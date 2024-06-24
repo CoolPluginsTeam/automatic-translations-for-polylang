@@ -1,2 +1,2 @@
 # automatic-translations-for-polylang
-The Polylang automatic translation addon plugin translates core blocks and predefined specific blocks from one language to another.
+Enhance Polylang with automatic translations for polylang plugin easy to use for WordPress sites.

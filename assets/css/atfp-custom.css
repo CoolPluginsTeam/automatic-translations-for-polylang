@@ -1,0 +1,321 @@
+
+#atfp-setting-modal .modal-container,
+#atfp_strings_model .modal-container {
+    display: none;
+    position: fixed;
+    z-index: 99999;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.75);
+}
+
+#atfp-setting-modal .modal-content {
+    position: absolute;
+    background-color: #fefefe;
+    width: clamp(200px, 400px, 80%);
+    height: auto;
+    overflow: hidden;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-animation-name: animatetopsetting;
+    -webkit-animation-duration: 0.6s;
+    -webkit-animation-fill-mode: forwards;
+    animation-name: animatetopsetting;
+    animation-duration: 0.6s;
+    animation-fill-mode: forwards;
+    top: -103%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding-block: 1rem;
+}
+
+#atfp_strings_model .modal-content {
+    position: relative;
+    background-color: #fefefe;
+    width: 80%;
+    height: calc(100% - 40px);
+    margin: 32px auto 0;
+    overflow: hidden;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.6s;
+    animation-name: animatetop;
+    animation-duration: 0.6s;
+    animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes animatetopsetting {
+    from {
+        top: -103%;
+        opacity: 0
+    }
+    to {
+        top: 50%;
+        opacity: 1
+    }
+}
+
+@keyframes animatetopsetting {
+    from {
+        top: -103%;
+        opacity: 0
+    }
+    to {
+        top: 50%;
+        opacity: 1
+    }
+}
+
+@-webkit-keyframes animatetop {
+    from {
+        top: -300px;
+        opacity: 0
+    }
+    to {
+        top: 0;
+        opacity: 1
+    }
+}
+
+@keyframes animatetop {
+    from {
+        top: -300px;
+        opacity: 0
+    }
+    to {
+        top: 0;
+        opacity: 1
+    }
+}
+
+#atfp-setting-modal .modal-content>*:not(hr){
+    padding-inline: 1rem;
+}
+
+#atfp_strings_model .modal-header {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+    height: 86px;
+    max-height: 86px;
+    overflow: hidden;
+    position: relative;
+}
+
+#atfp_strings_model .modal-header h2 {
+    display: inline-block;
+    font-size: 18px;
+    color: #000;
+    padding: 0;
+    margin: 18px 159px 5px 0px;
+    width: calc(100% - 160px);
+}
+
+/* The Close Button */
+
+#atfp-setting-modal .modal-header .close {
+    color: #5f5f5f;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    right: 16px;
+    top: 16px;
+}
+
+#atfp-setting-modal .modal-footer {
+   text-align: end;
+}
+
+#atfp-setting-modal .modal-header .close:hover,
+#atfp-setting-modal .modal-header .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#atfp_strings_model .modal-header .close {
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    right: 10px;
+    top: 20px;
+}
+
+#atfp_strings_model .modal-header .close:hover,
+#atfp_strings_model .modal-header .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#atfp_strings_model .save_btn_cont {
+    margin: 8px;
+    position: absolute;
+    top: 10px;
+    right: 40px;
+}
+
+#atfp_strings_model .save_btn_cont button:not([disabled]):before {
+    font-family: dashicons;
+    content: "\f345";
+    display: inline-block;
+    font-size: 24px;
+    line-height: 26px;
+    vertical-align: middle;
+    left: -20px;
+    position: absolute;
+    color: #fff;
+    animation: moveit 5s infinite;
+    -webkit-animation: moveit 1s infinite;
+}
+
+@keyframes moveit {
+    from {
+        left: -22px;
+    }
+    to {
+        left: -10px;
+    }
+}
+
+#atfp_strings_model .ytstats {
+    padding: 0;
+    margin: 5px 160px 5px 0;
+    width: calc(100% - 160px);
+}
+
+#atfp_strings_model .ytstats a {
+    color: #fff936;
+}
+
+#atfp_strings_model .modal-body {
+    padding: 2px 16px;
+    position: relative;
+}
+
+#atfp_strings_model .notice-dismiss {
+    padding: 0;
+}
+
+#atfp_strings_model h3 {
+    width: 100%;
+    display: inline-block;
+    font-size: 22px;
+    padding: 0;
+    margin: 20px 0 10px;
+    color: #5cb85c;
+}
+
+#translate_element {
+    margin-bottom: 25px;
+}
+
+#atfp_strings_model .atfp_string_container {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: calc(100vh - 390px);
+    width: 100%;
+    position: relative;
+}
+
+#atfp_strings_model .notice.atfp_string_count{
+    top: 2rem;
+}
+
+#atfp_strings_model #atfp_google_translate_element ~ .atfp_string_container{
+    height: calc(100vh - 450px);
+}
+
+#atfp_strings_model table {
+    border-spacing: 0;
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 100%;
+    table-layout: fixed;
+    padding: 0;
+    margin: 0;
+}
+
+#atfp_strings_model table td:first-child,
+#atfp_strings_model table th:first-child {
+    width: 60px;
+    text-align: center;
+}
+
+#atfp_strings_model table td,
+#atfp_strings_model table th {
+    border: 1px solid #ddd;
+    padding: 4px;
+    height: 26px;
+    text-align: left;
+    white-space: pre-wrap;
+    font-size: 12px;
+    line-height: 14px;
+    overflow: hidden;
+    vertical-align: middle;
+}
+
+#atfp_strings_model .atfp_translate_progress {
+    position: absolute;
+    display: none;
+    top: 0;
+    left: 10px;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.5);
+    width: calc(100% - 22px);
+    border-radius: 3px;
+    height: 100%;
+    z-index: 9;
+    box-sizing: border-box;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: bold;
+    text-align: center;
+    padding-top: 30px;
+}
+
+#atfp_strings_model .modal-footer {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+    position: absolute;
+    /* width: calc(100% - 32px); */
+    width: 100%;
+    bottom: 0;
+    height: 66px;
+    max-height: 66px;
+}
+
+body.atfp-google-translate-setting-hide div.skiptranslate iframe.skiptranslate{
+    display: none;
+}
+
+/* error message css start */
+#atfp_strings_model.atfp_fetch_error .atfp_string_container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#atfp_strings_model.atfp_fetch_error :where(.save_btn_cont, table#stringTemplate){
+    display: none;
+}
+
+#atfp_strings_model.atfp_fetch_error span.atfp_string_error_msg {
+    color: red;
+    font-size: 1.5rem;
+    padding: 2rem;
+}
+
+/* Google Translate Element Styles */
+#atfp_google_translate_element {
+    margin-bottom: 25px;
+}
+
+body>div.skiptranslate iframe.skiptranslate[frameborder][src][style="visibility:visible"]{
+    visibility: hidden !important;
+}
