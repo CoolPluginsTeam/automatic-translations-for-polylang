@@ -119,9 +119,6 @@ if ( ! class_exists( 'ATFP' ) ) {
 			$editor_script_asset = require_once ATFP_DIR_PATH . '/editor-script/build/index.asset.php';
 			wp_register_script( 'atfp-editor-script', ATFP_URL . 'editor-script/build/index.js', $editor_script_asset['dependencies'], $editor_script_asset['version'], true );
 
-			// Temeparary function for getting translated block data for adding block-rules.json file aniket.
-			wp_register_script( 'atfp-editor-temp-script', ATFP_URL . 'assets/js/atfp-temp-script.js', array( 'wp-data', 'jquery' ), ATFP_VERSION, true );
-
 			$from_post_id = isset( $_GET['from_post'] ) ? (int) filter_var( $_GET['from_post'], FILTER_SANITIZE_NUMBER_INT ) : false;
 
 			global $post;
@@ -151,21 +148,7 @@ if ( ! class_exists( 'ATFP' ) ) {
 						'source_lang'        => pll_get_post_language( $from_post_id, 'slug' ),
 					)
 				);
-			} else {
-				wp_enqueue_script( 'atfp-editor-temp-script' );
-				wp_localize_script(
-					'atfp-editor-temp-script',
-					'atfp_temp_ajax_object',
-					array(
-						'ajax_url'           => admin_url( 'admin-ajax.php' ),
-						'ajax_nonce'         => wp_create_nonce( 'atfp_translate_nonce' ),
-						'atfp_url'           => ATFP_URL,
-						'action_fetch'       => 'fetch_post_content',
-						'action_block_rules' => 'block_parsing_rules',
-					)
-				);
 			}
-
 		}
 
 
