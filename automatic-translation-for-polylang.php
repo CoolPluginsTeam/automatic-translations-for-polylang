@@ -56,18 +56,9 @@ if ( ! class_exists( 'ATFP' ) ) {
 		 * Constructor
 		 */
 		private function __construct() {
-			$this->atfp_includes();
 			add_action( 'plugins_loaded', array( $this, 'atfp_init' ) );
 			register_activation_hook( ATFP_FILE, array( $this, 'atfp_activate' ) );
 			register_deactivation_hook( ATFP_FILE, array( $this, 'atfp_deactivate' ) );
-		}
-
-		function atfp_includes() {
-			if ( is_admin() ) {
-				require_once __DIR__ . '/Admin/feedback/users-feedback.php'; // Feed Back Notice
-				require_once __DIR__ . '/includes/atfp-feedback-notice.php';
-				new atfpFeedbackNotice();
-			}
 		}
 
 		function atfp_init() {
