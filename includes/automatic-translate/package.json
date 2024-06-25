@@ -4,8 +4,8 @@
   "description": "You can easily create translated post using Automatic Translation For Polylang plugin",
   "main": "index.js",
   "scripts": {
-    "build": "wp-scripts build src/index.js --output-path=../assets/build/",
-    "start": "wp-scripts start src/index.js --output-path=../assets/build/"
+    "build": "wp-scripts build src/index.js --output-path=../../assets/build/",
+    "start": "wp-scripts start src/index.js --output-path=../../assets/build/"
   },
   "repository": {
     "type": "git",

@@ -104,11 +104,11 @@ if ( ! class_exists( 'ATFP' ) ) {
 
 
 		function atfp_register_backend_assets() {
-			wp_register_style( 'atfp-machine-translate', ATFP_URL . 'assets/css/atfp-custom.css', ATFP_VERSION );
+			wp_register_style( 'atfp-automatic-translate', ATFP_URL . 'assets/css/atfp-custom.css', ATFP_VERSION );
 			wp_register_script( 'atfp-google-api', 'https://translate.google.com/translate_a/element.js', '', ATFP_VERSION, true );
 
-			$editor_script_asset = require_once ATFP_DIR_PATH . '/editor-script/build/index.asset.php';
-			wp_register_script( 'atfp-editor-script', ATFP_URL . 'editor-script/build/index.js', $editor_script_asset['dependencies'], $editor_script_asset['version'], true );
+			$editor_script_asset = require_once ATFP_DIR_PATH . 'assets/build/index.asset.php';
+			wp_register_script( 'atfp-automatic-translate', ATFP_URL . 'assets/build/index.js', $editor_script_asset['dependencies'], ATFP_VERSION, true );
 
 			$from_post_id = isset( $_GET['from_post'] ) ? (int) filter_var( $_GET['from_post'], FILTER_SANITIZE_NUMBER_INT ) : false;
 
@@ -123,12 +123,12 @@ if ( ! class_exists( 'ATFP' ) ) {
 			$post_type      = isset( $_GET['post_type'] ) ? htmlspecialchars( $_GET['post_type'] ) : false;
 
 			if ( false !== $from_post_id && $post_translate && $lang && $post_type ) {
-				wp_enqueue_style( 'atfp-machine-translate' );
+				wp_enqueue_style( 'atfp-automatic-translate' );
 				wp_enqueue_script( 'atfp-google-api' );
-				wp_enqueue_script( 'atfp-editor-script' );
+				wp_enqueue_script( 'atfp-automatic-translate' );
 
 				wp_localize_script(
-					'atfp-editor-script',
+					'atfp-automatic-translate',
 					'atfp_ajax_object',
 					array(
 						'ajax_url'           => admin_url( 'admin-ajax.php' ),
@@ -156,7 +156,7 @@ if ( ! class_exists( 'ATFP' ) ) {
 				if ( ! PLL()->model->is_translated_post_type( $post->post_type ) ) {
 					return;
 				}
-				add_meta_box( 'my-meta-box-id', __( 'Duplicate Content from Original Post', 'automatic-translation-for-polylang' ), array( $this, 'atfp_shortcode_text' ), null, 'side', 'high' );
+				add_meta_box( 'my-meta-box-id', __( 'Automatic Translate Content from Original Post', 'automatic-translation-for-polylang' ), array( $this, 'atfp_shortcode_text' ), null, 'side', 'high' );
 			}
 
 		}
@@ -164,9 +164,9 @@ if ( ! class_exists( 'ATFP' ) ) {
 		function atfp_shortcode_text() {
 			?>
 			 <input type="button" class="atfp-ad-experiment-button button button-primary" name="atfp_meta_box_translate" id="atfp-translate-button" value="
-																													  <?php
-																														echo __( 'Translate Content (Beta)', 'automatic-translation-for-polylang' );
-																														?>
+				<?php
+					echo __( 'Translate Content (Beta)', 'automatic-translation-for-polylang' );
+				?>
 			 " readonly/><br><br>
 			<?php
 		}
@@ -180,7 +180,6 @@ if ( ! class_exists( 'ATFP' ) ) {
 			update_option( 'atfp-v', ATFP_VERSION );
 			update_option( 'atfp-type', 'FREE' );
 			update_option( 'atfp-installDate', date( 'Y-m-d h:i:s' ) );
-			update_option( 'atfp-ratingDiv', 'no' );
 		}
 
 		/*

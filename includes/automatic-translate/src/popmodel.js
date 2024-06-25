@@ -29,9 +29,9 @@ const PopupModal = () => {
     }
 
     useEffect(()=>{
-        const duplicateBtn=document.querySelector('input#atfp-translate-button[name="atfp_meta_box_translate"]');
+        const autoTranslateBtn=document.querySelector('input#atfp-translate-button[name="atfp_meta_box_translate"]');
 
-        duplicateBtn.addEventListener('click',()=>{
+        autoTranslateBtn.addEventListener('click',()=>{
             setSettingVisibility(prev=>!prev);
         });
     },[])

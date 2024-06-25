@@ -55,7 +55,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				exit();
 			}
 
-			$block_rules = file_get_contents( ATFP_DIR_PATH . '/editor-script/translate-block-rules/block-rules.json' );
+			$block_rules = file_get_contents( ATFP_DIR_PATH . 'includes/automatic-translate/translate-block-rules/block-rules.json' );
 			$data        = array(
 				'blockRules' => $block_rules,
 			);
