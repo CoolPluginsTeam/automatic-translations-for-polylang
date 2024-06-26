@@ -52,9 +52,9 @@ const popStringModal = (props) => {
         <>
             <div class="modal-container" style={{display: popupVisibility ? 'block' : 'none'}}>
                 <div class="modal-content">
-                    <StringPopUpHeader modalRender={props.modalRender} setPopupVisibility={setPopupVisibilityHandler} postContent={refPostData} blockRules={props.blockRules} translateStatus={translatePending} />
+                    <StringPopUpHeader modalRender={props.modalRender} setPopupVisibility={setPopupVisibilityHandler} postContent={refPostData} blockRules={props.blockRules} translateStatus={translatePending} pageTranslate={props.pageTranslate}/>
                     <StringPopUpBody {...props} updatePostContent={updatePostContentHandler} blockRules={props.blockRules} />
-                    <StringPopUpFooter modalRender={props.modalRender} setPopupVisibility={setPopupVisibilityHandler} postContent={refPostData} blockRules={props.blockRules} translateStatus={translatePending} />
+                    <StringPopUpFooter modalRender={props.modalRender} setPopupVisibility={setPopupVisibilityHandler} postContent={refPostData} blockRules={props.blockRules} translateStatus={translatePending} pageTranslate={props.pageTranslate}/>
                 </div>
             </div>
         </>

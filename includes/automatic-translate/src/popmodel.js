@@ -3,7 +3,7 @@ import { useEffect, useState } from "@wordpress/element";
 import PopStringModal from "./popupStringModal";
 const { __ } = wp.i18n;
 
-const PopupModal = () => {
+const PopupModal = (props) => {
     const [fetchStatus, setFetchStatus] = useState(false);
     const [targetBtn, setTargetBtn] = useState({});
     const [blockRules, setBlockRules] = useState({});
@@ -29,10 +29,10 @@ const PopupModal = () => {
     }
 
     useEffect(()=>{
-        const autoTranslateBtn=document.querySelector('input#atfp-translate-button[name="atfp_meta_box_translate"]');
+        const metaFieldBtn=document.querySelector('input#atfp-translate-button[name="atfp_meta_box_translate"]');
 
-        if(autoTranslateBtn){
-            autoTranslateBtn.addEventListener('click',()=>{
+        if(metaFieldBtn){
+            metaFieldBtn.addEventListener('click',()=>{
                 setSettingVisibility(prev=>!prev);
             });
         }
@@ -96,6 +96,7 @@ const PopupModal = () => {
                 sourceLang={sourceLang}
                 targetLang={targetLang}
                 modalRender={modalRender}
+                pageTranslate={props.pageTranslate}
             />, parentWrp);
             setSettingVisibility(prev=>!prev);
         }

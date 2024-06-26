@@ -1,5 +1,6 @@
 import PopupModal from './popmodel';
 import './global-store';
+import { useEffect, useState } from 'react';
 
 const init = () => {
   let atfpModals = new Array();
@@ -15,8 +16,27 @@ const init = () => {
 
 
 const App = () => {
+  const [pageTranslate,setPageTranslate]=useState(false);
+
+  const pageTranslateHandler=(status)=>{
+    setPageTranslate(status);
+  };
+
+  useEffect(()=>{
+    if(pageTranslate){
+      const metaFieldBtn=document.querySelector('input#atfp-translate-button[name="atfp_meta_box_translate"]');
+      if(metaFieldBtn){
+        metaFieldBtn?.closest('.postbox')?.remove();
+      }
+    }
+  },[pageTranslate])
+  
   return (
-    <PopupModal />
+    <>
+      { !pageTranslate &&
+        <PopupModal pageTranslate={pageTranslateHandler}/>
+      }
+    </>
   );
 };
 

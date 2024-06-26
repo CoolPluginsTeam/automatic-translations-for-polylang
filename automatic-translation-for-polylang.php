@@ -163,7 +163,7 @@ if ( ! class_exists( 'ATFP' ) ) {
 
 		function atfp_shortcode_text() {
 			?>
-			 <input type="button" class="atfp-ad-experiment-button button button-primary" name="atfp_meta_box_translate" id="atfp-translate-button" value="
+			 <input type="button" class="button button-primary" name="atfp_meta_box_translate" id="atfp-translate-button" value="
 				<?php
 					echo __( 'Translate Content (Beta)', 'automatic-translation-for-polylang' );
 				?>

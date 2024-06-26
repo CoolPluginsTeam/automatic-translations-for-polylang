@@ -19,6 +19,8 @@ const StringPopUpHeader = (props) => {
         const modalClose = closeModal;
 
         translatePost({ postContent: postContent, modalClose: modalClose, blockRules: blockRules });
+
+        props.pageTranslate(true);
     }
 
     return (
