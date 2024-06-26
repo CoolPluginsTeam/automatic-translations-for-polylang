@@ -26,7 +26,7 @@ const App = () => {
     if(pageTranslate){
       const metaFieldBtn=document.querySelector('input#atfp-translate-button[name="atfp_meta_box_translate"]');
       if(metaFieldBtn){
-        metaFieldBtn?.closest('.postbox')?.remove();
+        metaFieldBtn.disabled = true;
       }
     }
   },[pageTranslate])
