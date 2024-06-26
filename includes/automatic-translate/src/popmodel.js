@@ -130,17 +130,10 @@ const PopupModal = (props) => {
                         <br/><a href="https://translate.yandex.com/" target="_blank"><img className="pro-features-img" src={`${imgFolder}powered-by-yandex.png`} alt="powered by Yandex Translate Widget"/></a>
                     </div>
                     <hr/>
-                    <strong className="atfp-heading">{__("Translate Using Google Page Translate Widget", 'automatic-translation-for-polylang')}</strong>
-                    <div className="inputGroup">
-                        <button className="atfp-service-btn translate button button-primary" data-service="google" data-service-label="Google Translate" onClick={fetchContent}>{__("Google Translate (Beta)", 'automatic-translation-for-polylang')}</button>
-                        <span className="proonly-button alsofree">✔ {__("Available", 'automatic-translation-for-polylang')}</span>
-                        <br /><a href="https://translate.google.com/" target="_blank"><img style={{ marginTop: "5px" }} src={`${imgFolder}powered-by-google.png`} alt={__("powered by Google Translate Widget", 'automatic-translation-for-polylang')}></img></a>
-                    </div>
-                    <hr />
                    <ul style={{ margin: "0" }}>
-                        <li><span style={{ color: "green" }}>✔</span> {__("Unlimited Translations with Google Translate", 'automatic-translation-for-polylang')}</li>
-                        <li><span style={{ color: "green" }}>✔</span> {__("No API Key Required for Google Translate", 'automatic-translation-for-polylang')}</li>
-                        <li><span style={{ color: "green" }}>✔</span> {__("Supports Multiple Languages", 'automatic-translation-for-polylang')} - <a href="https://en.wikipedia.org/wiki/Google_Translate#Supported_languages" target="_blank">{__("See Supported Languages", 'automatic-translation-for-polylang')}</a></li>
+                        <li><span style={{ color: "green" }}>✔</span> {__("Unlimited Translations with Yandex Translate", 'automatic-translation-for-polylang')}</li>
+                        <li><span style={{ color: "green" }}>✔</span> {__("No API Key Required for Yandex Translate", 'automatic-translation-for-polylang')}</li>
+                        <li><span style={{ color: "green" }}>✔</span> {__("Supports Multiple Languages", 'automatic-translation-for-polylang')} - <a href="https://yandex.com/support2/translate-desktop/en/supported-langs" target="_blank">{__("See Supported Languages", 'automatic-translation-for-polylang')}</a></li>
                     </ul>
                     <hr/>
                     <div className="modal-footer">

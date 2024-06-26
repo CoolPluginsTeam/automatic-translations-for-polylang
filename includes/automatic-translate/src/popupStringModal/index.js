@@ -23,10 +23,6 @@ const popStringModal = (props) => {
      * @param {boolean} state - The state to update the fetch with.
      */
     const setPopupVisibilityHandler = (state) => {
-        if (props.service === 'google') {
-            document.querySelector('div.skiptranslate iframe.skiptranslate')?.contentDocument?.querySelector('a[title="Close"] img[alt="Close"]')?.click();
-        }
-
         setTranslatePending(true);
         setPopupVisibility(false);
         props.updateFetch(state);
@@ -43,7 +39,7 @@ const popStringModal = (props) => {
 
         /**
          * Calls the translate service provider based on the service type.
-         * For example, it can call services like deepL or Google Translate.
+         * For example, it can call services like yandex Translate.
         */
        const service = props.service;
        const id=`atfp_${service}_translate_element`;
