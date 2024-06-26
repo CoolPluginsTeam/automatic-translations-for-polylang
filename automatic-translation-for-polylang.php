@@ -108,7 +108,7 @@ if ( ! class_exists( 'ATFP' ) ) {
 			wp_register_script( 'atfp-google-api', 'https://translate.google.com/translate_a/element.js', '', ATFP_VERSION, true );
 
 			$editor_script_asset = require_once ATFP_DIR_PATH . 'assets/build/index.asset.php';
-			wp_register_script( 'atfp-automatic-translate', ATFP_URL . 'assets/build/index.js', $editor_script_asset['dependencies'], ATFP_VERSION, true );
+			wp_register_script( 'atfp-automatic-translate', ATFP_URL . 'assets/build/index.js', $editor_script_asset['dependencies'], $editor_script_asset['version'], true );
 
 			$from_post_id = isset( $_GET['from_post'] ) ? (int) filter_var( $_GET['from_post'], FILTER_SANITIZE_NUMBER_INT ) : false;
 

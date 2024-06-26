@@ -8,6 +8,7 @@ const popStringModal = (props) => {
     const [popupVisibility, setPopupVisibility] = useState(props.visibility);
     const [refPostData, setRefPostData] = useState('');
     const [translatePending, setTranslatePending] = useState(true);
+    const [translateObj,setTranslateObj]=useState({});
 
     /**
      * Updates the post content data.
@@ -41,8 +42,12 @@ const popStringModal = (props) => {
          * For example, it can call services like deepL or Google Translate.
         */
        const service = props.service;
-       TranslateService[service]({ ...props, translateStatus: translateStatusHandler });
-    }, []);
+       const id=`atfp_${service}_translate_element`;
+       if(undefined === translateObj[service] && true !== translateObj[service]){
+           setTranslateObj(prev=>{ return {...prev, [service]: true}});
+           TranslateService[service]({ sourceLang: props.sourceLang, targetLang: props.targetLang, translateStatus: translateStatusHandler, ID: id });
+       }
+    }, [props.service]);
     
     useEffect(()=>{
         setPopupVisibility(true);

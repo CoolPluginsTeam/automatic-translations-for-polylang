@@ -71,10 +71,10 @@ const filterTranslateAttr = (block, blockParseRules, replaceAttrRules) => {
             const blockAttrContent = dynamicBlockAttr;
 
             if (undefined !== blockAttrContent && blockAttrContent.trim() !== '') {
-                let filterKey = uniqueId.replace(/[^a-zA-Z0-9]/g, '');
+                let filterKey = uniqueId.replace(/[^\p{L}\p{N}]/gu, '');
                 let translateContent = '';
 
-                if (!/[a-zA-Z]/.test(blockAttrContent)) {
+                if (!/[^\p{L}]/gu.test(blockAttrContent)) {
                     translateContent = blockAttrContent;
                 } else {
                     translateContent = select('block-atfp/translate').getTranslatedString('content', blockAttrContent, filterKey);

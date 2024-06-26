@@ -33,7 +33,8 @@ const StringPopUpBody = (props) => {
             <div className="atfp_translate_progress">{__("Automatic translation is in progress....", 'automatic-translation-for-polylang')}<br />{__("It will take few minutes, enjoy ☕ coffee in this time!", 'automatic-translation-for-polylang')}<br /><br />{__("Please do not leave this window or browser tab while translation is in progress...", 'automatic-translation-for-polylang')}</div>
             <div className={`translator-widget ${service}`}>
                 <h3 class="choose-lang">{__("Choose language", 'automatic-translation-for-polylang')} <span class="dashicons-before dashicons-translation"></span></h3>
-                <div id="atfp_google_translate_element"></div>
+                <div id="atfp_google_translate_element" style={{display: `${service === 'google' ? 'block' : 'none'}`}}></div>
+                <div id="atfp_yandex_translate_element" style={{display: `${service === 'yandex' ? 'block' : 'none'}`}}></div>
             </div>
 
             <div className="atfp_string_container">

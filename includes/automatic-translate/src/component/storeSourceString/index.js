@@ -37,8 +37,8 @@ const filterTranslateAttr = (blockId, blockAttr, filterAttr) => {
 
             if (undefined !== blockAttrContent && blockAttrContent.trim() !== '') {
 
-                let filterKey = uniqueId.replace(/[^a-zA-Z0-9]/g, '');
-                if (!/[a-zA-Z]/.test(blockAttrContent)) {
+                let filterKey = uniqueId.replace(/[^\p{L}\p{N}]/gu, '');
+                if (!/[^\p{L}]/gu.test(blockAttrContent)) {
                     return false;
                 }
                 dispatch('block-atfp/translate').contentSaveSource(filterKey, blockAttrContent, contentIndex);

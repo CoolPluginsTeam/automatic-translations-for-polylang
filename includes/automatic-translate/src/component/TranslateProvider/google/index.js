@@ -134,7 +134,7 @@ const GoogleTranslater = (data) => {
     const bodyEle = document.querySelector('body');
     bodyEle.setAttribute('translate', 'no');
 
-    const { sourceLang, targetLang, translateStatus } = data;
+    const { sourceLang, targetLang, translateStatus, ID } = data;
     
     new google.translate.TranslateElement({
         pageLanguage: sourceLang,
@@ -142,9 +142,9 @@ const GoogleTranslater = (data) => {
         defaultLanguage: sourceLang,
         multilanguagePage: true,
         autoDisplay: false,
-    }, 'atfp_google_translate_element');
+    }, ID);
 
-    document.querySelector("#atfp_google_translate_element").addEventListener('change', () => {
+    document.querySelector(`#${ID}`).addEventListener('change', () => {
         translationWaiting(translateStatus);
     });
 
