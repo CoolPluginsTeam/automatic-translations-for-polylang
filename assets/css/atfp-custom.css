@@ -226,10 +226,6 @@
     top: 2rem;
 }
 
-#atfp_strings_model #atfp_google_translate_element ~ .atfp_string_container{
-    height: calc(100vh - 450px);
-}
-
 #atfp_strings_model table {
     border-spacing: 0;
     border-collapse: collapse;
@@ -290,10 +286,6 @@
     max-height: 66px;
 }
 
-body.atfp-google-translate-setting-hide div.skiptranslate iframe.skiptranslate{
-    display: none;
-}
-
 #yt-widget .yt-listbox__input:not(:checked)~.yt-listbox__text {
     display: none !important;
   }
@@ -313,11 +305,6 @@ body.atfp-google-translate-setting-hide div.skiptranslate iframe.skiptranslate{
     color: red;
     font-size: 1.5rem;
     padding: 2rem;
-}
-
-/* Google Translate Element Styles */
-#atfp_google_translate_element {
-    margin-bottom: 25px;
 }
 
 body>div.skiptranslate iframe.skiptranslate[frameborder][src][style="visibility:visible"]{

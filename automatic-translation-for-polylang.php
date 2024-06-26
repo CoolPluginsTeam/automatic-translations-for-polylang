@@ -105,7 +105,6 @@ if ( ! class_exists( 'ATFP' ) ) {
 
 		function atfp_register_backend_assets() {
 			wp_register_style( 'atfp-automatic-translate', ATFP_URL . 'assets/css/atfp-custom.css', ATFP_VERSION );
-			wp_register_script( 'atfp-google-api', 'https://translate.google.com/translate_a/element.js', '', ATFP_VERSION, true );
 
 			$editor_script_asset = require_once ATFP_DIR_PATH . 'assets/build/index.asset.php';
 			wp_register_script( 'atfp-automatic-translate', ATFP_URL . 'assets/build/index.js', $editor_script_asset['dependencies'], $editor_script_asset['version'], true );
@@ -124,7 +123,6 @@ if ( ! class_exists( 'ATFP' ) ) {
 
 			if ( false !== $from_post_id && $post_translate && $lang && $post_type ) {
 				wp_enqueue_style( 'atfp-automatic-translate' );
-				wp_enqueue_script( 'atfp-google-api' );
 				wp_enqueue_script( 'atfp-automatic-translate' );
 
 				wp_localize_script(
