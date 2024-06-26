@@ -78,7 +78,6 @@ const yandexWidget=(win, doc, nav, params, namespace, targetLang, translateStatu
     };
 
     // Button
-
     var Button = function Button(element, contentElement) {
         var self = this;
 
@@ -98,7 +97,6 @@ const yandexWidget=(win, doc, nav, params, namespace, targetLang, translateStatu
     };
 
     // Select
-
     var Select = function Select(form, itemName) {
         var self = this;
 
@@ -172,7 +170,6 @@ const yandexWidget=(win, doc, nav, params, namespace, targetLang, translateStatu
     Select.prototype.onHiddenChange = function () { };
 
     // Widget
-
     var Widget = function Widget(options) {
         var self = this,
             active,
@@ -205,11 +202,9 @@ const yandexWidget=(win, doc, nav, params, namespace, targetLang, translateStatu
         };
 
         select.onChange = function (lang) {
-
             storage.setValue('lang', lang);
             rightButton.setText(lang);
             self.setState('invalid', lang === pageLang);
-            // SaveTranslationHandler(translateStatus);
         };
 
         select.onHiddenChange = function (hidden) {
@@ -286,7 +281,7 @@ const yandexWidget=(win, doc, nav, params, namespace, targetLang, translateStatu
         closeButton.onClick = function () {
             select.setHidden(true);
         };
-        //   defaultLang = storage.getValue('lang') || userLang;
+
         if (targetLang != undefined) {
             var defaultcode = targetLang;
             // var region = window.locoConf.conf.locale.region ? window.locoConf.conf.locale.region : null;
@@ -310,9 +305,6 @@ const yandexWidget=(win, doc, nav, params, namespace, targetLang, translateStatu
             // }
             select.setValue(defaultLang);
             active = storage.getValue('active');
-            if (active || (autoMode && active === undefined)) {
-                // this.translate(defaultLang);
-            }
         }
     };
     Widget.prototype.hasState = function (name) {
@@ -342,7 +334,6 @@ const yandexWidget=(win, doc, nav, params, namespace, targetLang, translateStatu
     Widget.prototype.onStateChange = function () { };
 
     // Storage
-
     var Storage = function Storage(name) {
         this._name = name;
         try {
@@ -390,7 +381,6 @@ const yandexWidget=(win, doc, nav, params, namespace, targetLang, translateStatu
                         userLang: (nav.language || nav.userLanguage || '').split('-')[0],
                         translator: new namespace.PageTranslator({
                             srv: 'tr-url-widget',
-                            //sid: '432eecb0.607a6bda.cceb72be.74722d75726c2d776964676574',
                             url: 'https://translate.yandex.net/api/v1/tr.json/translate',
                             autoSync: true,
                             maxPortionLength: 600
