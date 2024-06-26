@@ -107,7 +107,7 @@ const FilterTargetContent = (props) => {
                 content.map((data, index) => {
                     const notTranslate = notTranslatePattern.test(data);
                     if (notTranslate) {
-                        return <span key={index} className="notranslate atfp-notraslate-tag">{data.replace(replacePlaceholderPattern, '')}</span>;
+                        return <span key={index} className="notranslate atfp-notraslate-tag" translate="yes">{data.replace(replacePlaceholderPattern, '')}</span>;
                     } else {
                         return data;
                     }

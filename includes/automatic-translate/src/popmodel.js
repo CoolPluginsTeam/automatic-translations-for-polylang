@@ -124,7 +124,13 @@ const PopupModal = (props) => {
                     <span className="close" onClick={()=>setSettingVisibility(false)}>&times;</span>
                     </div>
                     <hr />
-                    <strong className="atfp-heading" style={{ marginBottom: "10px", display: "inline-block" }}>{__("Translate Using Google Page Translate Widget", 'automatic-translation-for-polylang')}</strong>
+                    <strong className="atlt-heading">{__("Translate Using Yandex Page Translate Widget", 'automatic-translation-for-polylang')}</strong>
+                    <div className="inputGroup">
+                        <button className="atfp-service-btn translate button button-primary" data-service="yandex" data-service-label="Yandex Translate" onClick={fetchContent}>{__("Yandex Translate", 'automatic-translation-for-polylang')}</button>
+                        <br/><a href="https://translate.yandex.com/" target="_blank"><img className="pro-features-img" src={`${imgFolder}powered-by-yandex.png`} alt="powered by Yandex Translate Widget"/></a>
+                    </div>
+                    <hr/>
+                    <strong className="atfp-heading">{__("Translate Using Google Page Translate Widget", 'automatic-translation-for-polylang')}</strong>
                     <div className="inputGroup">
                         <button className="atfp-service-btn translate button button-primary" data-service="google" data-service-label="Google Translate" onClick={fetchContent}>{__("Google Translate (Beta)", 'automatic-translation-for-polylang')}</button>
                         <span className="proonly-button alsofree">✔ {__("Available", 'automatic-translation-for-polylang')}</span>
