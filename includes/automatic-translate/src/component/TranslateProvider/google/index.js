@@ -131,8 +131,8 @@ const onCompleteTranslation = (container) => {
  */
 const GoogleTranslater = (data) => {
     // delete window.google;
-    const bodyEle = document.querySelector('body');
-    bodyEle.setAttribute('translate', 'no');
+    // const bodyEle = document.querySelector('body');
+    // bodyEle.setAttribute('translate', 'no');
 
     const { sourceLang, targetLang, translateStatus, ID } = data;
     

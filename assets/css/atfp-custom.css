@@ -294,6 +294,10 @@ body.atfp-google-translate-setting-hide div.skiptranslate iframe.skiptranslate{
     display: none;
 }
 
+#yt-widget .yt-listbox__input:not(:checked)~.yt-listbox__text {
+    display: none !important;
+  }
+
 /* error message css start */
 #atfp_strings_model.atfp_fetch_error .atfp_string_container{
     display: flex;

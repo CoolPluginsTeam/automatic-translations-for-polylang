@@ -1,4 +1,4 @@
-const yandexWidget=(win, doc, nav, params, namespace, undefined)=>{
+const yandexWidget=(win, doc, nav, params, namespace, sourceLang, targetLang)=>{
     'use strict';
     
     var util = {
@@ -351,9 +351,9 @@ const yandexWidget=(win, doc, nav, params, namespace, undefined)=>{
             select.setHidden(true);
         };
         //   defaultLang = storage.getValue('lang') || userLang;
-        if (window.locoConf.conf != undefined) {
-            var defaultcode = window.locoConf.conf.locale.lang ? window.locoConf.conf.locale.lang : null;
-            var region = window.locoConf.conf.locale.region ? window.locoConf.conf.locale.region : null;
+        if (targetLang != undefined) {
+            var defaultcode = targetLang;
+            // var region = window.locoConf.conf.locale.region ? window.locoConf.conf.locale.region : null;
         }
         switch (defaultcode) {
             case 'nb':
@@ -369,9 +369,9 @@ const yandexWidget=(win, doc, nav, params, namespace, undefined)=>{
         }
         //    defaultLang =  defaultcode;
         if (defaultLang) {
-            if(region === 'BR' && null !== region){
-                defaultLang = defaultLang + "-" + region;
-            }
+            // if(region === 'BR' && null !== region){
+            //     defaultLang = defaultLang + "-" + region;
+            // }
             select.setValue(defaultLang);
             active = storage.getValue('active');
             if (active || (autoMode && active === undefined)) {
@@ -478,9 +478,8 @@ const yandexWidget=(win, doc, nav, params, namespace, undefined)=>{
 };
 
 const YandexTranslater=(props)=>{
-    return;
     const globalObj=window;
-    yandexWidget(globalObj, globalObj.document, globalObj.navigator, { "pageLang": "en", "autoMode": "false", "widgetId": "atfp_yandex_translate_element", "widgetTheme": "light" }, globalObj.yt = globalObj.yt || {});
+    yandexWidget(globalObj, globalObj.document, globalObj.navigator, { "pageLang": props.sourceLang, "autoMode": "false", "widgetId": "atfp_yandex_translate_element", "widgetTheme": "light" }, globalObj.yt = globalObj.yt || {}, props.sourceLang, props.targetLang);
 }
 
 export default YandexTranslater;

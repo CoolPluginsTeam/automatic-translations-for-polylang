@@ -37,6 +37,10 @@ const popStringModal = (props) => {
     }
 
     useEffect(() => {
+        
+        document.documentElement.setAttribute('translate', 'no');
+        document.body.classList.add('notranslate');
+
         /**
          * Calls the translate service provider based on the service type.
          * For example, it can call services like deepL or Google Translate.

@@ -252,8 +252,9 @@ const onCompleteTranslation = container => {
  */
 const GoogleTranslater = data => {
   // delete window.google;
-  const bodyEle = document.querySelector('body');
-  bodyEle.setAttribute('translate', 'no');
+  // const bodyEle = document.querySelector('body');
+  // bodyEle.setAttribute('translate', 'no');
+
   const {
     sourceLang,
     targetLang,
@@ -310,7 +311,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-const yandexWidget = (win, doc, nav, params, namespace, undefined) => {
+const yandexWidget = (win, doc, nav, params, namespace, sourceLang, targetLang) => {
   'use strict';
 
   var util = {
@@ -615,9 +616,9 @@ const yandexWidget = (win, doc, nav, params, namespace, undefined) => {
       select.setHidden(true);
     };
     //   defaultLang = storage.getValue('lang') || userLang;
-    if (window.locoConf.conf != undefined) {
-      var defaultcode = window.locoConf.conf.locale.lang ? window.locoConf.conf.locale.lang : null;
-      var region = window.locoConf.conf.locale.region ? window.locoConf.conf.locale.region : null;
+    if (targetLang != undefined) {
+      var defaultcode = targetLang;
+      // var region = window.locoConf.conf.locale.region ? window.locoConf.conf.locale.region : null;
     }
     switch (defaultcode) {
       case 'nb':
@@ -632,9 +633,9 @@ const yandexWidget = (win, doc, nav, params, namespace, undefined) => {
     }
     //    defaultLang =  defaultcode;
     if (defaultLang) {
-      if (region === 'BR' && null !== region) {
-        defaultLang = defaultLang + "-" + region;
-      }
+      // if(region === 'BR' && null !== region){
+      //     defaultLang = defaultLang + "-" + region;
+      // }
       select.setValue(defaultLang);
       active = storage.getValue('active');
       if (active || autoMode && active === undefined) {
@@ -726,14 +727,13 @@ const yandexWidget = (win, doc, nav, params, namespace, undefined) => {
   }
 };
 const YandexTranslater = props => {
-  return;
   const globalObj = window;
   yandexWidget(globalObj, globalObj.document, globalObj.navigator, {
-    "pageLang": "en",
+    "pageLang": props.sourceLang,
     "autoMode": "false",
     "widgetId": "atfp_yandex_translate_element",
     "widgetTheme": "light"
-  }, globalObj.yt = globalObj.yt || {});
+  }, globalObj.yt = globalObj.yt || {}, props.sourceLang, props.targetLang);
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (YandexTranslater);
 
@@ -1270,6 +1270,7 @@ const FetchPost = props => {
       "data-source": "source_text"
     }, data.source), /*#__PURE__*/React.createElement("td", {
       class: "translate",
+      translate: "yes",
       "data-key": data.id,
       "data-string-type": data.type
     }, /*#__PURE__*/React.createElement(_component_FilterTargetContent__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -1990,6 +1991,9 @@ const popStringModal = props => {
     setTranslatePending(false);
   };
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    document.documentElement.setAttribute('translate', 'no');
+    document.body.classList.add('notranslate');
+
     /**
      * Calls the translate service provider based on the service type.
      * For example, it can call services like deepL or Google Translate.
