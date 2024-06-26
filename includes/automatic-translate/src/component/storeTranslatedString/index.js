@@ -1,5 +1,33 @@
 const { dispatch } = wp.data;
-import SaveTranslationHandler from "../../storeTranslatedString";
+
+const ScrollAnimation=(props)=>{
+    const {element,scrollSpeed}=props;
+    const scrollHeight = element.scrollHeight;
+    const scrollingSpeed = Math.min(scrollSpeed, scrollHeight);
+    let startTime = null;
+
+    const animateScroll=()=>{
+        const currentTime = performance.now();
+        const duration = scrollingSpeed; // 10 seconds
+        const scrollTarget = scrollHeight + 2000;
+    
+        if (!startTime) {
+            startTime = currentTime;
+        }
+    
+        const progress = (currentTime - startTime) / duration;
+        const scrollPosition = scrollTarget * progress;
+    
+        element.scrollTop = scrollPosition;
+    
+        if (progress < 1) {
+            requestAnimationFrame(animateScroll);
+        }
+    }
+
+    animateScroll();
+};
+
 /**
  * Saves the translation data by updating the translation content based on the provided translate object and data.
  * @param {Object} translateData - The data containing translation information.
@@ -39,10 +67,26 @@ const updateTranslatedContent = () => {
 }
 
 /**
+ * Handles the completion of translation by enabling save button, updating stats, and stopping translation progress.
+ * @param {HTMLElement} container - The container element for translation.
+ */
+const onCompleteTranslation = (container) => {
+    container.querySelector(".atfp_translate_progress").style.display = "none";
+    container.querySelector(".atfp_string_container").style.animation = "none";
+    document.body.style.top = '0';
+
+    const saveButton = container.querySelector('button.save_it');
+    saveButton.removeAttribute('disabled');
+    saveButton.classList.add('translated');
+    saveButton.classList.remove('notranslate');
+    updateTranslatedContent();
+}
+
+/**
  * Automatically scrolls the container and triggers the completion callback when the bottom is reached or certain conditions are met.
  * @param {Function} translateStatus - Callback function to execute when translation is deemed complete.
  */
-const translationWaiting = (translateStatus) => {
+const SaveTranslationHandler = (translateStatus) => {
 
     let translateComplete = false;
 
@@ -77,7 +121,7 @@ const translationWaiting = (translateStatus) => {
         container.querySelector(".atfp_translate_progress").style.display = "block";
 
         setTimeout(() => {
-            StringModalScroll({element: stringContainer, scrollSpeed: 10000});
+            ScrollAnimation({element: stringContainer, scrollSpeed: 10000});
         }, 2000);
 
         stringContainer.addEventListener('scroll', () => {
@@ -104,46 +148,4 @@ const translationWaiting = (translateStatus) => {
     }
 }
 
-/**
- * Handles the completion of translation by enabling save button, updating stats, and stopping translation progress.
- * @param {HTMLElement} container - The container element for translation.
- */
-const onCompleteTranslation = (container) => {
-    container.querySelector(".atfp_translate_progress").style.display = "none";
-    container.querySelector(".atfp_string_container").style.animation = "none";
-    document.body.style.top = '0';
-
-    const saveButton = container.querySelector('button.save_it');
-    saveButton.removeAttribute('disabled');
-    saveButton.classList.add('translated');
-    saveButton.classList.remove('notranslate');
-    updateTranslatedContent();
-}
-
-/**
- * Initializes Google Translate functionality on specific elements based on provided data.
- * @param {Object} data - The data containing source and target languages.
- */
-const GoogleTranslater = (data) => {
-    // delete window.google;
-    // const bodyEle = document.querySelector('body');
-    // bodyEle.setAttribute('translate', 'no');
-
-    const { sourceLang, targetLang, translateStatus, ID } = data;
-    
-    new google.translate.TranslateElement({
-        pageLanguage: sourceLang,
-        includedLanguages: targetLang,
-        defaultLanguage: sourceLang,
-        multilanguagePage: true,
-        autoDisplay: false,
-    }, ID);
-
-    document.querySelector(`#${ID}`).addEventListener('change', () => {
-        SaveTranslationHandler(translateStatus);
-        // translationWaiting(translateStatus);
-    });
-
-}
-
-export default GoogleTranslater;
+export default SaveTranslationHandler;

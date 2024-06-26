@@ -1,4 +1,6 @@
-const yandexWidget=(win, doc, nav, params, namespace, sourceLang, targetLang)=>{
+import SaveTranslationHandler from "../../storeTranslatedString";
+
+const yandexWidget=(win, doc, nav, params, namespace, targetLang, translateStatus)=>{
     'use strict';
     
     var util = {
@@ -199,7 +201,7 @@ const yandexWidget=(win, doc, nav, params, namespace, sourceLang, targetLang)=>{
         select.onSelect = function (lang) {
             this.setHidden(true);
             self.translate(lang);
-            updatePopupSettings();
+            SaveTranslationHandler(translateStatus);
         };
 
         select.onChange = function (lang) {
@@ -207,7 +209,7 @@ const yandexWidget=(win, doc, nav, params, namespace, sourceLang, targetLang)=>{
             storage.setValue('lang', lang);
             rightButton.setText(lang);
             self.setState('invalid', lang === pageLang);
-            // updatePopupSettings();
+            // SaveTranslationHandler(translateStatus);
         };
 
         select.onHiddenChange = function (hidden) {
@@ -262,77 +264,11 @@ const yandexWidget=(win, doc, nav, params, namespace, sourceLang, targetLang)=>{
             }
         });
 
-        // Custom code to update popup settings
-        function updatePopupSettings() {
-            return;
-            var container = $(".yandex-widget-container");
-
-            if (container.find(".atfp_string_container").length) {
-
-                // Scroll to the top of the string container
-                container.find(".atfp_string_container").scrollTop(0);
-
-                // Get the scroll height of the string container
-                var scrollHeight = container.find('.atfp_string_container').get(0).scrollHeight;
-
-                // Set a reasonable scroll speed
-                var scrollSpeed = 1000; // Adjust this value to make scrolling slower
-                if (scrollHeight > scrollSpeed) {
-                    scrollSpeed = scrollHeight;
-                }
-
-
-                // Check if scroll height is defined and greater than 100
-                if (scrollHeight !== undefined && scrollHeight > 100) {
-                    // Show translation progress indicator
-                    container.find(".atfp_translate_progress").fadeIn("slow");
-
-                    // Animate scrolling down to the end of the container
-                    setTimeout(() => {
-                        container.find(".atfp_string_container").animate({
-                            scrollTop: scrollHeight + 2000
-                        }, scrollSpeed * 2, 'linear');
-                    }, 1500);
-
-                    // Add a scroll event listener
-                    container.find('.atfp_string_container').on('scroll', function () {
-                        if ($(this).scrollTop() + $(this).innerHeight() + 50 >= $(this)[0].scrollHeight) {
-                            // Enable save button, show stats, and hide progress when scrolled to the bottom
-                            onCompleteTranslation(container);
-                        }
-                    });
-
-                    // If the container is already at the bottom, simulate scroll end
-                    if (container.find('.atfp_string_container').innerHeight() + 10 >= scrollHeight) {
-                        onCompleteTranslation(container);
-                    }
-                } else {
-                    // If scroll height is less than or equal to 100, do nothing after a delay
-                    setTimeout(() => {
-                        // Uncomment the following lines if you want to perform actions in this case
-                        // container.find(".save_it").prop("disabled", false);
-                        // container.find(".ytstats").fadeIn("slow");
-                    }, 1500);
-                }
-            }
-        }
-
-        // Function to handle actions when scrolled to the bottom
-        function onCompleteTranslation(container) {
-            setTimeout(() => {
-                container.find(".atfp_save_strings ").prop("disabled", false);
-                container.find(".atfp_stats").fadeIn("slow");
-                container.find(".atfp_translate_progress").fadeOut("slow");
-                container.find(".atfp_string_container").stop();
-                $('body').css('top', '0');
-            }, 2000);
-        }
-
 
         leftButton.onClick = function () {
             select.setHidden(true);
             self.translate(select.getValue());
-            updatePopupSettings();
+            SaveTranslationHandler(translateStatus);
         };
 
         rightButton.onClick = function () {
@@ -479,7 +415,7 @@ const yandexWidget=(win, doc, nav, params, namespace, sourceLang, targetLang)=>{
 
 const YandexTranslater=(props)=>{
     const globalObj=window;
-    yandexWidget(globalObj, globalObj.document, globalObj.navigator, { "pageLang": props.sourceLang, "autoMode": "false", "widgetId": "atfp_yandex_translate_element", "widgetTheme": "light" }, globalObj.yt = globalObj.yt || {}, props.sourceLang, props.targetLang);
+    yandexWidget(globalObj, globalObj.document, globalObj.navigator, { "pageLang": props.sourceLang, "autoMode": "false", "widgetId": "atfp_yandex_translate_element", "widgetTheme": "light" }, globalObj.yt = globalObj.yt || {}, props.targetLang, props.translateStatus);
 }
 
 export default YandexTranslater;
