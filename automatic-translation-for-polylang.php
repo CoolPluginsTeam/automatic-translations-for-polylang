@@ -104,65 +104,74 @@ if ( ! class_exists( 'ATFP' ) ) {
 
 
 		function atfp_register_backend_assets() {
-			wp_register_style( 'atfp-automatic-translate', ATFP_URL . 'assets/css/atfp-custom.css', ATFP_VERSION );
+			$current_screen = get_current_screen();
 
-			$editor_script_asset = require_once ATFP_DIR_PATH . 'assets/build/index.asset.php';
-			wp_register_script( 'atfp-automatic-translate', ATFP_URL . 'assets/build/index.js', $editor_script_asset['dependencies'], $editor_script_asset['version'], true );
+			if ( method_exists( $current_screen, 'is_block_editor' ) && $current_screen->is_block_editor() ) {
+				wp_register_style( 'atfp-automatic-translate', ATFP_URL . 'assets/css/atfp-custom.css', ATFP_VERSION );
 
-			$from_post_id = isset( $_GET['from_post'] ) ? (int) filter_var( $_GET['from_post'], FILTER_SANITIZE_NUMBER_INT ) : false;
+				$editor_script_asset = require_once ATFP_DIR_PATH . 'assets/build/index.asset.php';
+				wp_register_script( 'atfp-automatic-translate', ATFP_URL . 'assets/build/index.js', $editor_script_asset['dependencies'], $editor_script_asset['version'], true );
 
-			global $post;
+				$from_post_id = isset( $_GET['from_post'] ) ? (int) filter_var( $_GET['from_post'], FILTER_SANITIZE_NUMBER_INT ) : false;
 
-			if ( null === $post ) {
-				return;
+				global $post;
+
+				if ( null === $post ) {
+					return;
+				}
+
+				$languages = PLL()->model->get_languages_list();
+
+				$lang_object = array();
+				foreach ( $languages as $lang ) {
+					$lang_object[ $lang->slug ] = $lang->name;
+				}
+
+				$post_translate = PLL()->model->is_translated_post_type( $post->post_type );
+				$lang           = isset( $_GET['new_lang'] ) ? htmlspecialchars( $_GET['new_lang'] ) : false;
+				$post_type      = isset( $_GET['post_type'] ) ? htmlspecialchars( $_GET['post_type'] ) : false;
+
+				if ( false !== $from_post_id && $post_translate && $lang && $post_type ) {
+					wp_enqueue_style( 'atfp-automatic-translate' );
+					wp_enqueue_script( 'atfp-automatic-translate' );
+
+					wp_localize_script(
+						'atfp-automatic-translate',
+						'atfp_ajax_object',
+						array(
+							'ajax_url'           => admin_url( 'admin-ajax.php' ),
+							'ajax_nonce'         => wp_create_nonce( 'atfp_translate_nonce' ),
+							'atfp_url'           => ATFP_URL,
+							'action_fetch'       => 'fetch_post_content',
+							'action_block_rules' => 'block_parsing_rules',
+							'source_lang'        => pll_get_post_language( $from_post_id, 'slug' ),
+							'languageObject'     => $lang_object,
+						)
+					);
+				}
 			}
 
-			$languages = PLL()->model->get_languages_list();
-
-			$lang_object = array();
-			foreach ( $languages as $lang ) {
-				$lang_object[ $lang->slug ] = $lang->name;
-			}
-
-			$post_translate = PLL()->model->is_translated_post_type( $post->post_type );
-			$lang           = isset( $_GET['new_lang'] ) ? htmlspecialchars( $_GET['new_lang'] ) : false;
-			$post_type      = isset( $_GET['post_type'] ) ? htmlspecialchars( $_GET['post_type'] ) : false;
-
-			if ( false !== $from_post_id && $post_translate && $lang && $post_type ) {
-				wp_enqueue_style( 'atfp-automatic-translate' );
-				wp_enqueue_script( 'atfp-automatic-translate' );
-
-				wp_localize_script(
-					'atfp-automatic-translate',
-					'atfp_ajax_object',
-					array(
-						'ajax_url'           => admin_url( 'admin-ajax.php' ),
-						'ajax_nonce'         => wp_create_nonce( 'atfp_translate_nonce' ),
-						'atfp_url'           => ATFP_URL,
-						'action_fetch'       => 'fetch_post_content',
-						'action_block_rules' => 'block_parsing_rules',
-						'source_lang'        => pll_get_post_language( $from_post_id, 'slug' ),
-						'languageObject'     => $lang_object,
-					)
-				);
-			}
 		}
 
 
 
 		function atfp_shortcode_metabox() {
-			if ( $GLOBALS['pagenow'] == 'post-new.php' && isset( $_GET['from_post'], $_GET['new_lang'] ) ) {
+			$current_screen = get_current_screen();
 
-				global $post;
+			if ( method_exists( $current_screen, 'is_block_editor' ) && $current_screen->is_block_editor() ) {
+				if ( $GLOBALS['pagenow'] == 'post-new.php' && isset( $_GET['from_post'], $_GET['new_lang'] ) ) {
 
-				if ( ! ( $post instanceof WP_Post ) ) {
-					return;
+					global $post;
+
+					if ( ! ( $post instanceof WP_Post ) ) {
+						return;
+					}
+
+					if ( ! PLL()->model->is_translated_post_type( $post->post_type ) ) {
+						return;
+					}
+					add_meta_box( 'my-meta-box-id', __( 'Automatic Translate Content from Original Post', 'automatic-translation-for-polylang' ), array( $this, 'atfp_shortcode_text' ), null, 'side', 'high' );
 				}
-
-				if ( ! PLL()->model->is_translated_post_type( $post->post_type ) ) {
-					return;
-				}
-				add_meta_box( 'my-meta-box-id', __( 'Automatic Translate Content from Original Post', 'automatic-translation-for-polylang' ), array( $this, 'atfp_shortcode_text' ), null, 'side', 'high' );
 			}
 
 		}
