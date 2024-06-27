@@ -43,6 +43,6 @@ const App = () => {
 // Append app root wrapper in body
 init();
 // Render the main App component
-document.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('load', () => {
   wp.element.render(<App />, document.getElementById('atfp-setting-modal'));
 });

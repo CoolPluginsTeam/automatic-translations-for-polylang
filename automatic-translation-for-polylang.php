@@ -105,7 +105,6 @@ if ( ! class_exists( 'ATFP' ) ) {
 
 		function atfp_register_backend_assets() {
 			wp_register_style( 'atfp-automatic-translate', ATFP_URL . 'assets/css/atfp-custom.css', ATFP_VERSION );
-			wp_register_script( 'atfp-google-api', 'https://translate.google.com/translate_a/element.js', '', ATFP_VERSION, true );
 
 			$editor_script_asset = require_once ATFP_DIR_PATH . 'assets/build/index.asset.php';
 			wp_register_script( 'atfp-automatic-translate', ATFP_URL . 'assets/build/index.js', $editor_script_asset['dependencies'], $editor_script_asset['version'], true );
@@ -118,13 +117,19 @@ if ( ! class_exists( 'ATFP' ) ) {
 				return;
 			}
 
+			$languages = PLL()->model->get_languages_list();
+
+			$lang_object = array();
+			foreach ( $languages as $lang ) {
+				$lang_object[ $lang->slug ] = $lang->name;
+			}
+
 			$post_translate = PLL()->model->is_translated_post_type( $post->post_type );
 			$lang           = isset( $_GET['new_lang'] ) ? htmlspecialchars( $_GET['new_lang'] ) : false;
 			$post_type      = isset( $_GET['post_type'] ) ? htmlspecialchars( $_GET['post_type'] ) : false;
 
 			if ( false !== $from_post_id && $post_translate && $lang && $post_type ) {
 				wp_enqueue_style( 'atfp-automatic-translate' );
-				wp_enqueue_script( 'atfp-google-api' );
 				wp_enqueue_script( 'atfp-automatic-translate' );
 
 				wp_localize_script(
@@ -137,6 +142,7 @@ if ( ! class_exists( 'ATFP' ) ) {
 						'action_fetch'       => 'fetch_post_content',
 						'action_block_rules' => 'block_parsing_rules',
 						'source_lang'        => pll_get_post_language( $from_post_id, 'slug' ),
+						'languageObject'     => $lang_object,
 					)
 				);
 			}

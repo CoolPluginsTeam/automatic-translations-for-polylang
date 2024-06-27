@@ -1,16 +1,22 @@
 import ReactDOM from "react-dom";
 import { useEffect, useState } from "@wordpress/element";
 import PopStringModal from "./popupStringModal";
-const { __ } = wp.i18n;
+const { sprintf, __ } = wp.i18n;
 
 const PopupModal = (props) => {
     const [fetchStatus, setFetchStatus] = useState(false);
     const [targetBtn, setTargetBtn] = useState({});
     const [blockRules, setBlockRules] = useState({});
     const [modalRender, setModalRender] = useState({});
-    const [settingVisibility, setSettingVisibility]=useState(false);
+    const [settingVisibility, setSettingVisibility]=useState(true);
+    const urlParams = new URLSearchParams(window.location.search);
+    const sourceLang = atfp_ajax_object.source_lang;
+    const targetLang = urlParams.get('new_lang');
+    const sourceLangName=atfp_ajax_object.languageObject[sourceLang];
+    const targetLangName=atfp_ajax_object.languageObject[targetLang];
     const apiUrl = atfp_ajax_object.ajax_url;
     const imgFolder=atfp_ajax_object.atfp_url + 'assets/images/';
+
     /**
      * Prepare data to send in API request.
      */
@@ -28,6 +34,10 @@ const PopupModal = (props) => {
         setFetchStatus(state);
     }
 
+    /**
+     * useEffect hook to set settingVisibility.
+     * Triggers the setSettingVisibility only when user click on meta field Button.
+    */
     useEffect(()=>{
         const metaFieldBtn=document.querySelector('input#atfp-translate-button[name="atfp_meta_box_translate"]');
 
@@ -75,12 +85,9 @@ const PopupModal = (props) => {
             return;
         }
 
-        const urlParams = new URLSearchParams(window.location.search);
         const btn = targetBtn;
         const service = btn.dataset && btn.dataset.service;
         const serviceLabel = btn.dataset && btn.dataset.serviceLabel;
-        const sourceLang = atfp_ajax_object.source_lang;
-        const targetLang = urlParams.get('new_lang');
         const postId = urlParams.get('from_post');
 
         const parentWrp = document.getElementById("atfp_strings_model");
@@ -117,10 +124,11 @@ const PopupModal = (props) => {
     return (
         <>
             {settingVisibility &&
-                <div className="modal-container" style={{display: settingVisibility ? 'block' : 'none'}}>
+                <div className="modal-container" style={{display: settingVisibility ? 'flex' : 'none'}}>
                 <div className="atfp-settings modal-content">
                     <div className="modal-header">
                     <h2>{__("Step 1 - Select Translation Provider (Beta)", 'automatic-translation-for-polylang')}</h2>
+                    <h4>{sprintf(__("Translate post content from %(source)s to %(target)s", 'automatic-translation-for-polylang'),{source: sourceLangName, target: targetLangName})}</h4>
                     <span className="close" onClick={()=>setSettingVisibility(false)}>&times;</span>
                     </div>
                     <hr />
@@ -130,17 +138,10 @@ const PopupModal = (props) => {
                         <br/><a href="https://translate.yandex.com/" target="_blank"><img className="pro-features-img" src={`${imgFolder}powered-by-yandex.png`} alt="powered by Yandex Translate Widget"/></a>
                     </div>
                     <hr/>
-                    <strong className="atfp-heading">{__("Translate Using Google Page Translate Widget", 'automatic-translation-for-polylang')}</strong>
-                    <div className="inputGroup">
-                        <button className="atfp-service-btn translate button button-primary" data-service="google" data-service-label="Google Translate" onClick={fetchContent}>{__("Google Translate (Beta)", 'automatic-translation-for-polylang')}</button>
-                        <span className="proonly-button alsofree">✔ {__("Available", 'automatic-translation-for-polylang')}</span>
-                        <br /><a href="https://translate.google.com/" target="_blank"><img style={{ marginTop: "5px" }} src={`${imgFolder}powered-by-google.png`} alt={__("powered by Google Translate Widget", 'automatic-translation-for-polylang')}></img></a>
-                    </div>
-                    <hr />
                    <ul style={{ margin: "0" }}>
-                        <li><span style={{ color: "green" }}>✔</span> {__("Unlimited Translations with Google Translate", 'automatic-translation-for-polylang')}</li>
-                        <li><span style={{ color: "green" }}>✔</span> {__("No API Key Required for Google Translate", 'automatic-translation-for-polylang')}</li>
-                        <li><span style={{ color: "green" }}>✔</span> {__("Supports Multiple Languages", 'automatic-translation-for-polylang')} - <a href="https://en.wikipedia.org/wiki/Google_Translate#Supported_languages" target="_blank">{__("See Supported Languages", 'automatic-translation-for-polylang')}</a></li>
+                        <li><span style={{ color: "green" }}>✔</span> {__("Unlimited Translations with Yandex Translate", 'automatic-translation-for-polylang')}</li>
+                        <li><span style={{ color: "green" }}>✔</span> {__("No API Key Required for Yandex Translate", 'automatic-translation-for-polylang')}</li>
+                        <li><span style={{ color: "green" }}>✔</span> {__("Supports Multiple Languages", 'automatic-translation-for-polylang')} - <a href="https://yandex.com/support2/translate-desktop/en/supported-langs" target="_blank">{__("See Supported Languages", 'automatic-translation-for-polylang')}</a></li>
                     </ul>
                     <hr/>
                     <div className="modal-footer">

@@ -1,13 +1,10 @@
-import { useState } from "react";
 import FetchPost from "../fetch-post";
-import StringPopUpNotice from "./notice";
 const { __ } = wp.i18n;
 
 const StringPopUpBody = (props) => {
 
     const { service: service, serviceLabel: serviceLabel } = props;
-    const [translateEntryCount, setTranslateEntryCount]=useState(0);
-
+    let totalWordCount=0;
     /**
      * Updates the post content with the provided content.
      * @param {string} content - The content to update the post with.
@@ -17,15 +14,21 @@ const StringPopUpBody = (props) => {
     }
 
     const updateTranslateContent=(entries)=>{
-        let content='';
-        entries.forEach(object=>{
-            if(undefined !== object.source && object.source.trim() !== ''){
-                content += ' '+object.source;
-            };
-        });
+        if(Object.getPrototypeOf(entries) === Object.prototype && entries.stringRenderComplete === true){
+            props.stringCountHandler(totalWordCount);
+            return;
+        }
+        let entrie=entries.join(" ");
 
-        const wordCount = content.trim().split(/\s+/).filter(word => /[a-zA-Z]/.test(word)).length;
-        setTranslateEntryCount(wordCount);
+        if(undefined === entrie || entrie.trim() === ''){
+            return;
+        };
+
+        entrie = entrie.replace(/#atfp_open_translate_span#(.*?)#atfp_close_translate_span#/g, '');
+
+        const wordCount = entrie.trim().split(/\s+/).filter(word => /[a-zA-Z]/.test(word)).length;
+
+        totalWordCount+=wordCount;
     };
 
     return (
@@ -33,7 +36,6 @@ const StringPopUpBody = (props) => {
             <div className="atfp_translate_progress">{__("Automatic translation is in progress....", 'automatic-translation-for-polylang')}<br />{__("It will take few minutes, enjoy ☕ coffee in this time!", 'automatic-translation-for-polylang')}<br /><br />{__("Please do not leave this window or browser tab while translation is in progress...", 'automatic-translation-for-polylang')}</div>
             <div className={`translator-widget ${service}`}>
                 <h3 class="choose-lang">{__("Choose language", 'automatic-translation-for-polylang')} <span class="dashicons-before dashicons-translation"></span></h3>
-                <div id="atfp_google_translate_element" style={{display: `${service === 'google' ? 'block' : 'none'}`}}></div>
                 <div id="atfp_yandex_translate_element" style={{display: `${service === 'yandex' ? 'block' : 'none'}`}}></div>
             </div>
 
@@ -51,7 +53,6 @@ const StringPopUpBody = (props) => {
                     </tbody>
                 </table>
             </div>
-            <StringPopUpNotice className="atfp_string_count">{__("Total Strings Translated:", 'automatic-translation-for-polylang')} {translateEntryCount}</StringPopUpNotice>
         </div>
     );
 }

@@ -9,6 +9,13 @@ const popStringModal = (props) => {
     const [refPostData, setRefPostData] = useState('');
     const [translatePending, setTranslatePending] = useState(true);
     const [translateObj,setTranslateObj]=useState({});
+    const [stringCount, setStringCount]=useState(false);
+
+    const stringCountHandler=(number)=>{
+        if(popupVisibility){
+            setStringCount(number);
+        }
+    }
 
     /**
      * Updates the post content data.
@@ -23,10 +30,6 @@ const popStringModal = (props) => {
      * @param {boolean} state - The state to update the fetch with.
      */
     const setPopupVisibilityHandler = (state) => {
-        if (props.service === 'google') {
-            document.querySelector('div.skiptranslate iframe.skiptranslate')?.contentDocument?.querySelector('a[title="Close"] img[alt="Close"]')?.click();
-        }
-
         setTranslatePending(true);
         setPopupVisibility(false);
         props.updateFetch(state);
@@ -43,7 +46,7 @@ const popStringModal = (props) => {
 
         /**
          * Calls the translate service provider based on the service type.
-         * For example, it can call services like deepL or Google Translate.
+         * For example, it can call services like yandex Translate.
         */
        const service = props.service;
        const id=`atfp_${service}_translate_element`;
@@ -59,11 +62,11 @@ const popStringModal = (props) => {
 
     return (
         <>
-            <div class="modal-container" style={{display: popupVisibility ? 'block' : 'none'}}>
+            <div class="modal-container" style={{display: popupVisibility ? 'flex' : 'none'}}>
                 <div class="modal-content">
                     <StringPopUpHeader modalRender={props.modalRender} setPopupVisibility={setPopupVisibilityHandler} postContent={refPostData} blockRules={props.blockRules} translateStatus={translatePending} pageTranslate={props.pageTranslate}/>
-                    <StringPopUpBody {...props} updatePostContent={updatePostContentHandler} blockRules={props.blockRules} />
-                    <StringPopUpFooter modalRender={props.modalRender} setPopupVisibility={setPopupVisibilityHandler} postContent={refPostData} blockRules={props.blockRules} translateStatus={translatePending} pageTranslate={props.pageTranslate}/>
+                    <StringPopUpBody {...props} updatePostContent={updatePostContentHandler} blockRules={props.blockRules} stringCountHandler={stringCountHandler}/>
+                    <StringPopUpFooter modalRender={props.modalRender} setPopupVisibility={setPopupVisibilityHandler} postContent={refPostData} blockRules={props.blockRules} translateStatus={translatePending} pageTranslate={props.pageTranslate} stringCount={stringCount}/>
                 </div>
             </div>
         </>
