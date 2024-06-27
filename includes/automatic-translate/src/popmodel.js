@@ -8,7 +8,7 @@ const PopupModal = (props) => {
     const [targetBtn, setTargetBtn] = useState({});
     const [blockRules, setBlockRules] = useState({});
     const [modalRender, setModalRender] = useState({});
-    const [settingVisibility, setSettingVisibility]=useState(false);
+    const [settingVisibility, setSettingVisibility]=useState(true);
     const apiUrl = atfp_ajax_object.ajax_url;
     const imgFolder=atfp_ajax_object.atfp_url + 'assets/images/';
     /**
@@ -117,7 +117,7 @@ const PopupModal = (props) => {
     return (
         <>
             {settingVisibility &&
-                <div className="modal-container" style={{display: settingVisibility ? 'block' : 'none'}}>
+                <div className="modal-container" style={{display: settingVisibility ? 'flex' : 'none'}}>
                 <div className="atfp-settings modal-content">
                     <div className="modal-header">
                     <h2>{__("Step 1 - Select Translation Provider (Beta)", 'automatic-translation-for-polylang')}</h2>

@@ -9,10 +9,12 @@
     height: 100vh;
     overflow: hidden;
     background-color: rgba(0, 0, 0, 0.75);
+    justify-content: center;
+    align-items: center;
 }
 
 #atfp-setting-modal .modal-content {
-    position: absolute;
+    position: relative;
     background-color: #fefefe;
     width: clamp(200px, 400px, 80%);
     height: auto;
@@ -25,9 +27,6 @@
     animation-name: animatetopsetting;
     animation-duration: 0.6s;
     animation-fill-mode: forwards;
-    top: -103%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     padding-block: 1rem;
 }
 
@@ -36,7 +35,6 @@
     background-color: #fefefe;
     width: 80%;
     height: calc(100% - 40px);
-    margin: 32px auto 0;
     overflow: hidden;
     border-radius: 5px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -49,22 +47,18 @@
 
 @-webkit-keyframes animatetopsetting {
     from {
-        top: -103%;
         opacity: 0
     }
     to {
-        top: 50%;
         opacity: 1
     }
 }
 
 @keyframes animatetopsetting {
     from {
-        top: -103%;
         opacity: 0
     }
     to {
-        top: 50%;
         opacity: 1
     }
 }
@@ -115,6 +109,19 @@
 }
 
 /* The Close Button */
+
+button.atfp-setting-close{
+    margin-top: .9rem;
+    /* font-weight: 500; */
+    font-size: 1rem;
+    padding: .1rem .4rem;
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+button.atfp-setting-close:hover{
+    opacity: 1;
+}
 
 #atfp-setting-modal .modal-header .close {
     color: #5f5f5f;
