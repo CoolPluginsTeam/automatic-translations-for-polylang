@@ -9,6 +9,13 @@ const popStringModal = (props) => {
     const [refPostData, setRefPostData] = useState('');
     const [translatePending, setTranslatePending] = useState(true);
     const [translateObj,setTranslateObj]=useState({});
+    const [stringCount, setStringCount]=useState(false);
+
+    const stringCountHandler=(number)=>{
+        if(popupVisibility){
+            setStringCount(number);
+        }
+    }
 
     /**
      * Updates the post content data.
@@ -58,8 +65,8 @@ const popStringModal = (props) => {
             <div class="modal-container" style={{display: popupVisibility ? 'flex' : 'none'}}>
                 <div class="modal-content">
                     <StringPopUpHeader modalRender={props.modalRender} setPopupVisibility={setPopupVisibilityHandler} postContent={refPostData} blockRules={props.blockRules} translateStatus={translatePending} pageTranslate={props.pageTranslate}/>
-                    <StringPopUpBody {...props} updatePostContent={updatePostContentHandler} blockRules={props.blockRules} />
-                    <StringPopUpFooter modalRender={props.modalRender} setPopupVisibility={setPopupVisibilityHandler} postContent={refPostData} blockRules={props.blockRules} translateStatus={translatePending} pageTranslate={props.pageTranslate}/>
+                    <StringPopUpBody {...props} updatePostContent={updatePostContentHandler} blockRules={props.blockRules} stringCountHandler={stringCountHandler}/>
+                    <StringPopUpFooter modalRender={props.modalRender} setPopupVisibility={setPopupVisibilityHandler} postContent={refPostData} blockRules={props.blockRules} translateStatus={translatePending} pageTranslate={props.pageTranslate} stringCount={stringCount}/>
                 </div>
             </div>
         </>

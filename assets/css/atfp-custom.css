@@ -85,6 +85,15 @@
     }
 }
 
+#atfp-setting-modal .modal-header *{
+    margin-bottom: 1rem;
+}
+
+#atfp-setting-modal .modal-header h4{
+    background-color: #f1f1f1;
+    padding: .5rem;
+}
+
 #atfp-setting-modal .modal-content>*:not(hr){
     padding-inline: 1rem;
 }
@@ -224,13 +233,18 @@ button.atfp-setting-close:hover{
 #atfp_strings_model .atfp_string_container {
     overflow-y: scroll;
     overflow-x: hidden;
-    height: calc(100vh - 390px);
+    height: calc(100vh - 315px);
     width: 100%;
     position: relative;
 }
 
 #atfp_strings_model .notice.atfp_string_count{
-    top: 2rem;
+    top: 1.2rem;
+    font-size: 1.2rem;
+    background: transparent;
+    border-width: 0px;
+    margin-left: 0px;
+    padding-left: 0px;
 }
 
 #atfp_strings_model table {

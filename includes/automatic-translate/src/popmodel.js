@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom";
 import { useEffect, useState } from "@wordpress/element";
 import PopStringModal from "./popupStringModal";
-const { __ } = wp.i18n;
+const { sprintf, __ } = wp.i18n;
 
 const PopupModal = (props) => {
     const [fetchStatus, setFetchStatus] = useState(false);
@@ -9,8 +9,14 @@ const PopupModal = (props) => {
     const [blockRules, setBlockRules] = useState({});
     const [modalRender, setModalRender] = useState({});
     const [settingVisibility, setSettingVisibility]=useState(true);
+    const urlParams = new URLSearchParams(window.location.search);
+    const sourceLang = atfp_ajax_object.source_lang;
+    const targetLang = urlParams.get('new_lang');
+    const sourceLangName=atfp_ajax_object.languageObject[sourceLang];
+    const targetLangName=atfp_ajax_object.languageObject[targetLang];
     const apiUrl = atfp_ajax_object.ajax_url;
     const imgFolder=atfp_ajax_object.atfp_url + 'assets/images/';
+
     /**
      * Prepare data to send in API request.
      */
@@ -28,6 +34,10 @@ const PopupModal = (props) => {
         setFetchStatus(state);
     }
 
+    /**
+     * useEffect hook to set settingVisibility.
+     * Triggers the setSettingVisibility only when user click on meta field Button.
+    */
     useEffect(()=>{
         const metaFieldBtn=document.querySelector('input#atfp-translate-button[name="atfp_meta_box_translate"]');
 
@@ -75,12 +85,9 @@ const PopupModal = (props) => {
             return;
         }
 
-        const urlParams = new URLSearchParams(window.location.search);
         const btn = targetBtn;
         const service = btn.dataset && btn.dataset.service;
         const serviceLabel = btn.dataset && btn.dataset.serviceLabel;
-        const sourceLang = atfp_ajax_object.source_lang;
-        const targetLang = urlParams.get('new_lang');
         const postId = urlParams.get('from_post');
 
         const parentWrp = document.getElementById("atfp_strings_model");
@@ -121,6 +128,7 @@ const PopupModal = (props) => {
                 <div className="atfp-settings modal-content">
                     <div className="modal-header">
                     <h2>{__("Step 1 - Select Translation Provider (Beta)", 'automatic-translation-for-polylang')}</h2>
+                    <h4>{sprintf(__("Translate post content from %(source)s to %(target)s", 'automatic-translation-for-polylang'),{source: sourceLangName, target: targetLangName})}</h4>
                     <span className="close" onClick={()=>setSettingVisibility(false)}>&times;</span>
                     </div>
                     <hr />

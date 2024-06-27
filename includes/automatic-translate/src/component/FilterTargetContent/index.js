@@ -91,6 +91,12 @@ const FilterTargetContent = (props) => {
      */
     const content = 'yandex' === props.service ? filterSourceData(props.content) : props.content;
 
+    props.translateContent(content);
+
+    if(props.currentIndex === props.totalString){
+        props.translateContent({stringRenderComplete: true});
+    }
+
     /**
      * Regular expression pattern to match the span elements that should not be translated.
      */
@@ -101,13 +107,17 @@ const FilterTargetContent = (props) => {
      */
     const replacePlaceholderPattern = /#atfp_open_translate_span#|#atfp_close_translate_span#/g;
 
+    const totalNumberOfStrings=()=>{
+
+    };
+
     return (
         <>
             {'yandex' === props.service ?
                 content.map((data, index) => {
                     const notTranslate = notTranslatePattern.test(data);
                     if (notTranslate) {
-                        return <span key={index} className="notranslate atfp-notraslate-tag" translate="yes">{data.replace(replacePlaceholderPattern, '')}</span>;
+                        return <span key={index} className="notranslate atfp-notraslate-tag" translate="no">{data.replace(replacePlaceholderPattern, '')}</span>;
                     } else {
                         return data;
                     }

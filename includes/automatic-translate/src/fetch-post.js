@@ -44,27 +44,32 @@ const FetchPost = (props) => {
 
                 const translationEntry = select("block-atfp/translate").getTranslationEntry();
                 setTranslateContent(translationEntry);
-                props.translateContent(translationEntry);
             })
             .catch(error => {
                 console.error('Error fetching post content:', error);
             });
     }, [props.fetchKey]);
+
     let sNo = 0;
+
+    const totalString=translateContent.filter(data=>undefined !== data.source && data.source.trim() !== '').length;
 
     return (
         <>
             {translateContent.map((data, index) => {
                 return (
-                    undefined !== data.source && data.source.trim() !== '' &&
                     <>
-                        <tr key={index}>
-                            <td>{sNo++}</td>
-                            <td data-source="source_text">{data.source}</td>
-                            <td class="translate" translate="yes" data-key={data.id} data-string-type={data.type}>
-                                <FilterTargetContent service={props.service} content={data.source} />
-                            </td>
-                        </tr>
+                    {undefined !== data.source && data.source.trim() !== '' &&
+                        <>
+                            <tr key={index}>
+                                <td>{++sNo}</td>
+                                <td data-source="source_text">{data.source}</td>
+                                <td class="translate" translate="yes" data-key={data.id} data-string-type={data.type}>
+                                    <FilterTargetContent service={props.service} content={data.source} translateContent={props.translateContent} totalString={totalString} currentIndex={sNo}/>
+                                </td>
+                            </tr>
+                        </>
+                    }
                     </>
                 );
             })}

@@ -117,6 +117,13 @@ if ( ! class_exists( 'ATFP' ) ) {
 				return;
 			}
 
+			$languages = PLL()->model->get_languages_list();
+
+			$lang_object = array();
+			foreach ( $languages as $lang ) {
+				$lang_object[ $lang->slug ] = $lang->name;
+			}
+
 			$post_translate = PLL()->model->is_translated_post_type( $post->post_type );
 			$lang           = isset( $_GET['new_lang'] ) ? htmlspecialchars( $_GET['new_lang'] ) : false;
 			$post_type      = isset( $_GET['post_type'] ) ? htmlspecialchars( $_GET['post_type'] ) : false;
@@ -135,6 +142,7 @@ if ( ! class_exists( 'ATFP' ) ) {
 						'action_fetch'       => 'fetch_post_content',
 						'action_block_rules' => 'block_parsing_rules',
 						'source_lang'        => pll_get_post_language( $from_post_id, 'slug' ),
+						'languageObject'     => $lang_object,
 					)
 				);
 			}

@@ -28,7 +28,7 @@ const StringPopUpHeader = (props) => {
             <span className="close" onClick={closeModal}>&times;</span>
             <h2 className="notranslate">{__("Step 2 - Start Automatic Translation Process (Beta)", 'automatic-translation-for-polylang')}</h2>
             <div className="save_btn_cont">
-                <button className="notranslate save_it button button-primary" disabled={props.translateStatus} onClick={createTranslatedPost}>{__("Save Translation", 'automatic-translation-for-polylang')}</button>
+                <button className="notranslate save_it button button-primary" disabled={props.translateStatus} onClick={createTranslatedPost}>{__("Update Content", 'automatic-translation-for-polylang')}</button>
             </div>
             <div style={{ display: "none" }} className="ytstats hidden">
                 {__("Wahooo! You have saved your valuable time via auto translating", 'automatic-translation-for-polylang')}
