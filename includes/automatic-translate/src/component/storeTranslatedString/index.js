@@ -1,25 +1,26 @@
 const { dispatch } = wp.data;
 
-const ScrollAnimation=(props)=>{
-    const {element,scrollSpeed}=props;
+const ScrollAnimation = (props) => {
+    const { element, scrollSpeed } = props;
     const scrollHeight = element.scrollHeight;
-    const scrollingSpeed = Math.min(scrollSpeed, scrollHeight);
-    let startTime = null;
 
-    const animateScroll=()=>{
+    let startTime = null;
+    let startScrollTop = element.scrollTop;
+
+    const animateScroll = () => {
         const currentTime = performance.now();
-        const duration = scrollingSpeed; // 10 seconds
+        const duration = scrollSpeed; // 10 seconds
         const scrollTarget = scrollHeight + 2000;
-    
+
         if (!startTime) {
             startTime = currentTime;
         }
-    
+
         const progress = (currentTime - startTime) / duration;
-        const scrollPosition = scrollTarget * progress;
-    
+        const scrollPosition = startScrollTop + (scrollTarget - startScrollTop) * progress;
+
         element.scrollTop = scrollPosition;
-    
+
         if (progress < 1) {
             requestAnimationFrame(animateScroll);
         }
@@ -95,27 +96,6 @@ const SaveTranslationHandler = (translateStatus) => {
 
     stringContainer.scrollTop = 0;
     const scrollHeight = stringContainer.scrollHeight;
-    const scrollSpeed = Math.min(10000, scrollHeight);
-    let startTime = null;
-
-    const animateScroll=()=>{
-        const currentTime = performance.now();
-        const duration = scrollSpeed; // 10 seconds
-        const scrollTarget = scrollHeight + 2000;
-
-        if (!startTime) {
-            startTime = currentTime;
-        }
-
-        const progress = (currentTime - startTime) / duration;
-        const scrollPosition = scrollTarget * progress;
-
-        stringContainer.scrollTop = scrollPosition;
-
-        if (progress < 1) {
-            requestAnimationFrame(animateScroll);
-        }
-    }
 
     if (scrollHeight !== undefined && scrollHeight > 100) {
         container.querySelector(".atfp_translate_progress").style.display = "block";

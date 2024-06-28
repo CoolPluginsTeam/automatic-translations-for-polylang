@@ -134,7 +134,7 @@ const PopupModal = (props) => {
                     <hr />
                     <strong className="atlt-heading">{__("Translate Using Yandex Page Translate Widget", 'automatic-translation-for-polylang')}</strong>
                     <div className="inputGroup">
-                        <button className="atfp-service-btn translate button button-primary" data-service="yandex" data-service-label="Yandex Translate" onClick={fetchContent}>{__("Yandex Translate", 'automatic-translation-for-polylang')}</button>
+                        <button className="atfp-service-btn translate button button-primary" data-service="yandex" data-service-label="Yandex Translate" onClick={fetchContent}>{__("Yandex Translate (Beta)", 'automatic-translation-for-polylang')}</button>
                         <br/><a href="https://translate.yandex.com/" target="_blank"><img className="pro-features-img" src={`${imgFolder}powered-by-yandex.png`} alt="powered by Yandex Translate Widget"/></a>
                     </div>
                     <hr/>
