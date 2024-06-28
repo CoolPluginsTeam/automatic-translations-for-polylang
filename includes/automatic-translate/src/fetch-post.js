@@ -39,8 +39,8 @@ const FetchPost = (props) => {
                 if (post_data.content.trim() !== '') {
                     post_data.content = parse(post_data.content);
                 }
-                props.setPostData(post_data);
                 saveTranslation(post_data, blockRules);
+                props.setPostData(post_data);
 
                 const translationEntry = select("block-atfp/translate").getTranslationEntry();
                 setTranslateContent(translationEntry);
