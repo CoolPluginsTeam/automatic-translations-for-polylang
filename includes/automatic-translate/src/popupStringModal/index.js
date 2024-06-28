@@ -30,6 +30,11 @@ const popStringModal = (props) => {
      * @param {boolean} state - The state to update the fetch with.
      */
     const setPopupVisibilityHandler = (state) => {
+
+        if (props.service === 'yandex') {
+            document.querySelector('#atfp_yandex_translate_element #yt-widget .yt-button__icon.yt-button__icon_type_right')?.click();
+        }
+
         setTranslatePending(true);
         setPopupVisibility(false);
         props.updateFetch(state);
@@ -58,6 +63,12 @@ const popStringModal = (props) => {
     
     useEffect(()=>{
         setPopupVisibility(true);
+        setTimeout(()=>{
+            const stringModal=document.querySelector('.atfp_string_container');
+            if(stringModal){
+                stringModal.scrollTop=0
+            };
+        })
     },[props.modalRender])
 
     return (
