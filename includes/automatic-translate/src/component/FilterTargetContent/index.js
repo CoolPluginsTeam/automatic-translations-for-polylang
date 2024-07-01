@@ -39,22 +39,32 @@ const FilterTargetContent = (props) => {
         // Check if the inner HTML contains the corresponding closing tag
         const closingTagMatch = firstElement.outerHTML.match(closingTagName);
 
-        // Wrap the first opening tag
-        let wrappedFirstTag = '';
-        let filterContent = '';
+        // Wrap the style element
         if (firstElementOpeningTag === '<style>') {
-            wrappedFirstTag = `#atfp_open_translate_span#${firstElement.outerHTML}#atfp_close_translate_span#`;
+            let wrappedFirstTag = `#atfp_open_translate_span#${firstElement.outerHTML}#atfp_close_translate_span#`;
             return wrappedFirstTag;
-        } else {
-            wrappedFirstTag = `#atfp_open_translate_span#${firstElementOpeningTag}#atfp_close_translate_span#`;
-            // Wrap the first element's outerHTML with the wrapped first tag
-            filterContent = firstElement.outerHTML.replace(firstElementOpeningTag, wrappedFirstTag);
         }
+        
+        const firstElementHtml = firstElement.innerHTML;
+        firstElement.innerHTML = '';
+
+        let openTag = `#atfp_open_translate_span#${firstElementOpeningTag}#atfp_close_translate_span#`;
+        let closeTag = '';
+        let filterContent='';
 
         if (closingTagMatch) {
-            const wrappedClosingTag = `#atfp_open_translate_span#</${openTagName}>#atfp_close_translate_span#`;
+            closeTag = `#atfp_open_translate_span#</${openTagName}>#atfp_close_translate_span#`;
+        }
 
-            filterContent = filterContent.replace(closingTagName, wrappedClosingTag);
+        if ('' !== firstElementHtml) {
+            if('' !== openTag){
+                filterContent=openTag+firstElementHtml;
+            }
+            if('' !== closeTag){
+                filterContent += closeTag;
+            }
+        }else{
+            filterContent=openTag+closeTag;
         }
 
         firstElement.outerHTML = filterContent;
@@ -103,6 +113,7 @@ const FilterTargetContent = (props) => {
         const tempElement = document.createElement('div');
         tempElement.innerHTML = string;
         replaceInnerTextWithSpan(tempElement);
+
         return splitContent(tempElement.innerText);
     }
 
@@ -128,13 +139,18 @@ const FilterTargetContent = (props) => {
      */
     const replacePlaceholderPattern = /#atfp_open_translate_span#|#atfp_close_translate_span#/g;
 
+    const filterContent=content=>{
+        const updatedContent=content.replace(replacePlaceholderPattern, '');
+        return updatedContent;
+    }
+
     return (
         <>
             {'yandex' === props.service ?
                 content.map((data, index) => {
                     const notTranslate = notTranslatePattern.test(data);
                     if (notTranslate) {
-                        return <span key={index} className="notranslate atfp-notraslate-tag" translate="no">{data.replace(replacePlaceholderPattern, '')}</span>;
+                        return <span key={index} className="notranslate atfp-notraslate-tag" translate="no">{filterContent(data)}</span>;
                     } else {
                         return data;
                     }
