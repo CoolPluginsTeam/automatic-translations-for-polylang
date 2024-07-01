@@ -18,6 +18,16 @@ const FilterTargetContent = (props) => {
             return html; // If no elements, return the original HTML
         }
 
+        let childElements = firstElement.children;
+        const length = childElements.length;
+        if (length > 0) {
+            for (let i = 0; i < length; i++) {
+                let element = childElements[i];
+                let filterContent = wrapFirstAndMatchingClosingTag(element.outerHTML);
+                element.outerHTML = filterContent;
+            }
+        }
+
         // Get the opening tag of the first element
         // const firstElementOpeningTag = firstElement.outerHTML.match(/^<[^>]+>/)[0];
         const firstElementOpeningTag = firstElement.outerHTML.match(/^<[^>]+>/)[0];
@@ -30,10 +40,16 @@ const FilterTargetContent = (props) => {
         const closingTagMatch = firstElement.outerHTML.match(closingTagName);
 
         // Wrap the first opening tag
-        const wrappedFirstTag = `#atfp_open_translate_span#${firstElementOpeningTag}#atfp_close_translate_span#`;
-
-        // Wrap the first element's outerHTML with the wrapped first tag
-        let filterContent = firstElement.outerHTML.replace(firstElementOpeningTag, wrappedFirstTag);
+        let wrappedFirstTag = '';
+        let filterContent = '';
+        if (firstElementOpeningTag === '<style>') {
+            wrappedFirstTag = `#atfp_open_translate_span#${firstElement.outerHTML}#atfp_close_translate_span#`;
+            return wrappedFirstTag;
+        } else {
+            wrappedFirstTag = `#atfp_open_translate_span#${firstElementOpeningTag}#atfp_close_translate_span#`;
+            // Wrap the first element's outerHTML with the wrapped first tag
+            filterContent = firstElement.outerHTML.replace(firstElementOpeningTag, wrappedFirstTag);
+        }
 
         if (closingTagMatch) {
             const wrappedClosingTag = `#atfp_open_translate_span#</${openTagName}>#atfp_close_translate_span#`;
@@ -69,20 +85,25 @@ const FilterTargetContent = (props) => {
      */
     const filterSourceData = (string) => {
         function replaceInnerTextWithSpan(doc) {
-            let elements = doc.querySelector('body').querySelectorAll('*');
-            elements.forEach(element => {
-                let filterContent = wrapFirstAndMatchingClosingTag(element.outerHTML);
-                const textNode = document.createTextNode(filterContent);
-                element.parentNode.replaceChild(textNode, element);
-            });
+            let childElements = doc.children;
+
+            const childElementsReplace = () => {
+                if (childElements.length > 0) {
+                    let element = childElements[0];
+                    let filterContent = wrapFirstAndMatchingClosingTag(element.outerHTML);
+                    const textNode = document.createTextNode(filterContent);
+                    element.replaceWith(textNode);
+                    childElementsReplace();
+                }
+            }
+            childElementsReplace();
             return doc;
         }
 
-        let parser = new DOMParser();
-        let doc = parser.parseFromString(string, 'text/html');
-
-        replaceInnerTextWithSpan(doc);
-        return splitContent(doc.body.innerText);
+        const tempElement = document.createElement('div');
+        tempElement.innerHTML = string;
+        replaceInnerTextWithSpan(tempElement);
+        return splitContent(tempElement.innerText);
     }
 
     /**
@@ -93,8 +114,8 @@ const FilterTargetContent = (props) => {
 
     props.translateContent(content);
 
-    if(props.currentIndex === props.totalString){
-        props.translateContent({stringRenderComplete: true});
+    if (props.currentIndex === props.totalString) {
+        props.translateContent({ stringRenderComplete: true });
     }
 
     /**
