@@ -1,6 +1,6 @@
 import translatePost from "../component/createTranslatedPost";
 import StringPopUpNotice from "./notice";
-const { __ } = wp.i18n;
+const { sprintf, __ } = wp.i18n;
 
 const StringPopUpFooter = (props) => {
 
@@ -25,17 +25,9 @@ const StringPopUpFooter = (props) => {
 
     return (
         <div className="modal-footer" key={props.modalRender}>
-            {!props.translateStatus && props.stringCount && <StringPopUpNotice className="atfp_string_count">{__("Total Strings Translated:", 'automatic-translation-for-polylang')} {props.stringCount}</StringPopUpNotice>}
+            {!props.translateStatus && props.stringCount && <StringPopUpNotice className="atfp_string_count">{sprintf(__("Automated translation complete: %s strings translated, saving valuable time and resources.", 'automatic-translation-for-polylang'),props.stringCount)}</StringPopUpNotice>}
             <div className="save_btn_cont">
                 <button className="notranslate save_it button button-primary" disabled={props.translateStatus} onClick={createTranslatedPost}>{__("Update Content", 'automatic-translation-for-polylang')}</button>
-            </div>
-            <div style={{ display: "none" }} className="ytstats">
-                {__("Wahooo! You have saved your valuable time via auto translating", 'automatic-translation-for-polylang')}
-                <strong className="totalChars"></strong> {__("characters using", 'automatic-translation-for-polylang')}
-                <strong>
-                    <a href="https://wordpress.org/support/plugin/automatic-translator-addon-for-loco-translate/reviews/#new-post" target="_new">
-                        {__("Loco Automatic Translate Addon", 'automatic-translation-for-polylang')}</a>
-                </strong>
             </div>
         </div>
     );

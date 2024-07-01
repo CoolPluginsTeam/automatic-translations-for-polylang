@@ -1,7 +1,7 @@
 const StringPopUpNotice = (props) => {
     return (
         <div className={`notice inline notice-info is-dismissible ${props.className}`}>
-            {props.children.join(' ')}
+            {Array.isArray(props.children) ? props.children.join(' ') : props.children}
         </div>
     );
 }

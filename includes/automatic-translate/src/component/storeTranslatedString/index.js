@@ -101,7 +101,9 @@ const SaveTranslationHandler = (translateStatus) => {
         container.querySelector(".atfp_translate_progress").style.display = "block";
 
         setTimeout(() => {
-            ScrollAnimation({element: stringContainer, scrollSpeed: 10000});
+            const scrollSpeed=Math.floor((scrollHeight / stringContainer?.offsetHeight)) * 2000;
+
+            ScrollAnimation({element: stringContainer, scrollSpeed: scrollSpeed});
         }, 2000);
 
         stringContainer.addEventListener('scroll', () => {

@@ -25,7 +25,10 @@ if ( ! defined( 'ATFP_URL' ) ) {
 	define( 'ATFP_URL', plugin_dir_url( __FILE__ ) );
 }
 
-define( 'ATFP_FILE', __FILE__ );
+if ( ! defined( 'ATFP_FILE' ) ) {
+	define( 'ATFP_FILE', __FILE__ );
+}
+
 
 
 if ( ! class_exists( 'ATFP' ) ) {
@@ -63,7 +66,10 @@ if ( ! class_exists( 'ATFP' ) ) {
 
 		function atfp_init() {
 			require_once ATFP_DIR_PATH . '/helper/class-atfp-ajax-handler.php';
-			ATFP_Ajax_Handler::get_instance();
+
+			if ( class_exists( 'ATFP_Ajax_Handler' ) ) {
+				ATFP_Ajax_Handler::get_instance();
+			}
 
 			// Check Polylang plugin is installed and active
 			global $polylang;
@@ -107,7 +113,7 @@ if ( ! class_exists( 'ATFP' ) ) {
 			$current_screen = get_current_screen();
 
 			if ( method_exists( $current_screen, 'is_block_editor' ) && $current_screen->is_block_editor() ) {
-				wp_register_style( 'atfp-automatic-translate', ATFP_URL . 'assets/css/atfp-custom.css', ATFP_VERSION );
+				wp_register_style( 'atfp-automatic-translate', ATFP_URL . 'assets/css/atfp-custom.min.css', ATFP_VERSION );
 
 				$editor_script_asset = require_once ATFP_DIR_PATH . 'assets/build/index.asset.php';
 				wp_register_script( 'atfp-automatic-translate', ATFP_URL . 'assets/build/index.js', $editor_script_asset['dependencies'], $editor_script_asset['version'], true );
