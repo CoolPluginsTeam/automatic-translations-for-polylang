@@ -107,10 +107,6 @@ const FilterTargetContent = (props) => {
      */
     const replacePlaceholderPattern = /#atfp_open_translate_span#|#atfp_close_translate_span#/g;
 
-    const totalNumberOfStrings=()=>{
-
-    };
-
     return (
         <>
             {'yandex' === props.service ?

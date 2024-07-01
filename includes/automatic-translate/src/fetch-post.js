@@ -1,11 +1,13 @@
 import { useEffect, useState } from "@wordpress/element";
 import saveTranslation from "./component/storeSourceString";
 import FilterTargetContent from "./component/FilterTargetContent";
+const { __ } = wp.i18n;
 const { parse } = wp.blocks;
 const { select } = wp.data;
 
 const FetchPost = (props) => {
     const [translateContent, setTranslateContent] = useState([]);
+    const [stringAvality, setStringAvality]=useState(true);
     const blockRules = props.blockRules;
     const apiUrl = atfp_ajax_object.ajax_url;
 
@@ -43,7 +45,13 @@ const FetchPost = (props) => {
                 props.setPostData(post_data);
 
                 const translationEntry = select("block-atfp/translate").getTranslationEntry();
-                setTranslateContent(translationEntry);
+
+                const totalString = Object.values(translationEntry).filter(data => data.source !== undefined && /[^\p{L}\p{N}]/gu.test(data.source));
+                if (Object.keys(totalString).length > 0) {
+                    setTranslateContent(translationEntry);
+                }else{
+                    setStringAvality(false);
+                }
             })
             .catch(error => {
                 console.error('Error fetching post content:', error);
@@ -52,27 +60,30 @@ const FetchPost = (props) => {
 
     let sNo = 0;
 
-    const totalString=translateContent.filter(data=>undefined !== data.source && data.source.trim() !== '').length;
+    const totalString = translateContent.filter(data => undefined !== data.source && data.source.trim() !== '').length;
 
     return (
         <>
-            {translateContent.map((data, index) => {
-                return (
-                    <>
-                    {undefined !== data.source && data.source.trim() !== '' &&
+            {translateContent.length > 0 || stringAvality ?
+                translateContent.map((data, index) => {
+                    return (
                         <>
-                            <tr key={index}>
-                                <td>{++sNo}</td>
-                                <td data-source="source_text">{data.source}</td>
-                                <td class="translate" translate="yes" data-key={data.id} data-string-type={data.type}>
-                                    <FilterTargetContent service={props.service} content={data.source} translateContent={props.translateContent} totalString={totalString} currentIndex={sNo}/>
-                                </td>
-                            </tr>
+                            {undefined !== data.source && data.source.trim() !== '' &&
+                                <>
+                                    <tr key={index}>
+                                        <td>{++sNo}</td>
+                                        <td data-source="source_text">{data.source}</td>
+                                        <td class="translate" translate="yes" data-key={data.id} data-string-type={data.type}>
+                                            <FilterTargetContent service={props.service} content={data.source} translateContent={props.translateContent} totalString={totalString} currentIndex={sNo} />
+                                        </td>
+                                    </tr>
+                                </>
+                            }
                         </>
-                    }
-                    </>
-                );
-            })}
+                    );
+                })
+                : <p>{__('No strings are available for translation','automatic-translation-for-polylang')}</p>
+            }
         </>
     );
 };

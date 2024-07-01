@@ -112,7 +112,6 @@ const FilterTargetContent = props => {
    * Regular expression pattern to replace the placeholder span elements.
    */
   const replacePlaceholderPattern = /#atfp_open_translate_span#|#atfp_close_translate_span#/g;
-  const totalNumberOfStrings = () => {};
   return /*#__PURE__*/React.createElement(React.Fragment, null, 'yandex' === props.service ? content.map((data, index) => {
     const notTranslate = notTranslatePattern.test(data);
     if (notTranslate) {
@@ -403,7 +402,6 @@ const yandexWidget = (win, doc, nav, params, namespace, targetLang, translateSta
     };
     if (targetLang != undefined) {
       var defaultcode = targetLang;
-      // var region = window.locoConf.conf.locale.region ? window.locoConf.conf.locale.region : null;
     }
     switch (defaultcode) {
       case 'nb':
@@ -416,11 +414,7 @@ const yandexWidget = (win, doc, nav, params, namespace, targetLang, translateSta
         defaultLang = defaultcode;
         break;
     }
-    //    defaultLang =  defaultcode;
     if (defaultLang) {
-      // if(region === 'BR' && null !== region){
-      //     defaultLang = defaultLang + "-" + region;
-      // }
       select.setValue(defaultLang);
       active = storage.getValue('active');
     }
@@ -1131,6 +1125,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const {
+  __
+} = wp.i18n;
+const {
   parse
 } = wp.blocks;
 const {
@@ -1138,6 +1135,7 @@ const {
 } = wp.data;
 const FetchPost = props => {
   const [translateContent, setTranslateContent] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+  const [stringAvality, setStringAvality] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
   const blockRules = props.blockRules;
   const apiUrl = atfp_ajax_object.ajax_url;
 
@@ -1170,14 +1168,19 @@ const FetchPost = props => {
       (0,_component_storeSourceString__WEBPACK_IMPORTED_MODULE_1__["default"])(post_data, blockRules);
       props.setPostData(post_data);
       const translationEntry = select("block-atfp/translate").getTranslationEntry();
-      setTranslateContent(translationEntry);
+      const totalString = Object.values(translationEntry).filter(data => data.source !== undefined && /[^\p{L}\p{N}]/gu.test(data.source));
+      if (Object.keys(totalString).length > 0) {
+        setTranslateContent(translationEntry);
+      } else {
+        setStringAvality(false);
+      }
     }).catch(error => {
       console.error('Error fetching post content:', error);
     });
   }, [props.fetchKey]);
   let sNo = 0;
   const totalString = translateContent.filter(data => undefined !== data.source && data.source.trim() !== '').length;
-  return /*#__PURE__*/React.createElement(React.Fragment, null, translateContent.map((data, index) => {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, translateContent.length > 0 || stringAvality ? translateContent.map((data, index) => {
     return /*#__PURE__*/React.createElement(React.Fragment, null, undefined !== data.source && data.source.trim() !== '' && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("tr", {
       key: index
     }, /*#__PURE__*/React.createElement("td", null, ++sNo), /*#__PURE__*/React.createElement("td", {
@@ -1194,7 +1197,7 @@ const FetchPost = props => {
       totalString: totalString,
       currentIndex: sNo
     })))));
-  }));
+  }) : /*#__PURE__*/React.createElement("p", null, __('No strings are available for translation', 'automatic-translation-for-polylang')));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FetchPost);
 
@@ -1330,7 +1333,7 @@ const reducer = (state = TranslateDefaultState, action) => {
           ...state,
           excerpt: {
             ...state.excerpt,
-            target: action.text
+            source: action.text
           }
         };
       }
@@ -1674,8 +1677,12 @@ const StringPopUpBody = props => {
   const updatePostContent = content => {
     props.updatePostContent(content);
     const translationEntry = select("block-atfp/translate").getTranslationEntry();
-    const data = Object.values(translationEntry).filter(data => data.source !== undefined && /[^\p{L}\p{N}]/gu.test(data.source));
-    console.log(data);
+    const totalString = Object.values(translationEntry).filter(data => data.source !== undefined && /[^\p{L}\p{N}]/gu.test(data.source));
+    if (Object.keys(totalString).length > 0) {
+      setStringAvality(true);
+    } else {
+      setStringAvality(false);
+    }
   };
   const updateTranslateContent = entries => {
     if (Object.getPrototypeOf(entries) === Object.prototype && entries.stringRenderComplete === true) {
@@ -1696,7 +1703,10 @@ const StringPopUpBody = props => {
   }, /*#__PURE__*/React.createElement("div", {
     className: "atfp_translate_progress"
   }, __("Automatic translation is in progress....", 'automatic-translation-for-polylang'), /*#__PURE__*/React.createElement("br", null), __("It will take few minutes, enjoy ☕ coffee in this time!", 'automatic-translation-for-polylang'), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("br", null), __("Please do not leave this window or browser tab while translation is in progress...", 'automatic-translation-for-polylang')), /*#__PURE__*/React.createElement("div", {
-    className: `translator-widget ${service}`
+    className: `translator-widget ${service}`,
+    style: {
+      display: `${stringAvality ? 'block' : 'none'}`
+    }
   }, /*#__PURE__*/React.createElement("h3", {
     class: "choose-lang"
   }, __("Choose language", 'automatic-translation-for-polylang'), " ", /*#__PURE__*/React.createElement("span", {
@@ -1707,11 +1717,11 @@ const StringPopUpBody = props => {
       display: `${service === 'yandex' ? 'block' : 'none'}`
     }
   })), /*#__PURE__*/React.createElement("div", {
-    className: "atfp_string_container"
+    className: `atfp_string_container ${!stringAvality ? 'atfp_empty_string' : ''}`
   }, /*#__PURE__*/React.createElement("table", {
     className: "scrolldown",
     id: "stringTemplate"
-  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
+  }, stringAvality && /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
     className: "notranslate"
   }, __("S.No", 'automatic-translation-for-polylang')), /*#__PURE__*/React.createElement("th", {
     className: "notranslate"
@@ -1743,6 +1753,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const {
+  sprintf,
   __
 } = wp.i18n;
 const StringPopUpFooter = props => {
@@ -1772,23 +1783,13 @@ const StringPopUpFooter = props => {
     key: props.modalRender
   }, !props.translateStatus && props.stringCount && /*#__PURE__*/React.createElement(_notice__WEBPACK_IMPORTED_MODULE_1__["default"], {
     className: "atfp_string_count"
-  }, __("Total Strings Translated:", 'automatic-translation-for-polylang'), " ", props.stringCount), /*#__PURE__*/React.createElement("div", {
+  }, sprintf(__("Automated translation complete: %s strings translated, saving valuable time and resources.", 'automatic-translation-for-polylang'), props.stringCount)), /*#__PURE__*/React.createElement("div", {
     className: "save_btn_cont"
   }, /*#__PURE__*/React.createElement("button", {
     className: "notranslate save_it button button-primary",
     disabled: props.translateStatus,
     onClick: createTranslatedPost
-  }, __("Update Content", 'automatic-translation-for-polylang'))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "none"
-    },
-    className: "ytstats"
-  }, __("Wahooo! You have saved your valuable time via auto translating", 'automatic-translation-for-polylang'), /*#__PURE__*/React.createElement("strong", {
-    className: "totalChars"
-  }), " ", __("characters using", 'automatic-translation-for-polylang'), /*#__PURE__*/React.createElement("strong", null, /*#__PURE__*/React.createElement("a", {
-    href: "https://wordpress.org/support/plugin/automatic-translator-addon-for-loco-translate/reviews/#new-post",
-    target: "_new"
-  }, __("Loco Automatic Translate Addon", 'automatic-translation-for-polylang')))));
+  }, __("Update Content", 'automatic-translation-for-polylang'))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (StringPopUpFooter);
 
@@ -1998,7 +1999,7 @@ __webpack_require__.r(__webpack_exports__);
 const StringPopUpNotice = props => {
   return /*#__PURE__*/React.createElement("div", {
     className: `notice inline notice-info is-dismissible ${props.className}`
-  }, props.children.join(' '));
+  }, Array.isArray(props.children) ? props.children.join(' ') : props.children);
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (StringPopUpNotice);
 

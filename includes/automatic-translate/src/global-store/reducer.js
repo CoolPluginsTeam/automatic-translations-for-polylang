@@ -17,7 +17,7 @@ const reducer = (state = TranslateDefaultState, action) => {
             return { ...state, title: { ...state.title, target: action.text } };
         case AtfpActionTypes.sourceExcerpt:
             if(/[^\p{L}\p{N}]/gu.test(action.text)){
-                return { ...state, excerpt: { ...state.excerpt, target: action.text } };
+                return { ...state, excerpt: { ...state.excerpt, source: action.text } };
             }
             return state;
         case AtfpActionTypes.traslatedExcerpt:

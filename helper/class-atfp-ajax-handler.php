@@ -71,17 +71,24 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				exit();
 			}
 
-			$post_id   = $_POST['postId'];
-			$post_data = get_post( $post_id );
+			$post_id = isset( $_POST['postId'] ) ? (int) filter_var( $_POST['postId'], FILTER_SANITIZE_NUMBER_INT ) : false;
 
-			$content = $post_data->post_content;
-			$data    = array(
-				'title'   => $post_data->post_title,
-				'excerpt' => $post_data->post_excerpt,
-				'content' => $content,
-			);
+			if ( false !== $post_id ) {
+				$post_data = get_post( $post_id );
 
-			echo wp_send_json_success( $data );
+				$content = $post_data->post_content;
+				$data    = array(
+					'title'   => $post_data->post_title,
+					'excerpt' => $post_data->post_excerpt,
+					'content' => $content,
+				);
+
+				echo wp_send_json_success( $data );
+			} else {
+				wp_send_json_error( __( 'Invalid Post ID.', 'automatic-translation-for-polylang' ) );
+				wp_die( '0', 400 );
+			}
+
 			exit;
 		}
 	}

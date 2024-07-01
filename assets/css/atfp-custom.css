@@ -231,16 +231,31 @@ button.atfp-setting-close:hover{
 }
 
 #atfp_strings_model .atfp_string_container {
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
     height: calc(100vh - 315px);
     width: 100%;
     position: relative;
 }
 
+#atfp_strings_model .atfp_string_container.atfp_empty_string{
+    height: calc(100vh - 196px);
+    display: flex;
+    align-items: center;
+}
+
+#atfp_strings_model .atfp_string_container.atfp_empty_string p{
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bolder;
+    color: #5cb85c;
+    background: whitesmoke;
+    padding: 1rem;
+}
+
 #atfp_strings_model .notice.atfp_string_count{
     top: 1.2rem;
-    font-size: 1.2rem;
+    font-size: 1rem;
     background: transparent;
     border-width: 0px;
     margin-left: 0px;

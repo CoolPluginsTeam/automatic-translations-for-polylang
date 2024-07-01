@@ -284,7 +284,6 @@ const yandexWidget=(win, doc, nav, params, namespace, targetLang, translateStatu
 
         if (targetLang != undefined) {
             var defaultcode = targetLang;
-            // var region = window.locoConf.conf.locale.region ? window.locoConf.conf.locale.region : null;
         }
         switch (defaultcode) {
             case 'nb':
@@ -298,11 +297,7 @@ const yandexWidget=(win, doc, nav, params, namespace, targetLang, translateStatu
                 defaultLang = defaultcode;
                 break;
         }
-        //    defaultLang =  defaultcode;
         if (defaultLang) {
-            // if(region === 'BR' && null !== region){
-            //     defaultLang = defaultLang + "-" + region;
-            // }
             select.setValue(defaultLang);
             active = storage.getValue('active');
         }
