@@ -139,13 +139,18 @@ const FilterTargetContent = (props) => {
      */
     const replacePlaceholderPattern = /#atfp_open_translate_span#|#atfp_close_translate_span#/g;
 
+    const filterContent=content=>{
+        const updatedContent=content.replace(replacePlaceholderPattern, '');
+        return updatedContent;
+    }
+
     return (
         <>
             {'yandex' === props.service ?
                 content.map((data, index) => {
                     const notTranslate = notTranslatePattern.test(data);
                     if (notTranslate) {
-                        return <span key={index} className="notranslate atfp-notraslate-tag" translate="no">{data.replace(replacePlaceholderPattern, '')}</span>;
+                        return <span key={index} className="notranslate atfp-notraslate-tag" translate="no">{filterContent(data)}</span>;
                     } else {
                         return data;
                     }
