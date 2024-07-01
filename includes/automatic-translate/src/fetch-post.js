@@ -38,7 +38,7 @@ const FetchPost = (props) => {
 
                 const post_data = data.data;
 
-                if (post_data.content.trim() !== '') {
+                if (post_data.content && post_data.content.trim() !== '') {
                     post_data.content = parse(post_data.content);
                 }
                 saveTranslation(post_data, blockRules);
