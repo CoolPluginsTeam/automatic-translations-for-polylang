@@ -1,6 +1,7 @@
 import ReactDOM from "react-dom";
 import { useEffect, useState } from "@wordpress/element";
 import PopStringModal from "./popupStringModal";
+import yandexLanguage from "./component/TranslateProvider/yandex/yandex-language";
 const { sprintf, __ } = wp.i18n;
 
 const PopupModal = (props) => {
@@ -15,6 +16,7 @@ const PopupModal = (props) => {
     const targetLangName = atfp_ajax_object.languageObject[targetLang];
     const apiUrl = atfp_ajax_object.ajax_url;
     const imgFolder = atfp_ajax_object.atfp_url + 'assets/images/';
+    const yandexSupport = yandexLanguage().includes(targetLang);
 
     /**
      * Prepare data to send in API request.
@@ -86,10 +88,7 @@ const PopupModal = (props) => {
         const btn = targetBtn;
         const service = btn.dataset && btn.dataset.service;
         const serviceLabel = btn.dataset && btn.dataset.serviceLabel;
-        // const postId = urlParams.get('from_post');
         const postId = props.postId;
-
-        console.log(postId);
 
         const parentWrp = document.getElementById("atfp_strings_model");
 
@@ -135,8 +134,18 @@ const PopupModal = (props) => {
                         <hr />
                         <strong className="atlt-heading">{__("Translate Using Yandex Page Translate Widget", 'automatic-translation-for-polylang')}</strong>
                         <div className="inputGroup">
-                            <button className="atfp-service-btn translate button button-primary" data-service="yandex" data-service-label="Yandex Translate" onClick={fetchContent}>{__("Yandex Translate (Beta)", 'automatic-translation-for-polylang')}</button>
-                            <br /><a href="https://translate.yandex.com/" target="_blank"><img className="pro-features-img" src={`${imgFolder}powered-by-yandex.png`} alt="powered by Yandex Translate Widget" /></a>
+                            {yandexSupport ?
+                                <>
+                                    <button className="atfp-service-btn translate button button-primary" data-service="yandex" data-service-label="Yandex Translate" onClick={fetchContent}>{__("Yandex Translate (Beta)", 'automatic-translation-for-polylang')}</button>
+                                    <br />
+                                </>
+                                :
+                                <>
+                                    <button className="atfp-service-btn translate button button-primary" disabled={true}>{__("Yandex Translate (Beta)", 'automatic-translation-for-polylang')}</button><br />
+                                    <span className="atfp-error-message">{targetLangName} {__('language is not supported by Yandex Translate', 'automatic-translation-for-polylang')}.</span>
+                                </>
+                            }
+                            <a href="https://translate.yandex.com/" target="_blank"><img className="pro-features-img" src={`${imgFolder}powered-by-yandex.png`} alt="powered by Yandex Translate Widget" /></a>
                         </div>
                         <hr />
                         <ul style={{ margin: "0" }}>

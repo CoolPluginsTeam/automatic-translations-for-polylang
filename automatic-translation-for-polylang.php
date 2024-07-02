@@ -126,6 +126,24 @@ if ( ! class_exists( 'ATFP' ) ) {
 					return;
 				}
 
+				$editor = '';
+				if ( false === $from_post_id ) {
+					return;
+				}
+				if ( has_blocks( $from_post_id ) ) {
+					$editor = 'Gutenberg';
+				}
+				if ( get_post_meta( $from_post_id, '_elementor_edit_mode', true ) === 'builder' ) {
+					$editor = 'Elementor';
+				}
+				if ( get_post_meta( $from_post_id, '_et_pb_use_builder', true ) === 'on' ) {
+					$editor = 'Divi';
+				}
+
+				if ( in_array( $editor, array( 'Elementor', 'Divi' ) ) ) {
+					return;
+				}
+
 				$languages = PLL()->model->get_languages_list();
 
 				$lang_object = array();
@@ -164,7 +182,23 @@ if ( ! class_exists( 'ATFP' ) ) {
 		function atfp_shortcode_metabox() {
 			$current_screen = get_current_screen();
 
-			if ( method_exists( $current_screen, 'is_block_editor' ) && $current_screen->is_block_editor() ) {
+			$post_id = isset( $_GET['from_post'] ) ? (int) filter_var( $_GET['from_post'], FILTER_SANITIZE_NUMBER_INT ) : false;
+
+			$editor = '';
+			if ( false === $post_id ) {
+				return;
+			}
+			if ( has_blocks( $post_id ) ) {
+				$editor = 'Gutenberg';
+			}
+			if ( get_post_meta( $post_id, '_elementor_edit_mode', true ) === 'builder' ) {
+				$editor = 'Elementor';
+			}
+			if ( get_post_meta( $post_id, '_et_pb_use_builder', true ) === 'on' ) {
+				$editor = 'Divi';
+			}
+
+			if ( method_exists( $current_screen, 'is_block_editor' ) && $current_screen->is_block_editor() && ! in_array( $editor, array( 'Elementor', 'Divi' ) ) ) {
 				if ( $GLOBALS['pagenow'] == 'post-new.php' && isset( $_GET['from_post'], $_GET['new_lang'] ) ) {
 
 					global $post;

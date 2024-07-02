@@ -98,6 +98,13 @@
     padding-inline: 1rem;
 }
 
+#atfp-setting-modal .modal-content .atfp-service-btn{
+    margin-block: .3rem;
+}
+#atfp-setting-modal .modal-content .atfp-error-message{
+    color: red;
+}
+
 #atfp_strings_model .modal-header {
     padding: 2px 16px;
     background-color: #5cb85c;
