@@ -8,14 +8,13 @@ const PopupModal = (props) => {
     const [targetBtn, setTargetBtn] = useState({});
     const [blockRules, setBlockRules] = useState({});
     const [modalRender, setModalRender] = useState({});
-    const [settingVisibility, setSettingVisibility]=useState(true);
-    const urlParams = new URLSearchParams(window.location.search);
+    const [settingVisibility, setSettingVisibility] = useState(true);
     const sourceLang = atfp_ajax_object.source_lang;
-    const targetLang = urlParams.get('new_lang');
-    const sourceLangName=atfp_ajax_object.languageObject[sourceLang];
-    const targetLangName=atfp_ajax_object.languageObject[targetLang];
+    const targetLang = props.targetLang;
+    const sourceLangName = atfp_ajax_object.languageObject[sourceLang];
+    const targetLangName = atfp_ajax_object.languageObject[targetLang];
     const apiUrl = atfp_ajax_object.ajax_url;
-    const imgFolder=atfp_ajax_object.atfp_url + 'assets/images/';
+    const imgFolder = atfp_ajax_object.atfp_url + 'assets/images/';
 
     /**
      * Prepare data to send in API request.
@@ -24,7 +23,6 @@ const PopupModal = (props) => {
         atfp_nonce: atfp_ajax_object.ajax_nonce,
         action: atfp_ajax_object.action_block_rules
     };
-
 
     /**
      * Update the fetch status state.
@@ -38,15 +36,15 @@ const PopupModal = (props) => {
      * useEffect hook to set settingVisibility.
      * Triggers the setSettingVisibility only when user click on meta field Button.
     */
-    useEffect(()=>{
-        const metaFieldBtn=document.querySelector('input#atfp-translate-button[name="atfp_meta_box_translate"]');
+    useEffect(() => {
+        const metaFieldBtn = document.querySelector('input#atfp-translate-button[name="atfp_meta_box_translate"]');
 
-        if(metaFieldBtn){
-            metaFieldBtn.addEventListener('click',()=>{
-                setSettingVisibility(prev=>!prev);
+        if (metaFieldBtn) {
+            metaFieldBtn.addEventListener('click', () => {
+                setSettingVisibility(prev => !prev);
             });
         }
-    },[])
+    }, [])
 
     /**
      * useEffect hook to fetch block rules data from the server.
@@ -88,7 +86,10 @@ const PopupModal = (props) => {
         const btn = targetBtn;
         const service = btn.dataset && btn.dataset.service;
         const serviceLabel = btn.dataset && btn.dataset.serviceLabel;
-        const postId = urlParams.get('from_post');
+        // const postId = urlParams.get('from_post');
+        const postId = props.postId;
+
+        console.log(postId);
 
         const parentWrp = document.getElementById("atfp_strings_model");
 
@@ -105,7 +106,7 @@ const PopupModal = (props) => {
                 modalRender={modalRender}
                 pageTranslate={props.pageTranslate}
             />, parentWrp);
-            setSettingVisibility(prev=>!prev);
+            setSettingVisibility(prev => !prev);
         }
     }, [fetchStatus, blockRules]);
 
@@ -115,7 +116,7 @@ const PopupModal = (props) => {
      * @param {Event} e - The event object representing the button click.
      */
     const fetchContent = (e) => {
-        let targetElement=!e.target.classList.contains('atfp-service-btn') ? e.target.closest('.atfp-service-btn') : e.target;
+        let targetElement = !e.target.classList.contains('atfp-service-btn') ? e.target.closest('.atfp-service-btn') : e.target;
         setModalRender(prev => prev + 1);
         setTargetBtn(targetElement);
         setFetchStatus(true);
@@ -124,31 +125,31 @@ const PopupModal = (props) => {
     return (
         <>
             {settingVisibility &&
-                <div className="modal-container" style={{display: settingVisibility ? 'flex' : 'none'}}>
-                <div className="atfp-settings modal-content">
-                    <div className="modal-header">
-                    <h2>{__("Step 1 - Select Translation Provider (Beta)", 'automatic-translation-for-polylang')}</h2>
-                    <h4>{sprintf(__("Translate post content from %(source)s to %(target)s", 'automatic-translation-for-polylang'),{source: sourceLangName, target: targetLangName})}</h4>
-                    <span className="close" onClick={()=>setSettingVisibility(false)}>&times;</span>
-                    </div>
-                    <hr />
-                    <strong className="atlt-heading">{__("Translate Using Yandex Page Translate Widget", 'automatic-translation-for-polylang')}</strong>
-                    <div className="inputGroup">
-                        <button className="atfp-service-btn translate button button-primary" data-service="yandex" data-service-label="Yandex Translate" onClick={fetchContent}>{__("Yandex Translate (Beta)", 'automatic-translation-for-polylang')}</button>
-                        <br/><a href="https://translate.yandex.com/" target="_blank"><img className="pro-features-img" src={`${imgFolder}powered-by-yandex.png`} alt="powered by Yandex Translate Widget"/></a>
-                    </div>
-                    <hr/>
-                   <ul style={{ margin: "0" }}>
-                        <li><span style={{ color: "green" }}>✔</span> {__("Unlimited Translations with Yandex Translate", 'automatic-translation-for-polylang')}</li>
-                        <li><span style={{ color: "green" }}>✔</span> {__("No API Key Required for Yandex Translate", 'automatic-translation-for-polylang')}</li>
-                        <li><span style={{ color: "green" }}>✔</span> {__("Supports Multiple Languages", 'automatic-translation-for-polylang')} - <a href="https://yandex.com/support2/translate-desktop/en/supported-langs" target="_blank">{__("See Supported Languages", 'automatic-translation-for-polylang')}</a></li>
-                    </ul>
-                    <hr/>
-                    <div className="modal-footer">
-                    <button className="atfp-setting-close" onClick={()=>setSettingVisibility(false)}>{__("Close", 'automatic-translation-for-polylang')}</button>
+                <div className="modal-container" style={{ display: settingVisibility ? 'flex' : 'none' }}>
+                    <div className="atfp-settings modal-content">
+                        <div className="modal-header">
+                            <h2>{__("Step 1 - Select Translation Provider (Beta)", 'automatic-translation-for-polylang')}</h2>
+                            <h4>{sprintf(__("Translate post content from %(source)s to %(target)s", 'automatic-translation-for-polylang'), { source: sourceLangName, target: targetLangName })}</h4>
+                            <span className="close" onClick={() => setSettingVisibility(false)}>&times;</span>
+                        </div>
+                        <hr />
+                        <strong className="atlt-heading">{__("Translate Using Yandex Page Translate Widget", 'automatic-translation-for-polylang')}</strong>
+                        <div className="inputGroup">
+                            <button className="atfp-service-btn translate button button-primary" data-service="yandex" data-service-label="Yandex Translate" onClick={fetchContent}>{__("Yandex Translate (Beta)", 'automatic-translation-for-polylang')}</button>
+                            <br /><a href="https://translate.yandex.com/" target="_blank"><img className="pro-features-img" src={`${imgFolder}powered-by-yandex.png`} alt="powered by Yandex Translate Widget" /></a>
+                        </div>
+                        <hr />
+                        <ul style={{ margin: "0" }}>
+                            <li><span style={{ color: "green" }}>✔</span> {__("Unlimited Translations with Yandex Translate", 'automatic-translation-for-polylang')}</li>
+                            <li><span style={{ color: "green" }}>✔</span> {__("No API Key Required for Yandex Translate", 'automatic-translation-for-polylang')}</li>
+                            <li><span style={{ color: "green" }}>✔</span> {__("Supports Multiple Languages", 'automatic-translation-for-polylang')} - <a href="https://yandex.com/support2/translate-desktop/en/supported-langs" target="_blank">{__("See Supported Languages", 'automatic-translation-for-polylang')}</a></li>
+                        </ul>
+                        <hr />
+                        <div className="modal-footer">
+                            <button className="atfp-setting-close" onClick={() => setSettingVisibility(false)}>{__("Close", 'automatic-translation-for-polylang')}</button>
+                        </div>
                     </div>
                 </div>
-                </div> 
             }
         </>
     );

@@ -7,7 +7,7 @@ const { select } = wp.data;
 
 const FetchPost = (props) => {
     const [translateContent, setTranslateContent] = useState([]);
-    const [stringAvality, setStringAvality]=useState(true);
+    const [stringAvality, setStringAvality] = useState(true);
     const blockRules = props.blockRules;
     const apiUrl = atfp_ajax_object.ajax_url;
 
@@ -49,7 +49,7 @@ const FetchPost = (props) => {
                 const totalString = Object.values(translationEntry).filter(data => data.source !== undefined && /[^\p{L}\p{N}]/gu.test(data.source));
                 if (Object.keys(totalString).length > 0) {
                     setTranslateContent(translationEntry);
-                }else{
+                } else {
                     setStringAvality(false);
                 }
             })
@@ -82,7 +82,7 @@ const FetchPost = (props) => {
                         </>
                     );
                 })
-                : <p>{__('No strings are available for translation','automatic-translation-for-polylang')}</p>
+                : <p>{__('No strings are available for translation', 'automatic-translation-for-polylang')}</p>
             }
         </>
     );

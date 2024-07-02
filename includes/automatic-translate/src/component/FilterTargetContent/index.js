@@ -44,27 +44,27 @@ const FilterTargetContent = (props) => {
             let wrappedFirstTag = `#atfp_open_translate_span#${firstElement.outerHTML}#atfp_close_translate_span#`;
             return wrappedFirstTag;
         }
-        
+
         const firstElementHtml = firstElement.innerHTML;
         firstElement.innerHTML = '';
 
         let openTag = `#atfp_open_translate_span#${firstElementOpeningTag}#atfp_close_translate_span#`;
         let closeTag = '';
-        let filterContent='';
+        let filterContent = '';
 
         if (closingTagMatch) {
             closeTag = `#atfp_open_translate_span#</${openTagName}>#atfp_close_translate_span#`;
         }
 
         if ('' !== firstElementHtml) {
-            if('' !== openTag){
-                filterContent=openTag+firstElementHtml;
+            if ('' !== openTag) {
+                filterContent = openTag + firstElementHtml;
             }
-            if('' !== closeTag){
+            if ('' !== closeTag) {
                 filterContent += closeTag;
             }
-        }else{
-            filterContent=openTag+closeTag;
+        } else {
+            filterContent = openTag + closeTag;
         }
 
         firstElement.outerHTML = filterContent;
@@ -139,8 +139,8 @@ const FilterTargetContent = (props) => {
      */
     const replacePlaceholderPattern = /#atfp_open_translate_span#|#atfp_close_translate_span#/g;
 
-    const filterContent=content=>{
-        const updatedContent=content.replace(replacePlaceholderPattern, '');
+    const filterContent = content => {
+        const updatedContent = content.replace(replacePlaceholderPattern, '');
         return updatedContent;
     }
 
