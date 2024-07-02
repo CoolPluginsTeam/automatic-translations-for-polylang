@@ -16,25 +16,28 @@ const init = () => {
 
 
 const App = () => {
-  const [pageTranslate,setPageTranslate]=useState(false);
+  const [pageTranslate, setPageTranslate] = useState(false);
+  const urlParams = new URLSearchParams(window.location.search);
+  const targetLang = urlParams.get('new_lang');
+  const postId = urlParams.get('from_post');
 
-  const pageTranslateHandler=(status)=>{
+  const pageTranslateHandler = (status) => {
     setPageTranslate(status);
   };
 
-  useEffect(()=>{
-    if(pageTranslate){
-      const metaFieldBtn=document.querySelector('input#atfp-translate-button[name="atfp_meta_box_translate"]');
-      if(metaFieldBtn){
+  useEffect(() => {
+    if (pageTranslate) {
+      const metaFieldBtn = document.querySelector('input#atfp-translate-button[name="atfp_meta_box_translate"]');
+      if (metaFieldBtn) {
         metaFieldBtn.disabled = true;
       }
     }
-  },[pageTranslate])
-  
+  }, [pageTranslate])
+
   return (
     <>
-      { !pageTranslate &&
-        <PopupModal pageTranslate={pageTranslateHandler}/>
+      {!pageTranslate &&
+        <PopupModal pageTranslate={pageTranslateHandler} postId={postId} targetLang={targetLang} />
       }
     </>
   );

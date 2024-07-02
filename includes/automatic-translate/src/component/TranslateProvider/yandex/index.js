@@ -1,8 +1,8 @@
 import SaveTranslationHandler from "../../storeTranslatedString";
 
-const yandexWidget=(win, doc, nav, params, namespace, targetLang, translateStatus)=>{
+const yandexWidget = (win, doc, nav, params, namespace, targetLang, translateStatus) => {
     'use strict';
-    
+
     var util = {
         keycode: {
             ESCAPE: 27
@@ -398,8 +398,8 @@ const yandexWidget=(win, doc, nav, params, namespace, targetLang, translateStatu
     }
 };
 
-const YandexTranslater=(props)=>{
-    const globalObj=window;
+const YandexTranslater = (props) => {
+    const globalObj = window;
     yandexWidget(globalObj, globalObj.document, globalObj.navigator, { "pageLang": props.sourceLang, "autoMode": "false", "widgetId": "atfp_yandex_translate_element", "widgetTheme": "light" }, globalObj.yt = globalObj.yt || {}, props.targetLang, props.translateStatus);
 }
 
