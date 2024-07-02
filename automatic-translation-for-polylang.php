@@ -11,7 +11,6 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: automatic-translation-for-polylang
 */
 
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -63,7 +62,11 @@ if ( ! class_exists( 'ATFP' ) ) {
 			register_activation_hook( ATFP_FILE, array( $this, 'atfp_activate' ) );
 			register_deactivation_hook( ATFP_FILE, array( $this, 'atfp_deactivate' ) );
 		}
-
+		/**
+		 * Initialize the Automatic Translation for Polylang plugin.
+		 *
+		 * @return void
+		 */
 		function atfp_init() {
 			require_once ATFP_DIR_PATH . '/helper/class-atfp-ajax-handler.php';
 
@@ -82,6 +85,11 @@ if ( ! class_exists( 'ATFP' ) ) {
 			load_plugin_textdomain( 'automatic-translation-for-polylang', false, basename( dirname( __FILE__ ) ) . '/languages/' );
 		}
 
+		/**
+		 * Display admin notice for required plugin activation.
+		 *
+		 * @return void
+		 */
 		function atfp_plugin_required_admin_notice() {
 			if ( current_user_can( 'activate_plugins' ) ) {
 				$url         = 'plugin-install.php?tab=plugin-information&plugin=polylang&TB_iframe=true';
@@ -109,30 +117,30 @@ if ( ! class_exists( 'ATFP' ) ) {
 		}
 
 
+		/**
+		 * Register backend assets for Automatic Translation for Polylang plugin.
+		 *
+		 * @return void
+		 */
 		function atfp_register_backend_assets() {
 			$current_screen = get_current_screen();
 
 			if ( method_exists( $current_screen, 'is_block_editor' ) && $current_screen->is_block_editor() ) {
-				wp_register_style( 'atfp-automatic-translate', ATFP_URL . 'assets/css/atfp-custom.min.css', ATFP_VERSION );
-
-				$editor_script_asset = require_once ATFP_DIR_PATH . 'assets/build/index.asset.php';
-				wp_register_script( 'atfp-automatic-translate', ATFP_URL . 'assets/build/index.js', $editor_script_asset['dependencies'], $editor_script_asset['version'], true );
-
 				$from_post_id = isset( $_GET['from_post'] ) ? (int) filter_var( $_GET['from_post'], FILTER_SANITIZE_NUMBER_INT ) : false;
 
 				global $post;
 
 				if ( null === $post ) {
+					// Post is null, cannot proceed
+					return;
+				}
+
+				if ( false === $from_post_id ) {
+					// Invalid post ID, cannot proceed
 					return;
 				}
 
 				$editor = '';
-				if ( false === $from_post_id ) {
-					return;
-				}
-				if ( has_blocks( $from_post_id ) ) {
-					$editor = 'Gutenberg';
-				}
 				if ( get_post_meta( $from_post_id, '_elementor_edit_mode', true ) === 'builder' ) {
 					$editor = 'Elementor';
 				}
@@ -141,6 +149,7 @@ if ( ! class_exists( 'ATFP' ) ) {
 				}
 
 				if ( in_array( $editor, array( 'Elementor', 'Divi' ) ) ) {
+					// Editor is Elementor or Divi, skipping
 					return;
 				}
 
@@ -155,17 +164,21 @@ if ( ! class_exists( 'ATFP' ) ) {
 				$lang           = isset( $_GET['new_lang'] ) ? htmlspecialchars( $_GET['new_lang'] ) : false;
 				$post_type      = isset( $_GET['post_type'] ) ? htmlspecialchars( $_GET['post_type'] ) : false;
 
-				if ( false !== $from_post_id && $post_translate && $lang && $post_type ) {
+				if ( $post_translate && $lang && $post_type ) {
+					wp_register_style( 'atfp-automatic-translate', ATFP_URL . 'assets/css/atfp-custom.min.css', ATFP_VERSION );
+
+					$editor_script_asset = require_once ATFP_DIR_PATH . 'assets/build/index.asset.php';
+					wp_register_script( 'atfp-automatic-translate', ATFP_URL . 'assets/build/index.js', $editor_script_asset['dependencies'], $editor_script_asset['version'], true );
+
 					wp_enqueue_style( 'atfp-automatic-translate' );
 					wp_enqueue_script( 'atfp-automatic-translate' );
-
 					wp_localize_script(
 						'atfp-automatic-translate',
 						'atfp_ajax_object',
 						array(
 							'ajax_url'           => admin_url( 'admin-ajax.php' ),
 							'ajax_nonce'         => wp_create_nonce( 'atfp_translate_nonce' ),
-							'atfp_url'           => ATFP_URL,
+							'atfp_url'           => esc_url( ATFP_URL ),
 							'action_fetch'       => 'fetch_post_content',
 							'action_block_rules' => 'block_parsing_rules',
 							'source_lang'        => pll_get_post_language( $from_post_id, 'slug' ),
@@ -177,20 +190,18 @@ if ( ! class_exists( 'ATFP' ) ) {
 
 		}
 
-
-
+		/**
+		 * Register and display the automatic translation metabox.
+		 */
 		function atfp_shortcode_metabox() {
-			$current_screen = get_current_screen();
-
 			$post_id = isset( $_GET['from_post'] ) ? (int) filter_var( $_GET['from_post'], FILTER_SANITIZE_NUMBER_INT ) : false;
 
-			$editor = '';
 			if ( false === $post_id ) {
+				// Return if post_id is false
 				return;
 			}
-			if ( has_blocks( $post_id ) ) {
-				$editor = 'Gutenberg';
-			}
+
+			$editor = '';
 			if ( get_post_meta( $post_id, '_elementor_edit_mode', true ) === 'builder' ) {
 				$editor = 'Elementor';
 			}
@@ -198,24 +209,30 @@ if ( ! class_exists( 'ATFP' ) ) {
 				$editor = 'Divi';
 			}
 
+			$current_screen = get_current_screen();
 			if ( method_exists( $current_screen, 'is_block_editor' ) && $current_screen->is_block_editor() && ! in_array( $editor, array( 'Elementor', 'Divi' ) ) ) {
 				if ( $GLOBALS['pagenow'] == 'post-new.php' && isset( $_GET['from_post'], $_GET['new_lang'] ) ) {
+					// Check if conditions are met for adding meta box
 
 					global $post;
 
 					if ( ! ( $post instanceof WP_Post ) ) {
+						// Return if $post is not an instance of WP_Post
 						return;
 					}
 
-					if ( ! PLL()->model->is_translated_post_type( $post->post_type ) ) {
+					if ( ! function_exists( 'PLL' ) || ! PLL()->model->is_translated_post_type( $post->post_type ) ) {
+						// Return if PLL function does not exist or post type is not translated
 						return;
 					}
 					add_meta_box( 'my-meta-box-id', __( 'Automatic Translate Content from Original Post', 'automatic-translation-for-polylang' ), array( $this, 'atfp_shortcode_text' ), null, 'side', 'high' );
 				}
 			}
-
 		}
 
+		/**
+		 * Display the automatic translation metabox button.
+		 */
 		function atfp_shortcode_text() {
 			?>
 			 <input type="button" class="button button-primary" name="atfp_meta_box_translate" id="atfp-translate-button" value="
