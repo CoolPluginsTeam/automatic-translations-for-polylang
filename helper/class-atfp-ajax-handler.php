@@ -24,11 +24,11 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 		 */
 		private static $instance;
 
-				/**
-				 * Gets an instance of our plugin.
-				 *
-				 * @param object $settings_obj timeline settings.
-				 */
+		/**
+		 * Gets an instance of our plugin.
+		 *
+		 * @param object $settings_obj timeline settings.
+		 */
 		public static function get_instance() {
 			if ( null === self::$instance ) {
 				self::$instance = new self();
@@ -48,6 +48,11 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 			}
 		}
 
+		/**
+		 * Block Parsing Rules
+		 *
+		 * Handles the block parsing rules AJAX request.
+		 */
 		public function block_parsing_rules() {
 			if ( ! check_ajax_referer( 'atfp_translate_nonce', 'atfp_nonce', false ) ) {
 				wp_send_json_error( __( 'Invalid security token sent.', 'automatic-translation-for-polylang' ) );
@@ -64,6 +69,9 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 			exit;
 		}
 
+		/**
+		 * Fetches post content via AJAX request.
+		 */
 		public function fetch_post_content() {
 			if ( ! check_ajax_referer( 'atfp_translate_nonce', 'atfp_nonce', false ) ) {
 				wp_send_json_error( __( 'Invalid security token sent.', 'automatic-translation-for-polylang' ) );
