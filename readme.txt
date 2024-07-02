@@ -29,7 +29,7 @@ Special thanks to famous **[Polylang](https://wordpress.org/plugins/polylang/)**
 == Frequently Asked Questions ==
 
 == Changelog ==
-<strong>Version 1.0.0 | 24 June 2024</strong>
+<strong>Version 1.0.0 | 02 July 2024</strong>
 <pre>
 New: Initial Plugin Release
 </pre>

@@ -1,3 +1,4 @@
+import FilterBlockNestedAttr from "../FilterNestedAttr";
 const { createBlock } = wp.blocks;
 const { dispatch, select } = wp.data;
 
@@ -82,59 +83,11 @@ const filterTranslateAttr = (block, blockParseRules, replaceAttrRules) => {
 
                 block.attributes = updateNestedAttribute(block.attributes, newIdArr, translateContent);
             }
-        }
-
-        if (Object.getPrototypeOf(filterAttrObj) === Array.prototype) {
-            childAttrArray(idArr, filterAttrObj);
-        } else if (Object.getPrototypeOf(filterAttrObj) === Object.prototype) {
-            childAttr(idArr, filterAttrObj);
-        }
-    }
-
-    /**
-     * Function to handle updating translated attributes for a single level object.
-     * 
-     * @param {Array} idArr - The array of IDs to update attributes for.
-     * @param {Object} filterObj - The filter object containing attributes to update.
-     */
-    const childAttr = (idArr, filterObj) => {
-        Object.keys(filterObj).map(key => {
-            let filterObjType = filterObj;
-            filterObjType = filterObjType[key];
-            const newIdArr = new Array(...idArr, key);
-
-            updateTranslatedAttr(newIdArr, filterObjType);
-        });
-    }
-
-    /**
-     * Function to handle updating translated attributes for an array of objects.
-     * 
-     * @param {Array} idArr - The array of IDs to update attributes for.
-     * @param {Array} attrFilter - The filter array containing attributes to update.
-     */
-    const childAttrArray = (idArr, attrFilter) => {
-        const newIdArr = new Array(...idArr);
-        let dynamicBlockAttr = blockAttr;
-
-        newIdArr.forEach(key => {
-            dynamicBlockAttr = dynamicBlockAttr[key];
-        });
-
-        if (Object.getPrototypeOf(dynamicBlockAttr) === Object.prototype) {
-            childAttr(idArr, attrFilter[0]);
+            
             return;
         }
 
-        dynamicBlockAttr.forEach((_, index) => {
-            const nestedId = new Array();
-            newIdArr.forEach(key => {
-                nestedId.push(key);
-            });
-
-            nestedId.push(index);
-            updateTranslatedAttr(nestedId, attrFilter[0]);
-        });
+        FilterBlockNestedAttr(idArr,filterAttrObj,blockAttr,updateTranslatedAttr);
     }
 
     filterAttrArr.forEach(data => {
