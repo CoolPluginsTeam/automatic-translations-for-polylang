@@ -89,6 +89,11 @@
     margin-bottom: 1rem;
 }
 
+#atfp-setting-modal .modal-header h2{
+    margin-top: 0px;
+    padding-top: 0px;
+}
+
 #atfp-setting-modal .modal-header h4{
     background-color: #f1f1f1;
     padding: .5rem;
@@ -118,7 +123,7 @@
 #atfp_strings_model .modal-header h2 {
     display: inline-block;
     font-size: 18px;
-    color: #000;
+    color: white;
     padding: 0;
     margin: 18px 159px 5px 0px;
     width: calc(100% - 160px);
@@ -320,6 +325,22 @@ button.atfp-setting-close:hover{
     font-weight: bold;
     text-align: center;
     padding-top: 30px;
+}
+
+#atfp_strings_model .atfp_translate_element_wrapper{
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    column-gap: 0.5rem;
+}
+
+#atfp_strings_model .atfp_translate_element_wrapper>button{
+    height: 34px;
+    pointer-events: none;
+}
+
+#atfp_strings_model .atfp_translate_element_wrapper #yt-widget .yt-wrapper_align_right{
+    margin-bottom: 1rem;
 }
 
 #atfp_strings_model .modal-footer {

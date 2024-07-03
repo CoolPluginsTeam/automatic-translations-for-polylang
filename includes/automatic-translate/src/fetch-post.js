@@ -82,7 +82,7 @@ const FetchPost = (props) => {
                         </>
                     );
                 })
-                : <p>{__('No strings are available for translation', 'automatic-translation-for-polylang')}</p>
+                : <p>{__('No strings are available for translation', 'automatic-translations-for-polylang')}</p>
             }
         </>
     );

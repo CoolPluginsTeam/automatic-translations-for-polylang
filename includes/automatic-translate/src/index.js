@@ -20,6 +20,7 @@ const App = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const targetLang = urlParams.get('new_lang');
   const postId = urlParams.get('from_post');
+  const postType = urlParams.get('post_type');
 
   const pageTranslateHandler = (status) => {
     setPageTranslate(status);
@@ -37,7 +38,7 @@ const App = () => {
   return (
     <>
       {!pageTranslate &&
-        <PopupModal pageTranslate={pageTranslateHandler} postId={postId} targetLang={targetLang} />
+        <PopupModal pageTranslate={pageTranslateHandler} postId={postId} targetLang={targetLang} postType={postType}/>
       }
     </>
   );

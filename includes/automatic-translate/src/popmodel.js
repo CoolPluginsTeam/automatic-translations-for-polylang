@@ -127,35 +127,35 @@ const PopupModal = (props) => {
                 <div className="modal-container" style={{ display: settingVisibility ? 'flex' : 'none' }}>
                     <div className="atfp-settings modal-content">
                         <div className="modal-header">
-                            <h2>{__("Step 1 - Select Translation Provider (Beta)", 'automatic-translation-for-polylang')}</h2>
-                            <h4>{sprintf(__("Translate post content from %(source)s to %(target)s", 'automatic-translation-for-polylang'), { source: sourceLangName, target: targetLangName })}</h4>
+                            <h2>{__("Step 1 - Select Translation Provider (Beta)", 'automatic-translations-for-polylang')}</h2>
+                            <h4>{sprintf(__("Translate %(postType)s content from %(source)s to %(target)s", 'automatic-translations-for-polylang'), { postType: props.postType, source: sourceLangName, target: targetLangName })}</h4>
                             <span className="close" onClick={() => setSettingVisibility(false)}>&times;</span>
                         </div>
                         <hr />
-                        <strong className="atlt-heading">{__("Translate Using Yandex Page Translate Widget", 'automatic-translation-for-polylang')}</strong>
+                        <strong className="atlt-heading">{__("Translate Using Yandex Page Translate Widget", 'automatic-translations-for-polylang')}</strong>
                         <div className="inputGroup">
                             {yandexSupport ?
                                 <>
-                                    <button className="atfp-service-btn translate button button-primary" data-service="yandex" data-service-label="Yandex Translate" onClick={fetchContent}>{__("Yandex Translate (Beta)", 'automatic-translation-for-polylang')}</button>
+                                    <button className="atfp-service-btn translate button button-primary" data-service="yandex" data-service-label="Yandex Translate" onClick={fetchContent}>{__("Yandex Translate (Beta)", 'automatic-translations-for-polylang')}</button>
                                     <br />
                                 </>
                                 :
                                 <>
-                                    <button className="atfp-service-btn translate button button-primary" disabled={true}>{__("Yandex Translate (Beta)", 'automatic-translation-for-polylang')}</button><br />
-                                    <span className="atfp-error-message">{targetLangName} {__('language is not supported by Yandex Translate', 'automatic-translation-for-polylang')}.</span>
+                                    <button className="atfp-service-btn translate button button-primary" disabled={true}>{__("Yandex Translate (Beta)", 'automatic-translations-for-polylang')}</button><br />
+                                    <span className="atfp-error-message">{targetLangName} {__('language is not supported by Yandex Translate', 'automatic-translations-for-polylang')}.</span>
                                 </>
                             }
                             <a href="https://translate.yandex.com/" target="_blank"><img className="pro-features-img" src={`${imgFolder}powered-by-yandex.png`} alt="powered by Yandex Translate Widget" /></a>
                         </div>
                         <hr />
                         <ul style={{ margin: "0" }}>
-                            <li><span style={{ color: "green" }}>✔</span> {__("Unlimited Translations with Yandex Translate", 'automatic-translation-for-polylang')}</li>
-                            <li><span style={{ color: "green" }}>✔</span> {__("No API Key Required for Yandex Translate", 'automatic-translation-for-polylang')}</li>
-                            <li><span style={{ color: "green" }}>✔</span> {__("Supports Multiple Languages", 'automatic-translation-for-polylang')} - <a href="https://yandex.com/support2/translate-desktop/en/supported-langs" target="_blank">{__("See Supported Languages", 'automatic-translation-for-polylang')}</a></li>
+                            <li><span style={{ color: "green" }}>✔</span> {__("Unlimited Translations with Yandex Translate", 'automatic-translations-for-polylang')}</li>
+                            <li><span style={{ color: "green" }}>✔</span> {__("No API Key Required for Yandex Translate", 'automatic-translations-for-polylang')}</li>
+                            <li><span style={{ color: "green" }}>✔</span> {__("Supports Multiple Languages", 'automatic-translations-for-polylang')} - <a href="https://yandex.com/support2/translate-desktop/en/supported-langs" target="_blank">{__("See Supported Languages", 'automatic-translations-for-polylang')}</a></li>
                         </ul>
                         <hr />
                         <div className="modal-footer">
-                            <button className="atfp-setting-close" onClick={() => setSettingVisibility(false)}>{__("Close", 'automatic-translation-for-polylang')}</button>
+                            <button className="atfp-setting-close" onClick={() => setSettingVisibility(false)}>{__("Close", 'automatic-translations-for-polylang')}</button>
                         </div>
                     </div>
                 </div>
