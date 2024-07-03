@@ -14,36 +14,12 @@ const init = () => {
   });
 }
 
-
 const App = () => {
   const [pageTranslate, setPageTranslate] = useState(false);
   const urlParams = new URLSearchParams(window.location.search);
   const targetLang = urlParams.get('new_lang');
   const postId = urlParams.get('from_post');
   const postType = urlParams.get('post_type');
-  const targetLangName = atfp_ajax_object.languageObject[targetLang];
-
-  const createMessagePopup = () => {
-    const messagePopup = document.createElement('div');
-    messagePopup.id = 'atfp-modal-open-warning-wrapper';
-    messagePopup.innerHTML = `
-      <div class="modal-container" style="display: flex">
-        <div class="modal-content">
-          <p>Would you like to duplicate your original ${postType} content and have it automatically translated into ${targetLangName}?</p>
-          <div>
-            <button data-value="yes">Yes</button>
-            <button data-value="no">No</button>
-          </div>
-        </div>
-      </div>`;
-    return messagePopup;
-  };
-
-  const insertMessagePopup = () => {
-    const targetElement = document.getElementById('atfp-setting-modal');
-    const messagePopup = createMessagePopup();
-    document.body.insertBefore(messagePopup, targetElement);
-  };
 
   const handlePageTranslate = (status) => {
     setPageTranslate(status);
@@ -60,15 +36,51 @@ const App = () => {
 
   return (
     <>
-      {insertMessagePopup()}
       {!pageTranslate && <PopupModal pageTranslate={handlePageTranslate} postId={postId} targetLang={targetLang} postType={postType} />}
     </>
   );
 };
 
-// Append app root wrapper in body
-init();
-// Render the main App component
+/**
+ * Creates a message popup based on the post type and target language.
+ * @returns {HTMLElement} The created message popup element.
+ */
+const createMessagePopup = () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const postType = urlParams.get('post_type');
+  const targetLang = urlParams.get('new_lang');
+  const targetLangName = atfp_ajax_object.languageObject[targetLang];
+
+  const messagePopup = document.createElement('div');
+  messagePopup.id = 'atfp-modal-open-warning-wrapper';
+  messagePopup.innerHTML = `
+    <div class="modal-container" style="display: flex">
+      <div class="modal-content">
+        <p>Would you like to duplicate your original ${postType} content and have it automatically translated into ${targetLangName}?</p>
+        <div>
+          <button data-value="yes">Yes</button>
+          <button data-value="no">No</button>
+        </div>
+      </div>
+    </div>`;
+  return messagePopup;
+};
+
+/**
+ * Inserts the message popup into the DOM.
+ */
+const insertMessagePopup = () => {
+  const targetElement = document.getElementById('atfp-setting-modal');
+  const messagePopup = createMessagePopup();
+  document.body.insertBefore(messagePopup, targetElement);
+};
+
 window.addEventListener('load', () => {
+
+  // Append app root wrapper in body
+  init();
+
+  insertMessagePopup();
+
   wp.element.render(<App />, document.getElementById('atfp-setting-modal'));
 });
