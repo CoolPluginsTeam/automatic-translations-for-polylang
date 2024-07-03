@@ -222,7 +222,7 @@ if ( ! class_exists( 'ATFP' ) ) {
 							// Return if PLL function does not exist or post type is not translated
 							return;
 						}
-						add_meta_box( 'my-meta-box-id', __( 'Automatic Translate Content from Original Post', 'automatic-translations-for-polylang' ), array( $this, 'atfp_shortcode_text' ), null, 'side', 'high' );
+						add_meta_box( 'my-meta-box-id', __( 'Automatic Translate', 'automatic-translations-for-polylang' ), array( $this, 'atfp_shortcode_text' ), null, 'side', 'high' );
 					}
 				}
 			}
@@ -232,13 +232,26 @@ if ( ! class_exists( 'ATFP' ) ) {
 		 * Display the automatic translation metabox button.
 		 */
 		function atfp_shortcode_text() {
-			?>
+			if ( isset( $_GET['_wpnonce'] ) && wp_verify_nonce( $_GET['_wpnonce'], 'new-post-translation' ) ) {
+				$target_language = '';
+				if ( function_exists( 'PLL' ) ) {
+					$target_code = isset( $_GET['new_lang'] ) ? htmlspecialchars( $_GET['new_lang'] ) : false;
+					$languages   = PLL()->model->get_languages_list();
+					foreach ( $languages as $lang ) {
+						if ( $lang->slug === $target_code ) {
+							$target_language = $lang->name;
+						}
+					}
+				}
+				?>
 			 <input type="button" class="button button-primary" name="atfp_meta_box_translate" id="atfp-translate-button" value="
 				<?php
 					echo esc_html__( 'Translate Content (Beta)', 'automatic-translations-for-polylang' );
 				?>
 			 " readonly/><br><br>
-			<?php
+			 <p style="margin-bottom: .5rem;">Translate or duplicate content from Hindi to <?php echo esc_html( $target_language ); ?></p>
+				<?php
+			}
 		}
 
 		/*

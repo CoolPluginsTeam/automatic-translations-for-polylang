@@ -9,7 +9,7 @@ const PopupModal = (props) => {
     const [targetBtn, setTargetBtn] = useState({});
     const [blockRules, setBlockRules] = useState({});
     const [modalRender, setModalRender] = useState({});
-    const [settingVisibility, setSettingVisibility] = useState(true);
+    const [settingVisibility, setSettingVisibility] = useState(false);
     const sourceLang = atfp_ajax_object.source_lang;
     const targetLang = props.targetLang;
     const sourceLangName = atfp_ajax_object.languageObject[sourceLang];
@@ -34,11 +34,24 @@ const PopupModal = (props) => {
         setFetchStatus(state);
     }
 
+    const openModalOnLoadHandler=(e)=>{
+        e.preventDefault();
+        const btnElement=e.target;
+        const visibility=btnElement.dataset.value;
+
+        if(visibility === 'yes'){
+            setSettingVisibility(true);
+        }
+
+        btnElement.closest('#atfp-modal-open-warning-wrapper').remove();
+    }
+
     /**
      * useEffect hook to set settingVisibility.
      * Triggers the setSettingVisibility only when user click on meta field Button.
     */
     useEffect(() => {
+        const firstRenderBtns=document.querySelectorAll('#atfp-modal-open-warning-wrapper .modal-content button');
         const metaFieldBtn = document.querySelector('input#atfp-translate-button[name="atfp_meta_box_translate"]');
 
         if (metaFieldBtn) {
@@ -46,6 +59,12 @@ const PopupModal = (props) => {
                 setSettingVisibility(prev => !prev);
             });
         }
+
+        firstRenderBtns.forEach(ele=>{
+            if(ele){
+                ele.addEventListener('click',openModalOnLoadHandler);
+            }
+        })
     }, [])
 
     /**
@@ -130,6 +149,7 @@ const PopupModal = (props) => {
                         <div className="modal-header">
                             <h2>{__("Step 1 - Select Translation Provider (Beta)", 'automatic-translations-for-polylang')}</h2>
                             <h4>{sprintf(__("Translate %(postType)s content from %(source)s to %(target)s", 'automatic-translations-for-polylang'), { postType: props.postType, source: sourceLangName, target: targetLangName })}</h4>
+                            <p class="atfp-error-message" style={{marginBottom: '.5rem'}}>{sprintf(__("This translation widget replaces the current %(postType)s content with the original %(source)s %(postType)s and translates it into %(target)s", 'automatic-translations-for-polylang'),{ postType: props.postType, source: sourceLangName, target: targetLangName})}</p>
                             <span className="close" onClick={() => setSettingVisibility(false)}>&times;</span>
                         </div>
                         <hr />

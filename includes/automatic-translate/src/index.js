@@ -21,8 +21,31 @@ const App = () => {
   const targetLang = urlParams.get('new_lang');
   const postId = urlParams.get('from_post');
   const postType = urlParams.get('post_type');
+  const targetLangName = atfp_ajax_object.languageObject[targetLang];
 
-  const pageTranslateHandler = (status) => {
+  const createMessagePopup = () => {
+    const messagePopup = document.createElement('div');
+    messagePopup.id = 'atfp-modal-open-warning-wrapper';
+    messagePopup.innerHTML = `
+      <div class="modal-container" style="display: flex">
+        <div class="modal-content">
+          <p>Would you like to duplicate your original post content and have it automatically translated into ${targetLangName}?</p>
+          <div>
+            <button data-value="yes">Yes</button>
+            <button data-value="no">No</button>
+          </div>
+        </div>
+      </div>`;
+    return messagePopup;
+  };
+
+  const insertMessagePopup = () => {
+    const targetElement = document.getElementById('atfp-setting-modal');
+    const messagePopup = createMessagePopup();
+    document.body.insertBefore(messagePopup, targetElement);
+  };
+
+  const handlePageTranslate = (status) => {
     setPageTranslate(status);
   };
 
@@ -33,13 +56,12 @@ const App = () => {
         metaFieldBtn.disabled = true;
       }
     }
-  }, [pageTranslate])
+  }, [pageTranslate]);
 
   return (
     <>
-      {!pageTranslate &&
-        <PopupModal pageTranslate={pageTranslateHandler} postId={postId} targetLang={targetLang} postType={postType}/>
-      }
+      {insertMessagePopup()}
+      {!pageTranslate && <PopupModal pageTranslate={handlePageTranslate} postId={postId} targetLang={targetLang} postType={postType} />}
     </>
   );
 };

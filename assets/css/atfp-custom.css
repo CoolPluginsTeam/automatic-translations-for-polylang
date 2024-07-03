@@ -1,6 +1,5 @@
 
-#atfp-setting-modal .modal-container,
-#atfp_strings_model .modal-container {
+:is(#atfp-modal-open-warning-wrapper, #atfp-setting-modal,#atfp_strings_model ) .modal-container {
     display: none;
     position: fixed;
     z-index: 99999;
@@ -13,7 +12,7 @@
     align-items: center;
 }
 
-#atfp-setting-modal .modal-content {
+:is(#atfp-modal-open-warning-wrapper, #atfp-setting-modal ) .modal-content {
     position: relative;
     background-color: #fefefe;
     width: clamp(200px, 400px, 80%);
@@ -28,6 +27,57 @@
     animation-duration: 0.6s;
     animation-fill-mode: forwards;
     padding-block: 1rem;
+}
+
+#atfp-modal-open-warning-wrapper .modal-content{
+    padding: 1rem;
+    text-align: center;
+}
+
+#atfp-modal-open-warning-wrapper .modal-content p{
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+#atfp-modal-open-warning-wrapper .modal-content button{
+    font-size: 1rem;
+    font-weight: 500;
+    padding: .3rem .5rem;
+    margin-inline: .3rem;
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+#atfp-modal-open-warning-wrapper .modal-content button:hover{
+    opacity: 1;
+}
+
+#atfp-modal-open-warning-wrapper .modal-content button:nth-child(1){
+    background-color: #28a745;
+    color: white;
+    border: 1px solid #28a745;
+    padding: 0.375rem 0.75rem;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+#atfp-modal-open-warning-wrapper .modal-content button:nth-child(2) {
+    background-color: #dc3545;
+    color: white;
+    border: 1px solid #dc3545;
+    padding: 0.375rem 0.75rem;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 #atfp_strings_model .modal-content {
@@ -97,6 +147,14 @@
 #atfp-setting-modal .modal-header h4{
     background-color: #f1f1f1;
     padding: .5rem;
+    margin-bottom: 0px;
+}
+
+#atfp-setting-modal .modal-header .atfp-error-message{
+    background-color: #f1f1f1;
+    margin: .5rem 0 .5rem 0;
+    padding: .5rem;
+    font-weight: 500;
 }
 
 #atfp-setting-modal .modal-content>*:not(hr){
