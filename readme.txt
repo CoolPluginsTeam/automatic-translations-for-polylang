@@ -1,6 +1,6 @@
 ﻿=== Automatic Translations For Polylang ===
 Contributors:coolplugins
-Tags:polylang,duplicate page, duplicate post,translation,language,duplicate,Content duplication, Automatic Translation
+Tags: polylang, Automatic Translate, Duplicate Content, Block Translation
 Requires at least:5.0
 Tested up to:6.5
 Requires PHP:5.6
@@ -19,12 +19,21 @@ This addon enables you to <strong>replicate page/post titles, content, images, g
 
 Moreover, there's no need to repeatedly restyle your page, as this addon seamlessly copies all styles and formats and translate content from the original post. Simplify your multilingual website management with ease.
 
+> **Important Notice:** This plugin serves as an automatic translation extension for the official Polylang plugin.
+
+> **Important Notice:** This plugin provides automatic translation functionality only for Gutenberg blocks.
+
 > This plugin is not developed by or affiliated with the "**Polylang developers**". It is a third-party addon that provides automatic translation functionality to quickly translate your post with the same styles into other languages.
 
 = Special THANKS!: =
 Special thanks to famous **[Polylang](https://wordpress.org/plugins/polylang/)** plugin authors for creating an awesome plugin for multilang management.
 == Screenshots ==
 1. Automatic translation content preview in Gutenberg Block Editor.
+
+### 🌴 Important Links & Information
+
+* [Yandex Translate Terms](https://yandex.com/legal/translate_termsofuse/)
+* [Yandex Privacy Policy](https://yandex.com/legal/confidential/)
 
 == Frequently Asked Questions ==
 
