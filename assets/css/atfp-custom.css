@@ -260,8 +260,13 @@ button.atfp-setting-close:hover{
     padding: 1rem;
 }
 
+#atfp_strings_model .modal-footer .notice.atfp_string_count{
+    display: block;
+    max-width: calc(100% - 123px) !important;
+} 
+
 #atfp_strings_model .notice.atfp_string_count{
-    top: 1.2rem;
+    top: 1rem;
     font-size: 1rem;
     background: transparent;
     border-width: 0px;
