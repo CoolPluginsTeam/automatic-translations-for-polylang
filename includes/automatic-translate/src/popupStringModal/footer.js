@@ -25,7 +25,7 @@ const StringPopUpFooter = (props) => {
 
     return (
         <div className="modal-footer" key={props.modalRender}>
-            {!props.translateStatus && props.stringCount && <StringPopUpNotice className="atfp_string_count">{sprintf(__("Automated translation complete: %s strings translated, saving valuable time and resources.", 'automatic-translation-for-polylang'), props.stringCount)}</StringPopUpNotice>}
+            {!props.translateStatus && props.stringCount && <StringPopUpNotice className="atfp_string_count">{sprintf(__("Automated translation complete: %s words translated, saving valuable time and resources.", 'automatic-translation-for-polylang'), props.stringCount)}</StringPopUpNotice>}
             <div className="save_btn_cont">
                 <button className="notranslate save_it button button-primary" disabled={props.translateStatus} onClick={createTranslatedPost}>{__("Update Content", 'automatic-translation-for-polylang')}</button>
             </div>

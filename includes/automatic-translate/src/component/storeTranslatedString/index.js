@@ -2,22 +2,26 @@ const { dispatch } = wp.data;
 
 const ScrollAnimation = (props) => {
     const { element, scrollSpeed } = props;
-    const scrollHeight = element.scrollHeight;
+    const scrollHeight = element.scrollHeight - element.offsetHeight;
 
     let startTime = null;
     let startScrollTop = element.scrollTop;
 
     const animateScroll = () => {
         const currentTime = performance.now();
-        const duration = scrollSpeed; // 10 seconds
+        const duration = scrollSpeed;
         const scrollTarget = scrollHeight + 2000;
-
+        
         if (!startTime) {
             startTime = currentTime;
         }
 
         const progress = (currentTime - startTime) / duration;
         const scrollPosition = startScrollTop + (scrollTarget - startScrollTop) * progress;
+
+        if(scrollPosition > scrollHeight){
+            return; // Stop animate scroll
+        }
 
         element.scrollTop = scrollPosition;
 
