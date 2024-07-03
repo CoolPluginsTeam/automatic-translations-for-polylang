@@ -29,7 +29,7 @@ const App = () => {
     messagePopup.innerHTML = `
       <div class="modal-container" style="display: flex">
         <div class="modal-content">
-          <p>Would you like to duplicate your original post content and have it automatically translated into ${targetLangName}?</p>
+          <p>Would you like to duplicate your original ${postType} content and have it automatically translated into ${targetLangName}?</p>
           <div>
             <button data-value="yes">Yes</button>
             <button data-value="no">No</button>
