@@ -26,9 +26,9 @@ const StringPopUpHeader = (props) => {
     return (
         <div className="modal-header" key={props.modalRender}>
             <span className="close" onClick={closeModal}>&times;</span>
-            <h2 className="notranslate">{__("Step 2 - Start Automatic Translation Process (Beta)", 'automatic-translation-for-polylang')}</h2>
+            <h2 className="notranslate">{__("Step 2 - Start Automatic Translation Process", 'automatic-translations-for-polylang')}</h2>
             <div className="save_btn_cont">
-                <button className="notranslate save_it button button-primary" disabled={props.translateStatus} onClick={createTranslatedPost}>{__("Update Content", 'automatic-translation-for-polylang')}</button>
+                <button className="notranslate save_it button button-primary" disabled={props.translateStatus} onClick={createTranslatedPost}>{__("Update Content", 'automatic-translations-for-polylang')}</button>
             </div>
         </div>
     );

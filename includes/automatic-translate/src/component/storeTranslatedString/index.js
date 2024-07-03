@@ -2,11 +2,10 @@ const { dispatch } = wp.data;
 
 const ScrollAnimation = (props) => {
     const { element, scrollSpeed } = props;
-    const scrollHeight = element.scrollHeight - element.offsetHeight;
+    const scrollHeight = element.scrollHeight - element.offsetHeight + 100;
 
     let startTime = null;
     let startScrollTop = element.scrollTop;
-
     const animateScroll = () => {
         const currentTime = performance.now();
         const duration = scrollSpeed;
@@ -25,11 +24,10 @@ const ScrollAnimation = (props) => {
 
         element.scrollTop = scrollPosition;
 
-        if (progress < 1) {
-            requestAnimationFrame(animateScroll);
+        if (scrollPosition < scrollHeight) {
+            setTimeout(animateScroll, 16);
         }
     }
-
     animateScroll();
 };
 
@@ -105,7 +103,7 @@ const SaveTranslationHandler = (translateStatus) => {
         container.querySelector(".atfp_translate_progress").style.display = "block";
 
         setTimeout(() => {
-            const scrollSpeed = Math.ceil((scrollHeight / stringContainer?.offsetHeight)) * 3000;
+            const scrollSpeed = Math.ceil((scrollHeight / stringContainer?.offsetHeight)) * 2000;
 
             ScrollAnimation({ element: stringContainer, scrollSpeed: scrollSpeed });
         }, 2000);
