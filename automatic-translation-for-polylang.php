@@ -222,7 +222,7 @@ if ( ! class_exists( 'ATFP' ) ) {
 							// Return if PLL function does not exist or post type is not translated
 							return;
 						}
-						add_meta_box( 'my-meta-box-id', __( 'Automatic Translate', 'automatic-translations-for-polylang' ), array( $this, 'atfp_shortcode_text' ), null, 'side', 'high' );
+						add_meta_box( 'atfp-meta-box', __( 'Automatic Translate', 'automatic-translations-for-polylang' ), array( $this, 'atfp_shortcode_text' ), null, 'side', 'high' );
 					}
 				}
 			}
