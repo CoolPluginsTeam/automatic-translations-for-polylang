@@ -89,7 +89,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 			$post_id = isset( $_POST['postId'] ) ? (int) filter_var( $_POST['postId'], FILTER_SANITIZE_NUMBER_INT ) : false;
 
 			if ( false !== $post_id ) {
-				$post_data = get_post( $post_id );
+				$post_data = get_post( esc_html($post_id) );
 
 				$content = $post_data->post_content;
 				$data    = array(
