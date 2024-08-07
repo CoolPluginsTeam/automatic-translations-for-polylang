@@ -31,13 +31,13 @@ if ( ! defined( 'ATFP_FILE' ) ) {
 
 
 
-if ( ! class_exists( 'Automatic_Translator_For_Polylang' ) ) {
-	final class Automatic_Translator_For_Polylang {
+if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
+	final class Automatic_Translations_For_Polylang {
 
 		/**
 		 * Plugin instance.
 		 *
-		 * @var Automatic_Translator_For_Polylang
+		 * @var Automatic_Translations_For_Polylang
 		 * @access private
 		 */
 		private static $instance = null;
@@ -45,7 +45,7 @@ if ( ! class_exists( 'Automatic_Translator_For_Polylang' ) ) {
 		/**
 		 * Get plugin instance.
 		 *
-		 * @return Automatic_Translator_For_Polylang
+		 * @return Automatic_Translations_For_Polylang
 		 * @static
 		 */
 		public static function get_instance() {
@@ -262,8 +262,8 @@ if ( ! class_exists( 'Automatic_Translator_For_Polylang' ) ) {
 
 }
 
-function Automatic_Translator_For_Polylang() {
-	return Automatic_Translator_For_Polylang::get_instance();
+function Automatic_Translations_For_Polylang() {
+	return Automatic_Translations_For_Polylang::get_instance();
 }
 
-$Automatic_Translator_For_Polylang = Automatic_Translator_For_Polylang();
+$Automatic_Translations_For_Polylang = Automatic_Translations_For_Polylang();
