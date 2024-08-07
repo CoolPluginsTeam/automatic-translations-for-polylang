@@ -27,13 +27,30 @@ Moreover, there's no need to repeatedly restyle your page, as this addon seamles
 
 = Special THANKS!: =
 Special thanks to famous **[Polylang](https://wordpress.org/plugins/polylang/)** plugin authors for creating an awesome plugin for multilang management.
-== Screenshots ==
-1. Automatic translation content preview in Gutenberg Block Editor.
+
+**Service Provider :**
+This plugin provides automatic translation services for Polylang using the Yandex Translate API.
+
+= Service Description =
+The plugin uses the Yandex Translate API to translate content in real-time, allowing you to easily manage multilingual content on your WordPress site.
+
+= Servers Being Called =
+The plugin makes API calls to the following servers:
+* `https://translate.yandex.net/api/v1/tr.json/translate`
+
+= Account Requirements =
+To use this plugin, you don't need to create a Yandex Translate account. However, please note that the API usage is subject to Yandex Translate's terms of service and usage limits.
+
+= Benefits =
+By using the Yandex Translate API, you can enjoy improved translation accuracy and efficiency, making it easier to manage your multilingual content.
 
 ### 🌴 Important Links & Information
 
 * [Yandex Translate Terms](https://yandex.com/legal/translate_termsofuse/)
 * [Yandex Privacy Policy](https://yandex.com/legal/confidential/)
+
+== Screenshots ==
+1. Automatic translation content preview in Gutenberg Block Editor.
 
 == Frequently Asked Questions ==
 
