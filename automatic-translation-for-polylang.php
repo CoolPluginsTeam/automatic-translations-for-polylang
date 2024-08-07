@@ -3,7 +3,7 @@
 Plugin Name: Automatic Translations For Polylang
 Requires Plugins: polylang
 Plugin URI: https://coolplugins.net/
-Version: 1.0.0
+Version: 1.0.1
 Author: Cool Plugins
 Author URI: https://coolplugins.net/
 Description: Streamline your Polylang experience with this plugin that not only duplicates content but also translates core and specific blocks across multiple languages.
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 if ( ! defined( 'ATFP_V' ) ) {
-	define( 'ATFP_V', '1.0.0' );
+	define( 'ATFP_V', '1.0.1' );
 }
 if ( ! defined( 'ATFP_DIR_PATH' ) ) {
 	define( 'ATFP_DIR_PATH', plugin_dir_path( __FILE__ ) );

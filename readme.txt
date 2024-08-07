@@ -4,7 +4,7 @@ Tags: polylang, Automatic Translate, Duplicate Content, Block Translation
 Requires at least:5.0
 Tested up to:6.5
 Requires PHP:5.6
-Stable tag:1.0.0
+Stable tag:1.0.1
 Author URI:https://coolplugins.net/
 License:GPLv2 or later
 License URI:http://www.gnu.org/licenses/gpl-2.0.html
@@ -28,20 +28,25 @@ Moreover, there's no need to repeatedly restyle your page, as this addon seamles
 = Special THANKS!: =
 Special thanks to famous **[Polylang](https://wordpress.org/plugins/polylang/)** plugin authors for creating an awesome plugin for multilang management.
 
-**Service Provider :**
+**Development Resources**
+
+To access the source code, please navigate to the `automatic-translations-for-polylang/includes/automatic-translate/src` directory within the plugin directory. The build files can be found in the `automatic-translations-for-polylang/assets/build` directory.
+
+**Service Provider**
+
 This plugin provides automatic translation services for Polylang using the Yandex Translate API.
 
-= Service Description =
+* **Service Description**
 The plugin uses the Yandex Translate API to translate content in real-time, allowing you to easily manage multilingual content on your WordPress site.
 
-= Servers Being Called =
+* **Servers Being Called**
 The plugin makes API calls to the following servers:
-* `https://translate.yandex.net/api/v1/tr.json/translate`
+`https://translate.yandex.net/api/v1/tr.json/translate`
 
-= Account Requirements =
+* **Account Requirements**
 To use this plugin, you don't need to create a Yandex Translate account. However, please note that the API usage is subject to Yandex Translate's terms of service and usage limits.
 
-= Benefits =
+* **Benefits**
 By using the Yandex Translate API, you can enjoy improved translation accuracy and efficiency, making it easier to manage your multilingual content.
 
 ### 🌴 Important Links & Information
@@ -55,6 +60,12 @@ By using the Yandex Translate API, you can enjoy improved translation accuracy a
 == Frequently Asked Questions ==
 
 == Changelog ==
+<strong>Version 1.0.1 | 07 August 2024</strong>
+<pre>
+Added: Service provider details to the README file for easier access.
+Fixed: Resolved security issues by adding an escaping function in all necessary places.
+Impove: Code improvement for better performance and maintainability..
+</pre>
 <strong>Version 1.0.0 | 02 July 2024</strong>
 <pre>
 New: Initial Plugin Release
