@@ -83,6 +83,10 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 				add_action( 'admin_enqueue_scripts', array( $this, 'atfp_register_backend_assets' ) ); // registers js and css for frontend
 			}
 
+			if ( is_admin() ) {
+				require_once ATFP_DIR_PATH . 'admin/feedback/atfp-users-feedback.php';
+			}
+
 			load_plugin_textdomain( 'automatic-translations-for-polylang', false, basename( dirname( __FILE__ ) ) . '/languages/' );
 		}
 
