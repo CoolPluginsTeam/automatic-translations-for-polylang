@@ -1,53 +1,85 @@
 ﻿=== Automatic Translations For Polylang ===
-Contributors:coolplugins
-Tags: polylang, Automatic Translate, Duplicate Content, Block Translation
-Requires at least:5.0
-Tested up to:6.5
-Requires PHP:5.6
-Stable tag:1.0.1
-Author URI:https://coolplugins.net/
-License:GPLv2 or later
-License URI:http://www.gnu.org/licenses/gpl-2.0.html
+Contributors: narinder-singh,satindersingh,coolplugins
+Tags: Polylang, Automatic Translation, Duplicate Content, Block Translation
+Requires at least: 5.0
+Tested up to: 6.5
+Requires PHP: 5.6
+Stable tag: 1.0.1
+Author URI: https://coolplugins.net/
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-The Polylang addon makes translating your posts easy by copying all the content, including core blocks and specialized blocks like Spectra, Kadence, Stackable, Otter, and Essential, from one language to another.
+Automatic Translations For Polylang simplifies your translation process by automatically copying and translating all post content, including core and specialized blocks from one language to another.
+
 == Description ==
 
-**Automatic Translations For Polylang**
-Reduce your translation <strong>workload by 50%</strong> with this efficient PolyLang addon. Not only does it duplicate your original or default language <strong>post content</strong>, but it also <strong>translates core and specific blocks</strong> into other languages of the same post, significantly streamlining the translation process.
+**Automatic Translations For Polylang** reduces your translation **workload by 90%** with this powerful addon. It not only duplicates your original or default language **post content** but also **translates core and specific blocks** into other languages of the same post, streamlining the entire translation process.
 
-This addon enables you to <strong>replicate page/post titles, content, images, galleries, </strong>and all associated meta fields. By duplicating and translating the content, you can focus solely on translating the necessary elements without the hassle of setting featured images, adding galleries, or reinserting other content.
+This addon allows you to **replicate page/post titles, content, images, galleries,** and all associated meta fields. By duplicating and translating content, you can focus solely on translating the necessary elements without the hassle of setting featured images, adding galleries, or reinserting other content.
 
-Moreover, there's no need to repeatedly restyle your page, as this addon seamlessly copies all styles and formats and translate content from the original post. Simplify your multilingual website management with ease.
+**[Check It Now ](https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=buy_pro)**
 
-> **Important Notice:** This plugin serves as an automatic translation extension for the official Polylang plugin.
+
+Moreover, there's no need to repeatedly restyle your page, as this addon seamlessly copies all styles and formats while translating content from the original post. Simplify your multilingual website management with ease.
+== Key Features ==
+
+- **Automatic Content Translation:** Effortlessly translate post titles, content, images, galleries, and meta fields from one language to another using the Yandex Translate API.
+  
+- **Gutenberg Block Compatibility:** Specifically designed to translate content within Gutenberg blocks, including core blocks and popular third-party blocks like Spectra, Kadence, Stackable, Otter, and Essential.
+
+- **One-Click Duplication:** Easily duplicate your original or default language content into other languages, saving time and reducing manual work.
+
+- **Style and Format Preservation:** The plugin retains all styles, formats, and layouts from the original post, ensuring that your translated content maintains a consistent appearance.
+
+- **Multilingual Management:** Simplifies the process of managing a multilingual website by automating translation tasks and reducing the need for repetitive actions.
+
+- **No Account Required:** Use the Yandex Translate API without needing to create a separate Yandex account, making it straightforward to set up and use.
+
+- **Custom Block Support:** While optimized for Gutenberg blocks, the plugin also works with several third-party block plugins, extending its versatility.
+
+- **Easy to Use:** Designed with a user-friendly interface, making it accessible even for those with limited technical knowledge.
+
+
+### Check out our advanced Automatic Translate Addon for Loco Translate
+
+The  **[Automatic Translate Addon for Loco Translate](https://locoaddon.com/plugin/automatic-translate-addon-for-loco-translate-pro/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=buy_pro)** is an essential tool for website owners and developers who want to quickly and efficiently translate WordPress plugins and themes. By integrating with the popular Loco Translate plugin, this addon leverages advanced machine translation services to automate the translation of PO files, significantly reducing the time and effort required.
+
+#### Key Features:
+- **Automatic Translations:** Utilizes machine translation to translate WordPress plugin and theme strings automatically.
+- **No API Key Required for Free Version:** Allows unlimited character translations using the Yandex Page Translate Widget without needing a paid API key.
+- **Premium Version Enhancements:** Provides additional translation options with Google Translate Widget, DeepL Doc Translator, ChatGPT, and Gemini, all without requiring a paid API key.
+- **User-Friendly Interface:** Features a one-click translation button within the Loco Translate editor, making translations quick and easy.
+- **Unlimited Translations:** Both free and premium versions support unlimited character translations, with premium users accessing more advanced and accurate translation tools.
+
+**[Check It Now ](https://locoaddon.com/plugin/automatic-translate-addon-for-loco-translate-pro/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=buy_pro)**
+
+
+> **Important Notice:** This plugin serves as an automatic translation extension for the official **[Polylang](https://wordpress.org/plugins/polylang/)** plugin.
 
 > **Important Notice:** This plugin provides automatic translation functionality only for Gutenberg blocks.
 
-> This plugin is not developed by or affiliated with the "**Polylang developers**". It is a third-party addon that provides automatic translation functionality to quickly translate your post with the same styles into other languages.
+> **Disclaimer:** This plugin is not developed by or affiliated with the **[Polylang developers](https://wordpress.org/plugins/polylang/)**. It is a third-party addon that offers automatic translation functionality, enabling you to quickly translate your posts while maintaining the same styles in other languages.
 
-= Special THANKS!: =
-Special thanks to famous **[Polylang](https://wordpress.org/plugins/polylang/)** plugin authors for creating an awesome plugin for multilang management.
+== Special Thanks ==
 
-**Development Resources**
+A special thanks to the authors of the **[Polylang](https://wordpress.org/plugins/polylang/)** plugin for creating an outstanding tool for multilingual management.
 
-To access the source code, please navigate to the `automatic-translations-for-polylang/includes/automatic-translate/src` directory within the plugin directory. The build files can be found in the `automatic-translations-for-polylang/assets/build` directory.
-
-**Service Provider**
+== Service Provider ==
 
 This plugin provides automatic translation services for Polylang using the Yandex Translate API.
 
-* **Service Description**
-The plugin uses the Yandex Translate API to translate content in real-time, allowing you to easily manage multilingual content on your WordPress site.
+* **Service Description:**  
+  The plugin uses the Yandex Translate API to translate content in real-time, allowing you to easily manage multilingual content on your WordPress site.
 
-* **Servers Being Called**
-The plugin makes API calls to the following servers:
-`https://translate.yandex.net/api/v1/tr.json/translate`
+* **Servers Being Called:**  
+  The plugin makes API calls to the following server:  
+  `https://translate.yandex.net/api/v1/tr.json/translate`
 
-* **Account Requirements**
-To use this plugin, you don't need to create a Yandex Translate account. However, please note that the API usage is subject to Yandex Translate's terms of service and usage limits.
+* **Account Requirements:**  
+  No Yandex Translate account is required to use this plugin. However, please note that API usage is subject to Yandex Translate's terms of service and usage limits.
 
-* **Benefits**
-By using the Yandex Translate API, you can enjoy improved translation accuracy and efficiency, making it easier to manage your multilingual content.
+* **Benefits:**  
+  By using the Yandex Translate API, you can enjoy improved translation accuracy and efficiency, making it easier to manage your multilingual content.
 
 ### 🌴 Important Links & Information
 
@@ -55,18 +87,52 @@ By using the Yandex Translate API, you can enjoy improved translation accuracy a
 * [Yandex Privacy Policy](https://yandex.com/legal/confidential/)
 
 == Screenshots ==
-1. Automatic translation content preview in Gutenberg Block Editor.
+1. Automatic translation content preview in the Gutenberg Block Editor.
+2. Content Translation Preview.
 
 == Frequently Asked Questions ==
 
+= What does the "Automatic Translations For Polylang" plugin do? =  
+This plugin automatically copies and translates your posts, including titles, content, images, galleries, and meta fields, from one language to another using the Yandex Translate API. It works specifically with Gutenberg blocks, replicating the original content and styles across different languages.
+
+= Is this plugin officially developed by Polylang? =  
+No, this plugin is not developed by or affiliated with the Polylang developers. It is a third-party addon designed to extend Polylang's functionality by adding automatic translation capabilities.
+
+= Do I need a Yandex Translate account to use this plugin? =  
+No, you do not need a Yandex Translate account to use this plugin. However, the translation services are powered by the Yandex Translate API, which is subject to Yandex's terms of service and usage limits.
+
+= Can I use this plugin with custom blocks or themes? =  
+This plugin is designed to work with core Gutenberg blocks and several popular third-party blocks (e.g., Spectra, Kadence, Stackable, Otter, and Essential). While it may work with custom blocks or themes, compatibility is not guaranteed, and testing is recommended.
+
+= Does the plugin translate all content on my website? =  
+The plugin automatically translates the content within Gutenberg blocks. It does not translate content outside of these blocks, such as custom widgets, shortcodes, or other plugins' content that doesn't utilize Gutenberg blocks.
+
+= How do I manage the translated content? =  
+The translated content is managed within the WordPress editor, just like your original content. The plugin duplicates your content into other languages, which you can then review and adjust as needed.
+
+= Can I undo the automatic translations if needed? =  
+Yes, you can manually edit or remove the translated content in the WordPress editor after it has been automatically translated.
+
+= What if the translation quality is not accurate? =  
+While the plugin uses the Yandex Translate API for automatic translations, you can manually adjust the translated content within the WordPress editor to ensure accuracy.
+
+= How do I update the plugin to the latest version? =  
+You can update the plugin through the WordPress dashboard like any other plugin. Regular updates will ensure you have the latest features and security improvements.
+
+= Will this plugin slow down my website? =  
+The plugin is optimized for performance, but the speed impact may vary depending on your hosting environment and the size of your content. The automatic translation process occurs in the background to minimize any potential impact on site performance.
+
+
 == Changelog ==
-<strong>Version 1.0.1 | 07 August 2024</strong>
+
+**Version 1.0.1 | 07 August 2024**
 <pre>
 Added: Service provider details to the README file for easier access.
-Fixed: Resolved security issues by adding an escaping function in all necessary places.
-Impove: Code improvement for better performance and maintainability..
+Fixed: Resolved security issues by adding escaping functions in all necessary places.
+Improved: Code improvements for better performance and maintainability.
 </pre>
-<strong>Version 1.0.0 | 02 July 2024</strong>
+
+**Version 1.0.0 | 02 July 2024**
 <pre>
 New: Initial Plugin Release
 </pre>
