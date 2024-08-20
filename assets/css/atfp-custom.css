@@ -1,5 +1,4 @@
-
-:is(#atfp-modal-open-warning-wrapper, #atfp-setting-modal,#atfp_strings_model ) .modal-container {
+:is(#atfp-modal-open-warning-wrapper, #atfp-setting-modal, #atfp_strings_model) .modal-container {
     display: none;
     position: fixed;
     z-index: 99999;
@@ -12,7 +11,7 @@
     align-items: center;
 }
 
-:is(#atfp-modal-open-warning-wrapper, #atfp-setting-modal ) .modal-content {
+:is(#atfp-modal-open-warning-wrapper, #atfp-setting-modal) .modal-content {
     position: relative;
     background-color: #fefefe;
     width: clamp(200px, 400px, 80%);
@@ -29,17 +28,17 @@
     padding-block: 1rem;
 }
 
-#atfp-modal-open-warning-wrapper .modal-content{
+#atfp-modal-open-warning-wrapper .modal-content {
     padding: 1rem;
     text-align: center;
 }
 
-#atfp-modal-open-warning-wrapper .modal-content p{
+#atfp-modal-open-warning-wrapper .modal-content p {
     font-size: 1.2rem;
     font-weight: 500;
 }
 
-#atfp-modal-open-warning-wrapper .modal-content button{
+#atfp-modal-open-warning-wrapper .modal-content button {
     font-size: 1rem;
     font-weight: 500;
     padding: .3rem .5rem;
@@ -48,11 +47,11 @@
     opacity: 0.8;
 }
 
-#atfp-modal-open-warning-wrapper .modal-content button:hover{
+#atfp-modal-open-warning-wrapper .modal-content button:hover {
     opacity: 1;
 }
 
-#atfp-modal-open-warning-wrapper .modal-content button:nth-child(1){
+#atfp-modal-open-warning-wrapper .modal-content button:nth-child(1) {
     background-color: #28a745;
     color: white;
     border: 1px solid #28a745;
@@ -99,6 +98,7 @@
     from {
         opacity: 0
     }
+
     to {
         opacity: 1
     }
@@ -108,6 +108,7 @@
     from {
         opacity: 0
     }
+
     to {
         opacity: 1
     }
@@ -118,6 +119,7 @@
         top: -300px;
         opacity: 0
     }
+
     to {
         top: 0;
         opacity: 1
@@ -129,42 +131,44 @@
         top: -300px;
         opacity: 0
     }
+
     to {
         top: 0;
         opacity: 1
     }
 }
 
-#atfp-setting-modal .modal-header *{
+#atfp-setting-modal .modal-header * {
     margin-bottom: 1rem;
 }
 
-#atfp-setting-modal .modal-header h2{
+#atfp-setting-modal .modal-header h2 {
     margin-top: 0px;
     padding-top: 0px;
 }
 
-#atfp-setting-modal .modal-header h4{
+#atfp-setting-modal .modal-header h4 {
     background-color: #f1f1f1;
     padding: .5rem;
     margin-bottom: 0px;
 }
 
-#atfp-setting-modal .modal-header .atfp-error-message{
+#atfp-setting-modal .modal-header .atfp-error-message {
     background-color: #f1f1f1;
     margin: .5rem 0 .5rem 0;
     padding: .5rem;
     font-weight: 500;
 }
 
-#atfp-setting-modal .modal-content>*:not(hr){
+#atfp-setting-modal .modal-content>*:not(hr) {
     padding-inline: 1rem;
 }
 
-#atfp-setting-modal .modal-content .atfp-service-btn{
+#atfp-setting-modal .modal-content .atfp-service-btn {
     margin-block: .3rem;
 }
-#atfp-setting-modal .modal-content .atfp-error-message{
+
+#atfp-setting-modal .modal-content .atfp-error-message {
     color: red;
 }
 
@@ -189,7 +193,7 @@
 
 /* The Close Button */
 
-button.atfp-setting-close{
+button.atfp-setting-close {
     margin-top: .9rem;
     /* font-weight: 500; */
     font-size: 1rem;
@@ -198,7 +202,7 @@ button.atfp-setting-close{
     opacity: 0.7;
 }
 
-button.atfp-setting-close:hover{
+button.atfp-setting-close:hover {
     opacity: 1;
 }
 
@@ -212,7 +216,7 @@ button.atfp-setting-close:hover{
 }
 
 #atfp-setting-modal .modal-footer {
-   text-align: end;
+    text-align: end;
 }
 
 #atfp-setting-modal .modal-header .close:hover,
@@ -263,6 +267,7 @@ button.atfp-setting-close:hover{
     from {
         left: -22px;
     }
+
     to {
         left: -10px;
     }
@@ -308,13 +313,13 @@ button.atfp-setting-close:hover{
     position: relative;
 }
 
-#atfp_strings_model .atfp_string_container.atfp_empty_string{
+#atfp_strings_model .atfp_string_container.atfp_empty_string {
     height: calc(100vh - 196px);
     display: flex;
     align-items: center;
 }
 
-#atfp_strings_model .atfp_string_container.atfp_empty_string p{
+#atfp_strings_model .atfp_string_container.atfp_empty_string p {
     text-align: center;
     font-size: 2rem;
     font-weight: bolder;
@@ -323,12 +328,12 @@ button.atfp-setting-close:hover{
     padding: 1rem;
 }
 
-#atfp_strings_model .modal-footer .notice.atfp_string_count{
+#atfp_strings_model .modal-footer .notice.atfp_string_count {
     display: block;
     max-width: calc(100% - 123px) !important;
-} 
+}
 
-#atfp_strings_model .notice.atfp_string_count{
+#atfp_strings_model .notice.atfp_string_count {
     top: 1rem;
     font-size: 1rem;
     background: transparent;
@@ -385,19 +390,19 @@ button.atfp-setting-close:hover{
     padding-top: 30px;
 }
 
-#atfp_strings_model .atfp_translate_element_wrapper{
+#atfp_strings_model .atfp_translate_element_wrapper {
     display: flex;
     justify-content: start;
     align-items: start;
     column-gap: 0.5rem;
 }
 
-#atfp_strings_model .atfp_translate_element_wrapper>button{
+#atfp_strings_model .atfp_translate_element_wrapper>button {
     height: 34px;
     pointer-events: none;
 }
 
-#atfp_strings_model .atfp_translate_element_wrapper #yt-widget .yt-wrapper_align_right{
+#atfp_strings_model .atfp_translate_element_wrapper #yt-widget .yt-wrapper_align_right {
     margin-bottom: 1rem;
 }
 
@@ -415,16 +420,16 @@ button.atfp-setting-close:hover{
 
 #yt-widget .yt-listbox__input:not(:checked)~.yt-listbox__text {
     display: none !important;
-  }
+}
 
 /* error message css start */
-#atfp_strings_model.atfp_fetch_error .atfp_string_container{
+#atfp_strings_model.atfp_fetch_error .atfp_string_container {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-#atfp_strings_model.atfp_fetch_error :where(.save_btn_cont, table#stringTemplate){
+#atfp_strings_model.atfp_fetch_error :where(.save_btn_cont, table#stringTemplate) {
     display: none;
 }
 
@@ -434,6 +439,29 @@ button.atfp-setting-close:hover{
     padding: 2rem;
 }
 
-body>div.skiptranslate iframe.skiptranslate[frameborder][src][style="visibility:visible"]{
+body>div.skiptranslate iframe.skiptranslate[frameborder][src][style="visibility:visible"] {
     visibility: hidden !important;
 }
+
+/* meta box review notice style start */
+.atfp-review-meta-box {
+    text-align: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1882352941);
+    padding: 10px 0px !important;
+    border-radius: 5px !important;
+}
+
+.atfp-review-meta-box p{
+    margin: 0px;
+}
+
+.atfp-review-meta-box p a{
+    margin-top: .5rem;
+}
+
+.atfp-review-meta-box p a span{
+    color: #ffb900 !important;
+    margin-left: 5px;
+}
+
+/* meta box review notice style end */

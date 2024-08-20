@@ -215,6 +215,13 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 				?>
 				<input type="button" class="button button-primary" name="atfp_meta_box_translate" id="atfp-translate-button" value="<?php echo esc_attr__( 'Translate Content (Beta)', 'automatic-translations-for-polylang' ); ?>" readonly/><br><br>
 				<p style="margin-bottom: .5rem;"><?php echo esc_html( sprintf( __( 'Translate or duplicate content from Hindi to %s', 'automatic-translations-for-polylang' ), $target_language ) ); ?></p>
+				<hr>
+				<div class="atfp-review-meta-box">
+					<p><?php echo esc_html__( 'We hope you liked our plugin created timelines. Please share your valuable feedback.', 'automatic-translations-for-polylang' ); ?>
+					<br>
+					<a href="<?php echo esc_url( 'https://wordpress.org/plugins/search/automatic-translations-for-polylang/reviews/#new-post' ); ?>" class="components-button is-primary is-small" target="_blank"><?php echo esc_html__( 'Rate Us', 'automatic-translations-for-polylang' ); ?><span> ★★★★★</span></a>
+					</p>
+				</div>
 				<?php
 			}
 		}
