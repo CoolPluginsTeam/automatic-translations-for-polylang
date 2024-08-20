@@ -81,33 +81,13 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			if ( isset( $atfp_polylang ) ) {
 				add_action( 'add_meta_boxes', array( $this, 'atfp_shortcode_metabox' ) );
 				add_action( 'admin_enqueue_scripts', array( $this, 'atfp_register_backend_assets' ) ); // registers js and css for frontend
-			} else {
-				add_action( 'admin_notices', array( self::$instance, 'atfp_plugin_required_admin_notice' ) );
 			}
-			load_plugin_textdomain( 'automatic-translations-for-polylang', false, basename( dirname( __FILE__ ) ) . '/languages/' );
-		}
 
-		/**
-		 * Display admin notice for required plugin activation.
-		 *
-		 * @return void
-		 */
-		function atfp_plugin_required_admin_notice() {
-			if ( current_user_can( 'activate_plugins' ) ) {
-				$url         = 'plugin-install.php?tab=plugin-information&plugin=polylang&TB_iframe=true';
-				$title       = 'Polylang';
-				$plugin_info = get_plugin_data( __FILE__, true, true );
-				echo '<div class="error"><p>' .
-				sprintf(
-					// translators: 1: Plugin Name, 2: Plugin URL
-					esc_html__(
-						'In order to use %1$s plugin, please install and activate the latest version  of %2$s',
-						'automatic-translations-for-polylang'
-					),
-					wp_kses( '<strong>' . esc_html( $plugin_info['Name'] ) . '</strong>', 'strong' ),
-					wp_kses( '<a href="' . esc_url( $url ) . '" class="thickbox" title="' . esc_attr( $title ) . '">' . esc_html( $title ) . '</a>', 'a' )
-				) . '.</p></div>';
+			if ( is_admin() ) {
+				require_once ATFP_DIR_PATH . 'admin/feedback/atfp-users-feedback.php';
 			}
+
+			load_plugin_textdomain( 'automatic-translations-for-polylang', false, basename( dirname( __FILE__ ) ) . '/languages/' );
 		}
 
 		/**
