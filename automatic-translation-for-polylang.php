@@ -243,7 +243,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 				<div class="atfp-review-meta-box">
 					<p><?php echo esc_html__( 'We hope you liked our plugin created timelines. Please share your valuable feedback.', 'automatic-translations-for-polylang' ); ?>
 					<br>
-					<a href="<?php echo esc_url( 'https://wordpress.org/plugins/search/automatic-translations-for-polylang/reviews/#new-post' ); ?>" class="components-button is-primary is-small" target="_blank"><?php echo esc_html__( 'Rate Us', 'automatic-translations-for-polylang' ); ?><span> ★★★★★</span></a>
+					<a href="<?php echo esc_url( 'https://wordpress.org/plugins/automatic-translations-for-polylang/reviews/#new-post' ); ?>" class="components-button is-primary is-small" target="_blank"><?php echo esc_html__( 'Rate Us', 'automatic-translations-for-polylang' ); ?><span> ★★★★★</span></a>
 					</p>
 				</div>
 				<?php
