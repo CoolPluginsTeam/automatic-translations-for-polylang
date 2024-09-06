@@ -2,7 +2,7 @@
 /*
 Plugin Name: Automatic Translations For Polylang
 Plugin URI: https://coolplugins.net/
-Version: 1.0.2
+Version: 1.0.3
 Author: Cool Plugins
 Author URI: https://coolplugins.net/
 Description: Streamline your Polylang experience with this plugin that not only duplicates content but also translates core and specific blocks across multiple languages.
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 if ( ! defined( 'ATFP_V' ) ) {
-	define( 'ATFP_V', '1.0.2' );
+	define( 'ATFP_V', '1.0.3' );
 }
 if ( ! defined( 'ATFP_DIR_PATH' ) ) {
 	define( 'ATFP_DIR_PATH', plugin_dir_path( __FILE__ ) );
@@ -237,7 +237,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 					}
 				}
 				?>
-				<input type="button" class="button button-primary" name="atfp_meta_box_translate" id="atfp-translate-button" value="<?php echo esc_attr__( 'Translate Content (Beta)', 'automatic-translations-for-polylang' ); ?>" readonly/><br><br>
+				<input type="button" class="button button-primary" name="atfp_meta_box_translate" id="atfp-translate-button" value="<?php echo esc_attr__( 'Translate Content', 'automatic-translations-for-polylang' ); ?>" readonly/><br><br>
 				<p style="margin-bottom: .5rem;"><?php echo esc_html( sprintf( __( 'Translate or duplicate content from Hindi to %s', 'automatic-translations-for-polylang' ), $target_language ) ); ?></p>
 				<hr>
 				<div class="atfp-review-meta-box">

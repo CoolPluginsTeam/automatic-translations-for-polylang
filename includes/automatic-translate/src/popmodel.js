@@ -147,7 +147,7 @@ const PopupModal = (props) => {
                 <div className="modal-container" style={{ display: settingVisibility ? 'flex' : 'none' }}>
                     <div className="atfp-settings modal-content">
                         <div className="modal-header">
-                            <h2>{__("Step 1 - Select Translation Provider (Beta)", 'automatic-translations-for-polylang')}</h2>
+                            <h2>{__("Step 1 - Select Translation Provider", 'automatic-translations-for-polylang')}</h2>
                             <h4>{sprintf(__("Translate %(postType)s content from %(source)s to %(target)s", 'automatic-translations-for-polylang'), { postType: props.postType, source: sourceLangName, target: targetLangName })}</h4>
                             <p class="atfp-error-message" style={{marginBottom: '.5rem'}}>{sprintf(__("This translation widget replaces the current %(postType)s content with the original %(source)s %(postType)s and translates it into %(target)s", 'automatic-translations-for-polylang'),{ postType: props.postType, source: sourceLangName, target: targetLangName})}</p>
                             <span className="close" onClick={() => setSettingVisibility(false)}>&times;</span>
@@ -157,12 +157,12 @@ const PopupModal = (props) => {
                         <div className="inputGroup">
                             {yandexSupport ?
                                 <>
-                                    <button className="atfp-service-btn translate button button-primary" data-service="yandex" data-service-label="Yandex Translate" onClick={fetchContent}>{__("Yandex Translate (Beta)", 'automatic-translations-for-polylang')}</button>
+                                    <button className="atfp-service-btn translate button button-primary" data-service="yandex" data-service-label="Yandex Translate" onClick={fetchContent}>{__("Yandex Translate", 'automatic-translations-for-polylang')}</button>
                                     <br />
                                 </>
                                 :
                                 <>
-                                    <button className="atfp-service-btn translate button button-primary" disabled={true}>{__("Yandex Translate (Beta)", 'automatic-translations-for-polylang')}</button><br />
+                                    <button className="atfp-service-btn translate button button-primary" disabled={true}>{__("Yandex Translate", 'automatic-translations-for-polylang')}</button><br />
                                     <span className="atfp-error-message">{targetLangName} {__('language is not supported by Yandex Translate', 'automatic-translations-for-polylang')}.</span>
                                 </>
                             }

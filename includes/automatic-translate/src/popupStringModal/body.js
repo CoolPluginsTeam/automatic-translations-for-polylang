@@ -51,7 +51,6 @@ const StringPopUpBody = (props) => {
                 <h3 class="choose-lang">{__("Choose language", 'automatic-translations-for-polylang')} <span class="dashicons-before dashicons-translation"></span></h3>
                 <div className="atfp_translate_element_wrapper">
                 <div id="atfp_yandex_translate_element" style={{ display: `${service === 'yandex' ? 'block' : 'none'}` }}></div>
-                <button className="button button-primary">(Beta)</button>
                 </div>
             </div>
 

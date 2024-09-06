@@ -2,9 +2,9 @@
 Contributors: narinder-singh,satindersingh,coolplugins
 Tags: Polylang, Automatic Translation, Duplicate Content, Block Translation
 Requires at least: 5.0
-Tested up to: 6.5
+Tested up to: 6.6
 Requires PHP: 5.6
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 Author URI: https://coolplugins.net/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -125,9 +125,14 @@ The plugin is optimized for performance, but the speed impact may vary depending
 
 == Changelog ==
 
+**Version 1.0.3 | 21 August 2024**
+<pre>
+Tested up to: Tested with WordPress 6.6.
+</pre>
+
 **Version 1.0.2 | 20 August 2024**
 <pre>
-Added: Feedback notice.
+Fixed: Minor bug fixes.
 </pre>
 
 **Version 1.0.1 | 07 August 2024**
