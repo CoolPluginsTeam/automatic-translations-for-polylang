@@ -61,6 +61,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			add_action( 'plugins_loaded', array( $this, 'atfp_init' ) );
 			register_activation_hook( ATFP_FILE, array( $this, 'atfp_activate' ) );
 			register_deactivation_hook( ATFP_FILE, array( $this, 'atfp_deactivate' ) );
+			add_action( 'admin_menu', array( $this, 'atfp_add_submenu_pages' ), 11 );
 		}
 		/**
 		 * Initialize the Automatic Translation for Polylang plugin.
@@ -68,8 +69,8 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 		 * @return void
 		 */
 		function atfp_init() {
+			require_once ATFP_DIR_PATH . '/helper/class-atfp-helper.php';
 			require_once ATFP_DIR_PATH . '/helper/class-atfp-ajax-handler.php';
-
 			if ( class_exists( 'ATFP_Ajax_Handler' ) ) {
 				ATFP_Ajax_Handler::get_instance();
 			}
@@ -78,8 +79,11 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			global $polylang;
 			$atfp_polylang = $polylang;
 			if ( isset( $atfp_polylang ) ) {
+				require_once ATFP_DIR_PATH . 'admin/atfp-custom-block-post/class-atfp-custom-block-post.php';
+
 				add_action( 'add_meta_boxes', array( $this, 'atfp_shortcode_metabox' ) );
 				add_action( 'admin_enqueue_scripts', array( $this, 'atfp_register_backend_assets' ) ); // registers js and css for frontend
+
 			} else {
 				add_action( 'admin_notices', array( self::$instance, 'atfp_plugin_required_admin_notice' ) );
 			}
@@ -89,6 +93,26 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			}
 
 			load_plugin_textdomain( 'automatic-translations-for-polylang', false, basename( dirname( __FILE__ ) ) . '/languages/' );
+		}
+
+		/**
+		 * Add submenu page under the Polylang menu.
+		 */
+		public function atfp_add_submenu_pages() {
+
+			global $polylang;
+			$atfp_polylang = $polylang;
+			if ( isset( $atfp_polylang ) ) {
+				add_submenu_page(
+					'mlang', // Parent slug
+					__( 'Automatic Translations', 'automatic-translations-for-polylang' ), // Page title
+					__( 'Automatic Translations', 'automatic-translations-for-polylang' ), // Menu title
+					'manage_options', // Capability
+					'edit.php?post_type=atfp_add_blocks', // Menu slug
+					false, // Callback function
+					15 // Position to display at the end of the submenu
+				);
+			}
 		}
 
 		/**
@@ -164,6 +188,30 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 
 						wp_enqueue_style( 'atfp-automatic-translate' );
 						wp_enqueue_script( 'atfp-automatic-translate' );
+
+						if ( function_exists( 'get_option' ) ) {
+							$update_blocks = get_option( 'atfp_custom_block_status', false ) && 'true' === get_option( 'atfp_custom_block_status', false ) ? true : false;
+							if ( $update_blocks ) {
+								// Custom Translation Block update script
+								wp_register_script( 'atfp-custom-blocks', ATFP_URL . 'assets/js/atfp-update-custom-blocks.js', array( 'wp-data', 'jquery' ), ATFP_V, true );
+								wp_enqueue_script( 'atfp-custom-blocks' );
+
+								wp_localize_script(
+									'atfp-custom-blocks',
+									'atfp_block_update_object',
+									array(
+										'ajax_url'       => admin_url( 'admin-ajax.php' ),
+										'ajax_nonce'     => wp_create_nonce( 'atfp_block_update_nonce' ),
+										'atfp_url'       => esc_url( ATFP_URL ),
+										'action_get_content' => 'get_custom_blocks_content',
+										'action_update_content' => 'update_custom_blocks_content',
+										'source_lang'    => pll_get_post_language( $from_post_id, 'slug' ),
+										'languageObject' => $lang_object,
+									)
+								);
+							}
+						}
+
 						wp_localize_script(
 							'atfp-automatic-translate',
 							'atfp_ajax_object',
