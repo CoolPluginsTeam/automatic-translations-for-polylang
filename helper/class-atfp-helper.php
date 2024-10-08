@@ -73,7 +73,7 @@ if ( ! class_exists( 'ATFP_Helper' ) ) {
 			return $block_translation_rules;
 		}
 
-        private function filter_custom_block_rules( $id_keys = array(), $value, $block_rules, $attr_key = false ) {
+		private function filter_custom_block_rules( $id_keys = array(), $value, $block_rules, $attr_key = false ) {
 
 			$latest_data = array();
 			$block_rules = is_object( $block_rules ) ? json_decode( json_encode( $block_rules ) ) : $block_rules;

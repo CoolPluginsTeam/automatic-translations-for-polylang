@@ -79,7 +79,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			global $polylang;
 			$atfp_polylang = $polylang;
 			if ( isset( $atfp_polylang ) ) {
-				require_once ATFP_DIR_PATH . 'admin/atfp-custom-block-post/class-atfp-custom-block-post.php';
+				require_once ATFP_DIR_PATH . 'admin/atfp-menu-pages/class-atfp-custom-block-post.php';
 
 				add_action( 'add_meta_boxes', array( $this, 'atfp_shortcode_metabox' ) );
 				add_action( 'admin_enqueue_scripts', array( $this, 'atfp_register_backend_assets' ) ); // registers js and css for frontend
