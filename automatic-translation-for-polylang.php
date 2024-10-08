@@ -61,7 +61,6 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			add_action( 'plugins_loaded', array( $this, 'atfp_init' ) );
 			register_activation_hook( ATFP_FILE, array( $this, 'atfp_activate' ) );
 			register_deactivation_hook( ATFP_FILE, array( $this, 'atfp_deactivate' ) );
-			add_action( 'admin_menu', array( $this, 'atfp_add_submenu_pages' ), 11 );
 		}
 		/**
 		 * Initialize the Automatic Translation for Polylang plugin.
@@ -95,25 +94,6 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			load_plugin_textdomain( 'automatic-translations-for-polylang', false, basename( dirname( __FILE__ ) ) . '/languages/' );
 		}
 
-		/**
-		 * Add submenu page under the Polylang menu.
-		 */
-		public function atfp_add_submenu_pages() {
-
-			global $polylang;
-			$atfp_polylang = $polylang;
-			if ( isset( $atfp_polylang ) ) {
-				add_submenu_page(
-					'mlang', // Parent slug
-					__( 'Automatic Translations', 'automatic-translations-for-polylang' ), // Page title
-					__( 'Automatic Translations', 'automatic-translations-for-polylang' ), // Menu title
-					'manage_options', // Capability
-					'edit.php?post_type=atfp_add_blocks', // Menu slug
-					false, // Callback function
-					15 // Position to display at the end of the submenu
-				);
-			}
-		}
 
 		/**
 		 * Display admin notice for required plugin activation.

@@ -1,11 +1,5 @@
 <?php
 /**
- * ATFP ATFP_Custom_Block_Post
- *
- * @package ATFP
- */
-
-/**
  * Do not access the page directly
  */
 if ( ! defined( 'ABSPATH' ) ) {
@@ -13,6 +7,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! class_exists( 'ATFP_Custom_Block_Post' ) ) {
+	/**
+	 * Class ATFP_Custom_Block_Post
+	 *
+	 * This class handles the custom block post type for the Automatic Translations For Polylang plugin.
+	 * It manages the registration of the custom post type, adds submenu pages under the Polylang menu,
+	 * and handles post save actions.
+	 *
+	 * @package ATFP
+	 */
 	class ATFP_Custom_Block_Post {
 		/**
 		 * Singleton instance.
@@ -27,7 +30,7 @@ if ( ! class_exists( 'ATFP_Custom_Block_Post' ) ) {
 		private function __construct() {
 			add_action( 'init', array( $this, 'register_custom_post_type' ) );
 			add_action( 'admin_menu', array( $this, 'remove_post_type_menu' ) );
-
+			add_action( 'admin_menu', array( $this, 'atfp_add_submenu_page' ), 10 );
 			add_action( 'save_post', array( $this, 'on_save_post' ), 10, 3 );
 
 			// add_action( 'wp_loaded', function() {
@@ -37,6 +40,27 @@ if ( ! class_exists( 'ATFP_Custom_Block_Post' ) ) {
 			// echo "</pre>";
 			// } );
 		}
+
+
+		/**
+		 * Add submenu page under the Polylang menu.
+		 */
+		public function atfp_add_submenu_page() {
+
+			global $polylang;
+			$atfp_polylang = $polylang;
+			if ( isset( $atfp_polylang ) ) {
+				add_submenu_page(
+					'mlang', // Parent slug
+					__( 'Automatic Translations', 'automatic-translations-for-polylang' ), // Page title
+					__( 'Automatic Translations', 'automatic-translations-for-polylang' ), // Menu title
+					'manage_options', // Capability
+					'edit.php?post_type=atfp_add_blocks', // Menu slug
+					false, // Callback function
+				);
+			}
+		}
+
 		/**
 		 * Function to run on post save or update.
 		 *
