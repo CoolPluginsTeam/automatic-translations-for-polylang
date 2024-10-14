@@ -58,9 +58,16 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 		 * Constructor
 		 */
 		private function __construct() {
+			$this->atfp_load_files();
 			add_action( 'plugins_loaded', array( $this, 'atfp_init' ) );
 			register_activation_hook( ATFP_FILE, array( $this, 'atfp_activate' ) );
 			register_deactivation_hook( ATFP_FILE, array( $this, 'atfp_deactivate' ) );
+		}
+
+		public function atfp_load_files() {
+			require_once ATFP_DIR_PATH . '/helper/class-atfp-helper.php';
+			require_once ATFP_DIR_PATH . 'admin/atfp-menu-pages/class-atfp-custom-block-post.php';
+			require_once ATFP_DIR_PATH . 'admin/atfp-menu-pages/class-atfp-supported-blocks.php';
 		}
 		/**
 		 * Initialize the Automatic Translation for Polylang plugin.
@@ -68,17 +75,15 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 		 * @return void
 		 */
 		function atfp_init() {
-			require_once ATFP_DIR_PATH . '/helper/class-atfp-helper.php';
-			require_once ATFP_DIR_PATH . '/helper/class-atfp-ajax-handler.php';
-			if ( class_exists( 'ATFP_Ajax_Handler' ) ) {
-				ATFP_Ajax_Handler::get_instance();
-			}
-
 			// Check Polylang plugin is installed and active
 			global $polylang;
 			$atfp_polylang = $polylang;
-			if ( isset( $atfp_polylang ) ) {
-				require_once ATFP_DIR_PATH . 'admin/atfp-menu-pages/class-atfp-custom-block-post.php';
+			if ( isset( $atfp_polylang ) && is_admin() ) {
+
+				require_once ATFP_DIR_PATH . '/helper/class-atfp-ajax-handler.php';
+				if ( class_exists( 'ATFP_Ajax_Handler' ) ) {
+					ATFP_Ajax_Handler::get_instance();
+				}
 
 				add_action( 'add_meta_boxes', array( $this, 'atfp_shortcode_metabox' ) );
 				add_action( 'admin_enqueue_scripts', array( $this, 'atfp_register_backend_assets' ) ); // registers js and css for frontend
@@ -173,7 +178,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 							$update_blocks = get_option( 'atfp_custom_block_status', false ) && 'true' === get_option( 'atfp_custom_block_status', false ) ? true : false;
 							if ( $update_blocks ) {
 								// Custom Translation Block update script
-								wp_register_script( 'atfp-custom-blocks', ATFP_URL . 'assets/js/atfp-update-custom-blocks.js', array( 'wp-data', 'jquery' ), ATFP_V, true );
+								wp_register_script( 'atfp-custom-blocks', ATFP_URL . 'assets/js/atfp-update-custom-blocks.min.js', array( 'wp-data', 'jquery' ), ATFP_V, true );
 								wp_enqueue_script( 'atfp-custom-blocks' );
 
 								wp_localize_script(

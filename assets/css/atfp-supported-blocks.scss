@@ -1,0 +1,114 @@
+
+.atfp-supported-blocks-wrapper{
+    margin: 1rem;
+    padding: 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 1rem;
+
+    .atfp-supported-blocks-container{
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        column-gap: 1rem;
+
+        .atfp-search-tab{
+            margin-left: auto;
+            #atfp-blocks-search{
+                min-width: 220px;
+            }
+        }
+
+        .atfp-filter-tab,.atfp-sortby-tab,.atfp-search-tab{
+            display: flex;
+            align-items: center;
+            column-gap: 1rem;
+        }
+    }
+    .atfp-blocks-lists {
+        margin: 20px 0px;
+        font-family: Arial, sans-serif;
+    
+        .atfp-supported-blocks-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            border: 1px solid #ddd; // Add a border to the table
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); // Add a little shadow to the table
+    
+            thead {
+                background-color: #f2f2f2;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                th {
+                    padding: 10px;
+                    text-align: left;
+                    border-bottom: 2px solid #ddd;
+                }
+            }
+    
+            tbody {
+                tr {
+                    .atfp-search-highlight{
+                        background-color: orange;
+                        color: black;
+                    }
+                    &:nth-child(even) {
+                        background-color: #f9f9f9;
+                    }
+    
+                    td {
+                        padding: 10px;
+                        border-bottom: 1px solid #ddd;
+    
+                        a {
+                            color: #0073aa;
+                            text-decoration: none;
+    
+                            &:hover {
+                                text-decoration: underline;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+.atfp-pagination {
+    margin: 20px 0px;
+    font-size: 14px;
+    text-align: end;
+
+    .page-numbers {
+        display: inline-block;
+        padding: 0.5em 1em;
+        margin: 0 0.2em;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        color: #0073aa;
+        text-decoration: none;
+        background-color: #fff;
+        transition: background-color 0.3s;
+
+        &.current {
+            background-color: #0073aa;
+            color: #fff;
+            border: 1px solid #0073aa;
+        }
+
+        &:hover:not(.current) {
+            background-color: #f0f0f0;
+        }
+
+        &.dots {
+            padding: 0;
+            color: #555;
+        }
+
+        &.next {
+            margin-left: auto;
+            font-weight: bold;
+        }
+    }
+}
+}
+

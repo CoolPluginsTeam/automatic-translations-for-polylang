@@ -112,6 +112,10 @@ class blockDataReterive {
     }
 
     saveBlockData=()=>{
+        if(Object.keys(this.customBlockTranslateData).length < 1){
+            return;
+        }
+        
          /**
          * Prepare data to send in API request & update latest translate block data.
         */
@@ -186,7 +190,6 @@ class blockDataReterive {
         tempObj[lastKey] = true;
 
         const obj = convertToArrays(currentElement);
-
         deepMerge(this.customBlockTranslateData, obj);
     }
 
@@ -201,10 +204,10 @@ class blockDataReterive {
             this.filterBlockObjectAttr(idsArray, value);
         } else if (![Array.prototype, Object.prototype].includes(Object.getPrototypeOf(value)) && typeof value === 'object' && Object.keys(this.AtfpCoreAttrReplaceBlocks).includes(idsArray[0])) {
             const replaceAttrArr = this.AtfpCoreAttrReplaceBlocks[idsArray[0]];
-
+            
             replaceAttrArr.map((key) => {
                 const oringalAttr = key.split('_');
-
+                
                 if (idsArray[idsArray.length - 1] === oringalAttr[0] && value[oringalAttr[1]]) {
                     if (value[oringalAttr[1]] === 'Polylang translate content') {
                         idsArray.push(oringalAttr[1]);
@@ -212,7 +215,7 @@ class blockDataReterive {
                     }
                 }
             })
-        } else if (typeof value === 'string' && value.includes('Polylang translate content')) {
+        } else if (typeof value === 'string' && (value === 'Polylang Translate Content' || value.includes('Polylang Translate Content'))) {
             this.nestedAttrValue(idsArray, value);
         }
 
@@ -232,10 +235,12 @@ class blockDataReterive {
         Object.keys(blockData).forEach(key => {
             const newIdArr = new Array(...idsArr);
             const value = blockData[key];
-            if ((typeof value === 'string' && value.includes('Polylang translate content')) || [Array.prototype, Object.prototype].includes(Object.getPrototypeOf(value))) {
-                newIdArr.push(key);
-                this.filterAttr(newIdArr, blockData[key]);
-            };
+            if(value !== null && value !== undefined){
+                if ( (typeof value === 'string' && value.includes('Polylang translate content')) || [Array.prototype, Object.prototype].includes(Object.getPrototypeOf(value))) {
+                    newIdArr.push(key);
+                    this.filterAttr(newIdArr, blockData[key]);
+                };
+            }
         })
     }
 
@@ -272,6 +277,8 @@ class blockDataReterive {
         }
     }
 }
+
+
 
 window.addEventListener('load', () => {
     const urlParams = new URLSearchParams(window.location.search);
