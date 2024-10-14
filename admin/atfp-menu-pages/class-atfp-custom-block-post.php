@@ -30,23 +30,25 @@ if ( ! class_exists( 'ATFP_Custom_Block_Post' ) ) {
 		private function __construct() {
 			add_action( 'init', array( $this, 'register_custom_post_type' ) );
 			add_action( 'admin_menu', array( $this, 'remove_post_type_menu' ) );
-			add_action( 'admin_menu', array( $this, 'atfp_add_submenu_page' ), 10 );
+			add_action( 'admin_menu', array( $this, 'atfp_add_submenu_page' ), 11 );
 			add_action( 'save_post', array( $this, 'on_save_post' ), 10, 3 );
-
-			// add_action( 'wp_loaded', function() {
-			// $blocks_data=WP_Block_Type_Registry::get_instance()->get_all_registered();
-			// echo "<pre>";
-			// var_dump($blocks_data);
-			// echo "</pre>";
-			// } );
+			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		}
 
+		/**
+		 * Enqueue scripts.
+		 */
+		public function enqueue_scripts( $hook ) {
+			$current_screen = get_current_screen();
+			if ( 'atfp_add_blocks' === $current_screen->post_type && is_object( $current_screen ) && 'post.php' === $hook && $current_screen->is_block_editor ) {
+				wp_enqueue_script( 'atfp-add-new-block', ATFP_URL . 'assets/js/atfp-add-new-block.min.js', array( 'jquery','wp-data', 'wp-element' ), '1.0.0', true );
+			}
+		}
 
 		/**
 		 * Add submenu page under the Polylang menu.
 		 */
 		public function atfp_add_submenu_page() {
-
 			global $polylang;
 			$atfp_polylang = $polylang;
 			if ( isset( $atfp_polylang ) ) {
@@ -133,29 +135,8 @@ if ( ! class_exists( 'ATFP_Custom_Block_Post' ) ) {
 
 			register_post_type( 'atfp_add_blocks', $args );
 
-			// Create a default post if it doesn't exist
-			$post_title = 'Add More Gutenberg Blocks';
-			$query      = new WP_Query(
-				array(
-					'post_type'      => 'atfp_add_blocks',
-					'title'          => $post_title,
-					'posts_per_page' => 1,
-				)
-			);
 
-			$existing_post = $query->posts ? $query->posts[0] : null;
-
-			if ( ! $existing_post ) {
-				wp_insert_post(
-					array(
-						'post_title'   => $post_title,
-						'post_content' => '',
-						'post_status'  => 'publish',
-						'post_type'    => 'atfp_add_blocks', // Corrected post type to match registered type
-						'post_parent'  => 0, // Set the parent ID if needed, or adjust accordingly
-					)
-				);
-			}
+			ATFP_Helper::get_custom_block_post_id();
 		}
 
 		/**

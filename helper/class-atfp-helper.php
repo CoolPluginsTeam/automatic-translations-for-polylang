@@ -33,7 +33,7 @@ if ( ! class_exists( 'ATFP_Helper' ) ) {
 		 *
 		 * @var array
 		 */
-		private static $custom_block_data_array = array();
+		private $custom_block_data_array = array();
 
 		/**
 		 * Gets an instance of our plugin.
@@ -45,6 +45,38 @@ if ( ! class_exists( 'ATFP_Helper' ) ) {
 				self::$instance = new self();
 			}
 			return self::$instance;
+		}
+
+		public static function get_custom_block_post_id() {
+			$first_post_id = null;
+
+			$query = new WP_Query(
+				array(
+					'post_type'      => 'atfp_add_blocks',
+					'posts_per_page' => 1,
+					'orderby'        => 'date',
+					'order'          => 'ASC',
+				)
+			);
+
+			$existing_post = $query->posts ? $query->posts[0] : null;
+
+			if ( ! $existing_post ) {
+				$post_title    = esc_html__( 'Add More Gutenberg Blocks', 'automatic-translation-for-polylang' );
+				$first_post_id = wp_insert_post(
+					array(
+						'post_title'   => $post_title,
+						'post_content' => '',
+						'post_status'  => 'publish',
+						'post_type'    => 'atfp_add_blocks',
+					)
+				);
+			} elseif ( $query->have_posts() ) {
+				$query->the_post();
+				$first_post_id = get_the_ID();
+			}
+
+			return $first_post_id;
 		}
 
 		public function get_block_parse_rules() {
@@ -73,8 +105,7 @@ if ( ! class_exists( 'ATFP_Helper' ) ) {
 			return $block_translation_rules;
 		}
 
-		private function filter_custom_block_rules( $id_keys = array(), $value, $block_rules, $attr_key = false ) {
-
+		private function filter_custom_block_rules( array $id_keys, $value, $block_rules, $attr_key = false ) {
 			$latest_data = array();
 			$block_rules = is_object( $block_rules ) ? json_decode( json_encode( $block_rules ) ) : $block_rules;
 
@@ -97,7 +128,7 @@ if ( ! class_exists( 'ATFP_Helper' ) ) {
 			}
 		}
 
-		private function merge_nested_attribute( $id_keys = array(), $value ) {
+		private function merge_nested_attribute( array $id_keys, $value ) {
 			$value = is_object( $value ) ? json_decode( json_encode( $value ), true ) : $value;
 
 			$current_array = &$this->custom_block_data_array;
@@ -110,6 +141,50 @@ if ( ! class_exists( 'ATFP_Helper' ) ) {
 			}
 
 			$current_array = $value;
+		}
+
+		/**
+		 * Timeline Stories Default Pagination
+		 *
+		 * @param WP_Query $wp_query WP_Query object.
+		 * @param int      $paged current page number.
+		 */
+		public static function atfp_pagination( $max_num_pages, $paged ) {
+			$output   = '';
+			$numpages = $max_num_pages;
+			if ( ! $numpages ) {
+				$numpages = 1;
+			}
+			$big      = 999999999;
+			$of_lbl   = __( ' of ', 'cool-timeline' );
+			$page_lbl = __( ' Page ', 'cool-timeline' );
+
+			$pagination_args = array(
+				'base'         => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+				'format'       => '?paged=%#%',
+				'total'        => $numpages,
+				'current'      => $paged,
+				'show_all'     => false,
+				'end_size'     => 1,
+				'mid_size'     => 1,
+				'prev_next'    => true,
+				// 'prev_text'    => $prev_arrow,
+				// 'next_text'    => $next_arrow,
+				'type'         => 'plain',
+				'add_args'     => false,
+				'add_fragment' => '',
+			);
+
+			$paginate_links = paginate_links( $pagination_args );
+
+			if ( $paginate_links ) {
+				$output  = '<nav class="atfp-pagination" aria-label="Timeline Navigation">';
+				$output .= '<span class="page-numbers atfp-page-num" role="status">' . $page_lbl . $paged . $of_lbl . $numpages . '</span> ';
+				$output .= $paginate_links;
+				$output .= '</nav>';
+				return $output;
+			}
+			return '';
 		}
 	}
 }

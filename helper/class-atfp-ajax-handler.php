@@ -72,7 +72,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				exit();
 			}
 
-			$block_parse_rules=ATFP_Helper::get_instance()->get_block_parse_rules();
+			$block_parse_rules = ATFP_Helper::get_instance()->get_block_parse_rules();
 
 			$data = array(
 				'blockRules' => json_encode( $block_parse_rules ),
@@ -139,7 +139,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 			$updated_blocks_data = isset( $_POST['save_block_data'] ) ? json_decode( wp_unslash( $_POST['save_block_data'] ) ) : false;
 
 			if ( $updated_blocks_data ) {
-				$block_parse_rules=ATFP_Helper::get_instance()->get_block_parse_rules();
+				$block_parse_rules = ATFP_Helper::get_instance()->get_block_parse_rules();
 
 				if ( isset( $block_parse_rules['AtfpBlockParseRules'] ) ) {
 					$previous_translate_data = get_option( 'atfp_custom_block_translation', false );
