@@ -190,6 +190,7 @@
         },
         "uagb/counter": {
             "attributes": {
+                "numberPrefix": "",
                 "heading": true,
                 "iconImage": {
                     "alt": true
@@ -293,6 +294,48 @@
                         "name": true
                     }
                 ]
+            }
+        },
+        "uagb/review": {
+            "attributes": {
+                "summaryDescription": true,
+                "summaryTitle": true,
+                "parts": [
+                    {
+                        "label": true
+                    }
+                ],
+                "rAuthor": true,
+                "rContent": true,
+                "rTitle": true,
+                "schema": true
+            }
+        },
+        "uagb/how-to-step": {
+            "attributes": {
+                "description": true,
+                "name": true
+            }
+        },
+        "uagb/how-to": {
+            "attributes": {
+                "headingDesc": true,
+                "headingTitle": true,
+                "timeNeeded": true,
+                "estCost": true,
+                "materials": [
+                    {
+                        "add_required_materials": true
+                    }
+                ],
+                "tools": [
+                    {
+                        "add_required_tools": true
+                    }
+                ],
+                "stepsTitle": true,
+                "materialTitle": true,
+                "toolsTitle": true
             }
         },
         "essential-blocks/accordion-item": {
@@ -889,6 +932,181 @@
         "stackable/timeline": {
             "attributes": {
                 "text": true
+            }
+        },
+        "gutenverse/accordion": {
+            "attributes": {
+                "title": true
+            }
+        },
+        "gutenverse/button": {
+            "attributes": {
+                "content": true
+            }
+        },
+        "gutenverse/icon-list-item": {
+            "attributes": {
+                "text": true
+            }
+        },
+        "gutenverse/advanced-heading": {
+            "attributes": {
+                "subText": true,
+                "focusText": true
+            }
+        },
+        "gutenverse/heading": {
+            "attributes": {
+                "content": true
+            }
+        },
+        "gutenverse/icon-box": {
+            "attributes": {
+                "description": true,
+                "title": true
+            }
+        },
+        "gutenverse/image-box": {
+            "attributes": {
+                "description": true,
+                "title": true
+            }
+        },
+        "gutenverse/tabs": {
+            "attributes": {
+                "tabs": [
+                    {
+                        "text": true
+                    }
+                ]
+            }
+        },
+        "gutenverse/team": {
+            "attributes": {
+                "job": true,
+                "name": true
+            }
+        },
+        "gutenverse/testimonials": {
+            "attributes": {
+                "testimonialDataRichText": [
+                    {
+                        "description": true,
+                        "name": true,
+                        "comment": true
+                    }
+                ]
+            }
+        },
+        "ub/content-toggle-panel-block": {
+            "attributes": {
+                "panelTitle": ""
+            }
+        },
+        "ub/button": {
+            "attributes": {
+                "buttons": [
+                    {
+                        "buttonText": ""
+                    }
+                ]
+            }
+        },
+        "ub/expand-portion": {
+            "attributes": {
+                "clickText": ""
+            }
+        },
+        "ub/testimonial": {
+            "attributes": {
+                "ub_testimonial_author_role": "",
+                "ub_testimonial_author": "",
+                "ub_testimonial_text": ""
+            }
+        },
+        "ub/call-to-action-block": {
+            "attributes": {
+                "ub_cta_button_text": "",
+                "ub_cta_content_text": "",
+                "ub_call_to_action_headline_text": ""
+            }
+        },
+        "ub/click-to-tweet": {
+            "attributes": {
+                "ubTweet": ""
+            }
+        },
+        "ub/tabbed-content-block": {
+            "attributes": {
+                "tabsTitle": [
+                    ""
+                ]
+            }
+        },
+        "ub/star-rating-block": {
+            "attributes": {
+                "reviewText": ""
+            }
+        },
+        "ub/table-of-contents-block": {
+            "attributes": {
+                "title": ""
+            }
+        },
+        "ub/progress-bar": {
+            "attributes": {
+                "detail": ""
+            }
+        },
+        "ub/review": {
+            "attributes": {
+                "parts": [
+                    {
+                        "label": ""
+                    }
+                ],
+                "summaryDescription": "",
+                "summaryTitle": "",
+                "itemName": "",
+                "authorName": ""
+            }
+        },
+        "ub/content-filter-block": {
+            "attributes": {
+                "filterArray": [
+                    {
+                        "category": ""
+                    }
+                ]
+            }
+        },
+        "ub/how-to": {
+            "attributes": {
+                "resultIntro": "",
+                "howToYield": "",
+                "section": [
+                    {
+                        "steps": [
+                            {
+                                "title": "",
+                                "tip": "",
+                                "direction": ""
+                            }
+                        ]
+                    }
+                ],
+                "introduction": "",
+                "title": ""
+            }
+        },
+        "ub/advanced-heading": {
+            "attributes": {
+                "content": ""
+            }
+        },
+        "ub/counter": {
+            "attributes": {
+                "label": ""
             }
         }
     },
