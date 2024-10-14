@@ -79,7 +79,7 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 				<h2><?php esc_html_e( 'Help', 'automatic-translations-for-polylang' ); ?></h2>
 				<p><?php esc_html_e( 'This section provides information on the number of blocks that are supported for automatic translation.', 'automatic-translations-for-polylang' ); ?></p>
 			</div>
-			<!-- <div class="atfp-supported-blocks-container">
+			<div class="atfp-supported-blocks-filters">
 				<div class="atfp-filter-tab">
 					<h3><?php esc_html_e( 'Filter Blocks:', 'automatic-translations-for-polylang' ); ?></h3>
 					<select id="atfp-blocks-filter" name="atfp_blocks_filter">
@@ -96,11 +96,11 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 						<option value="unsupported"><?php esc_html_e( 'Unsupported Block', 'automatic-translations-for-polylang' ); ?></option>
 					</select>
 				</div>
-				<div class="atfp-search-tab">
+				<!-- <div class="atfp-search-tab">
 					<h3><?php esc_html_e( 'Search Blocks:', 'automatic-translations-for-polylang' ); ?></h3>
 					<input type="search" id="atfp-blocks-search" name="atfp_blocks_search" placeholder="<?php esc_attr_e( 'Search Blocks...', 'automatic-translations-for-polylang' ); ?>" />
-				</div>
-			</div> -->
+				</div> -->
+			</div>
 			<div class="atfp-blocks-section">
 				<h3><?php esc_html_e( 'Supported Blocks', 'automatic-translations-for-polylang' ); ?></h3>
 				<div class="atfp-blocks-lists">
