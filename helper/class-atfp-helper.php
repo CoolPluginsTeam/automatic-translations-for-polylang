@@ -108,7 +108,7 @@ if (! class_exists('ATFP_Helper')) {
 
 			$block_translation_rules['AtfpBlockParseRules'] = $this->custom_block_data_array;
 
-			$block_translation_rules['AtfpCoreAttrReplace'] = $this->get_block_replace_rules($block_translation_rules['AtfpCoreAttrReplace']);
+			$block_translation_rules['AtfpCoreAttrReplace'] = $this->get_block_replace_rules(isset($block_translation_rules['AtfpCoreAttrReplace']) ? $block_translation_rules['AtfpCoreAttrReplace'] : array());
 
 			return $block_translation_rules;
 		}
@@ -228,11 +228,13 @@ if (! class_exists('ATFP_Helper')) {
 				)
 			);
 
-			foreach ($new_rules as $key => $value) {
-				if (!array_key_exists($key, $AtfpCoreAttrReplace)) {
+			if (count($new_rules) > 0) {
+				foreach ($new_rules as $key => $value) {
+					if (!array_key_exists($key, $AtfpCoreAttrReplace)) {
 					$AtfpCoreAttrReplace[$key] = $value;
 				} elseif (!in_array($value, $AtfpCoreAttrReplace[$key])) {
-					$AtfpCoreAttrReplace[$key][] = $value;
+						$AtfpCoreAttrReplace[$key][] = $value;
+					}
 				}
 			}
 
