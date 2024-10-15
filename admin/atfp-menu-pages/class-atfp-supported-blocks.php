@@ -72,7 +72,6 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 		 * Render the support blocks page.
 		 */
 		public function atfp_render_support_blocks_page() {
-			// $content = $this->atfp_get_supported_blocks_table();
 			?>
 		<div class="atfp-supported-blocks-wrapper">
 			<div class="atfp-help-section">
@@ -96,10 +95,6 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 						<option value="unsupported"><?php esc_html_e( 'Unsupported Block', 'automatic-translations-for-polylang' ); ?></option>
 					</select>
 				</div>
-				<!-- <div class="atfp-search-tab">
-					<h3><?php esc_html_e( 'Search Blocks:', 'automatic-translations-for-polylang' ); ?></h3>
-					<input type="search" id="atfp-blocks-search" name="atfp_blocks_search" placeholder="<?php esc_attr_e( 'Search Blocks...', 'automatic-translations-for-polylang' ); ?>" />
-				</div> -->
 			</div>
 			<div class="atfp-blocks-section">
 				<h3><?php esc_html_e( 'Supported Blocks', 'automatic-translations-for-polylang' ); ?></h3>
@@ -116,7 +111,6 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 						</thead>
 						<tbody>
 							<?php 
-							// echo $content['html'];
 								$this->atfp_get_supported_blocks_table()
 							?>
 						</tbody>
@@ -124,62 +118,6 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 			</div>
 		</div>
 			<?php
-			// echo $content['pagination'];
-			?>
-			<?php
-		}
-
-		/**
-		 * Get the supported blocks.
-		 */
-		public function atfp_get_supported_blocks() {
-
-			if ( class_exists( 'WP_Block_Type_Registry' ) && method_exists( 'WP_Block_Type_Registry', 'get_all_registered' ) ) {
-				$atfp_block_parse_rules      = ATFP_Helper::get_instance()->get_block_parse_rules();
-				$blocks_data                 = WP_Block_Type_Registry::get_instance()->get_all_registered();
-				$atfp_supported_blocks       = $atfp_block_parse_rules['AtfpBlockParseRules'];
-				$atfp_supported_blocks_names = array_keys( $atfp_supported_blocks );
-				$s_no                        = 1;
-				$atfp_post_id                = ATFP_Helper::get_custom_block_post_id();
-				$paged                       = isset( $_GET['paged'] ) ? intval( $_GET['paged'] ) : 1;
-				
-				$filter_blocks_data = array_filter( $blocks_data, function( $block ) {
-					return !in_array($block->category, array( 'media', 'reusable' ));
-				} );
-				
-				$max_page                    = ceil( count( $filter_blocks_data ) / 20 );
-
-				$offset              = ( $paged - 1 ) * 20; // Calculate the starting index
-
-				$limited_blocks_data = array_slice( $filter_blocks_data, $offset, 20 ); // Get the subset of blocks
-				// $limited_blocks_data = $blocks_data; // Get the subset of blocks
-				$html                = '';
-				foreach ( $limited_blocks_data as $block ) {
-
-					$block_name  = esc_html( $block->name );
-					$block_title = esc_html( $block->title );
-					$status      = ! in_array( $block_name, $atfp_supported_blocks_names ) ? 'Unsupported' : 'Supported'; // You can modify this logic based on your requirements
-					$modify_text = ! in_array( $block_name, $atfp_supported_blocks_names ) ? esc_html__( 'Add', 'automatic-translations-for-polylang' ) : esc_html__( 'Edit', 'automatic-translations-for-polylang' );
-					$modify_link = '<a href="' . esc_url( admin_url( 'post.php?post=' . esc_attr( $atfp_post_id ) . '&action=edit&atfp_new_block=' ) . esc_attr( $block_name ) ) . '">' . $modify_text . '</a>'; // Modify link
-					$modify_link = '<a href="' . esc_url( admin_url( 'post.php?post=' . esc_attr( $atfp_post_id ) . '&action=edit&atfp_new_block=' ) . esc_attr( $block_name ) ) . '">' . $modify_text . '</a>'; // Modify link
-
-					$html .= '<tr data-block-name="' . esc_attr( strtolower( $block_name ) ) . '" data-block-status="' . esc_attr( strtolower( $status ) ) . '" >';
-					$html .= '<td>' . $s_no++ . '</td>';
-					$html .= '<td>' . $block_name . '</td>';
-					$html .= '<td>' . $block_title . '</td>';
-					$html .= '<td>' . $status . '</td>';
-					$html .= '<td>' . $modify_link . '</td>';
-					$html .= '</tr>';
-				}
-
-				$pagination = ATFP_Helper::atfp_pagination( $max_page, $paged );
-
-				return array(
-					'pagination' => $pagination,
-					'html'       => $html,
-				);
-			}
-
 		}
 
 		/**
@@ -200,7 +138,6 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 					return !in_array($block->category, array( 'media', 'reusable' ));
 				} );
 
-				$html                = '';
 				foreach ( $filter_blocks_data as $block ) {
 
 					$block_name  = esc_html( $block->name );

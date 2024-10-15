@@ -115,7 +115,6 @@ if (! class_exists('ATFP_Helper')) {
 
 		private function filter_custom_block_rules(array $id_keys, $value, $block_rules, $attr_key = false)
 		{
-			$latest_data = array();
 			$block_rules = is_object($block_rules) ? json_decode(json_encode($block_rules)) : $block_rules;
 
 			if (! isset($block_rules)) {
@@ -151,51 +150,6 @@ if (! class_exists('ATFP_Helper')) {
 			}
 
 			$current_array = $value;
-		}
-
-		/**
-		 * Timeline Stories Default Pagination
-		 *
-		 * @param WP_Query $wp_query WP_Query object.
-		 * @param int      $paged current page number.
-		 */
-		public static function atfp_pagination($max_num_pages, $paged)
-		{
-			$output   = '';
-			$numpages = $max_num_pages;
-			if (! $numpages) {
-				$numpages = 1;
-			}
-			$big      = 999999999;
-			$of_lbl   = __(' of ', 'cool-timeline');
-			$page_lbl = __(' Page ', 'cool-timeline');
-
-			$pagination_args = array(
-				'base'         => str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
-				'format'       => '?paged=%#%',
-				'total'        => $numpages,
-				'current'      => $paged,
-				'show_all'     => false,
-				'end_size'     => 1,
-				'mid_size'     => 1,
-				'prev_next'    => true,
-				// 'prev_text'    => $prev_arrow,
-				// 'next_text'    => $next_arrow,
-				'type'         => 'plain',
-				'add_args'     => false,
-				'add_fragment' => '',
-			);
-
-			$paginate_links = paginate_links($pagination_args);
-
-			if ($paginate_links) {
-				$output  = '<nav class="atfp-pagination" aria-label="Timeline Navigation">';
-				$output .= '<span class="page-numbers atfp-page-num" role="status">' . $page_lbl . $paged . $of_lbl . $numpages . '</span> ';
-				$output .= $paginate_links;
-				$output .= '</nav>';
-				return $output;
-			}
-			return '';
 		}
 
 		public function get_block_replace_rules($new_rules)
@@ -239,8 +193,6 @@ if (! class_exists('ATFP_Helper')) {
 			}
 
 			return $AtfpCoreAttrReplace;
-
-
 		}
 	}
 }
