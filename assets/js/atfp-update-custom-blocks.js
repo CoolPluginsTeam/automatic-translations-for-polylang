@@ -4,6 +4,7 @@ class blockDataReterive {
         this.blockLists = [];
         this.customBlockTranslateData = {};
         this.customBlocksData = [];
+        this.loaderContainer = null;
         this.init();
 
         this.AtfpCoreAttrReplace = {
@@ -39,6 +40,13 @@ class blockDataReterive {
 
     init = () => {
         this.fetchCustomBlocks();
+        const modalContainer=document.querySelector('#atfp-modal-open-warning-wrapper .modal-container .modal-content');
+        if(modalContainer){
+            this.loaderContainer = document.createElement('div');
+            this.loaderContainer.className = 'atfp-loader-container';
+            this.loaderContainer.innerHTML = '<div class="atfp-loader-skeleton"><span class="atfp-loader-shimmer"></span></div>';
+            modalContainer.appendChild(this.loaderContainer);
+        }
     }
 
     replaceAttrBlocks = () => {
@@ -100,6 +108,7 @@ class blockDataReterive {
             .then(response => response.json())
             .then(data => {
                 if(data.message === 'No custom blocks found.'){
+                    this.loaderContainer && this.loaderContainer.remove();
                     return;
                 }
 
@@ -111,12 +120,14 @@ class blockDataReterive {
                 this.saveBlockData();
             })
             .catch(error => {
+                this.loaderContainer && this.loaderContainer.remove();
                 console.error('Error fetching block rules:', error);
             });
     }
 
     saveBlockData=()=>{
         if(Object.keys(this.customBlockTranslateData).length < 1){
+            this.loaderContainer && this.loaderContainer.remove();
             return;
         }
 
@@ -140,11 +151,13 @@ class blockDataReterive {
         })
             .then(response => response.json())
             .then(data => {
+                this.loaderContainer && this.loaderContainer.remove();
                 if(data.success && data.data.message){
                     console.log(data.data.message);
                 }
             })
             .catch(error => {
+                this.loaderContainer && this.loaderContainer.remove();
                 console.error('Error fetching block rules:', error);
             });
     }

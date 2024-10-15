@@ -464,4 +464,38 @@ body>div.skiptranslate iframe.skiptranslate[frameborder][src][style="visibility:
     margin-left: 5px;
 }
 
+/* Skeleton Shimmer Animation */
+.atfp-loader-skeleton {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background-color: #e0e0e0; /* Light gray background */
+    border-radius: 4px; /* Rounded corners */
+    top: 0;
+    left: 0;
+    opacity: 0.9;
+}
+
+.atfp-loader-skeleton::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.6) 50%, rgba(255, 255, 255, 0.2) 100%);
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+
 /* meta box review notice style end */
