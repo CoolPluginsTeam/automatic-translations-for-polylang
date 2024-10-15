@@ -95,7 +95,7 @@ if (! class_exists('ATFP_Helper')) {
 
 			$block_translation_rules = json_decode($block_rules, true);
 
-			$this->custom_block_data_array = isset($block_translation_rules['AtfpBlockParseRules']) ? $block_translation_rules['AtfpBlockParseRules'] : array();
+			$this->custom_block_data_array = isset($block_translation_rules['AtfpBlockParseRules']) ? $block_translation_rules['AtfpBlockParseRules'] : null;
 
 			$custom_block_translation = get_option('atfp_custom_block_translation', false);
 
