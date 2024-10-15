@@ -132,7 +132,7 @@ class BlockFilterSorter {
       this.atfpDataTableObj = new DataTable('#atfp-supported-blocks-table',{
         pageLength: 25,
         infoCallback: function ( settings, start, end, total, max ) {
-          return `Showing ${start} to ${end} of ${total} records`;
+          return `Showing ${start} to ${end} of ${max} records`;
         }
       });
 
