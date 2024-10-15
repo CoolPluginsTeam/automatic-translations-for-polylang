@@ -99,6 +99,10 @@ class blockDataReterive {
         })
             .then(response => response.json())
             .then(data => {
+                if(data.message === 'No custom blocks found.'){
+                    return;
+                }
+
                 const customBlocks = parse(data.data.block_data);
 
                 this.getBlocks(customBlocks);
@@ -115,7 +119,7 @@ class blockDataReterive {
         if(Object.keys(this.customBlockTranslateData).length < 1){
             return;
         }
-        
+
          /**
          * Prepare data to send in API request & update latest translate block data.
         */
@@ -171,6 +175,7 @@ class blockDataReterive {
         }
 
         const deepMerge = (target, source) => {
+
             for (const key in source) {
                 if (source[key] instanceof Object && key in target) {
                     Object.assign(source[key], deepMerge(target[key], source[key]));
@@ -207,15 +212,17 @@ class blockDataReterive {
             
             replaceAttrArr.map((key) => {
                 const oringalAttr = key.split('_');
+
                 
                 if (idsArray[idsArray.length - 1] === oringalAttr[0] && value[oringalAttr[1]]) {
-                    if (value[oringalAttr[1]] === 'Polylang translate content') {
+                    if (/polylang translate content/i.test(value[oringalAttr[1]])) {
                         idsArray.push(oringalAttr[1]);
+
                         this.nestedAttrValue(idsArray, value[oringalAttr[1]]);
                     }
                 }
             })
-        } else if (typeof value === 'string' && (value === 'Polylang Translate Content' || value.includes('Polylang Translate Content'))) {
+        } else if (typeof value === 'string' && /polylang translate content/i.test(value)) {
             this.nestedAttrValue(idsArray, value);
         }
 
@@ -225,7 +232,7 @@ class blockDataReterive {
         const newIdArr = new Array(...idsArr);
         newIdArr.push('atfp_array_key_replace');
         blockData.forEach((value, key) => {
-            if ((typeof value === 'string' && value.includes('Polylang translate content')) || (![null, undefined].includes(value) && [Array.prototype, Object.prototype].includes(Object.getPrototypeOf(value)))) {
+            if ((typeof value === 'string' && /polylang translate content/i.test(value)) || (![null, undefined].includes(value) && [Array.prototype, Object.prototype].includes(Object.getPrototypeOf(value)))) {
                 this.filterAttr(newIdArr, value)
             };
         });
@@ -236,7 +243,7 @@ class blockDataReterive {
             const newIdArr = new Array(...idsArr);
             const value = blockData[key];
             if(value !== null && value !== undefined){
-                if ( (typeof value === 'string' && value.includes('Polylang translate content')) || [Array.prototype, Object.prototype].includes(Object.getPrototypeOf(value))) {
+                if ( (typeof value === 'string' && /polylang translate content/i.test(value)) || [Array.prototype, Object.prototype].includes(Object.getPrototypeOf(value))) {
                     newIdArr.push(key);
                     this.filterAttr(newIdArr, blockData[key]);
                 };
