@@ -189,8 +189,9 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 
 			if ( class_exists( 'WP_Block_Type_Registry' ) && method_exists( 'WP_Block_Type_Registry', 'get_all_registered' ) ) {
 				$atfp_block_parse_rules      = ATFP_Helper::get_instance()->get_block_parse_rules();
+
 				$blocks_data                 = WP_Block_Type_Registry::get_instance()->get_all_registered();
-				$atfp_supported_blocks       = $atfp_block_parse_rules['AtfpBlockParseRules'];
+				$atfp_supported_blocks       = isset($atfp_block_parse_rules['AtfpBlockParseRules']) ? $atfp_block_parse_rules['AtfpBlockParseRules'] : array();
 				$atfp_supported_blocks_names = array_keys( $atfp_supported_blocks );
 				$s_no                        = 1;
 				$atfp_post_id                = ATFP_Helper::get_custom_block_post_id();
