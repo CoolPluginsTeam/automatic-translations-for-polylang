@@ -7,10 +7,25 @@
     class atfpCreateNewBlock {
         constructor(newBlock) {
             this.newBlock = newBlock;
+            this.updateBlockStore = {};
+            this.loaderRemove=null;
+            this.loader=null;
             this.init();
         }
         init = () => {
             this.creteNewBlock();
+            this.skeletonLoader();
+        }
+
+        removeLoader=()=>{
+            clearTimeout(this.loaderRemove);
+
+            this.loaderRemove=setTimeout(()=>{
+                if(this.loader){
+                    this.loader.remove();
+                }
+            },2000);
+            
         }
 
         creteNewBlock = () => {
@@ -20,48 +35,42 @@
 
         updateBlockData = async (Block) => {
             await dispatch('core/block-editor').insertBlocks([Block]);
-            const loader = this.skeletonLoader();
 
             setTimeout(()=>{
                 const blockWrp=document.getElementById(`block-${Block.clientId}`);
-                blockWrp.appendChild(loader);
+                blockWrp.appendChild(this.loader);
             },100);
 
             setTimeout(() => {
-                this.updateBlockContent(Block, loader);
+                this.updateBlockContent(Block);
             }, 400);
-
-            setTimeout(()=>{
-                if(loader){
-                    loader.remove();
-                }
-            },4000);
         }
 
-        updateBlockContent = (Block, loader) => {
+        updateBlockContent = (Block) => {
             const newBlock = document.getElementById(`block-${Block.clientId}`);
 
             if (newBlock) {
-                this.updateContent(newBlock, loader);
+                this.updateContent(newBlock);
             }
             return;
         }
 
-        updateContent =async (ele, loader) => {
+        updateContent =async (ele) => {
             const element = ele;
             let i=1;
+            this.removeLoader();
+
             if (element) {
                 if (element.contentEditable == 'true' && element.children.length < 2) {
                     element.innerHTML = 'Polylang Translate Content';
-                    loader.remove();
                 } else {
                     const innerElements = element.getElementsByTagName('*');
                   
                     for (let innerElement of innerElements) {
                         if(i=== innerElements.length){
                             setTimeout(()=>{
-                                loader.remove();
-                            },3000);
+                                this.updateBlockFromStore();
+                            },500);
                         }
 
                         i++;
@@ -72,7 +81,7 @@
                         if (innerElement.childNodes.length > 0) {
                             innerElement.childNodes.forEach((child)  => {
                                 if (child.nodeType === Node.TEXT_NODE) {
-                                    this.updateBlock(innerElement, child);
+                                    this.updateBlockAttr(innerElement, child);
                                 }
                             });
                         }
@@ -81,7 +90,7 @@
             }
         }
 
-        updateBlock = (innerElement, child) => {
+        updateBlockAttr = (innerElement, child) => {
             let blockId=false;
             if(innerElement.classList.contains('wp-block')){
                 blockId=innerElement.dataset.block;
@@ -93,15 +102,13 @@
             }
 
             const blockAttributes = select('core/block-editor').getBlockAttributes(blockId);
-            let updatedAttrs = JSON.parse(JSON.stringify(blockAttributes));
+            
             let index=0;
 
-            const checkValidAttributes = (value = false,blockId) => {
-                const blockData = document.querySelector(`#block-${blockId}`).innerHTML;
-
-                const regex = new RegExp(value); // Create regex from the value parameter
-
-                return regex.test(blockData); // Return the result of the regex test directly
+            if(!this.updateBlockStore[blockId]){
+                let attributes = JSON.parse(JSON.stringify(blockAttributes));
+                this.updateBlockStore[blockId] = {attributes:attributes};
+                this.updateBlockStore[blockId].updateBlockData={};
             }
 
             const updateNestedAttributes = async (attributes, child) => {
@@ -110,22 +117,9 @@
 
                     if (typeof attributes[key] === 'string' && (attributes[key].trim() === child.textContent.trim() || attributes[key] === child.textContent.trim())) {
                         const originalValue = attributes[key];
-                        const updatedValue = 'Polylang Translate Content here ' + index;
-                        attributes[key] = updatedValue;
-
-                        await dispatch('core/block-editor').updateBlockAttributes(blockId, attributes).then(e=>{
-                            setTimeout( async ()=>{
-                                const valid = checkValidAttributes(updatedValue,blockId);
-                                if (!valid) {
-                                    attributes[key] = originalValue;
-                                    await dispatch('core/block-editor').updateBlockAttributes(blockId, attributes);
-                                } else {
-                                    attributes[key] = 'Polylang Translate Content';
-                                    await dispatch('core/block-editor').updateBlockAttributes(blockId, attributes);
-                                }
-                            },2000);
-                        });
-                      
+                        const newValue = 'Polylang Translate Content here ' + index;
+                        this.updateBlockStore[blockId].updateBlockData[newValue.replace(/\s+/g, '-')] = originalValue;
+                        attributes[key] = newValue;
                     }
                 };
 
@@ -138,8 +132,77 @@
                 }
             };
 
-            updateNestedAttributes(updatedAttrs, child);
-            return;
+            const blockStoreAttributes = this.updateBlockStore[blockId].attributes;
+            updateNestedAttributes(blockStoreAttributes, child);
+        }
+
+        updateBlockFromStore = () => {
+            const blockStoreAttributes = this.updateBlockStore;
+
+            const checkValidAttributes = (value = false,blockId) => {
+                const blockElement = document.querySelector(`#block-${blockId}`);
+                const regex = new RegExp(value, 'g'); // Create regex from the value parameter with global flag
+                const matchFound = regex.test(blockElement.innerText); // Check if the regex matches
+
+
+
+                return matchFound; // Return the result of the regex test directly
+            };
+            
+            Object.keys(blockStoreAttributes).forEach((blockId) => {
+                const blockAttributes = blockStoreAttributes[blockId].attributes;
+                this.removeLoader();
+
+                const upateNestedAttributes = async (attributes) => {
+                    const updateAttributes = async (key) => {
+                        
+                        if (typeof attributes[key] === 'string' && attributes[key].includes('Polylang Translate Content here')) {
+                            try {
+                                const keyWithDashes = attributes[key].replace(/\s+/g, '-');
+                                const originalValue=this.updateBlockStore[blockId].updateBlockData[keyWithDashes];
+                                
+                                const status=checkValidAttributes(attributes[key],blockId);
+
+                                if(!status){
+                                    attributes[key]=originalValue;
+                                }else{
+                                    attributes[key]='Polylang Translate Content';
+                                }
+                            } catch (e) {
+                                console.log(`${attributes[key]} is not valid JSON.`);
+                            }
+                        }
+                    };
+                    
+                    for (const key of Object.keys(attributes)) {
+                        await updateAttributes(key);
+                        
+                        if (typeof attributes[key] === 'object' && attributes[key] !== null) {
+                            await upateNestedAttributes(attributes[key]); // Recursively update nested objects
+                        }
+                    }
+                };
+                
+                dispatch('core/block-editor').updateBlockAttributes(blockId, blockAttributes).then(()=>{
+                    setTimeout(()=>{
+                        this.removeLoader();
+                        upateNestedAttributes(blockAttributes);
+                    },1000);
+                });
+            });
+
+            setTimeout(()=>{    
+                Object.keys(blockStoreAttributes).forEach((blockId) => {
+                    const blockAttributes = blockStoreAttributes[blockId].attributes;
+                    dispatch('core/block-editor').updateBlockAttributes(blockId, blockAttributes).then(()=>{
+                        this.removeLoader();
+                        setTimeout(()=>{
+                            dispatch('core/block-editor').selectBlock(null); // Deselect the currently selected block
+                        },500)
+                    }
+                    );
+                });
+            },1500);
         }
 
         skeletonLoader = () => {
@@ -154,7 +217,7 @@
             loader.className = 'atfp-loader-wrapper'; // Add the atfp class to the loader
             loader.innerHTML = loaderContainer();
 
-            return loader;
+            this.loader=loader;
         }
     }
 
