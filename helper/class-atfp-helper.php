@@ -205,25 +205,29 @@ if (! class_exists('ATFP_Helper')) {
 					if ($postID > 0) {
 						$translatedPost = pll_get_post($postID, $locale);
 						if ($translatedPost) {
-							$link = esc_url(urldecode_deep(get_permalink($translatedPost)));
+							$link = get_permalink($translatedPost);
 
 							if ($link) {
+								$link=esc_url(urldecode_deep($link));
 								$content = str_replace($href, $link, $content);
 							}
 						}
 					} else {
-						$cat_id = self::get_category_id_by_url($href, $current_locale);
-						if ($cat_id > 0) {
-							$term_id = pll_get_term($cat_id, $locale);
+						$path = trim(str_replace(pll_home_url($current_locale), '', $href), '/');
+						$category_slug = end(array_filter(explode('/', $path)));
+						$category = get_term_by('slug', $category_slug, 'category');
+
+						if ($category) {
+							$term_id = pll_get_term($category->term_id, $locale);
 							if ($term_id > 0) {
 								$link = get_category_link($term_id);
-								$content = str_replace($href, $link, $content);
+								$content = str_replace($href, esc_url($link), $content);
 							}
 						}
 					}
 				}
 			}
-			
+
 			return $content;
 		}
 	}
