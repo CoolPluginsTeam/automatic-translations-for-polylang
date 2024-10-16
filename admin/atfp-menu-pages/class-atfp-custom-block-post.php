@@ -72,8 +72,13 @@ if ( ! class_exists( 'ATFP_Custom_Block_Post' ) ) {
 		 */
 		public function on_save_post( $post_id, $post, $update ) {
 			if ( isset( $post->post_type ) && 'atfp_add_blocks' === $post->post_type ) {
-				update_option( 'atfp_custom_block_data', $post->post_content );
-				update_option( 'atfp_custom_block_status', 'true' );
+				if (preg_match('/polylang translate content/i', $post->post_content)) {
+					update_option( 'atfp_custom_block_data', $post->post_content );
+					update_option( 'atfp_custom_block_status', 'true' );
+				}else{
+					delete_option( 'atfp_custom_block_data' );
+					update_option( 'atfp_custom_block_status', 'false' );
+				}
 			}
 		}
 
