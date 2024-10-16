@@ -101,7 +101,7 @@ if (! class_exists('ATFP_Helper')) {
 
 			if (! empty($custom_block_translation) && is_array($custom_block_translation)) {
 				foreach ($custom_block_translation as $key => $block_data) {
-					$block_rules = isset($block_translation_rules['AtfpBlockParseRules'][$key]) ? $block_translation_rules['AtfpBlockParseRules'][$key] : array();
+					$block_rules = isset($block_translation_rules['AtfpBlockParseRules'][$key]) ? $block_translation_rules['AtfpBlockParseRules'][$key] : null;
 					$this->filter_custom_block_rules(array($key), $block_data, $block_rules);
 				}
 			}

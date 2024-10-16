@@ -153,9 +153,11 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 
 					if ( count( $this->custom_block_data_array ) > 0 ) {
 						update_option( 'atfp_custom_block_translation', $this->custom_block_data_array );
-						delete_option( 'atfp_custom_block_data' );
-						update_option( 'atfp_custom_block_status', 'false' );
 					}
+
+					delete_option( 'atfp_custom_block_data' );
+					update_option( 'atfp_custom_block_status', 'false' );
+
 				}
 			}
 
