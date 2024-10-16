@@ -194,5 +194,37 @@ if (! class_exists('ATFP_Helper')) {
 
 			return $AtfpCoreAttrReplace;
 		}
+
+		public static function replace_links_with_translations($content, $locale, $current_locale)
+		{
+			$pattern = '/href="([^"]*)"/';
+
+			if (preg_match_all($pattern, $content, $matches)) {
+				foreach ($matches[1] as $href) {
+					$postID = url_to_postid($href);
+					if ($postID > 0) {
+						$translatedPost = pll_get_post($postID, $locale);
+						if ($translatedPost) {
+							$link = esc_url(urldecode_deep(get_permalink($translatedPost)));
+
+							if ($link) {
+								$content = str_replace($href, $link, $content);
+							}
+						}
+					} else {
+						$cat_id = self::get_category_id_by_url($href, $current_locale);
+						if ($cat_id > 0) {
+							$term_id = pll_get_term($cat_id, $locale);
+							if ($term_id > 0) {
+								$link = get_category_link($term_id);
+								$content = str_replace($href, $link, $content);
+							}
+						}
+					}
+				}
+			}
+			
+			return $content;
+		}
 	}
 }
