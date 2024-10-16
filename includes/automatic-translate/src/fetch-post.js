@@ -16,6 +16,8 @@ const FetchPost = (props) => {
      */
     const apiSendData = {
         postId: parseInt(props.postId),
+        local: props.targetLang,
+        current_local: props.sourceLang,
         atfp_nonce: atfp_ajax_object.ajax_nonce,
         action: atfp_ajax_object.action_fetch
     };

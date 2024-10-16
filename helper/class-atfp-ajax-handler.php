@@ -96,8 +96,13 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 
 			if ( false !== $post_id ) {
 				$post_data = get_post( esc_html( $post_id ) );
+                $locale = isset($_POST['local']) ? sanitize_text_field($_POST['local']) : 'en';
+                $current_locale = isset($_POST['current_local']) ? sanitize_text_field($_POST['current_local']) : 'en';
+				
 
 				$content = $post_data->post_content;
+				$content = ATFP_Helper::replace_links_with_translations($content, $locale, $current_locale);
+				
 				$data    = array(
 					'title'   => $post_data->post_title,
 					'excerpt' => $post_data->post_excerpt,
