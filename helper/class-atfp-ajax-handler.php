@@ -173,7 +173,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 			$block_rules = is_object( $block_rules ) ? json_decode( json_encode( $block_rules ) ) : $block_rules;
 
 			if ( ! isset( $block_rules ) ) {
-				return $this->create_nested_attribute( $id_keys, $value );
+				return $this->create_nested_attribute( $value,$id_keys );
 			}
 			if ( is_object( $value ) && isset( $block_rules ) ) {
 				foreach ( $value as $key => $item ) {
@@ -181,17 +181,17 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 						$this->verify_block_data( array_merge( $id_keys, array( $key ) ), $item, $block_rules[ $key ], false );
 						continue;
 					} elseif ( ! isset( $block_rules[ $key ] ) && true === $item ) {
-						$this->create_nested_attribute( array_merge( $id_keys, array( $key ) ), true );
+						$this->create_nested_attribute(  true,array_merge( $id_keys, array( $key ) ) );
 						continue;
 					} elseif ( ! isset( $block_rules[ $key ] ) && is_object( $item ) ) {
-						$this->create_nested_attribute( array_merge( $id_keys, array( $key ) ), $item );
+						$this->create_nested_attribute(  $item,array_merge( $id_keys, array( $key ) ) );
 						continue;
 					}
 				}
 			}
 		}
 
-		private function create_nested_attribute( $id_keys = array(), $value ) {
+		private function create_nested_attribute( $value,$id_keys = array() ) {
 			$value = is_object( $value ) ? json_decode( json_encode( $value ), true ) : $value;
 
 			$current_array = &$this->custom_block_data_array;
