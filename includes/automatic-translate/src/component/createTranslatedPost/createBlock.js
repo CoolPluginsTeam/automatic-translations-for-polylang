@@ -75,7 +75,7 @@ const filterTranslateAttr = (block, blockParseRules, replaceAttrRules) => {
                 let filterKey = uniqueId.replace(/[^\p{L}\p{N}]/gu, '');
                 let translateContent = '';
 
-                if (!/[^\p{L}\p{N}]/gu.test(blockAttrContent)) {
+                if (!/[\p{L}\p{N}]/gu.test(blockAttrContent)) {
                     translateContent = blockAttrContent;
                 } else {
                     translateContent = select('block-atfp/translate').getTranslatedString('content', blockAttrContent, filterKey);

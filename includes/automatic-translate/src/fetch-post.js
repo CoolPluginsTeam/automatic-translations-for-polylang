@@ -49,7 +49,7 @@ const FetchPost = (props) => {
 
                 const translationEntry = select("block-atfp/translate").getTranslationEntry();
 
-                const totalString = Object.values(translationEntry).filter(data => data.source !== undefined && /[^\p{L}\p{N}]/gu.test(data.source));
+                const totalString = Object.values(translationEntry).filter(data => data.source !== undefined && /[\p{L}\p{N}]/gu.test(data.source));
                 if (Object.keys(totalString).length > 0) {
                     setTranslateContent(translationEntry);
                 } else {

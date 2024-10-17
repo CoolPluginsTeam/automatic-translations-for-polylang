@@ -199,6 +199,7 @@ if (! class_exists('ATFP_Helper')) {
 		{
 			$pattern = '/href="([^"]*)"/';
 
+			
 			if (preg_match_all($pattern, $content, $matches)) {
 				foreach ($matches[1] as $href) {
 					$postID = url_to_postid($href);
@@ -206,7 +207,7 @@ if (! class_exists('ATFP_Helper')) {
 						$translatedPost = pll_get_post($postID, $locale);
 						if ($translatedPost) {
 							$link = get_permalink($translatedPost);
-
+							
 							if ($link) {
 								$link=esc_url(urldecode_deep($link));
 								$content = str_replace($href, $link, $content);

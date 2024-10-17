@@ -32,7 +32,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 		 *
 		 * @var array
 		 */
-		private static $custom_block_data_array = array();
+		private $custom_block_data_array = array();
 
 		/**
 		 * Gets an instance of our plugin.
