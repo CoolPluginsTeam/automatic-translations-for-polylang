@@ -68,6 +68,7 @@
                   
                     for (let innerElement of innerElements) {
                         if(i=== innerElements.length){
+                            this.removeLoader();
                             setTimeout(()=>{
                                 this.updateBlockFromStore();
                             },500);
