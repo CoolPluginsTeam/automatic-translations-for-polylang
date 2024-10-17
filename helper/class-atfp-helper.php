@@ -106,7 +106,7 @@ if (! class_exists('ATFP_Helper')) {
 				}
 			}
 
-			$block_translation_rules['AtfpBlockParseRules'] = $this->custom_block_data_array;
+			$block_translation_rules['AtfpBlockParseRules'] = $this->custom_block_data_array ? $this->custom_block_data_array : array();
 
 			$block_translation_rules['AtfpCoreAttrReplace'] = $this->get_block_replace_rules(isset($block_translation_rules['AtfpCoreAttrReplace']) ? $block_translation_rules['AtfpCoreAttrReplace'] : array());
 
