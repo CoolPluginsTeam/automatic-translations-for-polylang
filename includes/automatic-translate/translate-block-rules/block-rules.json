@@ -190,7 +190,7 @@
         },
         "uagb/counter": {
             "attributes": {
-                "numberPrefix": "",
+                "numberPrefix": true,
                 "heading": true,
                 "iconImage": {
                     "alt": true
@@ -1000,113 +1000,113 @@
         },
         "ub/content-toggle-panel-block": {
             "attributes": {
-                "panelTitle": ""
+                "panelTitle": true
             }
         },
         "ub/button": {
             "attributes": {
                 "buttons": [
                     {
-                        "buttonText": ""
+                        "buttonText": true
                     }
                 ]
             }
         },
         "ub/expand-portion": {
             "attributes": {
-                "clickText": ""
+                "clickText": true
             }
         },
         "ub/testimonial": {
             "attributes": {
-                "ub_testimonial_author_role": "",
-                "ub_testimonial_author": "",
-                "ub_testimonial_text": ""
+                "ub_testimonial_author_role": true,
+                "ub_testimonial_author": true,
+                "ub_testimonial_text": true
             }
         },
         "ub/call-to-action-block": {
             "attributes": {
-                "ub_cta_button_text": "",
-                "ub_cta_content_text": "",
-                "ub_call_to_action_headline_text": ""
+                "ub_cta_button_text": true,
+                "ub_cta_content_text": true,
+                "ub_call_to_action_headline_text": true
             }
         },
         "ub/click-to-tweet": {
             "attributes": {
-                "ubTweet": ""
+                "ubTweet": true
             }
         },
         "ub/tabbed-content-block": {
             "attributes": {
                 "tabsTitle": [
-                    ""
+                    true
                 ]
             }
         },
         "ub/star-rating-block": {
             "attributes": {
-                "reviewText": ""
+                "reviewText": true
             }
         },
         "ub/table-of-contents-block": {
             "attributes": {
-                "title": ""
+                "title": true
             }
         },
         "ub/progress-bar": {
             "attributes": {
-                "detail": ""
+                "detail": true
             }
         },
         "ub/review": {
             "attributes": {
                 "parts": [
                     {
-                        "label": ""
+                        "label": true
                     }
                 ],
-                "summaryDescription": "",
-                "summaryTitle": "",
-                "itemName": "",
-                "authorName": ""
+                "summaryDescription": true,
+                "summaryTitle": true,
+                "itemName": true,
+                "authorName": true
             }
         },
         "ub/content-filter-block": {
             "attributes": {
                 "filterArray": [
                     {
-                        "category": ""
+                        "category": true
                     }
                 ]
             }
         },
         "ub/how-to": {
             "attributes": {
-                "resultIntro": "",
-                "howToYield": "",
+                "resultIntro": true,
+                "howToYield": true,
                 "section": [
                     {
                         "steps": [
                             {
-                                "title": "",
-                                "tip": "",
-                                "direction": ""
+                                "title": true,
+                                "tip": true,
+                                "direction": true
                             }
                         ]
                     }
                 ],
-                "introduction": "",
-                "title": ""
+                "introduction": true,
+                "title": true
             }
         },
         "ub/advanced-heading": {
             "attributes": {
-                "content": ""
+                "content": true
             }
         },
         "ub/counter": {
             "attributes": {
-                "label": ""
+                "label": true
             }
         }
     },
