@@ -1,4 +1,4 @@
-const FilterBlockNestedAttr=(idsArr,attrObj,blockAttr,callBack)=>{
+const FilterBlockNestedAttr = (idsArr, attrObj, blockAttr, callBack) => {
 
     /**
      * Iterates over the keys of the filter object and calls saveTranslatedAttr for each key.
@@ -35,19 +35,26 @@ const FilterBlockNestedAttr=(idsArr,attrObj,blockAttr,callBack)=>{
             return;
         }
 
-        dynamicBlockAttr.forEach((_, index) => {
-            const nestedId = new Array();
-            newIdArr.forEach(key => {
-                nestedId.push(key);
-            });
+        if (typeof dynamicBlockAttr === 'object') {
+            childAttr(idArr, attrFilter[0]);
+            return;
+        }
 
-            nestedId.push(index);
-            callBack(nestedId, attrFilter[0]);
-        });
+        if (Object.getPrototypeOf(dynamicBlockAttr) === Array.prototype) {
+            dynamicBlockAttr.forEach((_, index) => {
+                const nestedId = new Array();
+                newIdArr.forEach(key => {
+                    nestedId.push(key);
+                });
+
+                nestedId.push(index);
+                callBack(nestedId, attrFilter[0]);
+            });
+        }
     }
 
 
-    const typeCheck=()=>{
+    const typeCheck = () => {
         if (Object.getPrototypeOf(attrObj) === Array.prototype) {
             childAttrArray(idsArr, attrObj);
         } else if (Object.getPrototypeOf(attrObj) === Object.prototype) {
