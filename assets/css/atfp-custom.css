@@ -232,7 +232,8 @@ button.atfp-setting-close:hover {
     font-weight: bold;
     position: absolute;
     right: 10px;
-    top: 20px;
+    top: 18px;
+    line-height: 24px;
 }
 
 #atfp_strings_model .modal-header .close:hover,
