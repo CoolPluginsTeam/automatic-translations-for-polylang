@@ -108,8 +108,6 @@ if (! class_exists('ATFP_Helper')) {
 
 			$block_translation_rules['AtfpBlockParseRules'] = $this->custom_block_data_array ? $this->custom_block_data_array : array();
 
-			$block_translation_rules['AtfpCoreAttrReplace'] = $this->get_block_replace_rules(isset($block_translation_rules['AtfpCoreAttrReplace']) ? $block_translation_rules['AtfpCoreAttrReplace'] : array());
-
 			return $block_translation_rules;
 		}
 
@@ -152,53 +150,9 @@ if (! class_exists('ATFP_Helper')) {
 			$current_array = $value;
 		}
 
-		public function get_block_replace_rules($new_rules)
-		{
-			$AtfpCoreAttrReplace = array(
-				'content_originalHTML' => array(
-					'core/paragraph',
-					'core/heading',
-					'core/list-item',
-					'core/preformatted',
-					'core/table',
-					'core/verse',
-					'core/code'
-				),
-				'citation_originalHTML' => array(
-					'core/quote',
-					'core/pullquote'
-				),
-				'summary_originalHTML' => array(
-					'core/details'
-				),
-				'value_originalHTML' => array(
-					'core/pullquote'
-				),
-				'caption_originalHTML' => array(
-					'core/table'
-				),
-				'text_originalHTML' => array(
-					'core/button'
-				)
-			);
-
-			if (count($new_rules) > 0) {
-				foreach ($new_rules as $key => $value) {
-					if (!array_key_exists($key, $AtfpCoreAttrReplace)) {
-					$AtfpCoreAttrReplace[$key] = $value;
-				} elseif (!in_array($value, $AtfpCoreAttrReplace[$key])) {
-						$AtfpCoreAttrReplace[$key][] = $value;
-					}
-				}
-			}
-
-			return $AtfpCoreAttrReplace;
-		}
-
 		public static function replace_links_with_translations($content, $locale, $current_locale)
 		{
 			$pattern = '/href="([^"]*)"/';
-
 			
 			if (preg_match_all($pattern, $content, $matches)) {
 				foreach ($matches[1] as $href) {
