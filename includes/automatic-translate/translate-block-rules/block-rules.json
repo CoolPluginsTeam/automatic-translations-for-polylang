@@ -22,16 +22,12 @@
         },
         "core/quote": {
             "attributes": {
-                "citation": {
-                    "originalHTML": true
-                }
+                "citation": true
             }
         },
         "core/details": {
             "attributes": {
-                "summary": {
-                    "originalHTML": true
-                }
+                "summary": true
             }
         },
         "core/preformatted": {
@@ -41,27 +37,19 @@
         },
         "core/pullquote": {
             "attributes": {
-                "citation": {
-                    "originalHTML": true
-                },
-                "value": {
-                    "originalHTML": true
-                }
+                "citation": true,
+                "value": true
             }
         },
         "core/table": {
             "attributes": {
-                "caption": {
-                    "originalHTML": true
-                },
+                "caption": true,
                 "body": [
                     [
                         {
                             "cells": [
                                 {
-                                    "content": {
-                                        "originalHTML": true
-                                    }
+                                    "content": true
                                 }
                             ]
                         }
@@ -86,9 +74,7 @@
         },
         "core/button": {
             "attributes": {
-                "text": {
-                    "originalHTML": true
-                }
+                "text": true
             }
         },
         "core/more": {
