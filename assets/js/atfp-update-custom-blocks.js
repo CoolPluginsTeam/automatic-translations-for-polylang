@@ -6,36 +6,6 @@ class blockDataReterive {
         this.customBlocksData = [];
         this.loaderContainer = null;
         this.init();
-
-        this.AtfpCoreAttrReplace = {
-            "content_originalHTML": [
-                "core/paragraph",
-                "core/heading",
-                "core/list-item",
-                "core/preformatted",
-                "core/table",
-                "core/verse",
-                "core/code"
-            ],
-            "citation_originalHTML": [
-                "core/quote",
-                "core/pullquote"
-            ],
-            "summary_originalHTML": [
-                "core/details"
-            ],
-            "value_originalHTML": [
-                "core/pullquote"
-            ],
-            "caption_originalHTML": [
-                "core/table"
-            ],
-            "text_originalHTML": [
-                "core/button"
-            ]
-        }
-
-        this.AtfpCoreAttrReplaceBlocks = this.replaceAttrBlocks();
     }
 
     init = () => {
@@ -47,22 +17,6 @@ class blockDataReterive {
             this.loaderContainer.innerHTML = '<div class="atfp-loader-skeleton"><span class="atfp-loader-shimmer"></span></div>';
             modalContainer.appendChild(this.loaderContainer);
         }
-    }
-
-    replaceAttrBlocks = () => {
-        let array = {};
-
-        Object.keys(this.AtfpCoreAttrReplace).map((keys) => {
-            this.AtfpCoreAttrReplace[keys].map((value) => {
-                if (array.hasOwnProperty(value)) {
-                    array[value].push(keys);
-                } else {
-                    array[value] = [keys];
-                }
-            });
-        });
-
-        return array;
     }
 
     getBlocks = (blocks) => {
@@ -130,6 +84,7 @@ class blockDataReterive {
             this.loaderContainer && this.loaderContainer.remove();
             return;
         }
+
 
          /**
          * Prepare data to send in API request & update latest translate block data.
@@ -220,25 +175,11 @@ class blockDataReterive {
             this.filterBlockArrayAttr(idsArray, value);
         } else if (Object.getPrototypeOf(value) === Object.prototype) {
             this.filterBlockObjectAttr(idsArray, value);
-        } else if (![Array.prototype, Object.prototype].includes(Object.getPrototypeOf(value)) && typeof value === 'object' && Object.keys(this.AtfpCoreAttrReplaceBlocks).includes(idsArray[0])) {
-            const replaceAttrArr = this.AtfpCoreAttrReplaceBlocks[idsArray[0]];
-            
-            replaceAttrArr.map((key) => {
-                const oringalAttr = key.split('_');
-
-                
-                if (idsArray[idsArray.length - 1] === oringalAttr[0] && value[oringalAttr[1]]) {
-                    if (/polylang translate content/i.test(value[oringalAttr[1]])) {
-                        idsArray.push(oringalAttr[1]);
-
-                        this.nestedAttrValue(idsArray, value[oringalAttr[1]]);
-                    }
-                }
-            })
         } else if (typeof value === 'string' && /polylang translate content/i.test(value)) {
             this.nestedAttrValue(idsArray, value);
+        }else if(value instanceof wp.richText.RichTextData && /polylang translate content/i.test(value.originalHTML)){
+            this.nestedAttrValue(idsArray, value.originalHTML);
         }
-
     }
 
     filterBlockArrayAttr = (idsArr, blockData) => {
