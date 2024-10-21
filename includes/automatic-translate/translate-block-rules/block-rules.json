@@ -2,9 +2,7 @@
     "AtfpBlockParseRules": {
         "core/paragraph": {
             "attributes": {
-                "content": {
-                    "originalHTML": true
-                }
+                "content": true
             }
         },
         "core/image": {
@@ -14,16 +12,12 @@
         },
         "core/heading": {
             "attributes": {
-                "content": {
-                    "originalHTML": true
-                }
+                "content": true
             }
         },
         "core/list-item": {
             "attributes": {
-                "content": {
-                    "originalHTML": true
-                }
+                "content": true
             }
         },
         "core/quote": {
@@ -42,9 +36,7 @@
         },
         "core/preformatted": {
             "attributes": {
-                "content": {
-                    "originalHTML": true
-                }
+                "content": true
             }
         },
         "core/pullquote": {
@@ -79,9 +71,7 @@
         },
         "core/verse": {
             "attributes": {
-                "content": {
-                    "originalHTML": true
-                }
+                "content": true
             }
         },
         "core/freeform": {
@@ -124,9 +114,7 @@
         },
         "core/code": {
             "attributes": {
-                "content": {
-                    "originalHTML": true
-                }
+                "content": true
             }
         },
         "cp-timeline/content-timeline-block-child": {
@@ -1109,32 +1097,5 @@
                 "label": true
             }
         }
-    },
-    "AtfpCoreAttrReplace": {
-        "content_originalHTML": [
-            "core/paragraph",
-            "core/heading",
-            "core/list-item",
-            "core/preformatted",
-            "core/table",
-            "core/verse",
-            "core/code"
-        ],
-        "citation_originalHTML": [
-            "core/quote",
-            "core/pullquote"
-        ],
-        "summary_originalHTML": [
-            "core/details"
-        ],
-        "value_originalHTML": [
-            "core/pullquote"
-        ],
-        "caption_originalHTML": [
-            "core/table"
-        ],
-        "text_originalHTML": [
-            "core/button"
-        ]
     }
 }

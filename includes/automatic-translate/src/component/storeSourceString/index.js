@@ -34,7 +34,12 @@ const filterTranslateAttr = (blockId, blockAttr, filterAttr) => {
                 dynamicBlockAttr = dynamicBlockAttr[key];
             });
 
-            const blockAttrContent = dynamicBlockAttr;
+            let blockAttrContent = dynamicBlockAttr;
+
+            if(blockAttrContent instanceof wp.richText.RichTextData) {
+                blockAttrContent=blockAttrContent.originalHTML;
+            }
+          
             if (undefined !== blockAttrContent && blockAttrContent.trim() !== '') {
                 
                 let filterKey = uniqueId.replace(/[^\p{L}\p{N}]/gu, '');
