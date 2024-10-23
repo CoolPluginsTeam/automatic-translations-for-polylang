@@ -5,14 +5,60 @@
     const { dispatch, select } = wp.data;
 
     class atfpCreateNewBlock {
-        constructor(newBlock) {
-            this.newBlock = newBlock;
+        constructor() {
             this.updateBlockStore = {};
             this.loaderRemove=null;
             this.loader=null;
-            this.init();
         }
-        init = () => {
+
+        copyTranslateText=()=>{
+            // Get the current selection object
+            const selection = window.getSelection();
+            // Create a new range object
+            const range = document.createRange();
+            // Select the contents of the copy text element
+            range.selectNodeContents(document.getElementById('atfp-copy-text'));
+            // Remove any existing selections
+            selection.removeAllRanges();
+            // Add the new range to the selection
+            selection.addRange(range);
+            // Execute the copy command
+            document.execCommand('copy');
+            // Clear the selection
+            selection.removeAllRanges();
+        }
+
+        noticeInitialize = () => {
+            dispatch("core/notices").createInfoNotice( 'To enable translation, please include the Polylang translate Content text in your block content. For help, watch the video and click <b>"Copy Text"</b> to use. Then, paste it into the section of your block you want automatically translated', {
+                className: 'atfp_notice_testing',
+                actions: [
+                    {
+                        label: 'Watch Video.',
+                        url: '#',
+                    }
+                ],
+                __unstableHTML: true
+            } );
+        }
+
+        copyBtnInitialize = () => { // Initialize the copy button
+            const copyBtn = document.createElement('div'); // Create a new div element for the copy button
+            copyBtn.id = 'atfp-copy-btn'; // Set the ID of the copy button
+            copyBtn.innerHTML = 'Copy Text'; // Set the inner HTML of the copy button
+            copyBtn.addEventListener('click', this.copyTranslateText); // Add click event listener to copy text
+            copyBtn.ariaLabel = 'Copy Text'; // Set the aria-label for accessibility
+            copyBtn.title = 'Click to copy the text "Polylang translate Content"'; // Tooltip message
+
+            const copyText = document.createElement('div'); // Create a new div element for the copy text
+            copyText.id = 'atfp-copy-text'; // Set the ID of the copy text div
+            copyText.innerHTML = 'Polylang translate Content'; // Set the inner HTML of the copy text div
+            
+            document.body.appendChild(copyBtn); // Append the copy button to the document body
+            document.body.appendChild(copyText); // Append the copy text to the document body
+        } 
+
+        addBlockInitialize = (newBlock) => {
+            this.newBlock=newBlock;
             this.creteNewBlock();
             this.skeletonLoader();
         }
@@ -221,14 +267,20 @@
             this.loader=loader;
         }
     }
-
+    
+    
     window.addEventListener('load', () => {
+        const atfpCreateBlockObj=new atfpCreateNewBlock();
+
+        atfpCreateBlockObj.copyBtnInitialize();
+        atfpCreateBlockObj.noticeInitialize();
+
         const urlParams = new URLSearchParams(window.location.search);
         let newBlock = '';
 
         if (urlParams.has('atfp_new_block') && '' !== urlParams.get('atfp_new_block').trim()) {
             newBlock = urlParams.get('atfp_new_block');
-            new atfpCreateNewBlock(newBlock);
+            atfpCreateBlockObj.addBlockInitialize(newBlock);
         }
     });
 })();

@@ -41,7 +41,8 @@ if ( ! class_exists( 'ATFP_Custom_Block_Post' ) ) {
 		public function enqueue_scripts( $hook ) {
 			$current_screen = get_current_screen();
 			if ( 'atfp_add_blocks' === $current_screen->post_type && is_object( $current_screen ) && 'post.php' === $hook && $current_screen->is_block_editor ) {
-				wp_enqueue_script( 'atfp-add-new-block', ATFP_URL . 'assets/js/atfp-add-new-block.min.js', array( 'jquery','wp-data', 'wp-element' ), '1.0.0', true );
+				wp_enqueue_script( 'atfp-add-new-block', ATFP_URL . 'assets/js/atfp-add-new-block.min.js', array( 'jquery','wp-data', 'wp-element' ), ATFP_V, true );
+				wp_enqueue_style( 'atfp-supported-blocks', ATFP_URL . 'assets/css/atfp-supported-blocks.min.css', array(), ATFP_V, 'all' );
 			}
 		}
 

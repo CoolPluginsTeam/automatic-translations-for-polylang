@@ -237,4 +237,35 @@
   font-size: 1.3em;
   font-weight: 600;
 }
+
+#atfp-copy-btn {
+  z-index: 999999;
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  position: fixed;
+  top: 50%;
+  -webkit-transform: translateY(-50%) scale(0.9);
+          transform: translateY(-50%) scale(0.9);
+  left: 0px;
+}
+
+#atfp-copy-btn:hover {
+  font-weight: 600;
+  -webkit-transform: translateY(-50%) scale(1);
+          transform: translateY(-50%) scale(1);
+  -webkit-box-shadow: 0 0 10px #333, 0 0 30px #333;
+          box-shadow: 0 0 10px #333, 0 0 30px #333;
+}
+
+#atfp-copy-text {
+  display: fixed;
+  bottom: -50%;
+  left: -50%;
+}
 /*# sourceMappingURL=atfp-supported-blocks.css.map */
