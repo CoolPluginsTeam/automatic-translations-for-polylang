@@ -136,6 +136,8 @@ if ( ! class_exists( 'ATFP_Custom_Block_Post' ) ) {
 					'edit_post'    => 'edit_pages',
 					'delete_posts' => false,
 					'edit_posts'   => 'edit_pages',
+					'edit_pages'   => 'edit_pages',
+					'edit_page'    => 'edit_pages'
 				),
 			);
 
