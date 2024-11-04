@@ -84,7 +84,9 @@
 
             setTimeout(()=>{
                 const blockWrp=document.getElementById(`block-${Block.clientId}`);
-                blockWrp.appendChild(this.loader);
+                if(blockWrp){
+                    blockWrp.appendChild(this.loader);
+                }
             },100);
 
             setTimeout(() => {
@@ -234,7 +236,7 @@
                     setTimeout(()=>{
                         this.removeLoader();
                         upateNestedAttributes(blockAttributes);
-                    },1000);
+                    },1500);
                 });
             });
 
@@ -243,9 +245,6 @@
                     const blockAttributes = blockStoreAttributes[blockId].attributes;
                     dispatch('core/block-editor').updateBlockAttributes(blockId, blockAttributes).then(()=>{
                         this.removeLoader();
-                        setTimeout(()=>{
-                            dispatch('core/block-editor').selectBlock(null); // Deselect the currently selected block
-                        },500)
                     }
                     );
                 });

@@ -259,8 +259,8 @@
   font-weight: 600;
   -webkit-transform: translateY(-50%) scale(1);
           transform: translateY(-50%) scale(1);
-  -webkit-box-shadow: 0 0 10px #333, 0 0 30px #333;
-          box-shadow: 0 0 10px #333, 0 0 30px #333;
+  -webkit-box-shadow: 0 0 10px #949494, 0 0 30px #898787;
+          box-shadow: 0 0 10px #949494, 0 0 30px #898787;
 }
 
 #atfp-copy-text {
