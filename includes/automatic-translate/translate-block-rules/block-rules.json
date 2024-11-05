@@ -103,6 +103,15 @@
                 "content": true
             }
         },
+        "core/text-columns": {
+            "attributes": {
+                "content": [
+                    {
+                        "children": true
+                    }
+                ]
+            }
+        },
         "cp-timeline/content-timeline-block-child": {
             "attributes": {
                 "t_date": true,
