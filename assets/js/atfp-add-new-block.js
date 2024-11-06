@@ -31,7 +31,7 @@
         }
 
         noticeInitialize = () => {
-            dispatch("core/notices").createInfoNotice('To enable translation, please include the Polylang translate Content text in your block content. For help, watch the video and click <b>"Copy Text"</b> to use. Then, paste it into the section of your block you want automatically translated', {
+            dispatch("core/notices").createInfoNotice('To enable translation, please include the Make This Content Available for Translation text in your block content. For help, watch the video and click <b>"Copy Text"</b> to use. Then, paste it into the section of your block you want automatically translated', {
                 className: 'atfp_notice_testing',
                 actions: [
                     {
@@ -49,11 +49,11 @@
             copyBtn.innerHTML = 'Copy Text'; // Set the inner HTML of the copy button
             copyBtn.addEventListener('click', this.copyTranslateText); // Add click event listener to copy text
             copyBtn.ariaLabel = 'Copy Text'; // Set the aria-label for accessibility
-            copyBtn.title = 'Click to copy the text "Polylang translate Content"'; // Tooltip message
+            copyBtn.title = 'Click to copy the text "Make This Content Available for Translation"'; // Tooltip message
 
             const copyText = document.createElement('div'); // Create a new div element for the copy text
             copyText.id = 'atfp-copy-text'; // Set the ID of the copy text div
-            copyText.innerHTML = 'Polylang translate Content'; // Set the inner HTML of the copy text div
+            copyText.innerHTML = 'Make This Content Available for Translation'; // Set the inner HTML of the copy text div
 
             document.body.appendChild(copyBtn); // Append the copy button to the document body
             document.body.appendChild(copyText); // Append the copy text to the document body
@@ -112,7 +112,7 @@
 
             if (element) {
                 if (element.contentEditable == 'true' && element.children.length < 2) {
-                    element.innerHTML = 'Polylang Translate Content';
+                    element.innerHTML = 'Make This Content Available for Translation';
                 } else {
                     const innerElements = element.getElementsByTagName('*');
 
@@ -168,7 +168,7 @@
 
                     if (typeof attributes[key] === 'string' && (attributes[key].trim() === child.textContent.trim() || attributes[key] === child.textContent.trim())) {
                         const originalValue = attributes[key];
-                        const newValue = 'Polylang Translate Content here ' + index;
+                        const newValue = 'Make This Content Available for Translation ' + index;
                         this.updateBlockStore[blockId].updateBlockData[newValue.replace(/\s+/g, '-')] = originalValue;
                         attributes[key] = newValue;
                     }
@@ -221,7 +221,7 @@
             const upateNestedAttributes = async (attributes) => {
                 const updateAttributes = async (key) => {
 
-                    if (typeof attributes[key] === 'string' && attributes[key].includes('Polylang Translate Content here')) {
+                    if (typeof attributes[key] === 'string' && attributes[key].includes('Make This Content Available for Translation')) {
                         try {
                             const keyWithDashes = attributes[key].replace(/\s+/g, '-');
                             const originalValue = this.updateBlockStore[blockId].updateBlockData[keyWithDashes];
@@ -231,7 +231,7 @@
                             if (!status) {
                                 attributes[key] = originalValue;
                             } else {
-                                attributes[key] = 'Polylang Translate Content';
+                                attributes[key] = 'Make This Content Available for Translation';
                             }
                         } catch (e) {
                             console.log(`${attributes[key]} is not valid JSON.`);

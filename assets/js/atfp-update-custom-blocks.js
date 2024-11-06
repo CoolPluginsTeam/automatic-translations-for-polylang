@@ -175,9 +175,9 @@ class blockDataReterive {
             this.filterBlockArrayAttr(idsArray, value);
         } else if (Object.getPrototypeOf(value) === Object.prototype) {
             this.filterBlockObjectAttr(idsArray, value);
-        } else if (typeof value === 'string' && /polylang translate content/i.test(value)) {
+        } else if (typeof value === 'string' && /Make This Content Available for Translation/i.test(value)) {
             this.nestedAttrValue(idsArray, value);
-        }else if(value instanceof wp.richText.RichTextData && /polylang translate content/i.test(value.originalHTML)){
+        }else if(value instanceof wp.richText.RichTextData && /Make This Content Available for Translation/i.test(value.originalHTML)){
             this.nestedAttrValue(idsArray, value.originalHTML);
         }
     }
@@ -186,7 +186,7 @@ class blockDataReterive {
         const newIdArr = new Array(...idsArr);
         newIdArr.push('atfp_array_key_replace');
         blockData.forEach((value, key) => {
-            if ((typeof value === 'string' && /polylang translate content/i.test(value)) || (![null, undefined].includes(value) && [Array.prototype, Object.prototype].includes(Object.getPrototypeOf(value)))) {
+            if ((typeof value === 'string' && /Make This Content Available for Translation/i.test(value)) || (![null, undefined].includes(value) && [Array.prototype, Object.prototype].includes(Object.getPrototypeOf(value)))) {
                 this.filterAttr(newIdArr, value)
             };
         });
@@ -197,7 +197,7 @@ class blockDataReterive {
             const newIdArr = new Array(...idsArr);
             const value = blockData[key];
             if(value !== null && value !== undefined){
-                if ( (typeof value === 'string' && /polylang translate content/i.test(value)) || [Array.prototype, Object.prototype].includes(Object.getPrototypeOf(value))) {
+                if ( (typeof value === 'string' && /Make This Content Available for Translation/i.test(value)) || [Array.prototype, Object.prototype].includes(Object.getPrototypeOf(value))) {
                     newIdArr.push(key);
                     this.filterAttr(newIdArr, blockData[key]);
                 };

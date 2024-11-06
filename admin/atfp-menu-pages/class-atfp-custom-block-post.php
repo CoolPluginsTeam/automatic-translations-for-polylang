@@ -29,8 +29,6 @@ if ( ! class_exists( 'ATFP_Custom_Block_Post' ) ) {
 		 */
 		private function __construct() {
 			add_action( 'init', array( $this, 'register_custom_post_type' ) );
-			add_action( 'admin_menu', array( $this, 'remove_post_type_menu' ) );
-			add_action( 'admin_menu', array( $this, 'atfp_add_submenu_page' ), 11 );
 			add_action( 'save_post', array( $this, 'on_save_post' ), 10, 3 );
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		}
@@ -47,24 +45,6 @@ if ( ! class_exists( 'ATFP_Custom_Block_Post' ) ) {
 		}
 
 		/**
-		 * Add submenu page under the Polylang menu.
-		 */
-		public function atfp_add_submenu_page() {
-			global $polylang;
-			$atfp_polylang = $polylang;
-			if ( isset( $atfp_polylang ) ) {
-				add_submenu_page(
-					'mlang', // Parent slug
-					__( 'Automatic Translations', 'automatic-translations-for-polylang' ), // Page title
-					__( 'Automatic Translations', 'automatic-translations-for-polylang' ), // Menu title
-					'manage_options', // Capability
-					'edit.php?post_type=atfp_add_blocks', // Menu slug
-					false, // Callback function
-				);
-			}
-		}
-
-		/**
 		 * Function to run on post save or update.
 		 *
 		 * @param int          $post_id The ID of the post being saved.
@@ -73,7 +53,7 @@ if ( ! class_exists( 'ATFP_Custom_Block_Post' ) ) {
 		 */
 		public function on_save_post( $post_id, $post, $update ) {
 			if ( isset( $post->post_type ) && 'atfp_add_blocks' === $post->post_type ) {
-				if (preg_match('/polylang translate content/i', $post->post_content)) {
+				if (preg_match('/Make This Content Available for Translation/i', $post->post_content)) {
 					update_option( 'atfp_custom_block_data', $post->post_content );
 					update_option( 'atfp_custom_block_status', 'true' );
 				}else{
@@ -145,13 +125,6 @@ if ( ! class_exists( 'ATFP_Custom_Block_Post' ) ) {
 
 
 			ATFP_Helper::get_custom_block_post_id();
-		}
-
-		/**
-		 * Hide the "Add New" and "Remove" options.
-		 */
-		public function remove_post_type_menu() {
-			remove_menu_page( 'edit.php?post_type=automatic_translation_add_block' );
 		}
 	}
 
