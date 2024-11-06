@@ -112,6 +112,13 @@
                 ]
             }
         },
+        "cp-timeline/content-timeline-child": {
+            "attributes": {
+                "t_date": true,
+                "time_desc": true,
+                "time_heading": true
+            }
+        },
         "cp-timeline/content-timeline-block-child": {
             "attributes": {
                 "t_date": true,
