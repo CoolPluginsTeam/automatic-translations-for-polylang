@@ -1099,5 +1099,222 @@
                 "label": true
             }
         }
+        "qi-blocks/button": {
+            "attributes": {
+                "buttonText": true
+            }
+        },
+        "qi-blocks/accordion": {
+            "attributes": {
+                "accordionItemsRepeater": [
+                    {
+                        "itemTitle": true,
+                        "itemText": true
+                    }
+                ]
+            }
+        },
+        "qi-blocks/advanced-text": {
+            "attributes": {
+                "text": true
+            }
+        },
+        "qi-blocks/author-info": {
+            "attributes": {
+                "text": true,
+                "title": true
+            }
+        },
+        "qi-blocks/banner": {
+            "attributes": {
+                "text": true,
+                "subtitle": true,
+                "title": true
+            }
+        },
+        "qi-blocks/call-to-action": {
+            "attributes": {
+                "text": true,
+                "title": true
+            }
+        },
+        "qi-blocks/clients-list": {
+            "attributes": {
+                "clientItemsRepeater": [
+                    {
+                        "clientText": true,
+                        "clientTitle": true
+                    }
+                ]
+            }
+        },
+        "qi-blocks/counter": {
+            "attributes": {
+                "text": true,
+                "title": true
+            }
+        },
+        "qi-blocks/faq": {
+            "attributes": {
+                "faqItemsRepeater": [
+                    {
+                        "itemText": true,
+                        "itemTitle": true
+                    }
+                ]
+            }
+        },
+        "qi-blocks/how-to": {
+            "attributes": {
+                "text": true,
+                "subtitle": true,
+                "title": true,
+                "howToItemsRepeater": [
+                    {
+                        "stepText": true,
+                        "stepTitle": true
+                    }
+                ]
+            }
+        },
+        "qi-blocks/icon-with-text": {
+            "attributes": {
+                "text": true,
+                "title": true
+            }
+        },
+        "qi-blocks/info-box": {
+            "attributes": {
+                "text": true,
+                "title": true,
+                "subtitle": true
+            }
+        },
+        "qi-blocks/message-box": {
+            "attributes": {
+                "text": true,
+                "title": true
+            }
+        },
+        "qi-blocks/pricing-table": {
+            "attributes": {
+                "pricingTableItemsRepeater": [
+                    {
+                        "itemText": true
+                    }
+                ],
+                "label": true,
+                "period": true,
+                "currency": true,
+                "price": true,
+                "title": true
+            }
+        },
+        "qi-blocks/process": {
+            "attributes": {
+                "processItemsRepeater": [
+                    {
+                        "itemText": true,
+                        "itemTitle": true
+                    }
+                ]
+            }
+        },
+        "qi-blocks/progress-bar-circle": {
+            "attributes": {
+                "text": true,
+                "title": true
+            }
+        },
+        "qi-blocks/progress-bar-horizontal": {
+            "attributes": {
+                "title": true
+            }
+        },
+        "qi-blocks/progress-bar-vertical": {
+            "attributes": {
+                "title": true
+            }
+        },
+        "qi-blocks/search": {
+            "attributes": {
+                "buttonText": true
+            }
+        },
+        "qi-blocks/section-title": {
+            "attributes": {
+                "subtitleIcon": {
+                    "html": true
+                },
+                "text": true,
+                "subtitle": true,
+                "title": true
+            }
+        },
+        "qi-blocks/table-of-contents": {
+            "attributes": {
+                "text": true,
+                "subtitle": true,
+                "title": true
+            }
+        },
+        "qi-blocks/tabs-horizontal": {
+            "attributes": {
+                "tabsHorizontalItemsRepeater": [
+                    {
+                        "itemTitle": true,
+                        "itemText": true
+                    }
+                ]
+            }
+        },
+        "qi-blocks/tabs-vertical": {
+            "attributes": {
+                "tabsVerticalItemsRepeater": [
+                    {
+                        "itemTitle": true,
+                        "itemText": true
+                    }
+                ]
+            }
+        },
+        "qi-blocks/team-member": {
+            "attributes": {
+                "role": true,
+                "name": true
+            }
+        },
+        "qi-blocks/testimonials-list": {
+            "attributes": {
+                "testimonialsListItemsRepeater": [
+                    {
+                        "itemAuthorOccupation": true,
+                        "itemAuthor": true,
+                        "itemText": true,
+                        "itemTitle": true
+                    }
+                ]
+            }
+        },
+        "qi-blocks/text-marquee": {
+            "attributes": {
+                "items": [
+                    {
+                        "itemText": true
+                    }
+                ]
+            }
+        },
+        "qi-blocks/timeline": {
+            "attributes": {
+                "timelineRepeater": [
+                    {
+                        "itemText": true,
+                        "itemDate": true,
+                        "itemTitle": true
+                    }
+                ]
+            }
+        }
     }
 }

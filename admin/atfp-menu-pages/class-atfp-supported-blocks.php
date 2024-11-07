@@ -193,6 +193,7 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 			$predfined_blocks = array(
 				'ub' => 'Ultimate Blocks',
 				'uagb' => 'Spectra',
+				'themeisle-blocks' => 'Otter Blocks'
 			);
 			
 			if(array_key_exists($block_name, $predfined_blocks)){
