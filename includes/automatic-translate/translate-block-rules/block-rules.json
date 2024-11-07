@@ -1098,7 +1098,7 @@
             "attributes": {
                 "label": true
             }
-        }
+        },
         "qi-blocks/button": {
             "attributes": {
                 "buttonText": true
