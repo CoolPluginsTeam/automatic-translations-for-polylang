@@ -1,7 +1,7 @@
 class BlockFilterSorter {
   constructor() {
-    this.tabsSortBy = document.getElementById('atfp-sortby-tab');
     this.filterSelect = document.getElementById('atfp-blocks-filter');
+    this.categorySelect = document.getElementById('atfp-blocks-category');
     this.tableBody = document.querySelector('.atfp-supported-blocks-table tbody');
     this.atfpDataTableObj=null;
 
@@ -9,8 +9,8 @@ class BlockFilterSorter {
       this.atfpDataTable();
       
       // Tab sort by Handler
-      this.tabsSortBy.addEventListener('input',this.datatableSortByHandler);
       this.filterSelect.addEventListener('input',this.datatableFilterHandler);
+      this.categorySelect.addEventListener('input',this.datatableCategoryHandler);
     }
   }
 
@@ -35,8 +35,6 @@ class BlockFilterSorter {
       const selectWrapper = document.querySelector('.atfp-supported-blocks-filters');
       selectWrapper.remove();
       tableWrp.prepend(selectWrapper);
-
-      this.datatableSortByHandler();
     }
   }
   
@@ -48,21 +46,11 @@ class BlockFilterSorter {
     }
   }
 
-  datatableSortByHandler=()=>{
+  datatableCategoryHandler=()=>{
     if((this.atfpDataTableObj)){
-      let sortBy=this.tabsSortBy.value;
-      let sortDir='asc';
-      if(sortBy === 'name'){
-        sortBy=1;
-        sortDir='asc';
-      }else if(sortBy === 'supported'){
-        sortBy=3;
-        sortDir='asc';
-      }else if(sortBy === 'unsupported'){
-        sortBy=3;
-        sortDir='desc';
-      }
-      this.atfpDataTableObj.order([sortBy, sortDir]).draw();
+      let selectedCategory=this.categorySelect.value;
+      selectedCategory=selectedCategory === 'all' ? false : selectedCategory;
+      this.atfpDataTableObj.column(1).search(selectedCategory ? new RegExp('^' + selectedCategory + '/') : '', false, false, false).draw();
     }
   }
 }

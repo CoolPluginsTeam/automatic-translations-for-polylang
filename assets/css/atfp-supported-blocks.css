@@ -25,7 +25,7 @@
   min-width: 220px;
 }
 
-.atfp-supported-blocks-wrapper .atfp-supported-blocks-filters .atfp-filter-tab, .atfp-supported-blocks-wrapper .atfp-supported-blocks-filters .atfp-sortby-tab, .atfp-supported-blocks-wrapper .atfp-supported-blocks-filters .atfp-search-tab {
+.atfp-supported-blocks-wrapper .atfp-supported-blocks-filters .atfp-filter-tab, .atfp-supported-blocks-wrapper .atfp-supported-blocks-filters .atfp-search-tab, .atfp-supported-blocks-wrapper .atfp-supported-blocks-filters .atfp-category-tab {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

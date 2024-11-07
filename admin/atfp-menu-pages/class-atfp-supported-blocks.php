@@ -23,6 +23,13 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 		private static $instance = null;
 
 		/**
+		 * ATFP plugin category.
+		 *
+		 * @var array
+		 */
+		private $atfp_plugin_category = array();
+
+		/**
 		 * Get the singleton instance of the class.
 		 *
 		 * @return ATFP_Supported_Blocks
@@ -74,11 +81,16 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 		public function atfp_render_support_blocks_page() {
 			?>
 		<div class="atfp-supported-blocks-wrapper">
-			<div class="atfp-help-section">
-				<h2><?php esc_html_e( 'Help', 'automatic-translations-for-polylang' ); ?></h2>
-				<p><?php esc_html_e( 'This section provides information on the number of blocks that are supported for automatic translation.', 'automatic-translations-for-polylang' ); ?></p>
-			</div>
+			<h3><?php esc_html_e( 'Supported Blocks for Automatic Translations for Polylang', 'automatic-translations-for-polylang' ); ?></h3>
 			<div class="atfp-supported-blocks-filters">
+				<div class="atfp-category-tab">
+					<h3><?php esc_html_e( 'Blocks Category:', 'automatic-translations-for-polylang' ); ?></h3>
+					<select id="atfp-blocks-category" name="atfp_blocks_category">
+						<option value="all"><?php esc_html_e( 'All Blocks', 'automatic-translations-for-polylang' ); ?></option>
+						<option value="core">Core</option>
+						<?php $this->atfp_get_blocks_category(); ?>
+					</select>
+				</div>
 				<div class="atfp-filter-tab">
 					<h3><?php esc_html_e( 'Filter Blocks:', 'automatic-translations-for-polylang' ); ?></h3>
 					<select id="atfp-blocks-filter" name="atfp_blocks_filter">
@@ -87,17 +99,8 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 						<option value="unsupported"><?php esc_html_e( 'Unsupported Blocks', 'automatic-translations-for-polylang' ); ?></option>
 					</select>
 				</div>
-				<div class="atfp-sortby-tab">
-					<h3><?php esc_html_e( 'Sort By:', 'automatic-translations-for-polylang' ); ?></h3>
-					<select id="atfp-sortby-tab" name="atfp_sortby_filter">
-						<option value="name"><?php esc_html_e( 'Name', 'automatic-translations-for-polylang' ); ?></option>
-						<option value="supported" selected><?php esc_html_e( 'Supported Block', 'automatic-translations-for-polylang' ); ?></option>
-						<option value="unsupported"><?php esc_html_e( 'Unsupported Block', 'automatic-translations-for-polylang' ); ?></option>
-					</select>
-				</div>
 			</div>
 			<div class="atfp-blocks-section">
-				<h3><?php esc_html_e( 'Supported Blocks', 'automatic-translations-for-polylang' ); ?></h3>
 				<div class="atfp-blocks-lists">
 					<table class="atfp-supported-blocks-table" id="atfp-supported-blocks-table">
 						<thead>
@@ -118,6 +121,33 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 			</div>
 		</div>
 			<?php
+		}
+
+		/**
+		 * Get the blocks category.
+		 */
+		public function atfp_get_blocks_category() {
+			$blocks_data                 = WP_Block_Type_Registry::get_instance()->get_all_registered();
+			$filter_blocks_data = array_filter( $blocks_data, function( $block ) {
+				return !in_array($block->category, array( 'media', 'reusable' ));
+			} );
+			foreach ( $filter_blocks_data as $block ) {
+				$plugin_name = explode('/', $block->name);
+				$plugin_name = isset($plugin_name[0]) ? $plugin_name[0] : '';
+
+				if(!empty($plugin_name)){
+					$filter_plugin_name = $this->atfp_supported_block_name($plugin_name);
+					$filter_plugin_name=str_replace('-',' ',$filter_plugin_name);
+					$filter_plugin_name=ucwords($filter_plugin_name);
+
+					if(in_array($plugin_name, $this->atfp_plugin_category) || $plugin_name === 'core'){
+						continue;
+					}
+
+					$this->atfp_plugin_category[] = $plugin_name;
+					echo '<option value="' . esc_attr( $plugin_name ) . '">' . esc_html( $filter_plugin_name ) . '</option>';
+				}
+			}
 		}
 
 		/**
@@ -157,6 +187,19 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 				}
 			}
 
+		}
+
+		private function atfp_supported_block_name($block_name){
+			$predfined_blocks = array(
+				'ub' => 'Ultimate Blocks',
+				'uagb' => 'Spectra',
+			);
+			
+			if(array_key_exists($block_name, $predfined_blocks)){
+				return $predfined_blocks[$block_name];
+			}
+
+			return $block_name;
 		}
 	}
 
