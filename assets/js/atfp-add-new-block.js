@@ -166,7 +166,7 @@
                 const updateAttributes = async (key) => {
                     index++;
 
-                    if (typeof attributes[key] === 'string' && (attributes[key].trim() === child.textContent.trim() || attributes[key] === child.textContent.trim())) {
+                    if (typeof attributes[key] === 'string' && attributes[key].trim() !== '' && (attributes[key].trim() === child.textContent.trim() || attributes[key] === child.textContent.trim())) {
                         const originalValue = attributes[key];
                         const newValue = 'Make This Content Available for Translation ' + index;
                         this.updateBlockStore[blockId].updateBlockData[newValue.replace(/\s+/g, '-')] = originalValue;
@@ -208,6 +208,22 @@
 
         replaceBlockContent = (blockId) => {
             const blockStoreAttributes = this.updateBlockStore;
+            const currentBlock=document.querySelector(`#block-${blockId}`)
+
+            // if(currentBlock && currentBlock.classList.contains('has-warning')){
+            //     const warningWrapper=currentBlock.querySelector('.block-editor-warning')
+
+            //     if (warningWrapper) {
+            //         const blockCrash = Array.from(warningWrapper.classList).filter(item => item.endsWith('block-crash-warning'));
+                    
+            //         if (blockCrash.length > 0) {
+            //             dispatch('core/block-editor').removeBlock(blockId);
+            //             createBlock(this.newBlock);
+
+            //             return;
+            //         }
+            //     }
+            // }
 
             const checkValidAttributes = (value = false, blockId) => {
                 const blockElement = document.querySelector(`#block-${blockId}`);
