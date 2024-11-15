@@ -19,7 +19,6 @@ This addon allows you to **replicate page/post titles, content, images, gallerie
 
 **[Check It Now ](https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=buy_pro)**
 
-
 Moreover, there's no need to repeatedly restyle your page, as this addon seamlessly copies all styles and formats while translating content from the original post. Simplify your multilingual website management with ease.
 == Key Features ==
 
@@ -59,6 +58,36 @@ The  **[Automatic Translate Addon for Loco Translate](https://locoaddon.com/plug
 > **Important Notice:** This plugin provides automatic translation functionality only for Gutenberg blocks.
 
 > **Disclaimer:** This plugin is not developed by or affiliated with the **[Polylang developers](https://wordpress.org/plugins/polylang/)**. It is a third-party addon that offers automatic translation functionality, enabling you to quickly translate your posts while maintaining the same styles in other languages.
+
+== Custom Blocks Support ==
+
+To make your custom blocks translation-ready, follow these steps:
+
+- **Go to the Support Blocks Page:**
+  Navigate to the languages page in your WordPress admin.
+  Find the Support Blocks page.
+
+- **Identify Your Blocks:**
+  Check the list of supported and unsupported blocks.
+  Search or filter to find your desired blocks.
+
+- **Add Blocks for Translation:**
+  Click the **"Edit"** or **"Add"** button next to the block you want to translate.
+  The block will appear in the Gutenberg editor with the **"Make This Content Available for Translation"** text.
+
+- **Enable Translation for Missing Sections:**
+  If a section is missing, click the **"Click Here"** button.
+  Copy the translation text and paste it into the desired block.
+
+- **Update Your Page:**
+  Save your changes to the page.
+
+- **Translate Your Content:**
+  Use Polylang's translation tools to translate your content.
+  Your custom blocks will be automatically translated using the Automatic Translation for Polylang plugin.
+
+By following these steps, you can ensure that your custom blocks are ready for translation and can be easily translated into multiple languages. For a visual guide, check out our demo video on how to add custom blocks for translation: [Demo Video](https://coolplugins.net/product/automatic-translations-for-polylang/#custom-block-translate).
+
 
 == Special Thanks ==
 
