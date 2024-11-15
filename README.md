@@ -1,14 +1,3 @@
-=== Automatic Translations For Polylang ===
-Contributors: narinder-singh,satindersingh,coolplugins
-Tags: Polylang, Automatic Translation, Duplicate Content, Block Translation
-Requires at least: 5.0
-Tested up to: 6.7
-Requires PHP: 5.6
-Stable tag: 1.0.4
-Author URI: https://coolplugins.net/
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
-
 Automatic Translations For Polylang simplifies your translation process by automatically copying and translating all post content, including core and specialized blocks from one language to another.
 
 == Description ==
@@ -150,35 +139,3 @@ You can update the plugin through the WordPress dashboard like any other plugin.
 
 = Will this plugin slow down my website? =  
 The plugin is optimized for performance, but the speed impact may vary depending on your hosting environment and the size of your content. The automatic translation process occurs in the background to minimize any potential impact on site performance.
-
-
-== Changelog ==
-
-**Version 1.0.4 | 14 November 2024**
-<pre>
-Added: Supported Blocks Page for adding custom blocks.
-Added: Added support for WordPress 6.7.
-Fixed: Permalinks translation issue.
-</pre>
-
-**Version 1.0.3 | 21 August 2024**
-<pre>
-Tested up to: Tested with WordPress 6.6.
-</pre>
-
-**Version 1.0.2 | 20 August 2024**
-<pre>
-Fixed: Minor bug fixes.
-</pre>
-
-**Version 1.0.1 | 07 August 2024**
-<pre>
-Added: Service provider details to the README file for easier access.
-Fixed: Resolved security issues by adding escaping functions in all necessary places.
-Improved: Code improvements for better performance and maintainability.
-</pre>
-
-**Version 1.0.0 | 02 July 2024**
-<pre>
-New: Initial Plugin Release
-</pre>
