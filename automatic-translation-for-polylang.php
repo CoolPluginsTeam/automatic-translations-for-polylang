@@ -2,7 +2,7 @@
 /*
 Plugin Name: Automatic Translations For Polylang
 Plugin URI: https://coolplugins.net/
-Version: 1.0.3
+Version: 1.0.4
 Author: Cool Plugins
 Author URI: https://coolplugins.net/
 Description: Streamline your Polylang experience with this plugin that not only duplicates content but also translates core and specific blocks across multiple languages.
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 if ( ! defined( 'ATFP_V' ) ) {
-	define( 'ATFP_V', '1.0.3' );
+	define( 'ATFP_V', '1.0.4' );
 }
 if ( ! defined( 'ATFP_DIR_PATH' ) ) {
 	define( 'ATFP_DIR_PATH', plugin_dir_path( __FILE__ ) );
@@ -27,8 +27,6 @@ if ( ! defined( 'ATFP_URL' ) ) {
 if ( ! defined( 'ATFP_FILE' ) ) {
 	define( 'ATFP_FILE', __FILE__ );
 }
-
-
 
 if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 	final class Automatic_Translations_For_Polylang {
@@ -62,6 +60,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			add_action( 'plugins_loaded', array( $this, 'atfp_init' ) );
 			register_activation_hook( ATFP_FILE, array( $this, 'atfp_activate' ) );
 			register_deactivation_hook( ATFP_FILE, array( $this, 'atfp_deactivate' ) );
+			add_action('init', array($this, 'load_plugin_textdomain'));
 		}
 
 		public function atfp_load_files() {
@@ -95,7 +94,12 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			if ( is_admin() ) {
 				require_once ATFP_DIR_PATH . 'admin/feedback/atfp-users-feedback.php';
 			}
+		}
 
+		/**
+		 * Load plugin textdomain.
+		 */
+		public function load_plugin_textdomain() {
 			load_plugin_textdomain( 'automatic-translations-for-polylang', false, basename( dirname( __FILE__ ) ) . '/languages/' );
 		}
 
