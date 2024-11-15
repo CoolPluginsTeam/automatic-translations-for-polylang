@@ -31,15 +31,26 @@
         }
 
         noticeInitialize = () => {
-            dispatch("core/notices").createInfoNotice('To enable translation, please include the Make This Content Available for Translation text in your block content. For help, watch the video and click <b>"Copy Text"</b> to use. Then, paste it into the section of your block you want automatically translated', {
-                className: 'atfp_notice_testing',
-                actions: [
+            dispatch("core/notices").createNotice('info', 'To enable translation, please include the Make This Content Available for Translation text in your block content. For help, watch the video and click <b>"Copy Text"</b> to use. Then, paste it into the section of your block you want automatically translated', 
+                {
+                    isDismissible : false,
+                    id: 'atfp-notice-id',
+                    actions: [
                     {
                         label: 'Watch Video.',
-                        url: '#',
-                    }
+                        url: `${atfpAddBlockVars.atfp_demo_page_url}#custom-block-translate`,
+                    },
                 ],
                 __unstableHTML: true
+            }).then(()=>{
+                const targetAnchor=document.querySelector(`a[href^="${atfpAddBlockVars.atfp_demo_page_url}#custom-block-translate"]`);
+
+                if(targetAnchor){
+                    targetAnchor.addEventListener('click', (e)=>{
+                        e.preventDefault();
+                        window.open(targetAnchor.href, '_blank');
+                    })
+                }
             });
         }
 

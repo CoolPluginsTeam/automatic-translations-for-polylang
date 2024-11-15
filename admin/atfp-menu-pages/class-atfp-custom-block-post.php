@@ -41,6 +41,10 @@ if ( ! class_exists( 'ATFP_Custom_Block_Post' ) ) {
 			if ( 'atfp_add_blocks' === $current_screen->post_type && is_object( $current_screen ) && 'post.php' === $hook && $current_screen->is_block_editor ) {
 				wp_enqueue_script( 'atfp-add-new-block', ATFP_URL . 'assets/js/atfp-add-new-block.min.js', array( 'jquery','wp-data', 'wp-element' ), ATFP_V, true );
 				wp_enqueue_style( 'atfp-supported-blocks', ATFP_URL . 'assets/css/atfp-supported-blocks.min.css', array(), ATFP_V, 'all' );
+
+				wp_localize_script( 'atfp-add-new-block', 'atfpAddBlockVars', array(
+					'atfp_demo_page_url' => esc_url('https://coolplugins.net/product/automatic-translations-for-polylang/'),
+				) );
 			}
 		}
 
