@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Handle Cool Timeline ajax requests
+ * Handle ATFP ajax requests
  */
 if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 	class ATFP_Ajax_Handler {
@@ -23,6 +23,16 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 		 * @var instance
 		 */
 		private static $instance;
+		/**
+		 * Stores custom block data for processing and retrieval.
+		 *
+		 * This static array holds the data related to custom blocks that are
+		 * used within the plugin. It can be utilized to manage and manipulate
+		 * the custom block information as needed during AJAX requests.
+		 *
+		 * @var array
+		 */
+		private $custom_block_data_array = array();
 
 		/**
 		 * Gets an instance of our plugin.
@@ -45,6 +55,8 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 			if ( is_admin() ) {
 				add_action( 'wp_ajax_fetch_post_content', array( $this, 'fetch_post_content' ) );
 				add_action( 'wp_ajax_block_parsing_rules', array( $this, 'block_parsing_rules' ) );
+				add_action( 'wp_ajax_get_custom_blocks_content', array( $this, 'get_custom_blocks_content' ) );
+				add_action( 'wp_ajax_update_custom_blocks_content', array( $this, 'update_custom_blocks_content' ) );
 			}
 		}
 
@@ -60,16 +72,10 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				exit();
 			}
 
-			$response = wp_remote_get( ATFP_URL . 'includes/automatic-translate/translate-block-rules/block-rules.json' );
-
-			if ( is_wp_error( $response ) ) {
-				$block_rules = '';
-			} else {
-				$block_rules = wp_remote_retrieve_body( $response );
-			}
+			$block_parse_rules = ATFP_Helper::get_instance()->get_block_parse_rules();
 
 			$data = array(
-				'blockRules' => $block_rules,
+				'blockRules' => json_encode( $block_parse_rules ),
 			);
 
 			return wp_send_json_success( $data );
@@ -89,9 +95,14 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 			$post_id = isset( $_POST['postId'] ) ? (int) filter_var( $_POST['postId'], FILTER_SANITIZE_NUMBER_INT ) : false;
 
 			if ( false !== $post_id ) {
-				$post_data = get_post( esc_html($post_id) );
+				$post_data = get_post( esc_html( $post_id ) );
+                $locale = isset($_POST['local']) ? sanitize_text_field($_POST['local']) : 'en';
+                $current_locale = isset($_POST['current_local']) ? sanitize_text_field($_POST['current_local']) : 'en';
+				
 
 				$content = $post_data->post_content;
+				$content = ATFP_Helper::replace_links_with_translations($content, $locale, $current_locale);
+				
 				$data    = array(
 					'title'   => $post_data->post_title,
 					'excerpt' => $post_data->post_excerpt,
@@ -105,6 +116,93 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 			}
 
 			exit;
+		}
+
+		public function get_custom_blocks_content() {
+			if ( ! check_ajax_referer( 'atfp_block_update_nonce', 'atfp_nonce', false ) ) {
+				wp_send_json_error( __( 'Invalid security token sent.', 'automatic-translations-for-polylang' ) );
+				wp_die( '0', 400 );
+				exit();
+			}
+
+			$custom_content = get_option( 'atfp_custom_block_data', false ) ? get_option( 'atfp_custom_block_data', false ) : false;
+
+			if ( $custom_content && is_string( $custom_content ) && ! empty( trim( $custom_content ) ) ) {
+				return wp_send_json_success( array( 'block_data' => $custom_content ) );
+			} else {
+				return wp_send_json_success( array( 'message' => __( 'No custom blocks found.', 'automatic-translations-for-polylang' ) ) );
+			}
+			exit();
+		}
+
+		public function update_custom_blocks_content() {
+			if ( ! check_ajax_referer( 'atfp_block_update_nonce', 'atfp_nonce', false ) ) {
+				wp_send_json_error( __( 'Invalid security token sent.', 'automatic-translations-for-polylang' ) );
+				wp_die( '0', 400 );
+				exit();
+			}
+			$updated_blocks_data = isset( $_POST['save_block_data'] ) ? json_decode( wp_unslash( $_POST['save_block_data'] ) ) : false;
+
+			if ( $updated_blocks_data ) {
+				$block_parse_rules = ATFP_Helper::get_instance()->get_block_parse_rules();
+
+				if ( isset( $block_parse_rules['AtfpBlockParseRules'] ) ) {
+					$previous_translate_data = get_option( 'atfp_custom_block_translation', false );
+					if ( $previous_translate_data && ! empty( $previous_translate_data ) ) {
+						$this->custom_block_data_array = $previous_translate_data;
+					}
+
+					foreach ( $updated_blocks_data as $key => $block_data ) {
+						$this->verify_block_data( array( $key ), $block_data, $block_parse_rules['AtfpBlockParseRules'][ $key ] );
+					}
+
+					if ( count( $this->custom_block_data_array ) > 0 ) {
+						update_option( 'atfp_custom_block_translation', $this->custom_block_data_array );
+					}
+
+					delete_option( 'atfp_custom_block_data' );
+					update_option( 'atfp_custom_block_status', 'false' );
+
+				}
+			}
+
+			return wp_send_json_success( array( 'message' => __( 'Automatic Translation for Polylang: Custom Blocks data updated successfully', 'automatic-translations-for-polylang' ) ) );
+		}
+
+		private function verify_block_data( $id_keys, $value, $block_rules ) {
+			$block_rules = is_object( $block_rules ) ? json_decode( json_encode( $block_rules ) ) : $block_rules;
+
+			if ( ! isset( $block_rules ) ) {
+				return $this->create_nested_attribute( $value,$id_keys );
+			}
+			if ( is_object( $value ) && isset( $block_rules ) ) {
+				foreach ( $value as $key => $item ) {
+					if ( isset( $block_rules[ $key ] ) && is_object( $item ) ) {
+						$this->verify_block_data( array_merge( $id_keys, array( $key ) ), $item, $block_rules[ $key ], false );
+						continue;
+					} elseif ( ! isset( $block_rules[ $key ] ) && true === $item ) {
+						$this->create_nested_attribute(  true,array_merge( $id_keys, array( $key ) ) );
+						continue;
+					} elseif ( ! isset( $block_rules[ $key ] ) && is_object( $item ) ) {
+						$this->create_nested_attribute(  $item,array_merge( $id_keys, array( $key ) ) );
+						continue;
+					}
+				}
+			}
+		}
+
+		private function create_nested_attribute( $value,$id_keys = array() ) {
+			$value = is_object( $value ) ? json_decode( json_encode( $value ), true ) : $value;
+
+			$current_array = &$this->custom_block_data_array;
+
+			foreach ( $id_keys as $index => $id ) {
+				if ( ! isset( $current_array[ $id ] ) ) {
+					$current_array[ $id ] = array();
+				}
+				$current_array = &$current_array[ $id ];
+			}
+				$current_array = $value;
 		}
 	}
 }

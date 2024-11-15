@@ -16,6 +16,8 @@ const FetchPost = (props) => {
      */
     const apiSendData = {
         postId: parseInt(props.postId),
+        local: props.targetLang,
+        current_local: props.sourceLang,
         atfp_nonce: atfp_ajax_object.ajax_nonce,
         action: atfp_ajax_object.action_fetch
     };
@@ -47,7 +49,7 @@ const FetchPost = (props) => {
 
                 const translationEntry = select("block-atfp/translate").getTranslationEntry();
 
-                const totalString = Object.values(translationEntry).filter(data => data.source !== undefined && /[^\p{L}\p{N}]/gu.test(data.source));
+                const totalString = Object.values(translationEntry).filter(data => data.source !== undefined && /[\p{L}\p{N}]/gu.test(data.source));
                 if (Object.keys(totalString).length > 0) {
                     setTranslateContent(translationEntry);
                 } else {

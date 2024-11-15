@@ -7,27 +7,16 @@ const { dispatch, select } = wp.data;
  * 
  * @param {Object} block - The block to filter and translate attributes for.
  * @param {Object} blockParseRules - The rules for parsing the block.
- * @param {Object} replaceAttrRules - The rules for replacing attributes.
  * @returns {Object} The updated block with translated attributes.
  */
-const filterTranslateAttr = (block, blockParseRules, replaceAttrRules) => {
+const filterTranslateAttr = (block, blockParseRules) => {
     const filterAttrArr = Object.values(blockParseRules);
     const blockAttr = block.attributes;
     const blockId = block.clientId;
 
     // Function to update a nested attribute in the block
     const updateNestedAttribute = (obj, path, value) => {
-        const attrReplaceKey = Object.keys(replaceAttrRules);
-        const attrKeyJoin = path.slice(-2).join('_');
-        let attrReplace = false;
 
-        if (attrReplaceKey.includes(attrKeyJoin)) {
-            const filterReplaceBlockName = replaceAttrRules[attrKeyJoin];
-            if (filterReplaceBlockName.includes(block.name)) {
-                path.pop()
-                attrReplace = true;
-            }
-        }
         const newObj = { ...obj };
         let current = newObj;
         for (let i = 0; i < path.length - 1; i++) {
@@ -39,11 +28,12 @@ const filterTranslateAttr = (block, blockParseRules, replaceAttrRules) => {
             current = current[path[i]];
         }
 
-        if (attrReplace) {
+        if ( current[path[path.length - 1]] instanceof wp.richText.RichTextData ) {
             current[path[path.length - 1]] = value.replace(/(?<!\\)"|\\"/g, "'");
         } else {
             current[path[path.length - 1]] = value;
         }
+
         return newObj;
     };
 
@@ -69,13 +59,17 @@ const filterTranslateAttr = (block, blockParseRules, replaceAttrRules) => {
                 dynamicBlockAttr = dynamicBlockAttr[key];
             });
 
-            const blockAttrContent = dynamicBlockAttr;
+            let blockAttrContent = dynamicBlockAttr;
+
+            if(blockAttrContent instanceof wp.richText.RichTextData) {
+                blockAttrContent=blockAttrContent.originalHTML;
+            }
 
             if (undefined !== blockAttrContent && blockAttrContent.trim() !== '') {
                 let filterKey = uniqueId.replace(/[^\p{L}\p{N}]/gu, '');
                 let translateContent = '';
 
-                if (!/[^\p{L}\p{N}]/gu.test(blockAttrContent)) {
+                if (!/[\p{L}\p{N}]/gu.test(blockAttrContent)) {
                     translateContent = blockAttrContent;
                 } else {
                     translateContent = select('block-atfp/translate').getTranslatedString('content', blockAttrContent, filterKey);
@@ -118,7 +112,7 @@ const createTranslatedBlock = (block, childBlock, blockRules) => {
     let newBlock = '';
 
     if (blockTranslateName.includes(block.name)) {
-        translatedBlock = filterTranslateAttr(block, blockRules['AtfpBlockParseRules'][block.name], blockRules.AtfpCoreAttrReplace);
+        translatedBlock = filterTranslateAttr(block, blockRules['AtfpBlockParseRules'][block.name]);
         attribute = translatedBlock.attributes;
     }
 

@@ -34,14 +34,21 @@ const filterTranslateAttr = (blockId, blockAttr, filterAttr) => {
                 dynamicBlockAttr = dynamicBlockAttr[key];
             });
 
-            const blockAttrContent = dynamicBlockAttr;
+            let blockAttrContent = dynamicBlockAttr;
 
+            if(blockAttrContent instanceof wp.richText.RichTextData) {
+                blockAttrContent=blockAttrContent.originalHTML;
+            }
+          
             if (undefined !== blockAttrContent && blockAttrContent.trim() !== '') {
-
+                
                 let filterKey = uniqueId.replace(/[^\p{L}\p{N}]/gu, '');
-                if (!/[^\p{L}\p{N}]/gu.test(blockAttrContent)) {
+
+                if (!/[\p{L}\p{N}]/gu.test(blockAttrContent)) {
                     return false;
                 }
+
+
                 dispatch('block-atfp/translate').contentSaveSource(filterKey, blockAttrContent, contentIndex);
                 contentIndex++;
             }

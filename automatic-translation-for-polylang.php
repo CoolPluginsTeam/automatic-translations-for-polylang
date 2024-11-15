@@ -1,9 +1,8 @@
 <?php
 /*
 Plugin Name: Automatic Translations For Polylang
-Requires Plugins: polylang
 Plugin URI: https://coolplugins.net/
-Version: 1.0.1
+Version: 1.0.4
 Author: Cool Plugins
 Author URI: https://coolplugins.net/
 Description: Streamline your Polylang experience with this plugin that not only duplicates content but also translates core and specific blocks across multiple languages.
@@ -16,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 if ( ! defined( 'ATFP_V' ) ) {
-	define( 'ATFP_V', '1.0.1' );
+	define( 'ATFP_V', '1.0.4' );
 }
 if ( ! defined( 'ATFP_DIR_PATH' ) ) {
 	define( 'ATFP_DIR_PATH', plugin_dir_path( __FILE__ ) );
@@ -28,8 +27,6 @@ if ( ! defined( 'ATFP_URL' ) ) {
 if ( ! defined( 'ATFP_FILE' ) ) {
 	define( 'ATFP_FILE', __FILE__ );
 }
-
-
 
 if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 	final class Automatic_Translations_For_Polylang {
@@ -59,9 +56,17 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 		 * Constructor
 		 */
 		private function __construct() {
+			$this->atfp_load_files();
 			add_action( 'plugins_loaded', array( $this, 'atfp_init' ) );
 			register_activation_hook( ATFP_FILE, array( $this, 'atfp_activate' ) );
 			register_deactivation_hook( ATFP_FILE, array( $this, 'atfp_deactivate' ) );
+			add_action('init', array($this, 'load_plugin_textdomain'));
+		}
+
+		public function atfp_load_files() {
+			require_once ATFP_DIR_PATH . '/helper/class-atfp-helper.php';
+			require_once ATFP_DIR_PATH . 'admin/atfp-menu-pages/class-atfp-custom-block-post.php';
+			require_once ATFP_DIR_PATH . 'admin/atfp-menu-pages/class-atfp-supported-blocks.php';
 		}
 		/**
 		 * Initialize the Automatic Translation for Polylang plugin.
@@ -69,25 +74,57 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 		 * @return void
 		 */
 		function atfp_init() {
-			require_once ATFP_DIR_PATH . '/helper/class-atfp-ajax-handler.php';
-
-			if ( class_exists( 'ATFP_Ajax_Handler' ) ) {
-				ATFP_Ajax_Handler::get_instance();
-			}
-
 			// Check Polylang plugin is installed and active
 			global $polylang;
 			$atfp_polylang = $polylang;
-			if ( isset( $atfp_polylang ) ) {
+			if ( isset( $atfp_polylang ) && is_admin() ) {
+
+				require_once ATFP_DIR_PATH . '/helper/class-atfp-ajax-handler.php';
+				if ( class_exists( 'ATFP_Ajax_Handler' ) ) {
+					ATFP_Ajax_Handler::get_instance();
+				}
+
 				add_action( 'add_meta_boxes', array( $this, 'atfp_shortcode_metabox' ) );
 				add_action( 'admin_enqueue_scripts', array( $this, 'atfp_register_backend_assets' ) ); // registers js and css for frontend
+
+			} else {
+				add_action( 'admin_notices', array( self::$instance, 'atfp_plugin_required_admin_notice' ) );
 			}
 
 			if ( is_admin() ) {
 				require_once ATFP_DIR_PATH . 'admin/feedback/atfp-users-feedback.php';
 			}
+		}
 
+		/**
+		 * Load plugin textdomain.
+		 */
+		public function load_plugin_textdomain() {
 			load_plugin_textdomain( 'automatic-translations-for-polylang', false, basename( dirname( __FILE__ ) ) . '/languages/' );
+		}
+
+
+		/**
+		 * Display admin notice for required plugin activation.
+		 *
+		 * @return void
+		 */
+		function atfp_plugin_required_admin_notice() {
+			if ( current_user_can( 'activate_plugins' ) ) {
+				$url         = 'plugin-install.php?tab=plugin-information&plugin=polylang&TB_iframe=true';
+				$title       = 'Polylang';
+				$plugin_info = get_plugin_data( __FILE__, true, true );
+				echo '<div class="error"><p>' .
+				sprintf(
+					// translators: 1: Plugin Name, 2: Plugin URL
+					esc_html__(
+						'In order to use %1$s plugin, please install and activate the latest version  of %2$s',
+						'automatic-translations-for-polylang'
+					),
+					wp_kses( '<strong>' . esc_html( $plugin_info['Name'] ) . '</strong>', 'strong' ),
+					wp_kses( '<a href="' . esc_url( $url ) . '" class="thickbox" title="' . esc_attr( $title ) . '">' . esc_html( $title ) . '</a>', 'a' )
+				) . '.</p></div>';
+			}
 		}
 
 		/**
@@ -140,6 +177,30 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 
 						wp_enqueue_style( 'atfp-automatic-translate' );
 						wp_enqueue_script( 'atfp-automatic-translate' );
+
+						if ( function_exists( 'get_option' ) ) {
+							$update_blocks = get_option( 'atfp_custom_block_status', false ) && 'true' === get_option( 'atfp_custom_block_status', false ) ? true : false;
+							if ( $update_blocks ) {
+								// Custom Translation Block update script
+								wp_register_script( 'atfp-custom-blocks', ATFP_URL . 'assets/js/atfp-update-custom-blocks.min.js', array( 'wp-data', 'jquery' ), ATFP_V, true );
+								wp_enqueue_script( 'atfp-custom-blocks' );
+
+								wp_localize_script(
+									'atfp-custom-blocks',
+									'atfp_block_update_object',
+									array(
+										'ajax_url'       => admin_url( 'admin-ajax.php' ),
+										'ajax_nonce'     => wp_create_nonce( 'atfp_block_update_nonce' ),
+										'atfp_url'       => esc_url( ATFP_URL ),
+										'action_get_content' => 'get_custom_blocks_content',
+										'action_update_content' => 'update_custom_blocks_content',
+										'source_lang'    => pll_get_post_language( $from_post_id, 'slug' ),
+										'languageObject' => $lang_object,
+									)
+								);
+							}
+						}
+
 						wp_localize_script(
 							'atfp-automatic-translate',
 							'atfp_ajax_object',
@@ -213,8 +274,15 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 					}
 				}
 				?>
-				<input type="button" class="button button-primary" name="atfp_meta_box_translate" id="atfp-translate-button" value="<?php echo esc_attr__( 'Translate Content (Beta)', 'automatic-translations-for-polylang' ); ?>" readonly/><br><br>
+				<input type="button" class="button button-primary" name="atfp_meta_box_translate" id="atfp-translate-button" value="<?php echo esc_attr__( 'Translate Content', 'automatic-translations-for-polylang' ); ?>" readonly/><br><br>
 				<p style="margin-bottom: .5rem;"><?php echo esc_html( sprintf( __( 'Translate or duplicate content from Hindi to %s', 'automatic-translations-for-polylang' ), $target_language ) ); ?></p>
+				<hr>
+				<div class="atfp-review-meta-box">
+					<p><?php echo esc_html__( 'We hope you liked our plugin created timelines. Please share your valuable feedback.', 'automatic-translations-for-polylang' ); ?>
+					<br>
+					<a href="<?php echo esc_url( 'https://wordpress.org/plugins/automatic-translations-for-polylang/reviews/#new-post' ); ?>" class="components-button is-primary is-small" target="_blank"><?php echo esc_html__( 'Rate Us', 'automatic-translations-for-polylang' ); ?><span> ★★★★★</span></a>
+					</p>
+				</div>
 				<?php
 			}
 		}

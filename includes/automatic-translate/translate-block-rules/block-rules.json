@@ -2,9 +2,7 @@
     "AtfpBlockParseRules": {
         "core/paragraph": {
             "attributes": {
-                "content": {
-                    "originalHTML": true
-                }
+                "content": true
             }
         },
         "core/image": {
@@ -14,62 +12,44 @@
         },
         "core/heading": {
             "attributes": {
-                "content": {
-                    "originalHTML": true
-                }
+                "content": true
             }
         },
         "core/list-item": {
             "attributes": {
-                "content": {
-                    "originalHTML": true
-                }
+                "content": true
             }
         },
         "core/quote": {
             "attributes": {
-                "citation": {
-                    "originalHTML": true
-                }
+                "citation": true
             }
         },
         "core/details": {
             "attributes": {
-                "summary": {
-                    "originalHTML": true
-                }
+                "summary": true
             }
         },
         "core/preformatted": {
             "attributes": {
-                "content": {
-                    "originalHTML": true
-                }
+                "content": true
             }
         },
         "core/pullquote": {
             "attributes": {
-                "citation": {
-                    "originalHTML": true
-                },
-                "value": {
-                    "originalHTML": true
-                }
+                "citation": true,
+                "value": true
             }
         },
         "core/table": {
             "attributes": {
-                "caption": {
-                    "originalHTML": true
-                },
+                "caption": true,
                 "body": [
                     [
                         {
                             "cells": [
                                 {
-                                    "content": {
-                                        "originalHTML": true
-                                    }
+                                    "content": true
                                 }
                             ]
                         }
@@ -79,9 +59,7 @@
         },
         "core/verse": {
             "attributes": {
-                "content": {
-                    "originalHTML": true
-                }
+                "content": true
             }
         },
         "core/freeform": {
@@ -96,9 +74,7 @@
         },
         "core/button": {
             "attributes": {
-                "text": {
-                    "originalHTML": true
-                }
+                "text": true
             }
         },
         "core/more": {
@@ -124,9 +100,23 @@
         },
         "core/code": {
             "attributes": {
-                "content": {
-                    "originalHTML": true
-                }
+                "content": true
+            }
+        },
+        "core/text-columns": {
+            "attributes": {
+                "content": [
+                    {
+                        "children": true
+                    }
+                ]
+            }
+        },
+        "cp-timeline/content-timeline-child": {
+            "attributes": {
+                "t_date": true,
+                "time_desc": true,
+                "time_heading": true
             }
         },
         "cp-timeline/content-timeline-block-child": {
@@ -190,6 +180,7 @@
         },
         "uagb/counter": {
             "attributes": {
+                "numberPrefix": true,
                 "heading": true,
                 "iconImage": {
                     "alt": true
@@ -293,6 +284,48 @@
                         "name": true
                     }
                 ]
+            }
+        },
+        "uagb/review": {
+            "attributes": {
+                "summaryDescription": true,
+                "summaryTitle": true,
+                "parts": [
+                    {
+                        "label": true
+                    }
+                ],
+                "rAuthor": true,
+                "rContent": true,
+                "rTitle": true,
+                "schema": true
+            }
+        },
+        "uagb/how-to-step": {
+            "attributes": {
+                "description": true,
+                "name": true
+            }
+        },
+        "uagb/how-to": {
+            "attributes": {
+                "headingDesc": true,
+                "headingTitle": true,
+                "timeNeeded": true,
+                "estCost": true,
+                "materials": [
+                    {
+                        "add_required_materials": true
+                    }
+                ],
+                "tools": [
+                    {
+                        "add_required_tools": true
+                    }
+                ],
+                "stepsTitle": true,
+                "materialTitle": true,
+                "toolsTitle": true
             }
         },
         "essential-blocks/accordion-item": {
@@ -890,33 +923,398 @@
             "attributes": {
                 "text": true
             }
+        },
+        "gutenverse/accordion": {
+            "attributes": {
+                "title": true
+            }
+        },
+        "gutenverse/button": {
+            "attributes": {
+                "content": true
+            }
+        },
+        "gutenverse/icon-list-item": {
+            "attributes": {
+                "text": true
+            }
+        },
+        "gutenverse/advanced-heading": {
+            "attributes": {
+                "subText": true,
+                "focusText": true
+            }
+        },
+        "gutenverse/heading": {
+            "attributes": {
+                "content": true
+            }
+        },
+        "gutenverse/icon-box": {
+            "attributes": {
+                "description": true,
+                "title": true
+            }
+        },
+        "gutenverse/image-box": {
+            "attributes": {
+                "description": true,
+                "title": true
+            }
+        },
+        "gutenverse/tabs": {
+            "attributes": {
+                "tabs": [
+                    {
+                        "text": true
+                    }
+                ]
+            }
+        },
+        "gutenverse/team": {
+            "attributes": {
+                "job": true,
+                "name": true
+            }
+        },
+        "gutenverse/testimonials": {
+            "attributes": {
+                "testimonialDataRichText": [
+                    {
+                        "description": true,
+                        "name": true,
+                        "comment": true
+                    }
+                ]
+            }
+        },
+        "ub/content-toggle-panel-block": {
+            "attributes": {
+                "panelTitle": true
+            }
+        },
+        "ub/button": {
+            "attributes": {
+                "buttons": [
+                    {
+                        "buttonText": true
+                    }
+                ]
+            }
+        },
+        "ub/expand-portion": {
+            "attributes": {
+                "clickText": true
+            }
+        },
+        "ub/testimonial": {
+            "attributes": {
+                "ub_testimonial_author_role": true,
+                "ub_testimonial_author": true,
+                "ub_testimonial_text": true
+            }
+        },
+        "ub/call-to-action-block": {
+            "attributes": {
+                "ub_cta_button_text": true,
+                "ub_cta_content_text": true,
+                "ub_call_to_action_headline_text": true
+            }
+        },
+        "ub/click-to-tweet": {
+            "attributes": {
+                "ubTweet": true
+            }
+        },
+        "ub/tabbed-content-block": {
+            "attributes": {
+                "tabsTitle": [
+                    true
+                ]
+            }
+        },
+        "ub/star-rating-block": {
+            "attributes": {
+                "reviewText": true
+            }
+        },
+        "ub/table-of-contents-block": {
+            "attributes": {
+                "title": true
+            }
+        },
+        "ub/progress-bar": {
+            "attributes": {
+                "detail": true
+            }
+        },
+        "ub/review": {
+            "attributes": {
+                "parts": [
+                    {
+                        "label": true
+                    }
+                ],
+                "summaryDescription": true,
+                "summaryTitle": true,
+                "itemName": true,
+                "authorName": true
+            }
+        },
+        "ub/content-filter-block": {
+            "attributes": {
+                "filterArray": [
+                    {
+                        "category": true
+                    }
+                ]
+            }
+        },
+        "ub/how-to": {
+            "attributes": {
+                "resultIntro": true,
+                "howToYield": true,
+                "section": [
+                    {
+                        "steps": [
+                            {
+                                "title": true,
+                                "tip": true,
+                                "direction": true
+                            }
+                        ]
+                    }
+                ],
+                "introduction": true,
+                "title": true
+            }
+        },
+        "ub/advanced-heading": {
+            "attributes": {
+                "content": true
+            }
+        },
+        "ub/counter": {
+            "attributes": {
+                "label": true
+            }
+        },
+        "qi-blocks/button": {
+            "attributes": {
+                "buttonText": true
+            }
+        },
+        "qi-blocks/accordion": {
+            "attributes": {
+                "accordionItemsRepeater": [
+                    {
+                        "itemTitle": true,
+                        "itemText": true
+                    }
+                ]
+            }
+        },
+        "qi-blocks/advanced-text": {
+            "attributes": {
+                "text": true
+            }
+        },
+        "qi-blocks/author-info": {
+            "attributes": {
+                "text": true,
+                "title": true
+            }
+        },
+        "qi-blocks/banner": {
+            "attributes": {
+                "text": true,
+                "subtitle": true,
+                "title": true
+            }
+        },
+        "qi-blocks/call-to-action": {
+            "attributes": {
+                "text": true,
+                "title": true
+            }
+        },
+        "qi-blocks/clients-list": {
+            "attributes": {
+                "clientItemsRepeater": [
+                    {
+                        "clientText": true,
+                        "clientTitle": true
+                    }
+                ]
+            }
+        },
+        "qi-blocks/counter": {
+            "attributes": {
+                "text": true,
+                "title": true
+            }
+        },
+        "qi-blocks/faq": {
+            "attributes": {
+                "faqItemsRepeater": [
+                    {
+                        "itemText": true,
+                        "itemTitle": true
+                    }
+                ]
+            }
+        },
+        "qi-blocks/how-to": {
+            "attributes": {
+                "text": true,
+                "subtitle": true,
+                "title": true,
+                "howToItemsRepeater": [
+                    {
+                        "stepText": true,
+                        "stepTitle": true
+                    }
+                ]
+            }
+        },
+        "qi-blocks/icon-with-text": {
+            "attributes": {
+                "text": true,
+                "title": true
+            }
+        },
+        "qi-blocks/info-box": {
+            "attributes": {
+                "text": true,
+                "title": true,
+                "subtitle": true
+            }
+        },
+        "qi-blocks/message-box": {
+            "attributes": {
+                "text": true,
+                "title": true
+            }
+        },
+        "qi-blocks/pricing-table": {
+            "attributes": {
+                "pricingTableItemsRepeater": [
+                    {
+                        "itemText": true
+                    }
+                ],
+                "label": true,
+                "period": true,
+                "currency": true,
+                "price": true,
+                "title": true
+            }
+        },
+        "qi-blocks/process": {
+            "attributes": {
+                "processItemsRepeater": [
+                    {
+                        "itemText": true,
+                        "itemTitle": true
+                    }
+                ]
+            }
+        },
+        "qi-blocks/progress-bar-circle": {
+            "attributes": {
+                "text": true,
+                "title": true
+            }
+        },
+        "qi-blocks/progress-bar-horizontal": {
+            "attributes": {
+                "title": true
+            }
+        },
+        "qi-blocks/progress-bar-vertical": {
+            "attributes": {
+                "title": true
+            }
+        },
+        "qi-blocks/search": {
+            "attributes": {
+                "buttonText": true
+            }
+        },
+        "qi-blocks/section-title": {
+            "attributes": {
+                "subtitleIcon": {
+                    "html": true
+                },
+                "text": true,
+                "subtitle": true,
+                "title": true
+            }
+        },
+        "qi-blocks/table-of-contents": {
+            "attributes": {
+                "text": true,
+                "subtitle": true,
+                "title": true
+            }
+        },
+        "qi-blocks/tabs-horizontal": {
+            "attributes": {
+                "tabsHorizontalItemsRepeater": [
+                    {
+                        "itemTitle": true,
+                        "itemText": true
+                    }
+                ]
+            }
+        },
+        "qi-blocks/tabs-vertical": {
+            "attributes": {
+                "tabsVerticalItemsRepeater": [
+                    {
+                        "itemTitle": true,
+                        "itemText": true
+                    }
+                ]
+            }
+        },
+        "qi-blocks/team-member": {
+            "attributes": {
+                "role": true,
+                "name": true
+            }
+        },
+        "qi-blocks/testimonials-list": {
+            "attributes": {
+                "testimonialsListItemsRepeater": [
+                    {
+                        "itemAuthorOccupation": true,
+                        "itemAuthor": true,
+                        "itemText": true,
+                        "itemTitle": true
+                    }
+                ]
+            }
+        },
+        "qi-blocks/text-marquee": {
+            "attributes": {
+                "items": [
+                    {
+                        "itemText": true
+                    }
+                ]
+            }
+        },
+        "qi-blocks/timeline": {
+            "attributes": {
+                "timelineRepeater": [
+                    {
+                        "itemText": true,
+                        "itemDate": true,
+                        "itemTitle": true
+                    }
+                ]
+            }
         }
-    },
-    "AtfpCoreAttrReplace": {
-        "content_originalHTML": [
-            "core/paragraph",
-            "core/heading",
-            "core/list-item",
-            "core/preformatted",
-            "core/table",
-            "core/verse",
-            "core/code"
-        ],
-        "citation_originalHTML": [
-            "core/quote",
-            "core/pullquote"
-        ],
-        "summary_originalHTML": [
-            "core/details"
-        ],
-        "value_originalHTML": [
-            "core/pullquote"
-        ],
-        "caption_originalHTML": [
-            "core/table"
-        ],
-        "text_originalHTML": [
-            "core/button"
-        ]
     }
 }
