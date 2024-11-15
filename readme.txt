@@ -154,9 +154,9 @@ The plugin is optimized for performance, but the speed impact may vary depending
 
 == Changelog ==
 
-**Version 1.0.4 | 14 November 2024**
+**Version 1.0.4 | 15 November 2024**
 <pre>
-Added: Supported Blocks Page for adding custom blocks.
+Added: Supported Blocks Page for easily adding custom blocks for translation.
 Added: Added support for WordPress 6.7.
 Fixed: Permalinks translation issue.
 </pre>
