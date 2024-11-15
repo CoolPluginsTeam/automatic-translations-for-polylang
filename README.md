@@ -1,6 +1,6 @@
 Automatic Translations For Polylang simplifies your translation process by automatically copying and translating all post content, including core and specialized blocks from one language to another.
 
-== Description ==
+#### Description
 
 **Automatic Translations For Polylang** reduces your translation **workload by 90%** with this powerful addon. It not only duplicates your original or default language **post content** but also **translates core and specific blocks** into other languages of the same post, streamlining the entire translation process.
 
@@ -9,7 +9,8 @@ This addon allows you to **replicate page/post titles, content, images, gallerie
 **[Check It Now ](https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=buy_pro)**
 
 Moreover, there's no need to repeatedly restyle your page, as this addon seamlessly copies all styles and formats while translating content from the original post. Simplify your multilingual website management with ease.
-== Key Features ==
+
+#### Key Features
 
 - **Automatic Content Translation:** Effortlessly translate post titles, content, images, galleries, and meta fields from one language to another using the Yandex Translate API.
   
@@ -26,7 +27,6 @@ Moreover, there's no need to repeatedly restyle your page, as this addon seamles
 - **Custom Block Support:** While optimized for Gutenberg blocks, the plugin also works with several third-party block plugins, extending its versatility.
 
 - **Easy to Use:** Designed with a user-friendly interface, making it accessible even for those with limited technical knowledge.
-
 
 ### Check out our advanced Automatic Translate Addon for Loco Translate
 
@@ -48,7 +48,7 @@ The  **[Automatic Translate Addon for Loco Translate](https://locoaddon.com/plug
 
 > **Disclaimer:** This plugin is not developed by or affiliated with the **[Polylang developers](https://wordpress.org/plugins/polylang/)**. It is a third-party addon that offers automatic translation functionality, enabling you to quickly translate your posts while maintaining the same styles in other languages.
 
-== Custom Blocks Support ==
+#### Custom Blocks Support
 
 To make your custom blocks translation-ready, follow these steps:
 
@@ -78,11 +78,11 @@ To make your custom blocks translation-ready, follow these steps:
 By following these steps, you can ensure that your custom blocks are ready for translation and can be easily translated into multiple languages. For a visual guide, check out our demo video on how to add custom blocks for translation: [Demo Video](https://coolplugins.net/product/automatic-translations-for-polylang/#custom-block-translate).
 
 
-== Special Thanks ==
+#### Special Thanks
 
 A special thanks to the authors of the **[Polylang](https://wordpress.org/plugins/polylang/)** plugin for creating an outstanding tool for multilingual management.
 
-== Service Provider ==
+#### Service Provider
 
 This plugin provides automatic translation services for Polylang using the Yandex Translate API.
 
@@ -103,39 +103,3 @@ This plugin provides automatic translation services for Polylang using the Yande
 
 * [Yandex Translate Terms](https://yandex.com/legal/translate_termsofuse/)
 * [Yandex Privacy Policy](https://yandex.com/legal/confidential/)
-
-== Screenshots ==
-1. Automatic translation content preview in the Gutenberg Block Editor.
-2. Content Translation Preview.
-
-== Frequently Asked Questions ==
-
-= What does the "Automatic Translations For Polylang" plugin do? =  
-This plugin automatically copies and translates your posts, including titles, content, images, galleries, and meta fields, from one language to another using the Yandex Translate API. It works specifically with Gutenberg blocks, replicating the original content and styles across different languages.
-
-= Is this plugin officially developed by Polylang? =  
-No, this plugin is not developed by or affiliated with the Polylang developers. It is a third-party addon designed to extend Polylang's functionality by adding automatic translation capabilities.
-
-= Do I need a Yandex Translate account to use this plugin? =  
-No, you do not need a Yandex Translate account to use this plugin. However, the translation services are powered by the Yandex Translate API, which is subject to Yandex's terms of service and usage limits.
-
-= Can I use this plugin with custom blocks or themes? =  
-This plugin is designed to work with core Gutenberg blocks and several popular third-party blocks (e.g., Spectra, Kadence, Stackable, Otter, and Essential). While it may work with custom blocks or themes, compatibility is not guaranteed, and testing is recommended.
-
-= Does the plugin translate all content on my website? =  
-The plugin automatically translates the content within Gutenberg blocks. It does not translate content outside of these blocks, such as custom widgets, shortcodes, or other plugins' content that doesn't utilize Gutenberg blocks.
-
-= How do I manage the translated content? =  
-The translated content is managed within the WordPress editor, just like your original content. The plugin duplicates your content into other languages, which you can then review and adjust as needed.
-
-= Can I undo the automatic translations if needed? =  
-Yes, you can manually edit or remove the translated content in the WordPress editor after it has been automatically translated.
-
-= What if the translation quality is not accurate? =  
-While the plugin uses the Yandex Translate API for automatic translations, you can manually adjust the translated content within the WordPress editor to ensure accuracy.
-
-= How do I update the plugin to the latest version? =  
-You can update the plugin through the WordPress dashboard like any other plugin. Regular updates will ensure you have the latest features and security improvements.
-
-= Will this plugin slow down my website? =  
-The plugin is optimized for performance, but the speed impact may vary depending on your hosting environment and the size of your content. The automatic translation process occurs in the background to minimize any potential impact on site performance.
