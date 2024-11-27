@@ -121,7 +121,7 @@ const FilterTargetContent = (props) => {
      * The content to be filtered based on the service type.
      * If the service is 'yandex', the content is filtered using filterSourceData function, otherwise, the content remains unchanged.
      */
-    const content = 'yandex' === props.service ? filterSourceData(props.content) : props.content;
+    const content = 'yandex' === props.service || 'localAiTranslator' === props.service ? filterSourceData(props.content) : props.content;
 
     props.translateContent(content);
 
@@ -146,7 +146,7 @@ const FilterTargetContent = (props) => {
 
     return (
         <>
-            {'yandex' === props.service ?
+            {'yandex' === props.service || 'localAiTranslator' === props.service ?
                 content.map((data, index) => {
                     const notTranslate = notTranslatePattern.test(data);
                     if (notTranslate) {

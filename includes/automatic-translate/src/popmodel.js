@@ -100,7 +100,6 @@ const PopupModal = (props) => {
      * Renders the modal only when blockRules is not empty and fetchStatus is true.
      */
     useEffect(() => {
-
         if (Object.keys(blockRules).length <= 0) {
             return;
         }
@@ -174,6 +173,12 @@ const PopupModal = (props) => {
                             <li><span style={{ color: "green" }}>✔</span> {__("No API Key Required for Yandex Translate", 'automatic-translations-for-polylang')}</li>
                             <li><span style={{ color: "green" }}>✔</span> {__("Supports Multiple Languages", 'automatic-translations-for-polylang')} - <a href="https://yandex.com/support2/translate-desktop/en/supported-langs" target="_blank">{__("See Supported Languages", 'automatic-translations-for-polylang')}</a></li>
                         </ul>
+                        <hr />
+                        <strong className="atlt-heading">{__("Translate Using Local AI Translator", 'automatic-translations-for-polylang')}</strong>
+                        <div className="inputGroup">
+                            <button id="local_ai_translator_btn" class="atfp-service-btn button button-primary" data-service="localAiTranslator" data-service-label="Local AI Translator" onClick={fetchContent}>{__("Local AI Translator", 'automatic-translations-for-polylang')}</button>
+                            <br/><a href="https://developer.chrome.com/docs/ai/translator-api" target="_blank">Powered by  AI Translate API</a>
+                        </div>
                         <hr />
                         <div className="modal-footer">
                             <button className="atfp-setting-close" onClick={() => setSettingVisibility(false)}>{__("Close", 'automatic-translations-for-polylang')}</button>

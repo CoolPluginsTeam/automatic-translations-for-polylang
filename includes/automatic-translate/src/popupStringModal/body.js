@@ -31,6 +31,7 @@ const StringPopUpBody = (props) => {
             props.stringCountHandler(totalWordCount);
             return;
         }
+        
         let entrie = entries.join(" ");
 
         if (undefined === entrie || entrie.trim() === '') {
@@ -50,11 +51,12 @@ const StringPopUpBody = (props) => {
             <div className={`translator-widget ${service}`} style={{ display: `${stringAvality ? 'block' : 'none'}` }}>
                 <h3 class="choose-lang">{__("Choose language", 'automatic-translations-for-polylang')} <span class="dashicons-before dashicons-translation"></span></h3>
                 <div className="atfp_translate_element_wrapper">
-                <div id="atfp_yandex_translate_element" style={{ display: `${service === 'yandex' ? 'block' : 'none'}` }}></div>
+                    <div id="atfp_yandex_translate_element" style={{ display: `${service === 'yandex' ? 'block' : 'none'}` }}></div>
+                    <div id="atfp_localAiTranslator_translate_element" style={{ display: `${service === 'localAiTranslator' ? 'block' : 'none'}` }}></div>
                 </div>
             </div>
 
-            <div className={`atfp_string_container ${!stringAvality ? 'atfp_empty_string' : ''}`}>
+            <div className={`atfp_string_container${!stringAvality ? ' atfp_empty_string' : ''}`}>
                 <table className="scrolldown" id="stringTemplate">
                     {stringAvality &&
                         <thead>

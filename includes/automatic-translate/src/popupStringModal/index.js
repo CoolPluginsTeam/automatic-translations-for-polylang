@@ -45,7 +45,6 @@ const popStringModal = (props) => {
     }
 
     useEffect(() => {
-
         document.documentElement.setAttribute('translate', 'no');
         document.body.classList.add('notranslate');
 
@@ -55,11 +54,11 @@ const popStringModal = (props) => {
         */
         const service = props.service;
         const id = `atfp_${service}_translate_element`;
-        if (undefined === translateObj[service] && true !== translateObj[service]) {
+        if (undefined === translateObj[service] && true !== translateObj[service] && refPostData && stringCount) {
             setTranslateObj(prev => { return { ...prev, [service]: true } });
             TranslateService[service]({ sourceLang: props.sourceLang, targetLang: props.targetLang, translateStatus: translateStatusHandler, ID: id });
         }
-    }, [props.service]);
+    }, [props.service, refPostData, stringCount]);
 
     useEffect(() => {
         setPopupVisibility(true);

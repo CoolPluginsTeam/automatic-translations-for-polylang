@@ -1,1 +1,2706 @@
-(()=>{"use strict";var t={n:e=>{var a=e&&e.__esModule?()=>e.default:()=>e;return t.d(a,{a}),a},d:(e,a)=>{for(var n in a)t.o(a,n)&&!t.o(e,n)&&Object.defineProperty(e,n,{enumerable:!0,get:a[n]})},o:(t,e)=>Object.prototype.hasOwnProperty.call(t,e),r:t=>{"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})}},e={};t.r(e),t.d(e,{contentSaveSource:()=>tt,contentSaveTranslate:()=>et,excerptSaveSource:()=>Q,excerptSaveTranslate:()=>Z,titleSaveSource:()=>G,titleSaveTranslate:()=>K});var a={};t.r(a),t.d(a,{getTranslatedString:()=>nt,getTranslationEntry:()=>at});const n=window.ReactDOM;var r=t.n(n);const o=window.wp.element,s=(t,e,a,n)=>{const r=(t,e)=>{Object.keys(e).map((a=>{let r=e;r=r[a];const o=new Array(...t,a);n(o,r)}))};Object.getPrototypeOf(e)===Array.prototype?((t,e)=>{const o=new Array(...t);let s=a;o.forEach((t=>{s=s[t]})),Object.getPrototypeOf(s)!==Object.prototype?(Object.getPrototypeOf(s)===Array.prototype&&s.forEach(((t,a)=>{const r=new Array;o.forEach((t=>{r.push(t)})),r.push(a),n(r,e[0])})),"object"!=typeof s||r(t,e[0])):r(t,e[0])})(t,e):Object.getPrototypeOf(e)===Object.prototype&&r(t,e)},{createBlock:l}=wp.blocks,{dispatch:c,select:i}=wp.data,u=(t,e,a)=>{const{name:n,attributes:r}=t;let o={...r},c=t,u="";return Object.keys(a.AtfpBlockParseRules).includes(t.name)&&(c=((t,e)=>{const a=Object.values(e),n=t.attributes,r=t.clientId,o=(e,a)=>{if(!0!==a)s(e,a,n,o);else{const a=new Array(...e),o=new Array;let s=n,l=r;a.forEach((t=>{o.push(t),l+=`atfp${t}`,s=s[t]}));let c=s;if(c instanceof wp.richText.RichTextData&&(c=c.originalHTML),void 0!==c&&""!==c.trim()){let e=l.replace(/[^\p{L}\p{N}]/gu,""),n="";n=/[\p{L}\p{N}]/gu.test(c)?i("block-atfp/translate").getTranslatedString("content",c,e):c,t.attributes=((t,e,a)=>{const n={...t};let r=n;for(let t=0;t<e.length-1;t++)Object.getPrototypeOf(r[e[t]])===Array.prototype?r[e[t]]=[...r[e[t]]]:r[e[t]]={...r[e[t]]},r=r[e[t]];return r[e[e.length-1]]instanceof wp.richText.RichTextData?r[e[e.length-1]]=a.replace(/(?<!\\)"|\\"/g,"'"):r[e[e.length-1]]=a,n})(t.attributes,a,n)}}};return a.forEach((t=>{Object.keys(t).forEach((e=>{const a=new Array(e);o(a,t[e])}))})),t})(t,a.AtfpBlockParseRules[t.name]),o=c.attributes),u=l(n,o,e),u},p=(t,e)=>{let a=t.innerBlocks.map((t=>{if(t.name)return p(t,e)}));return u(t,a,e)},d=window.wp.data,m=t=>{const{editPost:e}=(0,d.dispatch)("core/editor"),{modalClose:a,postContent:n}=t;(()=>{const t={};Object.keys(n).filter((t=>"content"!==t)).forEach((e=>{const a=n[e];if(""!==a.trim()){const n=(0,d.select)("block-atfp/translate").getTranslatedString(e,a);t[e]=n}})),e(t)})(),(()=>{const e=n.content;e.length<=0||Object.values(e).forEach((e=>{((t,e)=>{const{name:a}=t;if(a){let a=t.innerBlocks.map((t=>{if(t.name)return p(t,e)}));const n=u(t,a,e);c("core/block-editor").insertBlock(n)}})(e,t.blockRules)}))})(),a()},{__}=wp.i18n,g=t=>{const e=()=>{t.setPopupVisibility(!1)};return React.createElement("div",{className:"modal-header",key:t.modalRender},React.createElement("span",{className:"close",onClick:e},"×"),React.createElement("h2",{className:"notranslate"},__("Step 2 - Start Automatic Translation Process","automatic-translations-for-polylang")),React.createElement("div",{className:"save_btn_cont"},React.createElement("button",{className:"notranslate save_it button button-primary",disabled:t.translateStatus,onClick:()=>{const a=t.postContent,n=t.blockRules;m({postContent:a,modalClose:e,blockRules:n}),t.pageTranslate(!0)}},__("Update Content","automatic-translations-for-polylang"))))},f=window.React,{dispatch:y}=wp.data;let h=0;const _=(t,e)=>{Object.keys(e.AtfpBlockParseRules).includes(t.name)&&((t,e,a)=>{const n=Object.values(a),r=(a,n)=>{if(!0!==n)s(a,n,e,r);else{const n=new Array(...a),r=new Array;let o=e,s=t;n.forEach((t=>{r.push(t),s+=`atfp${t}`,o=o[t]}));let l=o;if(l instanceof wp.richText.RichTextData&&(l=l.originalHTML),void 0!==l&&""!==l.trim()){let t=s.replace(/[^\p{L}\p{N}]/gu,"");if(!/[\p{L}\p{N}]/gu.test(l))return!1;y("block-atfp/translate").contentSaveSource(t,l,h),h++}}};n.forEach((t=>{Object.keys(t).forEach((e=>{const a=new Array(e);r(a,t[e])}))}))})(t.clientId,t.attributes,e.AtfpBlockParseRules[t.name])},b=(t,e)=>{t.forEach((t=>{_(t,e),t.innerBlocks&&b(t.innerBlocks,e)}))},v=t=>{const e=t=>{const a=document.createElement("div");a.innerHTML=t;const n=a.firstElementChild;if(!n)return t;let r=n.children;const o=r.length;if(o>0)for(let t=0;t<o;t++){let a=r[t],n=e(a.outerHTML);a.outerHTML=n}const s=n.outerHTML.match(/^<[^>]+>/)[0],l=n.tagName.toLowerCase(),c=new RegExp(`</${l}>`,"i"),i=n.outerHTML.match(c);if("<style>"===s)return`#atfp_open_translate_span#${n.outerHTML}#atfp_close_translate_span#`;const u=n.innerHTML;n.innerHTML="";let p=`#atfp_open_translate_span#${s}#atfp_close_translate_span#`,d="",m="";return i&&(d=`#atfp_open_translate_span#</${l}>#atfp_close_translate_span#`),""!==u?(""!==p&&(m=p+u),""!==d&&(m+=d)):m=p+d,n.outerHTML=m,a.innerHTML},a="yandex"===t.service?(t=>{const a=document.createElement("div");return a.innerHTML=t,function(t){let a=t.children;const n=()=>{if(a.length>0){let t=a[0],r=e(t.outerHTML);const o=document.createTextNode(r);t.replaceWith(o),n()}};n()}(a),(t=>t.split(/(#atfp_open_translate_span#.*?#atfp_close_translate_span#)|'/).filter(Boolean).filter((t=>""!==t.trim())))(a.innerText)})(t.content):t.content;t.translateContent(a),t.currentIndex===t.totalString&&t.translateContent({stringRenderComplete:!0});const n=/#atfp_open_translate_span#[\s\S]*?#atfp_close_translate_span#/,r=/#atfp_open_translate_span#|#atfp_close_translate_span#/g;return React.createElement(React.Fragment,null,"yandex"===t.service?a.map(((t,e)=>n.test(t)?React.createElement("span",{key:e,className:"notranslate atfp-notraslate-tag",translate:"no"},(t=>t.replace(r,""))(t)):t)):a)},{__:E}=wp.i18n,{parse:R}=wp.blocks,{select:S}=wp.data,T=t=>{const[e,a]=(0,o.useState)([]),[n,r]=(0,o.useState)(!0),s=t.blockRules,l=atfp_ajax_object.ajax_url,c={postId:parseInt(t.postId),local:t.targetLang,current_local:t.sourceLang,atfp_nonce:atfp_ajax_object.ajax_nonce,action:atfp_ajax_object.action_fetch};(0,o.useEffect)((()=>{fetch(l,{method:"POST",headers:{"content-type":"application/x-www-form-urlencoded; charset=UTF-8",Accept:"application/json"},body:new URLSearchParams(c)}).then((t=>t.json())).then((e=>{const n=e.data;n.content&&""!==n.content.trim()&&(n.content=R(n.content)),((t,e)=>{Object.keys(t).forEach((a=>{if("content"===a)((t,e)=>{Object.values(t).forEach((t=>{_(t,e),t.innerBlocks&&b(t.innerBlocks,e)}))})(t[a],e);else{const e=`${a}SaveSource`;y("block-atfp/translate")[e](t[a])}}))})(n,s),t.setPostData(n);const o=S("block-atfp/translate").getTranslationEntry(),l=Object.values(o).filter((t=>void 0!==t.source&&/[\p{L}\p{N}]/gu.test(t.source)));Object.keys(l).length>0?a(o):r(!1)})).catch((t=>{console.error("Error fetching post content:",t)}))}),[t.fetchKey]);let i=0;const u=e.filter((t=>void 0!==t.source&&""!==t.source.trim())).length;return React.createElement(React.Fragment,null,e.length>0||n?e.map(((e,a)=>React.createElement(React.Fragment,null,void 0!==e.source&&""!==e.source.trim()&&React.createElement(React.Fragment,null,React.createElement("tr",{key:a},React.createElement("td",null,++i),React.createElement("td",{"data-source":"source_text"},e.source),React.createElement("td",{class:"translate",translate:"yes","data-key":e.id,"data-string-type":e.type},React.createElement(v,{service:t.service,content:e.source,translateContent:t.translateContent,totalString:u,currentIndex:i}))))))):React.createElement("p",null,E("No strings are available for translation","automatic-translations-for-polylang")))};function w(){return w=Object.assign?Object.assign.bind():function(t){for(var e=1;e<arguments.length;e++){var a=arguments[e];for(var n in a)({}).hasOwnProperty.call(a,n)&&(t[n]=a[n])}return t},w.apply(null,arguments)}const{__:k}=wp.i18n,{select:x}=wp.data,L=t=>{const{service:e,serviceLabel:a}=t,[n,r]=(0,f.useState)(!1);let o=0;return React.createElement("div",{className:"modal-body"},React.createElement("div",{className:"atfp_translate_progress",key:t.modalRender},k("Automatic translation is in progress....","automatic-translations-for-polylang"),React.createElement("br",null),k("It will take few minutes, enjoy ☕ coffee in this time!","automatic-translations-for-polylang"),React.createElement("br",null),React.createElement("br",null),k("Please do not leave this window or browser tab while translation is in progress...","automatic-translations-for-polylang")),React.createElement("div",{className:`translator-widget ${e}`,style:{display:n?"block":"none"}},React.createElement("h3",{class:"choose-lang"},k("Choose language","automatic-translations-for-polylang")," ",React.createElement("span",{class:"dashicons-before dashicons-translation"})),React.createElement("div",{className:"atfp_translate_element_wrapper"},React.createElement("div",{id:"atfp_yandex_translate_element",style:{display:"yandex"===e?"block":"none"}}))),React.createElement("div",{className:"atfp_string_container "+(n?"":"atfp_empty_string")},React.createElement("table",{className:"scrolldown",id:"stringTemplate"},n&&React.createElement("thead",null,React.createElement("tr",null,React.createElement("th",{className:"notranslate"},k("S.No","automatic-translations-for-polylang")),React.createElement("th",{className:"notranslate"},k("Source Text","automatic-translations-for-polylang")),React.createElement("th",{className:"notranslate"},k("Translation","automatic-translations-for-polylang")))),React.createElement("tbody",null,React.createElement(T,w({blockRules:t.blockRules,setPostData:e=>{t.updatePostContent(e);const a=x("block-atfp/translate").getTranslationEntry(),n=Object.values(a).filter((t=>void 0!==t.source&&/[\p{L}\p{N}]/gu.test(t.source)));Object.keys(n).length>0?r(!0):r(!1)}},t,{translateContent:e=>{if(Object.getPrototypeOf(e)===Object.prototype&&!0===e.stringRenderComplete)return void t.stringCountHandler(o);let a=e.join(" ");if(void 0===a||""===a.trim())return;a=a.replace(/#atfp_open_translate_span#(.*?)#atfp_close_translate_span#/g,"");const n=a.trim().split(/\s+/).filter((t=>/[^\p{L}\p{N}]/.test(t))).length;o+=n}}))))))},j=t=>React.createElement("div",{className:`notice inline notice-info is-dismissible ${t.className}`},Array.isArray(t.children)?t.children.join(" "):t.children),{sprintf:C,__:N}=wp.i18n,O=t=>{const e=()=>{t.setPopupVisibility(!1)};return React.createElement("div",{className:"modal-footer",key:t.modalRender},!t.translateStatus&&t.stringCount&&React.createElement(j,{className:"atfp_string_count"},C(N("Automated translation complete: %s words translated, saving valuable time and resources.","automatic-translations-for-polylang"),t.stringCount)),React.createElement("div",{className:"save_btn_cont"},React.createElement("button",{className:"notranslate save_it button button-primary",disabled:t.translateStatus,onClick:()=>{const a=t.postContent,n=t.blockRules;m({postContent:a,modalClose:e,blockRules:n}),t.pageTranslate(!0)}},N("Update Content","automatic-translations-for-polylang"))))},{dispatch:A}=wp.data,H=t=>{t.querySelector(".atfp_translate_progress").style.display="none",t.querySelector(".atfp_string_container").style.animation="none",document.body.style.top="0";const e=t.querySelector("button.save_it");e.removeAttribute("disabled"),e.classList.add("translated"),e.classList.remove("notranslate"),(()=>{const t=document.getElementById("atfp_strings_model").querySelector(".atfp_string_container").querySelectorAll("td.translate[data-string-type]"),e={};var a;t.forEach((t=>{const a=t.innerText,n=t.dataset.key,r=t.dataset.stringType,o=t.closest("tr").querySelector('td[data-source="source_text"]').innerText;e[n]={type:r,translateContent:a,source:o}})),a=e,Object.keys(a).map((t=>{const e=a[t];if("content"!==e.type){const t=`${e.type}SaveTranslate`;A("block-atfp/translate")[t](e.translateContent)}else A("block-atfp/translate").contentSaveTranslate(t,e.translateContent,e.source)}))})()},P=t=>{let e=!1;const a=document.getElementById("atfp_strings_model"),n=a.querySelector(".atfp_string_container");n.scrollTop=0;const r=n.scrollHeight;void 0!==r&&r>100?(a.querySelector(".atfp_translate_progress").style.display="block",setTimeout((()=>{const t=2e3*Math.ceil(r/n?.offsetHeight);(t=>{const{element:e,scrollSpeed:a}=t,n=e.scrollHeight-e.offsetHeight+100;let r=null,o=e.scrollTop;const s=()=>{const t=performance.now();r||(r=t);const l=o+(t-r)/a*(n+2e3-o);l>n||(e.scrollTop=l,l<n&&setTimeout(s,16))};s()})({element:n,scrollSpeed:t})}),2e3),n.addEventListener("scroll",(()=>{n.scrollTop+n.clientHeight+50>=n.scrollHeight&&!e&&(t(),H(a),e=!0)})),n.clientHeight+10>=r&&setTimeout((()=>{t(),H(a)}),1500)):setTimeout((()=>{t(),H(a)}),2e3)},M=(t,e,a,n,r,o,s)=>{var l={keycode:{ESCAPE:27},getRequest:function(){return t.XDomainRequest?new t.XDomainRequest:t.XMLHttpRequest?new t.XMLHttpRequest:null},loadScript:function(t,a,n){var r=e.createElement("script");r.src=t,r.addEventListener("load",(function t(){this.removeEventListener("load",t,!1),n()}),!1),a.appendChild(r)},loadResource:function(e,a){var n=this.getRequest();return n?(n.onload=function(){a(this.responseText)},n.open("GET",e,!0),t.setTimeout((function(){n.send()}),0),n):null},getStyleList:function(t){var e=t.getAttribute("class");return e?e.replace(/\s+/g," ").trim().split(" "):[]},hasStyleName:function(t,e){var a=this.getStyleList(t);return!!a.length&&a.indexOf(e)>=0},addStyleName:function(t,e){var a=this.getStyleList(t);a.push(e),t.setAttribute("class",a.join(" "))},removeStyleName:function(t,e){var a=this.getStyleList(t),n=a.indexOf(e);n>=0&&(a.splice(n,1),t.setAttribute("class",a.join(" ")))},isSupportedBrowser:function(){return"localStorage"in t&&"querySelector"in e&&"addEventListener"in t&&"getComputedStyle"in t&&"CSS1Compat"===e.compatMode}},c=function(t,e){var a=this;t.addEventListener("click",(function(t){a.onClick(t)}),!1),this._element=t,this._contentElement=e||this._element};c.prototype.onClick=function(){},c.prototype.setText=function(t){return this._contentElement.textContent=t,this};var i=function(t,e){var a=this;t.reset(),t.addEventListener("click",(function(t){var e=t.target;"value"in e&&a.onSelect(e.value)}),!1),t.addEventListener("change",(function(t){alert("form change state");var e=t.target;e.checked&&a.onChange(e.value)}),!1),this._form=t,this._itemName=e};i.prototype.onSelect=function(){},i.prototype.onChange=function(){},i.prototype.isHidden=function(){return this._form.hasAttribute("hidden")},i.prototype.getItems=function(){return this._form[this._itemName]||[]},i.prototype.getValue=function(){var t,e,a=this.getItems();for(t=0,e=a.length;t<e;t++)if(a[t].checked)return a[t].value;return""},i.prototype.setValue=function(t){var e,a,n=this.getItems();if(t===this.getValue())return this;for(e=0,a=n.length;e<a;e++)if(n[e].value===t){n[e].checked=!0,this.onChange(t);break}return this},i.prototype.setHidden=function(t){return(t=!!t)!==this.isHidden()&&(this._form[(t?"set":"remove")+"Attribute"]("hidden",""),this.onHiddenChange(t)),this},i.prototype.onHiddenChange=function(){};var u=function(a){var n,r=this,c=a.select,i=a.element,u=a.storage,p=(a.autoMode,a.pageLang),d=(a.userLang,a.translator),m=a.leftButton,g=a.rightButton,f=a.closeButton;if(this._element=i,this._pageLang=p,this._translator=d,this.onStateChange=function(t,e){"active"===t&&u.setValue("active",e)},c.onSelect=function(t){this.setHidden(!0),r.translate(t),P(s)},c.onChange=function(t){u.setValue("lang",t),g.setText(t),r.setState("invalid",t===p)},c.onHiddenChange=function(a){var n,o=e.documentElement;r.setState("expanded",!a),a||(r.setState("right",!1).setState("bottom",!1),i.focus(),(n=this._form.getBoundingClientRect()).right+(t.pageXOffset||o.scrollLeft)+1>=Math.max(o.clientWidth,o.scrollWidth)&&r.setState("right",!0),n.bottom+(t.pageYOffset||o.scrollTop)+1>=Math.max(o.clientHeight,o.scrollHeight)&&r.setState("bottom",!0))},i.addEventListener("blur",(function(){c.setHidden(!0)}),!1),i.addEventListener("keydown",(function(t){t.keyCode===l.keycode.ESCAPE&&c.setHidden(!0)}),!1),d.on("error",(function(){this.abort(),r.setState("busy",!1).setState("error",!0)})),d.on("progress",(function(t){switch(t){case 0:r.setState("busy",!0).setState("active",!0);break;case 100:r.setState("done",!0).setState("busy",!1)}})),m.onClick=function(){c.setHidden(!0),r.translate(c.getValue()),P(s)},g.onClick=function(){r.hasState("active")?(d.undo(),r.setState("busy",!1).setState("done",!1).setState("error",!1).setState("active",!1)):c.setHidden(!c.isHidden())},f.onClick=function(){c.setHidden(!0)},null!=o)var y=o;switch(y){case"nb":case"nn":n="no";break;default:n=y}n&&(c.setValue(n),u.getValue("active"))};u.prototype.hasState=function(t){return l.hasStyleName(this._element,"yt-state_"+t)},u.prototype.setState=function(t,e){return(e=!!e)===this.hasState(t)||(l[(e?"add":"remove")+"StyleName"](this._element,"yt-state_"+t),this.onStateChange(t,e)),this},u.prototype.translate=function(t){return t&&!this.hasState("active")&&this._translator.translate(this._pageLang,t),this},u.prototype.onStateChange=function(){};var p=function(e){this._name=e;try{this._data=t.JSON.parse(t.localStorage[e])}catch(t){this._data={}}};p.prototype.getValue=function(t){return this._data[t]},p.prototype.setValue=function(e,a){this._data[e]=a;try{t.localStorage[this._name]=t.JSON.stringify(this._data)}catch(t){}};var d=e.getElementById(n.widgetId);if(d&&l.isSupportedBrowser()){var m=function(){l.loadScript("https://yastatic.net/s3/translate/v21.4.7/js/tr_page.js",d,(function(){l.loadResource("https://translate.yandex.net/website-widget/v1/widget.html",(function(t){var e;t&&(d.innerHTML=t,e=d.querySelector(".yt-widget"),n.widgetTheme&&e.setAttribute("data-theme",n.widgetTheme),new u({select:new i(e.querySelector(".yt-listbox"),"yt-lang"),element:e,storage:new p("yt-widget"),autoMode:"true"===n.autoMode,pageLang:n.pageLang,userLang:(a.language||a.userLanguage||"").split("-")[0],translator:new r.PageTranslator({srv:"tr-url-widget",url:"https://translate.yandex.net/api/v1/tr.json/translate",autoSync:!0,maxPortionLength:600}),leftButton:new c(e.querySelector(".yt-button_type_left")),rightButton:new c(e.querySelector(".yt-button_type_right"),e.querySelector(".yt-button_type_right > .yt-button__text")),closeButton:new c(e.querySelector(".yt-button_type_close"))}))}))}))};"complete"===e.readyState||"interactive"===e.readyState?m():e.addEventListener("DOMContentLoaded",m,!1)}},B={yandex:t=>{const e=window;M(e,e.document,e.navigator,{pageLang:t.sourceLang,autoMode:"false",widgetId:"atfp_yandex_translate_element",widgetTheme:"light"},e.yt=e.yt||{},t.targetLang,t.translateStatus)}};function q(){return q=Object.assign?Object.assign.bind():function(t){for(var e=1;e<arguments.length;e++){var a=arguments[e];for(var n in a)({}).hasOwnProperty.call(a,n)&&(t[n]=a[n])}return t},q.apply(null,arguments)}const I=t=>{const[e,a]=(0,o.useState)(t.visibility),[n,r]=(0,o.useState)(""),[s,l]=(0,o.useState)(!0),[c,i]=(0,o.useState)({}),[u,p]=(0,o.useState)(!1),d=e=>{"yandex"===t.service&&document.querySelector("#atfp_yandex_translate_element #yt-widget .yt-button__icon.yt-button__icon_type_right")?.click(),l(!0),a(!1),t.updateFetch(e)},m=()=>{l(!1)};return(0,o.useEffect)((()=>{document.documentElement.setAttribute("translate","no"),document.body.classList.add("notranslate");const e=t.service,a=`atfp_${e}_translate_element`;void 0===c[e]&&!0!==c[e]&&(i((t=>({...t,[e]:!0}))),B[e]({sourceLang:t.sourceLang,targetLang:t.targetLang,translateStatus:m,ID:a}))}),[t.service]),(0,o.useEffect)((()=>{a(!0),setTimeout((()=>{const t=document.querySelector(".atfp_string_container");t&&(t.scrollTop=0)}))}),[t.modalRender]),React.createElement(React.Fragment,null,React.createElement("div",{class:"modal-container",style:{display:e?"flex":"none"}},React.createElement("div",{class:"modal-content"},React.createElement(g,{modalRender:t.modalRender,setPopupVisibility:d,postContent:n,blockRules:t.blockRules,translateStatus:s,pageTranslate:t.pageTranslate}),React.createElement(L,q({},t,{updatePostContent:t=>{r(t)},blockRules:t.blockRules,stringCountHandler:t=>{e&&p(t)}})),React.createElement(O,{modalRender:t.modalRender,setPopupVisibility:d,postContent:n,blockRules:t.blockRules,translateStatus:s,pageTranslate:t.pageTranslate,stringCount:u}))))},{sprintf:V,__:$}=wp.i18n,F=t=>{const[e,a]=(0,o.useState)(!1),[n,s]=(0,o.useState)({}),[l,c]=(0,o.useState)({}),[i,u]=(0,o.useState)({}),[p,d]=(0,o.useState)(!1),m=atfp_ajax_object.source_lang,g=t.targetLang,f=atfp_ajax_object.languageObject[m],y=atfp_ajax_object.languageObject[g],h=atfp_ajax_object.ajax_url,_=atfp_ajax_object.atfp_url+"assets/images/",b=["af","am","ar","az","ba","be","bg","bn","bs","ca","ceb","cs","cv","cy","da","de","el","emj","en","eo","es","et","eu","fa","fi","fr","ga","gd","gl","gu","he","hi","hr","ht","hu","hy","id","is","it","ja","jv","ka","kazlat","kk","km","kn","ko","ky","la","lb","lo","lt","lv","mg","mhr","mi","mk","ml","mn","mr","mrj","ms","mt","my","ne","nl","no","pa","pap","pl","pt","pt-BR","ro","ru","sah","si","sk","sl","sq","sr","sr-Latn","su","sv","sw","ta","te","tg","th","tl","tr","tt","udm","uk","ur","uz","uzbcyr","vi","xh","yi","zh","zu"].includes(g),v={atfp_nonce:atfp_ajax_object.ajax_nonce,action:atfp_ajax_object.action_block_rules},E=t=>{a(t)},R=t=>{t.preventDefault();const e=t.target;"yes"===e.dataset.value&&d(!0),e.closest("#atfp-modal-open-warning-wrapper").remove()};return(0,o.useEffect)((()=>{const t=document.querySelectorAll("#atfp-modal-open-warning-wrapper .modal-content button"),e=document.querySelector('input#atfp-translate-button[name="atfp_meta_box_translate"]');e&&e.addEventListener("click",(()=>{d((t=>!t))})),t.forEach((t=>{t&&t.addEventListener("click",R)}))}),[]),(0,o.useEffect)((()=>{Object.keys(l).length>0||!e||fetch(h,{method:"POST",headers:{"content-type":"application/x-www-form-urlencoded; charset=UTF-8",Accept:"application/json"},body:new URLSearchParams(v)}).then((t=>t.json())).then((t=>{const e=JSON.parse(t.data.blockRules);c(e)})).catch((t=>{console.error("Error fetching post content:",t)}))}),[e]),(0,o.useEffect)((()=>{if(Object.keys(l).length<=0)return;const a=n,o=a.dataset&&a.dataset.service,s=a.dataset&&a.dataset.serviceLabel,c=t.postId,u=document.getElementById("atfp_strings_model");e&&Object.keys(l).length>0&&(r().render(React.createElement(I,{blockRules:l,visibility:e,updateFetch:E,postId:c,service:o,serviceLabel:s,sourceLang:m,targetLang:g,modalRender:i,pageTranslate:t.pageTranslate}),u),d((t=>!t)))}),[e,l]),React.createElement(React.Fragment,null,p&&React.createElement("div",{className:"modal-container",style:{display:p?"flex":"none"}},React.createElement("div",{className:"atfp-settings modal-content"},React.createElement("div",{className:"modal-header"},React.createElement("h2",null,$("Step 1 - Select Translation Provider","automatic-translations-for-polylang")),React.createElement("h4",null,V($("Translate %(postType)s content from %(source)s to %(target)s","automatic-translations-for-polylang"),{postType:t.postType,source:f,target:y})),React.createElement("p",{class:"atfp-error-message",style:{marginBottom:".5rem"}},V($("This translation widget replaces the current %(postType)s content with the original %(source)s %(postType)s and translates it into %(target)s","automatic-translations-for-polylang"),{postType:t.postType,source:f,target:y})),React.createElement("span",{className:"close",onClick:()=>d(!1)},"×")),React.createElement("hr",null),React.createElement("strong",{className:"atlt-heading"},$("Translate Using Yandex Page Translate Widget","automatic-translations-for-polylang")),React.createElement("div",{className:"inputGroup"},b?React.createElement(React.Fragment,null,React.createElement("button",{className:"atfp-service-btn translate button button-primary","data-service":"yandex","data-service-label":"Yandex Translate",onClick:t=>{let e=t.target.classList.contains("atfp-service-btn")?t.target:t.target.closest(".atfp-service-btn");u((t=>t+1)),s(e),a(!0)}},$("Yandex Translate","automatic-translations-for-polylang")),React.createElement("br",null)):React.createElement(React.Fragment,null,React.createElement("button",{className:"atfp-service-btn translate button button-primary",disabled:!0},$("Yandex Translate","automatic-translations-for-polylang")),React.createElement("br",null),React.createElement("span",{className:"atfp-error-message"},y," ",$("language is not supported by Yandex Translate","automatic-translations-for-polylang"),".")),React.createElement("a",{href:"https://translate.yandex.com/",target:"_blank"},React.createElement("img",{className:"pro-features-img",src:`${_}powered-by-yandex.png`,alt:"powered by Yandex Translate Widget"}))),React.createElement("hr",null),React.createElement("ul",{style:{margin:"0"}},React.createElement("li",null,React.createElement("span",{style:{color:"green"}},"✔")," ",$("Unlimited Translations with Yandex Translate","automatic-translations-for-polylang")),React.createElement("li",null,React.createElement("span",{style:{color:"green"}},"✔")," ",$("No API Key Required for Yandex Translate","automatic-translations-for-polylang")),React.createElement("li",null,React.createElement("span",{style:{color:"green"}},"✔")," ",$("Supports Multiple Languages","automatic-translations-for-polylang")," - ",React.createElement("a",{href:"https://yandex.com/support2/translate-desktop/en/supported-langs",target:"_blank"},$("See Supported Languages","automatic-translations-for-polylang")))),React.createElement("hr",null),React.createElement("div",{className:"modal-footer"},React.createElement("button",{className:"atfp-setting-close",onClick:()=>d(!1)},$("Close","automatic-translations-for-polylang"))))))},U="SAVE_SOURCE_TITLE",D="SAVE_TRANSLATE_TITLE",Y="SAVE_SOURCE_EXCERPT",X="SAVE_TRANSLATE_EXCERPT",z="SAVE_SOURCE_CONTENT",W="SAVE_TRANSLATE_CONTENT",J={title:{},excerpt:{},content:[]},G=t=>({type:U,text:t}),K=t=>({type:D,text:t}),Q=t=>({type:Y,text:t}),Z=t=>({type:X,text:t}),tt=(t,e,a)=>({type:z,text:e,id:t,index:a}),et=(t,e,a)=>({type:W,text:e,id:t,source:a}),at=t=>{const e=new Array;return e.push({id:"title",source:t.title.source,type:"title",target:t.title.target||""}),e.push({id:"excerpt",source:t.excerpt.source,type:"excerpt",target:t.excerpt.target||""}),Object.keys(t.content).map((a=>{const n=t.content[a].index+2;e[n]={type:"content",id:a,source:t.content[a].source,target:t.content[a].target||""}})),e},nt=(t,e,a,n=null)=>"content"!==e&&t[e].source===a?t[e].target:t[e]&&t[e][n]&&t[e][n].source===a?void 0!==t[e][n].target?t[e][n].target:t[e][n].source:a,{createReduxStore:rt,register:ot}=wp.data;ot(rt("block-atfp/translate",{reducer:(t=J,e)=>{switch(e.type){case U:return/[\p{L}\p{N}]/gu.test(e.text)?{...t,title:{...t.title,source:e.text}}:t;case D:return{...t,title:{...t.title,target:e.text}};case Y:return/[\p{L}\p{N}]/gu.test(e.text)?{...t,excerpt:{...t.excerpt,source:e.text}}:t;case X:return{...t,excerpt:{...t.excerpt,target:e.text}};case z:return/[\p{L}\p{N}]/gu.test(e.text)?{...t,content:{...t.content,[e.id]:{...t.content[e.id]||[],source:e.text,index:e.index}}}:t;case W:return t.content[e.id].source===e.source?{...t,content:{...t.content,[e.id]:{...t.content[e.id]||[],target:e.text}}}:t;default:return t}},actions:e,selectors:a}));const st=()=>{const[t,e]=(0,f.useState)(!1),a=new URLSearchParams(window.location.search),n=a.get("new_lang"),r=a.get("from_post"),o=a.get("post_type");return(0,f.useEffect)((()=>{if(t){const t=document.querySelector('input#atfp-translate-button[name="atfp_meta_box_translate"]');t&&(t.disabled=!0)}}),[t]),React.createElement(React.Fragment,null,!t&&React.createElement(F,{pageTranslate:t=>{e(t)},postId:r,targetLang:n,postType:o}))};window.addEventListener("load",(()=>{(()=>{let t=new Array;t.push('\x3c!-- The Modal --\x3e<div id="atfp-setting-modal"></div>','<div id="atfp_strings_model" class="modal atfp_custom_model"></div>'),t.forEach((t=>{document.body.insertAdjacentHTML("beforeend",t)}))})(),(()=>{const t=document.getElementById("atfp-setting-modal"),e=(()=>{const t=new URLSearchParams(window.location.search),e=t.get("post_type"),a=t.get("new_lang"),n=atfp_ajax_object.languageObject[a],r=document.createElement("div");return r.id="atfp-modal-open-warning-wrapper",r.innerHTML=`\n    <div class="modal-container" style="display: flex">\n      <div class="modal-content">\n        <p>Would you like to duplicate your original ${e} content and have it automatically translated into ${n}?</p>\n        <div>\n          <button data-value="yes">Yes</button>\n          <button data-value="no">No</button>\n        </div>\n      </div>\n    </div>`,r})();document.body.insertBefore(e,t)})(),wp.element.render(React.createElement(st,null),document.getElementById("atfp-setting-modal"))}))})();
+/******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./src/component/FilterNestedAttr/index.js":
+/*!*************************************************!*\
+  !*** ./src/component/FilterNestedAttr/index.js ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+const FilterBlockNestedAttr = (idsArr, attrObj, blockAttr, callBack) => {
+  /**
+   * Iterates over the keys of the filter object and calls saveTranslatedAttr for each key.
+   * 
+   * @param {Array} idArr - The array of IDs.
+   * @param {Object} filterObj - The filter object to iterate over.
+   */
+  const childAttr = (idArr, filterObj) => {
+    Object.keys(filterObj).map(key => {
+      let filterObjType = filterObj;
+      filterObjType = filterObjType[key];
+      const newIdArr = new Array(...idArr, key);
+      callBack(newIdArr, filterObjType);
+    });
+  };
+
+  /**
+   * Handles the attributes that are arrays and objects by recursively calling saveTranslatedAttr.
+   * 
+   * @param {Array} idArr - The array of IDs.
+   * @param {Array} attrFilter - The filter attribute array.
+   */
+  const childAttrArray = (idArr, attrFilter) => {
+    const newIdArr = new Array(...idArr);
+    let dynamicBlockAttr = blockAttr;
+    newIdArr.forEach(key => {
+      dynamicBlockAttr = dynamicBlockAttr[key];
+    });
+    if (Object.getPrototypeOf(dynamicBlockAttr) === Object.prototype) {
+      childAttr(idArr, attrFilter[0]);
+      return;
+    }
+    if (Object.getPrototypeOf(dynamicBlockAttr) === Array.prototype) {
+      dynamicBlockAttr.forEach((_, index) => {
+        const nestedId = new Array();
+        newIdArr.forEach(key => {
+          nestedId.push(key);
+        });
+        nestedId.push(index);
+        callBack(nestedId, attrFilter[0]);
+      });
+    }
+    if (typeof dynamicBlockAttr === 'object') {
+      childAttr(idArr, attrFilter[0]);
+      return;
+    }
+  };
+  const typeCheck = () => {
+    if (Object.getPrototypeOf(attrObj) === Array.prototype) {
+      childAttrArray(idsArr, attrObj);
+    } else if (Object.getPrototypeOf(attrObj) === Object.prototype) {
+      childAttr(idsArr, attrObj);
+    }
+  };
+  typeCheck();
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FilterBlockNestedAttr);
+
+/***/ }),
+
+/***/ "./src/component/FilterTargetContent/index.js":
+/*!****************************************************!*\
+  !*** ./src/component/FilterTargetContent/index.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+const FilterTargetContent = props => {
+  /**
+   * Wraps the first element and its matching closing tag with translation spans.
+   * If no elements are found, returns the original HTML.
+   * @param {string} html - The HTML string to process.
+   * @returns {string} The modified HTML string with wrapped translation spans.
+   */
+  const wrapFirstAndMatchingClosingTag = html => {
+    // Create a temporary element to parse the HTML string
+    const tempElement = document.createElement('div');
+    tempElement.innerHTML = html;
+
+    // Get the first element
+    const firstElement = tempElement.firstElementChild;
+    if (!firstElement) {
+      return html; // If no elements, return the original HTML
+    }
+    let childElements = firstElement.children;
+    const length = childElements.length;
+    if (length > 0) {
+      for (let i = 0; i < length; i++) {
+        let element = childElements[i];
+        let filterContent = wrapFirstAndMatchingClosingTag(element.outerHTML);
+        element.outerHTML = filterContent;
+      }
+    }
+
+    // Get the opening tag of the first element
+    // const firstElementOpeningTag = firstElement.outerHTML.match(/^<[^>]+>/)[0];
+    const firstElementOpeningTag = firstElement.outerHTML.match(/^<[^>]+>/)[0];
+
+    // Check if the first element has a corresponding closing tag
+    const openTagName = firstElement.tagName.toLowerCase();
+    const closingTagName = new RegExp(`<\/${openTagName}>`, 'i');
+
+    // Check if the inner HTML contains the corresponding closing tag
+    const closingTagMatch = firstElement.outerHTML.match(closingTagName);
+
+    // Wrap the style element
+    if (firstElementOpeningTag === '<style>') {
+      let wrappedFirstTag = `#atfp_open_translate_span#${firstElement.outerHTML}#atfp_close_translate_span#`;
+      return wrappedFirstTag;
+    }
+    const firstElementHtml = firstElement.innerHTML;
+    firstElement.innerHTML = '';
+    let openTag = `#atfp_open_translate_span#${firstElementOpeningTag}#atfp_close_translate_span#`;
+    let closeTag = '';
+    let filterContent = '';
+    if (closingTagMatch) {
+      closeTag = `#atfp_open_translate_span#</${openTagName}>#atfp_close_translate_span#`;
+    }
+    if ('' !== firstElementHtml) {
+      if ('' !== openTag) {
+        filterContent = openTag + firstElementHtml;
+      }
+      if ('' !== closeTag) {
+        filterContent += closeTag;
+      }
+    } else {
+      filterContent = openTag + closeTag;
+    }
+    firstElement.outerHTML = filterContent;
+
+    // Return the modified HTML
+    return tempElement.innerHTML;
+  };
+
+  /**
+   * Splits the content string based on a specific pattern.
+   * @param {string} string - The content string to split.
+   * @returns {Array} An array of strings after splitting based on the pattern.
+   */
+  const splitContent = string => {
+    const pattern = /(#atfp_open_translate_span#.*?#atfp_close_translate_span#)|'/;
+    const matches = string.split(pattern).filter(Boolean);
+
+    // Remove empty strings from the result
+    const output = matches.filter(match => match.trim() !== '');
+    return output;
+  };
+
+  /**
+   * Replaces the inner text of HTML elements with span elements for translation.
+   * @param {string} string - The HTML content string to process.
+   * @returns {Array} An array of strings after splitting based on the pattern.
+   */
+  const filterSourceData = string => {
+    function replaceInnerTextWithSpan(doc) {
+      let childElements = doc.children;
+      const childElementsReplace = () => {
+        if (childElements.length > 0) {
+          let element = childElements[0];
+          let filterContent = wrapFirstAndMatchingClosingTag(element.outerHTML);
+          const textNode = document.createTextNode(filterContent);
+          element.replaceWith(textNode);
+          childElementsReplace();
+        }
+      };
+      childElementsReplace();
+      return doc;
+    }
+    const tempElement = document.createElement('div');
+    tempElement.innerHTML = string;
+    replaceInnerTextWithSpan(tempElement);
+    return splitContent(tempElement.innerText);
+  };
+
+  /**
+   * The content to be filtered based on the service type.
+   * If the service is 'yandex', the content is filtered using filterSourceData function, otherwise, the content remains unchanged.
+   */
+  const content = 'yandex' === props.service || 'localAiTranslator' === props.service ? filterSourceData(props.content) : props.content;
+  props.translateContent(content);
+  if (props.currentIndex === props.totalString) {
+    props.translateContent({
+      stringRenderComplete: true
+    });
+  }
+
+  /**
+   * Regular expression pattern to match the span elements that should not be translated.
+   */
+  const notTranslatePattern = /#atfp_open_translate_span#[\s\S]*?#atfp_close_translate_span#/;
+
+  /**
+   * Regular expression pattern to replace the placeholder span elements.
+   */
+  const replacePlaceholderPattern = /#atfp_open_translate_span#|#atfp_close_translate_span#/g;
+  const filterContent = content => {
+    const updatedContent = content.replace(replacePlaceholderPattern, '');
+    return updatedContent;
+  };
+  return /*#__PURE__*/React.createElement(React.Fragment, null, 'yandex' === props.service || 'localAiTranslator' === props.service ? content.map((data, index) => {
+    const notTranslate = notTranslatePattern.test(data);
+    if (notTranslate) {
+      return /*#__PURE__*/React.createElement("span", {
+        key: index,
+        className: "notranslate atfp-notraslate-tag",
+        translate: "no"
+      }, filterContent(data));
+    } else {
+      return data;
+    }
+  }) : content);
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FilterTargetContent);
+
+/***/ }),
+
+/***/ "./src/component/TranslateProvider/index.js":
+/*!**************************************************!*\
+  !*** ./src/component/TranslateProvider/index.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _yandex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./yandex */ "./src/component/TranslateProvider/yandex/index.js");
+/* harmony import */ var _local_ai_translator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./local-ai-translator */ "./src/component/TranslateProvider/local-ai-translator/index.js");
+
+
+
+/**
+ * Provides translation services using Yandex Translate.
+ */
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  yandex: _yandex__WEBPACK_IMPORTED_MODULE_0__["default"],
+  localAiTranslator: _local_ai_translator__WEBPACK_IMPORTED_MODULE_1__["default"]
+});
+
+/***/ }),
+
+/***/ "./src/component/TranslateProvider/local-ai-translator/index.js":
+/*!**********************************************************************!*\
+  !*** ./src/component/TranslateProvider/local-ai-translator/index.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _local_ai_translator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./local-ai-translator */ "./src/component/TranslateProvider/local-ai-translator/local-ai-translator.js");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+
+
+const {
+  dispatch
+} = wp.data;
+const localAiTranslator = async props => {
+  console.log(props);
+  const targetLangName = atfp_ajax_object.languageObject[props.targetLang];
+  const startTranslation = () => {
+    const stringContainer = jQuery("#atfp_strings_model .modal-content .atfp_string_container");
+    if (stringContainer[0].scrollHeight > 100) {
+      jQuery("#atfp_strings_model .atfp_translate_progress").fadeIn("slow");
+    }
+  };
+  const completeTranslation = () => {
+    setTimeout(() => {
+      props.translateStatus();
+      jQuery("#atfp_strings_model .atfp_translate_progress").fadeOut("slow");
+    }, 4000);
+  };
+  const languageError = () => {
+    console.log("languageError");
+  };
+  const beforeTranslate = ele => {
+    const stringContainer = jQuery("#atfp_strings_model .modal-content .atfp_string_container");
+    const scrollStringContainer = position => {
+      stringContainer.scrollTop(position);
+    };
+    const stringContainerPosition = stringContainer[0].getBoundingClientRect();
+    const eleTopPosition = ele.closest("tr").offsetTop;
+    const containerHeight = stringContainer.height();
+    if (eleTopPosition > containerHeight + stringContainerPosition.y) {
+      scrollStringContainer(eleTopPosition - containerHeight + ele.offsetHeight);
+    }
+  };
+  const afterTranslate = ele => {
+    const translatedText = ele.innerText;
+    const key = ele.dataset.key;
+    const type = ele.dataset.stringType;
+    const sourceText = ele.closest('tr').querySelector('td[data-source="source_text"]').innerText;
+    if (type !== 'content') {
+      const action = `${type}SaveTranslate`;
+      dispatch('block-atfp/translate')[action](translatedText);
+    } else {
+      dispatch('block-atfp/translate').contentSaveTranslate(key, translatedText, sourceText);
+    }
+    console.group("afterTranslate");
+    console.log(translatedText, key, type, sourceText);
+    console.groupEnd();
+  };
+  const TranslateProvider = await _local_ai_translator__WEBPACK_IMPORTED_MODULE_0__["default"].Object({
+    mainWrapperSelector: "#atfp_strings_model",
+    btnSelector: `#${props.ID}`,
+    btnClass: "local_ai_translator_btn",
+    btnText: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Translate To", 'automatic-translations-for-polylang') + ' ' + targetLangName,
+    stringSelector: ".atfp_string_container tbody tr td.translate",
+    progressBarSelector: "#atfp_strings_model .atfp_translate_progress",
+    sourceLanguage: props.sourceLang,
+    targetLanguage: props.targetLang,
+    targetLanguageLabel: targetLangName,
+    onStartTranslationProcess: startTranslation,
+    onComplete: completeTranslation,
+    onLanguageError: languageError,
+    onBeforeTranslate: beforeTranslate,
+    onAfterTranslate: afterTranslate
+  });
+  if (TranslateProvider.hasOwnProperty('init')) {
+    TranslateProvider.init();
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (localAiTranslator);
+
+/***/ }),
+
+/***/ "./src/component/TranslateProvider/local-ai-translator/local-ai-translator.js":
+/*!************************************************************************************!*\
+  !*** ./src/component/TranslateProvider/local-ai-translator/local-ai-translator.js ***!
+  \************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+class ChromeAiTranslator {
+  // Static method to create an instance of ChromeAiTranslator and return extra data
+  static Object = options => {
+    const selfObject = new this(options);
+    return selfObject.extraData();
+  };
+
+  // Constructor to initialize the translator with options
+  constructor(options) {
+    this.btnSelector = options.btnSelector || false; // Selector for the button that triggers translation
+    this.btnClass = options.btnClass || false; // Class for the button
+    this.btnText = options.btnText || `Translate To ${options.targetLanguageLabel}`; // Text for the button
+    this.stringSelector = options.stringSelector || false; // Selector for the elements containing strings to translate
+    this.progressBarSelector = options.progressBarSelector || false; // Selector for the progress bar element
+    this.onStartTranslationProcess = options.onStartTranslationProcess || (() => {}); // Callback for when translation starts
+    this.onComplete = options.onComplete || (() => {}); // Callback for when translation completes
+    this.onLanguageError = options.onLanguageError || (() => {}); // Callback for language errors
+    this.onBeforeTranslate = options.onBeforeTranslate || (() => {}); // Callback for before translation
+    this.onAfterTranslate = options.onAfterTranslate || (() => {}); // Callback for after translation
+    this.sourceLanguage = options.sourceLanguage || "en"; // Default source language
+    this.targetLanguage = options.targetLanguage || "hi"; // Default target language
+    this.targetLanguageLabel = options.targetLanguageLabel || "Hindi"; // Label for the target language
+  }
+
+  // Method to check language support and return relevant data
+  extraData = async () => {
+    const languageSupported = await this.langStatus(); // Check if the language is supported
+
+    // Handle unsupported language
+    if (languageSupported === "language-not-supported") {
+      await new Promise(resolve => setTimeout(resolve, 500));
+      const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">Unfortunately, the <strong>${this.targetLanguageLabel} (${this.targetLanguage})</strong> language is currently not supported by the Local Translator AI modal. Please check and read the docs which languages are currently supported by <a href="https://developer.chrome.com/docs/ai/translator-api#bypass_language_restrictions_for_local_testing" target="_blank">clicking here</a>.</span>`);
+      jQuery("#chrome-ai-translator_settings_btn");
+      this.onLanguageError(message);
+      return {};
+    }
+
+    // Handle API disabled case
+    if (languageSupported === "api-disabled") {
+      await new Promise(resolve => setTimeout(resolve, 500));
+      const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">The Translator AI modal is currently not supported or disabled in your browser. Please enable it. For detailed instructions on how to enable the Translator AI modal in your Chrome browser, <a href="https://developer.chrome.com/docs/ai/translator-api#bypass_language_restrictions_for_local_testing" target="_blank">click here</a>.</span>`);
+      jQuery("#chrome-ai-translator_settings_btn");
+      this.onLanguageError(message);
+      return {};
+    }
+
+    // Handle case for language pack after download
+    if (languageSupported === "after-download") {
+      const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">Please install the <strong>${this.targetLanguageLabel} (${this.targetLanguage})</strong> language pack to proceed.To install the language pack, visit <strong>chrome://on-device-translation-internals</strong>. For further assistance, refer to the <a href="https://developer.chrome.com/docs/ai/translator-api#bypass_language_restrictions_for_local_testing" target="_blank">documentation</a>.</span>`);
+      jQuery("#chrome-ai-translator_settings_btn");
+      this.onLanguageError(message);
+      return {};
+    }
+
+    // Handle case for language pack not readily available
+    if (languageSupported !== 'readily') {
+      const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">Please ensure that the <strong>${this.targetLanguageLabel} (${this.targetLanguage})</strong> language pack is installed and set as a preferred language in your browser. To install the language pack, visit <strong>chrome://on-device-translation-internals</strong>. For further assistance, refer to the <a href="https://developer.chrome.com/docs/ai/translator-api#bypass_language_restrictions_for_local_testing" target="_blank">documentation</a>.</span>`);
+      this.onLanguageError(message);
+      return {};
+    }
+
+    // Return methods for translation control
+    return {
+      continueTranslation: this.continueTranslation,
+      stopTranslation: this.stopTranslation,
+      startTranslation: this.startTranslation,
+      reInit: this.reInit,
+      init: this.init
+    };
+  };
+
+  // Method to initialize the translation process
+  init = async () => {
+    this.appendBtn();
+    this.translationStart = false; // Flag to indicate if translation has started
+    this.completedTranslateIndex = 0; // Index of the last completed translation
+    this.completedCharacterCount = 0; // Count of characters translated
+    this.translateBtnEvents(); // Set up button events
+    if (this.progressBarSelector) {
+      this.addProgressBar(); // Add progress bar to the UI
+    }
+  };
+  appendBtn = () => {
+    this.translateBtn = jQuery(`<button class="button button-primary${this.btnClass ? ' ' + this.btnClass : ''}">${this.btnText}</button>`);
+    jQuery(this.btnSelector).append(this.translateBtn);
+  };
+
+  // Method to check the status of the language support
+  langStatus = async () => {
+    const supportedLanguages = ['en', 'es', 'ja', 'ar', 'bn', 'de', 'fr', 'hi', 'it', 'ko', 'nl', 'pl', 'pt', 'ru', 'th', 'tr', 'vi', 'zh', 'zh-hant', 'bg', 'cs', 'da', 'el', 'fi', 'hr', 'hu', 'id', 'iw', 'lt', 'no', 'ro', 'sk', 'sl', 'sv', 'uk', 'en-zh'].map(lang => lang.toLowerCase());
+
+    // Check if the translation API is available
+    if (!('translation' in self && 'createTranslator' in self.translation)) {
+      return 'api-disabled';
+    }
+
+    // Check if the target language is supported
+    if (!supportedLanguages.includes(this.targetLanguage.toLowerCase())) {
+      return 'language-not-supported';
+    }
+    const defaultLangCode = this.targetLanguage || null; // Get the default language code
+    this.defaultLang = this.mapLanguageCode(defaultLangCode); // Map the language code
+
+    // Check if translation can be performed
+    return await translation.canTranslate({
+      sourceLanguage: this.sourceLanguage,
+      targetLanguage: this.defaultLang
+    });
+  };
+
+  // Method to set up button events for translation
+  translateBtnEvents = e => {
+    if (!this.btnSelector || jQuery(this.btnSelector).length === 0) return this.onLanguageError("The button selector is missing. Please provide a valid selector for the button.");
+    if (!this.stringSelector || jQuery(this.stringSelector).length === 0) return this.onLanguageError("The string selector is missing. Please provide a valid selector for the strings to be translated.");
+    this.translateStatus = true; // Set translation status to true
+    this.translateBtn.off("click"); // Clear previous click handlers
+    this.translateBtn.prop("disabled", false); // Enable the button
+
+    // Set up click event for starting translation
+    if (!this.translationStart) {
+      this.translateBtn.on("click", this.startTranslationProcess);
+    } else if (this.translateStringEle.length > this.completedTranslateIndex + 1) {
+      this.translateBtn.on("click", () => {
+        this.onStartTranslationProcess(); // Call the start translation callback
+        this.stringTranslation(this.completedTranslateIndex + 1); // Start translating the next string
+      });
+    } else {
+      this.onComplete({
+        translatedStringsCount: this.completedCharacterCount
+      }); // Call the complete callback
+      this.translateBtn.prop("disabled", true); // Disable the button
+    }
+  };
+
+  // Method to map language codes to their respective codes
+  mapLanguageCode = code => {
+    const languageMap = {
+      'bel': 'be',
+      'he': 'iw',
+      'snd': 'sd',
+      'jv': 'jw',
+      'nb': 'no',
+      'nn': 'no'
+    };
+    return languageMap[code] || code; // Return mapped code or original code
+  };
+
+  // Method to start the translation process
+  startTranslationProcess = async () => {
+    this.onStartTranslationProcess(); // Call the start translation callback
+    const langCode = this.defaultLang; // Get the default language code
+
+    this.translationStart = true; // Set translation start flag
+    this.translateStringEle = jQuery(this.stringSelector); // Get the elements to translate
+
+    // Calculate total character count for progress tracking
+    this.totalStringCount = Array.from(this.translateStringEle).map(ele => ele.innerText.length).reduce((a, b) => a + b, 0);
+
+    // Create a translator instance
+    this.translator = await self.translation.createTranslator({
+      sourceLanguage: 'en',
+      targetLanguage: langCode
+    });
+
+    // Start translating if there are strings to translate
+    if (this.translateStringEle.length > 0) {
+      await this.stringTranslation(this.completedTranslateIndex);
+    }
+  };
+
+  // Method to translate a specific string at the given index
+  stringTranslation = async index => {
+    if (!this.translateStatus) return; // Exit if translation is stopped
+    const ele = this.translateStringEle[index]; // Get the element to translate
+    this.onBeforeTranslate(ele); // Call the before translation callback
+    const orignalText = ele.innerText;
+    let originalString = [];
+    if (ele.childNodes.length > 0 && !ele.querySelector('.notranslate')) {
+      ele.childNodes.forEach(child => {
+        if (child.nodeType === 3 && child.nodeValue.trim() !== '') {
+          originalString.push(child);
+        }
+      });
+    } else if (ele.querySelector('.notranslate')) {
+      ele.childNodes.forEach(child => {
+        if (child.nodeType === 3 && child.nodeValue.trim() !== '') {
+          originalString.push(child);
+        }
+      });
+    }
+    if (originalString.length > 0) {
+      await this.stringTranslationBatch(originalString, 0);
+    }
+    this.completedCharacterCount += orignalText.length; // Update character count
+    this.completedTranslateIndex = index; // Update completed index
+    if (this.progressBarSelector) {
+      this.updateProgressBar(); // Update the progress bar
+    }
+    this.onAfterTranslate(ele); // Call the after translation callback
+
+    // Continue translating the next string if available
+    if (this.translateStringEle.length > index + 1) {
+      await this.stringTranslation(this.completedTranslateIndex + 1);
+    }
+
+    // If all strings are translated, complete the process
+    if (index === this.translateStringEle.length - 1) {
+      this.translateBtn.prop("disabled", true); // Disable the button
+      this.onComplete({
+        characterCount: this.completedCharacterCount
+      }); // Call the complete callback
+      jQuery(this.progressBarSelector).find(".chrome-ai-translator-strings-count").show().find(".totalChars").text(this.completedCharacterCount);
+    }
+  };
+  stringTranslationBatch = async (originalString, index) => {
+    const translatedString = await this.translator.translate(originalString[index].nodeValue); // Translate the string
+
+    if (translatedString && '' !== translatedString) {
+      originalString[index].nodeValue = translatedString; // Set the translated string
+    }
+    if (index < originalString.length - 1) {
+      await this.stringTranslationBatch(originalString, index + 1);
+    }
+    return true;
+  };
+
+  // Method to add a progress bar to the UI
+  addProgressBar = () => {
+    if (!document.querySelector("#chrome-ai-translator-modal .chrome-ai-translator_progress_bar")) {
+      const progressBar = jQuery(`
+                <div class="chrome-ai-translator_progress_bar" style="background-color: #f3f3f3;border-radius: 10px;overflow: hidden;margin: 1.5rem auto; width: 50%;">
+                <div class="chrome-ai-translator_progress" style="overflow: hidden;transition: width .5s ease-in-out; border-radius: 10px;text-align: center;width: 0%;height: 20px;box-sizing: border-box;background-color: #4caf50; color: #fff; font-weight: 600;"></div>
+                </div>
+                <div style="display:none; color: #ffff9f;" class="chrome-ai-translator-strings-count hidden">
+                    Wahooo! You have saved your valuable time via auto translating 
+                    <strong class="totalChars">0</strong> characters using 
+                    <strong>
+                        Chrome AI Translator
+                    </strong>
+                </div>
+            `);
+      jQuery(this.progressBarSelector).append(progressBar); // Append the progress bar to the specified selector
+    }
+  };
+
+  // Method to update the progress bar based on translation progress
+  updateProgressBar = () => {
+    const progress = this.completedCharacterCount / this.totalStringCount * 1000 / 10; // Calculate progress percentage
+    let decimalValue = progress.toString().split('.')[1] || ''; // Get decimal part of the progress
+    decimalValue = decimalValue.length > 0 && decimalValue[0] !== '0' ? decimalValue[0] : ''; // Format decimal value
+    const formattedProgress = parseInt(progress) + `${decimalValue !== '' ? '.' + decimalValue : ''}`; // Format progress for display
+    jQuery(".chrome-ai-translator_progress").css({
+      "width": `${formattedProgress}%`
+    }).text(`${formattedProgress}%`); // Update progress bar width and text
+  };
+
+  // Method to stop the translation process
+  stopTranslation = () => {
+    this.translateStatus = false; // Set translation status to false
+  };
+
+  // Method to reinitialize button events
+  reInit = () => {
+    this.translateBtnEvents(); // Re-setup button events
+  };
+
+  // Method to start translation from the current index
+  startTranslation = () => {
+    this.translateStatus = true; // Set translation status to true
+    this.startTranslationProcess(this.completedTranslateIndex + 1); // Start translation process
+  };
+}
+
+/*
+ * Example Usage of the ChromeAiTranslator.init method.
+ * This method initializes the translator with the following configuration options:
+ * 
+ * mainWrapperSelector: Selector for the main wrapper element that contains the translation elements.
+ * btnSelector: Selector for the button that triggers the translation process.
+ * btnClass: Class for custom styling the button
+ * btnText: Text for the button
+ * stringSelector: Selector for the elements containing the strings to be translated.
+ * progressBarSelector: Selector for the progress bar element to show translation progress.
+ * sourceLanguage: The language code for the language to translate from (e.g., "es" for Spanish).
+ * targetLanguage: The language code for the language to translate to (e.g., "fr" for French).
+ * onStartTranslationProcess: Callback function that executes when the translation process starts.
+ * onBeforeTranslate: Callback function that executes before each translation.
+ * onAfterTranslate: Callback function that executes after each translation.
+ * onComplete: Callback function that executes when the translation process is completed.
+ * onLanguageError: Callback function that executes when there is a language error.
+ */
+// const chromeAiTranslatorObject = ChromeAiTranslator.Object(
+//     {
+//         mainWrapperSelector: ".main-wrapper", // Main Wrapper Class, Id or Selector
+//         btnSelector: ".translator-container .translator-button", // Button Class, Id or Selector
+//         btnClass: "Btn_custom_class", // Button Class for custom styling
+//         btnText: "Translate To French", // Button Text
+//         stringSelector: ".translator-body .translation-item", // String Translate Element Class, Id or Selector
+//         progressBarSelector: ".translator-progress-bar", // Progress Bar Class, Id or Selector
+//         sourceLanguage: "es", // Source Language Code
+//         targetLanguage: "fr", // Target Language Code
+//         onStartTranslationProcess: () => { console.log("Translation process started."); }, // Callback function
+//         onBeforeTranslate: () => { console.log("Before translation."); }, // Callback function
+//         onAfterTranslate: () => { console.log("After translation."); }, // Callback function
+//         onComplete: () => { console.log("Translation completed."); }, // Callback function
+//         onLanguageError: () => { console.error("Language error occurred."); } // Callback function
+//     }
+// );
+// chromeAiTranslatorObject.init();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ChromeAiTranslator);
+
+/***/ }),
+
+/***/ "./src/component/TranslateProvider/yandex/index.js":
+/*!*********************************************************!*\
+  !*** ./src/component/TranslateProvider/yandex/index.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _storeTranslatedString__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../storeTranslatedString */ "./src/component/storeTranslatedString/index.js");
+
+const yandexWidget = (win, doc, nav, params, namespace, targetLang, translateStatus) => {
+  'use strict';
+
+  var util = {
+    keycode: {
+      ESCAPE: 27
+    },
+    getRequest: function () {
+      if (win.XDomainRequest) {
+        return new win.XDomainRequest();
+      }
+      if (win.XMLHttpRequest) {
+        return new win.XMLHttpRequest();
+      }
+      return null;
+    },
+    loadScript: function (src, parent, callback) {
+      var script = doc.createElement('script');
+      script.src = src;
+      script.addEventListener('load', function onLoad() {
+        this.removeEventListener('load', onLoad, false);
+        callback();
+      }, false);
+      parent.appendChild(script);
+    },
+    loadResource: function (url, callback) {
+      var request = this.getRequest();
+      if (!request) {
+        return null;
+      }
+      request.onload = function () {
+        callback(this.responseText);
+      };
+      request.open('GET', url, true);
+      win.setTimeout(function () {
+        request.send();
+      }, 0);
+      return request;
+    },
+    getStyleList: function (element) {
+      var value = element.getAttribute('class');
+      if (!value) {
+        return [];
+      }
+      return value.replace(/\s+/g, ' ').trim().split(' ');
+    },
+    hasStyleName: function (element, name) {
+      var list = this.getStyleList(element);
+      return !!list.length && list.indexOf(name) >= 0;
+    },
+    addStyleName: function (element, name) {
+      var list = this.getStyleList(element);
+      list.push(name);
+      element.setAttribute('class', list.join(' '));
+    },
+    removeStyleName: function (element, name) {
+      var list = this.getStyleList(element),
+        index = list.indexOf(name);
+      if (index >= 0) {
+        list.splice(index, 1);
+        element.setAttribute('class', list.join(' '));
+      }
+    },
+    isSupportedBrowser: function () {
+      return 'localStorage' in win && 'querySelector' in doc && 'addEventListener' in win && 'getComputedStyle' in win && doc.compatMode === 'CSS1Compat';
+    }
+  };
+
+  // Button
+  var Button = function Button(element, contentElement) {
+    var self = this;
+    element.addEventListener('click', function (event) {
+      self.onClick(event);
+    }, false);
+    this._element = element;
+    this._contentElement = contentElement || this._element;
+  };
+  Button.prototype.onClick = function () {};
+  Button.prototype.setText = function (text) {
+    this._contentElement.textContent = text;
+    return this;
+  };
+
+  // Select
+  var Select = function Select(form, itemName) {
+    var self = this;
+    form.reset();
+    form.addEventListener('click', function (event) {
+      var target = event.target;
+      if ('value' in target) {
+        self.onSelect(target.value);
+      }
+    }, false);
+    form.addEventListener('change', function (event) {
+      alert("form change state");
+      var target = event.target;
+      if (target.checked) {
+        self.onChange(target.value);
+      }
+    }, false);
+    this._form = form;
+    this._itemName = itemName;
+  };
+  Select.prototype.onSelect = function () {};
+  Select.prototype.onChange = function () {};
+  Select.prototype.isHidden = function () {
+    return this._form.hasAttribute('hidden');
+  };
+  Select.prototype.getItems = function () {
+    return this._form[this._itemName] || [];
+  };
+  Select.prototype.getValue = function () {
+    var i,
+      n,
+      items = this.getItems();
+    for (i = 0, n = items.length; i < n; i++) {
+      if (items[i].checked) {
+        return items[i].value;
+      }
+    }
+    return '';
+  };
+  Select.prototype.setValue = function (value) {
+    var i,
+      n,
+      items = this.getItems();
+    if (value === this.getValue()) {
+      return this;
+    }
+    for (i = 0, n = items.length; i < n; i++) {
+      if (items[i].value === value) {
+        items[i].checked = true;
+        this.onChange(value);
+        break;
+      }
+    }
+    return this;
+  };
+  Select.prototype.setHidden = function (hidden) {
+    hidden = !!hidden;
+    if (hidden !== this.isHidden()) {
+      this._form[(hidden ? 'set' : 'remove') + 'Attribute']('hidden', '');
+      this.onHiddenChange(hidden);
+    }
+    return this;
+  };
+  Select.prototype.onHiddenChange = function () {};
+
+  // Widget
+  var Widget = function Widget(options) {
+    var self = this,
+      active,
+      select = options.select,
+      element = options.element,
+      storage = options.storage,
+      autoMode = options.autoMode,
+      pageLang = options.pageLang,
+      userLang = options.userLang,
+      translator = options.translator,
+      leftButton = options.leftButton,
+      rightButton = options.rightButton,
+      closeButton = options.closeButton,
+      defaultLang;
+    this._element = element;
+    this._pageLang = pageLang;
+    this._translator = translator;
+    this.onStateChange = function (name, enable) {
+      if (name === 'active') {
+        storage.setValue('active', enable);
+      }
+    };
+    select.onSelect = function (lang) {
+      this.setHidden(true);
+      self.translate(lang);
+      (0,_storeTranslatedString__WEBPACK_IMPORTED_MODULE_0__["default"])(translateStatus);
+    };
+    select.onChange = function (lang) {
+      storage.setValue('lang', lang);
+      rightButton.setText(lang);
+      self.setState('invalid', lang === pageLang);
+    };
+    select.onHiddenChange = function (hidden) {
+      var docElem = doc.documentElement,
+        formRect;
+      self.setState('expanded', !hidden);
+      if (!hidden) {
+        self.setState('right', false).setState('bottom', false);
+        element.focus();
+        formRect = this._form.getBoundingClientRect();
+        if (formRect.right + (win.pageXOffset || docElem.scrollLeft) + 1 >= Math.max(docElem.clientWidth, docElem.scrollWidth)) {
+          self.setState('right', true);
+        }
+        if (formRect.bottom + (win.pageYOffset || docElem.scrollTop) + 1 >= Math.max(docElem.clientHeight, docElem.scrollHeight)) {
+          self.setState('bottom', true);
+        }
+      }
+    };
+    element.addEventListener('blur', function () {
+      select.setHidden(true);
+    }, false);
+    element.addEventListener('keydown', function (event) {
+      switch (event.keyCode) {
+        case util.keycode.ESCAPE:
+          select.setHidden(true);
+          break;
+      }
+    }, false);
+    translator.on('error', function () {
+      this.abort();
+      self.setState('busy', false).setState('error', true);
+    });
+    translator.on('progress', function (progress) {
+      switch (progress) {
+        case 0:
+          self.setState('busy', true).setState('active', true);
+          break;
+        case 100:
+          self.setState('done', true).setState('busy', false);
+          break;
+      }
+    });
+    leftButton.onClick = function () {
+      select.setHidden(true);
+      self.translate(select.getValue());
+      (0,_storeTranslatedString__WEBPACK_IMPORTED_MODULE_0__["default"])(translateStatus);
+    };
+    rightButton.onClick = function () {
+      if (self.hasState('active')) {
+        translator.undo();
+        self.setState('busy', false).setState('done', false).setState('error', false).setState('active', false);
+      } else {
+        select.setHidden(!select.isHidden());
+      }
+    };
+    closeButton.onClick = function () {
+      select.setHidden(true);
+    };
+    if (targetLang != undefined) {
+      var defaultcode = targetLang;
+    }
+    switch (defaultcode) {
+      case 'nb':
+        defaultLang = 'no';
+        break;
+      case 'nn':
+        defaultLang = 'no';
+        break;
+      default:
+        defaultLang = defaultcode;
+        break;
+    }
+    if (defaultLang) {
+      select.setValue(defaultLang);
+      active = storage.getValue('active');
+    }
+  };
+  Widget.prototype.hasState = function (name) {
+    return util.hasStyleName(this._element, 'yt-state_' + name);
+  };
+  Widget.prototype.setState = function (name, enable) {
+    var hasState = this.hasState(name);
+    enable = !!enable;
+    if (enable === hasState) {
+      return this;
+    }
+    util[(enable ? 'add' : 'remove') + 'StyleName'](this._element, 'yt-state_' + name);
+    this.onStateChange(name, enable);
+    return this;
+  };
+  Widget.prototype.translate = function (targetLang) {
+    if (targetLang && !this.hasState('active')) {
+      this._translator.translate(this._pageLang, targetLang);
+    }
+    return this;
+  };
+  Widget.prototype.onStateChange = function () {};
+
+  // Storage
+  var Storage = function Storage(name) {
+    this._name = name;
+    try {
+      this._data = win.JSON.parse(win.localStorage[name]);
+    } catch (error) {
+      this._data = {};
+    }
+  };
+  Storage.prototype.getValue = function (prop) {
+    return this._data[prop];
+  };
+  Storage.prototype.setValue = function (prop, value) {
+    this._data[prop] = value;
+    try {
+      win.localStorage[this._name] = win.JSON.stringify(this._data);
+    } catch (error) {}
+  };
+  var wrapper = doc.getElementById(params.widgetId);
+  if (!wrapper || !util.isSupportedBrowser()) {
+    return;
+  }
+  var initWidget = function () {
+    util.loadScript('https://yastatic.net/s3/translate/v21.4.7/js/tr_page.js', wrapper, function () {
+      util.loadResource('https://translate.yandex.net/website-widget/v1/widget.html', function (responseText) {
+        var element;
+        if (!responseText) {
+          return;
+        }
+        wrapper.innerHTML = responseText;
+        element = wrapper.querySelector('.yt-widget');
+        if (params.widgetTheme) {
+          element.setAttribute('data-theme', params.widgetTheme);
+        }
+        new Widget({
+          select: new Select(element.querySelector('.yt-listbox'), 'yt-lang'),
+          element: element,
+          storage: new Storage('yt-widget'),
+          autoMode: params.autoMode === 'true',
+          pageLang: params.pageLang,
+          userLang: (nav.language || nav.userLanguage || '').split('-')[0],
+          translator: new namespace.PageTranslator({
+            srv: 'tr-url-widget',
+            url: 'https://translate.yandex.net/api/v1/tr.json/translate',
+            autoSync: true,
+            maxPortionLength: 600
+          }),
+          leftButton: new Button(element.querySelector('.yt-button_type_left')),
+          rightButton: new Button(element.querySelector('.yt-button_type_right'), element.querySelector('.yt-button_type_right > .yt-button__text')),
+          closeButton: new Button(element.querySelector('.yt-button_type_close'))
+        });
+      });
+    });
+  };
+  if (doc.readyState === 'complete' || doc.readyState === 'interactive') {
+    initWidget();
+  } else {
+    doc.addEventListener('DOMContentLoaded', initWidget, false);
+  }
+};
+const YandexTranslater = props => {
+  const globalObj = window;
+  yandexWidget(globalObj, globalObj.document, globalObj.navigator, {
+    "pageLang": props.sourceLang,
+    "autoMode": "false",
+    "widgetId": "atfp_yandex_translate_element",
+    "widgetTheme": "light"
+  }, globalObj.yt = globalObj.yt || {}, props.targetLang, props.translateStatus);
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (YandexTranslater);
+
+/***/ }),
+
+/***/ "./src/component/TranslateProvider/yandex/yandex-language.js":
+/*!*******************************************************************!*\
+  !*** ./src/component/TranslateProvider/yandex/yandex-language.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (() => {
+  const languages = ['af', 'am', 'ar', 'az', 'ba', 'be', 'bg', 'bn', 'bs', 'ca', 'ceb', 'cs', 'cv', 'cy', 'da', 'de', 'el', 'emj', 'en', 'eo', 'es', 'et', 'eu', 'fa', 'fi', 'fr', 'ga', 'gd', 'gl', 'gu', 'he', 'hi', 'hr', 'ht', 'hu', 'hy', 'id', 'is', 'it', 'ja', 'jv', 'ka', 'kazlat', 'kk', 'km', 'kn', 'ko', 'ky', 'la', 'lb', 'lo', 'lt', 'lv', 'mg', 'mhr', 'mi', 'mk', 'ml', 'mn', 'mr', 'mrj', 'ms', 'mt', 'my', 'ne', 'nl', 'no', 'pa', 'pap', 'pl', 'pt', 'pt-BR', 'ro', 'ru', 'sah', 'si', 'sk', 'sl', 'sq', 'sr', 'sr-Latn', 'su', 'sv', 'sw', 'ta', 'te', 'tg', 'th', 'tl', 'tr', 'tt', 'udm', 'uk', 'ur', 'uz', 'uzbcyr', 'vi', 'xh', 'yi', 'zh', 'zu'];
+  return languages;
+});
+
+/***/ }),
+
+/***/ "./src/component/createTranslatedPost/createBlock.js":
+/*!***********************************************************!*\
+  !*** ./src/component/createTranslatedPost/createBlock.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _FilterNestedAttr__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../FilterNestedAttr */ "./src/component/FilterNestedAttr/index.js");
+
+const {
+  createBlock
+} = wp.blocks;
+const {
+  dispatch,
+  select
+} = wp.data;
+
+/**
+ * Filters and translates attributes of a block based on provided rules.
+ * 
+ * @param {Object} block - The block to filter and translate attributes for.
+ * @param {Object} blockParseRules - The rules for parsing the block.
+ * @returns {Object} The updated block with translated attributes.
+ */
+const filterTranslateAttr = (block, blockParseRules) => {
+  const filterAttrArr = Object.values(blockParseRules);
+  const blockAttr = block.attributes;
+  const blockId = block.clientId;
+
+  // Function to update a nested attribute in the block
+  const updateNestedAttribute = (obj, path, value) => {
+    const newObj = {
+      ...obj
+    };
+    let current = newObj;
+    for (let i = 0; i < path.length - 1; i++) {
+      if (Object.getPrototypeOf(current[path[i]]) === Array.prototype) {
+        current[path[i]] = [...current[path[i]]];
+      } else {
+        current[path[i]] = {
+          ...current[path[i]]
+        }; // Create a shallow copy
+      }
+      current = current[path[i]];
+    }
+    if (current[path[path.length - 1]] instanceof wp.richText.RichTextData) {
+      current[path[path.length - 1]] = value.replace(/(?<!\\)"|\\"/g, "'");
+    } else {
+      current[path[path.length - 1]] = value;
+    }
+    return newObj;
+  };
+
+  /**
+   * Updates translated attributes based on provided ID array and filter attribute object.
+   * 
+   * @param {Array} idArr - The array of IDs to update attributes for.
+   * @param {Object|Array} filterAttrObj - The filter attribute object to apply.
+   */
+  const updateTranslatedAttr = (idArr, filterAttrObj) => {
+    if (true === filterAttrObj) {
+      const newIdArr = new Array(...idArr);
+      const childIdArr = new Array();
+      let dynamicBlockAttr = blockAttr;
+      let uniqueId = blockId;
+      newIdArr.forEach(key => {
+        childIdArr.push(key);
+        uniqueId += `atfp${key}`;
+        dynamicBlockAttr = dynamicBlockAttr[key];
+      });
+      let blockAttrContent = dynamicBlockAttr;
+      if (blockAttrContent instanceof wp.richText.RichTextData) {
+        blockAttrContent = blockAttrContent.originalHTML;
+      }
+      if (undefined !== blockAttrContent && blockAttrContent.trim() !== '') {
+        let filterKey = uniqueId.replace(/[^\p{L}\p{N}]/gu, '');
+        let translateContent = '';
+        if (!/[\p{L}\p{N}]/gu.test(blockAttrContent)) {
+          translateContent = blockAttrContent;
+        } else {
+          translateContent = select('block-atfp/translate').getTranslatedString('content', blockAttrContent, filterKey);
+        }
+        block.attributes = updateNestedAttribute(block.attributes, newIdArr, translateContent);
+      }
+      return;
+    }
+    (0,_FilterNestedAttr__WEBPACK_IMPORTED_MODULE_0__["default"])(idArr, filterAttrObj, blockAttr, updateTranslatedAttr);
+  };
+  filterAttrArr.forEach(data => {
+    Object.keys(data).forEach(key => {
+      const idArr = new Array(key);
+      updateTranslatedAttr(idArr, data[key]);
+    });
+  });
+  return block;
+};
+
+/**
+ * Creates a translated block based on the provided block, child block, translate handler, and block rules.
+ * If the block name is included in the block rules, it filters and translates the attributes accordingly.
+ * 
+ * @param {Object} block - The block to create a translated version of.
+ * @param {Array} childBlock - The child blocks associated with the main block.
+ * @param {Object} blockRules - The rules for translating blocks.
+ * @returns {Object} The newly created translated block.
+ */
+const createTranslatedBlock = (block, childBlock, blockRules) => {
+  const {
+    name: blockName,
+    attributes
+  } = block;
+  const blockTranslateName = Object.keys(blockRules.AtfpBlockParseRules);
+  let attribute = {
+    ...attributes
+  };
+  let translatedBlock = block;
+  let newBlock = '';
+  if (blockTranslateName.includes(block.name)) {
+    translatedBlock = filterTranslateAttr(block, blockRules['AtfpBlockParseRules'][block.name]);
+    attribute = translatedBlock.attributes;
+  }
+  newBlock = createBlock(blockName, attribute, childBlock);
+  return newBlock;
+};
+
+/**
+ * Creates a child block recursively by translating each inner block based on the provided block, translate handler, and block rules.
+ * 
+ * @param {Object} block - The block to create a child block for.
+ * @param {Object} blockRules - The rules for translating blocks.
+ * @returns {Object} The newly created translated child block.
+ */
+const cretaeChildBlock = (block, blockRules) => {
+  let childBlock = block.innerBlocks.map(block => {
+    if (block.name) {
+      const childBlock = cretaeChildBlock(block, blockRules);
+      return childBlock;
+    }
+  });
+  const newBlock = createTranslatedBlock(block, childBlock, blockRules);
+  return newBlock;
+};
+
+/**
+ * Creates the main blocks based on the provided block, translate handler, and block rules.
+ * If the block name exists, it creates the main block along with its child blocks and inserts it into the block editor.
+ * 
+ * @param {Object} block - The main block to create.
+ * @param {Object} blockRules - The rules for translating blocks.
+ */
+const createBlocks = (block, blockRules) => {
+  const {
+    name: blockName
+  } = block;
+  // Create the main block
+  if (blockName) {
+    let childBlock = block.innerBlocks.map(block => {
+      if (block.name) {
+        return cretaeChildBlock(block, blockRules);
+      }
+    });
+    const parentBlock = createTranslatedBlock(block, childBlock, blockRules);
+    dispatch('core/block-editor').insertBlock(parentBlock);
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createBlocks);
+
+/***/ }),
+
+/***/ "./src/component/createTranslatedPost/index.js":
+/*!*****************************************************!*\
+  !*** ./src/component/createTranslatedPost/index.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _createBlock__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./createBlock */ "./src/component/createTranslatedPost/createBlock.js");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__);
+
+
+/**
+ * Translates the post content and updates the post title, excerpt, and content.
+ * 
+ * @param {Object} props - The properties containing post content, translation function, and block rules.
+ */
+const translatePost = props => {
+  const {
+    editPost
+  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.dispatch)('core/editor');
+  const {
+    modalClose,
+    postContent
+  } = props;
+
+  /**
+   * Updates the post title and excerpt text based on translation.
+   */
+  const postDataUpdate = () => {
+    const data = {};
+    const editPostData = Object.keys(postContent).filter(key => key !== 'content');
+    editPostData.forEach(key => {
+      const sourceData = postContent[key];
+      if (sourceData.trim() !== '') {
+        const translateContent = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.select)('block-atfp/translate').getTranslatedString(key, sourceData);
+        data[key] = translateContent;
+      }
+    });
+    editPost(data);
+  };
+
+  /**
+   * Updates the post content based on translation.
+   */
+  const postContentUpdate = () => {
+    const postContentData = postContent.content;
+    if (postContentData.length <= 0) {
+      return;
+    }
+    Object.values(postContentData).forEach(block => {
+      (0,_createBlock__WEBPACK_IMPORTED_MODULE_0__["default"])(block, props.blockRules);
+    });
+  };
+
+  // Update post title and excerpt text
+  postDataUpdate();
+  // Update post content
+  postContentUpdate();
+  // Close string modal box
+  modalClose();
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (translatePost);
+
+/***/ }),
+
+/***/ "./src/component/storeSourceString/index.js":
+/*!**************************************************!*\
+  !*** ./src/component/storeSourceString/index.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _FilterNestedAttr__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../FilterNestedAttr */ "./src/component/FilterNestedAttr/index.js");
+
+const {
+  dispatch
+} = wp.data;
+let contentIndex = 0;
+/**
+ * Filters and translates attributes of a block.
+ * 
+ * @param {string} blockId - The ID of the block.
+ * @param {Object} blockAttr - The attributes of the block.
+ * @param {Object} filterAttr - The attributes to filter.
+ */
+const filterTranslateAttr = (blockId, blockAttr, filterAttr) => {
+  const filterAttrArr = Object.values(filterAttr);
+
+  /**
+   * Saves translated attributes based on the provided ID array and filter attribute object.
+   * 
+   * @param {Array} idArr - The array of IDs.
+   * @param {Object} filterAttrObj - The filter attribute object.
+   */
+  const saveTranslatedAttr = (idArr, filterAttrObj) => {
+    if (true === filterAttrObj) {
+      const newIdArr = new Array(...idArr);
+      const childIdArr = new Array();
+      let dynamicBlockAttr = blockAttr;
+      let uniqueId = blockId;
+      newIdArr.forEach(key => {
+        childIdArr.push(key);
+        uniqueId += `atfp${key}`;
+        dynamicBlockAttr = dynamicBlockAttr[key];
+      });
+      let blockAttrContent = dynamicBlockAttr;
+      if (blockAttrContent instanceof wp.richText.RichTextData) {
+        blockAttrContent = blockAttrContent.originalHTML;
+      }
+      if (undefined !== blockAttrContent && blockAttrContent.trim() !== '') {
+        let filterKey = uniqueId.replace(/[^\p{L}\p{N}]/gu, '');
+        if (!/[\p{L}\p{N}]/gu.test(blockAttrContent)) {
+          return false;
+        }
+        dispatch('block-atfp/translate').contentSaveSource(filterKey, blockAttrContent, contentIndex);
+        contentIndex++;
+      }
+      return;
+    }
+    (0,_FilterNestedAttr__WEBPACK_IMPORTED_MODULE_0__["default"])(idArr, filterAttrObj, blockAttr, saveTranslatedAttr);
+  };
+  filterAttrArr.forEach(data => {
+    Object.keys(data).forEach(key => {
+      const idArr = new Array(key);
+      saveTranslatedAttr(idArr, data[key]);
+    });
+  });
+};
+/**
+ * Retrieves the translation string for a block based on block rules and applies translation.
+ * 
+ * @param {Object} block - The block to translate.
+ * @param {Object} blockRules - The rules for translating the block.
+ */
+const getTranslateString = (block, blockRules) => {
+  const blockTranslateName = Object.keys(blockRules.AtfpBlockParseRules);
+  if (!blockTranslateName.includes(block.name)) {
+    return;
+  }
+  filterTranslateAttr(block.clientId, block.attributes, blockRules['AtfpBlockParseRules'][block.name]);
+};
+
+/**
+ * Recursively processes child block attributes for translation.
+ * 
+ * @param {Array} blocks - The array of blocks to translate.
+ * @param {Object} blockRules - The rules for translating the blocks.
+ */
+const childBlockAttributesContent = (blocks, blockRules) => {
+  blocks.forEach(block => {
+    getTranslateString(block, blockRules);
+    if (block.innerBlocks) {
+      childBlockAttributesContent(block.innerBlocks, blockRules);
+    }
+  });
+};
+
+/**
+ * Processes the attributes of a block for translation.
+ * 
+ * @param {Object} parseBlock - The block to parse for translation.
+ * @param {Object} blockRules - The rules for translating the block.
+ */
+const blockAttributeContent = (parseBlock, blockRules) => {
+  Object.values(parseBlock).forEach(block => {
+    getTranslateString(block, blockRules);
+    if (block.innerBlocks) {
+      childBlockAttributesContent(block.innerBlocks, blockRules);
+    }
+  });
+};
+
+/**
+ * Saves the translation for a block based on its attributes.
+ * 
+ * @param {Object} block - The block to save translation for.
+ * @param {Object} blockRules - The rules for translating the block.
+ */
+const saveTranslation = (block, blockRules) => {
+  Object.keys(block).forEach(key => {
+    if (key === 'content') {
+      blockAttributeContent(block[key], blockRules);
+    } else {
+      const action = `${key}SaveSource`;
+      dispatch('block-atfp/translate')[action](block[key]);
+    }
+  });
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (saveTranslation);
+
+/***/ }),
+
+/***/ "./src/component/storeTranslatedString/index.js":
+/*!******************************************************!*\
+  !*** ./src/component/storeTranslatedString/index.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+const {
+  dispatch
+} = wp.data;
+const ScrollAnimation = props => {
+  const {
+    element,
+    scrollSpeed
+  } = props;
+  const scrollHeight = element.scrollHeight - element.offsetHeight + 100;
+  let startTime = null;
+  let startScrollTop = element.scrollTop;
+  const animateScroll = () => {
+    const currentTime = performance.now();
+    const duration = scrollSpeed;
+    const scrollTarget = scrollHeight + 2000;
+    if (!startTime) {
+      startTime = currentTime;
+    }
+    const progress = (currentTime - startTime) / duration;
+    const scrollPosition = startScrollTop + (scrollTarget - startScrollTop) * progress;
+    if (scrollPosition > scrollHeight) {
+      return; // Stop animate scroll
+    }
+    element.scrollTop = scrollPosition;
+    if (scrollPosition < scrollHeight) {
+      setTimeout(animateScroll, 16);
+    }
+  };
+  animateScroll();
+};
+
+/**
+ * Saves the translation data by updating the translation content based on the provided translate object and data.
+ * @param {Object} translateData - The data containing translation information.
+ */
+const saveTranslation = translateData => {
+  Object.keys(translateData).map(key => {
+    const data = translateData[key];
+    if (data.type !== 'content') {
+      const action = `${data.type}SaveTranslate`;
+      dispatch('block-atfp/translate')[action](data.translateContent);
+    } else {
+      dispatch('block-atfp/translate').contentSaveTranslate(key, data.translateContent, data.source);
+    }
+  });
+};
+/**
+ * Updates the translated content based on the provided translation object.
+ */
+const updateTranslatedContent = () => {
+  const container = document.getElementById("atfp_strings_model");
+  const stringContainer = container.querySelector('.atfp_string_container');
+  const translatedData = stringContainer.querySelectorAll('td.translate[data-string-type]');
+  const data = {};
+  translatedData.forEach(ele => {
+    const translatedText = ele.innerText;
+    const key = ele.dataset.key;
+    const type = ele.dataset.stringType;
+    const sourceText = ele.closest('tr').querySelector('td[data-source="source_text"]').innerText;
+    data[key] = {
+      type: type,
+      translateContent: translatedText,
+      source: sourceText
+    };
+  });
+  saveTranslation(data);
+};
+
+/**
+ * Handles the completion of translation by enabling save button, updating stats, and stopping translation progress.
+ * @param {HTMLElement} container - The container element for translation.
+ */
+const onCompleteTranslation = container => {
+  container.querySelector(".atfp_translate_progress").style.display = "none";
+  container.querySelector(".atfp_string_container").style.animation = "none";
+  document.body.style.top = '0';
+  const saveButton = container.querySelector('button.save_it');
+  saveButton.removeAttribute('disabled');
+  saveButton.classList.add('translated');
+  saveButton.classList.remove('notranslate');
+  updateTranslatedContent();
+};
+
+/**
+ * Automatically scrolls the container and triggers the completion callback when the bottom is reached or certain conditions are met.
+ * @param {Function} translateStatus - Callback function to execute when translation is deemed complete.
+ */
+const SaveTranslationHandler = translateStatus => {
+  let translateComplete = false;
+  const container = document.getElementById("atfp_strings_model");
+  const stringContainer = container.querySelector('.atfp_string_container');
+  stringContainer.scrollTop = 0;
+  const scrollHeight = stringContainer.scrollHeight;
+  if (scrollHeight !== undefined && scrollHeight > 100) {
+    container.querySelector(".atfp_translate_progress").style.display = "block";
+    setTimeout(() => {
+      const scrollSpeed = Math.ceil(scrollHeight / stringContainer?.offsetHeight) * 2000;
+      ScrollAnimation({
+        element: stringContainer,
+        scrollSpeed: scrollSpeed
+      });
+    }, 2000);
+    stringContainer.addEventListener('scroll', () => {
+      var isScrolledToBottom = stringContainer.scrollTop + stringContainer.clientHeight + 50 >= stringContainer.scrollHeight;
+      if (isScrolledToBottom && !translateComplete) {
+        translateStatus();
+        onCompleteTranslation(container);
+        translateComplete = true;
+      }
+    });
+    if (stringContainer.clientHeight + 10 >= scrollHeight) {
+      setTimeout(() => {
+        translateStatus();
+        onCompleteTranslation(container);
+      }, 1500);
+    }
+  } else {
+    setTimeout(() => {
+      translateStatus();
+      onCompleteTranslation(container);
+    }, 2000);
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SaveTranslationHandler);
+
+/***/ }),
+
+/***/ "./src/fetch-post.js":
+/*!***************************!*\
+  !*** ./src/fetch-post.js ***!
+  \***************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _component_storeSourceString__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./component/storeSourceString */ "./src/component/storeSourceString/index.js");
+/* harmony import */ var _component_FilterTargetContent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./component/FilterTargetContent */ "./src/component/FilterTargetContent/index.js");
+
+
+
+const {
+  __
+} = wp.i18n;
+const {
+  parse
+} = wp.blocks;
+const {
+  select
+} = wp.data;
+const FetchPost = props => {
+  const [translateContent, setTranslateContent] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+  const [stringAvality, setStringAvality] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
+  const blockRules = props.blockRules;
+  const apiUrl = atfp_ajax_object.ajax_url;
+
+  /**
+   * Prepare data to send in API request.
+   */
+  const apiSendData = {
+    postId: parseInt(props.postId),
+    local: props.targetLang,
+    current_local: props.sourceLang,
+    atfp_nonce: atfp_ajax_object.ajax_nonce,
+    action: atfp_ajax_object.action_fetch
+  };
+
+  /**
+   * useEffect hook to fetch post data from the specified API endpoint.
+   * Parses the response data and updates the state accordingly.
+   * Handles errors in fetching post content.
+   */
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        'Accept': 'application/json'
+      },
+      body: new URLSearchParams(apiSendData)
+    }).then(response => response.json()).then(data => {
+      const post_data = data.data;
+      if (post_data.content && post_data.content.trim() !== '') {
+        post_data.content = parse(post_data.content);
+      }
+      (0,_component_storeSourceString__WEBPACK_IMPORTED_MODULE_1__["default"])(post_data, blockRules);
+      props.setPostData(post_data);
+      const translationEntry = select("block-atfp/translate").getTranslationEntry();
+      const totalString = Object.values(translationEntry).filter(data => data.source !== undefined && /[\p{L}\p{N}]/gu.test(data.source));
+      if (Object.keys(totalString).length > 0) {
+        setTranslateContent(translationEntry);
+      } else {
+        setStringAvality(false);
+      }
+    }).catch(error => {
+      console.error('Error fetching post content:', error);
+    });
+  }, [props.fetchKey]);
+  let sNo = 0;
+  const totalString = translateContent.filter(data => undefined !== data.source && data.source.trim() !== '').length;
+  return /*#__PURE__*/React.createElement(React.Fragment, null, translateContent.length > 0 || stringAvality ? translateContent.map((data, index) => {
+    return /*#__PURE__*/React.createElement(React.Fragment, null, undefined !== data.source && data.source.trim() !== '' && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("tr", {
+      key: index
+    }, /*#__PURE__*/React.createElement("td", null, ++sNo), /*#__PURE__*/React.createElement("td", {
+      "data-source": "source_text"
+    }, data.source), /*#__PURE__*/React.createElement("td", {
+      class: "translate",
+      translate: "yes",
+      "data-key": data.id,
+      "data-string-type": data.type
+    }, /*#__PURE__*/React.createElement(_component_FilterTargetContent__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      service: props.service,
+      content: data.source,
+      translateContent: props.translateContent,
+      totalString: totalString,
+      currentIndex: sNo
+    })))));
+  }) : /*#__PURE__*/React.createElement("p", null, __('No strings are available for translation', 'automatic-translations-for-polylang')));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FetchPost);
+
+/***/ }),
+
+/***/ "./src/global-store/actions.js":
+/*!*************************************!*\
+  !*** ./src/global-store/actions.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   contentSaveSource: () => (/* binding */ contentSaveSource),
+/* harmony export */   contentSaveTranslate: () => (/* binding */ contentSaveTranslate),
+/* harmony export */   excerptSaveSource: () => (/* binding */ excerptSaveSource),
+/* harmony export */   excerptSaveTranslate: () => (/* binding */ excerptSaveTranslate),
+/* harmony export */   titleSaveSource: () => (/* binding */ titleSaveSource),
+/* harmony export */   titleSaveTranslate: () => (/* binding */ titleSaveTranslate)
+/* harmony export */ });
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./types */ "./src/global-store/types.js");
+
+const titleSaveSource = data => {
+  return {
+    type: _types__WEBPACK_IMPORTED_MODULE_0__["default"].sourceTitle,
+    text: data
+  };
+};
+const titleSaveTranslate = data => {
+  return {
+    type: _types__WEBPACK_IMPORTED_MODULE_0__["default"].traslatedTitle,
+    text: data
+  };
+};
+const excerptSaveSource = data => {
+  return {
+    type: _types__WEBPACK_IMPORTED_MODULE_0__["default"].sourceExcerpt,
+    text: data
+  };
+};
+const excerptSaveTranslate = data => {
+  return {
+    type: _types__WEBPACK_IMPORTED_MODULE_0__["default"].traslatedExcerpt,
+    text: data
+  };
+};
+const contentSaveSource = (id, data, index) => {
+  return {
+    type: _types__WEBPACK_IMPORTED_MODULE_0__["default"].sourceContent,
+    text: data,
+    id: id,
+    index: index
+  };
+};
+const contentSaveTranslate = (id, data, source) => {
+  return {
+    type: _types__WEBPACK_IMPORTED_MODULE_0__["default"].traslatedContent,
+    text: data,
+    id: id,
+    source: source
+  };
+};
+
+/***/ }),
+
+/***/ "./src/global-store/index.js":
+/*!***********************************!*\
+  !*** ./src/global-store/index.js ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _reducer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./reducer */ "./src/global-store/reducer.js");
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./actions */ "./src/global-store/actions.js");
+/* harmony import */ var _selectors__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./selectors */ "./src/global-store/selectors.js");
+
+
+
+const {
+  createReduxStore,
+  register
+} = wp.data;
+const store = createReduxStore('block-atfp/translate', {
+  reducer: _reducer__WEBPACK_IMPORTED_MODULE_0__["default"],
+  actions: _actions__WEBPACK_IMPORTED_MODULE_1__,
+  selectors: _selectors__WEBPACK_IMPORTED_MODULE_2__
+});
+register(store);
+
+/***/ }),
+
+/***/ "./src/global-store/reducer.js":
+/*!*************************************!*\
+  !*** ./src/global-store/reducer.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./types */ "./src/global-store/types.js");
+
+const TranslateDefaultState = {
+  title: {},
+  excerpt: {},
+  content: []
+};
+const reducer = (state = TranslateDefaultState, action) => {
+  switch (action.type) {
+    case _types__WEBPACK_IMPORTED_MODULE_0__["default"].sourceTitle:
+      if (/[\p{L}\p{N}]/gu.test(action.text)) {
+        return {
+          ...state,
+          title: {
+            ...state.title,
+            source: action.text
+          }
+        };
+      }
+      return state;
+    case _types__WEBPACK_IMPORTED_MODULE_0__["default"].traslatedTitle:
+      return {
+        ...state,
+        title: {
+          ...state.title,
+          target: action.text
+        }
+      };
+    case _types__WEBPACK_IMPORTED_MODULE_0__["default"].sourceExcerpt:
+      if (/[\p{L}\p{N}]/gu.test(action.text)) {
+        return {
+          ...state,
+          excerpt: {
+            ...state.excerpt,
+            source: action.text
+          }
+        };
+      }
+      return state;
+    case _types__WEBPACK_IMPORTED_MODULE_0__["default"].traslatedExcerpt:
+      return {
+        ...state,
+        excerpt: {
+          ...state.excerpt,
+          target: action.text
+        }
+      };
+    case _types__WEBPACK_IMPORTED_MODULE_0__["default"].sourceContent:
+      if (/[\p{L}\p{N}]/gu.test(action.text)) {
+        return {
+          ...state,
+          content: {
+            ...state.content,
+            [action.id]: {
+              ...(state.content[action.id] || []),
+              source: action.text,
+              index: action.index
+            }
+          }
+        };
+      }
+      return state;
+    case _types__WEBPACK_IMPORTED_MODULE_0__["default"].traslatedContent:
+      if (state.content[action.id].source === action.source) {
+        return {
+          ...state,
+          content: {
+            ...state.content,
+            [action.id]: {
+              ...(state.content[action.id] || []),
+              target: action.text
+            }
+          }
+        };
+      }
+      return state;
+    default:
+      return state;
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (reducer);
+
+/***/ }),
+
+/***/ "./src/global-store/selectors.js":
+/*!***************************************!*\
+  !*** ./src/global-store/selectors.js ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getTranslatedString: () => (/* binding */ getTranslatedString),
+/* harmony export */   getTranslationEntry: () => (/* binding */ getTranslationEntry)
+/* harmony export */ });
+const getTranslationEntry = state => {
+  const translateEntry = new Array();
+  translateEntry.push({
+    id: 'title',
+    source: state.title.source,
+    type: 'title',
+    target: state.title.target || ''
+  });
+  translateEntry.push({
+    id: 'excerpt',
+    source: state.excerpt.source,
+    type: 'excerpt',
+    target: state.excerpt.target || ''
+  });
+  Object.keys(state.content).map(key => {
+    const newIndex = state.content[key].index + 2;
+    translateEntry[newIndex] = {
+      type: 'content',
+      id: key,
+      source: state.content[key].source,
+      target: state.content[key].target || ''
+    };
+  });
+  return translateEntry;
+};
+const getTranslatedString = (state, type, source, id = null) => {
+  if (type !== 'content' && state[type].source === source) {
+    return state[type].target;
+  } else if (state[type] && state[type][id] && state[type][id].source === source) {
+    return undefined !== state[type][id].target ? state[type][id].target : state[type][id].source;
+  }
+  return source;
+};
+
+/***/ }),
+
+/***/ "./src/global-store/types.js":
+/*!***********************************!*\
+  !*** ./src/global-store/types.js ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+const AtfpActionTypes = {
+  sourceTitle: 'SAVE_SOURCE_TITLE',
+  traslatedTitle: 'SAVE_TRANSLATE_TITLE',
+  sourceExcerpt: 'SAVE_SOURCE_EXCERPT',
+  traslatedExcerpt: 'SAVE_TRANSLATE_EXCERPT',
+  sourceContent: 'SAVE_SOURCE_CONTENT',
+  traslatedContent: 'SAVE_TRANSLATE_CONTENT'
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AtfpActionTypes);
+
+/***/ }),
+
+/***/ "./src/popmodel.js":
+/*!*************************!*\
+  !*** ./src/popmodel.js ***!
+  \*************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-dom */ "react-dom");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _popupStringModal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./popupStringModal */ "./src/popupStringModal/index.js");
+/* harmony import */ var _component_TranslateProvider_yandex_yandex_language__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./component/TranslateProvider/yandex/yandex-language */ "./src/component/TranslateProvider/yandex/yandex-language.js");
+
+
+
+
+const {
+  sprintf,
+  __
+} = wp.i18n;
+const PopupModal = props => {
+  const [fetchStatus, setFetchStatus] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+  const [targetBtn, setTargetBtn] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)({});
+  const [blockRules, setBlockRules] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)({});
+  const [modalRender, setModalRender] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)({});
+  const [settingVisibility, setSettingVisibility] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+  const sourceLang = atfp_ajax_object.source_lang;
+  const targetLang = props.targetLang;
+  const sourceLangName = atfp_ajax_object.languageObject[sourceLang];
+  const targetLangName = atfp_ajax_object.languageObject[targetLang];
+  const apiUrl = atfp_ajax_object.ajax_url;
+  const imgFolder = atfp_ajax_object.atfp_url + 'assets/images/';
+  const yandexSupport = (0,_component_TranslateProvider_yandex_yandex_language__WEBPACK_IMPORTED_MODULE_3__["default"])().includes(targetLang);
+
+  /**
+   * Prepare data to send in API request.
+   */
+  const apiSendData = {
+    atfp_nonce: atfp_ajax_object.ajax_nonce,
+    action: atfp_ajax_object.action_block_rules
+  };
+
+  /**
+   * Update the fetch status state.
+   * @param {boolean} state - The state to update the fetch status with.
+   */
+  const updateFetch = state => {
+    setFetchStatus(state);
+  };
+  const openModalOnLoadHandler = e => {
+    e.preventDefault();
+    const btnElement = e.target;
+    const visibility = btnElement.dataset.value;
+    if (visibility === 'yes') {
+      setSettingVisibility(true);
+    }
+    btnElement.closest('#atfp-modal-open-warning-wrapper').remove();
+  };
+
+  /**
+   * useEffect hook to set settingVisibility.
+   * Triggers the setSettingVisibility only when user click on meta field Button.
+  */
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+    const firstRenderBtns = document.querySelectorAll('#atfp-modal-open-warning-wrapper .modal-content button');
+    const metaFieldBtn = document.querySelector('input#atfp-translate-button[name="atfp_meta_box_translate"]');
+    if (metaFieldBtn) {
+      metaFieldBtn.addEventListener('click', () => {
+        setSettingVisibility(prev => !prev);
+      });
+    }
+    firstRenderBtns.forEach(ele => {
+      if (ele) {
+        ele.addEventListener('click', openModalOnLoadHandler);
+      }
+    });
+  }, []);
+
+  /**
+   * useEffect hook to fetch block rules data from the server.
+   * Triggers the fetch only when fetchStatus is true and blockRules is empty.
+   */
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+    if (Object.keys(blockRules).length > 0 || !fetchStatus) {
+      return;
+    }
+    fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        'Accept': 'application/json'
+      },
+      body: new URLSearchParams(apiSendData)
+    }).then(response => response.json()).then(data => {
+      const blockRules = JSON.parse(data.data.blockRules);
+      setBlockRules(blockRules);
+    }).catch(error => {
+      console.error('Error fetching post content:', error);
+    });
+  }, [fetchStatus]);
+
+  /**
+   * useEffect hook to handle displaying the modal and rendering the PopStringModal component.
+   * Renders the modal only when blockRules is not empty and fetchStatus is true.
+   */
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+    if (Object.keys(blockRules).length <= 0) {
+      return;
+    }
+    const btn = targetBtn;
+    const service = btn.dataset && btn.dataset.service;
+    const serviceLabel = btn.dataset && btn.dataset.serviceLabel;
+    const postId = props.postId;
+    const parentWrp = document.getElementById("atfp_strings_model");
+    if (fetchStatus && Object.keys(blockRules).length > 0) {
+      react_dom__WEBPACK_IMPORTED_MODULE_0___default().render( /*#__PURE__*/React.createElement(_popupStringModal__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        blockRules: blockRules,
+        visibility: fetchStatus,
+        updateFetch: updateFetch,
+        postId: postId,
+        service: service,
+        serviceLabel: serviceLabel,
+        sourceLang: sourceLang,
+        targetLang: targetLang,
+        modalRender: modalRender,
+        pageTranslate: props.pageTranslate
+      }), parentWrp);
+      setSettingVisibility(prev => !prev);
+    }
+  }, [fetchStatus, blockRules]);
+
+  /**
+   * Function to handle fetching content based on the target button clicked.
+   * Sets the target button and updates the fetch status to true.
+   * @param {Event} e - The event object representing the button click.
+   */
+  const fetchContent = e => {
+    let targetElement = !e.target.classList.contains('atfp-service-btn') ? e.target.closest('.atfp-service-btn') : e.target;
+    setModalRender(prev => prev + 1);
+    setTargetBtn(targetElement);
+    setFetchStatus(true);
+  };
+  return /*#__PURE__*/React.createElement(React.Fragment, null, settingVisibility && /*#__PURE__*/React.createElement("div", {
+    className: "modal-container",
+    style: {
+      display: settingVisibility ? 'flex' : 'none'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "atfp-settings modal-content"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "modal-header"
+  }, /*#__PURE__*/React.createElement("h2", null, __("Step 1 - Select Translation Provider", 'automatic-translations-for-polylang')), /*#__PURE__*/React.createElement("h4", null, sprintf(__("Translate %(postType)s content from %(source)s to %(target)s", 'automatic-translations-for-polylang'), {
+    postType: props.postType,
+    source: sourceLangName,
+    target: targetLangName
+  })), /*#__PURE__*/React.createElement("p", {
+    class: "atfp-error-message",
+    style: {
+      marginBottom: '.5rem'
+    }
+  }, sprintf(__("This translation widget replaces the current %(postType)s content with the original %(source)s %(postType)s and translates it into %(target)s", 'automatic-translations-for-polylang'), {
+    postType: props.postType,
+    source: sourceLangName,
+    target: targetLangName
+  })), /*#__PURE__*/React.createElement("span", {
+    className: "close",
+    onClick: () => setSettingVisibility(false)
+  }, "\xD7")), /*#__PURE__*/React.createElement("hr", null), /*#__PURE__*/React.createElement("strong", {
+    className: "atlt-heading"
+  }, __("Translate Using Yandex Page Translate Widget", 'automatic-translations-for-polylang')), /*#__PURE__*/React.createElement("div", {
+    className: "inputGroup"
+  }, yandexSupport ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("button", {
+    className: "atfp-service-btn translate button button-primary",
+    "data-service": "yandex",
+    "data-service-label": "Yandex Translate",
+    onClick: fetchContent
+  }, __("Yandex Translate", 'automatic-translations-for-polylang')), /*#__PURE__*/React.createElement("br", null)) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("button", {
+    className: "atfp-service-btn translate button button-primary",
+    disabled: true
+  }, __("Yandex Translate", 'automatic-translations-for-polylang')), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("span", {
+    className: "atfp-error-message"
+  }, targetLangName, " ", __('language is not supported by Yandex Translate', 'automatic-translations-for-polylang'), ".")), /*#__PURE__*/React.createElement("a", {
+    href: "https://translate.yandex.com/",
+    target: "_blank"
+  }, /*#__PURE__*/React.createElement("img", {
+    className: "pro-features-img",
+    src: `${imgFolder}powered-by-yandex.png`,
+    alt: "powered by Yandex Translate Widget"
+  }))), /*#__PURE__*/React.createElement("hr", null), /*#__PURE__*/React.createElement("ul", {
+    style: {
+      margin: "0"
+    }
+  }, /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: "green"
+    }
+  }, "\u2714"), " ", __("Unlimited Translations with Yandex Translate", 'automatic-translations-for-polylang')), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: "green"
+    }
+  }, "\u2714"), " ", __("No API Key Required for Yandex Translate", 'automatic-translations-for-polylang')), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: "green"
+    }
+  }, "\u2714"), " ", __("Supports Multiple Languages", 'automatic-translations-for-polylang'), " - ", /*#__PURE__*/React.createElement("a", {
+    href: "https://yandex.com/support2/translate-desktop/en/supported-langs",
+    target: "_blank"
+  }, __("See Supported Languages", 'automatic-translations-for-polylang')))), /*#__PURE__*/React.createElement("hr", null), /*#__PURE__*/React.createElement("strong", {
+    className: "atlt-heading"
+  }, __("Translate Using Local AI Translator", 'automatic-translations-for-polylang')), /*#__PURE__*/React.createElement("div", {
+    className: "inputGroup"
+  }, /*#__PURE__*/React.createElement("button", {
+    id: "local_ai_translator_btn",
+    class: "atfp-service-btn button button-primary",
+    "data-service": "localAiTranslator",
+    "data-service-label": "Local AI Translator",
+    onClick: fetchContent
+  }, __("Local AI Translator", 'automatic-translations-for-polylang')), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("a", {
+    href: "https://developer.chrome.com/docs/ai/translator-api",
+    target: "_blank"
+  }, "Powered by  AI Translate API")), /*#__PURE__*/React.createElement("hr", null), /*#__PURE__*/React.createElement("div", {
+    className: "modal-footer"
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "atfp-setting-close",
+    onClick: () => setSettingVisibility(false)
+  }, __("Close", 'automatic-translations-for-polylang'))))));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PopupModal);
+
+/***/ }),
+
+/***/ "./src/popupStringModal/body.js":
+/*!**************************************!*\
+  !*** ./src/popupStringModal/body.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _fetch_post__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../fetch-post */ "./src/fetch-post.js");
+function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
+
+
+const {
+  __
+} = wp.i18n;
+const {
+  select
+} = wp.data;
+const StringPopUpBody = props => {
+  const {
+    service: service,
+    serviceLabel: serviceLabel
+  } = props;
+  const [stringAvality, setStringAvality] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  let totalWordCount = 0;
+  /**
+   * Updates the post content with the provided content.
+   * @param {string} content - The content to update the post with.
+   */
+  const updatePostContent = content => {
+    props.updatePostContent(content);
+    const translationEntry = select("block-atfp/translate").getTranslationEntry();
+    const totalString = Object.values(translationEntry).filter(data => data.source !== undefined && /[\p{L}\p{N}]/gu.test(data.source));
+    if (Object.keys(totalString).length > 0) {
+      setStringAvality(true);
+    } else {
+      setStringAvality(false);
+    }
+  };
+  const updateTranslateContent = entries => {
+    if (Object.getPrototypeOf(entries) === Object.prototype && entries.stringRenderComplete === true) {
+      props.stringCountHandler(totalWordCount);
+      return;
+    }
+    let entrie = entries.join(" ");
+    if (undefined === entrie || entrie.trim() === '') {
+      return;
+    }
+    ;
+    entrie = entrie.replace(/#atfp_open_translate_span#(.*?)#atfp_close_translate_span#/g, '');
+    const wordCount = entrie.trim().split(/\s+/).filter(word => /[^\p{L}\p{N}]/.test(word)).length;
+    totalWordCount += wordCount;
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    className: "modal-body"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "atfp_translate_progress",
+    key: props.modalRender
+  }, __("Automatic translation is in progress....", 'automatic-translations-for-polylang'), /*#__PURE__*/React.createElement("br", null), __("It will take few minutes, enjoy ☕ coffee in this time!", 'automatic-translations-for-polylang'), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("br", null), __("Please do not leave this window or browser tab while translation is in progress...", 'automatic-translations-for-polylang')), /*#__PURE__*/React.createElement("div", {
+    className: `translator-widget ${service}`,
+    style: {
+      display: `${stringAvality ? 'block' : 'none'}`
+    }
+  }, /*#__PURE__*/React.createElement("h3", {
+    class: "choose-lang"
+  }, __("Choose language", 'automatic-translations-for-polylang'), " ", /*#__PURE__*/React.createElement("span", {
+    class: "dashicons-before dashicons-translation"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "atfp_translate_element_wrapper"
+  }, /*#__PURE__*/React.createElement("div", {
+    id: "atfp_yandex_translate_element",
+    style: {
+      display: `${service === 'yandex' ? 'block' : 'none'}`
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    id: "atfp_localAiTranslator_translate_element",
+    style: {
+      display: `${service === 'localAiTranslator' ? 'block' : 'none'}`
+    }
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: `atfp_string_container${!stringAvality ? ' atfp_empty_string' : ''}`
+  }, /*#__PURE__*/React.createElement("table", {
+    className: "scrolldown",
+    id: "stringTemplate"
+  }, stringAvality && /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
+    className: "notranslate"
+  }, __("S.No", 'automatic-translations-for-polylang')), /*#__PURE__*/React.createElement("th", {
+    className: "notranslate"
+  }, __("Source Text", 'automatic-translations-for-polylang')), /*#__PURE__*/React.createElement("th", {
+    className: "notranslate"
+  }, __("Translation", 'automatic-translations-for-polylang')))), /*#__PURE__*/React.createElement("tbody", null, /*#__PURE__*/React.createElement(_fetch_post__WEBPACK_IMPORTED_MODULE_1__["default"], _extends({
+    blockRules: props.blockRules,
+    setPostData: updatePostContent
+  }, props, {
+    translateContent: updateTranslateContent
+  }))))));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (StringPopUpBody);
+
+/***/ }),
+
+/***/ "./src/popupStringModal/footer.js":
+/*!****************************************!*\
+  !*** ./src/popupStringModal/footer.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _component_createTranslatedPost__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../component/createTranslatedPost */ "./src/component/createTranslatedPost/index.js");
+/* harmony import */ var _notice__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./notice */ "./src/popupStringModal/notice.js");
+
+
+const {
+  sprintf,
+  __
+} = wp.i18n;
+const StringPopUpFooter = props => {
+  /**
+   * Function to close the popup modal.
+   */
+  const closeModal = () => {
+    props.setPopupVisibility(false);
+  };
+
+  /**
+   * Function to create a translated post using the provided content, translation, block rules, and modal close function.
+   */
+  const createTranslatedPost = () => {
+    const postContent = props.postContent;
+    const blockRules = props.blockRules;
+    const modalClose = closeModal;
+    (0,_component_createTranslatedPost__WEBPACK_IMPORTED_MODULE_0__["default"])({
+      postContent: postContent,
+      modalClose: modalClose,
+      blockRules: blockRules
+    });
+    props.pageTranslate(true);
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    className: "modal-footer",
+    key: props.modalRender
+  }, !props.translateStatus && props.stringCount && /*#__PURE__*/React.createElement(_notice__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    className: "atfp_string_count"
+  }, sprintf(__("Automated translation complete: %s words translated, saving valuable time and resources.", 'automatic-translations-for-polylang'), props.stringCount)), /*#__PURE__*/React.createElement("div", {
+    className: "save_btn_cont"
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "notranslate save_it button button-primary",
+    disabled: props.translateStatus,
+    onClick: createTranslatedPost
+  }, __("Update Content", 'automatic-translations-for-polylang'))));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (StringPopUpFooter);
+
+/***/ }),
+
+/***/ "./src/popupStringModal/header.js":
+/*!****************************************!*\
+  !*** ./src/popupStringModal/header.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _component_createTranslatedPost__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../component/createTranslatedPost */ "./src/component/createTranslatedPost/index.js");
+
+const {
+  __
+} = wp.i18n;
+const StringPopUpHeader = props => {
+  /**
+   * Function to close the popup modal.
+   */
+  const closeModal = () => {
+    props.setPopupVisibility(false);
+  };
+
+  /**
+   * Function to create a translated post using the provided content, translation settings, block rules, and modal close function.
+   */
+  const createTranslatedPost = () => {
+    const postContent = props.postContent;
+    const blockRules = props.blockRules;
+    const modalClose = closeModal;
+    (0,_component_createTranslatedPost__WEBPACK_IMPORTED_MODULE_0__["default"])({
+      postContent: postContent,
+      modalClose: modalClose,
+      blockRules: blockRules
+    });
+    props.pageTranslate(true);
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    className: "modal-header",
+    key: props.modalRender
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "close",
+    onClick: closeModal
+  }, "\xD7"), /*#__PURE__*/React.createElement("h2", {
+    className: "notranslate"
+  }, __("Step 2 - Start Automatic Translation Process", 'automatic-translations-for-polylang')), /*#__PURE__*/React.createElement("div", {
+    className: "save_btn_cont"
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "notranslate save_it button button-primary",
+    disabled: props.translateStatus,
+    onClick: createTranslatedPost
+  }, __("Update Content", 'automatic-translations-for-polylang'))));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (StringPopUpHeader);
+
+/***/ }),
+
+/***/ "./src/popupStringModal/index.js":
+/*!***************************************!*\
+  !*** ./src/popupStringModal/index.js ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _header__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./header */ "./src/popupStringModal/header.js");
+/* harmony import */ var _body__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./body */ "./src/popupStringModal/body.js");
+/* harmony import */ var _footer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./footer */ "./src/popupStringModal/footer.js");
+/* harmony import */ var _component_TranslateProvider__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../component/TranslateProvider */ "./src/component/TranslateProvider/index.js");
+function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
+
+
+
+
+
+const popStringModal = props => {
+  const [popupVisibility, setPopupVisibility] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(props.visibility);
+  const [refPostData, setRefPostData] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const [translatePending, setTranslatePending] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
+  const [translateObj, setTranslateObj] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)({});
+  const [stringCount, setStringCount] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const stringCountHandler = number => {
+    if (popupVisibility) {
+      setStringCount(number);
+    }
+  };
+
+  /**
+   * Updates the post content data.
+   * @param {string} data - The data to set as the post content.
+   */
+  const updatePostContentHandler = data => {
+    setRefPostData(data);
+  };
+
+  /**
+   * Updates the fetch state.
+   * @param {boolean} state - The state to update the fetch with.
+   */
+  const setPopupVisibilityHandler = state => {
+    if (props.service === 'yandex') {
+      document.querySelector('#atfp_yandex_translate_element #yt-widget .yt-button__icon.yt-button__icon_type_right')?.click();
+    }
+    setTranslatePending(true);
+    setPopupVisibility(false);
+    props.updateFetch(state);
+  };
+  const translateStatusHandler = () => {
+    setTranslatePending(false);
+  };
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    document.documentElement.setAttribute('translate', 'no');
+    document.body.classList.add('notranslate');
+
+    /**
+     * Calls the translate service provider based on the service type.
+     * For example, it can call services like yandex Translate.
+    */
+    const service = props.service;
+    const id = `atfp_${service}_translate_element`;
+    if (undefined === translateObj[service] && true !== translateObj[service] && refPostData && stringCount) {
+      setTranslateObj(prev => {
+        return {
+          ...prev,
+          [service]: true
+        };
+      });
+      _component_TranslateProvider__WEBPACK_IMPORTED_MODULE_4__["default"][service]({
+        sourceLang: props.sourceLang,
+        targetLang: props.targetLang,
+        translateStatus: translateStatusHandler,
+        ID: id
+      });
+    }
+  }, [props.service, refPostData, stringCount]);
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    setPopupVisibility(true);
+    setTimeout(() => {
+      const stringModal = document.querySelector('.atfp_string_container');
+      if (stringModal) {
+        stringModal.scrollTop = 0;
+      }
+      ;
+    });
+  }, [props.modalRender]);
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    class: "modal-container",
+    style: {
+      display: popupVisibility ? 'flex' : 'none'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    class: "modal-content"
+  }, /*#__PURE__*/React.createElement(_header__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    modalRender: props.modalRender,
+    setPopupVisibility: setPopupVisibilityHandler,
+    postContent: refPostData,
+    blockRules: props.blockRules,
+    translateStatus: translatePending,
+    pageTranslate: props.pageTranslate
+  }), /*#__PURE__*/React.createElement(_body__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({}, props, {
+    updatePostContent: updatePostContentHandler,
+    blockRules: props.blockRules,
+    stringCountHandler: stringCountHandler
+  })), /*#__PURE__*/React.createElement(_footer__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    modalRender: props.modalRender,
+    setPopupVisibility: setPopupVisibilityHandler,
+    postContent: refPostData,
+    blockRules: props.blockRules,
+    translateStatus: translatePending,
+    pageTranslate: props.pageTranslate,
+    stringCount: stringCount
+  }))));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (popStringModal);
+
+/***/ }),
+
+/***/ "./src/popupStringModal/notice.js":
+/*!****************************************!*\
+  !*** ./src/popupStringModal/notice.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+const StringPopUpNotice = props => {
+  return /*#__PURE__*/React.createElement("div", {
+    className: `notice inline notice-info is-dismissible ${props.className}`
+  }, Array.isArray(props.children) ? props.children.join(' ') : props.children);
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (StringPopUpNotice);
+
+/***/ }),
+
+/***/ "react":
+/*!************************!*\
+  !*** external "React" ***!
+  \************************/
+/***/ ((module) => {
+
+module.exports = window["React"];
+
+/***/ }),
+
+/***/ "react-dom":
+/*!***************************!*\
+  !*** external "ReactDOM" ***!
+  \***************************/
+/***/ ((module) => {
+
+module.exports = window["ReactDOM"];
+
+/***/ }),
+
+/***/ "@wordpress/data":
+/*!******************************!*\
+  !*** external ["wp","data"] ***!
+  \******************************/
+/***/ ((module) => {
+
+module.exports = window["wp"]["data"];
+
+/***/ }),
+
+/***/ "@wordpress/element":
+/*!*********************************!*\
+  !*** external ["wp","element"] ***!
+  \*********************************/
+/***/ ((module) => {
+
+module.exports = window["wp"]["element"];
+
+/***/ }),
+
+/***/ "@wordpress/i18n":
+/*!******************************!*\
+  !*** external ["wp","i18n"] ***!
+  \******************************/
+/***/ ((module) => {
+
+module.exports = window["wp"]["i18n"];
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _popmodel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./popmodel */ "./src/popmodel.js");
+/* harmony import */ var _global_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./global-store */ "./src/global-store/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+const src_init = () => {
+  let atfpModals = new Array();
+  const atfpSettingModalWrp = '<!-- The Modal --><div id="atfp-setting-modal"></div>';
+  const atfpStringModalWrp = '<div id="atfp_strings_model" class="modal atfp_custom_model"></div>';
+  atfpModals.push(atfpSettingModalWrp, atfpStringModalWrp);
+  atfpModals.forEach(modal => {
+    document.body.insertAdjacentHTML('beforeend', modal);
+  });
+};
+const App = () => {
+  const [pageTranslate, setPageTranslate] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false);
+  const urlParams = new URLSearchParams(window.location.search);
+  const targetLang = urlParams.get('new_lang');
+  const postId = urlParams.get('from_post');
+  const postType = urlParams.get('post_type');
+  const handlePageTranslate = status => {
+    setPageTranslate(status);
+  };
+  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
+    if (pageTranslate) {
+      const metaFieldBtn = document.querySelector('input#atfp-translate-button[name="atfp_meta_box_translate"]');
+      if (metaFieldBtn) {
+        metaFieldBtn.disabled = true;
+      }
+    }
+  }, [pageTranslate]);
+  return /*#__PURE__*/React.createElement(React.Fragment, null, !pageTranslate && /*#__PURE__*/React.createElement(_popmodel__WEBPACK_IMPORTED_MODULE_0__["default"], {
+    pageTranslate: handlePageTranslate,
+    postId: postId,
+    targetLang: targetLang,
+    postType: postType
+  }));
+};
+
+/**
+ * Creates a message popup based on the post type and target language.
+ * @returns {HTMLElement} The created message popup element.
+ */
+const createMessagePopup = () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const postType = urlParams.get('post_type');
+  const targetLang = urlParams.get('new_lang');
+  const targetLangName = atfp_ajax_object.languageObject[targetLang];
+  const messagePopup = document.createElement('div');
+  messagePopup.id = 'atfp-modal-open-warning-wrapper';
+  messagePopup.innerHTML = `
+    <div class="modal-container" style="display: flex">
+      <div class="modal-content">
+        <p>Would you like to duplicate your original ${postType} content and have it automatically translated into ${targetLangName}?</p>
+        <div>
+          <button data-value="yes">Yes</button>
+          <button data-value="no">No</button>
+        </div>
+      </div>
+    </div>`;
+  return messagePopup;
+};
+
+/**
+ * Inserts the message popup into the DOM.
+ */
+const insertMessagePopup = () => {
+  const targetElement = document.getElementById('atfp-setting-modal');
+  const messagePopup = createMessagePopup();
+  document.body.insertBefore(messagePopup, targetElement);
+};
+window.addEventListener('load', () => {
+  // Append app root wrapper in body
+  src_init();
+  insertMessagePopup();
+  wp.element.render( /*#__PURE__*/React.createElement(App, null), document.getElementById('atfp-setting-modal'));
+});
+/******/ })()
+;
+//# sourceMappingURL=index.js.map
