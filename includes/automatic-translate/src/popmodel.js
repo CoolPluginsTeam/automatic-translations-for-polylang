@@ -2,6 +2,7 @@ import ReactDOM from "react-dom";
 import { useEffect, useState } from "@wordpress/element";
 import PopStringModal from "./popupStringModal";
 import yandexLanguage from "./component/TranslateProvider/yandex/yandex-language";
+import ChromeLocalAiTranslator from "./component/TranslateProvider/local-ai-translator/local-ai-translator";
 const { sprintf, __ } = wp.i18n;
 
 const PopupModal = (props) => {
@@ -66,6 +67,19 @@ const PopupModal = (props) => {
             }
         })
     }, [])
+
+    useEffect(() => {
+        const languageSupportedStatus = async () => {
+            const localAiTranslatorSupport = await ChromeLocalAiTranslator.languageSupportedStatus(sourceLang, targetLang, targetLangName);
+            const translateBtn=document.querySelector('.atfp-service-btn#local_ai_translator_btn');
+
+            if(localAiTranslatorSupport !== true && typeof localAiTranslatorSupport === 'object' && translateBtn) {
+                translateBtn.disabled=true;
+                jQuery(translateBtn).after(localAiTranslatorSupport); 
+            }       
+        };
+        languageSupportedStatus();
+    }, [settingVisibility]);
 
     /**
      * useEffect hook to fetch block rules data from the server.
@@ -133,8 +147,16 @@ const PopupModal = (props) => {
      * Sets the target button and updates the fetch status to true.
      * @param {Event} e - The event object representing the button click.
      */
-    const fetchContent = (e) => {
+    const fetchContent = async (e) => {
         let targetElement = !e.target.classList.contains('atfp-service-btn') ? e.target.closest('.atfp-service-btn') : e.target;
+        const dataService = targetElement.dataset && targetElement.dataset.service;
+
+        if(dataService === 'localAiTranslator') {
+            const localAiTranslatorSupport = await ChromeLocalAiTranslator.languageSupportedStatus(sourceLang, targetLang, targetLangName);
+            if(localAiTranslatorSupport !== true && typeof localAiTranslatorSupport === 'object') {
+                return;
+            }
+        }
         setModalRender(prev => prev + 1);
         setTargetBtn(targetElement);
         setFetchStatus(true);

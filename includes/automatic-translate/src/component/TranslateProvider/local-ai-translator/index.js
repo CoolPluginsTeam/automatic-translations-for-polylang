@@ -3,7 +3,6 @@ import { __ } from "@wordpress/i18n";
 const { dispatch } = wp.data;
 
 const localAiTranslator = async (props)=>{
-    console.log(props);
     const targetLangName = atfp_ajax_object.languageObject[props.targetLang];
 
     const startTranslation = () => {
@@ -18,10 +17,6 @@ const localAiTranslator = async (props)=>{
             props.translateStatus();
             jQuery("#atfp_strings_model .atfp_translate_progress").fadeOut("slow");
         }, 4000);
-    }
-
-    const languageError = () => {
-        console.log("languageError");
     }
 
     const beforeTranslate = (ele) => {
@@ -53,10 +48,6 @@ const localAiTranslator = async (props)=>{
         } else {
             dispatch('block-atfp/translate').contentSaveTranslate(key, translatedText, sourceText);
         }
-
-        console.group("afterTranslate");
-        console.log(translatedText, key, type, sourceText);
-        console.groupEnd();
     }
 
     const TranslateProvider = await ChromeAiTranslator.Object({
@@ -71,7 +62,6 @@ const localAiTranslator = async (props)=>{
         targetLanguageLabel: targetLangName,
         onStartTranslationProcess: startTranslation,
         onComplete: completeTranslation,
-        onLanguageError: languageError,
         onBeforeTranslate: beforeTranslate,
         onAfterTranslate: afterTranslate
     });

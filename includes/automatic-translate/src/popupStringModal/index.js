@@ -72,7 +72,7 @@ const popStringModal = (props) => {
 
     return (
         <>
-            <div class="modal-container" style={{ display: popupVisibility ? 'flex' : 'none' }}>
+            <div id={`atfp-${props.service}-strings-modal`} class="modal-container" style={{ display: popupVisibility ? 'flex' : 'none' }}>
                 <div class="modal-content">
                     <StringPopUpHeader modalRender={props.modalRender} setPopupVisibility={setPopupVisibilityHandler} postContent={refPostData} blockRules={props.blockRules} translateStatus={translatePending} pageTranslate={props.pageTranslate} />
                     <StringPopUpBody {...props} updatePostContent={updatePostContentHandler} blockRules={props.blockRules} stringCountHandler={stringCountHandler} />

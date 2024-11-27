@@ -275,7 +275,6 @@ const {
   dispatch
 } = wp.data;
 const localAiTranslator = async props => {
-  console.log(props);
   const targetLangName = atfp_ajax_object.languageObject[props.targetLang];
   const startTranslation = () => {
     const stringContainer = jQuery("#atfp_strings_model .modal-content .atfp_string_container");
@@ -288,9 +287,6 @@ const localAiTranslator = async props => {
       props.translateStatus();
       jQuery("#atfp_strings_model .atfp_translate_progress").fadeOut("slow");
     }, 4000);
-  };
-  const languageError = () => {
-    console.log("languageError");
   };
   const beforeTranslate = ele => {
     const stringContainer = jQuery("#atfp_strings_model .modal-content .atfp_string_container");
@@ -315,9 +311,6 @@ const localAiTranslator = async props => {
     } else {
       dispatch('block-atfp/translate').contentSaveTranslate(key, translatedText, sourceText);
     }
-    console.group("afterTranslate");
-    console.log(translatedText, key, type, sourceText);
-    console.groupEnd();
   };
   const TranslateProvider = await _local_ai_translator__WEBPACK_IMPORTED_MODULE_0__["default"].Object({
     mainWrapperSelector: "#atfp_strings_model",
@@ -331,7 +324,6 @@ const localAiTranslator = async props => {
     targetLanguageLabel: targetLangName,
     onStartTranslationProcess: startTranslation,
     onComplete: completeTranslation,
-    onLanguageError: languageError,
     onBeforeTranslate: beforeTranslate,
     onAfterTranslate: afterTranslate
   });
@@ -379,40 +371,13 @@ class ChromeAiTranslator {
 
   // Method to check language support and return relevant data
   extraData = async () => {
-    const languageSupported = await this.langStatus(); // Check if the language is supported
-
-    // Handle unsupported language
-    if (languageSupported === "language-not-supported") {
-      await new Promise(resolve => setTimeout(resolve, 500));
-      const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">Unfortunately, the <strong>${this.targetLanguageLabel} (${this.targetLanguage})</strong> language is currently not supported by the Local Translator AI modal. Please check and read the docs which languages are currently supported by <a href="https://developer.chrome.com/docs/ai/translator-api#bypass_language_restrictions_for_local_testing" target="_blank">clicking here</a>.</span>`);
-      jQuery("#chrome-ai-translator_settings_btn");
-      this.onLanguageError(message);
-      return {};
+    // Check if the language is supported
+    const langSupportedStatus = await ChromeAiTranslator.languageSupportedStatus(this.sourceLanguage, this.targetLanguage, this.targetLanguageLabel);
+    if (langSupportedStatus !== true) {
+      this.onLanguageError(langSupportedStatus); // Handle language error
+      return {}; // Return empty object if language is not supported
     }
-
-    // Handle API disabled case
-    if (languageSupported === "api-disabled") {
-      await new Promise(resolve => setTimeout(resolve, 500));
-      const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">The Translator AI modal is currently not supported or disabled in your browser. Please enable it. For detailed instructions on how to enable the Translator AI modal in your Chrome browser, <a href="https://developer.chrome.com/docs/ai/translator-api#bypass_language_restrictions_for_local_testing" target="_blank">click here</a>.</span>`);
-      jQuery("#chrome-ai-translator_settings_btn");
-      this.onLanguageError(message);
-      return {};
-    }
-
-    // Handle case for language pack after download
-    if (languageSupported === "after-download") {
-      const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">Please install the <strong>${this.targetLanguageLabel} (${this.targetLanguage})</strong> language pack to proceed.To install the language pack, visit <strong>chrome://on-device-translation-internals</strong>. For further assistance, refer to the <a href="https://developer.chrome.com/docs/ai/translator-api#bypass_language_restrictions_for_local_testing" target="_blank">documentation</a>.</span>`);
-      jQuery("#chrome-ai-translator_settings_btn");
-      this.onLanguageError(message);
-      return {};
-    }
-
-    // Handle case for language pack not readily available
-    if (languageSupported !== 'readily') {
-      const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">Please ensure that the <strong>${this.targetLanguageLabel} (${this.targetLanguage})</strong> language pack is installed and set as a preferred language in your browser. To install the language pack, visit <strong>chrome://on-device-translation-internals</strong>. For further assistance, refer to the <a href="https://developer.chrome.com/docs/ai/translator-api#bypass_language_restrictions_for_local_testing" target="_blank">documentation</a>.</span>`);
-      this.onLanguageError(message);
-      return {};
-    }
+    this.defaultLang = this.targetLanguage; // Set default language
 
     // Return methods for translation control
     return {
@@ -422,6 +387,52 @@ class ChromeAiTranslator {
       reInit: this.reInit,
       init: this.init
     };
+  };
+
+  /**
+   * Checks if the specified source and target languages are supported by the Local Translator AI modal.
+   * 
+   * @param {string} sourceLanguage - The language code for the source language (e.g., "en" for English).
+   * @param {string} targetLanguage - The language code for the target language (e.g., "hi" for Hindi).
+   * @param {string} targetLanguageLabel - The label for the target language (e.g., "Hindi").
+   * @returns {Promise<boolean|jQuery>} - Returns true if the languages are supported, or a jQuery message if not.
+   */
+  static languageSupportedStatus = async (sourceLanguage, targetLanguage, targetLanguageLabel) => {
+    const supportedLanguages = ['en', 'es', 'ja', 'ar', 'bn', 'de', 'fr', 'hi', 'it', 'ko', 'nl', 'pl', 'pt', 'ru', 'th', 'tr', 'vi', 'zh', 'zh-hant', 'bg', 'cs', 'da', 'el', 'fi', 'hr', 'hu', 'id', 'iw', 'lt', 'no', 'ro', 'sk', 'sl', 'sv', 'uk', 'en-zh'].map(lang => lang.toLowerCase());
+
+    // Check if the translation API is available
+    if (!('translation' in self && 'createTranslator' in self.translation)) {
+      const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">The Translator AI modal is currently not supported or disabled in your browser. Please enable it. For detailed instructions on how to enable the Translator AI modal in your Chrome browser, <a href="https://developer.chrome.com/docs/ai/translator-api#bypass_language_restrictions_for_local_testing" target="_blank">click here</a>.</span>`);
+      jQuery("#chrome-ai-translator_settings_btn");
+      return message;
+    }
+
+    // Check if the target language is supported
+    if (!supportedLanguages.includes(targetLanguage.toLowerCase())) {
+      const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">Unfortunately, the <strong>${targetLanguageLabel} (${targetLanguage})</strong> language is currently not supported by the Local Translator AI modal. Please check and read the docs which languages are currently supported by <a href="https://developer.chrome.com/docs/ai/translator-api#bypass_language_restrictions_for_local_testing" target="_blank">clicking here</a>.</span>`);
+      jQuery("#chrome-ai-translator_settings_btn");
+      return message;
+    }
+
+    // Check if translation can be performed
+    const status = await translation.canTranslate({
+      sourceLanguage: sourceLanguage,
+      targetLanguage: targetLanguage
+    });
+
+    // Handle case for language pack after download
+    if (status === "after-download") {
+      const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">Please install the <strong>${targetLanguageLabel} (${targetLanguage})</strong> language pack to proceed.To install the language pack, visit <strong>chrome://on-device-translation-internals</strong>. For further assistance, refer to the <a href="https://developer.chrome.com/docs/ai/translator-api#bypass_language_restrictions_for_local_testing" target="_blank">documentation</a>.</span>`);
+      jQuery("#chrome-ai-translator_settings_btn");
+      return message;
+    }
+
+    // Handle case for language pack not readily available
+    if (status !== 'readily') {
+      const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">Please ensure that the <strong>${targetLanguageLabel} (${targetLanguage})</strong> language pack is installed and set as a preferred language in your browser. To install the language pack, visit <strong>chrome://on-device-translation-internals</strong>. For further assistance, refer to the <a href="https://developer.chrome.com/docs/ai/translator-api#bypass_language_restrictions_for_local_testing" target="_blank">documentation</a>.</span>`);
+      return message;
+    }
+    return true;
   };
 
   // Method to initialize the translation process
@@ -435,32 +446,15 @@ class ChromeAiTranslator {
       this.addProgressBar(); // Add progress bar to the UI
     }
   };
+
+  /**
+   * Appends a translation button to the specified button selector.
+   * The button is styled with primary button classes and includes
+   * any additional classes specified in `this.btnClass`.
+   */
   appendBtn = () => {
     this.translateBtn = jQuery(`<button class="button button-primary${this.btnClass ? ' ' + this.btnClass : ''}">${this.btnText}</button>`);
     jQuery(this.btnSelector).append(this.translateBtn);
-  };
-
-  // Method to check the status of the language support
-  langStatus = async () => {
-    const supportedLanguages = ['en', 'es', 'ja', 'ar', 'bn', 'de', 'fr', 'hi', 'it', 'ko', 'nl', 'pl', 'pt', 'ru', 'th', 'tr', 'vi', 'zh', 'zh-hant', 'bg', 'cs', 'da', 'el', 'fi', 'hr', 'hu', 'id', 'iw', 'lt', 'no', 'ro', 'sk', 'sl', 'sv', 'uk', 'en-zh'].map(lang => lang.toLowerCase());
-
-    // Check if the translation API is available
-    if (!('translation' in self && 'createTranslator' in self.translation)) {
-      return 'api-disabled';
-    }
-
-    // Check if the target language is supported
-    if (!supportedLanguages.includes(this.targetLanguage.toLowerCase())) {
-      return 'language-not-supported';
-    }
-    const defaultLangCode = this.targetLanguage || null; // Get the default language code
-    this.defaultLang = this.mapLanguageCode(defaultLangCode); // Map the language code
-
-    // Check if translation can be performed
-    return await translation.canTranslate({
-      sourceLanguage: this.sourceLanguage,
-      targetLanguage: this.defaultLang
-    });
   };
 
   // Method to set up button events for translation
@@ -485,19 +479,6 @@ class ChromeAiTranslator {
       }); // Call the complete callback
       this.translateBtn.prop("disabled", true); // Disable the button
     }
-  };
-
-  // Method to map language codes to their respective codes
-  mapLanguageCode = code => {
-    const languageMap = {
-      'bel': 'be',
-      'he': 'iw',
-      'snd': 'sd',
-      'jv': 'jw',
-      'nb': 'no',
-      'nn': 'no'
-    };
-    return languageMap[code] || code; // Return mapped code or original code
   };
 
   // Method to start the translation process
@@ -586,7 +567,7 @@ class ChromeAiTranslator {
                 <div class="chrome-ai-translator_progress_bar" style="background-color: #f3f3f3;border-radius: 10px;overflow: hidden;margin: 1.5rem auto; width: 50%;">
                 <div class="chrome-ai-translator_progress" style="overflow: hidden;transition: width .5s ease-in-out; border-radius: 10px;text-align: center;width: 0%;height: 20px;box-sizing: border-box;background-color: #4caf50; color: #fff; font-weight: 600;"></div>
                 </div>
-                <div style="display:none; color: #ffff9f;" class="chrome-ai-translator-strings-count hidden">
+                <div style="display:none; color: white;" class="chrome-ai-translator-strings-count hidden">
                     Wahooo! You have saved your valuable time via auto translating 
                     <strong class="totalChars">0</strong> characters using 
                     <strong>
@@ -628,37 +609,43 @@ class ChromeAiTranslator {
 
 /*
  * Example Usage of the ChromeAiTranslator.init method.
- * This method initializes the translator with the following configuration options:
+ * This method initializes the Chrome AI Translator with a comprehensive set of configuration options to facilitate the translation process.
  * 
- * mainWrapperSelector: Selector for the main wrapper element that contains the translation elements.
- * btnSelector: Selector for the button that triggers the translation process.
- * btnClass: Class for custom styling the button
- * btnText: Text for the button
- * stringSelector: Selector for the elements containing the strings to be translated.
- * progressBarSelector: Selector for the progress bar element to show translation progress.
- * sourceLanguage: The language code for the language to translate from (e.g., "es" for Spanish).
- * targetLanguage: The language code for the language to translate to (e.g., "fr" for French).
- * onStartTranslationProcess: Callback function that executes when the translation process starts.
- * onBeforeTranslate: Callback function that executes before each translation.
- * onAfterTranslate: Callback function that executes after each translation.
- * onComplete: Callback function that executes when the translation process is completed.
- * onLanguageError: Callback function that executes when there is a language error.
+ * Configuration Options:
+ * 
+ * - mainWrapperSelector: A CSS selector for the main wrapper element that encapsulates all translation-related elements.
+ * - btnSelector: A CSS selector for the button that initiates the translation process.
+ * - btnClass: A custom class for styling the translation button.
+ * - btnText: The text displayed on the translation button.
+ * - stringSelector: A CSS selector for the elements that contain the strings intended for translation.
+ * - progressBarSelector: A CSS selector for the progress bar element that visually represents the translation progress.
+ * - sourceLanguage: The language code representing the source language (e.g., "es" for Spanish).
+ * - targetLanguage: The language code representing the target language (e.g., "fr" for French).
+ * - onStartTranslationProcess: A callback function that is executed when the translation process begins.
+ * - onBeforeTranslate: A callback function that is executed prior to each individual translation.
+ * - onAfterTranslate: A callback function that is executed following each translation.
+ * - onComplete: A callback function that is executed upon the completion of the translation process.
+ * - onLanguageError: A callback function that is executed when a language-related error occurs.
  */
+
+// Example for checking language support status
+// ChromeAiTranslator.languageSupportedStatus("en", "fr", "French");
+
 // const chromeAiTranslatorObject = ChromeAiTranslator.Object(
 //     {
-//         mainWrapperSelector: ".main-wrapper", // Main Wrapper Class, Id or Selector
-//         btnSelector: ".translator-container .translator-button", // Button Class, Id or Selector
-//         btnClass: "Btn_custom_class", // Button Class for custom styling
-//         btnText: "Translate To French", // Button Text
-//         stringSelector: ".translator-body .translation-item", // String Translate Element Class, Id or Selector
-//         progressBarSelector: ".translator-progress-bar", // Progress Bar Class, Id or Selector
-//         sourceLanguage: "es", // Source Language Code
-//         targetLanguage: "fr", // Target Language Code
-//         onStartTranslationProcess: () => { console.log("Translation process started."); }, // Callback function
-//         onBeforeTranslate: () => { console.log("Before translation."); }, // Callback function
-//         onAfterTranslate: () => { console.log("After translation."); }, // Callback function
-//         onComplete: () => { console.log("Translation completed."); }, // Callback function
-//         onLanguageError: () => { console.error("Language error occurred."); } // Callback function
+//         mainWrapperSelector: ".main-wrapper", // CSS selector for the main wrapper element
+//         btnSelector: ".translator-container .translator-button", // CSS selector for the translation button
+//         btnClass: "Btn_custom_class", // Custom class for button styling
+//         btnText: "Translate To French", // Text displayed on the translation button
+//         stringSelector: ".translator-body .translation-item", // CSS selector for translation string elements
+//         progressBarSelector: ".translator-progress-bar", // CSS selector for the progress bar
+//         sourceLanguage: "es", // Language code for the source language
+//         targetLanguage: "fr", // Language code for the target language
+//         onStartTranslationProcess: () => { console.log("Translation process started."); }, // Callback for translation start
+//         onBeforeTranslate: () => { console.log("Before translation."); }, // Callback before each translation
+//         onAfterTranslate: () => { console.log("After translation."); }, // Callback after each translation
+//         onComplete: () => { console.log("Translation completed."); }, // Callback for completion
+//         onLanguageError: () => { console.error("Language error occurred."); } // Callback for language errors
 //     }
 // );
 // chromeAiTranslatorObject.init();
@@ -1918,6 +1905,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _popupStringModal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./popupStringModal */ "./src/popupStringModal/index.js");
 /* harmony import */ var _component_TranslateProvider_yandex_yandex_language__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./component/TranslateProvider/yandex/yandex-language */ "./src/component/TranslateProvider/yandex/yandex-language.js");
+/* harmony import */ var _component_TranslateProvider_local_ai_translator_local_ai_translator__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./component/TranslateProvider/local-ai-translator/local-ai-translator */ "./src/component/TranslateProvider/local-ai-translator/local-ai-translator.js");
+
 
 
 
@@ -1983,6 +1972,17 @@ const PopupModal = props => {
       }
     });
   }, []);
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+    const languageSupportedStatus = async () => {
+      const localAiTranslatorSupport = await _component_TranslateProvider_local_ai_translator_local_ai_translator__WEBPACK_IMPORTED_MODULE_4__["default"].languageSupportedStatus(sourceLang, targetLang, targetLangName);
+      const translateBtn = document.querySelector('.atfp-service-btn#local_ai_translator_btn');
+      if (localAiTranslatorSupport !== true && typeof localAiTranslatorSupport === 'object' && translateBtn) {
+        translateBtn.disabled = true;
+        jQuery(translateBtn).after(localAiTranslatorSupport);
+      }
+    };
+    languageSupportedStatus();
+  }, [settingVisibility]);
 
   /**
    * useEffect hook to fetch block rules data from the server.
@@ -2042,8 +2042,15 @@ const PopupModal = props => {
    * Sets the target button and updates the fetch status to true.
    * @param {Event} e - The event object representing the button click.
    */
-  const fetchContent = e => {
+  const fetchContent = async e => {
     let targetElement = !e.target.classList.contains('atfp-service-btn') ? e.target.closest('.atfp-service-btn') : e.target;
+    const dataService = targetElement.dataset && targetElement.dataset.service;
+    if (dataService === 'localAiTranslator') {
+      const localAiTranslatorSupport = await _component_TranslateProvider_local_ai_translator_local_ai_translator__WEBPACK_IMPORTED_MODULE_4__["default"].languageSupportedStatus(sourceLang, targetLang, targetLangName);
+      if (localAiTranslatorSupport !== true && typeof localAiTranslatorSupport === 'object') {
+        return;
+      }
+    }
     setModalRender(prev => prev + 1);
     setTargetBtn(targetElement);
     setFetchStatus(true);
@@ -2449,6 +2456,7 @@ const popStringModal = props => {
     });
   }, [props.modalRender]);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    id: `atfp-${props.service}-strings-modal`,
     class: "modal-container",
     style: {
       display: popupVisibility ? 'flex' : 'none'
