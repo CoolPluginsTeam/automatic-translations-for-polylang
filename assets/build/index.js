@@ -2122,18 +2122,22 @@ const PopupModal = props => {
     target: "_blank"
   }, __("See Supported Languages", 'automatic-translations-for-polylang')))), /*#__PURE__*/React.createElement("hr", null), /*#__PURE__*/React.createElement("strong", {
     className: "atlt-heading"
-  }, __("Translate Using Local AI Translator", 'automatic-translations-for-polylang')), /*#__PURE__*/React.createElement("div", {
+  }, __("Translate Using Chrome Built-in API", 'automatic-translations-for-polylang')), /*#__PURE__*/React.createElement("div", {
     className: "inputGroup"
   }, /*#__PURE__*/React.createElement("button", {
     id: "local_ai_translator_btn",
     class: "atfp-service-btn button button-primary",
     "data-service": "localAiTranslator",
-    "data-service-label": "Local AI Translator",
+    "data-service-label": "Chrome Built-in API",
     onClick: fetchContent
-  }, __("Local AI Translator", 'automatic-translations-for-polylang')), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("a", {
+  }, __("Chrome AI Translator", 'automatic-translations-for-polylang')), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("a", {
     href: "https://developer.chrome.com/docs/ai/translator-api",
     target: "_blank"
-  }, "Powered by  AI Translate API")), /*#__PURE__*/React.createElement("hr", null), /*#__PURE__*/React.createElement("div", {
+  }, "Powered by ", /*#__PURE__*/React.createElement("img", {
+    className: "pro-features-img",
+    src: `${imgFolder}chrome-ai-translator.png`,
+    alt: "powered by Chrome built-in API"
+  }), " Built-in API")), /*#__PURE__*/React.createElement("hr", null), /*#__PURE__*/React.createElement("div", {
     className: "modal-footer"
   }, /*#__PURE__*/React.createElement("button", {
     className: "atfp-setting-close",
@@ -2209,9 +2213,13 @@ const StringPopUpBody = props => {
   }, __("Automatic translation is in progress....", 'automatic-translations-for-polylang'), /*#__PURE__*/React.createElement("br", null), __("It will take few minutes, enjoy ☕ coffee in this time!", 'automatic-translations-for-polylang'), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("br", null), __("Please do not leave this window or browser tab while translation is in progress...", 'automatic-translations-for-polylang')), /*#__PURE__*/React.createElement("div", {
     className: `translator-widget ${service}`,
     style: {
-      display: `${stringAvality ? 'block' : 'none'}`
+      display: `${stringAvality ? `${props.service === 'localAiTranslator' ? 'flex' : 'block'}` : 'none'}`
     }
-  }, /*#__PURE__*/React.createElement("h3", {
+  }, props.service === 'localAiTranslator' ? /*#__PURE__*/React.createElement("h3", {
+    class: "choose-lang"
+  }, __("Translate Using Chrome built-in API", 'automatic-translations-for-polylang'), " ", /*#__PURE__*/React.createElement("span", {
+    class: "dashicons-before dashicons-translation"
+  })) : /*#__PURE__*/React.createElement("h3", {
     class: "choose-lang"
   }, __("Choose language", 'automatic-translations-for-polylang'), " ", /*#__PURE__*/React.createElement("span", {
     class: "dashicons-before dashicons-translation"

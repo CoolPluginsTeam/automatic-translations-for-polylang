@@ -196,10 +196,10 @@ const PopupModal = (props) => {
                             <li><span style={{ color: "green" }}>✔</span> {__("Supports Multiple Languages", 'automatic-translations-for-polylang')} - <a href="https://yandex.com/support2/translate-desktop/en/supported-langs" target="_blank">{__("See Supported Languages", 'automatic-translations-for-polylang')}</a></li>
                         </ul>
                         <hr />
-                        <strong className="atlt-heading">{__("Translate Using Local AI Translator", 'automatic-translations-for-polylang')}</strong>
+                        <strong className="atlt-heading">{__("Translate Using Chrome Built-in API", 'automatic-translations-for-polylang')}</strong>
                         <div className="inputGroup">
-                            <button id="local_ai_translator_btn" class="atfp-service-btn button button-primary" data-service="localAiTranslator" data-service-label="Local AI Translator" onClick={fetchContent}>{__("Local AI Translator", 'automatic-translations-for-polylang')}</button>
-                            <br/><a href="https://developer.chrome.com/docs/ai/translator-api" target="_blank">Powered by  AI Translate API</a>
+                            <button id="local_ai_translator_btn" class="atfp-service-btn button button-primary" data-service="localAiTranslator" data-service-label="Chrome Built-in API" onClick={fetchContent}>{__("Chrome AI Translator", 'automatic-translations-for-polylang')}</button>
+                            <br/><a href="https://developer.chrome.com/docs/ai/translator-api" target="_blank">Powered by <img className="pro-features-img" src={`${imgFolder}chrome-ai-translator.png`} alt="powered by Chrome built-in API" /> Built-in API</a>
                         </div>
                         <hr />
                         <div className="modal-footer">

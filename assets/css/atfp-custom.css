@@ -497,6 +497,34 @@ body>div.skiptranslate iframe.skiptranslate[frameborder][src][style="visibility:
         left: 100%;
     }
 }
-
-
 /* meta box review notice style end */
+
+/* Chrome AI Translator Widget */
+#atfp-setting-modal .inputGroup #local_ai_translator_btn ~ a{
+    margin-top: .2rem 0 .3rem;
+    text-decoration: none;
+    font-size: 1.1rem;
+    display: inline-flex;
+    color: #000;
+    font-weight: 600;
+    align-items: center;
+}
+
+#atfp-setting-modal .inputGroup #local_ai_translator_btn ~ a img{
+    width: 28px;
+    margin: 0 2px;
+}
+
+#atfp-localAiTranslator-strings-modal .translator-widget{
+    justify-content: space-between;
+    align-items: center;
+}
+
+#atfp_strings_model #atfp-localAiTranslator-strings-modal h3{
+    margin: 20px 0px;
+}
+
+#atfp_strings_model #atfp-localAiTranslator-strings-modal .atfp_string_container{
+    height: calc(100vh - 270px);
+    box-shadow: 0 -1px 4px #0000005e inset;
+}
