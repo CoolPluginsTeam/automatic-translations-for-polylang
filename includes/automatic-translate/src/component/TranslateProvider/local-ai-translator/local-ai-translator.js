@@ -9,7 +9,7 @@ class ChromeAiTranslator {
     constructor(options) {
         this.btnSelector = options.btnSelector || false; // Selector for the button that triggers translation
         this.btnClass = options.btnClass || false; // Class for the button
-        this.btnText = options.btnText || `Translate To ${options.targetLanguageLabel}`; // Text for the button
+        this.btnText = options.btnText || `Translate To ${options.targetLanguageLabel} (Beta)`; // Text for the button
         this.stringSelector = options.stringSelector || false; // Selector for the elements containing strings to translate
         this.progressBarSelector = options.progressBarSelector || false; // Selector for the progress bar element
         this.onStartTranslationProcess = options.onStartTranslationProcess || (() => { }); // Callback for when translation starts
