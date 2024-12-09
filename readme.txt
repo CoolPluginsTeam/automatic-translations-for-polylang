@@ -160,10 +160,14 @@ The plugin is optimized for performance, but the speed impact may vary depending
 
 == Changelog ==
 
+= Version 1.0.4 | 09 December 2024 =
+* **Added:** Chrome built-in Translator api using local ai modal.
+
 = Version 1.0.4 | 15 November 2024 =
 * **Added:** Supported Blocks Page for easily adding custom blocks for translation.
 * **Added:** Added support for WordPress 6.7.
 * **Fixed:** Permalinks translation issue.
+* **Fixed:** Load text domain issue.
 
 = Version 1.0.3 | 21 August 2024 =
 * **Tested up to:** Tested with WordPress 6.6.
