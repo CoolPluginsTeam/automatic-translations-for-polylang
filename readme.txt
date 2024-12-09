@@ -2,9 +2,9 @@
 Contributors: narinder-singh,satindersingh,coolplugins
 Tags: Polylang, Automatic Translation, Duplicate Content, Block Translation
 Requires at least: 5.0
-Tested up to: 6.7
+Tested up to: 6.7.1
 Requires PHP: 5.6
-Stable tag: 1.0.4
+Stable tag: 1.1.0
 Author URI: https://coolplugins.net/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -160,14 +160,15 @@ The plugin is optimized for performance, but the speed impact may vary depending
 
 == Changelog ==
 
-= Version 1.0.4 | 09 December 2024 =
+= Version 1.1.0 | 09 December 2024 =
 * **Added:** Chrome built-in Translator api using local ai modal.
+* **Tested up to:** Added support for WordPress 6.7.1.
 
 = Version 1.0.4 | 15 November 2024 =
 * **Added:** Supported Blocks Page for easily adding custom blocks for translation.
-* **Added:** Added support for WordPress 6.7.
 * **Fixed:** Permalinks translation issue.
 * **Fixed:** Load text domain issue.
+* **Tested up to:** Added support for WordPress 6.7.
 
 = Version 1.0.3 | 21 August 2024 =
 * **Tested up to:** Tested with WordPress 6.6.
