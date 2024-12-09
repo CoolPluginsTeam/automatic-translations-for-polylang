@@ -17,6 +17,12 @@ Automatic Translations For Polylang simplifies your translation process by autom
 
 This addon allows you to **replicate page/post titles, content, images, galleries,** and all associated meta fields. By duplicating and translating content, you can focus solely on translating the necessary elements without the hassle of setting featured images, adding galleries, or reinserting other content.
 
+Moreover, we have added the feature to translate Content using **Chrome built-in AI**. This feature enables real-time translation directly within the browser, without any paid API services. This means you can easily translate your website content without additional setup, saving time and costs.
+
+https://youtu.be/ecHsOyIL_J4
+
+https://youtu.be/XDhltCnRs34
+
 **[Check It Now ](https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=buy_pro)**
 
 Moreover, there's no need to repeatedly restyle your page, as this addon seamlessly copies all styles and formats while translating content from the original post. Simplify your multilingual website management with ease.
@@ -154,31 +160,21 @@ The plugin is optimized for performance, but the speed impact may vary depending
 
 == Changelog ==
 
-**Version 1.0.4 | 15 November 2024**
-<pre>
-Added: Supported Blocks Page for easily adding custom blocks for translation.
-Added: Added support for WordPress 6.7.
-Fixed: Permalinks translation issue.
-</pre>
+= Version 1.0.4 | 15 November 2024 =
+* **Added:** Supported Blocks Page for easily adding custom blocks for translation.
+* **Added:** Added support for WordPress 6.7.
+* **Fixed:** Permalinks translation issue.
 
-**Version 1.0.3 | 21 August 2024**
-<pre>
-Tested up to: Tested with WordPress 6.6.
-</pre>
+= Version 1.0.3 | 21 August 2024 =
+* **Tested up to:** Tested with WordPress 6.6.
 
-**Version 1.0.2 | 20 August 2024**
-<pre>
-Fixed: Minor bug fixes.
-</pre>
+= Version 1.0.2 | 20 August 2024 =
+* **Fixed:** Minor bug fixes.
 
-**Version 1.0.1 | 07 August 2024**
-<pre>
-Added: Service provider details to the README file for easier access.
-Fixed: Resolved security issues by adding escaping functions in all necessary places.
-Improved: Code improvements for better performance and maintainability.
-</pre>
+= Version 1.0.1 | 07 August 2024 =
+* **Added:** Service provider details to the README file for easier access.
+* **Fixed:** Resolved security issues by adding escaping functions in all necessary places.
+* **Improved:** Code improvements for better performance and maintainability.
 
-**Version 1.0.0 | 02 July 2024**
-<pre>
-New: Initial Plugin Release
-</pre>
+= Version 1.0.0 | 02 July 2024 =
+* **New:** Initial Plugin Release
