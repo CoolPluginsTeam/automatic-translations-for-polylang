@@ -1,8 +1,8 @@
-Automatic Translations For Polylang simplifies your translation process by automatically copying and translating all post content, including core and specialized blocks from one language to another.
+AI Automatic Translations For Polylang simplifies your translation process by automatically copying and translating all post content, including core and specialized blocks from one language to another.
 
 #### Description
 
-**Automatic Translations For Polylang** reduces your translation **workload by 90%** with this powerful addon. It not only duplicates your original or default language **post content** but also **translates core and specific blocks** into other languages of the same post, streamlining the entire translation process.
+**AI Automatic Translations For Polylang** reduces your translation **workload by 90%** with this powerful addon. It not only duplicates your original or default language **post content** but also **translates core and specific blocks** into other languages of the same post, streamlining the entire translation process.
 
 This addon allows you to **replicate page/post titles, content, images, galleries,** and all associated meta fields. By duplicating and translating content, you can focus solely on translating the necessary elements without the hassle of setting featured images, adding galleries, or reinserting other content.
 

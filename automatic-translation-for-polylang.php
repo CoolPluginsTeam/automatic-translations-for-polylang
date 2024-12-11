@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Automatic Translations For Polylang
+Plugin Name: AI Automatic Translations For Polylang
 Plugin URI: https://coolplugins.net/
 Version: 1.1.0
 Author: Cool Plugins

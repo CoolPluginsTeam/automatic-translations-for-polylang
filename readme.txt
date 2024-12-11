@@ -1,4 +1,4 @@
-﻿=== Automatic Translations For Polylang ===
+﻿=== AI Automatic Translations For Polylang ===
 Contributors: narinder-singh,satindersingh,coolplugins
 Tags: Polylang, Automatic Translation, Duplicate Content, Block Translation
 Requires at least: 5.0
@@ -9,24 +9,24 @@ Author URI: https://coolplugins.net/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Automatic Translations For Polylang simplifies your translation process by automatically copying and translating all post content, including core and specialized blocks from one language to another.
+AI Automatic Translations For Polylang simplifies your translation process by automatically copying and translating all post content, including core and specialized blocks from one language to another.
 
 == Description ==
 
-**Automatic Translations For Polylang** reduces your translation **workload by 90%** with this powerful addon. It not only duplicates your original or default language **post content** but also **translates core and specific blocks** into other languages of the same post, streamlining the entire translation process.
+**AI Automatic Translations For Polylang** reduces your translation **workload by 90%** with this powerful addon. It not only duplicates your original or default language **post content** but also **translates core and specific blocks** into other languages of the same post, streamlining the entire translation process.
 
 This addon allows you to **replicate page/post titles, content, images, galleries,** and all associated meta fields. By duplicating and translating content, you can focus solely on translating the necessary elements without the hassle of setting featured images, adding galleries, or reinserting other content.
 
-Moreover, we have added the feature to translate Content using **Chrome built-in AI**. This feature enables real-time translation directly within the browser, without any paid API services. This means you can easily translate your website content without additional setup, saving time and costs.
-
 https://youtu.be/ecHsOyIL_J4
 
-https://youtu.be/XDhltCnRs34
+https://youtu.be/yamFwNRWEbc
 
 **[Check It Now ](https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=buy_pro)**
 
 Moreover, there's no need to repeatedly restyle your page, as this addon seamlessly copies all styles and formats while translating content from the original post. Simplify your multilingual website management with ease.
 == Key Features ==
+
+- **AI Automatic Translation:** Moreover, we have added the feature to translate Content using **Chrome built-in AI**. This feature enables real-time translation directly within the browser, without any paid API services. This means you can easily translate your website content without additional setup, saving time and costs.
 
 - **Automatic Content Translation:** Effortlessly translate post titles, content, images, galleries, and meta fields from one language to another using the Yandex Translate API.
   
@@ -127,7 +127,7 @@ This plugin provides automatic translation services for Polylang using the Yande
 
 == Frequently Asked Questions ==
 
-= What does the "Automatic Translations For Polylang" plugin do? =  
+= What does the "AI Automatic Translations For Polylang" plugin do? =  
 This plugin automatically copies and translates your posts, including titles, content, images, galleries, and meta fields, from one language to another using the Yandex Translate API. It works specifically with Gutenberg blocks, replicating the original content and styles across different languages.
 
 = Is this plugin officially developed by Polylang? =  
