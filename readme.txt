@@ -4,7 +4,7 @@ Tags: Polylang, Automatic Translation, Duplicate Content, Block Translation
 Requires at least: 5.0
 Tested up to: 6.7.1
 Requires PHP: 5.6
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 Author URI: https://coolplugins.net/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -161,7 +161,7 @@ The plugin is optimized for performance, but the speed impact may vary depending
 
 == Changelog ==
 
-= Version 1.1.1 | 09 December 2024 =
+= Version 1.1.1 | 11 December 2024 =
 * **Improved:** Renamed plugin to "AI Automatic Translations For Polylang".
 * **Minor:** Minor textual changes.
 
