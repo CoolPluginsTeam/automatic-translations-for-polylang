@@ -13,17 +13,18 @@ AI Automatic Translations For Polylang simplifies your translation process by au
 
 == Description ==
 
+https://youtu.be/ecHsOyIL_J4
+
 **AI Automatic Translations For Polylang** reduces your translation **workload by 90%** with this powerful addon. It not only duplicates your original or default language **post content** but also **translates core and specific blocks** into other languages of the same post, streamlining the entire translation process.
 
 This addon allows you to **replicate page/post titles, content, images, galleries,** and all associated meta fields. By duplicating and translating content, you can focus solely on translating the necessary elements without the hassle of setting featured images, adding galleries, or reinserting other content.
 
-https://youtu.be/ecHsOyIL_J4
-
-https://youtu.be/yamFwNRWEbc
-
 **[Check It Now ](https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=buy_pro)**
 
 Moreover, there's no need to repeatedly restyle your page, as this addon seamlessly copies all styles and formats while translating content from the original post. Simplify your multilingual website management with ease.
+
+https://youtu.be/yamFwNRWEbc
+
 == Key Features ==
 
 - **AI Automatic Translation:** Moreover, we have added the feature to translate Content using **Chrome built-in AI**. This feature enables real-time translation directly within the browser, without any paid API services. This means you can easily translate your website content without additional setup, saving time and costs.
@@ -159,6 +160,10 @@ The plugin is optimized for performance, but the speed impact may vary depending
 
 
 == Changelog ==
+
+= Version 1.1.1 | 09 December 2024 =
+* **Improved:** Renamed plugin to "AI Automatic Translations For Polylang".
+* **Minor:** Minor textual changes.
 
 = Version 1.1.0 | 09 December 2024 =
 * **Added:** Chrome built-in Translator api using local ai modal.
