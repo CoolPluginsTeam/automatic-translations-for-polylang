@@ -125,6 +125,7 @@ This plugin provides automatic translation services for Polylang using the Yande
 == Screenshots ==
 1. Automatic translation content preview in the Gutenberg Block Editor.
 2. Content Translation Preview.
+3. AI Translation Preview.
 
 == Frequently Asked Questions ==
 

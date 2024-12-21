@@ -1,4 +1,4 @@
-import SaveTranslationHandler from "../../storeTranslatedString";
+import ModalStringScroll from "../../stringModalScroll";
 
 const yandexWidget = (win, doc, nav, params, namespace, targetLang, translateStatus) => {
     'use strict';
@@ -198,7 +198,7 @@ const yandexWidget = (win, doc, nav, params, namespace, targetLang, translateSta
         select.onSelect = function (lang) {
             this.setHidden(true);
             self.translate(lang);
-            SaveTranslationHandler(translateStatus);
+            ModalStringScroll(translateStatus);
         };
 
         select.onChange = function (lang) {

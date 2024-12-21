@@ -1,5 +1,6 @@
 import createBlocks from './createBlock';
 import { dispatch, select } from '@wordpress/data';
+
 /**
  * Translates the post content and updates the post title, excerpt, and content.
  * 
@@ -14,7 +15,7 @@ const translatePost = (props) => {
      */
     const postDataUpdate = () => {
         const data = {};
-        const editPostData = Object.keys(postContent).filter(key => key !== 'content');
+        const editPostData = Object.keys(postContent).filter(key => ['title', 'excerpt'].includes(key));
 
         editPostData.forEach(key => {
             const sourceData = postContent[key];

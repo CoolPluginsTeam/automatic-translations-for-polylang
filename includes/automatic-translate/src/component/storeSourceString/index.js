@@ -1,7 +1,6 @@
 import FilterBlockNestedAttr from "../FilterNestedAttr";
 const { dispatch } = wp.data;
 
-let contentIndex = 0;
 /**
  * Filters and translates attributes of a block.
  * 
@@ -49,8 +48,7 @@ const filterTranslateAttr = (blockId, blockAttr, filterAttr) => {
                 }
 
 
-                dispatch('block-atfp/translate').contentSaveSource(filterKey, blockAttrContent, contentIndex);
-                contentIndex++;
+                dispatch('block-atfp/translate').contentSaveSource(filterKey, blockAttrContent);
             }
 
             return;
@@ -122,7 +120,7 @@ const saveTranslation = (block, blockRules) => {
     Object.keys(block).forEach(key => {
         if (key === 'content') {
             blockAttributeContent(block[key], blockRules);
-        } else {
+        }else {
             const action = `${key}SaveSource`;
             dispatch('block-atfp/translate')[action](block[key]);
         }
