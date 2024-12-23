@@ -7,7 +7,7 @@
  * @param {Object} state - The state object containing translation data.
  * @param {Object} state.title - The title object containing source and target translations.
  * @param {Object} state.excerpt - The excerpt object containing source and target translations.
- * @param {Object} state.metaFields - An object containing meta field translations, where each key is a meta field ID
+ * @param {Object} state.metaFields - An object containing meta field translations, where each key is a meta field ID.
  * @param {Object} state.content - An object containing content translations, where each key is a content ID.
  * @returns {Array<Object>} An array of translation entry objects, each containing the following properties:
  *   @property {string} id - The identifier of the translation entry.
@@ -34,6 +34,16 @@ export const getTranslationEntry = (state) => {
         type: 'excerpt', // Type of the entry
         target: (state.excerpt.target || '') // Target text for the excerpt, defaulting to an empty string if not provided
     });
+
+    // Iterate over the metaFields object keys and push each translation entry into the array
+    Object.keys(state.metaFields).map(key => {
+        translateEntry.push({
+            type: 'metaFields', // Type of the entry
+            id: key, // Identifier for the meta field
+            source: state.metaFields[key].source, // Source text for the meta field
+            target: (state.metaFields[key].target || '') // Target text for the meta field, defaulting to an empty string if not provided
+        });
+    });
     
     // Iterate over the content object keys and push each translation entry into the array
     Object.keys(state.content).map(key => {
@@ -53,6 +63,11 @@ export const getTranslatedString = (state, type, source, id = null) => {
     // Check if the type is 'title' or 'excerpt' and if the source matches
     if (['title', 'excerpt'].includes(type) && state[type].source === source) {
         return state[type].target; // Return the target text if it matches
+    } 
+    // Check if the type is 'metaFields' and if the source matches
+    else if(type === 'metaFields' && state.metaFields && state.metaFields[id] && state.metaFields[id].source === source){
+        // Return the target text if it exists, otherwise return the source text
+        return undefined !== state.metaFields[id].target ? state.metaFields[id].target : state.metaFields[id].source;
     } 
     // Check if the type is 'content' and if the source matches
     else if (type === 'content' && state.content && state.content[id] && state.content[id].source === source) {

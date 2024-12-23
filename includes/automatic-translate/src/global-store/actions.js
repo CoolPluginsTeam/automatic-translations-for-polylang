@@ -77,3 +77,33 @@ export const contentSaveTranslate = (id, data, source) => {
         source: source // The source of the translated content
     }
 };
+
+/**
+ * Action creator for saving the source meta fields.
+ * @param {string} id - The identifier for the meta fields.
+ * @param {Object} data - The source meta fields to be saved.
+ * @returns {Object} The action object containing the type, text, and id.
+ */
+export const metaFieldsSaveSource = (id, data) => {
+    return {
+        type: AtfpActionTypes.sourceMetaFields, // Action type for saving the source meta fields
+        text: data, // The source meta fields text
+        id: id, // The identifier for the meta fields
+    }
+};
+
+/**
+ * Action creator for saving the translated meta fields.
+ * @param {string} id - The identifier for the meta fields.
+ * @param {Object} data - The translated meta fields to be saved.
+ * @param {string} source - The source of the translated meta fields.
+ * @returns {Object} The action object containing the type, text, id, and source.
+ */
+export const metaFieldsSaveTranslate = (id, data, source) => {
+    return {
+        type: AtfpActionTypes.traslatedMetaFields, // Action type for saving the translated meta fields
+        text: data, // The translated meta fields text
+        id: id, // The identifier for the meta fields
+        source: source // The source of the translated meta fields
+    }
+};

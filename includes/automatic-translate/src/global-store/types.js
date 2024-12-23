@@ -23,6 +23,12 @@ const AtfpActionTypes = {
     
     // Action type for saving the main content of the translated content
     traslatedContent: 'SAVE_TRANSLATE_CONTENT',
+    
+    // Action type for saving the meta fields of the source content
+    sourceMetaFields: 'SAVE_SOURCE_META_FIELDS',
+    
+    // Action type for saving the meta fields of the translated content
+    traslatedMetaFields: 'SAVE_TRANSLATE_META_FIELDS',
 };
 
 export default AtfpActionTypes;

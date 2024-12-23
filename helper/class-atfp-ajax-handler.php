@@ -102,11 +102,14 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 
 				$content = $post_data->post_content;
 				$content = ATFP_Helper::replace_links_with_translations($content, $locale, $current_locale);
-				
+
+				$meta_fields=get_post_meta($post_id);
+
 				$data    = array(
 					'title'   => $post_data->post_title,
 					'excerpt' => $post_data->post_excerpt,
 					'content' => $content,
+					'metaFields' => $meta_fields
 				);
 
 				return wp_send_json_success( $data );

@@ -8,11 +8,13 @@ import AtfpActionTypes from "./types"; // Importing action types from the types 
  * @property {Object} title - Contains source and target translations for the title.
  * @property {Object} excerpt - Contains source and target translations for the excerpt.
  * @property {Array} content - An array holding content translations.
+ * @property {Object} metaFields - Contains source and target translations for meta fields.
  */
 const TranslateDefaultState = {
     title: {}, // Initial state for title translations
     excerpt: {}, // Initial state for excerpt translations
     content: [], // Initial state for content translations
+    metaFields: {} // Initial state for meta field translations
 };
 
 /**
@@ -64,6 +66,18 @@ const reducer = (state = TranslateDefaultState, action) => {
                 return { ...state, content: { ...state.content, [action.id]: { ...(state.content[action.id] || []), target: action.text } } };
             }
             return state; // Return the current state if no match
+
+        case AtfpActionTypes.sourceMetaFields: // Action to save the source meta fields
+            // Check if the action text contains any letters or numbers
+            if (/[\p{L}\p{N}]/gu.test(action.text)) {
+                // Update the state with the new source meta field for the specific ID
+                return { ...state, metaFields: { ...state.metaFields, [action.id]: { ...(state.metaFields[action.id] || []), source: action.text } } };
+            }
+            return state; // Return the current state if no valid text
+
+        case AtfpActionTypes.traslatedMetaFields: // Action to save the translated meta fields
+            // Update the state with the new target meta field for the specific ID
+            return { ...state, metaFields: { ...state.metaFields, [action.id]: { ...(state.metaFields[action.id] || []), target: action.text } } };
 
         default: // If the action type does not match any case
             return state; // Return the current state unchanged
