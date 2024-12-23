@@ -1,4 +1,5 @@
 import FilterBlockNestedAttr from "../FilterNestedAttr";
+import AllowedMetaFields from "../../AllowedMetafileds";
 const { dispatch } = wp.data;
 
 /**
@@ -120,7 +121,16 @@ const saveTranslation = (block, blockRules) => {
     Object.keys(block).forEach(key => {
         if (key === 'content') {
             blockAttributeContent(block[key], blockRules);
-        }else {
+        }else if(key === 'metaFields'){
+            Object.keys(block[key]).forEach(metaKey => {
+                // Store yoast seo meta fields
+                if(Object.keys(AllowedMetaFields).includes(metaKey) && AllowedMetaFields[metaKey].type === 'string'){
+                    if('' !== block[key][metaKey][0] && undefined !== block[key][metaKey][0]){
+                        dispatch('block-atfp/translate').metaFieldsSaveSource(metaKey, block[key][metaKey][0]);
+                    }
+                }
+            });
+        } else if(['title', 'excerpt'].includes(key)){
             const action = `${key}SaveSource`;
             dispatch('block-atfp/translate')[action](block[key]);
         }
