@@ -263,7 +263,7 @@ const yandexWidget = (win, doc, nav, params, namespace, targetLang, translateSta
         leftButton.onClick = function () {
             select.setHidden(true);
             self.translate(select.getValue());
-            SaveTranslationHandler(translateStatus);
+            ModalStringScroll(translateStatus);
         };
 
         rightButton.onClick = function () {
