@@ -1,11 +1,13 @@
 {
   "name": "automatic-translations-for-polylang",
-  "version": "1.0.0",
-  "description": "You can easily create translated post using Automatic Translation For Polylang plugin",
+  "version": "1.1.0",
+  "description": "You can easily create translated post using Automatic Translation For Polylang plugin & translate blocks",
   "main": "index.js",
   "scripts": {
-    "build": "wp-scripts build src/index.js --output-path=../../assets/build/",
-    "start": "wp-scripts start src/index.js --output-path=../../assets/build/"
+    "build:at": "wp-scripts build automatic-translate/src/index.js --output-path=../assets/automatic-translate/",
+    "start:at": "wp-scripts start automatic-translate/src/index.js --output-path=../assets/automatic-translate/",
+    "build:bt": "wp-scripts build block-translator/index.js --output-path=../assets/block-translator/",
+    "start:bt": "wp-scripts start block-translator/index.js --output-path=../assets/block-translator/"
   },
   "repository": {
     "type": "git",

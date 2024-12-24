@@ -1,6 +1,6 @@
 import { useEffect, useState } from "@wordpress/element";
-import saveTranslation from "./component/storeSourceString";
-import FilterTargetContent from "./component/FilterTargetContent";
+import saveTranslation from "../component/storeSourceString";
+import FilterTargetContent from "../component/FilterTargetContent";
 const { __ } = wp.i18n;
 const { parse } = wp.blocks;
 const { select } = wp.data;
@@ -44,6 +44,7 @@ const FetchPost = (props) => {
                 if (post_data.content && post_data.content.trim() !== '') {
                     post_data.content = parse(post_data.content);
                 }
+                
                 saveTranslation(post_data, blockRules);
                 props.setPostData(post_data);
 
@@ -77,7 +78,7 @@ const FetchPost = (props) => {
                                         <td>{++sNo}</td>
                                         <td data-source="source_text">{data.source}</td>
                                         <td class="translate" translate="yes" data-key={data.id} data-string-type={data.type}>
-                                            <FilterTargetContent service={props.service} content={data.source} translateContent={props.translateContent} totalString={totalString} currentIndex={sNo} />
+                                            <FilterTargetContent service={props.service} content={data.source} translateContent={props.translateContent} totalString={totalString} currentIndex={sNo} contentKey={data.id}/>
                                         </td>
                                     </tr>
                                 </>

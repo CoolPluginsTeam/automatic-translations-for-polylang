@@ -89,6 +89,22 @@ const FilterTargetContent = (props) => {
     }
 
     /**
+     * Filters the SEO content.
+     * @param {string} content - The SEO content to filter.
+     * @returns {string} The filtered SEO content.
+     */
+    const filterSeoContent = (content) => {
+        const regex = /(%{1,2}[a-zA-Z0-9_]+%{0,2})/g;
+
+        // Replace placeholders with wrapped spans
+        const output = content.replace(regex, (match) => {
+            return `#atfp_open_translate_span#${match}#atfp_close_translate_span#`;
+        });
+
+        return output;
+    }
+
+    /**
      * Replaces the inner text of HTML elements with span elements for translation.
      * @param {string} string - The HTML content string to process.
      * @returns {Array} An array of strings after splitting based on the pattern.
@@ -102,6 +118,7 @@ const FilterTargetContent = (props) => {
                     let element = childElements[0];
                     let filterContent = wrapFirstAndMatchingClosingTag(element.outerHTML);
                     const textNode = document.createTextNode(filterContent);
+
                     element.replaceWith(textNode);
                     childElementsReplace();
                 }
@@ -114,7 +131,14 @@ const FilterTargetContent = (props) => {
         tempElement.innerHTML = string;
         replaceInnerTextWithSpan(tempElement);
 
-        return splitContent(tempElement.innerText);
+        let content = tempElement.innerText;
+
+        const isSeoContent = /^(_yoast_wpseo_|rank_math_|_seopress_)/.test(props.contentKey.trim());
+        if (isSeoContent) {
+            content= filterSeoContent(content);
+        }
+
+        return splitContent(content);
     }
 
     /**

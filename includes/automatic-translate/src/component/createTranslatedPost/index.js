@@ -1,5 +1,10 @@
 import createBlocks from './createBlock';
 import { dispatch, select } from '@wordpress/data';
+import YoastSeoFields from './SeoMetaFields/YoastSeoFields';
+import AllowedMetaFields from '../../AllowedMetafileds';
+import RankMathSeo from './SeoMetaFields/RankMathSeo';
+import SeoPressFields from './SeoMetaFields/SeoPress';
+
 /**
  * Translates the post content and updates the post title, excerpt, and content.
  * 
@@ -14,7 +19,7 @@ const translatePost = (props) => {
      */
     const postDataUpdate = () => {
         const data = {};
-        const editPostData = Object.keys(postContent).filter(key => key !== 'content');
+        const editPostData = Object.keys(postContent).filter(key => ['title', 'excerpt'].includes(key));
 
         editPostData.forEach(key => {
             const sourceData = postContent[key];
@@ -25,6 +30,29 @@ const translatePost = (props) => {
         });
 
         editPost(data);
+    }
+
+    /**
+     * Updates the post meta fields based on translation.
+     */
+    const postMetaFieldsUpdate = () => {
+        const metaFieldsData = postContent.metaFields;
+        Object.keys(metaFieldsData).forEach(key => {
+            // Update yoast seo meta fields
+            if(Object.keys(AllowedMetaFields).includes(key) && AllowedMetaFields[key].type === 'string') {
+                const translatedMetaFields = select('block-atfp/translate').getTranslatedString('metaFields', metaFieldsData[key][0], key);
+                if(key.startsWith('_yoast_wpseo_')) {
+                    YoastSeoFields({ key: key, value: translatedMetaFields });
+                } else if(key.startsWith('rank_math_')) {
+                    RankMathSeo({ key: key, value: translatedMetaFields });
+                }else if(key.startsWith('_seopress_')){
+                    SeoPressFields({ key: key, value: translatedMetaFields });
+                }
+                else{
+                    editPost({ meta: { [key]: translatedMetaFields } });
+                }
+            };
+        });
     }
 
     /**
@@ -44,6 +72,8 @@ const translatePost = (props) => {
 
     // Update post title and excerpt text
     postDataUpdate();
+    // Update post meta fields
+    postMetaFieldsUpdate();
     // Update post content
     postContentUpdate();
     // Close string modal box

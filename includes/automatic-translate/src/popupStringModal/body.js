@@ -1,5 +1,5 @@
 import { useState } from "react";
-import FetchPost from "../fetch-post";
+import FetchPost from "./fetch-post";
 const { __ } = wp.i18n;
 const { select } = wp.data;
 

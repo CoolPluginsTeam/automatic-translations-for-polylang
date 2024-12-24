@@ -1,6 +1,7 @@
 import ChromeAiTranslator from "./local-ai-translator";
 import { __ } from "@wordpress/i18n";
 const { dispatch } = wp.data;
+import SaveTranslation from "../../storeTranslatedString";
 
 const localAiTranslator = async (props)=>{
     const targetLangName = atfp_ajax_object.languageObject[props.targetLang];
@@ -38,16 +39,11 @@ const localAiTranslator = async (props)=>{
 
     const afterTranslate = (ele) => {
         const translatedText = ele.innerText;
-        const key = ele.dataset.key;
         const type = ele.dataset.stringType;
+        const key = ele.dataset.key;
         const sourceText = ele.closest('tr').querySelector('td[data-source="source_text"]').innerText;
 
-        if (type !== 'content') {
-            const action = `${type}SaveTranslate`;
-            dispatch('block-atfp/translate')[action](translatedText);
-        } else {
-            dispatch('block-atfp/translate').contentSaveTranslate(key, translatedText, sourceText);
-        }
+        SaveTranslation({type: type, key: key, translateContent: translatedText, source: sourceText});
     }
 
     const TranslateProvider = await ChromeAiTranslator.Object({
