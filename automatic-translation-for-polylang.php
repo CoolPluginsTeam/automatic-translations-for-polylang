@@ -86,7 +86,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 				}
 
 				add_action( 'add_meta_boxes', array( $this, 'atfp_shortcode_metabox' ) );
-				add_action( 'admin_enqueue_scripts', array( $this, 'atfp_register_backend_assets' ) ); // registers js and css for frontend
+				$this->atfp_register_backend_assets();
 
 			} else {
 				add_action( 'admin_notices', array( self::$instance, 'atfp_plugin_required_admin_notice' ) );

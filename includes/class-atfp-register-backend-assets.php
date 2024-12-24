@@ -12,7 +12,7 @@ class ATFP_Register_Backend_Assets {
     }
 
     public function __construct() {
-        $this->register_backend_assets();
+        add_action( 'admin_enqueue_scripts', array( $this, 'register_backend_assets' ) );
     }
 
     public function register_backend_assets() {
