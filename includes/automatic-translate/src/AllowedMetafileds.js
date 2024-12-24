@@ -15,6 +15,13 @@ const AllowedMetaFields={
     'rank_math_twitter_title': {type: 'string'},
     'rank_math_twitter_description': {type: 'string'},
     'rank_math_breadcrumb_title': {type: 'string'},
+    '_seopress_titles_title': {type: 'string'},
+    '_seopress_titles_desc': {type: 'string'},
+    '_seopress_social_fb_title': {type: 'string'},
+    '_seopress_social_fb_desc': {type: 'string'},
+    '_seopress_social_twitter_title': {type: 'string'},
+    '_seopress_social_twitter_desc': {type: 'string'},
+    '_seopress_analysis_target_kw': {type: 'string'}
 };
 
 export default AllowedMetaFields;

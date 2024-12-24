@@ -133,7 +133,7 @@ const FilterTargetContent = (props) => {
 
         let content = tempElement.innerText;
 
-        const isSeoContent = /^(_yoast_wpseo_|rank_math_)/.test(props.contentKey.trim());
+        const isSeoContent = /^(_yoast_wpseo_|rank_math_|_seopress_)/.test(props.contentKey.trim());
         if (isSeoContent) {
             content= filterSeoContent(content);
         }

@@ -3,6 +3,7 @@ import { dispatch, select } from '@wordpress/data';
 import YoastSeoFields from './SeoMetaFields/YoastSeoFields';
 import AllowedMetaFields from '../../AllowedMetafileds';
 import RankMathSeo from './SeoMetaFields/RankMathSeo';
+import SeoPressFields from './SeoMetaFields/SeoPress';
 
 /**
  * Translates the post content and updates the post title, excerpt, and content.
@@ -44,7 +45,10 @@ const translatePost = (props) => {
                     YoastSeoFields({ key: key, value: translatedMetaFields });
                 } else if(key.startsWith('rank_math_')) {
                     RankMathSeo({ key: key, value: translatedMetaFields });
-                }else{
+                }else if(key.startsWith('_seopress_')){
+                    SeoPressFields({ key: key, value: translatedMetaFields });
+                }
+                else{
                     editPost({ meta: { [key]: translatedMetaFields } });
                 }
             };
