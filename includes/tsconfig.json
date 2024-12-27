@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "target": "es2018",
+    "module": "es6",
+    "strict": true,
+    "removeComments": true,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "resolveJsonModule": true,
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "declaration": false,
+    "esModuleInterop": true,
+    "noImplicitAny": false,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "jsx": "react",
+    "jsxFactory": "wp.element.createElement",
+    "jsxFragmentFactory": "wp.element.Fragment",
+    "sourceMap": true,
+    "noLib": false,
+    "suppressImplicitAnyIndexErrors": false,
+    "downlevelIteration": true,
+    "skipLibCheck": true,
+    "typeRoots": [
+      "node_modules/@types",
+      "block-translator/@types"
+    ]
+  },
+  "include": [
+    "./**/*.tsx",
+    "./**/*.ts",
+    "./**/*.d.ts",
+    "./**/*.css"
+  ]
+}
