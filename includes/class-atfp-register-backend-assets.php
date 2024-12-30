@@ -13,22 +13,44 @@ class ATFP_Register_Backend_Assets {
 
     public function __construct() {
         add_action( 'admin_enqueue_scripts', array( $this, 'register_backend_assets' ) );
+        add_action('enqueue_block_assets', array($this, 'register_block_translator_assets'));
+    }
+
+    public function register_block_translator_assets() {
+
+        if ( defined( 'POLYLANG_VERSION' ) ) {
+            if ( function_exists( 'pll_current_language' ) ) {
+                $current_language = pll_current_language();
+            } else {
+                $current_language = '';
+            }
+
+            $editor_script_asset = require_once ATFP_DIR_PATH . 'assets/block-translator/index.asset.php';
+    
+            wp_register_script('atfp-block-translator-toolbar', ATFP_URL . 'assets/block-translator/index.js', $editor_script_asset['dependencies'], $editor_script_asset['version'], true);
+            wp_enqueue_script('atfp-block-translator-toolbar');
+
+            if($current_language && $current_language !== '') {
+                wp_localize_script('atfp-block-translator-toolbar', 'atfpBlockTranslator', array(
+                    'pageLanguage' => $current_language,
+                ));
+            }
+        }
     }
 
     public function register_backend_assets() {
         $current_screen = get_current_screen();
-
         if ( isset( $_GET['from_post'], $_GET['new_lang'], $_GET['_wpnonce'] ) &&
-             wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'new-post-translation' ) ) {
+        wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'new-post-translation' ) ) {
             if ( method_exists( $current_screen, 'is_block_editor' ) && $current_screen->is_block_editor() ) {
                 $from_post_id = isset( $_GET['from_post'] ) ? absint( $_GET['from_post'] ) : 0;
-
+                
                 global $post;
-
+                
                 if ( null === $post || 0 === $from_post_id ) {
                     return;
                 }
-
+                
                 $editor = '';
                 if ( 'builder' === get_post_meta( $from_post_id, '_elementor_edit_mode', true ) ) {
                     $editor = 'Elementor';

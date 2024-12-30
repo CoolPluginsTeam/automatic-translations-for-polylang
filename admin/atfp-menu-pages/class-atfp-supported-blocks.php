@@ -128,6 +128,7 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 		 */
 		public function atfp_get_blocks_category() {
 			$blocks_data                 = WP_Block_Type_Registry::get_instance()->get_all_registered();
+
 			$filter_blocks_data = array_filter( $blocks_data, function( $block ) {
 				return !in_array($block->category, array( 'media', 'reusable' ));
 			} );
@@ -159,14 +160,17 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 				$atfp_block_parse_rules      = ATFP_Helper::get_instance()->get_block_parse_rules();
 
 				$blocks_data                 = WP_Block_Type_Registry::get_instance()->get_all_registered();
+
 				$atfp_supported_blocks       = isset($atfp_block_parse_rules['AtfpBlockParseRules']) ? $atfp_block_parse_rules['AtfpBlockParseRules'] : array();
 				$atfp_supported_blocks_names = array_keys( $atfp_supported_blocks );
 				$s_no                        = 1;
 				$atfp_post_id                = ATFP_Helper::get_custom_block_post_id();
 				
-				$filter_blocks_data = array_filter( $blocks_data, function( $block ) {
-					return !in_array($block->category, array( 'media', 'reusable' ));
-				} );
+				// $filter_blocks_data = array_filter( $blocks_data, function( $block ) {
+				// 	return !in_array($block->category, array( 'media', 'reusable' ));
+				// } );
+
+				$filter_blocks_data=$blocks_data;
 
 				foreach ( $filter_blocks_data as $block ) {
 
