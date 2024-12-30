@@ -26,10 +26,10 @@ const ParagraphRewriter = ({ value, onChange }) => {
   if (atfpBlockTranslator && typeof atfpBlockTranslator === 'object' && 'pageLanguage' in atfpBlockTranslator) {
     const activePageLanguage = atfpBlockTranslator.pageLanguage;
 
-    if(activePageLanguage && '' !== activePageLanguage) {
+    if (activePageLanguage && '' !== activePageLanguage) {
       activeTargetLang = activePageLanguage;
-      if(activePageLanguage === 'en') {
-        activeSourceLang='es';
+      if (activePageLanguage === 'en') {
+        activeSourceLang = 'es';
       }
     }
   }
@@ -60,11 +60,11 @@ const ParagraphRewriter = ({ value, onChange }) => {
   }, [value]);
 
   const HandlerOpenModal = () => {
-    if(!toolbarActive){
+    if (!toolbarActive) {
       return;
     }
 
-    const text=value.text.slice(value.start, value.end);
+    const text = value.text.slice(value.start, value.end);
 
     setIsModalOpen(true);
     setLangError("");
@@ -81,39 +81,51 @@ const ParagraphRewriter = ({ value, onChange }) => {
       return;
     }
 
+    if(!isLanguageDetectorPaiAvailable()){
+      setApiError('<span style="color: #ff4646; display: inline-block;">The Language Detector AI modal is currently not supported or disabled in your browser. Please enable it. For detailed instructions on how to enable the Language Detector AI modal in your Chrome browser, <a href="https://developer.chrome.com/docs/ai/language-detection#add_support_to_localhost" target="_blank">click here</a>.</span>');
+      return;
+    }
+
     setSelectedText(text);
     window.setTimeout(() => textareaRef.current?.focus(), 100);
 
-    if(isLanguageDetectorPaiAvailable()){
+    if (isLanguageDetectorPaiAvailable()) {
       DetectLanguage(text);
-    }else{
+    } else {
       HandlerTranslate(targetLang, sourceLang, text);
     }
+  }
+
+  const HandlerCloseModal = () => {
+    setIsModalOpen(false);
+    setLangError("");
+    setApiError("");
+    setTranslatedContent("");
   }
 
   const DetectLanguage = async (text: string) => {
     const languageDetector = new LanguageDetector(Object.keys(Languages));
     const status = await languageDetector.Status();
 
-      if(status){
-        const result = await languageDetector.Detect(text);
-        
-        if(result){
-          if(result === targetLang){
-            HandlerSourceLanguageChange(result);
-          }else{
-            setSourceLang(result);
-            HandlerTranslate(targetLang, result, text);
-          }
-        }else{
-          HandlerTranslate(targetLang, sourceLang, text);
+    if (status) {
+      const result = await languageDetector.Detect(text);
+
+      if (result) {
+        if (result === targetLang) {
+          HandlerSourceLanguageChange(result);
+        } else {
+          HandlerSourceLanguageChange(result);
+          HandlerTranslate(targetLang, result, text);
         }
-      }else{
+      } else {
         HandlerTranslate(targetLang, sourceLang, text);
       }
+    } else {
+      HandlerTranslate(targetLang, sourceLang, text);
+    }
   }
 
-  const HandlerSourceLanguageChange = async(value: string) => {
+  const HandlerSourceLanguageChange = async (value: string) => {
     setSourceLang(value);
     setTargetLanguages(Object.keys(Languages).filter((lang) => lang !== value));
     HandlerTranslate(targetLang, value, selectedText);
@@ -123,8 +135,9 @@ const ParagraphRewriter = ({ value, onChange }) => {
     setTargetLang(value);
     HandlerTranslate(value, sourceLang, selectedText);
   }
-  
+
   const HandlerTranslate = async (targetLang: string, sourceLang: string, text: string) => {
+    setTranslatedContent("");
 
     const translatorObject = new Translator(sourceLang, targetLang, languages[targetLang]);
 
@@ -136,7 +149,7 @@ const ParagraphRewriter = ({ value, onChange }) => {
     } else if (langError !== "") {
       setLangError("");
     }
-    
+
     if (!translatorObject || !translatorObject.hasOwnProperty('startTranslation')) {
       return;
     }
@@ -158,6 +171,18 @@ const ParagraphRewriter = ({ value, onChange }) => {
     setIsModalOpen(false);
   }
 
+  const HandlerCopyText = async () => {
+    try {
+      if (navigator?.clipboard?.writeText) {
+        await navigator.clipboard.writeText(translatedContent);
+      } else {
+        console.log('Clipboard API not supported');
+      }
+    } catch (err) {
+      console.error('Error copying text to clipboard:', err);
+    }
+  }
+
   return (
     <>
       <BlockControls>
@@ -175,7 +200,7 @@ const ParagraphRewriter = ({ value, onChange }) => {
       {isModalOpen && (
         <Modal
           title="Chrome built-in translator AI"
-          onRequestClose={() => setIsModalOpen(false)}
+          onRequestClose={HandlerCloseModal}
         >
           {apiError && apiError !== "" ? (
             <div className={styles.error}>{apiError}</div>
@@ -204,17 +229,30 @@ const ParagraphRewriter = ({ value, onChange }) => {
                   />
                 </div>
                 {langError && langError !== "" && <div className={styles.error} dangerouslySetInnerHTML={{ __html: langError }}></div>}
-                {translatedContent && translatedContent !== "" && 
-                <>
-                <div className={styles.translatedContent} dangerouslySetInnerHTML={{ __html: translatedContent }}></div>
-                <Button
-                  className={styles.translateButton}
-                  variant="primary"
-                  onClick={HandlerReplaceText}
-                >
-                  Replace Text
-                </Button>
-                </>
+                {translatedContent && translatedContent !== "" &&
+                  <>
+                    <div className={styles.translatedContent}><label>Translated Text</label><p>{translatedContent}</p></div>
+                    <div className={styles.translatedButtonWrp}>
+                      <Button
+                        className={styles.replaceBtn + " " + styles.btnStyle}
+                        onClick={HandlerReplaceText}
+                      >
+                        Replace Text
+                      </Button>
+                      <Button
+                        className={styles.copyBtn + " " + styles.btnStyle}
+                        onClick={HandlerCopyText}
+                      >
+                        Copy Text
+                      </Button>
+                      <Button
+                        className={styles.closeBtn + " " + styles.btnStyle}
+                        onClick={HandlerCloseModal}
+                      >
+                        Close
+                      </Button>
+                    </div>
+                  </>
                 }
               </div>
             </div>

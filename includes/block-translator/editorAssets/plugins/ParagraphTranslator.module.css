@@ -11,7 +11,6 @@
 }
 
 .controls {
-  margin-top: 1rem;
   display: flex;
   justify-content: flex-end;
   flex-direction: column;
@@ -30,16 +29,79 @@
   border-radius: 0.5em;
 }
 
-.translatedContent {
+.translatedButtonWrp{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+}
+
+.translatedContent p{
   border: 1px solid #d1d5db;
   padding: .5rem;
   border-radius: 5px;
-  margin-bottom: .5rem;
+  margin-top: .5rem;
+  margin-bottom: 1rem;
 }
 
-.translateButton {
+.translatedContent label{
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.4;
+  text-transform: uppercase;
+  box-sizing: border-box;
+  display: block;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  max-width: 100%;
+  z-index: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: rgb(30, 30, 30);
+  margin: 0px;
+  text-wrap: pretty;
+}
+
+.btnStyle{
   display: flex;
-  align-items: center;
   justify-content: center;
-  gap: 0.5em;
+  align-items: center;
+  padding: .5rem;
+  border-radius: 5px;
+  margin-bottom: .5rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.replaceBtn {
+  background: transparent;
+  border: 1px solid #007cba;
+  color: #007cba;
+}
+
+.replaceBtn:hover {
+  background: #007cba;
+  color: white !important;
+}
+
+.copyBtn {
+  background: transparent;
+  border: 1px solid black;
+  color: black;
+}
+
+.copyBtn:hover {
+  background: black;
+  color: white !important;
+}
+
+.closeBtn {
+  background: transparent;
+  border: 1px solid #da1c4b;
+  color: #da1c4b;
+}
+
+.closeBtn:hover {
+  background: #da1c4b;
+  color: white !important;
 }
