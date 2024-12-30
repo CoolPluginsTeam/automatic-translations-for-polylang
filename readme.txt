@@ -4,7 +4,7 @@ Tags: Polylang, Automatic Translation, Duplicate Content, Block Translation
 Requires at least: 5.0
 Tested up to: 6.7.1
 Requires PHP: 5.6
-Stable tag: 1.1.1
+Stable tag: 1.2.0
 Author URI: https://coolplugins.net/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -161,6 +161,10 @@ The plugin is optimized for performance, but the speed impact may vary depending
 
 
 == Changelog ==
+
+= Version 1.2.0 | 30 December 2024 =
+* **Added:** Translation support for the Classic Paragraph Block (Automattic).
+* **Added:** Translation support for YOST SEO plugin, Rank Math SEO plugin, and SEOPress plugin.
 
 = Version 1.1.1 | 11 December 2024 =
 * **Improved:** Renamed plugin to "AI Automatic Translations For Polylang".
