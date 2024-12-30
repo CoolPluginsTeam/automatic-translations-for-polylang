@@ -12,6 +12,7 @@ class LanguageDetector {
         if(status?.available === 'readily'){
             return true;
         }
+
         return false;
     }
 

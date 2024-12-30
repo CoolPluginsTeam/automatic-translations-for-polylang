@@ -27,6 +27,9 @@
   padding: .5rem;
   border: 1px solid #ff4646;
   border-radius: 0.5em;
+  max-width: 400px;
+  font-size: 1rem;
+  line-height: 1.4;
 }
 
 .translatedButtonWrp{

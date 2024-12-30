@@ -89,11 +89,7 @@ const ParagraphRewriter = ({ value, onChange }) => {
     setSelectedText(text);
     window.setTimeout(() => textareaRef.current?.focus(), 100);
 
-    if (isLanguageDetectorPaiAvailable()) {
-      DetectLanguage(text);
-    } else {
-      HandlerTranslate(targetLang, sourceLang, text);
-    }
+    DetectLanguage(text);
   }
 
   const HandlerCloseModal = () => {
@@ -121,7 +117,8 @@ const ParagraphRewriter = ({ value, onChange }) => {
         HandlerTranslate(targetLang, sourceLang, text);
       }
     } else {
-      HandlerTranslate(targetLang, sourceLang, text);
+      setApiError('<span style="color: #ff4646; display: inline-block;">The Language Detector AI modal is currently not supported or disabled in your browser. Please enable it. For detailed instructions on how to enable the Language Detector AI modal in your Chrome browser, <a href="https://developer.chrome.com/docs/ai/language-detection#add_support_to_localhost" target="_blank">click here</a>.</span>');
+      return;
     }
   }
 
@@ -203,7 +200,7 @@ const ParagraphRewriter = ({ value, onChange }) => {
           onRequestClose={HandlerCloseModal}
         >
           {apiError && apiError !== "" ? (
-            <div className={styles.error}>{apiError}</div>
+            <div className={styles.error} dangerouslySetInnerHTML={{ __html: apiError }}></div>
           ) : (
             <div className={styles.modal}>
 

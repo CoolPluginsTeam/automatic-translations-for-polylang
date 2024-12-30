@@ -1,5 +1,5 @@
 /** @type {import('webpack').defaultConfig} */
-const defaultConfig = require("@wordpress/scripts/config/webpack.config");
+const defaultConfig = require("@wordpress/scripts/config/webpack.config.js");
 const path = require("path");
 const glob = require("glob");
 
@@ -45,7 +45,7 @@ const config = {
 };
 
 module.exports = (env, argv) => {
-  // if (argv.mode === "production" || argv.mode === "development") {
+  if (argv.mode === "production" || argv.mode === "development") {
     const dirDist = path.resolve(__dirname, "../assets/block-translator");
     const dirSrc = path.resolve(__dirname, "block-translator");
 
@@ -60,5 +60,7 @@ module.exports = (env, argv) => {
         publicPath: "/",
       },
     };
-  // }
+  }else{
+    return defaultConfig;
+  }
 };
