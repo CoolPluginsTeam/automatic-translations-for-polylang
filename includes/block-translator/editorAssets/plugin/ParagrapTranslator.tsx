@@ -125,7 +125,15 @@ const ParagraphRewriter = ({ value, onChange }) => {
   const HandlerSourceLanguageChange = async (value: string) => {
     setSourceLang(value);
     setTargetLanguages(Object.keys(Languages).filter((lang) => lang !== value));
-    HandlerTranslate(targetLang, value, selectedText);
+
+    let activeTargetLang=targetLang;
+
+    if(targetLang === value){
+      activeTargetLang=Object.keys(Languages).filter((lang) => lang !== value)[0];
+      setTargetLang(activeTargetLang);
+    }
+
+    HandlerTranslate(activeTargetLang, value, selectedText);
   }
 
   const HandlerTargetLanguageChange = async (value: string) => {
@@ -134,6 +142,7 @@ const ParagraphRewriter = ({ value, onChange }) => {
   }
 
   const HandlerTranslate = async (targetLang: string, sourceLang: string, text: string) => {
+
     setTranslatedContent("");
 
     const translatorObject = new Translator(sourceLang, targetLang, languages[targetLang]);
