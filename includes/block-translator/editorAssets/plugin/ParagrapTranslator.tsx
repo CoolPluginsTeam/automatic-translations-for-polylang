@@ -103,18 +103,18 @@ const ParagraphRewriter = ({ value, onChange }) => {
     const languageDetector = new LanguageDetector(Object.keys(Languages));
     const status = await languageDetector.Status();
 
+    
     if (status) {
       const result = await languageDetector.Detect(text);
-
+      
       if (result) {
         if (result === targetLang) {
           HandlerSourceLanguageChange(result);
         } else {
           HandlerSourceLanguageChange(result);
-          HandlerTranslate(targetLang, result, text);
         }
       } else {
-        HandlerTranslate(targetLang, sourceLang, text);
+        HandlerTranslate(targetLang, sourceLang);
       }
     } else {
       setApiError('<span style="color: #ff4646; display: inline-block;">The Language Detector AI modal is currently not supported or disabled in your browser. Please enable it. For detailed instructions on how to enable the Language Detector AI modal in your Chrome browser, <a href="https://developer.chrome.com/docs/ai/language-detection#add_support_to_localhost" target="_blank">click here</a>.</span>');
@@ -123,6 +123,7 @@ const ParagraphRewriter = ({ value, onChange }) => {
   }
 
   const HandlerSourceLanguageChange = async (value: string) => {
+
     setSourceLang(value);
     setTargetLanguages(Object.keys(Languages).filter((lang) => lang !== value));
 
@@ -133,21 +134,23 @@ const ParagraphRewriter = ({ value, onChange }) => {
       setTargetLang(activeTargetLang);
     }
 
-    HandlerTranslate(activeTargetLang, value, selectedText);
+    HandlerTranslate(activeTargetLang, value);
   }
 
   const HandlerTargetLanguageChange = async (value: string) => {
     setTargetLang(value);
-    HandlerTranslate(value, sourceLang, selectedText);
+    HandlerTranslate(value, sourceLang);
   }
 
-  const HandlerTranslate = async (targetLang: string, sourceLang: string, text: string) => {
+  const HandlerTranslate = async (targetLang: string, sourceLang: string) => {
+    const text = selectedText && '' !== selectedText ? selectedText : value.text.slice(value.start, value.end);
 
     setTranslatedContent("");
 
     const translatorObject = new Translator(sourceLang, targetLang, languages[targetLang]);
 
     const status = await translatorObject.LanguagePairStatus();
+
 
     if (status !== true && status.hasOwnProperty('error') && status.error !== "") {
       setLangError(status.error);
@@ -159,7 +162,6 @@ const ParagraphRewriter = ({ value, onChange }) => {
     if (!translatorObject || !translatorObject.hasOwnProperty('startTranslation')) {
       return;
     }
-
     const translatedText = await translatorObject.startTranslation(text);
 
     setTranslatedContent(translatedText);
