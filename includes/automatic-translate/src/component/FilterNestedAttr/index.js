@@ -30,6 +30,10 @@ const FilterBlockNestedAttr = (idsArr, attrObj, blockAttr, callBack) => {
             dynamicBlockAttr = dynamicBlockAttr[key];
         });
 
+        if([null, undefined].includes(dynamicBlockAttr)) {
+            return;
+        }
+
         if (Object.getPrototypeOf(dynamicBlockAttr) === Object.prototype) {
             childAttr(idArr, attrFilter[0]);
             return;
