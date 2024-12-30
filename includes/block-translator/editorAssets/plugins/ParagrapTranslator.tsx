@@ -15,6 +15,8 @@ import Translator from "../common/Translator";
 import isTranslatorApiAvailable from "../common/isTranslatorApiAvailable";
 import Languages from "../common/Languages";
 import languages from "../common/Languages";
+import isLanguageDetectorPaiAvailable from "../common/isLanguageDetectorPaiAvailable";
+import LanguageDetector from "../common/LanguageDetector";
 
 const ParagraphRewriter = ({ value, onChange }) => {
   let activeSourceLang = 'hi';
@@ -58,6 +60,12 @@ const ParagraphRewriter = ({ value, onChange }) => {
   }, [value]);
 
   const HandlerOpenModal = () => {
+    if(!toolbarActive){
+      return;
+    }
+
+    const text=value.text.slice(value.start, value.end);
+
     setIsModalOpen(true);
     setLangError("");
     setApiError("");
@@ -73,24 +81,51 @@ const ParagraphRewriter = ({ value, onChange }) => {
       return;
     }
 
-    setSelectedText(value.text.slice(value.start, value.end));
+    setSelectedText(text);
     window.setTimeout(() => textareaRef.current?.focus(), 100);
 
-    applyChanges(targetLang);
+    if(isLanguageDetectorPaiAvailable()){
+      DetectLanguage(text);
+    }else{
+      HandlerTranslate(targetLang, sourceLang, text);
+    }
   }
 
-  const HandlerSourceLanguageChange = (value: string) => {
+  const DetectLanguage = async (text: string) => {
+    const languageDetector = new LanguageDetector(Object.keys(Languages));
+    const status = await languageDetector.Status();
+
+      if(status){
+        const result = await languageDetector.Detect(text);
+        
+        if(result){
+          if(result === targetLang){
+            HandlerSourceLanguageChange(result);
+          }else{
+            setSourceLang(result);
+            HandlerTranslate(targetLang, result, text);
+          }
+        }else{
+          HandlerTranslate(targetLang, sourceLang, text);
+        }
+      }else{
+        HandlerTranslate(targetLang, sourceLang, text);
+      }
+  }
+
+  const HandlerSourceLanguageChange = async(value: string) => {
     setSourceLang(value);
     setTargetLanguages(Object.keys(Languages).filter((lang) => lang !== value));
-    applyChanges(targetLang);
+    HandlerTranslate(targetLang, value, selectedText);
   }
 
   const HandlerTargetLanguageChange = async (value: string) => {
     setTargetLang(value);
-    applyChanges(value);
+    HandlerTranslate(value, sourceLang, selectedText);
   }
   
-  const applyChanges = async (targetLang: string) => {
+  const HandlerTranslate = async (targetLang: string, sourceLang: string, text: string) => {
+
     const translatorObject = new Translator(sourceLang, targetLang, languages[targetLang]);
 
     const status = await translatorObject.LanguagePairStatus();
@@ -106,7 +141,7 @@ const ParagraphRewriter = ({ value, onChange }) => {
       return;
     }
 
-    const translatedText = await translatorObject.startTranslation(selectedText);
+    const translatedText = await translatorObject.startTranslation(text);
 
     setTranslatedContent(translatedText);
   };

@@ -30,6 +30,13 @@
   border-radius: 0.5em;
 }
 
+.translatedContent {
+  border: 1px solid #d1d5db;
+  padding: .5rem;
+  border-radius: 5px;
+  margin-bottom: .5rem;
+}
+
 .translateButton {
   display: flex;
   align-items: center;
