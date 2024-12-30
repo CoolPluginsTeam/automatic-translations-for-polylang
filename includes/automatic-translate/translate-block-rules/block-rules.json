@@ -112,6 +112,11 @@
                 ]
             }
         },
+        "tadv/classic-paragraph": {
+            "attributes": {
+                "content": true
+            }
+        },
         "cp-timeline/content-timeline-child": {
             "attributes": {
                 "t_date": true,
