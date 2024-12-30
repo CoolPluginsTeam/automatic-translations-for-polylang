@@ -25,7 +25,7 @@ class ATFP_Register_Backend_Assets {
                 $current_language = '';
             }
 
-            $editor_script_asset = require_once ATFP_DIR_PATH . 'assets/block-translator/index.asset.php';
+            $editor_script_asset = include ATFP_DIR_PATH . 'assets/block-translator/index.asset.php';
     
             wp_register_script('atfp-block-translator-toolbar', ATFP_URL . 'assets/block-translator/index.js', $editor_script_asset['dependencies'], $editor_script_asset['version'], true);
             wp_enqueue_script('atfp-block-translator-toolbar');
@@ -77,7 +77,7 @@ class ATFP_Register_Backend_Assets {
                 if ( $post_translate && $lang && $post_type ) {
                     wp_register_style( 'atfp-automatic-translate', ATFP_URL . 'assets/css/atfp-custom.min.css', array(), ATFP_V );
 
-                    $editor_script_asset = require_once ATFP_DIR_PATH . 'assets/automatic-translate/index.asset.php';
+                    $editor_script_asset = include ATFP_DIR_PATH . 'assets/automatic-translate/index.asset.php';
                     wp_register_script( 'atfp-automatic-translate', ATFP_URL . 'assets/automatic-translate/index.js', $editor_script_asset['dependencies'], $editor_script_asset['version'], true );
 
                     wp_enqueue_style( 'atfp-automatic-translate' );
