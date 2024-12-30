@@ -1,1 +1,1 @@
-import './plugins/ParagrapTranslator';
+import './plugin/ParagrapTranslator';
