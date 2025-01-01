@@ -74,37 +74,44 @@
   margin-bottom: .5rem;
   font-weight: 600;
   transition: all 0.3s ease;
+  color: white;
+  opacity: 0.8;
+}
+
+.btnStyle:hover{
+  opacity: 1;
+  color: white !important;
 }
 
 .replaceBtn {
   background: transparent;
   border: 1px solid #007cba;
-  color: #007cba;
+  background: #007cba;
 }
 
-.replaceBtn:hover {
+/* .replaceBtn:hover {
   background: #007cba;
   color: white !important;
-}
+} */
 
 .copyBtn {
   background: transparent;
   border: 1px solid black;
-  color: black;
+  background: black;
 }
 
-.copyBtn:hover {
+/* .copyBtn:hover {
   background: black;
   color: white !important;
-}
+} */
 
 .closeBtn {
   background: transparent;
   border: 1px solid #da1c4b;
-  color: #da1c4b;
+  background: #da1c4b;
 }
 
-.closeBtn:hover {
+/* .closeBtn:hover {
   background: #da1c4b;
   color: white !important;
-}
+} */

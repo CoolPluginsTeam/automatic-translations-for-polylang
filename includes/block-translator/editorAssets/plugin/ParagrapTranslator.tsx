@@ -44,7 +44,7 @@ const ParagraphRewriter = ({ value, onChange }) => {
   const [targetLanguages, setTargetLanguages] = useState<string[]>(Object.keys(Languages).filter((lang) => lang !== activeSourceLang));
   const [apiError, setApiError] = useState<string>("");
   const [langError, setLangError] = useState<string>("");
-
+  const [copyStatus, setCopyStatus] = useState<string>("Copy");
 
   useEffect(() => {
     if (
@@ -179,13 +179,27 @@ const ParagraphRewriter = ({ value, onChange }) => {
     setIsModalOpen(false);
   }
 
-  const HandlerCopyText = async () => {
+  const HandlerCopyText = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if(!translatedContent || translatedContent === "") return;
+
     try {
       if (navigator?.clipboard?.writeText) {
         await navigator.clipboard.writeText(translatedContent);
       } else {
-        console.log('Clipboard API not supported');
+        // Fallback method if Clipboard API is not supported
+        const textArea = document.createElement('textarea');
+        textArea.value = translatedContent;
+        document.body.appendChild(textArea);
+        textArea.select();
+        if(document.execCommand){
+          document.execCommand('copy');
+        }
+        document.body.removeChild(textArea);
       }
+
+      setCopyStatus("Copied");
+      setTimeout(() => setCopyStatus("Copy"), 1000); // Reset to "Copy" after 2 seconds
     } catch (err) {
       console.error('Error copying text to clipboard:', err);
     }
@@ -245,13 +259,13 @@ const ParagraphRewriter = ({ value, onChange }) => {
                         className={styles.replaceBtn + " " + styles.btnStyle}
                         onClick={HandlerReplaceText}
                       >
-                        Replace Text
+                        Replace
                       </Button>
                       <Button
                         className={styles.copyBtn + " " + styles.btnStyle}
                         onClick={HandlerCopyText}
                       >
-                        Copy Text
+                        {copyStatus}
                       </Button>
                       <Button
                         className={styles.closeBtn + " " + styles.btnStyle}
