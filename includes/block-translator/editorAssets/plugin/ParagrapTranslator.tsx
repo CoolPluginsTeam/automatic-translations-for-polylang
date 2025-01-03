@@ -77,11 +77,11 @@ const ParagraphRewriter = ({ value, onChange }) => {
     }
 
     if (!isTranslatorApiAvailable()) {
-      setApiError('<span style="color: #ff4646; display: inline-block;">The Translator AI modal is currently not supported or disabled in your browser. Please enable it. For detailed instructions on how to enable the Translator AI modal in your Chrome browser, <a href="https://developer.chrome.com/docs/ai/translator-api#bypass_language_restrictions_for_local_testing" target="_blank">click here</a>.</span>');
+      setApiError('<span style="color: #ff4646; display: inline-block;">The Translator AI modal is currently not supported or disabled in your browser. Please enable it. For detailed instructions on how to enable the Translator AI modal in your Chrome browser, <a href="https://developer.chrome.com/docs/ai/translator-api#add_support_to_localhost" target="_blank">click here</a>.</span>');
       return;
     }
 
-    if(!isLanguageDetectorPaiAvailable()){
+    if (!isLanguageDetectorPaiAvailable()) {
       setApiError('<span style="color: #ff4646; display: inline-block;">The Language Detector AI modal is currently not supported or disabled in your browser. Please enable it. For detailed instructions on how to enable the Language Detector AI modal in your Chrome browser, <a href="https://developer.chrome.com/docs/ai/language-detection#add_support_to_localhost" target="_blank">click here</a>.</span>');
       return;
     }
@@ -103,10 +103,10 @@ const ParagraphRewriter = ({ value, onChange }) => {
     const languageDetector = new LanguageDetector(Object.keys(Languages));
     const status = await languageDetector.Status();
 
-    
+
     if (status) {
       const result = await languageDetector.Detect(text);
-      
+
       if (result) {
         if (result === targetLang) {
           HandlerSourceLanguageChange(result);
@@ -127,10 +127,10 @@ const ParagraphRewriter = ({ value, onChange }) => {
     setSourceLang(value);
     setTargetLanguages(Object.keys(Languages).filter((lang) => lang !== value));
 
-    let activeTargetLang=targetLang;
+    let activeTargetLang = targetLang;
 
-    if(targetLang === value){
-      activeTargetLang=Object.keys(Languages).filter((lang) => lang !== value)[0];
+    if (targetLang === value) {
+      activeTargetLang = Object.keys(Languages).filter((lang) => lang !== value)[0];
       setTargetLang(activeTargetLang);
     }
 
@@ -181,7 +181,7 @@ const ParagraphRewriter = ({ value, onChange }) => {
 
   const HandlerCopyText = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if(!translatedContent || translatedContent === "") return;
+    if (!translatedContent || translatedContent === "") return;
 
     try {
       if (navigator?.clipboard?.writeText) {
@@ -192,7 +192,7 @@ const ParagraphRewriter = ({ value, onChange }) => {
         textArea.value = translatedContent;
         document.body.appendChild(textArea);
         textArea.select();
-        if(document.execCommand){
+        if (document.execCommand) {
           document.execCommand('copy');
         }
         document.body.removeChild(textArea);
@@ -285,13 +285,11 @@ const ParagraphRewriter = ({ value, onChange }) => {
   );
 };
 
-if (isTranslatorApiAvailable()) {
-  registerFormatType("atfp/paragraph-rewriter", {
-    title: "AI Paragraph Rewriter",
-    name: "atfp/paragraph-rewriter",
-    interactive: true,
-    tagName: "atfp-paragraph-rewriter",
-    className: null,
-    edit: ParagraphRewriter,
-  });
-}
+registerFormatType("atfp/paragraph-rewriter", {
+  title: "AI Paragraph Rewriter",
+  name: "atfp/paragraph-rewriter",
+  interactive: true,
+  tagName: "atfp-paragraph-rewriter",
+  className: null,
+  edit: ParagraphRewriter,
+});
