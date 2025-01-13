@@ -17,7 +17,7 @@ class Translator {
     }
 
     // @ts-ignore
-    const status = await window.self.translation.canTranslate({
+    const status = await window?.self?.translation?.canTranslate({
       sourceLanguage: this.sourceLang,
       targetLanguage: this.targetLang,
     });

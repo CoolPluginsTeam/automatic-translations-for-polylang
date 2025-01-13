@@ -1,4 +1,4 @@
 // @ts-ignore
-const isTranslatorApiAvailable = (): boolean => Boolean(window.self.translation);
+const isTranslatorApiAvailable = (): boolean => Boolean(window?.self?.translation);
 
 export default isTranslatorApiAvailable;
