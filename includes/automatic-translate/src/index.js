@@ -1,6 +1,8 @@
 import PopupModal from './popmodel';
 import './global-store';
 import { useEffect, useState } from 'react';
+import GutenbergPostFetch from './FetchPost/gutenberg-post-fetch';
+import UpdateGutenbergPage from './createTranslatedPost';
 
 const init = () => {
   let atfpModals = new Array();
@@ -20,6 +22,15 @@ const App = () => {
   const targetLang = urlParams.get('new_lang');
   const postId = urlParams.get('from_post');
   const postType = urlParams.get('post_type');
+  const [postDataFetchStatus, setPostDataFetchStatus] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const fetchPostData = GutenbergPostFetch;
+  const translatePost=UpdateGutenbergPage;
+
+  const updatePostDataFetch = (status) => {
+    setPostDataFetchStatus(status);
+    setLoading(false);
+  }
 
   const handlePageTranslate = (status) => {
     setPageTranslate(status);
@@ -36,7 +47,7 @@ const App = () => {
 
   return (
     <>
-      {!pageTranslate && <PopupModal pageTranslate={handlePageTranslate} postId={postId} targetLang={targetLang} postType={postType} />}
+      {!pageTranslate && <PopupModal contentLoading={loading} updatePostDataFetch={updatePostDataFetch} postDataFetchStatus={postDataFetchStatus} pageTranslate={handlePageTranslate} postId={postId} targetLang={targetLang} postType={postType} fetchPostData={fetchPostData} translatePost={translatePost}/>}
     </>
   );
 };

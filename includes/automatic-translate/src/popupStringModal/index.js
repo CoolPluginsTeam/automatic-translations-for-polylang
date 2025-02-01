@@ -2,18 +2,33 @@ import { useEffect, useState } from "@wordpress/element";
 import StringPopUpHeader from "./header";
 import StringPopUpBody from "./body";
 import StringPopUpFooter from "./footer";
-import TranslateService from "../component/TranslateProvider";
 
 const popStringModal = (props) => {
-    const [popupVisibility, setPopupVisibility] = useState(props.visibility);
+    const [popupVisibility, setPopupVisibility] = useState(true);
     const [refPostData, setRefPostData] = useState('');
     const [translatePending, setTranslatePending] = useState(true);
-    const [translateObj, setTranslateObj] = useState({});
     const [stringCount, setStringCount] = useState(false);
+    const [characterCount, setCharacterCount] = useState(false);
+    const [totalTimeTaken, setTotalTimeTaken] = useState(false);
 
-    const stringCountHandler = (number) => {
+    useEffect(() => {
+        if (!props.postDataFetchStatus) {
+            if (atfp_ajax_object.editor_type === 'gutenberg' && Object.keys(props.blockRules).length > 0) {
+                props.fetchPostData({ blockRules: props.blockRules, postId: props.postId, sourceLang: props.sourceLang, targetLang: props.targetLang, updatePostDataFetch: props.updatePostDataFetch, refPostData: data => setRefPostData(data) });
+            }
+        }
+    }, [props.postDataFetchStatus, props.blockRules, props.modalRender])
+
+    const stringCountHandler = (number, characterCount) => {
         if (popupVisibility) {
             setStringCount(number);
+            setCharacterCount(characterCount);
+        }
+    }
+
+    const totalTimeTakenHandler = (time) => {
+        if (popupVisibility) {
+            setTotalTimeTaken(time);
         }
     }
 
@@ -37,28 +52,22 @@ const popStringModal = (props) => {
 
         setTranslatePending(true);
         setPopupVisibility(false);
-        props.updateFetch(state);
     }
 
     const translateStatusHandler = () => {
         setTranslatePending(false);
     }
 
-    useEffect(() => {
-        document.documentElement.setAttribute('translate', 'no');
-        document.body.classList.add('notranslate');
+    const updatePostDataHandler = () => {
+        const postContent = refPostData;
+        const blockRules = props.blockRules;
+        const modalClose = () => setPopupVisibility(false);
 
-        /**
-         * Calls the translate service provider based on the service type.
-         * For example, it can call services like yandex Translate.
-        */
-        const service = props.service;
-        const id = `atfp_${service}_translate_element`;
-        if (undefined === translateObj[service] && true !== translateObj[service] && refPostData && stringCount) {
-            setTranslateObj(prev => { return { ...prev, [service]: true } });
-            TranslateService[service]({ sourceLang: props.sourceLang, targetLang: props.targetLang, translateStatus: translateStatusHandler, ID: id });
-        }
-    }, [props.service, refPostData, stringCount]);
+        console.log(postContent);
+        props.translatePost({ postContent: postContent, modalClose: modalClose, blockRules: blockRules, service: props.service, blockRules: blockRules });
+
+        props.pageTranslate(true);
+    }
 
     useEffect(() => {
         setPopupVisibility(true);
@@ -71,14 +80,51 @@ const popStringModal = (props) => {
     }, [props.modalRender])
 
     return (
-        <>
+        <> {popupVisibility &&
             <div id={`atfp-${props.service}-strings-modal`} className="modal-container" style={{ display: popupVisibility ? 'flex' : 'none' }}>
                 <div className="modal-content">
-                    <StringPopUpHeader modalRender={props.modalRender} setPopupVisibility={setPopupVisibilityHandler} postContent={refPostData} blockRules={props.blockRules} translateStatus={translatePending} pageTranslate={props.pageTranslate} service={props.service} />
-                    <StringPopUpBody {...props} updatePostContent={updatePostContentHandler} blockRules={props.blockRules} stringCountHandler={stringCountHandler} />
-                    <StringPopUpFooter modalRender={props.modalRender} setPopupVisibility={setPopupVisibilityHandler} postContent={refPostData} blockRules={props.blockRules} translateStatus={translatePending} pageTranslate={props.pageTranslate} stringCount={stringCount} service={props.service} />
+                    <StringPopUpHeader
+                        modalRender={props.modalRender}
+                        setPopupVisibility={setPopupVisibilityHandler}
+                        postContent={refPostData}
+                        blockRules={props.blockRules}
+                        translateStatus={translatePending}
+                        pageTranslate={props.pageTranslate}
+                        stringCount={stringCount}
+                        characterCount={characterCount}
+                        totalTimeTaken={totalTimeTaken}
+                        service={props.service}
+                        updatePostData={updatePostDataHandler}
+                    />
+                    <StringPopUpBody {...props}
+                        updatePostContent={updatePostContentHandler}
+                        blockRules={props.blockRules}
+                        stringCountHandler={stringCountHandler}
+                        totalTimeTakenHandler={totalTimeTakenHandler}
+                        contentLoading={props.contentLoading}
+                        postDataFetchStatus={props.postDataFetchStatus}
+                        service={props.service}
+                        sourceLang={props.sourceLang}
+                        targetLang={props.targetLang}
+                        translateStatusHandler={translateStatusHandler}
+                        modalRender={props.modalRender}
+                    />
+                    <StringPopUpFooter
+                        modalRender={props.modalRender}
+                        setPopupVisibility={setPopupVisibilityHandler}
+                        postContent={refPostData}
+                        blockRules={props.blockRules}
+                        translateStatus={translatePending}
+                        pageTranslate={props.pageTranslate}
+                        stringCount={stringCount}
+                        characterCount={characterCount}
+                        totalTimeTaken={totalTimeTaken}
+                        service={props.service}
+                        updatePostData={updatePostDataHandler}
+                    />
                 </div>
             </div>
+        }
         </>
     );
 }

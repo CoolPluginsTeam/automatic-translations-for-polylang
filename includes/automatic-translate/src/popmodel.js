@@ -1,4 +1,3 @@
-// import ReactDOM from "react-dom";
 import ReactDOM from "react-dom/client";
 import { useEffect, useState } from "@wordpress/element";
 import PopStringModal from "./popupStringModal";
@@ -7,10 +6,9 @@ import ChromeLocalAiTranslator from "./component/TranslateProvider/local-ai-tran
 const { sprintf, __ } = wp.i18n;
 
 const PopupModal = (props) => {
-    const [fetchStatus, setFetchStatus] = useState(false);
     const [targetBtn, setTargetBtn] = useState({});
     const [blockRules, setBlockRules] = useState({});
-    const [modalRender, setModalRender] = useState({});
+    const [modalRender, setModalRender] = useState(0);
     const [settingVisibility, setSettingVisibility] = useState(false);
     const sourceLang = atfp_ajax_object.source_lang;
     const targetLang = props.targetLang;
@@ -28,20 +26,12 @@ const PopupModal = (props) => {
         action: atfp_ajax_object.action_block_rules
     };
 
-    /**
-     * Update the fetch status state.
-     * @param {boolean} state - The state to update the fetch status with.
-     */
-    const updateFetch = (state) => {
-        setFetchStatus(state);
-    }
-
-    const openModalOnLoadHandler=(e)=>{
+    const openModalOnLoadHandler = (e) => {
         e.preventDefault();
-        const btnElement=e.target;
-        const visibility=btnElement.dataset.value;
+        const btnElement = e.target;
+        const visibility = btnElement.dataset.value;
 
-        if(visibility === 'yes'){
+        if (visibility === 'yes') {
             setSettingVisibility(true);
         }
 
@@ -53,7 +43,7 @@ const PopupModal = (props) => {
      * Triggers the setSettingVisibility only when user click on meta field Button.
     */
     useEffect(() => {
-        const firstRenderBtns=document.querySelectorAll('#atfp-modal-open-warning-wrapper .modal-content button');
+        const firstRenderBtns = document.querySelectorAll('#atfp-modal-open-warning-wrapper .modal-content button');
         const metaFieldBtn = document.querySelector('input#atfp-translate-button[name="atfp_meta_box_translate"]');
 
         if (metaFieldBtn) {
@@ -62,32 +52,34 @@ const PopupModal = (props) => {
             });
         }
 
-        firstRenderBtns.forEach(ele=>{
-            if(ele){
-                ele.addEventListener('click',openModalOnLoadHandler);
+        firstRenderBtns.forEach(ele => {
+            if (ele) {
+                ele.addEventListener('click', openModalOnLoadHandler);
             }
         })
     }, [])
 
+    /**
+     * useEffect hook to check if the local AI translator is supported.
+     */
     useEffect(() => {
         const languageSupportedStatus = async () => {
             const localAiTranslatorSupport = await ChromeLocalAiTranslator.languageSupportedStatus(sourceLang, targetLang, targetLangName);
-            const translateBtn=document.querySelector('.atfp-service-btn#local_ai_translator_btn');
+            const translateBtn = document.querySelector('.atfp-service-btn#local_ai_translator_btn');
 
-            if(localAiTranslatorSupport !== true && typeof localAiTranslatorSupport === 'object' && translateBtn) {
-                translateBtn.disabled=true;
-                jQuery(translateBtn).after(localAiTranslatorSupport); 
-            }       
+            if (localAiTranslatorSupport !== true && typeof localAiTranslatorSupport === 'object' && translateBtn) {
+                translateBtn.disabled = true;
+                jQuery(translateBtn).after(localAiTranslatorSupport);
+            }
         };
         languageSupportedStatus();
     }, [settingVisibility]);
 
     /**
-     * useEffect hook to fetch block rules data from the server.
-     * Triggers the fetch only when fetchStatus is true and blockRules is empty.
+     * Fetch block rules data from the server.
      */
-    useEffect(() => {
-        if (Object.keys(blockRules).length > 0 || !fetchStatus) {
+    const fetchBlockRules = () => {
+        if (Object.keys(blockRules).length > 0 || props.postDataFetchStatus) {
             return;
         }
 
@@ -108,17 +100,13 @@ const PopupModal = (props) => {
             .catch(error => {
                 console.error('Error fetching post content:', error);
             });
-    }, [fetchStatus])
+    }
 
     /**
      * useEffect hook to handle displaying the modal and rendering the PopStringModal component.
      * Renders the modal only when blockRules is not empty and fetchStatus is true.
      */
     useEffect(() => {
-        if (Object.keys(blockRules).length <= 0) {
-            return;
-        }
-
         const btn = targetBtn;
         const service = btn.dataset && btn.dataset.service;
         const serviceLabel = btn.dataset && btn.dataset.serviceLabel;
@@ -126,13 +114,15 @@ const PopupModal = (props) => {
 
         const parentWrp = document.getElementById("atfp_strings_model");
 
-        if(parentWrp){
-            const root = ReactDOM.createRoot(parentWrp);
-            if (fetchStatus && Object.keys(blockRules).length > 0) {
-                root.render(<PopStringModal
+        if (parentWrp) {
+            // Store root instance in a ref to avoid recreating it
+            if (!parentWrp._reactRoot) {
+                parentWrp._reactRoot = ReactDOM.createRoot(parentWrp);
+            }
+
+            if (modalRender) {
+                parentWrp._reactRoot.render(<PopStringModal
                     blockRules={blockRules}
-                    visibility={fetchStatus}
-                    updateFetch={updateFetch}
                     postId={postId}
                     service={service}
                     serviceLabel={serviceLabel}
@@ -140,12 +130,15 @@ const PopupModal = (props) => {
                     targetLang={targetLang}
                     modalRender={modalRender}
                     pageTranslate={props.pageTranslate}
+                    postDataFetchStatus={props.postDataFetchStatus}
+                    fetchPostData={props.fetchPostData}
+                    translatePost={props.translatePost}
+                    contentLoading={props.contentLoading}
+                    updatePostDataFetch={props.updatePostDataFetch}
                 />);
-                setSettingVisibility(prev => !prev);
             }
         }
-
-    }, [fetchStatus, blockRules]);
+    }, [props.postDataFetchStatus, blockRules, modalRender]);
 
     /**
      * Function to handle fetching content based on the target button clicked.
@@ -155,16 +148,17 @@ const PopupModal = (props) => {
     const fetchContent = async (e) => {
         let targetElement = !e.target.classList.contains('atfp-service-btn') ? e.target.closest('.atfp-service-btn') : e.target;
         const dataService = targetElement.dataset && targetElement.dataset.service;
+        setSettingVisibility(false);
 
-        if(dataService === 'localAiTranslator') {
+        if (dataService === 'localAiTranslator') {
             const localAiTranslatorSupport = await ChromeLocalAiTranslator.languageSupportedStatus(sourceLang, targetLang, targetLangName);
-            if(localAiTranslatorSupport !== true && typeof localAiTranslatorSupport === 'object') {
+            if (localAiTranslatorSupport !== true && typeof localAiTranslatorSupport === 'object') {
                 return;
             }
         }
         setModalRender(prev => prev + 1);
         setTargetBtn(targetElement);
-        setFetchStatus(true);
+        fetchBlockRules();
     };
 
     return (
@@ -175,7 +169,7 @@ const PopupModal = (props) => {
                         <div className="modal-header">
                             <h2>{__("Step 1 - Select Translation Provider", 'automatic-translations-for-polylang')}</h2>
                             <h4>{sprintf(__("Translate %(postType)s content from %(source)s to %(target)s", 'automatic-translations-for-polylang'), { postType: props.postType, source: sourceLangName, target: targetLangName })}</h4>
-                            <p className="atfp-error-message" style={{marginBottom: '.5rem'}}>{sprintf(__("This translation widget replaces the current %(postType)s content with the original %(source)s %(postType)s and translates it into %(target)s", 'automatic-translations-for-polylang'),{ postType: props.postType, source: sourceLangName, target: targetLangName})}</p>
+                            <p className="atfp-error-message" style={{ marginBottom: '.5rem' }}>{sprintf(__("This translation widget replaces the current %(postType)s content with the original %(source)s %(postType)s and translates it into %(target)s", 'automatic-translations-for-polylang'), { postType: props.postType, source: sourceLangName, target: targetLangName })}</p>
                             <span className="close" onClick={() => setSettingVisibility(false)}>&times;</span>
                         </div>
                         <hr />
@@ -204,7 +198,7 @@ const PopupModal = (props) => {
                         <strong className="atlt-heading">{__("Translate Using Chrome Built-in API", 'automatic-translations-for-polylang')}</strong>
                         <div className="inputGroup">
                             <button id="local_ai_translator_btn" className="atfp-service-btn button button-primary" data-service="localAiTranslator" data-service-label="Chrome Built-in API" onClick={fetchContent}>{__("Chrome AI Translator (Beta)", 'automatic-translations-for-polylang')}</button>
-                            <br/><a href="https://developer.chrome.com/docs/ai/translator-api" target="_blank">Powered by <img className="pro-features-img" src={`${imgFolder}chrome-ai-translator.png`} alt="powered by Chrome built-in API" /> Built-in API</a>
+                            <br /><a href="https://developer.chrome.com/docs/ai/translator-api" target="_blank">Powered by <img className="pro-features-img" src={`${imgFolder}chrome-ai-translator.png`} alt="powered by Chrome built-in API" /> Built-in API</a>
                         </div>
                         <hr />
                         <div className="modal-footer">

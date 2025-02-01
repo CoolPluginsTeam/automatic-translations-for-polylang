@@ -48,7 +48,6 @@ const filterTranslateAttr = (blockId, blockAttr, filterAttr) => {
                     return false;
                 }
 
-
                 dispatch('block-atfp/translate').contentSaveSource(filterKey, blockAttrContent);
             }
 
@@ -117,7 +116,7 @@ const blockAttributeContent = (parseBlock, blockRules) => {
  * @param {Object} block - The block to save translation for.
  * @param {Object} blockRules - The rules for translating the block.
  */
-const saveTranslation = (block, blockRules) => {
+const GutenbergBlockSaveSource = (block, blockRules) => {
     Object.keys(block).forEach(key => {
         if (key === 'content') {
             blockAttributeContent(block[key], blockRules);
@@ -131,10 +130,12 @@ const saveTranslation = (block, blockRules) => {
                 }
             });
         } else if(['title', 'excerpt'].includes(key)){
-            const action = `${key}SaveSource`;
-            dispatch('block-atfp/translate')[action](block[key]);
+            if(block[key] && block[key].trim() !== ''){
+                const action = `${key}SaveSource`;
+                dispatch('block-atfp/translate')[action](block[key]);
+            }
         }
     });
 }
 
-export default saveTranslation;
+export default GutenbergBlockSaveSource;

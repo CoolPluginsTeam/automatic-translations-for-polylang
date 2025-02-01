@@ -41,6 +41,7 @@ const GutenbergPostFetch = async (props) => {
             }
 
             GutenbergBlockSaveSource(post_data, blockRules);
+            props.refPostData(post_data);
             props.updatePostDataFetch(true);
         })
         .catch(error => {
