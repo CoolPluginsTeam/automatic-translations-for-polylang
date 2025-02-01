@@ -12,7 +12,7 @@ import SeoPressFields from './SeoMetaFields/SeoPress';
  */
 const translatePost = (props) => {
     const { editPost } = dispatch('core/editor');
-    const { modalClose, postContent } = props;
+    const { modalClose, postContent, service } = props;
 
     /**
      * Updates the post title and excerpt text based on translation.
@@ -24,7 +24,8 @@ const translatePost = (props) => {
         editPostData.forEach(key => {
             const sourceData = postContent[key];
             if (sourceData.trim() !== '') {
-                const translateContent = select('block-atfp/translate').getTranslatedString(key, sourceData);
+                const translateContent = select('block-atfp/translate').getTranslatedString(key, sourceData, null, service);
+
                 data[key] = translateContent;
             }
         });
@@ -40,7 +41,7 @@ const translatePost = (props) => {
         Object.keys(metaFieldsData).forEach(key => {
             // Update yoast seo meta fields
             if(Object.keys(AllowedMetaFields).includes(key) && AllowedMetaFields[key].type === 'string') {
-                const translatedMetaFields = select('block-atfp/translate').getTranslatedString('metaFields', metaFieldsData[key][0], key);
+                const translatedMetaFields = select('block-atfp/translate').getTranslatedString('metaFields', metaFieldsData[key][0], key, service);
                 if(key.startsWith('_yoast_wpseo_')) {
                     YoastSeoFields({ key: key, value: translatedMetaFields });
                 } else if(key.startsWith('rank_math_')) {
@@ -66,7 +67,7 @@ const translatePost = (props) => {
         }
 
         Object.values(postContentData).forEach(block => {
-            createBlocks(block, props.blockRules);
+            createBlocks(block, props.blockRules, service);
         });
     }
 

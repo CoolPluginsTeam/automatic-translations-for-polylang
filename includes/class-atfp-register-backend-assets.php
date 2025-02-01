@@ -117,6 +117,7 @@ class ATFP_Register_Backend_Assets {
                             'action_block_rules' => 'block_parsing_rules',
                             'source_lang'        => pll_get_post_language( $from_post_id, 'slug' ),
                             'languageObject'     => $lang_object,
+                            'editor_type'        => 'gutenberg',
                         )
                     );
                 }

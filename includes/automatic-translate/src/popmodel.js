@@ -1,4 +1,5 @@
-import ReactDOM from "react-dom";
+// import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import { useEffect, useState } from "@wordpress/element";
 import PopStringModal from "./popupStringModal";
 import yandexLanguage from "./component/TranslateProvider/yandex/yandex-language";
@@ -125,21 +126,25 @@ const PopupModal = (props) => {
 
         const parentWrp = document.getElementById("atfp_strings_model");
 
-        if (fetchStatus && Object.keys(blockRules).length > 0) {
-            ReactDOM.render(<PopStringModal
-                blockRules={blockRules}
-                visibility={fetchStatus}
-                updateFetch={updateFetch}
-                postId={postId}
-                service={service}
-                serviceLabel={serviceLabel}
-                sourceLang={sourceLang}
-                targetLang={targetLang}
-                modalRender={modalRender}
-                pageTranslate={props.pageTranslate}
-            />, parentWrp);
-            setSettingVisibility(prev => !prev);
+        if(parentWrp){
+            const root = ReactDOM.createRoot(parentWrp);
+            if (fetchStatus && Object.keys(blockRules).length > 0) {
+                root.render(<PopStringModal
+                    blockRules={blockRules}
+                    visibility={fetchStatus}
+                    updateFetch={updateFetch}
+                    postId={postId}
+                    service={service}
+                    serviceLabel={serviceLabel}
+                    sourceLang={sourceLang}
+                    targetLang={targetLang}
+                    modalRender={modalRender}
+                    pageTranslate={props.pageTranslate}
+                />);
+                setSettingVisibility(prev => !prev);
+            }
         }
+
     }, [fetchStatus, blockRules]);
 
     /**
@@ -170,7 +175,7 @@ const PopupModal = (props) => {
                         <div className="modal-header">
                             <h2>{__("Step 1 - Select Translation Provider", 'automatic-translations-for-polylang')}</h2>
                             <h4>{sprintf(__("Translate %(postType)s content from %(source)s to %(target)s", 'automatic-translations-for-polylang'), { postType: props.postType, source: sourceLangName, target: targetLangName })}</h4>
-                            <p class="atfp-error-message" style={{marginBottom: '.5rem'}}>{sprintf(__("This translation widget replaces the current %(postType)s content with the original %(source)s %(postType)s and translates it into %(target)s", 'automatic-translations-for-polylang'),{ postType: props.postType, source: sourceLangName, target: targetLangName})}</p>
+                            <p className="atfp-error-message" style={{marginBottom: '.5rem'}}>{sprintf(__("This translation widget replaces the current %(postType)s content with the original %(source)s %(postType)s and translates it into %(target)s", 'automatic-translations-for-polylang'),{ postType: props.postType, source: sourceLangName, target: targetLangName})}</p>
                             <span className="close" onClick={() => setSettingVisibility(false)}>&times;</span>
                         </div>
                         <hr />
@@ -198,7 +203,7 @@ const PopupModal = (props) => {
                         <hr />
                         <strong className="atlt-heading">{__("Translate Using Chrome Built-in API", 'automatic-translations-for-polylang')}</strong>
                         <div className="inputGroup">
-                            <button id="local_ai_translator_btn" class="atfp-service-btn button button-primary" data-service="localAiTranslator" data-service-label="Chrome Built-in API" onClick={fetchContent}>{__("Chrome AI Translator (Beta)", 'automatic-translations-for-polylang')}</button>
+                            <button id="local_ai_translator_btn" className="atfp-service-btn button button-primary" data-service="localAiTranslator" data-service-label="Chrome Built-in API" onClick={fetchContent}>{__("Chrome AI Translator (Beta)", 'automatic-translations-for-polylang')}</button>
                             <br/><a href="https://developer.chrome.com/docs/ai/translator-api" target="_blank">Powered by <img className="pro-features-img" src={`${imgFolder}chrome-ai-translator.png`} alt="powered by Chrome built-in API" /> Built-in API</a>
                         </div>
                         <hr />

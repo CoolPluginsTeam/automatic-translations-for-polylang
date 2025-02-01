@@ -72,11 +72,11 @@ const popStringModal = (props) => {
 
     return (
         <>
-            <div id={`atfp-${props.service}-strings-modal`} class="modal-container" style={{ display: popupVisibility ? 'flex' : 'none' }}>
-                <div class="modal-content">
-                    <StringPopUpHeader modalRender={props.modalRender} setPopupVisibility={setPopupVisibilityHandler} postContent={refPostData} blockRules={props.blockRules} translateStatus={translatePending} pageTranslate={props.pageTranslate} />
+            <div id={`atfp-${props.service}-strings-modal`} className="modal-container" style={{ display: popupVisibility ? 'flex' : 'none' }}>
+                <div className="modal-content">
+                    <StringPopUpHeader modalRender={props.modalRender} setPopupVisibility={setPopupVisibilityHandler} postContent={refPostData} blockRules={props.blockRules} translateStatus={translatePending} pageTranslate={props.pageTranslate} service={props.service} />
                     <StringPopUpBody {...props} updatePostContent={updatePostContentHandler} blockRules={props.blockRules} stringCountHandler={stringCountHandler} />
-                    <StringPopUpFooter modalRender={props.modalRender} setPopupVisibility={setPopupVisibilityHandler} postContent={refPostData} blockRules={props.blockRules} translateStatus={translatePending} pageTranslate={props.pageTranslate} stringCount={stringCount} />
+                    <StringPopUpFooter modalRender={props.modalRender} setPopupVisibility={setPopupVisibilityHandler} postContent={refPostData} blockRules={props.blockRules} translateStatus={translatePending} pageTranslate={props.pageTranslate} stringCount={stringCount} service={props.service} />
                 </div>
             </div>
         </>

@@ -43,7 +43,7 @@ const localAiTranslator = async (props)=>{
         const key = ele.dataset.key;
         const sourceText = ele.closest('tr').querySelector('td[data-source="source_text"]').innerText;
 
-        SaveTranslation({type: type, key: key, translateContent: translatedText, source: sourceText});
+        SaveTranslation({type: type, key: key, translateContent: translatedText, source: sourceText, provider: 'localAiTranslator'});
     }
 
     const TranslateProvider = await ChromeAiTranslator.Object({

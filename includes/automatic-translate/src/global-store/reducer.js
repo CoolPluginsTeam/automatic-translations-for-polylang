@@ -37,7 +37,7 @@ const reducer = (state = TranslateDefaultState, action) => {
 
         case AtfpActionTypes.traslatedTitle: // Action to save the translated title
             // Update the state with the new target title
-            return { ...state, title: { ...state.title, target: action.text } };
+            return { ...state, title: { ...state.title, translatedData: { ...(state.title.translatedData || []), [action.provider]: action.text } } };
 
         case AtfpActionTypes.sourceExcerpt: // Action to save the source excerpt
             // Check if the action text contains any letters or numbers
@@ -49,7 +49,7 @@ const reducer = (state = TranslateDefaultState, action) => {
 
         case AtfpActionTypes.traslatedExcerpt: // Action to save the translated excerpt
             // Update the state with the new target excerpt
-            return { ...state, excerpt: { ...state.excerpt, target: action.text } };
+            return { ...state, excerpt: { ...state.excerpt, translatedData: { ...(state.excerpt.translatedData || []), [action.provider]: action.text } } };
 
         case AtfpActionTypes.sourceContent: // Action to save the source content
             // Check if the action text contains any letters or numbers
@@ -63,7 +63,7 @@ const reducer = (state = TranslateDefaultState, action) => {
             // Check if the source of the content matches the action source
             if (state.content[action.id].source === action.source) {
                 // Update the state with the new target content for the specific ID
-                return { ...state, content: { ...state.content, [action.id]: { ...(state.content[action.id] || []), target: action.text } } };
+                return { ...state, content: { ...state.content, [action.id]: { ...(state.content[action.id] || []), translatedData: { ...(state.content[action.id].translatedData || []), [action.provider]: action.text } } } };
             }
             return state; // Return the current state if no match
 
@@ -77,7 +77,7 @@ const reducer = (state = TranslateDefaultState, action) => {
 
         case AtfpActionTypes.traslatedMetaFields: // Action to save the translated meta fields
             // Update the state with the new target meta field for the specific ID
-            return { ...state, metaFields: { ...state.metaFields, [action.id]: { ...(state.metaFields[action.id] || []), target: action.text } } };
+            return { ...state, metaFields: { ...state.metaFields, [action.id]: { ...(state.metaFields[action.id] || []), translatedData: { ...(state.metaFields[action.id].translatedData || []), [action.provider]: action.text } } } };  
 
         default: // If the action type does not match any case
             return state; // Return the current state unchanged

@@ -52,7 +52,7 @@ const updateTranslatedContent = () => {
         const type = ele.dataset.stringType;
         const sourceText = ele.closest('tr').querySelector('td[data-source="source_text"]').innerText;
 
-        SaveTranslation({ type: type, key: key, translateContent: translatedText, source: sourceText });
+        SaveTranslation({ type: type, key: key, translateContent: translatedText, source: sourceText, provider: 'yandex' });
     });
 }
 

@@ -77,7 +77,7 @@ const FetchPost = (props) => {
                                     <tr key={index}>
                                         <td>{++sNo}</td>
                                         <td data-source="source_text">{data.source}</td>
-                                        <td class="translate" translate="yes" data-key={data.id} data-string-type={data.type}>
+                                        <td className="translate" translate="yes" data-key={data.id} data-string-type={data.type}>
                                             <FilterTargetContent service={props.service} content={data.source} translateContent={props.translateContent} totalString={totalString} currentIndex={sNo} contentKey={data.id}/>
                                         </td>
                                     </tr>

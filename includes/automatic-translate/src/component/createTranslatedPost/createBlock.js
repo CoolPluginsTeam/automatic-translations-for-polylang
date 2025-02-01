@@ -9,7 +9,7 @@ const { dispatch, select } = wp.data;
  * @param {Object} blockParseRules - The rules for parsing the block.
  * @returns {Object} The updated block with translated attributes.
  */
-const filterTranslateAttr = (block, blockParseRules) => {
+const filterTranslateAttr = (block, blockParseRules, service) => {
     const filterAttrArr = Object.values(blockParseRules);
     const blockAttr = block.attributes;
     const blockId = block.clientId;
@@ -72,7 +72,7 @@ const filterTranslateAttr = (block, blockParseRules) => {
                 if (!/[\p{L}\p{N}]/gu.test(blockAttrContent)) {
                     translateContent = blockAttrContent;
                 } else {
-                    translateContent = select('block-atfp/translate').getTranslatedString('content', blockAttrContent, filterKey);
+                    translateContent = select('block-atfp/translate').getTranslatedString('content', blockAttrContent, filterKey, service);
                 }
 
                 block.attributes = updateNestedAttribute(block.attributes, newIdArr, translateContent);
@@ -101,9 +101,10 @@ const filterTranslateAttr = (block, blockParseRules) => {
  * @param {Object} block - The block to create a translated version of.
  * @param {Array} childBlock - The child blocks associated with the main block.
  * @param {Object} blockRules - The rules for translating blocks.
+ * @param {String} service - The service to use for translation.
  * @returns {Object} The newly created translated block.
  */
-const createTranslatedBlock = (block, childBlock, blockRules) => {
+const createTranslatedBlock = (block, childBlock, blockRules, service) => {
     const { name: blockName, attributes } = block;
     const blockTranslateName = Object.keys(blockRules.AtfpBlockParseRules);
 
@@ -112,7 +113,8 @@ const createTranslatedBlock = (block, childBlock, blockRules) => {
     let newBlock = '';
 
     if (blockTranslateName.includes(block.name)) {
-        translatedBlock = filterTranslateAttr(block, blockRules['AtfpBlockParseRules'][block.name]);
+        translatedBlock = filterTranslateAttr(block, blockRules['AtfpBlockParseRules'][block.name], service);
+
         attribute = translatedBlock.attributes;
     }
 
@@ -128,15 +130,15 @@ const createTranslatedBlock = (block, childBlock, blockRules) => {
  * @param {Object} blockRules - The rules for translating blocks.
  * @returns {Object} The newly created translated child block.
  */
-const cretaeChildBlock = (block, blockRules) => {
+const cretaeChildBlock = (block, blockRules, service) => {
     let childBlock = block.innerBlocks.map(block => {
         if (block.name) {
-            const childBlock = cretaeChildBlock(block, blockRules);
+            const childBlock = cretaeChildBlock(block, blockRules, service);
             return childBlock;
         }
     });
 
-    const newBlock = createTranslatedBlock(block, childBlock, blockRules)
+    const newBlock = createTranslatedBlock(block, childBlock, blockRules, service)
 
     return newBlock;
 }
@@ -148,16 +150,16 @@ const cretaeChildBlock = (block, blockRules) => {
  * @param {Object} block - The main block to create.
  * @param {Object} blockRules - The rules for translating blocks.
  */
-const createBlocks = (block, blockRules) => {
+const createBlocks = (block, blockRules, service) => {
     const { name: blockName } = block;
     // Create the main block
     if (blockName) {
         let childBlock = block.innerBlocks.map(block => {
             if (block.name) {
-                return cretaeChildBlock(block, blockRules);
+                return cretaeChildBlock(block, blockRules, service);
             }
         })
-        const parentBlock = createTranslatedBlock(block, childBlock, blockRules);
+        const parentBlock = createTranslatedBlock(block, childBlock, blockRules, service);
 
         dispatch('core/block-editor').insertBlock(parentBlock);
 
