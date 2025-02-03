@@ -3,6 +3,7 @@ import './global-store';
 import { useEffect, useState } from 'react';
 import GutenbergPostFetch from './FetchPost/Gutenberg';
 import UpdateGutenbergPage from './createTranslatedPost/Gutenberg';
+import ReactDOM from "react-dom/client";
 
 const init = () => {
   let atfpModals = new Array();
@@ -25,7 +26,7 @@ const App = () => {
   const [postDataFetchStatus, setPostDataFetchStatus] = useState(false);
   const [loading, setLoading] = useState(true);
   const fetchPostData = GutenbergPostFetch;
-  const translatePost=UpdateGutenbergPage;
+  const translatePost = UpdateGutenbergPage;
 
   const updatePostDataFetch = (status) => {
     setPostDataFetchStatus(status);
@@ -47,7 +48,7 @@ const App = () => {
 
   return (
     <>
-      {!pageTranslate && <PopupModal contentLoading={loading} updatePostDataFetch={updatePostDataFetch} postDataFetchStatus={postDataFetchStatus} pageTranslate={handlePageTranslate} postId={postId} targetLang={targetLang} postType={postType} fetchPostData={fetchPostData} translatePost={translatePost}/>}
+      {!pageTranslate && <PopupModal contentLoading={loading} updatePostDataFetch={updatePostDataFetch} postDataFetchStatus={postDataFetchStatus} pageTranslate={handlePageTranslate} postId={postId} targetLang={targetLang} postType={postType} fetchPostData={fetchPostData} translatePost={translatePost} />}
     </>
   );
 };
@@ -93,5 +94,6 @@ window.addEventListener('load', () => {
 
   insertMessagePopup();
 
-  wp.element.render(<App />, document.getElementById('atfp-setting-modal'));
+  const root = ReactDOM.createRoot(document.getElementById('atfp-setting-modal'));
+  root.render(<App />);
 });

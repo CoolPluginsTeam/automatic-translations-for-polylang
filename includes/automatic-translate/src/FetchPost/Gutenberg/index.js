@@ -23,7 +23,7 @@ const GutenbergPostFetch = async (props) => {
      * Handles errors in fetching post content.
      */
     // useEffect(() => {
-    fetch(apiUrl, {
+    await fetch(apiUrl, {
         method: 'POST',
         headers: {
             'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
