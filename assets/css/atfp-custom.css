@@ -528,3 +528,8 @@ body>div.skiptranslate iframe.skiptranslate[frameborder][src][style="visibility:
     height: calc(100vh - 270px);
     box-shadow: 0 -1px 4px #0000005e inset;
 }
+
+#atfp_strings_model .react-loading-skeleton-atfp{
+    height: calc(100vh - 235px)!important;
+    margin-block: 1rem;
+}

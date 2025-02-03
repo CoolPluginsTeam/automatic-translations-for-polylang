@@ -75,11 +75,14 @@ class ATFP_Register_Backend_Assets {
                 $post_type      = isset( $_GET['post_type'] ) ? sanitize_key( $_GET['post_type'] ) : '';
 
                 if ( $post_translate && $lang && $post_type ) {
-                    wp_register_style( 'atfp-automatic-translate', ATFP_URL . 'assets/css/atfp-custom.min.css', array(), ATFP_V );
+                    wp_register_style( 'atfp-automatic-translate-custom', ATFP_URL . 'assets/css/atfp-custom.min.css', array(), ATFP_V );
 
                     $editor_script_asset = include ATFP_DIR_PATH . 'assets/automatic-translate/index.asset.php';
                     wp_register_script( 'atfp-automatic-translate', ATFP_URL . 'assets/automatic-translate/index.js', $editor_script_asset['dependencies'], $editor_script_asset['version'], true );
 
+                    wp_register_style( 'atfp-automatic-translate', ATFP_URL . 'assets/automatic-translate/index.css', array(), $editor_script_asset['version'] );
+
+                    wp_enqueue_style( 'atfp-automatic-translate-custom' );
                     wp_enqueue_style( 'atfp-automatic-translate' );
                     wp_enqueue_script( 'atfp-automatic-translate' );
 

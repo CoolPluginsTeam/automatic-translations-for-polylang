@@ -78,7 +78,7 @@ const StringPopUpBody = (props) => {
 
     return (
         <div className="modal-body">
-            {translateContent.length > 0 && props.postDataFetchStatus ?
+            {/* {translateContent.length > 0 && props.postDataFetchStatus ?
                 <>
                     <div className="atfp_translate_progress" key={props.modalRender}>{__("Automatic translation is in progress....", 'automatic-translations-for-polylang')}<br />{__("It will take few minutes, enjoy ☕ coffee in this time!", 'automatic-translations-for-polylang')}<br /><br />{__("Please do not leave this window or browser tab while translation is in progress...", 'automatic-translations-for-polylang')}</div>
                     <div className={`translator-widget ${service}`} style={{ display: `${props.service === 'localAiTranslator' ? 'flex' : 'block'}` }}>
@@ -132,16 +132,13 @@ const StringPopUpBody = (props) => {
                         </table>
                     </div>
                 </> :
-                props.postDataFetchStatus ?
-                    <p>{__('No strings are available for translation', 'automatic-translations-for-polylang')}</p> :
-
+                props.postDataFetchStatus ? */}
                     <Skeleton
                         count={1}
                         height='150px'
                         width="100%"
-                        className="react-loading-skeleton"
+                        className="react-loading-skeleton-atfp"
                     />
-            }
         </div>
     );
 }
