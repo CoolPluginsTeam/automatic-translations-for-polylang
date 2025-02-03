@@ -77,7 +77,17 @@ const reducer = (state = TranslateDefaultState, action) => {
 
         case AtfpActionTypes.traslatedMetaFields: // Action to save the translated meta fields
             // Update the state with the new target meta field for the specific ID
-            return { ...state, metaFields: { ...state.metaFields, [action.id]: { ...(state.metaFields[action.id] || []), translatedData: { ...(state.metaFields[action.id].translatedData || []), [action.provider]: action.text } } } };  
+            return { ...state, metaFields: { ...state.metaFields, [action.id]: { ...(state.metaFields[action.id] || []), translatedData: { ...(state.metaFields[action.id].translatedData || []), [action.provider]: action.text } } } };
+
+        case AtfpActionTypes.translationInfo: // Action to save the translation info
+            // Update the state with the new translation info
+            const data = {}
+
+            action.stringCount && (data.stringCount = action.stringCount);
+            action.characterCount && (data.characterCount = action.characterCount);
+            action.timeTaken && (data.timeTaken = { ...data.timeTaken, [action.provider]: action.timeTaken });
+
+            return { ...state, translationInfo: { ...state.translationInfo, ...data } };
 
         default: // If the action type does not match any case
             return state; // Return the current state unchanged

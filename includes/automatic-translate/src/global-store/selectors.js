@@ -95,3 +95,7 @@ export const getTranslatedString = (state, type, source, id = null, provider = n
     // If no matches, return the original source text
     return source;
 }
+
+export const getTranslationInfo = (state) => {
+    return state.translationInfo;
+}
