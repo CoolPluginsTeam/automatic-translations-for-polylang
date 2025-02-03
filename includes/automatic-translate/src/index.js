@@ -25,8 +25,27 @@ const App = () => {
   const postType = urlParams.get('post_type');
   const [postDataFetchStatus, setPostDataFetchStatus] = useState(false);
   const [loading, setLoading] = useState(true);
-  const fetchPostData = GutenbergPostFetch;
   const translatePost = UpdateGutenbergPage;
+
+  const fetchPostData = async (data) => {
+    await GutenbergPostFetch(data);
+
+    const allEntries = wp.data.select('block-atfp/translate').getTranslationEntry();
+
+    let totalCharacterCount = 0;
+    let totalWordCount = 0;
+
+    allEntries.map(entries => {
+      const source = entries.source ? entries.source : '';
+      const wordCount = source.trim().split(/\s+/).filter(word => /[^\p{L}\p{N}]/.test(word)).length;
+      const characterCount = source.length;
+
+      totalCharacterCount += characterCount;
+      totalWordCount += wordCount;
+    });
+
+    wp.data.dispatch('block-atfp/translate').translationInfo({ wordCount: totalWordCount, characterCount: totalCharacterCount });
+  }
 
   const updatePostDataFetch = (status) => {
     setPostDataFetchStatus(status);

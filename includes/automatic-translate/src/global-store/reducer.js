@@ -84,6 +84,7 @@ const reducer = (state = TranslateDefaultState, action) => {
             const data = {}
 
             action.stringCount && (data.stringCount = action.stringCount);
+            action.wordCount && (data.wordCount = action.wordCount);
             action.characterCount && (data.characterCount = action.characterCount);
             action.timeTaken && (data.timeTaken = { ...data.timeTaken, [action.provider]: action.timeTaken });
 
