@@ -5,8 +5,13 @@ import SaveTranslation from "../../storeTranslatedString";
 
 const localAiTranslator = async (props)=>{
     const targetLangName = atfp_ajax_object.languageObject[props.targetLang];
+    let translationInitialize=false;
+    let startTime=0;
+    let totalTimeTaken=0;
 
     const startTranslation = () => {
+        startTime !== 0 && (totalTimeTaken = new Date().getTime() - startTime);
+        startTime = new Date().getTime();
         const stringContainer = jQuery("#atfp_strings_model .modal-content .atfp_string_container");
         if (stringContainer[0].scrollHeight > 100) {
             jQuery("#atfp_strings_model .atfp_translate_progress").fadeIn("slow");
@@ -16,12 +21,17 @@ const localAiTranslator = async (props)=>{
     const completeTranslation = () => {
         setTimeout(() => {
             props.translateStatus();
+            props.totalTimeTakenHandler(totalTimeTaken);
             jQuery("#atfp_strings_model .atfp_translate_progress").fadeOut("slow");
         }, 4000);
     }
 
     const beforeTranslate = (ele) => {
         const stringContainer = jQuery("#atfp_strings_model .modal-content .atfp_string_container");
+        if(stringContainer.length < 1){
+            TranslateProvider.stopTranslation();
+            return;
+        }
 
         const scrollStringContainer = (position) => {
             stringContainer.scrollTop(position);
@@ -51,7 +61,7 @@ const localAiTranslator = async (props)=>{
         btnSelector: `#${props.ID}`,
         btnClass: "local_ai_translator_btn",
         btnText: __("Translate To", 'automatic-translations-for-polylang') + ' ' + targetLangName +' (Beta)',
-        stringSelector: ".atfp_string_container tbody tr td.translate",
+        stringSelector: ".atfp_string_container tbody tr td.translate:not([data-translate-status='translated'])",
         progressBarSelector: "#atfp_strings_model .atfp_translate_progress",
         sourceLanguage: props.sourceLang,
         targetLanguage: props.targetLang,
@@ -63,6 +73,7 @@ const localAiTranslator = async (props)=>{
     });
 
     if(TranslateProvider.hasOwnProperty('init')){
+        translationInitialize=true;
         TranslateProvider.init();
     }
 };
