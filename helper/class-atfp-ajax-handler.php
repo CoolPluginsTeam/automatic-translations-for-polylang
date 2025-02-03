@@ -53,10 +53,10 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 		 */
 		public function __construct() {
 			if ( is_admin() ) {
-				add_action( 'wp_ajax_fetch_post_content', array( $this, 'fetch_post_content' ) );
-				add_action( 'wp_ajax_block_parsing_rules', array( $this, 'block_parsing_rules' ) );
-				add_action( 'wp_ajax_get_custom_blocks_content', array( $this, 'get_custom_blocks_content' ) );
-				add_action( 'wp_ajax_update_custom_blocks_content', array( $this, 'update_custom_blocks_content' ) );
+				add_action( 'wp_ajax_atfp_fetch_post_content', array( $this, 'atfp_fetch_post_content' ) );
+				add_action( 'wp_ajax_atfp_block_parsing_rules', array( $this, 'atfp_block_parsing_rules' ) );
+				add_action( 'wp_ajax_atfp_get_custom_blocks_content', array( $this, 'atfp_get_custom_blocks_content' ) );
+				add_action( 'wp_ajax_atfp_update_custom_blocks_content', array( $this, 'atfp_update_custom_blocks_content' ) );
 			}
 		}
 
@@ -65,7 +65,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 		 *
 		 * Handles the block parsing rules AJAX request.
 		 */
-		public function block_parsing_rules() {
+		public function atfp_block_parsing_rules() {
 			if ( ! check_ajax_referer( 'atfp_translate_nonce', 'atfp_nonce', false ) ) {
 				wp_send_json_error( __( 'Invalid security token sent.', 'automatic-translations-for-polylang' ) );
 				wp_die( '0', 400 );
@@ -85,7 +85,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 		/**
 		 * Fetches post content via AJAX request.
 		 */
-		public function fetch_post_content() {
+		public function atfp_fetch_post_content() {
 			if ( ! check_ajax_referer( 'atfp_translate_nonce', 'atfp_nonce', false ) ) {
 				wp_send_json_error( __( 'Invalid security token sent.', 'automatic-translations-for-polylang' ) );
 				wp_die( '0', 400 );
@@ -121,7 +121,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 			exit;
 		}
 
-		public function get_custom_blocks_content() {
+		public function atfp_get_custom_blocks_content() {
 			if ( ! check_ajax_referer( 'atfp_block_update_nonce', 'atfp_nonce', false ) ) {
 				wp_send_json_error( __( 'Invalid security token sent.', 'automatic-translations-for-polylang' ) );
 				wp_die( '0', 400 );
@@ -138,7 +138,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 			exit();
 		}
 
-		public function update_custom_blocks_content() {
+		public function atfp_update_custom_blocks_content() {
 			if ( ! check_ajax_referer( 'atfp_block_update_nonce', 'atfp_nonce', false ) ) {
 				wp_send_json_error( __( 'Invalid security token sent.', 'automatic-translations-for-polylang' ) );
 				wp_die( '0', 400 );
