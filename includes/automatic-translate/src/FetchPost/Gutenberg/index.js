@@ -1,4 +1,4 @@
-import GutenbergBlockSaveSource from "../component/storeSourceString/GutenbergBlock";
+import GutenbergBlockSaveSource from "../../storeSourceString/Gutenberg";
 const { __ } = wp.i18n;
 const { parse } = wp.blocks;
 

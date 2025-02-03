@@ -1,8 +1,8 @@
 import PopupModal from './popmodel';
 import './global-store';
 import { useEffect, useState } from 'react';
-import GutenbergPostFetch from './FetchPost/gutenberg-post-fetch';
-import UpdateGutenbergPage from './createTranslatedPost';
+import GutenbergPostFetch from './FetchPost/Gutenberg';
+import UpdateGutenbergPage from './createTranslatedPost/Gutenberg';
 
 const init = () => {
   let atfpModals = new Array();

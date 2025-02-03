@@ -1,4 +1,4 @@
-import FilterBlockNestedAttr from "../FilterNestedAttr";
+import FilterBlockNestedAttr from "../../component/FilterNestedAttr";
 import AllowedMetaFields from "../../AllowedMetafileds";
 const { dispatch } = wp.data;
 

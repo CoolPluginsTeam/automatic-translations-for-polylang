@@ -19,21 +19,25 @@ export const getTranslationEntry = (state) => {
     // Initialize an empty array to hold translation entries
     const translateEntry = new Array;
 
-    // Push the title translation entry into the array
-    translateEntry.push({
-        id: 'title', // Identifier for the entry
-        source: state.title.source, // Source text for the title
-        type: 'title', // Type of the entry
-        translatedData: (state.title.translatedData || {}), // translated text for the title, defaulting to an empty string if not provided
-    });
+    if (state.title.source) {
+        // Push the title translation entry into the array
+        translateEntry.push({
+            id: 'title', // Identifier for the entry
+            source: state.title.source, // Source text for the title
+            type: 'title', // Type of the entry
+            translatedData: (state.title.translatedData || {}), // translated text for the title, defaulting to an empty string if not provided
+        });
+    }
 
-    // Push the excerpt translation entry into the array
-    translateEntry.push({
-        id: 'excerpt', // Identifier for the entry
-        source: state.excerpt.source, // Source text for the excerpt
-        type: 'excerpt', // Type of the entry
-        translatedData: (state.excerpt.translatedData || {}), // translated text for the excerpt, defaulting to an empty string if not provided
-    });
+    if (state.excerpt.source) {
+        // Push the excerpt translation entry into the array
+        translateEntry.push({
+            id: 'excerpt', // Identifier for the entry
+            source: state.excerpt.source, // Source text for the excerpt
+            type: 'excerpt', // Type of the entry
+            translatedData: (state.excerpt.translatedData || {}), // translated text for the excerpt, defaulting to an empty string if not provided
+        });
+    }
 
     // Iterate over the metaFields object keys and push each translation entry into the array
     Object.keys(state.metaFields).map(key => {

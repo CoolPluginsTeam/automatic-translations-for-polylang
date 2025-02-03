@@ -1,7 +1,7 @@
 import createBlocks from './createBlock';
 import { dispatch, select } from '@wordpress/data';
 import YoastSeoFields from './SeoMetaFields/YoastSeoFields';
-import AllowedMetaFields from '../AllowedMetafileds';
+import AllowedMetaFields from '../../AllowedMetafileds';
 import RankMathSeo from './SeoMetaFields/RankMathSeo';
 import SeoPressFields from './SeoMetaFields/SeoPress';
 

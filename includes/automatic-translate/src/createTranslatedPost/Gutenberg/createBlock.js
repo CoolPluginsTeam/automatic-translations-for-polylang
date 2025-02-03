@@ -1,4 +1,4 @@
-import FilterBlockNestedAttr from "../component/FilterNestedAttr";
+import FilterBlockNestedAttr from "../../component/FilterNestedAttr";
 const { createBlock } = wp.blocks;
 const { dispatch, select } = wp.data;
 
