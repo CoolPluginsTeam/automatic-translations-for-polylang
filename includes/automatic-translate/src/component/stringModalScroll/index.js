@@ -1,4 +1,6 @@
 import SaveTranslation from "../storeTranslatedString";
+import { select, dispatch } from "@wordpress/data";
+import StoreTimeTaken from "../StoreTimeTaken";
 
 /**
  * Handles the scrolling animation of a specified element.
@@ -17,7 +19,7 @@ const ScrollAnimation = (props) => {
         const currentTime = performance.now();
         const duration = scrollSpeed;
         const scrollTarget = scrollHeight + 2000;
-        
+
         if (!startTime) {
             startTime = currentTime;
         }
@@ -25,7 +27,7 @@ const ScrollAnimation = (props) => {
         const progress = (currentTime - startTime) / duration;
         const scrollPosition = startScrollTop + (scrollTarget - startScrollTop) * progress;
 
-        if(scrollPosition > scrollHeight){
+        if (scrollPosition > scrollHeight) {
             return; // Stop animate scroll
         }
 
@@ -53,6 +55,14 @@ const updateTranslatedContent = () => {
         const sourceText = ele.closest('tr').querySelector('td[data-source="source_text"]').innerText;
 
         SaveTranslation({ type: type, key: key, translateContent: translatedText, source: sourceText, provider: 'yandex' });
+
+        const translationEntry = select('block-atfp/translate').getTranslationInfo().translateData?.yandex;
+        const previousTargetWordCount = translationEntry && translationEntry.targetWordCount ? translationEntry.targetWordCount : 0;
+        const previousTargetCharacterCount = translationEntry && translationEntry.targetCharacterCount ? translationEntry.targetCharacterCount : 0;
+
+        if (translatedText.trim() !== '' && translatedText.trim().length > 0) {
+            dispatch('block-atfp/translate').translationInfo({ targetWordCount: previousTargetWordCount + sourceText.trim().split(/\s+/).filter(word => /[^\p{L}\p{N}]/.test(word)).length, targetCharacterCount: previousTargetCharacterCount + sourceText.trim().length, provider: 'yandex' });
+        }
     });
 }
 
@@ -82,6 +92,7 @@ const onCompleteTranslation = (container) => {
  * @param {Function} translateStatus - Callback function to execute when translation is deemed complete.
  */
 const ModalStringScroll = (translateStatus) => {
+    const startTime = new Date().getTime();
 
     let translateComplete = false;
 
@@ -105,18 +116,22 @@ const ModalStringScroll = (translateStatus) => {
 
             if (isScrolledToBottom && !translateComplete) {
                 translateStatus();
+                StoreTimeTaken({ prefix: 'yandex', start: startTime, end: new Date().getTime(), translateStatus: true });
                 onCompleteTranslation(container);
                 translateComplete = true;
             }
         });
 
         if (stringContainer.clientHeight + 10 >= scrollHeight) {
+            StoreTimeTaken({ prefix: 'yandex', start: startTime, end: new Date().getTime(), translateStatus: true });
             setTimeout(() => {
                 translateStatus();
                 onCompleteTranslation(container);
             }, 1500);
         }
     } else {
+        StoreTimeTaken({ prefix: 'yandex', start: startTime, end: new Date().getTime(), translateStatus: true });
+
         setTimeout(() => {
             translateStatus();
             onCompleteTranslation(container);

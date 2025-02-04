@@ -9,7 +9,6 @@ const popStringModal = (props) => {
     const [translatePending, setTranslatePending] = useState(true);
     const [stringCount, setStringCount] = useState(false);
     const [characterCount, setCharacterCount] = useState(false);
-    const [totalTimeTaken, setTotalTimeTaken] = useState(false);
 
     useEffect(() => {
         if (!props.postDataFetchStatus) {
@@ -23,12 +22,6 @@ const popStringModal = (props) => {
         if (popupVisibility) {
             setStringCount(number);
             setCharacterCount(characterCount);
-        }
-    }
-
-    const totalTimeTakenHandler = (time) => {
-        if (popupVisibility) {
-            setTotalTimeTaken(time);
         }
     }
 
@@ -91,7 +84,6 @@ const popStringModal = (props) => {
                         pageTranslate={props.pageTranslate}
                         stringCount={stringCount}
                         characterCount={characterCount}
-                        totalTimeTaken={totalTimeTaken}
                         service={props.service}
                         updatePostData={updatePostDataHandler}
                     />
@@ -99,7 +91,6 @@ const popStringModal = (props) => {
                         updatePostContent={updatePostContentHandler}
                         blockRules={props.blockRules}
                         stringCountHandler={stringCountHandler}
-                        totalTimeTakenHandler={totalTimeTakenHandler}
                         contentLoading={props.contentLoading}
                         postDataFetchStatus={props.postDataFetchStatus}
                         service={props.service}
@@ -117,7 +108,6 @@ const popStringModal = (props) => {
                         pageTranslate={props.pageTranslate}
                         stringCount={stringCount}
                         characterCount={characterCount}
-                        totalTimeTaken={totalTimeTaken}
                         service={props.service}
                         updatePostData={updatePostDataHandler}
                     />

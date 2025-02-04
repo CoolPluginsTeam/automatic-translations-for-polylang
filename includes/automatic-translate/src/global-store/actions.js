@@ -116,13 +116,15 @@ export const metaFieldsSaveTranslate = (id, data, source, provider) => {
     }
 };
 
-export const translationInfo = ({ stringCount = null, wordCount = null, characterCount = null, timeTaken = null, provider = null }) => {
+export const translationInfo = ({ sourceWordCount = null, sourceCharacterCount = null, timeTaken = null, provider = null, targetWordCount = null, targetCharacterCount = null, translateStatus = null }) => {
     return {
         type: AtfpActionTypes.translationInfo, // Action type for saving the translation info
-        stringCount: stringCount, // The string count
-        wordCount: wordCount,
-        characterCount: characterCount, // The character count
+        sourceWordCount: sourceWordCount,
+        sourceCharacterCount: sourceCharacterCount, // The character count
         timeTaken: timeTaken, // The time taken
-        provider: provider // The provider
+        targetWordCount: targetWordCount,
+        targetCharacterCount: targetCharacterCount,
+        provider: provider, // The provider
+        translateStatus: translateStatus // The translate status
     }
 };

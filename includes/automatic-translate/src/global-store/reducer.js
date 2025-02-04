@@ -83,10 +83,29 @@ const reducer = (state = TranslateDefaultState, action) => {
             // Update the state with the new translation info
             const data = {}
 
-            action.stringCount && (data.stringCount = action.stringCount);
-            action.wordCount && (data.wordCount = action.wordCount);
-            action.characterCount && (data.characterCount = action.characterCount);
-            action.timeTaken && (data.timeTaken = { ...data.timeTaken, [action.provider]: action.timeTaken });
+            // Source Word Count
+            action.sourceWordCount && (data.sourceWordCount = action.sourceWordCount);
+            // Source Character Count
+            action.sourceCharacterCount && (data.sourceCharacterCount = action.sourceCharacterCount);
+
+            // Save the translation info like target word count, target character count, translate status, time taken
+            if ((action.targetWordCount || action.targetCharacterCount || action.translateStatus || action.timeTaken) && action.provider) {
+                data.translateData = {
+                    ...(state.translationInfo?.translateData || {}),
+                    [action.provider]: {
+                        // If the provider already exists, update the existing provider data    
+                        ...(state.translationInfo?.translateData?.[action.provider] || {}),
+                        // Update the target word count, target character count, translate status, time taken
+                        ...(action.targetWordCount && { targetWordCount: action.targetWordCount }),
+                        // Update the target character count
+                        ...(action.targetCharacterCount && { targetCharacterCount: action.targetCharacterCount }),
+                        // Update the translate status
+                        ...(action.translateStatus && { translateStatus: action.translateStatus }),
+                        // Update the time taken
+                        ...(action.timeTaken && { timeTaken: action.timeTaken })
+                    }
+                };
+            }
 
             return { ...state, translationInfo: { ...state.translationInfo, ...data } };
 

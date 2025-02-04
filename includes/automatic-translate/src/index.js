@@ -44,7 +44,7 @@ const App = () => {
       totalWordCount += wordCount;
     });
 
-    wp.data.dispatch('block-atfp/translate').translationInfo({ wordCount: totalWordCount, characterCount: totalCharacterCount });
+    wp.data.dispatch('block-atfp/translate').translationInfo({ sourceWordCount: totalWordCount, sourceCharacterCount: totalCharacterCount });
   }
 
   const updatePostDataFetch = (status) => {
