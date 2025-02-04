@@ -57,6 +57,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				add_action( 'wp_ajax_atfp_block_parsing_rules', array( $this, 'atfp_block_parsing_rules' ) );
 				add_action( 'wp_ajax_atfp_get_custom_blocks_content', array( $this, 'atfp_get_custom_blocks_content' ) );
 				add_action( 'wp_ajax_atfp_update_custom_blocks_content', array( $this, 'atfp_update_custom_blocks_content' ) );
+				add_action('wp_ajax_atfp_update_translate_data', array($this, 'atfp_update_translate_data'));
 			}
 		}
 
@@ -206,6 +207,16 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				$current_array = &$current_array[ $id ];
 			}
 				$current_array = $value;
+		}
+
+		public function atfp_update_translate_data() {
+			if ( ! check_ajax_referer( 'atfp_translate_nonce', 'atfp_nonce', false ) ) {
+				wp_send_json_error( __( 'Invalid security token sent.', 'automatic-translations-for-polylang' ) );
+				wp_die( '0', 400 );
+				exit();
+			}
+
+			exit;
 		}
 	}
 }

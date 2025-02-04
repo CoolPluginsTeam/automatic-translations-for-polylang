@@ -118,6 +118,7 @@ class ATFP_Register_Backend_Assets {
                             'atfp_url'           => esc_url( ATFP_URL ),
                             'action_fetch'       => 'atfp_fetch_post_content',
                             'action_block_rules' => 'atfp_block_parsing_rules',
+                            'update_translate_data' => 'atfp_update_translate_data',
                             'source_lang'        => pll_get_post_language( $from_post_id, 'slug' ),
                             'languageObject'     => $lang_object,
                             'editor_type'        => 'gutenberg',

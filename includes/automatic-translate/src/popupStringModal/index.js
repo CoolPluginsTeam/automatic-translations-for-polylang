@@ -1,4 +1,5 @@
 import { useEffect, useState } from "@wordpress/element";
+import { updateTranslateData } from "../helper";
 import { select } from "@wordpress/data";
 import StringPopUpHeader from "./header";
 import StringPopUpBody from "./body";
@@ -61,6 +62,7 @@ const popStringModal = (props) => {
 
         props.translatePost({ postContent: postContent, modalClose: modalClose, blockRules: blockRules, service: props.service, blockRules: blockRules });
         props.pageTranslate(true);
+        updateTranslateData({ provider: props.service, sourceLang: props.sourceLang, targetLang: props.targetLang });
     }
 
     useEffect(() => {
