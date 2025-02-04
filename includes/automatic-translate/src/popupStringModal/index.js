@@ -1,9 +1,12 @@
 import { useEffect, useState } from "@wordpress/element";
+import { select } from "@wordpress/data";
 import StringPopUpHeader from "./header";
 import StringPopUpBody from "./body";
 import StringPopUpFooter from "./footer";
 
 const popStringModal = (props) => {
+    const translateStatus = select('block-atfp/translate').getTranslationInfo().translateData[props.service]?.translateStatus || false;
+
     const [popupVisibility, setPopupVisibility] = useState(true);
     const [refPostData, setRefPostData] = useState('');
     const [translatePending, setTranslatePending] = useState(true);
@@ -55,7 +58,7 @@ const popStringModal = (props) => {
         const postContent = refPostData;
         const blockRules = props.blockRules;
         const modalClose = () => setPopupVisibility(false);
-        
+
         props.translatePost({ postContent: postContent, modalClose: modalClose, blockRules: blockRules, service: props.service, blockRules: blockRules });
 
         props.pageTranslate(true);
@@ -63,6 +66,11 @@ const popStringModal = (props) => {
 
     useEffect(() => {
         setPopupVisibility(true);
+
+        if (translateStatus && translatePending) {
+            setTranslatePending(false);
+        }
+
         setTimeout(() => {
             const stringModal = document.querySelector('.atfp_string_container');
             if (stringModal) {
@@ -80,7 +88,7 @@ const popStringModal = (props) => {
                         setPopupVisibility={setPopupVisibilityHandler}
                         postContent={refPostData}
                         blockRules={props.blockRules}
-                        translateStatus={translatePending}
+                        translatePendingStatus={translatePending}
                         pageTranslate={props.pageTranslate}
                         stringCount={stringCount}
                         characterCount={characterCount}
@@ -98,13 +106,14 @@ const popStringModal = (props) => {
                         targetLang={props.targetLang}
                         translateStatusHandler={translateStatusHandler}
                         modalRender={props.modalRender}
+                        translateStatus={translateStatus}
                     />
                     <StringPopUpFooter
                         modalRender={props.modalRender}
                         setPopupVisibility={setPopupVisibilityHandler}
                         postContent={refPostData}
                         blockRules={props.blockRules}
-                        translateStatus={translatePending}
+                        translatePendingStatus={translatePending}
                         pageTranslate={props.pageTranslate}
                         stringCount={stringCount}
                         characterCount={characterCount}

@@ -97,6 +97,10 @@ export const getTranslatedString = (state, type, source, id = null, provider = n
 }
 
 export const getTranslationInfo = (state) => {
-    return { sourceWordCount: state.translationInfo.sourceWordCount || 0, sourceCharacterCount: state.translationInfo.sourceCharacterCount || 0, translateData: state.translationInfo.translateData || {} };
+    return {
+        sourceWordCount: state?.translationInfo?.sourceWordCount || 0,
+        sourceCharacterCount: state?.translationInfo?.sourceCharacterCount || 0,
+        translateData: state?.translationInfo?.translateData || {}
+    };
 }
 

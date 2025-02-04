@@ -1,6 +1,6 @@
 import { select, dispatch } from "@wordpress/data";
 
-const StoreTimeTaken = ({ prefix = false, start = false, end = false, status = false }) => {
+const StoreTimeTaken = ({ prefix = false, start = false, end = false, translateStatus = false }) => {
 
     const timeTaken = (end - start) / 1000; // Convert milliseconds to seconds
     const data = {};
@@ -12,7 +12,7 @@ const StoreTimeTaken = ({ prefix = false, start = false, end = false, status = f
             data.timeTaken = timeTaken + oldTimeTaken;
         }
 
-        if (status) {
+        if (translateStatus) {
             data.translateStatus = true;
         }
 

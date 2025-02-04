@@ -87,9 +87,11 @@ const StringPopUpBody = (props) => {
                             :
                             <h3 className="choose-lang">{__("Choose language", 'automatic-translations-for-polylang')} <span className="dashicons-before dashicons-translation"></span></h3>
                         }
-                        <div className="atfp_translate_element_wrapper">
-                            <div id="atfp_yandex_translate_element" style={{ display: `${service === 'yandex' ? 'block' : 'none'}` }}></div>
-                            <div id="atfp_localAiTranslator_translate_element" style={{ display: `${service === 'localAiTranslator' ? 'block' : 'none'}` }}></div>
+                        <div className={`atfp_translate_element_wrapper ${props.translateStatus ? 'translate-completed' : ''}`}>
+                            {service === 'localAiTranslator' ?
+                                <div id="atfp_localAiTranslator_translate_element"></div>
+                                :
+                                <div id="atfp_yandex_translate_element"></div>}
                         </div>
                     </div>
 
