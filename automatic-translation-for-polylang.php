@@ -61,6 +61,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			register_activation_hook( ATFP_FILE, array( $this, 'atfp_activate' ) );
 			register_deactivation_hook( ATFP_FILE, array( $this, 'atfp_deactivate' ) );
 			add_action('init', array($this, 'load_plugin_textdomain'));
+			// add_filter('cpt_dashboard_tabs', array($this, 'atfp_add_dashboard_tab'));
 		}
 
 		public function atfp_load_files() {
@@ -71,8 +72,18 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 
 			if(!class_exists('CPT_Dashboard')) {
 				require_once ATFP_DIR_PATH . 'admin/cpt_dashboard/cpt_dashboard.php';
+				new CPT_Dashboard();
 			}
 		}
+
+		// public function atfp_add_dashboard_tab($tabs) {
+		// 	$tabs[] = array(
+		// 		'prefix' => 'atfp',
+		// 		'tab_name' => 'Automatic Translation',
+		// 		'columns' => array('post_id'=>'Post ID', 'service_provider'=>'Translation Provider', 'source_language'=>'Source Language', 'target_language'=>'Target Language', 'time_taken'=>'Time Taken','string_count'=>'Translated Words', 'character_count'=>'Translated Characters', 'date_time'=>'Date Time')
+		// 	);
+		// 	return $tabs;
+		// }
 		
 		/**
 		 * Initialize the Automatic Translation for Polylang plugin.
@@ -92,6 +103,15 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 
 				add_action( 'add_meta_boxes', array( $this, 'atfp_shortcode_metabox' ) );
 				$this->atfp_register_backend_assets();
+
+				// Review Notice
+				if(class_exists('Cpt_Dashboard')) {
+					Cpt_Dashboard::review_notice(
+						'atfp', // Required
+						'Automatic Translation for Polylang', // Required
+						'https://wordpress.org/plugins/automatic-translations-for-polylang/reviews/#new-post' // Required
+					);
+				}
 
 			} else {
 				add_action( 'admin_notices', array( self::$instance, 'atfp_plugin_required_admin_notice' ) );

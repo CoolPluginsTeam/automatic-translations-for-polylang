@@ -96,8 +96,8 @@ if(!class_exists('Cpt_Dashboard')){
         }
 
         public function __construct(){
-            add_action('admin_menu', array($this, 'add_menu_page'));
-            add_action('admin_enqueue_scripts', array($this, 'dashboard_assets'));
+            // add_action('admin_menu', array($this, 'add_menu_page'));
+            // add_action('admin_enqueue_scripts', array($this, 'dashboard_assets'));
             add_action('wp_ajax_cpt_hide_review_notice', array($this, 'cpt_hide_review_notice'));
         }
 
@@ -260,7 +260,9 @@ if(!class_exists('Cpt_Dashboard')){
         }
 
         public static function review_notice($prefix, $plugin_name, $url){
+
             $review_notice_dismissed = get_option('cpt_review_notice_dismissed', array());
+
             if(isset($review_notice_dismissed[$prefix]) && $review_notice_dismissed[$prefix] === true){
                 return;
             }
@@ -268,9 +270,21 @@ if(!class_exists('Cpt_Dashboard')){
             $total_string_count = self::get_translation_data($prefix)['total_string_count'];
             $total_character_count = self::get_translation_data($prefix)['total_character_count'];
 
-            if($total_character_count < 500000){ 
+            if($total_character_count < 10000){ 
                 return;
             }
+
+            if(function_exists('wp_style_is') && !wp_style_is('cpt-dashboard-style', 'enqueued')){
+                $plugin_url = plugin_dir_url(__FILE__);
+                wp_enqueue_style('cpt-dashboard-style', esc_url($plugin_url.'assets/css/cpt-dashboard.css'), array(), '1.0.0', 'all');
+            }
+
+            if(function_exists('wp_script_is') && !wp_script_is('cpt-dashboard-script', 'enqueued')){
+                $plugin_url = plugin_dir_url(__FILE__);
+                wp_enqueue_script('cpt-dashboard-script', esc_url($plugin_url.'assets/js/cpt-dashboard.js'), array('jquery'), '1.0.0', true);
+            }
+
+            
 
             $message = sprintf(
                 '🎉 %s! <br>%s <strong>%s</strong> %s 🚀<br>%s<br>%s 🌟<br>⭐⭐⭐⭐⭐ <a href="%s" target="_blank">Leave a Review</a>',
