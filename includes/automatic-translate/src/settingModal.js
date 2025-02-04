@@ -5,7 +5,7 @@ import yandexLanguage from "./component/TranslateProvider/yandex/yandex-language
 import ChromeLocalAiTranslator from "./component/TranslateProvider/local-ai-translator/local-ai-translator";
 const { sprintf, __ } = wp.i18n;
 
-const PopupModal = (props) => {
+const SettingModal = (props) => {
     const [targetBtn, setTargetBtn] = useState({});
     const [blockRules, setBlockRules] = useState({});
     const [modalRender, setModalRender] = useState(0);
@@ -211,4 +211,4 @@ const PopupModal = (props) => {
     );
 };
 
-export default PopupModal;
+export default SettingModal;

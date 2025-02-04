@@ -60,7 +60,6 @@ const popStringModal = (props) => {
         const modalClose = () => setPopupVisibility(false);
 
         props.translatePost({ postContent: postContent, modalClose: modalClose, blockRules: blockRules, service: props.service, blockRules: blockRules });
-
         props.pageTranslate(true);
     }
 

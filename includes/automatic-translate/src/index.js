@@ -1,4 +1,4 @@
-import PopupModal from './popmodel';
+import SettingModal from './settingModal';
 import './global-store';
 import { useEffect, useState } from 'react';
 import GutenbergPostFetch from './FetchPost/Gutenberg';
@@ -67,7 +67,7 @@ const App = () => {
 
   return (
     <>
-      {!pageTranslate && <PopupModal contentLoading={loading} updatePostDataFetch={updatePostDataFetch} postDataFetchStatus={postDataFetchStatus} pageTranslate={handlePageTranslate} postId={postId} targetLang={targetLang} postType={postType} fetchPostData={fetchPostData} translatePost={translatePost} />}
+      {!pageTranslate && <SettingModal contentLoading={loading} updatePostDataFetch={updatePostDataFetch} postDataFetchStatus={postDataFetchStatus} pageTranslate={handlePageTranslate} postId={postId} targetLang={targetLang} postType={postType} fetchPostData={fetchPostData} translatePost={translatePost} />}
     </>
   );
 };
