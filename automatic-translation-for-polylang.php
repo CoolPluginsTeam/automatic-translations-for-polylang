@@ -68,7 +68,12 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			require_once ATFP_DIR_PATH . 'admin/atfp-menu-pages/class-atfp-custom-block-post.php';
 			require_once ATFP_DIR_PATH . 'admin/atfp-menu-pages/class-atfp-supported-blocks.php';
 			require_once ATFP_DIR_PATH . 'includes/class-atfp-register-backend-assets.php';
+
+			if(!class_exists('CPT_Dashboard')) {
+				require_once ATFP_DIR_PATH . 'admin/cpt_dashboard/cpt_dashboard.php';
+			}
 		}
+		
 		/**
 		 * Initialize the Automatic Translation for Polylang plugin.
 		 *

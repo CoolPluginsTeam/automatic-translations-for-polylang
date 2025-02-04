@@ -1,6 +1,6 @@
 import { select } from '@wordpress/data';
 
-export const updateTranslateData = ({ provider, sourceLang, targetLang }) => {
+export const updateTranslateData = ({ provider, sourceLang, targetLang, postId }) => {
     const translateData = select('block-atfp/translate').getTranslationInfo();
     const totalWordCount = translateData.translateData?.[provider]?.targetWordCount || 0;
     const totalCharacterCount = translateData.translateData?.[provider]?.targetCharacterCount || 0;
@@ -10,7 +10,7 @@ export const updateTranslateData = ({ provider, sourceLang, targetLang }) => {
     const editorType = atfp_ajax_object.editor_type;
     const date = new Date().toISOString();
 
-    const data = { provider, totalWordCount, totalCharacterCount, editorType, date, sourceWordCount, sourceCharacterCount, sourceLang, targetLang, timeTaken, action: atfp_ajax_object.update_translate_data, atfp_nonce: atfp_ajax_object.ajax_nonce };
+    const data = { provider, totalWordCount, totalCharacterCount, editorType, date, sourceWordCount, sourceCharacterCount, sourceLang, targetLang, timeTaken, action: atfp_ajax_object.update_translate_data, atfp_nonce: atfp_ajax_object.ajax_nonce, post_id: postId };
 
     fetch(atfp_ajax_object.ajax_url, {
         method: 'POST',
@@ -20,7 +20,7 @@ export const updateTranslateData = ({ provider, sourceLang, targetLang }) => {
         },
         body: new URLSearchParams(data)
     }).then(response => response.json()).then(data => {
-        console.log(data);
+        console.log(data.data.message);
     }).catch(error => {
         console.error(error);
     });

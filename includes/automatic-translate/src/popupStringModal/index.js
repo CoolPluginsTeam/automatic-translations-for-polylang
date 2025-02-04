@@ -62,7 +62,7 @@ const popStringModal = (props) => {
 
         props.translatePost({ postContent: postContent, modalClose: modalClose, blockRules: blockRules, service: props.service, blockRules: blockRules });
         props.pageTranslate(true);
-        updateTranslateData({ provider: props.service, sourceLang: props.sourceLang, targetLang: props.targetLang });
+        updateTranslateData({ provider: props.service, sourceLang: props.sourceLang, targetLang: props.targetLang, postId: props.postId });
     }
 
     useEffect(() => {

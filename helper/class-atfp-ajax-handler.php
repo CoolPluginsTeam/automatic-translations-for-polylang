@@ -216,6 +216,48 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				exit();
 			}
 
+			$provider = isset($_POST['provider']) ? sanitize_text_field($_POST['provider']) : '';
+			$total_word_count = isset($_POST['totalWordCount']) ? absint($_POST['totalWordCount']) : 0;
+			$total_char_count = isset($_POST['totalCharacterCount']) ? absint($_POST['totalCharacterCount']) : 0;
+			$editor_type = isset($_POST['editorType']) ? sanitize_text_field($_POST['editorType']) : '';
+			$date = isset($_POST['date']) ? date('Y-m-d H:i:s', strtotime(sanitize_text_field($_POST['date']))) : '';
+			$source_word_count = isset($_POST['sourceWordCount']) ? absint($_POST['sourceWordCount']) : 0;
+			$source_char_count = isset($_POST['sourceCharacterCount']) ? absint($_POST['sourceCharacterCount']) : 0;
+			$source_lang = isset($_POST['sourceLang']) ? sanitize_text_field($_POST['sourceLang']) : '';
+			$target_lang = isset($_POST['targetLang']) ? sanitize_text_field($_POST['targetLang']) : '';
+			$time_taken = isset($_POST['timeTaken']) ? absint($_POST['timeTaken']) : 0;
+			$post_id = isset($_POST['post_id']) ? absint($_POST['post_id']) : 0;
+
+			if (class_exists('CPT_Dashboard')) {
+				$translation_data = array(
+					'post_id' => $post_id,
+					'service_provider' => $provider,
+					'source_language' => $source_lang,
+					'target_language' => $target_lang,
+					'time_taken' => $time_taken,
+					'string_count' => $total_word_count,
+					'character_count' => $total_char_count,
+					'source_string_count' => $source_word_count,
+					'source_character_count' => $source_char_count,
+					'editor_type' => $editor_type,
+					'date_time' => $date
+				);
+
+				CPT_Dashboard::store_options(
+					'atfp',
+					'post_id', 
+					'upredate',
+					$translation_data
+				);
+
+				wp_send_json_success(array(
+					'message' => __('Translation data updated successfully', 'automatic-translations-for-polylang')
+				));
+			} else {
+				wp_send_json_error(array(
+					'message' => __('CPT_Dashboard class not found', 'automatic-translations-for-polylang') 
+				));
+			}
 			exit;
 		}
 	}
