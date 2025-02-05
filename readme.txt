@@ -1,6 +1,6 @@
 ﻿=== AI Automatic Translations For Polylang ===
 Contributors: narinder-singh,satindersingh,coolplugins
-Tags: Polylang, Automatic Translation, Duplicate Content, Block Translation
+Tags: polylang,automatic translation, translate, ai translation,multilingual
 Requires at least: 5.0
 Tested up to: 6.7.1
 Requires PHP: 5.6
