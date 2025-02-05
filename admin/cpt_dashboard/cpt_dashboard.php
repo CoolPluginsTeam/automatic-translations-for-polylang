@@ -267,8 +267,10 @@ if(!class_exists('Cpt_Dashboard')){
                 return;
             }
 
-            $total_string_count = self::get_translation_data($prefix)['total_string_count'];
-            $total_character_count = self::get_translation_data($prefix)['total_character_count'];
+            $translation_data = self::get_translation_data($prefix);
+
+            $total_string_count = is_array($translation_data) && isset($translation_data['total_string_count']) ? $translation_data['total_string_count'] : 0;
+            $total_character_count = is_array($translation_data) && isset($translation_data['total_character_count']) ? $translation_data['total_character_count'] : 0;
 
             if($total_character_count < 10000){ 
                 return;
