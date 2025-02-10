@@ -260,19 +260,16 @@ if(!class_exists('Cpt_Dashboard')){
         }
 
         public static function review_notice($prefix, $plugin_name, $url){
-
-            $review_notice_dismissed = get_option('cpt_review_notice_dismissed', array());
-
-            if(isset($review_notice_dismissed[$prefix]) && $review_notice_dismissed[$prefix] === true){
+            
+            if(self::cpt_hide_review_notice_status($prefix)){
                 return;
             }
-
+            
             $translation_data = self::get_translation_data($prefix);
-
-            $total_string_count = is_array($translation_data) && isset($translation_data['total_string_count']) ? $translation_data['total_string_count'] : 0;
+            
             $total_character_count = is_array($translation_data) && isset($translation_data['total_character_count']) ? $translation_data['total_character_count'] : 0;
-
-            if($total_character_count < 10000){ 
+            
+            if($total_character_count < 50000){ 
                 return;
             }
 
@@ -306,6 +303,11 @@ if(!class_exists('Cpt_Dashboard')){
             add_action('admin_notices', function() use ($message, $prefix){
                 echo '<div class="notice notice-info is-dismissible cpt-review-notice"><p>'.$message.'<div class="cpt-review-notice-dismiss" data-prefix="'.$prefix.'" data-nonce="'.wp_create_nonce('cpt_hide_review_notice').'"><button class="button button-primary">'.__('Not Interested', 'cp-notice').'</button><button class="button button-secondary">'.__('Already Reviewed', 'cp-notice').'</button></div></p></div>';
             });
+        }
+
+        public static function cpt_hide_review_notice_status($prefix){
+            $review_notice_dismissed = get_option('cpt_review_notice_dismissed', array());
+            return isset($review_notice_dismissed[$prefix]) ? $review_notice_dismissed[$prefix] : false;
         }
 
         public function cpt_hide_review_notice(){
