@@ -21,12 +21,12 @@ if(!defined('ABSPATH')){
  *      'unique_key',// Optional unique key is used to update the data based on post/page id or plugin/themes name
  *      'update', // Optional preview string count or character count update or replace
  *      array(
- *          'post/page or theme/plugin name' => 'name or id',
+ *           'post/page or theme/plugin name' => 'name or id',
  *          'post_title (optional)' => 'Post Title',
- *          'TranslationProvider' => 'google',
- *          'source_language' => 'en',
- *          'target_language' => 'fr',
- *          'time_taken' => '10',
+ *          'service_provider' => 'google', // don't change this key
+ *          'source_language' => 'en', // don't change this key
+ *          'target_language' => 'fr', // don't change this key
+ *          'time_taken' => '10', // don't change this key
  *          'string_count'=>10, 
  *          'character_count'=>100, 
  *          'date_time' => date('Y-m-d H:i:s'),
@@ -58,6 +58,7 @@ if(!defined('ABSPATH')){
  *      'prefix', // Required
  *      'plugin_name', // Required
  *      'url' // Required
+ *      'icon' // Optional
  *  );
  * }
  * 
@@ -192,8 +193,11 @@ if(!class_exists('Cpt_Dashboard')){
                     $data_update = false;
                     foreach($all_data[$prefix] as $key => $translate_data){
                         if(!empty($unique_key) && isset($translate_data[$unique_key]) && 
-                           sanitize_text_field($translate_data[$unique_key]) === sanitize_text_field($data[$unique_key]) && 
-                           sanitize_text_field($translate_data['service_provider']) === sanitize_text_field($data['service_provider'])){
+                        sanitize_text_field($translate_data[$unique_key]) === sanitize_text_field($data[$unique_key]) && 
+                        sanitize_text_field($translate_data['service_provider']) === sanitize_text_field($data['service_provider']) &&
+                        sanitize_text_field($translate_data['target_language']) === sanitize_text_field($data['target_language']) &&
+                        sanitize_text_field($translate_data['source_language']) === sanitize_text_field($data['source_language'])
+                        ){
                             
                             if($old_data=='update'){
                                 $data['string_count'] = absint($data['string_count']) + absint($translate_data['string_count']);
@@ -259,8 +263,7 @@ if(!class_exists('Cpt_Dashboard')){
             }
         }
 
-        public static function review_notice($prefix, $plugin_name, $url){
-            
+        public static function review_notice($prefix, $plugin_name, $url, $icon=''){
             if(self::cpt_hide_review_notice_status($prefix)){
                 return;
             }
@@ -286,22 +289,29 @@ if(!class_exists('Cpt_Dashboard')){
             
 
             $message = sprintf(
-                '🎉 %s! <br>%s <strong>%s</strong> %s 🚀<br>%s<br>%s 🌟<br>⭐⭐⭐⭐⭐ <a href="%s" target="_blank">Leave a Review</a>',
+                '🎉 %s! %s <strong>%s</strong> %s 🚀<br>%s %s 🌟<br>',
                 __('Thank You For Using', 'cp-notice').' '.$plugin_name,
                 __('You\'ve translated', 'cp-notice'),
                 esc_html__(esc_html($total_character_count).' characters', 'cp-notice'),
                 esc_html__('so far using our plugin!', 'cp-notice'),
                 __('If our plugin has saved you time and effort, please consider leaving a', 'cp-notice'),
-                __('review to support our work. Your feedback means the world to us!', 'cp-notice'),
-                $url
+                __('review to support our work. Your feedback means the world to us!', 'cp-notice')
             );
 
             $prefix = sanitize_key($prefix);
             $message = wp_kses_post($message);
             $url = esc_url($url);
+            $plugin_name = sanitize_text_field($plugin_name);
+            $icon = isset($icon) && !empty($icon) ? esc_url($icon) : '';
 
-            add_action('admin_notices', function() use ($message, $prefix){
-                echo '<div class="notice notice-info is-dismissible cpt-review-notice"><p>'.$message.'<div class="cpt-review-notice-dismiss" data-prefix="'.$prefix.'" data-nonce="'.wp_create_nonce('cpt_hide_review_notice').'"><button class="button button-primary">'.__('Not Interested', 'cp-notice').'</button><button class="button button-secondary">'.__('Already Reviewed', 'cp-notice').'</button></div></p></div>';
+            add_action('admin_notices', function() use ($message, $prefix, $url, $icon, $plugin_name){
+                $html= '<div class="notice notice-info cpt-review-notice">';
+                if($icon){
+                    $html .= '<img class="cpt-review-notice-icon" src="'.$icon.'" alt="'.$plugin_name.'">';
+                }
+                $html .= '<div><p>'.$message.'</p><div class="cpt-review-notice-dismiss" data-prefix="'.$prefix.'" data-nonce="'.wp_create_nonce('cpt_hide_review_notice').'"><a href="'. $url .'" target="_blank" class="button button-primary">Rate Now! ★★★★★</a><button class="button cpt-not-interested">'.__('Not Interested', 'cp-notice').'</button><button class="button cpt-already-reviewed">'.__('Already Reviewed', 'cp-notice').'</button></div></div></div>';
+                
+                echo $html;
             });
         }
 

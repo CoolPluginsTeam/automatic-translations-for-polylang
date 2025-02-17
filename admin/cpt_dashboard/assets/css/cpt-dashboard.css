@@ -1,6 +1,20 @@
-.cpt-review-notice p {
-  font-size: 1rem;
-  line-height: 1.8;
+.cpt-review-notice{
+  position: relative;
+  margin: 10px 20px 10px 0 !important;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.cpt-review-notice .cpt-review-notice-icon{
+  max-width: 80px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.cpt-review-notice div p{
+  margin: 0;
+  margin-bottom: .5rem;
 }
 
 .cpt-review-notice .cpt-review-notice-dismiss {
@@ -8,6 +22,22 @@
   display: -ms-flexbox;
   display: flex;
   gap: 10px;
+}
+
+.cpt-review-notice .cpt-not-interested {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.cpt-review-notice :where(.cpt-not-interested, .cpt-already-reviewed)::before {
+  color: #cc0000;
+  content: "\f153";
+  font: normal 16px/20px dashicons;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 4px;
+  height: 22px;
 }
 
 .cpt-dashboard {
@@ -47,4 +77,3 @@
 .cpt-dashboard .cpt-dashboard-table.cpt-active {
   display: table;
 }
-/*# sourceMappingURL=cpt-dashboard.css.map */
