@@ -57,7 +57,7 @@ if(!defined('ABSPATH')){
  *  Cpt_Dashboard::review_notice(
  *      'prefix', // Required
  *      'plugin_name', // Required
- *      'url' // Required
+ *      'url', // Required
  *      'icon' // Optional
  *  );
  * }
