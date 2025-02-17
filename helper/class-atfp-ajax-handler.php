@@ -241,7 +241,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 					'source_character_count' => $source_char_count,
 					'editor_type' => $editor_type,
 					'date_time' => $date,
-					'plugin_type' => 'free'
+					'version_type' => 'free'
 				);
 
 				CPT_Dashboard::store_options(
