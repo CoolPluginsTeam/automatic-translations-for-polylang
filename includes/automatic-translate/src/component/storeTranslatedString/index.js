@@ -1,4 +1,4 @@
-const { dispatch } = wp.data;
+import { dispatch } from '@wordpress/data';
 import AllowedMetaFields from "../../AllowedMetafileds";
 
 /**

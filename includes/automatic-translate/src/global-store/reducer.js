@@ -79,6 +79,10 @@ const reducer = (state = TranslateDefaultState, action) => {
             // Update the state with the new target meta field for the specific ID
             return { ...state, metaFields: { ...state.metaFields, [action.id]: { ...(state.metaFields[action.id] || []), translatedData: { ...(state.metaFields[action.id].translatedData || []), [action.provider]: action.text } } } };
 
+        case AtfpActionTypes.setBlockRules: // Action to save the block rules
+            // Update the state with the new block rules
+            return { ...state, blockRules: action.data };
+
         case AtfpActionTypes.translationInfo: // Action to save the translation info
             // Update the state with the new translation info
             const data = {}

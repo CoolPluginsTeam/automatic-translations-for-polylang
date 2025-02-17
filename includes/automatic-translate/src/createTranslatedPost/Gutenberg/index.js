@@ -67,7 +67,7 @@ const translatePost = (props) => {
         }
 
         Object.values(postContentData).forEach(block => {
-            createBlocks(block, props.blockRules, service);
+            createBlocks(block, service);
         });
     }
 

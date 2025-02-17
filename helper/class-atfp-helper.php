@@ -85,7 +85,7 @@ if (! class_exists('ATFP_Helper')) {
 
 		public function get_block_parse_rules()
 		{
-			$response = wp_remote_get(ATFP_URL . 'includes/automatic-translate/translate-block-rules/block-rules.json', array(
+			$response = wp_remote_get(ATFP_URL . 'includes/block-translation-rules/block-rules.json', array(
 				'timeout'     => 15,
 				'sslverify'   => false, // Disable SSL verification to avoid cURL error 60
 			));

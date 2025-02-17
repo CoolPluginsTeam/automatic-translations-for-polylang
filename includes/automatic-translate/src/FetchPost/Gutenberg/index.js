@@ -1,10 +1,36 @@
 import GutenbergBlockSaveSource from "../../storeSourceString/Gutenberg";
-const { __ } = wp.i18n;
-const { parse } = wp.blocks;
-
 const GutenbergPostFetch = async (props) => {
-    const blockRules = props.blockRules;
-    const apiUrl = atfp_ajax_object.ajax_url;
+    const { __ } = wp.i18n;
+    const { parse } = wp.blocks;
+    const { dispatch } = wp.data;
+
+    const apiUrl = atfp_global_object.ajax_url;
+    let blockRules = {};
+
+    const blockRulesApiSendData = {
+        atfp_nonce: atfp_global_object.ajax_nonce,
+        action: atfp_global_object.action_block_rules
+    };
+
+    await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+            'Accept': 'application/json',
+        },
+        body: new URLSearchParams(blockRulesApiSendData)
+    })
+        .then(response => response.json())
+        .then(data => {
+            blockRules = JSON.parse(data.data.blockRules);
+            dispatch('block-atfp/translate').setBlockRules(blockRules);
+
+        })
+        .catch(error => {
+            console.error('Error fetching post content:', error);
+        });
+
+
 
     /**
      * Prepare data to send in API request.
@@ -13,8 +39,8 @@ const GutenbergPostFetch = async (props) => {
         postId: parseInt(props.postId),
         local: props.targetLang,
         current_local: props.sourceLang,
-        atfp_nonce: atfp_ajax_object.ajax_nonce,
-        action: atfp_ajax_object.action_fetch
+        atfp_nonce: atfp_global_object.ajax_nonce,
+        action: atfp_global_object.action_fetch
     };
 
     /**

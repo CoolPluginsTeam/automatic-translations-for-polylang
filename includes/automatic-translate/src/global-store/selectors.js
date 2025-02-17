@@ -64,6 +64,15 @@ export const getTranslationEntry = (state) => {
 };
 
 /**
+ * Retrieves the block rules from the given state.
+ * @param {Object} state - The state object containing translation data.
+ * @returns {Object} The block rules data.
+ */
+export const getBlockRules = (state) => {
+    return state.blockRules;
+}
+
+/**
  * Retrieves the translated string from the given state.
  *
  * This function extracts the translated string for a given type (title, excerpt, metaFields, or content)

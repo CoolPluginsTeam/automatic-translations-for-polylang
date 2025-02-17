@@ -43,12 +43,13 @@ const ScrollAnimation = (props) => {
 /**
  * Updates the translated content in the string container based on the provided translation object.
  */
-const updateTranslatedContent = () => {
+const updateTranslatedContent = (translateStatus) => {
     const container = document.getElementById("atfp_strings_model");
     const stringContainer = container.querySelector('.atfp_string_container');
     const translatedData = stringContainer.querySelectorAll('td.translate[data-string-type]');
+    const totalTranslatedData = translatedData.length;
 
-    translatedData.forEach(ele => {
+    translatedData.forEach((ele, index) => {
         const translatedText = ele.innerText;
         const key = ele.dataset.key;
         const type = ele.dataset.stringType;
@@ -63,6 +64,12 @@ const updateTranslatedContent = () => {
         if (translatedText.trim() !== '' && translatedText.trim().length > 0) {
             dispatch('block-atfp/translate').translationInfo({ targetWordCount: previousTargetWordCount + sourceText.trim().split(/\s+/).filter(word => /[^\p{L}\p{N}]/.test(word)).length, targetCharacterCount: previousTargetCharacterCount + sourceText.trim().length, provider: 'yandex' });
         }
+
+        if(index === totalTranslatedData - 1){
+            setTimeout(() => {
+                translateStatus();
+            },0);
+        }
     });
 }
 
@@ -72,7 +79,7 @@ const updateTranslatedContent = () => {
  * 
  * @param {HTMLElement} container - The container element for translation.
  */
-const onCompleteTranslation = (container) => {
+const onCompleteTranslation = ({container, translateStatus}) => {
     container.querySelector(".atfp_translate_progress").style.display = "none";
     container.querySelector(".atfp_string_container").style.animation = "none";
     document.body.style.top = '0';
@@ -82,7 +89,7 @@ const onCompleteTranslation = (container) => {
     saveButton.classList.add('translated');
     saveButton.classList.remove('notranslate');
 
-    updateTranslatedContent();
+    updateTranslatedContent(translateStatus);
 }
 
 /**
@@ -115,9 +122,8 @@ const ModalStringScroll = (translateStatus) => {
             var isScrolledToBottom = (stringContainer.scrollTop + stringContainer.clientHeight + 50 >= stringContainer.scrollHeight);
 
             if (isScrolledToBottom && !translateComplete) {
-                translateStatus();
                 StoreTimeTaken({ prefix: 'yandex', start: startTime, end: new Date().getTime(), translateStatus: true });
-                onCompleteTranslation(container);
+                onCompleteTranslation({container, translateStatus});
                 translateComplete = true;
             }
         });
@@ -125,16 +131,14 @@ const ModalStringScroll = (translateStatus) => {
         if (stringContainer.clientHeight + 10 >= scrollHeight) {
             StoreTimeTaken({ prefix: 'yandex', start: startTime, end: new Date().getTime(), translateStatus: true });
             setTimeout(() => {
-                translateStatus();
-                onCompleteTranslation(container);
+                onCompleteTranslation({container, translateStatus});
             }, 1500);
         }
     } else {
         StoreTimeTaken({ prefix: 'yandex', start: startTime, end: new Date().getTime(), translateStatus: true });
 
         setTimeout(() => {
-            translateStatus();
-            onCompleteTranslation(container);
+            onCompleteTranslation({container, translateStatus});
         }, 2000);
     }
 }

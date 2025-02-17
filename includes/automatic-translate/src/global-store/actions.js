@@ -116,6 +116,23 @@ export const metaFieldsSaveTranslate = (id, data, source, provider) => {
     }
 };
 
+/**
+ * Action creator for saving the block rules.
+ * @param {Object} data - The block rules to be saved.
+ * @returns {Object} The action object containing the type and data.
+ */
+export const setBlockRules = (data) => {
+    return {
+        type: AtfpActionTypes.setBlockRules, // Action type for saving the block rules
+        data: data // The block rules data
+    }
+};
+
+/**
+ * Action creator for saving the translation info.
+ * @param {Object} data - The translation info to be saved.
+ * @returns {Object} The action object containing the type and data.
+ */
 export const translationInfo = ({ sourceWordCount = null, sourceCharacterCount = null, timeTaken = null, provider = null, targetWordCount = null, targetCharacterCount = null, translateStatus = null }) => {
     return {
         type: AtfpActionTypes.translationInfo, // Action type for saving the translation info

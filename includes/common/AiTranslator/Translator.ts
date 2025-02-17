@@ -13,11 +13,11 @@ class Translator {
   public async LanguagePairStatus() {
     // @ts-ignore
     if (!window?.self?.translation) {
-      throw new Error('The Prompt API is not available');
+      return { error: '<span style="color: #ff4646; display: inline-block;">The Translator AI modal is currently not supported or disabled in your browser. Please enable it. For detailed instructions on how to enable the Translator AI modal in your Chrome browser, <a href="https://developer.chrome.com/docs/ai/translator-api#bypass_language_restrictions_for_local_testing" target="_blank">click here</a>.</span>' };
     }
 
     // @ts-ignore
-    const status = await window?.self?.translation?.canTranslate({
+    const status = await window.self.translation.canTranslate({
       sourceLanguage: this.sourceLang,
       targetLanguage: this.targetLang,
     });

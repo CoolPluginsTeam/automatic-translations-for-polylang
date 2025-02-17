@@ -240,7 +240,8 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 					'source_string_count' => $source_word_count,
 					'source_character_count' => $source_char_count,
 					'editor_type' => $editor_type,
-					'date_time' => $date
+					'date_time' => $date,
+					'plugin_type' => 'free'
 				);
 
 				CPT_Dashboard::store_options(

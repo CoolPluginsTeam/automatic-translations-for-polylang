@@ -16,11 +16,9 @@ const popStringModal = (props) => {
 
     useEffect(() => {
         if (!props.postDataFetchStatus) {
-            if (atfp_ajax_object.editor_type === 'gutenberg' && Object.keys(props.blockRules).length > 0) {
-                props.fetchPostData({ blockRules: props.blockRules, postId: props.postId, sourceLang: props.sourceLang, targetLang: props.targetLang, updatePostDataFetch: props.updatePostDataFetch, refPostData: data => setRefPostData(data) });
-            }
+                props.fetchPostData({ postId: props.postId, sourceLang: props.sourceLang, targetLang: props.targetLang, updatePostDataFetch: props.updatePostDataFetch, refPostData: data => setRefPostData(data) });
         }
-    }, [props.postDataFetchStatus, props.blockRules, props.modalRender])
+    }, [props.postDataFetchStatus, props.modalRender])
 
     const stringCountHandler = (number, characterCount) => {
         if (popupVisibility) {
@@ -57,12 +55,11 @@ const popStringModal = (props) => {
 
     const updatePostDataHandler = () => {
         const postContent = refPostData;
-        const blockRules = props.blockRules;
         const modalClose = () => setPopupVisibility(false);
 
-        props.translatePost({ postContent: postContent, modalClose: modalClose, blockRules: blockRules, service: props.service, blockRules: blockRules });
+        props.translatePost({ postContent: postContent, modalClose: modalClose, service: props.service });
         props.pageTranslate(true);
-        updateTranslateData({ provider: props.service, sourceLang: props.sourceLang, targetLang: props.targetLang, postId: props.postId });
+        updateTranslateData({ provider: props.service, sourceLang: props.sourceLang, targetLang: props.targetLang, postId: props.currentPostId });
     }
 
     useEffect(() => {
@@ -88,7 +85,6 @@ const popStringModal = (props) => {
                         modalRender={props.modalRender}
                         setPopupVisibility={setPopupVisibilityHandler}
                         postContent={refPostData}
-                        blockRules={props.blockRules}
                         translatePendingStatus={translatePending}
                         pageTranslate={props.pageTranslate}
                         stringCount={stringCount}
@@ -98,7 +94,6 @@ const popStringModal = (props) => {
                     />
                     <StringPopUpBody {...props}
                         updatePostContent={updatePostContentHandler}
-                        blockRules={props.blockRules}
                         stringCountHandler={stringCountHandler}
                         contentLoading={props.contentLoading}
                         postDataFetchStatus={props.postDataFetchStatus}
@@ -113,7 +108,6 @@ const popStringModal = (props) => {
                         modalRender={props.modalRender}
                         setPopupVisibility={setPopupVisibilityHandler}
                         postContent={refPostData}
-                        blockRules={props.blockRules}
                         translatePendingStatus={translatePending}
                         pageTranslate={props.pageTranslate}
                         stringCount={stringCount}

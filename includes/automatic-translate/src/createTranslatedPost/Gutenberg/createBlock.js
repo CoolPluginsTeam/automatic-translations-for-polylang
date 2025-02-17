@@ -1,6 +1,4 @@
 import FilterBlockNestedAttr from "../../component/FilterNestedAttr";
-const { createBlock } = wp.blocks;
-const { dispatch, select } = wp.data;
 
 /**
  * Filters and translates attributes of a block based on provided rules.
@@ -10,6 +8,9 @@ const { dispatch, select } = wp.data;
  * @returns {Object} The updated block with translated attributes.
  */
 const filterTranslateAttr = (block, blockParseRules, service) => {
+    
+    const { select } = wp.data;
+
     const filterAttrArr = Object.values(blockParseRules);
     const blockAttr = block.attributes;
     const blockId = block.clientId;
@@ -28,7 +29,7 @@ const filterTranslateAttr = (block, blockParseRules, service) => {
             current = current[path[i]];
         }
 
-        if ( current[path[path.length - 1]] instanceof wp.richText.RichTextData ) {
+        if (current[path[path.length - 1]] instanceof wp.richText.RichTextData) {
             current[path[path.length - 1]] = value.replace(/(?<!\\)"|\\"/g, "'");
         } else {
             current[path[path.length - 1]] = value;
@@ -61,8 +62,8 @@ const filterTranslateAttr = (block, blockParseRules, service) => {
 
             let blockAttrContent = dynamicBlockAttr;
 
-            if(blockAttrContent instanceof wp.richText.RichTextData) {
-                blockAttrContent=blockAttrContent.originalHTML;
+            if (blockAttrContent instanceof wp.richText.RichTextData) {
+                blockAttrContent = blockAttrContent.originalHTML;
             }
 
             if (undefined !== blockAttrContent && blockAttrContent.trim() !== '') {
@@ -77,11 +78,11 @@ const filterTranslateAttr = (block, blockParseRules, service) => {
 
                 block.attributes = updateNestedAttribute(block.attributes, newIdArr, translateContent);
             }
-            
+
             return;
         }
 
-        FilterBlockNestedAttr(idArr,filterAttrObj,blockAttr,updateTranslatedAttr);
+        FilterBlockNestedAttr(idArr, filterAttrObj, blockAttr, updateTranslatedAttr);
     }
 
     filterAttrArr.forEach(data => {
@@ -105,6 +106,7 @@ const filterTranslateAttr = (block, blockParseRules, service) => {
  * @returns {Object} The newly created translated block.
  */
 const createTranslatedBlock = (block, childBlock, blockRules, service) => {
+    const { createBlock } = wp.blocks;
     const { name: blockName, attributes } = block;
     const blockTranslateName = Object.keys(blockRules.AtfpBlockParseRules);
 
@@ -150,7 +152,11 @@ const cretaeChildBlock = (block, blockRules, service) => {
  * @param {Object} block - The main block to create.
  * @param {Object} blockRules - The rules for translating blocks.
  */
-const createBlocks = (block, blockRules, service) => {
+const createBlocks = (block, service) => {
+    const { select } = wp.data;
+    const blockRules = select('block-atfp/translate').getBlockRules();
+
+    const { dispatch } = wp.data;
     const { name: blockName } = block;
     // Create the main block
     if (blockName) {

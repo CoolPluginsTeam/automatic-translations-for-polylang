@@ -3,7 +3,10 @@ import './global-store';
 import { useEffect, useState } from 'react';
 import GutenbergPostFetch from './FetchPost/Gutenberg';
 import UpdateGutenbergPage from './createTranslatedPost/Gutenberg';
+
 import ReactDOM from "react-dom/client";
+
+const editorType = window.atfp_global_object.editor_type;
 
 const init = () => {
   let atfpModals = new Array();
@@ -19,16 +22,25 @@ const init = () => {
 
 const App = () => {
   const [pageTranslate, setPageTranslate] = useState(false);
-  const urlParams = new URLSearchParams(window.location.search);
-  const targetLang = urlParams.get('new_lang');
-  const postId = urlParams.get('from_post');
-  const postType = urlParams.get('post_type');
+  const targetLang = window.atfp_global_object.target_lang;
+  const postId = window.atfp_global_object.parent_post_id;
+  const currentPostId = window.atfp_global_object.current_post_id;
+  const postType = window.atfp_global_object.post_type;
+  let translatePost, fetchPost, translateWrpSelector;
+
+  // Gutenberg post fetch and update page
+  if(editorType === 'gutenberg'){
+    translateWrpSelector = 'input#atfp-translate-button[name="atfp_meta_box_translate"]';
+    translatePost = UpdateGutenbergPage;
+    fetchPost = GutenbergPostFetch;
+  }
+
   const [postDataFetchStatus, setPostDataFetchStatus] = useState(false);
   const [loading, setLoading] = useState(true);
-  const translatePost = UpdateGutenbergPage;
+
 
   const fetchPostData = async (data) => {
-    await GutenbergPostFetch(data);
+    await fetchPost(data);
 
     const allEntries = wp.data.select('block-atfp/translate').getTranslationEntry();
 
@@ -58,7 +70,7 @@ const App = () => {
 
   useEffect(() => {
     if (pageTranslate) {
-      const metaFieldBtn = document.querySelector('input#atfp-translate-button[name="atfp_meta_box_translate"]');
+      const metaFieldBtn = document.querySelector(translateWrpSelector);
       if (metaFieldBtn) {
         metaFieldBtn.disabled = true;
       }
@@ -67,7 +79,7 @@ const App = () => {
 
   return (
     <>
-      {!pageTranslate && <SettingModal contentLoading={loading} updatePostDataFetch={updatePostDataFetch} postDataFetchStatus={postDataFetchStatus} pageTranslate={handlePageTranslate} postId={postId} targetLang={targetLang} postType={postType} fetchPostData={fetchPostData} translatePost={translatePost} />}
+      {!pageTranslate && <SettingModal contentLoading={loading} updatePostDataFetch={updatePostDataFetch} postDataFetchStatus={postDataFetchStatus} pageTranslate={handlePageTranslate} postId={postId} currentPostId={currentPostId} targetLang={targetLang} postType={postType} fetchPostData={fetchPostData} translatePost={translatePost} translateWrpSelector={translateWrpSelector} />}
     </>
   );
 };
@@ -77,10 +89,9 @@ const App = () => {
  * @returns {HTMLElement} The created message popup element.
  */
 const createMessagePopup = () => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const postType = urlParams.get('post_type');
-  const targetLang = urlParams.get('new_lang');
-  const targetLangName = atfp_ajax_object.languageObject[targetLang];
+  const postType = window.atfp_global_object.post_type;
+  const targetLang = window.atfp_global_object.target_lang;
+  const targetLangName = atfp_global_object.languageObject[targetLang];
 
   const messagePopup = document.createElement('div');
   messagePopup.id = 'atfp-modal-open-warning-wrapper';
@@ -106,13 +117,16 @@ const insertMessagePopup = () => {
   document.body.insertBefore(messagePopup, targetElement);
 };
 
-window.addEventListener('load', () => {
+if (editorType === 'gutenberg') {
+  // Render App
+  window.addEventListener('load', () => {
 
-  // Append app root wrapper in body
-  init();
+    // Append app root wrapper in body
+    init();
 
-  insertMessagePopup();
+    insertMessagePopup();
 
-  const root = ReactDOM.createRoot(document.getElementById('atfp-setting-modal'));
-  root.render(<App />);
-});
+    const root = ReactDOM.createRoot(document.getElementById('atfp-setting-modal'));
+    root.render(<App />);
+  });
+}

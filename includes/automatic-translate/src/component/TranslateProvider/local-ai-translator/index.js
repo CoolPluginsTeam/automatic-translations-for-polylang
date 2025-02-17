@@ -5,7 +5,7 @@ import SaveTranslation from "../../storeTranslatedString";
 import StoreTimeTaken from "../../../component/StoreTimeTaken";
 
 const localAiTranslator = async (props) => {
-    const targetLangName = atfp_ajax_object.languageObject[props.targetLang];
+    const targetLangName = atfp_global_object.languageObject[props.targetLang];
     let translationInitialize = false;
     let startTime = 0;
 

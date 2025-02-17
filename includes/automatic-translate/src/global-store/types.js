@@ -30,6 +30,9 @@ const AtfpActionTypes = {
     // Action type for saving the meta fields of the translated content
     traslatedMetaFields: 'SAVE_TRANSLATE_META_FIELDS',
 
+    // Action type for saving the block rules
+    setBlockRules: 'SET_BLOCK_RULES',
+
     // Action type for saving the translatio info of the translated content
     translationInfo: 'SAVE_TRANSLATE_INFO',
 };

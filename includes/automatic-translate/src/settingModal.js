@@ -7,23 +7,22 @@ const { sprintf, __ } = wp.i18n;
 
 const SettingModal = (props) => {
     const [targetBtn, setTargetBtn] = useState({});
-    const [blockRules, setBlockRules] = useState({});
     const [modalRender, setModalRender] = useState(0);
     const [settingVisibility, setSettingVisibility] = useState(false);
-    const sourceLang = atfp_ajax_object.source_lang;
+    const sourceLang = atfp_global_object.source_lang;
     const targetLang = props.targetLang;
-    const sourceLangName = atfp_ajax_object.languageObject[sourceLang];
-    const targetLangName = atfp_ajax_object.languageObject[targetLang];
-    const apiUrl = atfp_ajax_object.ajax_url;
-    const imgFolder = atfp_ajax_object.atfp_url + 'assets/images/';
+    const sourceLangName = atfp_global_object.languageObject[sourceLang];
+    const targetLangName = atfp_global_object.languageObject[targetLang];
+    const apiUrl = atfp_global_object.ajax_url;
+    const imgFolder = atfp_global_object.atfp_url + 'assets/images/';
     const yandexSupport = yandexLanguage().includes(targetLang);
 
     /**
      * Prepare data to send in API request.
      */
     const apiSendData = {
-        atfp_nonce: atfp_ajax_object.ajax_nonce,
-        action: atfp_ajax_object.action_block_rules
+        atfp_nonce: atfp_global_object.ajax_nonce,
+        action: atfp_global_object.action_block_rules
     };
 
     const openModalOnLoadHandler = (e) => {
@@ -44,7 +43,7 @@ const SettingModal = (props) => {
     */
     useEffect(() => {
         const firstRenderBtns = document.querySelectorAll('#atfp-modal-open-warning-wrapper .modal-content button');
-        const metaFieldBtn = document.querySelector('input#atfp-translate-button[name="atfp_meta_box_translate"]');
+        const metaFieldBtn = document.querySelector(props.translateWrpSelector);
 
         if (metaFieldBtn) {
             metaFieldBtn.addEventListener('click', () => {
@@ -76,35 +75,7 @@ const SettingModal = (props) => {
     }, [settingVisibility]);
 
     /**
-     * Fetch block rules data from the server.
-     */
-    const fetchBlockRules = () => {
-        if (Object.keys(blockRules).length > 0 || props.postDataFetchStatus) {
-            return;
-        }
-
-        fetch(apiUrl, {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                'Accept': 'application/json',
-            },
-            body: new URLSearchParams(apiSendData)
-        })
-            .then(response => response.json())
-            .then(data => {
-                const blockRules = JSON.parse(data.data.blockRules);
-
-                setBlockRules(blockRules);
-            })
-            .catch(error => {
-                console.error('Error fetching post content:', error);
-            });
-    }
-
-    /**
      * useEffect hook to handle displaying the modal and rendering the PopStringModal component.
-     * Renders the modal only when blockRules is not empty and fetchStatus is true.
      */
     useEffect(() => {
         const btn = targetBtn;
@@ -122,7 +93,7 @@ const SettingModal = (props) => {
 
             if (modalRender) {
                 parentWrp._reactRoot.render(<PopStringModal
-                    blockRules={blockRules}
+                    currentPostId={props.currentPostId}
                     postId={postId}
                     service={service}
                     serviceLabel={serviceLabel}
@@ -138,7 +109,7 @@ const SettingModal = (props) => {
                 />);
             }
         }
-    }, [props.postDataFetchStatus, blockRules, modalRender]);
+    }, [props.postDataFetchStatus, modalRender]);
 
     /**
      * Function to handle fetching content based on the target button clicked.
@@ -158,7 +129,6 @@ const SettingModal = (props) => {
         }
         setModalRender(prev => prev + 1);
         setTargetBtn(targetElement);
-        fetchBlockRules();
     };
 
     return (
