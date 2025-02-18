@@ -257,6 +257,12 @@ if(!class_exists('Cpt_Dashboard')){
 
         public function dashboard_assets($page){
             if($page === 'settings_page_cool-translate-dashboard'){
+                self::ctp_enqueue_assets();
+            }
+        }
+
+        public static function ctp_enqueue_assets(){
+            if(function_exists('wp_style_is') && !wp_style_is('cpt-dashboard-style', 'enqueued')){
                 $plugin_url = plugin_dir_url(__FILE__);
                 wp_enqueue_style('cpt-dashboard-style', esc_url($plugin_url.'assets/css/cpt-dashboard.css'), array(), '1.0.0', 'all');
                 wp_enqueue_script('cpt-dashboard-script', esc_url($plugin_url.'assets/js/cpt-dashboard.js'), array('jquery'), '1.0.0', true);
@@ -276,15 +282,7 @@ if(!class_exists('Cpt_Dashboard')){
                 return;
             }
 
-            if(function_exists('wp_style_is') && !wp_style_is('cpt-dashboard-style', 'enqueued')){
-                $plugin_url = plugin_dir_url(__FILE__);
-                wp_enqueue_style('cpt-dashboard-style', esc_url($plugin_url.'assets/css/cpt-dashboard.css'), array(), '1.0.0', 'all');
-            }
-
-            if(function_exists('wp_script_is') && !wp_script_is('cpt-dashboard-script', 'enqueued')){
-                $plugin_url = plugin_dir_url(__FILE__);
-                wp_enqueue_script('cpt-dashboard-script', esc_url($plugin_url.'assets/js/cpt-dashboard.js'), array('jquery'), '1.0.0', true);
-            }
+            add_action('admin_enqueue_scripts', array(self::class, 'ctp_enqueue_assets'));
 
             
 
