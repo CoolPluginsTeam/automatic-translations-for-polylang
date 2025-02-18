@@ -109,7 +109,8 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 					Cpt_Dashboard::review_notice(
 						'atfp', // Required
 						'Automatic Translation for Polylang', // Required
-						'https://wordpress.org/plugins/automatic-translations-for-polylang/reviews/#new-post' // Required
+						'https://wordpress.org/plugins/automatic-translations-for-polylang/reviews/#new-post', // Required
+						ATFP_URL .'assets/images/ai-automatic-translation-for-polylang.png' // Required
 					);
 				}
 
