@@ -61,31 +61,20 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			register_activation_hook( ATFP_FILE, array( $this, 'atfp_activate' ) );
 			register_deactivation_hook( ATFP_FILE, array( $this, 'atfp_deactivate' ) );
 			add_action('init', array($this, 'load_plugin_textdomain'));
-			// add_filter('cpt_dashboard_tabs', array($this, 'atfp_add_dashboard_tab'));
 		}
 
 		public function atfp_load_files() {
+			if(!class_exists('CPT_Dashboard')) {
+				require_once ATFP_DIR_PATH . 'admin/cpt_dashboard/cpt_dashboard.php';
+				new CPT_Dashboard();
+			}
+
 			require_once ATFP_DIR_PATH . '/helper/class-atfp-helper.php';
 			require_once ATFP_DIR_PATH . 'admin/atfp-menu-pages/class-atfp-custom-block-post.php';
 			require_once ATFP_DIR_PATH . 'admin/atfp-menu-pages/class-atfp-supported-blocks.php';
 			require_once ATFP_DIR_PATH . 'includes/class-atfp-register-backend-assets.php';
 			require_once ATFP_DIR_PATH . 'includes/elementor-translate/class-atfp-elementor-translate.php';
-
-			if(!class_exists('CPT_Dashboard')) {
-				require_once ATFP_DIR_PATH . 'admin/cpt_dashboard/cpt_dashboard.php';
-				new CPT_Dashboard();
-			}
 		}
-
-		// public function atfp_add_dashboard_tab($tabs) {
-		// 	$tabs[] = array(
-		// 		'prefix' => 'atfp',
-		// 		'tab_name' => 'Automatic Translation',
-		// 		'columns' => array('post_id'=>'Post ID', 'service_provider'=>'Translation Provider', 'source_language'=>'Source Language', 'target_language'=>'Target Language', 'time_taken'=>'Time Taken','string_count'=>'Translated Words', 'character_count'=>'Translated Characters', 'date_time'=>'Date Time')
-		// 	);
-		// 	return $tabs;
-		// }
-		
 		/**
 		 * Initialize the Automatic Translation for Polylang plugin.
 		 *
