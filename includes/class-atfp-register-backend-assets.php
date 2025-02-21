@@ -151,11 +151,6 @@ class ATFP_Register_Backend_Assets
         $current_post_id = get_the_ID(); // Get the current post ID
         $elementor_data = get_post_meta($current_post_id, '_elementor_data', true);
         $elementor_data = is_serialized($elementor_data) ? unserialize($elementor_data) : (is_string($elementor_data) ? json_decode($elementor_data) : $elementor_data);
-        $default_language_slug = pll_default_language();
-
-        if($post_language_slug === $default_language_slug){
-            return;
-        }
 
         $data = array(
             'update_elementor_data' => 'atfp_update_elementor_data',
@@ -165,7 +160,7 @@ class ATFP_Register_Backend_Assets
         wp_enqueue_style('atfp-elementor-translate', ATFP_URL . 'assets/css/atfp-elementor-translate.css', array(), ATFP_V);
 
         $this->enqueue_automatic_translate_assets($parent_post_language_slug, $post_language_slug, 'elementor', $data);
-    }
+    }   
 
     public function enqueue_automatic_translate_assets($source_lang, $target_lang, $editor_type, $extra_data = array())
     {
@@ -202,6 +197,7 @@ class ATFP_Register_Backend_Assets
             'post_type'          => $post_type,
             'editor_type'        => $editor_type,
             'current_post_id'    => $post_id,
+            'translation_data'   => is_array($translation_data) ? $translation_data['data'] : array(),
         ), $extra_data);
 
         wp_localize_script(
