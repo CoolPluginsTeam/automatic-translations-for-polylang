@@ -4,6 +4,10 @@ import { useEffect, useState } from 'react';
 import GutenbergPostFetch from './FetchPost/Gutenberg';
 import UpdateGutenbergPage from './createTranslatedPost/Gutenberg';
 
+// Elementor post fetch and update page
+import ElementorPostFetch from './FetchPost/Elementor';
+import ElementorUpdatePage from './createTranslatedPost/Elementor';
+
 import ReactDOM from "react-dom/client";
 
 const editorType = window.atfp_global_object.editor_type;
@@ -28,8 +32,12 @@ const App = () => {
   const postType = window.atfp_global_object.post_type;
   let translatePost, fetchPost, translateWrpSelector;
 
-  // Gutenberg post fetch and update page
-  if(editorType === 'gutenberg'){
+  // Elementor post fetch and update page
+  if(editorType === 'elementor'){
+    translateWrpSelector = 'button.atfp-translate-button[name="atfp_meta_box_translate"]';
+    translatePost = ElementorUpdatePage;
+    fetchPost = ElementorPostFetch;
+  }else if(editorType === 'gutenberg'){
     translateWrpSelector = 'input#atfp-translate-button[name="atfp_meta_box_translate"]';
     translatePost = UpdateGutenbergPage;
     fetchPost = GutenbergPostFetch;
@@ -117,6 +125,34 @@ const insertMessagePopup = () => {
   document.body.insertBefore(messagePopup, targetElement);
 };
 
+/**
+ * Elementor translate button append
+ */
+const appendElementorTranslateBtn = () => {
+  const translateButtonGroup = jQuery('.MuiButtonGroup-root.MuiButtonGroup-contained').parent();
+  const buttonElement=jQuery(translateButtonGroup).find('.elementor-button.atfp-translate-button');
+  if(translateButtonGroup.length > 0 && buttonElement.length === 0){
+    const buttonHtml = '<button class="elementor-button atfp-translate-button" name="atfp_meta_box_translate">Translate</button>';
+    const buttonElement = jQuery(buttonHtml);
+
+    translateButtonGroup.prepend(buttonElement);
+    $e.internal('document/save/set-is-modified', { status: true });
+
+
+    if('' === window.atfp_global_object.elementorData || window.atfp_global_object.elementorData.length < 1){
+      buttonElement.attr('disabled', 'disabled');
+      buttonElement.attr('title', 'Translation is not available because there is no Elementor data.');
+      return;
+    }
+    // Append app root wrapper in body
+    init();
+  
+    const root = ReactDOM.createRoot(document.getElementById('atfp-setting-modal'));
+    root.render(<App />);
+  }
+
+}
+
 if (editorType === 'gutenberg') {
   // Render App
   window.addEventListener('load', () => {
@@ -128,5 +164,12 @@ if (editorType === 'gutenberg') {
 
     const root = ReactDOM.createRoot(document.getElementById('atfp-setting-modal'));
     root.render(<App />);
+  });
+}
+
+// Elementor translate button append
+if (editorType === 'elementor') {
+  jQuery(window).on('elementor:init', function () {
+    elementor.on('document:loaded', appendElementorTranslateBtn);
   });
 }

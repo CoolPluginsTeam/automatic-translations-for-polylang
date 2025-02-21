@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import FilterTargetContent from "../component/FilterTargetContent";
 const { __ } = wp.i18n;
 const { select } = wp.data;
@@ -9,30 +9,11 @@ import 'react-loading-skeleton/dist/skeleton.css'
 
 const StringPopUpBody = (props) => {
 
-    const { service: service, serviceLabel: serviceLabel } = props;
-    const [stringAvality, setStringAvality] = useState(false);
+    const { service: service } = props;
     const translateContent = select("block-atfp/translate").getTranslationEntry();
 
     let totalWordCount = 0;
     let totalCharacterCount = 0;
-
-
-    /**
-     * Updates the post content with the provided content.
-     * @param {string} content - The content to update the post with.
-     */
-    const updatePostContent = (content) => {
-        props.updatePostContent(content);
-        const translationEntry = select("block-atfp/translate").getTranslationEntry();
-
-        const totalString = Object.values(translationEntry).filter(data => data.source !== undefined && /[\p{L}\p{N}]/gu.test(data.source));
-
-        if (Object.keys(totalString).length > 0) {
-            setStringAvality(true);
-        } else {
-            setStringAvality(false);
-        }
-    }
 
     const updateTranslateContent = (entries) => {
         if (Object.getPrototypeOf(entries) === Object.prototype && entries.stringRenderComplete === true) {
@@ -109,13 +90,13 @@ const StringPopUpBody = (props) => {
                                     <>
                                         {translateContent.map((data, index) => {
                                             return (
-                                                <Fragment key={index}>
+                                                <Fragment key={index + props.translatePendingStatus}>
                                                     {undefined !== data.source && data.source.trim() !== '' &&
                                                         <>
-                                                            <tr>
+                                                            <tr key={index + 'tr' + props.translatePendingStatus}>
                                                                 <td>{index + 1}</td>
                                                                 <td data-source="source_text">{data.source}</td>
-                                                                {data.translatedData[props.service] ?
+                                                                {!props.translatePendingStatus ?
                                                                     <td className="translate" data-translate-status="translated" data-key={data.id} data-string-type={data.type}>{data.translatedData[props.service]}</td> :
                                                                     <td className="translate" translate="yes" data-key={data.id} data-string-type={data.type}>
                                                                         <FilterTargetContent service={props.service} content={data.source} translateContent={updateTranslateContent} totalString={350} currentIndex={index + 1} contentKey={data.id} />

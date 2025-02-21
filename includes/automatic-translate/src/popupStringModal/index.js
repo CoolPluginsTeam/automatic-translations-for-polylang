@@ -97,6 +97,7 @@ const popStringModal = (props) => {
                         stringCountHandler={stringCountHandler}
                         contentLoading={props.contentLoading}
                         postDataFetchStatus={props.postDataFetchStatus}
+                        translatePendingStatus={translatePending}
                         service={props.service}
                         sourceLang={props.sourceLang}
                         targetLang={props.targetLang}

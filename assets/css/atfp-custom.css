@@ -403,19 +403,6 @@ button.atfp-setting-close:hover {
     pointer-events: none;
 }
 
-#atfp_strings_model .atfp_translate_element_wrapper.translate-completed #yt-widget{
-   opacity: 0.5;
-   pointer-events: none;
-}
-
-#atfp_strings_model .atfp_translate_element_wrapper.translate-completed button{
-   background: #f6f7f7 !important;
-   background-color: #f6f7f7 !important;
-   border-color: #dcdcde !important;
-   color: #a7aaad!important;
-   pointer-events: none;
-}
-
 #atfp_strings_model .atfp_translate_element_wrapper #yt-widget .yt-wrapper_align_right {
     margin-bottom: 1rem;
 }

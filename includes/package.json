@@ -6,6 +6,8 @@
   "scripts": {
     "build:at": "wp-scripts build automatic-translate/src/index.js --output-path=../assets/automatic-translate/",
     "start:at": "wp-scripts start automatic-translate/src/index.js --output-path=../assets/automatic-translate/",
+    "build:et": "webpack --mode production --env ET=true",
+    "start:et": "webpack --mode development --env ET=true --watch",
     "build:bt": "webpack --mode production --env BT=true",
     "start:bt": "webpack --mode development --env BT=true --watch"
   },

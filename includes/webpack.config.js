@@ -50,14 +50,12 @@ const config = {
 };
 
 module.exports = (env, argv) => {
-  if ((argv.mode === "production" || argv.mode === "development") && argv.env && (argv.env.BT || argv.env.ET)) {
-    let dirDist, dirEntry;
+  if ((argv.mode === "production" || argv.mode === "development") && argv.env && argv.env.BT) {
 
-    if(argv.env.BT){
-      const dirSrc = path.resolve(__dirname, "block-translator");
-      dirDist = path.resolve(__dirname, "../assets/block-translator");
-      dirEntry = `${dirSrc}/editorAssets/index.ts`;
-    }
+    const dirSrc = path.resolve(__dirname, "block-translator");
+    const dirDist = path.resolve(__dirname, "../assets/block-translator");
+    const dirEntry = `${dirSrc}/editorAssets/index.ts`;
+
 
     return {
       ...config,
