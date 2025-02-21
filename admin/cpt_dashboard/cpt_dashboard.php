@@ -232,19 +232,9 @@ if(!class_exists('Cpt_Dashboard')){
             $all_data = get_option('cpt_dashboard_data', array());
             $data = array();
 
-            
             if(isset($all_data[$prefix])){
                 $total_string_count = 0;
                 $total_character_count = 0;
-
-                function format_number($number) {
-                    if ($number >= 1000000) {
-                        return round($number / 1000000, 1) . 'M';
-                    } elseif ($number >= 1000) {
-                        return round($number / 1000, 1) . 'K';
-                    }
-                    return $number;
-                }
 
                 foreach($all_data[$prefix] as $key => $value){
                     $total_string_count += isset($value['string_count']) ? absint($value['string_count']) : 0;
@@ -256,8 +246,8 @@ if(!class_exists('Cpt_Dashboard')){
                     'data' => array_map(function($item) {
                         return array_map('sanitize_text_field', $item);
                     }, $all_data[$prefix]),
-                    'total_string_count' => format_number($total_string_count),
-                    'total_character_count' => format_number($total_character_count),
+                    'total_string_count' => $total_string_count,
+                    'total_character_count' => $total_character_count,
                 );
             }
 
@@ -278,6 +268,15 @@ if(!class_exists('Cpt_Dashboard')){
             }
         }
 
+        private function format_number_count($number){
+            if ($number >= 1000000) {
+                return round($number / 1000000, 1) . 'M';
+            } elseif ($number >= 1000) {
+                return round($number / 1000, 1) . 'K';
+            }
+            return $number;
+        }
+
         public static function review_notice($prefix, $plugin_name, $url, $icon=''){
             if(self::cpt_hide_review_notice_status($prefix)){
                 return;
@@ -290,6 +289,8 @@ if(!class_exists('Cpt_Dashboard')){
             if($total_character_count < 50000){ 
                 return;
             }
+
+            $total_character_count = $this->format_number_count($total_character_count);
 
             add_action('admin_enqueue_scripts', array(self::class, 'ctp_enqueue_assets'));
 
