@@ -140,6 +140,10 @@ class ATFP_Register_Backend_Assets
     public function enqueue_elementor_translate_assets()
     {
 
+        if(!ATFP_Helper::get_translation_data()){
+            return;
+        }
+
         $page_translated = get_post_meta(get_the_ID(), 'atfp_elementor_translated', true);
         $parent_post_language_slug = get_post_meta(get_the_ID(), 'atfp_parent_post_language_slug', true);
 
@@ -178,6 +182,7 @@ class ATFP_Register_Backend_Assets
 
 
         $languages = PLL()->model->get_languages_list();
+        $translation_data = ATFP_Helper::get_translation_data();
 
         $lang_object = array();
         foreach ($languages as $lang) {
@@ -201,7 +206,7 @@ class ATFP_Register_Backend_Assets
             'post_type'          => $post_type,
             'editor_type'        => $editor_type,
             'current_post_id'    => $post_id,
-            'translation_data'   => is_array($translation_data) ? $translation_data['data'] : array(),
+            'translation_data'   => is_array($translation_data) ? (function() use (&$translation_data) { unset($translation_data['data']); return $translation_data; })() : array(),
         ), $extra_data);
 
         wp_localize_script(
