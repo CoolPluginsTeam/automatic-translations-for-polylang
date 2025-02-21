@@ -139,7 +139,7 @@ const appendElementorTranslateBtn = () => {
     $e.internal('document/save/set-is-modified', { status: true });
 
 
-    if('' === window.atfp_global_object.elementorData || window.atfp_global_object.elementorData.length < 1){
+    if('' === window.atfp_global_object.elementorData || window.atfp_global_object.elementorData.length < 1 || elementor.elements.length < 1){
       buttonElement.attr('disabled', 'disabled');
       buttonElement.attr('title', 'Translation is not available because there is no Elementor data.');
       return;
