@@ -152,6 +152,10 @@ class ATFP_Register_Backend_Assets
         $elementor_data = get_post_meta($current_post_id, '_elementor_data', true);
         $elementor_data = is_serialized($elementor_data) ? unserialize($elementor_data) : (is_string($elementor_data) ? json_decode($elementor_data) : $elementor_data);
 
+        if($parent_post_language_slug === $post_language_slug){
+            return;
+        }
+
         $data = array(
             'update_elementor_data' => 'atfp_update_elementor_data',
             'elementorData' => $elementor_data,
