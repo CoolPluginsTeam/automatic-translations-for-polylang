@@ -268,7 +268,7 @@ if(!class_exists('Cpt_Dashboard')){
             }
         }
 
-        private function format_number_count($number){
+        public static function format_number_count($number){
             if ($number >= 1000000) {
                 return round($number / 1000000, 1) . 'M';
             } elseif ($number >= 1000) {
@@ -290,7 +290,7 @@ if(!class_exists('Cpt_Dashboard')){
                 return;
             }
 
-            $total_character_count = $this->format_number_count($total_character_count);
+            $total_character_count = self::format_number_count($total_character_count);
 
             add_action('admin_enqueue_scripts', array(self::class, 'ctp_enqueue_assets'));
 
