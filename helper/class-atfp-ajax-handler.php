@@ -53,11 +53,12 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 		 */
 		public function __construct() {
 			if ( is_admin() ) {
-				add_action( 'wp_ajax_atfp_fetch_post_content', array( $this, 'atfp_fetch_post_content' ) );
-				add_action( 'wp_ajax_atfp_block_parsing_rules', array( $this, 'atfp_block_parsing_rules' ) );
-				add_action( 'wp_ajax_atfp_get_custom_blocks_content', array( $this, 'atfp_get_custom_blocks_content' ) );
-				add_action( 'wp_ajax_atfp_update_custom_blocks_content', array( $this, 'atfp_update_custom_blocks_content' ) );
+				add_action( 'wp_ajax_atfp_fetch_post_content', array( $this, 'fetch_post_content' ) );
+				add_action( 'wp_ajax_atfp_block_parsing_rules', array( $this, 'block_parsing_rules' ) );
+				add_action( 'wp_ajax_atfp_get_custom_blocks_content', array( $this, 'get_custom_blocks_content' ) );
+				add_action( 'wp_ajax_atfp_update_custom_blocks_content', array( $this, 'update_custom_blocks_content' ) );
 				add_action('wp_ajax_atfp_update_translate_data', array($this, 'atfp_update_translate_data'));
+				add_action( 'wp_ajax_atfp_update_elementor_data', array( $this, 'update_elementor_data' ) );
 			}
 		}
 
@@ -66,7 +67,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 		 *
 		 * Handles the block parsing rules AJAX request.
 		 */
-		public function atfp_block_parsing_rules() {
+		public function block_parsing_rules() {
 			if ( ! check_ajax_referer( 'atfp_translate_nonce', 'atfp_nonce', false ) ) {
 				wp_send_json_error( __( 'Invalid security token sent.', 'automatic-translations-for-polylang' ) );
 				wp_die( '0', 400 );
@@ -86,7 +87,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 		/**
 		 * Fetches post content via AJAX request.
 		 */
-		public function atfp_fetch_post_content() {
+		public function fetch_post_content() {
 			if ( ! check_ajax_referer( 'atfp_translate_nonce', 'atfp_nonce', false ) ) {
 				wp_send_json_error( __( 'Invalid security token sent.', 'automatic-translations-for-polylang' ) );
 				wp_die( '0', 400 );
@@ -122,7 +123,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 			exit;
 		}
 
-		public function atfp_get_custom_blocks_content() {
+		public function get_custom_blocks_content() {
 			if ( ! check_ajax_referer( 'atfp_block_update_nonce', 'atfp_nonce', false ) ) {
 				wp_send_json_error( __( 'Invalid security token sent.', 'automatic-translations-for-polylang' ) );
 				wp_die( '0', 400 );
@@ -139,7 +140,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 			exit();
 		}
 
-		public function atfp_update_custom_blocks_content() {
+		public function update_custom_blocks_content() {
 			if ( ! check_ajax_referer( 'atfp_block_update_nonce', 'atfp_nonce', false ) ) {
 				wp_send_json_error( __( 'Invalid security token sent.', 'automatic-translations-for-polylang' ) );
 				wp_die( '0', 400 );
@@ -247,7 +248,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				CPT_Dashboard::store_options(
 					'atfp',
 					'post_id', 
-					'upredate',
+					'update',
 					$translation_data
 				);
 
@@ -261,5 +262,28 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 			}
 			exit;
 		}
+
+		/**
+         * Handle AJAX request to update Elementor data.
+         */
+        public function update_elementor_data() {
+			if ( ! check_ajax_referer( 'atfp_translate_nonce', 'atfp_nonce', false ) ) {
+				wp_send_json_error( __( 'Invalid security token sent.', 'automatic-translations-for-polylang' ) );
+				wp_die( '0', 400 );
+				exit();
+			}
+            if ( isset( $_POST['post_id'] ) && isset( $_POST['elementor_data'] ) ) {
+                $post_id = intval( $_POST['post_id'] );
+                $elementor_data = sanitize_textarea_field( wp_unslash( $_POST['elementor_data'] ) ); // Sanitize the JSON data
+                update_post_meta( $post_id, '_elementor_data', $elementor_data );
+				update_post_meta($post_id, 'atfp_elementor_translated', 'true');
+				delete_post_meta( $post_id, 'atfp_parent_post_language_slug');
+                wp_send_json_success( 'Elementor data updated.' );
+				exit;
+            } else {
+                wp_send_json_error( 'Invalid data.' );
+				exit;
+            }
+        }
 	}
 }

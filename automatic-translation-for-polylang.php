@@ -69,6 +69,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			require_once ATFP_DIR_PATH . 'admin/atfp-menu-pages/class-atfp-custom-block-post.php';
 			require_once ATFP_DIR_PATH . 'admin/atfp-menu-pages/class-atfp-supported-blocks.php';
 			require_once ATFP_DIR_PATH . 'includes/class-atfp-register-backend-assets.php';
+			require_once ATFP_DIR_PATH . 'includes/elementor-translate/class-atfp-elementor-translate.php';
 
 			if(!class_exists('CPT_Dashboard')) {
 				require_once ATFP_DIR_PATH . 'admin/cpt_dashboard/cpt_dashboard.php';
@@ -103,6 +104,8 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 
 				add_action( 'add_meta_boxes', array( $this, 'atfp_shortcode_metabox' ) );
 				$this->atfp_register_backend_assets();
+
+				$this->atfp_initialize_elementor_translation();
 
 				// Review Notice
 				if(class_exists('Cpt_Dashboard')) {
@@ -162,6 +165,17 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 		function atfp_register_backend_assets() {
 			if(class_exists('ATFP_Register_Backend_Assets')) {
 				ATFP_Register_Backend_Assets::get_instance();
+			}
+		}
+
+		/**
+		 * Initialize Elementor Translation.
+		 *
+		 * @return void
+		 */
+		function atfp_initialize_elementor_translation() {
+			if(class_exists('ATFP_Elementor_Translate')) {
+				ATFP_Elementor_Translate::get_instance();
 			}
 		}
 

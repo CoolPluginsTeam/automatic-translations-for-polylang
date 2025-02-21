@@ -1,6 +1,5 @@
 <?php
 
-if(!class_exists('ATFP_Register_Backend_Assets')){
 class ATFP_Register_Backend_Assets
 {
 
@@ -31,6 +30,7 @@ class ATFP_Register_Backend_Assets
     {
         add_action('admin_enqueue_scripts', array($this, 'enqueue_gutenberg_translate_assets'));
         add_action('enqueue_block_assets', array($this, 'register_block_translator_assets'));
+        add_action('elementor/editor/after_enqueue_scripts', array($this, 'enqueue_elementor_translate_assets'));
     }
 
     /**
@@ -137,6 +137,36 @@ class ATFP_Register_Backend_Assets
         }
     }
 
+    public function enqueue_elementor_translate_assets()
+    {
+
+        $page_translated = get_post_meta(get_the_ID(), 'atfp_elementor_translated', true);
+        $parent_post_language_slug = get_post_meta(get_the_ID(), 'atfp_parent_post_language_slug', true);
+
+        if((!empty($page_translated) && $page_translated === 'true') || empty($parent_post_language_slug)){
+            return;
+        }
+        
+        $post_language_slug = pll_get_post_language(get_the_ID(), 'slug');
+        $current_post_id = get_the_ID(); // Get the current post ID
+        $elementor_data = get_post_meta($current_post_id, '_elementor_data', true);
+        $elementor_data = is_serialized($elementor_data) ? unserialize($elementor_data) : (is_string($elementor_data) ? json_decode($elementor_data) : $elementor_data);
+        $default_language_slug = pll_default_language();
+
+        if($post_language_slug === $default_language_slug){
+            return;
+        }
+
+        $data = array(
+            'update_elementor_data' => 'atfp_update_elementor_data',
+            'elementorData' => $elementor_data,
+        );
+
+        wp_enqueue_style('atfp-elementor-translate', ATFP_URL . 'assets/css/atfp-elementor-translate.css', array(), ATFP_V);
+
+        $this->enqueue_automatic_translate_assets($parent_post_language_slug, $post_language_slug, 'elementor', $data);
+    }
+
     public function enqueue_automatic_translate_assets($source_lang, $target_lang, $editor_type, $extra_data = array())
     {
         wp_register_style('atfp-automatic-translate-custom', ATFP_URL . 'assets/css/atfp-custom.min.css', array(), ATFP_V);
@@ -180,5 +210,4 @@ class ATFP_Register_Backend_Assets
             $data
         );
     }
-}
 }
