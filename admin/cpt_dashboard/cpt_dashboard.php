@@ -249,6 +249,12 @@ if(!class_exists('Cpt_Dashboard')){
                     'total_string_count' => $total_string_count,
                     'total_character_count' => $total_character_count,
                 );
+            }else{
+                $data = array(
+                    'prefix' => $prefix,
+                    'total_string_count' => 0,
+                    'total_character_count' => 0,
+                );
             }
 
             return $data;
@@ -286,7 +292,7 @@ if(!class_exists('Cpt_Dashboard')){
             
             $total_character_count = is_array($translation_data) && isset($translation_data['total_character_count']) ? $translation_data['total_character_count'] : 0;
             
-            if($total_character_count < 50000){ 
+            if($total_character_count < 10000){ 
                 return;
             }
 
