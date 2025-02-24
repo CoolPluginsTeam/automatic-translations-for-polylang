@@ -66,6 +66,10 @@ if(!defined('ABSPATH')){
  * if(class_exists('Cpt_Dashboard')){
  *  Cpt_Dashboard::get_translation_data(
  *      'prefix', // Required
+ *      array(
+ *          'editor_type' => 'gutenberg', // optional return data based on editor type
+ *          'post_id' => '123', // optional return data based on post id
+ *      ) // Optional
  *  );
  * }
  */
@@ -227,7 +231,7 @@ if(!class_exists('Cpt_Dashboard')){
          * @param string $prefix
          * @return array
          */
-        public static function get_translation_data($prefix){
+        public static function get_translation_data($prefix, $key_exists=array()){
             $prefix = sanitize_key($prefix);
             $all_data = get_option('cpt_dashboard_data', array());
             $data = array();
@@ -237,6 +241,19 @@ if(!class_exists('Cpt_Dashboard')){
                 $total_character_count = 0;
 
                 foreach($all_data[$prefix] as $key => $value){
+
+                    $continue=false;
+                    foreach($key_exists as $key_exists_key => $key_exists_value){
+                        if(!isset($value[$key_exists_key]) || (isset($value[$key_exists_key]) && $value[$key_exists_key] !== $key_exists_value)){
+                            $continue=true;
+                            break;
+                        }
+                    }
+
+                    if($continue){
+                        continue;
+                    }
+
                     $total_string_count += isset($value['string_count']) ? absint($value['string_count']) : 0;
                     $total_character_count += isset($value['character_count']) ? absint($value['character_count']) : 0;
                 }

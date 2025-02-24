@@ -160,13 +160,16 @@ class ATFP_Register_Backend_Assets
             return;
         }
 
+        $translation_data = ATFP_Helper::get_translation_data(array('editor_type' => 'elementor'));
+
         $data = array(
             'update_elementor_data' => 'atfp_update_elementor_data',
             'elementorData' => $elementor_data,
+            'translation_data'   => is_array($translation_data) ? (function() use (&$translation_data) { unset($translation_data['data']); return $translation_data; })() : array(),
+
         );
 
         wp_enqueue_style('atfp-elementor-translate', ATFP_URL . 'assets/css/atfp-elementor-translate.css', array(), ATFP_V);
-
         $this->enqueue_automatic_translate_assets($parent_post_language_slug, $post_language_slug, 'elementor', $data);
     }   
 
@@ -182,8 +185,6 @@ class ATFP_Register_Backend_Assets
 
 
         $languages = PLL()->model->get_languages_list();
-        $translation_data = ATFP_Helper::get_translation_data();
-
         $lang_object = array();
         foreach ($languages as $lang) {
             $lang_object[$lang->slug] = $lang->name;
@@ -206,7 +207,6 @@ class ATFP_Register_Backend_Assets
             'post_type'          => $post_type,
             'editor_type'        => $editor_type,
             'current_post_id'    => $post_id,
-            'translation_data'   => is_array($translation_data) ? (function() use (&$translation_data) { unset($translation_data['data']); return $translation_data; })() : array(),
         ), $extra_data);
 
         wp_localize_script(

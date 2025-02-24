@@ -3,6 +3,7 @@ import './global-store';
 import { useEffect, useState } from 'react';
 import GutenbergPostFetch from './FetchPost/Gutenberg';
 import UpdateGutenbergPage from './createTranslatedPost/Gutenberg';
+import ProVersionNotice from './ProVersionNotice';
 
 // Elementor post fetch and update page
 import ElementorPostFetch from './FetchPost/Elementor';
@@ -138,6 +139,21 @@ const appendElementorTranslateBtn = () => {
     translateButtonGroup.prepend(buttonElement);
     $e.internal('document/save/set-is-modified', { status: true });
 
+    if(!window.atfp_global_object.translation_data || !window.atfp_global_object.translation_data.total_string_count ){
+      buttonElement.attr('disabled', 'disabled');
+      buttonElement.attr('title', 'Translation data not found.');
+      return;
+    }
+
+    const characterCount = parseInt(window.atfp_global_object.translation_data.total_character_count);
+    if(characterCount > 500000){
+      const elementorProNotice = document.createElement('div');
+      elementorProNotice.id = 'atfp-elementor-pro-notice';
+      document.body.appendChild(elementorProNotice);
+      const root = ReactDOM.createRoot(document.getElementById('atfp-elementor-pro-notice'));
+      root.render(<ProVersionNotice characterCount={characterCount} url={window.atfp_global_object.pro_version_url || ''} />);
+      return;
+    }
 
     if('' === window.atfp_global_object.elementorData || window.atfp_global_object.elementorData.length < 1 || elementor.elements.length < 1){
       buttonElement.attr('disabled', 'disabled');
@@ -169,7 +185,9 @@ if (editorType === 'gutenberg') {
 
 // Elementor translate button append
 if (editorType === 'elementor') {
+  console.log("aniket dogra one");
   jQuery(window).on('elementor:init', function () {
+    console.log("aniket dogra two");
     elementor.on('document:loaded', appendElementorTranslateBtn);
   });
 }

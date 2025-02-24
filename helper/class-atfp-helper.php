@@ -189,9 +189,9 @@ if (! class_exists('ATFP_Helper')) {
 			return $content;
 		}
 
-		public static function get_translation_data(){
+		public static function get_translation_data($key_exists=array()){
 			if(class_exists('CPT_Dashboard') && method_exists('CPT_Dashboard', 'get_translation_data')){
-				return CPT_Dashboard::get_translation_data('atfp');
+				return CPT_Dashboard::get_translation_data('atfp', $key_exists);
 			}else{
 				return false;
 			}
