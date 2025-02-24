@@ -12,30 +12,6 @@ const StringPopUpBody = (props) => {
     const { service: service } = props;
     const translateContent = select("block-atfp/translate").getTranslationEntry();
 
-    let totalWordCount = 0;
-    let totalCharacterCount = 0;
-
-    const updateTranslateContent = (entries) => {
-        if (Object.getPrototypeOf(entries) === Object.prototype && entries.stringRenderComplete === true) {
-            props.stringCountHandler(totalWordCount, totalCharacterCount);
-            return;
-        }
-
-        let entrie = entries.join(" ");
-
-        if (undefined === entrie || entrie.trim() === '') {
-            return;
-        };
-
-        entrie = entrie.replace(/#atfp_open_translate_span#(.*?)#atfp_close_translate_span#/g, '');
-
-        const wordCount = entrie.trim().split(/\s+/).filter(word => /[^\p{L}\p{N}]/.test(word)).length;
-        const characterCount = entrie.length;
-
-        totalWordCount += wordCount;
-        totalCharacterCount += characterCount;
-    };
-
     useEffect(() => {
 
         if (props.service === 'yandex') {
@@ -99,7 +75,7 @@ const StringPopUpBody = (props) => {
                                                                 {!props.translatePendingStatus ?
                                                                     <td className="translate" data-translate-status="translated" data-key={data.id} data-string-type={data.type}>{data.translatedData[props.service]}</td> :
                                                                     <td className="translate" translate="yes" data-key={data.id} data-string-type={data.type}>
-                                                                        <FilterTargetContent service={props.service} content={data.source} translateContent={updateTranslateContent} totalString={350} currentIndex={index + 1} contentKey={data.id} />
+                                                                        <FilterTargetContent service={props.service} content={data.source} totalString={350} currentIndex={index + 1} contentKey={data.id} />
                                                                     </td>
                                                                 }
                                                             </tr>

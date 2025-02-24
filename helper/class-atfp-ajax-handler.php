@@ -272,6 +272,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				wp_die( '0', 400 );
 				exit();
 			}
+
 			if(!class_exists("CPT_Dashboard")){
 				wp_send_json_error( __( 'Translation Data class not found.', 'automatic-translations-for-polylang' ) );
 				wp_die( '0', 400 );
@@ -284,7 +285,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				exit();
 			}	
 
-			$translation_data = CPT_Dashboard::get_translation_data('atfp', array('editor_type' => 'elementor'));
+			$translation_data = CPT_Dashboard::get_translation_data('atfp');
 
 			if(!isset($translation_data['total_character_count'])){
 				wp_send_json_error( __( 'Character count not found.', 'automatic-translations-for-polylang' ) );

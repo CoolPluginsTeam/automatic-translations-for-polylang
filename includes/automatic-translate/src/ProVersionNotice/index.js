@@ -14,7 +14,7 @@ const ProVersionNotice = ({ characterCount = 0, url = '' }) => {
     const [activeClass, setActiveClass] = useState(false);
 
     useEffect(() => {
-        const translateButton = document.querySelector('button.atfp-translate-button[name="atfp_meta_box_translate"]');
+        const translateButton = document.querySelector('button.atfp-translate-button[name="atfp_meta_box_translate"],input#atfp-translate-button[name="atfp_meta_box_translate"]');
 
         if (!translateButton) {
             return;
@@ -42,7 +42,7 @@ const ProVersionNotice = ({ characterCount = 0, url = '' }) => {
                         <p>You have reached the character limit of <strong>{formatNumberCount(characterCount)}</strong> for your translations. To continue translating beyond this limit, please consider upgrading to AI Translation for Polylang Pro.</p>
                     </div>
                     <div className="atfp-notice-footer">
-                        <a href={url} target="_blank" rel="noopener noreferrer" className="atfp-upgrade-button">Buy Now</a>
+                        <a href={url} target="_blank" rel="noopener noreferrer" className="atfp-upgrade-button">Upgrade to Pro</a>
                     </div>
                 </div>
             </div>

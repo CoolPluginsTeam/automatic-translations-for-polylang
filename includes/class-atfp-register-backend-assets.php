@@ -140,9 +140,7 @@ class ATFP_Register_Backend_Assets
     public function enqueue_elementor_translate_assets()
     {
 
-        if(!ATFP_Helper::get_translation_data()){
-            return;
-        }
+    
 
         $page_translated = get_post_meta(get_the_ID(), 'atfp_elementor_translated', true);
         $parent_post_language_slug = get_post_meta(get_the_ID(), 'atfp_parent_post_language_slug', true);
@@ -160,13 +158,9 @@ class ATFP_Register_Backend_Assets
             return;
         }
 
-        $translation_data = ATFP_Helper::get_translation_data(array('editor_type' => 'elementor'));
-
         $data = array(
             'update_elementor_data' => 'atfp_update_elementor_data',
             'elementorData' => $elementor_data,
-            'translation_data'   => is_array($translation_data) ? (function() use (&$translation_data) { unset($translation_data['data']); return $translation_data; })() : array(),
-
         );
 
         wp_enqueue_style('atfp-elementor-translate', ATFP_URL . 'assets/css/atfp-elementor-translate.css', array(), ATFP_V);
@@ -175,6 +169,12 @@ class ATFP_Register_Backend_Assets
 
     public function enqueue_automatic_translate_assets($source_lang, $target_lang, $editor_type, $extra_data = array())
     {
+        if(!ATFP_Helper::get_translation_data()){
+            return;
+        }
+
+        $translation_data = ATFP_Helper::get_translation_data();
+
         wp_register_style('atfp-automatic-translate-custom', ATFP_URL . 'assets/css/atfp-custom.min.css', array(), ATFP_V);
 
         $editor_script_asset = include ATFP_DIR_PATH . 'assets/automatic-translate/index.asset.php';
@@ -207,6 +207,7 @@ class ATFP_Register_Backend_Assets
             'post_type'          => $post_type,
             'editor_type'        => $editor_type,
             'current_post_id'    => $post_id,
+            'translation_data'   => is_array($translation_data) ? (function() use (&$translation_data) { unset($translation_data['data']); return $translation_data; })() : array(),
         ), $extra_data);
 
         wp_localize_script(

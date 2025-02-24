@@ -148,9 +148,9 @@ const appendElementorTranslateBtn = () => {
     const characterCount = parseInt(window.atfp_global_object.translation_data.total_character_count);
     if(characterCount > 500000){
       const elementorProNotice = document.createElement('div');
-      elementorProNotice.id = 'atfp-elementor-pro-notice';
+      elementorProNotice.id = 'atfp-pro-notice';
       document.body.appendChild(elementorProNotice);
-      const root = ReactDOM.createRoot(document.getElementById('atfp-elementor-pro-notice'));
+      const root = ReactDOM.createRoot(document.getElementById('atfp-pro-notice'));
       root.render(<ProVersionNotice characterCount={characterCount} url={window.atfp_global_object.pro_version_url || ''} />);
       return;
     }
@@ -176,6 +176,24 @@ if (editorType === 'gutenberg') {
     // Append app root wrapper in body
     init();
 
+    const buttonElement = jQuery('input#atfp-translate-button[name="atfp_meta_box_translate"]');
+
+    if(!window.atfp_global_object.translation_data || !window.atfp_global_object.translation_data.total_string_count ){
+      buttonElement.attr('disabled', 'disabled');
+      buttonElement.attr('title', 'Translation data not found.');
+      return;
+    }
+
+    const characterCount = parseInt(window.atfp_global_object.translation_data.total_character_count);
+    if(characterCount > 500000){
+      const elementorProNotice = document.createElement('div');
+      elementorProNotice.id = 'atfp-pro-notice';
+      document.body.appendChild(elementorProNotice);
+      const root = ReactDOM.createRoot(document.getElementById('atfp-pro-notice'));
+      root.render(<ProVersionNotice characterCount={characterCount} url={window.atfp_global_object.pro_version_url || ''} />);
+      return;
+    }
+
     insertMessagePopup();
 
     const root = ReactDOM.createRoot(document.getElementById('atfp-setting-modal'));
@@ -185,9 +203,7 @@ if (editorType === 'gutenberg') {
 
 // Elementor translate button append
 if (editorType === 'elementor') {
-  console.log("aniket dogra one");
   jQuery(window).on('elementor:init', function () {
-    console.log("aniket dogra two");
     elementor.on('document:loaded', appendElementorTranslateBtn);
   });
 }

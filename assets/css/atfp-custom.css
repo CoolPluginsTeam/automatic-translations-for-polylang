@@ -533,3 +533,99 @@ body>div.skiptranslate iframe.skiptranslate[frameborder][src][style="visibility:
     height: calc(100vh - 235px)!important;
     margin-block: 1rem;
 }
+
+
+#atfp-pro-notice-wrapper {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(34, 34, 34, 0.7);
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    padding: 1rem;
+    color: black;
+}
+
+#atfp-pro-notice-wrapper.atfp-active {
+    opacity: 1;
+}
+
+#atfp-pro-notice-wrapper .atfp-pro-notice {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 400px;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#atfp-pro-notice-wrapper .atfp-pro-notice .atfp-notice-header {
+    background-color: #f3f3f3;
+    color: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .9rem 10px;
+    border-bottom: 1px solid black;
+}
+
+#atfp-pro-notice-wrapper .atfp-pro-notice .atfp-notice-header h2{
+    margin: 0px !important;
+    padding: 0px !important;
+}
+
+#atfp-pro-notice-wrapper .atfp-pro-notice .atfp-notice-header .atfp-close-button {
+    cursor: pointer;
+    font-size: 19px;
+    font-weight: 700;
+    background: transparent;
+    box-shadow: unset;
+    border: 0px;
+    color: black;
+    display: inline-flex;
+    line-height: 1;
+}
+
+#atfp-pro-notice-wrapper .atfp-pro-notice .atfp-notice-content {
+    margin: 10px;
+    font-size: 1rem;
+    color: #3c3c3c;
+    line-height: 1.5rem;
+}
+
+#atfp-pro-notice-wrapper .atfp-pro-notice .atfp-notice-content p{
+    font-size: 1rem;
+    line-height: 1.5rem;
+    margin: 0px !important;
+    padding: 0px !important;
+}
+
+#atfp-pro-notice-wrapper .atfp-pro-notice .atfp-notice-footer {
+    background-color: #f3f3f3;
+    padding: 10px;
+    border-top: 1px solid black;
+}
+
+#atfp-pro-notice-wrapper .atfp-pro-notice .atfp-notice-footer .atfp-upgrade-button {
+    background-color: #F0ABFC;
+    color: black;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+#atfp-pro-notice-wrapper .atfp-pro-notice .atfp-notice-footer .atfp-upgrade-button:hover {
+    background-color: #f09dff; /* Darker shade on hover */
+}

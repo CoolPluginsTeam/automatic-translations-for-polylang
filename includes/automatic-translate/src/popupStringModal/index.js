@@ -6,26 +6,19 @@ import StringPopUpBody from "./body";
 import StringPopUpFooter from "./footer";
 
 const popStringModal = (props) => {
-    const translateStatus = select('block-atfp/translate').getTranslationInfo().translateData[props.service]?.translateStatus || false;
+    const translateData = select('block-atfp/translate').getTranslationInfo().translateData[props.service] || false;
+    const translateStatus=translateData?.translateStatus || false;
 
     const [popupVisibility, setPopupVisibility] = useState(true);
     const [refPostData, setRefPostData] = useState('');
     const [translatePending, setTranslatePending] = useState(true);
-    const [stringCount, setStringCount] = useState(false);
-    const [characterCount, setCharacterCount] = useState(false);
+    const [characterCount, setCharacterCount] = useState(translateData?.targetCharacterCount || 0);
 
     useEffect(() => {
         if (!props.postDataFetchStatus) {
                 props.fetchPostData({ postId: props.postId, sourceLang: props.sourceLang, targetLang: props.targetLang, updatePostDataFetch: props.updatePostDataFetch, refPostData: data => setRefPostData(data) });
         }
     }, [props.postDataFetchStatus, props.modalRender])
-
-    const stringCountHandler = (number, characterCount) => {
-        if (popupVisibility) {
-            setStringCount(number);
-            setCharacterCount(characterCount);
-        }
-    }
 
     /**
      * Updates the post content data.
@@ -50,6 +43,9 @@ const popStringModal = (props) => {
     }
 
     const translateStatusHandler = () => {
+        const characterCount = select('block-atfp/translate').getTranslationInfo().translateData[props.service]?.targetCharacterCount || 0;
+
+        setCharacterCount(characterCount);
         setTranslatePending(false);
     }
 
@@ -66,6 +62,7 @@ const popStringModal = (props) => {
         setPopupVisibility(true);
 
         if (translateStatus && translatePending) {
+            setCharacterCount(translateData?.targetCharacterCount || 0);
             setTranslatePending(false);
         }
 
@@ -87,14 +84,12 @@ const popStringModal = (props) => {
                         postContent={refPostData}
                         translatePendingStatus={translatePending}
                         pageTranslate={props.pageTranslate}
-                        stringCount={stringCount}
-                        characterCount={characterCount}
                         service={props.service}
                         updatePostData={updatePostDataHandler}
+                        characterCount={characterCount}
                     />
                     <StringPopUpBody {...props}
                         updatePostContent={updatePostContentHandler}
-                        stringCountHandler={stringCountHandler}
                         contentLoading={props.contentLoading}
                         postDataFetchStatus={props.postDataFetchStatus}
                         translatePendingStatus={translatePending}
@@ -111,10 +106,9 @@ const popStringModal = (props) => {
                         postContent={refPostData}
                         translatePendingStatus={translatePending}
                         pageTranslate={props.pageTranslate}
-                        stringCount={stringCount}
-                        characterCount={characterCount}
                         service={props.service}
                         updatePostData={updatePostDataHandler}
+                        characterCount={characterCount}
                     />
                 </div>
             </div>

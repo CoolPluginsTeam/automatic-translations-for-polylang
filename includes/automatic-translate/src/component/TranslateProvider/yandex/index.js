@@ -198,7 +198,7 @@ const yandexWidget = (win, doc, nav, params, namespace, targetLang, translateSta
         select.onSelect = function (lang) {
             this.setHidden(true);
             self.translate(lang);
-            ModalStringScroll(translateStatus);
+            ModalStringScroll(translateStatus,'yandex');
         };
 
         select.onChange = function (lang) {
@@ -263,7 +263,7 @@ const yandexWidget = (win, doc, nav, params, namespace, targetLang, translateSta
         leftButton.onClick = function () {
             select.setHidden(true);
             self.translate(select.getValue());
-            ModalStringScroll(translateStatus);
+            ModalStringScroll(translateStatus,'yandex');
         };
 
         rightButton.onClick = function () {
