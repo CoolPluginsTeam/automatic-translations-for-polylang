@@ -272,6 +272,34 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				wp_die( '0', 400 );
 				exit();
 			}
+			if(!class_exists("CPT_Dashboard")){
+				wp_send_json_error( __( 'Translation Data class not found.', 'automatic-translations-for-polylang' ) );
+				wp_die( '0', 400 );
+				exit();
+			}
+
+			if(!method_exists("CPT_Dashboard", "get_translation_data")){
+				wp_send_json_error( __( 'Get Translation Data method not found.', 'automatic-translations-for-polylang' ) );
+				wp_die( '0', 400 );
+				exit();
+			}	
+
+			$translation_data = CPT_Dashboard::get_translation_data('atfp', array('editor_type' => 'elementor'));
+
+			if(!isset($translation_data['total_character_count'])){
+				wp_send_json_error( __( 'Character count not found.', 'automatic-translations-for-polylang' ) );
+				wp_die( '0', 400 );
+				exit();
+			}
+
+			$total_character_count = $translation_data['total_character_count'];
+			
+			if($total_character_count > 500000){
+				wp_send_json_error( __( 'Character count limit reached.', 'automatic-translations-for-polylang' ) );
+				wp_die( '0', 400 );
+				exit();
+			}
+
             if ( isset( $_POST['post_id'] ) && isset( $_POST['elementor_data'] ) ) {
                 $post_id = intval( $_POST['post_id'] );
                 $elementor_data = sanitize_textarea_field( wp_unslash( $_POST['elementor_data'] ) ); // Sanitize the JSON data

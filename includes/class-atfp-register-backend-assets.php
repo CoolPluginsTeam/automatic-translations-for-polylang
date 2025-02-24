@@ -30,7 +30,7 @@ class ATFP_Register_Backend_Assets
     {
         add_action('admin_enqueue_scripts', array($this, 'enqueue_gutenberg_translate_assets'));
         add_action('enqueue_block_assets', array($this, 'register_block_translator_assets'));
-        add_action('elementor/editor/after_enqueue_scripts', array($this, 'enqueue_elementor_translate_assets'));
+        add_action('elementor/editor/before_enqueue_scripts', array($this, 'enqueue_elementor_translate_assets'));
     }
 
     /**
