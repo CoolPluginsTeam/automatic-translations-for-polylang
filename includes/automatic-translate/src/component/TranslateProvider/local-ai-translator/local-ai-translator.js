@@ -116,6 +116,21 @@ class ChromeAiTranslator {
         jQuery(this.btnSelector).append(this.translateBtn);
     }
 
+    /**
+     * Formats a number by converting it to a string and removing any non-numeric characters.
+     * 
+     * @param {number} number - The number to format.
+     * @returns returns formatted number
+     */
+    formatCharacterCount = (number) => {
+        if (number >= 1000000) {
+            return (number / 1000000).toFixed(1) + 'M';
+        } else if (number >= 1000) {
+            return (number / 1000).toFixed(1) + 'K';
+        }
+        return number;
+    }
+
     // Method to set up button events for translation
     translateBtnEvents = (e) => {
         if (!this.btnSelector || jQuery(this.btnSelector).length === 0) return this.onLanguageError("The button selector is missing. Please provide a valid selector for the button.");
@@ -204,7 +219,7 @@ class ChromeAiTranslator {
         if (index === this.translateStringEle.length - 1) {
             this.translateBtn.prop("disabled", true); // Disable the button
             this.onComplete({characterCount: this.completedCharacterCount}); // Call the complete callback
-            jQuery(this.progressBarSelector).find(".chrome-ai-translator-strings-count").show().find(".totalChars").text(this.completedCharacterCount);
+            jQuery(this.progressBarSelector).find(".chrome-ai-translator-strings-count").show().find(".totalChars").text(this.formatCharacterCount(this.completedCharacterCount));
         }
     };
 

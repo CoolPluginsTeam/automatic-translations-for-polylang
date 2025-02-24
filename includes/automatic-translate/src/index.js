@@ -3,7 +3,7 @@ import './global-store';
 import { useEffect, useState } from 'react';
 import GutenbergPostFetch from './FetchPost/Gutenberg';
 import UpdateGutenbergPage from './createTranslatedPost/Gutenberg';
-import ProVersionNotice from './ProVersionNotice';
+import ProVersionNotice from './component/ProVersionNotice';
 
 // Elementor post fetch and update page
 import ElementorPostFetch from './FetchPost/Elementor';

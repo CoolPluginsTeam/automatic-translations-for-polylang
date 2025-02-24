@@ -1,7 +1,7 @@
 import SaveTranslation from "../storeTranslatedString";
 import { select, dispatch } from "@wordpress/data";
 import StoreTimeTaken from "../StoreTimeTaken";
-import { extendErrors } from "ajv/dist/compile/errors";
+import FormatNumberCount from "../FormateNumberCount";
 
 /**
  * Handles the scrolling animation of a specified element.
@@ -65,7 +65,7 @@ const ScrollAnimation = (props) => {
 const updateTranslatedContent = (provider) => {
     const container = document.getElementById("atfp_strings_model");
     const stringContainer = container.querySelector('.atfp_string_container');
-    const translatedData = stringContainer.querySelectorAll('td.translate[data-string-type]');
+    const translatedData = stringContainer.querySelectorAll('td.translate[data-string-type]:not([data-translate-status="translated"])');
     const totalTranslatedData = translatedData.length;
 
     translatedData.forEach((ele, index) => {
@@ -128,7 +128,7 @@ const addProgressBar = (provider) => {
             </div>
             <div style="display:none; color: white;" class="${provider}-translator-strings-count hidden">
                 Wahooo! You have saved your valuable time via auto translating 
-                <strong class="totalChars">${characterCount}</strong> characters using 
+                <strong class="totalChars">${FormatNumberCount({number: characterCount})}</strong> characters using 
                 <strong>
                     ${provider} Translator
                 </strong>

@@ -14,6 +14,25 @@ const popStringModal = (props) => {
     const [translatePending, setTranslatePending] = useState(true);
     const [characterCount, setCharacterCount] = useState(translateData?.targetCharacterCount || 0);
 
+    /**
+     * Returns the label for the service provider.
+     * @returns {string} The label for the service provider.
+     */ 
+    const serviceLabel = () => {
+        const serviceProvider = props.service;
+        if (serviceProvider === 'yandex') {
+            return 'Yandex Translate';
+        } else if (serviceProvider === 'google') {
+            return 'Google Translate';
+        } else if (serviceProvider === 'local-ai-translator') {
+            return 'Local AI Translator';
+        }
+        return serviceProvider;
+    }
+
+    /**
+     * Fetches the post data.
+     */
     useEffect(() => {
         if (!props.postDataFetchStatus) {
                 props.fetchPostData({ postId: props.postId, sourceLang: props.sourceLang, targetLang: props.targetLang, updatePostDataFetch: props.updatePostDataFetch, refPostData: data => setRefPostData(data) });
@@ -85,6 +104,7 @@ const popStringModal = (props) => {
                         translatePendingStatus={translatePending}
                         pageTranslate={props.pageTranslate}
                         service={props.service}
+                        serviceLabel={serviceLabel()}
                         updatePostData={updatePostDataHandler}
                         characterCount={characterCount}
                     />
@@ -107,6 +127,7 @@ const popStringModal = (props) => {
                         translatePendingStatus={translatePending}
                         pageTranslate={props.pageTranslate}
                         service={props.service}
+                        serviceLabel={serviceLabel()}
                         updatePostData={updatePostDataHandler}
                         characterCount={characterCount}
                     />

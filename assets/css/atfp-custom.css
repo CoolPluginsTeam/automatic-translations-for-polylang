@@ -329,18 +329,30 @@ button.atfp-setting-close:hover {
     padding: 1rem;
 }
 
+#atfp_strings_model .modal-footer{
+    display: flex;
+    align-items: center;
+}
+
 #atfp_strings_model .modal-footer .notice.atfp_string_count {
     display: block;
     max-width: calc(100% - 123px) !important;
 }
 
 #atfp_strings_model .notice.atfp_string_count {
-    top: 1rem;
+    top: unset;
+    left: unset;
     font-size: 1rem;
     background: transparent;
     border-width: 0px;
     margin-left: 0px;
     padding-left: 0px;
+}
+
+#atfp_strings_model .modal-footer .notice.atfp_string_count p{
+    margin: 0px !important;
+    padding: 0px !important;
+    font-size: 1rem;
 }
 
 #atfp_strings_model table {
