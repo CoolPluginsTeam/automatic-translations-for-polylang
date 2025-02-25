@@ -1,6 +1,6 @@
 import ModalStringScroll from "../../stringModalScroll";
 
-const yandexWidget = (win, doc, nav, params, namespace, targetLang, translateStatus) => {
+const yandexWidget = (win, doc, nav, params, namespace, targetLang, translateStatusHandler) => {
     'use strict';
 
     var util = {
@@ -198,7 +198,7 @@ const yandexWidget = (win, doc, nav, params, namespace, targetLang, translateSta
         select.onSelect = function (lang) {
             this.setHidden(true);
             self.translate(lang);
-            ModalStringScroll(translateStatus,'yandex');
+            ModalStringScroll(translateStatusHandler,'yandex');
         };
 
         select.onChange = function (lang) {
@@ -263,7 +263,7 @@ const yandexWidget = (win, doc, nav, params, namespace, targetLang, translateSta
         leftButton.onClick = function () {
             select.setHidden(true);
             self.translate(select.getValue());
-            ModalStringScroll(translateStatus,'yandex');
+            ModalStringScroll(translateStatusHandler,'yandex');
         };
 
         rightButton.onClick = function () {
@@ -400,7 +400,7 @@ const yandexWidget = (win, doc, nav, params, namespace, targetLang, translateSta
 
 const YandexTranslater = (props) => {
     const globalObj = window;
-    yandexWidget(globalObj, globalObj.document, globalObj.navigator, { "pageLang": props.sourceLang, "autoMode": "false", "widgetId": "atfp_yandex_translate_element", "widgetTheme": "light" }, globalObj.yt = globalObj.yt || {}, props.targetLang, props.translateStatus);
+    yandexWidget(globalObj, globalObj.document, globalObj.navigator, { "pageLang": props.sourceLang, "autoMode": "false", "widgetId": "atfp_yandex_translate_element", "widgetTheme": "light" }, globalObj.yt = globalObj.yt || {}, props.targetLang, props.translateStatusHandler);
 }
 
 export default YandexTranslater;

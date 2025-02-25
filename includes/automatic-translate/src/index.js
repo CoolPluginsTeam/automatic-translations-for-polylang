@@ -139,7 +139,7 @@ const appendElementorTranslateBtn = () => {
     translateButtonGroup.prepend(buttonElement);
     $e.internal('document/save/set-is-modified', { status: true });
 
-    if(!window.atfp_global_object.translation_data || !window.atfp_global_object.translation_data.total_string_count ){
+    if(!window.atfp_global_object.translation_data || (!window.atfp_global_object.translation_data.total_string_count && 0 !== window.atfp_global_object.translation_data.total_string_count)  ){
       buttonElement.attr('disabled', 'disabled');
       buttonElement.attr('title', 'Translation data not found.');
       return;

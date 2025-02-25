@@ -97,10 +97,10 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 				$this->atfp_initialize_elementor_translation();
 
 				// Review Notice
-				if(class_exists('Cpt_Dashboard')) {
+				if(class_exists('Cpt_Dashboard') && !defined('ATFPP_V')) {
 					Cpt_Dashboard::review_notice(
 						'atfp', // Required
-						'Automatic Translation for Polylang', // Required
+						'AI Translation For Polylang', // Required
 						'https://wordpress.org/plugins/automatic-translations-for-polylang/reviews/#new-post', // Required
 						ATFP_URL .'assets/images/ai-automatic-translation-for-polylang.png' // Required
 					);
@@ -230,7 +230,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 					?>
 					<hr>
 					<div class="atfp-review-meta-box">
-					<p><?php echo esc_html__( 'We hope you liked our plugin created timelines. Please share your valuable feedback.', 'automatic-translations-for-polylang' ); ?>
+					<p><?php echo esc_html__( 'We hope you find our plugin helpful for your translation needs. Your feedback is valuable to us!', 'automatic-translations-for-polylang' ); ?>
 					<br>
 					<a href="<?php echo esc_url( 'https://wordpress.org/plugins/automatic-translations-for-polylang/reviews/#new-post' ); ?>" class="components-button is-primary is-small" target="_blank"><?php echo esc_html__( 'Rate Us', 'automatic-translations-for-polylang' ); ?><span> ★★★★★</span></a>
 					</p>

@@ -6,7 +6,8 @@ import StoreTimeTaken from "../../../component/StoreTimeTaken";
 
 const localAiTranslator = async (props) => {
     const targetLangName = atfp_global_object.languageObject[props.targetLang];
-    let translationInitialize = false;
+    const sourceLangName = atfp_global_object.languageObject[props.sourceLang];
+
     let startTime = 0;
 
     const startTranslation = () => {
@@ -21,7 +22,7 @@ const localAiTranslator = async (props) => {
     const completeTranslation = () => {
         StoreTimeTaken({ prefix: 'localAiTranslator', start: startTime, end: new Date().getTime(), translateStatus: true });
         setTimeout(() => {
-            props.translateStatus();
+            props.translateStatusHandler();
             jQuery("#atfp_strings_model .atfp_translate_progress").fadeOut("slow");
         }, 4000);
     }
@@ -76,6 +77,7 @@ const localAiTranslator = async (props) => {
         sourceLanguage: props.sourceLang,
         targetLanguage: props.targetLang,
         targetLanguageLabel: targetLangName,
+        sourceLanguageLabel: sourceLangName,
         onStartTranslationProcess: startTranslation,
         onComplete: completeTranslation,
         onBeforeTranslate: beforeTranslate,
@@ -83,7 +85,6 @@ const localAiTranslator = async (props) => {
     });
 
     if (TranslateProvider.hasOwnProperty('init')) {
-        translationInitialize = true;
         TranslateProvider.init();
     }
 };

@@ -63,7 +63,7 @@ const SettingModal = (props) => {
      */
     useEffect(() => {
         const languageSupportedStatus = async () => {
-            const localAiTranslatorSupport = await ChromeLocalAiTranslator.languageSupportedStatus(sourceLang, targetLang, targetLangName);
+            const localAiTranslatorSupport = await ChromeLocalAiTranslator.languageSupportedStatus(sourceLang, targetLang, targetLangName, sourceLangName);
             const translateBtn = document.querySelector('.atfp-service-btn#local_ai_translator_btn');
 
             if (localAiTranslatorSupport !== true && typeof localAiTranslatorSupport === 'object' && translateBtn) {
