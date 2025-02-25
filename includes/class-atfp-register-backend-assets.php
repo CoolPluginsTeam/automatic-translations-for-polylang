@@ -163,7 +163,7 @@ class ATFP_Register_Backend_Assets
             'elementorData' => $elementor_data,
         );
 
-        wp_enqueue_style('atfp-elementor-translate', ATFP_URL . 'assets/css/atfp-elementor-translate.css', array(), ATFP_V);
+        wp_enqueue_style('atfp-elementor-translate', ATFP_URL . 'assets/css/atfp-elementor-translate.min.css', array(), ATFP_V);
         $this->enqueue_automatic_translate_assets($parent_post_language_slug, $post_language_slug, 'elementor', $data);
     }   
 
