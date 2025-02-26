@@ -29,7 +29,7 @@ const StringPopUpBody = (props) => {
         const translateContent = wp.data.select('block-atfp/translate').getTranslationEntry();
 
         if (translateContent.length > 0 && props.postDataFetchStatus) {
-            TranslateService[service]({ sourceLang: props.sourceLang, targetLang: props.targetLang, translateStatusHandler: props.translateStatusHandler, ID: id, translateStatus: props.translateStatus });
+            TranslateService[service]({ sourceLang: props.sourceLang, targetLang: props.targetLang, translateStatusHandler: props.translateStatusHandler, ID: id, translateStatus: props.translateStatus, modalRenderId: props.modalRender });
         }
     }, [props.modalRender, props.postDataFetchStatus]);
 

@@ -96,7 +96,7 @@ const popStringModal = (props) => {
 
     return (
         <> {popupVisibility &&
-            <div id={`atfp-${props.service}-strings-modal`} className="modal-container" style={{ display: popupVisibility ? 'flex' : 'none' }}>
+            <div id={`atfp-${props.service}-strings-modal`} className="modal-container" style={{ display: popupVisibility ? 'flex' : 'none' }} data-render-id={props.modalRender}>
                 <div className="modal-content">
                     <StringPopUpHeader
                         modalRender={props.modalRender}

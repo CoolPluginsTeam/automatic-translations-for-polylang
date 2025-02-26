@@ -74,21 +74,21 @@ const updateTranslatedContent = ({provider, startTime, endTime}) => {
         const type = ele.dataset.stringType;
         const sourceText = ele.closest('tr').querySelector('td[data-source="source_text"]').innerText;
 
-        SaveTranslation({ type: type, key: key, translateContent: translatedText, source: sourceText, provider: 'yandex' });
+        SaveTranslation({ type: type, key: key, translateContent: translatedText, source: sourceText, provider: provider });
 
-        const translationEntry = select('block-atfp/translate').getTranslationInfo().translateData?.yandex;
+        const translationEntry = select('block-atfp/translate').getTranslationInfo().translateData[provider];
         const previousTargetWordCount = translationEntry && translationEntry.targetWordCount ? translationEntry.targetWordCount : 0;
         const previousTargetCharacterCount = translationEntry && translationEntry.targetCharacterCount ? translationEntry.targetCharacterCount : 0;
 
         if (translatedText.trim() !== '' && translatedText.trim().length > 0) {
-            dispatch('block-atfp/translate').translationInfo({ targetWordCount: previousTargetWordCount + sourceText.trim().split(/\s+/).filter(word => /[^\p{L}\p{N}]/.test(word)).length, targetCharacterCount: previousTargetCharacterCount + sourceText.trim().length, provider: 'yandex' });
+            dispatch('block-atfp/translate').translationInfo({ targetWordCount: previousTargetWordCount + sourceText.trim().split(/\s+/).filter(word => /[^\p{L}\p{N}]/.test(word)).length, targetCharacterCount: previousTargetCharacterCount + sourceText.trim().length, provider: provider });
         }
 
         if(index === totalTranslatedData - 1){
             jQuery(`.${provider}-translator_progress`).css('width', '100%');
             jQuery(`.${provider}-translator-strings-count`).show();
 
-            StoreTimeTaken({ prefix: 'yandex', start: startTime, end: endTime, translateStatus: true });
+            StoreTimeTaken({ prefix: provider, start: startTime, end: endTime, translateStatus: true });
         }
     });
 }
@@ -102,10 +102,11 @@ const updateTranslatedContent = ({provider, startTime, endTime}) => {
  * @param {number} endTime - The end time of the translation.
  * @param {Function} translateStatus - The function to call when the translation is complete.
  */
-const onCompleteTranslation = ({container,provider, startTime, endTime, translateStatus}) => {
-    const stringContainer = container.querySelector(".atfp_string_container");
+const onCompleteTranslation = ({container,provider, startTime, endTime, translateStatus, modalRenderId}) => {
+    const conainer=document.querySelector(`#atfp-${provider}-strings-modal.modal-container[data-render-id="${modalRenderId}"]`);
 
-    if(!stringContainer){
+
+    if(!conainer){
         return;
     }
 
@@ -162,7 +163,7 @@ const addProgressBar = (provider) => {
  * @param {Function} translateStatus - Callback function to execute when translation is deemed complete.
  * @param {string} provider - The provider of the translation.
  */
-const ModalStringScroll = (translateStatus,provider) => {
+const ModalStringScroll = (translateStatus,provider,modalRenderId) => {
     const startTime = new Date().getTime();
 
     let translateComplete = false;
@@ -188,7 +189,7 @@ const ModalStringScroll = (translateStatus,provider) => {
             if (isScrolledToBottom && !translateComplete) {
                 const endTime = new Date().getTime();
                 setTimeout(() => {
-                    onCompleteTranslation({container,provider, startTime, endTime, translateStatus});
+                    onCompleteTranslation({container,provider, startTime, endTime, translateStatus, modalRenderId});
                 }, 4000);
                 translateComplete = true;
             }
@@ -201,7 +202,7 @@ const ModalStringScroll = (translateStatus,provider) => {
             const endTime = new Date().getTime();
             
             setTimeout(() => {
-                onCompleteTranslation({container,provider, startTime, endTime, translateStatus});
+                onCompleteTranslation({container,provider, startTime, endTime, translateStatus, modalRenderId});
             }, 4000);
         }
     } else {
@@ -211,7 +212,7 @@ const ModalStringScroll = (translateStatus,provider) => {
         const endTime = new Date().getTime();
    
         setTimeout(() => {
-            onCompleteTranslation({container,provider, startTime, endTime, translateStatus});
+            onCompleteTranslation({container,provider, startTime, endTime, translateStatus, modalRenderId});
         }, 4000);
     }
 }

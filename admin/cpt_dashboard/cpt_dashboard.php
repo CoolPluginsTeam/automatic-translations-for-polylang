@@ -340,7 +340,7 @@ if(!class_exists('Cpt_Dashboard')){
                 if($icon){
                     $html .= '<img class="cpt-review-notice-icon" src="'.$icon.'" alt="'.$plugin_name.'">';
                 }
-                $html .= '<div><p>'.$message.'</p><div class="cpt-review-notice-dismiss" data-prefix="'.$prefix.'" data-nonce="'.wp_create_nonce('cpt_hide_review_notice').'"><a href="'. $url .'" target="_blank" class="button button-primary">Rate Now! ★★★★★</a><button class="button cpt-not-interested">'.__('Not Interested', 'cp-notice').'</button><button class="button cpt-already-reviewed">'.__('Already Reviewed', 'cp-notice').'</button></div></div></div>';
+                $html .= '<div class="cpt-review-notice-content"><p>'.$message.'</p><div class="cpt-review-notice-dismiss" data-prefix="'.$prefix.'" data-nonce="'.wp_create_nonce('cpt_hide_review_notice').'"><a href="'. $url .'" target="_blank" class="button button-primary">Rate Now! ★★★★★</a><button class="button cpt-not-interested">'.__('Not Interested', 'cp-notice').'</button><button class="button cpt-already-reviewed">'.__('Already Reviewed', 'cp-notice').'</button></div></div></div>';
                 
                 echo $html;
             });
