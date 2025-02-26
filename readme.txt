@@ -101,6 +101,7 @@ This plugin provides automatic translation services for Polylang using the Yande
 1. AI Translation for Polylang Translation Preview.
 2. Content Translation Preview.
 3. AI Translation Preview.
+4. Gutenberg Block inline Translation.
 
 == Frequently Asked Questions ==
 = What does the "AI Translation for Polylang" plugin do? =
@@ -134,7 +135,13 @@ You can update the plugin through the WordPress dashboard like any other plugin.
 The plugin is optimized for performance, but the speed impact may vary depending on your hosting environment and the size of your content. The automatic translation process occurs in the background to minimize any potential impact on site performance.
 
 == Changelog ==
-
+= Version 1.3.0 | 30 December 2024 =
+* **Added:** Elementor Page translation.
+* **Added:** Gutenberg block inline translation feature.
+* **Added:** Review Notice.
+* **Fixed:** Translated text conflict issue with yandex & local ai translation.
+* **Improved:** Improved Modal box styling.
+* **Improved:** Improved String Modal box.
 = Version 1.2.0 | 30 December 2024 =
 * **Added:** Translation support for the Classic Paragraph Block (Automattic).
 * **Added:** Translation support for YOST SEO plugin, Rank Math SEO plugin, and SEOPress plugin.
