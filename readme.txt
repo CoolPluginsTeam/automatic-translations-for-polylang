@@ -134,7 +134,7 @@ You can update the plugin through the WordPress dashboard like any other plugin.
 The plugin is optimized for performance, but the speed impact may vary depending on your hosting environment and the size of your content. The automatic translation process occurs in the background to minimize any potential impact on site performance.
 
 == Changelog ==
-= Version 1.3.0 | 30 December 2024 =
+= Version 1.3.0 | 26 February 2024 =
 * **Added:** Elementor Page translation.
 * **Added:** Gutenberg block inline translation feature.
 * **Added:** Review Notice.
