@@ -4,6 +4,7 @@ const languages = {
     'ja': 'Japanese',
     'ar': 'Arabic',
     'bn': 'Bengali',
+    'de': 'Dutch',
     'fr': 'French',
     'hi': 'Hindi',
     'it': 'Italian',

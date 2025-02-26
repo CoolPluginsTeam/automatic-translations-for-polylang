@@ -32,6 +32,7 @@ const App = () => {
   const currentPostId = window.atfp_global_object.current_post_id;
   const postType = window.atfp_global_object.post_type;
   let translatePost, fetchPost, translateWrpSelector;
+  const sourceLang = window.atfp_global_object.source_lang;
 
   // Elementor post fetch and update page
   if(editorType === 'elementor'){
@@ -86,9 +87,18 @@ const App = () => {
     }
   }, [pageTranslate]);
 
+  if(!sourceLang || '' === sourceLang) {
+    const metaFieldBtn = document.querySelector(translateWrpSelector);
+    if (metaFieldBtn) {
+      metaFieldBtn.title = `Parent ${window.atfp_global_object.post_type} may be deleted.`;
+      metaFieldBtn.disabled = true;
+    }
+    return;
+  }
+
   return (
     <>
-      {!pageTranslate && <SettingModal contentLoading={loading} updatePostDataFetch={updatePostDataFetch} postDataFetchStatus={postDataFetchStatus} pageTranslate={handlePageTranslate} postId={postId} currentPostId={currentPostId} targetLang={targetLang} postType={postType} fetchPostData={fetchPostData} translatePost={translatePost} translateWrpSelector={translateWrpSelector} />}
+      {!pageTranslate && sourceLang && '' !== sourceLang && <SettingModal contentLoading={loading} updatePostDataFetch={updatePostDataFetch} postDataFetchStatus={postDataFetchStatus} pageTranslate={handlePageTranslate} postId={postId} currentPostId={currentPostId} targetLang={targetLang} postType={postType} fetchPostData={fetchPostData} translatePost={translatePost} translateWrpSelector={translateWrpSelector} />}
     </>
   );
 };
@@ -194,7 +204,11 @@ if (editorType === 'gutenberg') {
       return;
     }
 
-    insertMessagePopup();
+    const sourceLang = window.atfp_global_object.source_lang
+
+    if(sourceLang && '' !== sourceLang){
+      insertMessagePopup();
+    }
 
     const root = ReactDOM.createRoot(document.getElementById('atfp-setting-modal'));
     root.render(<App />);

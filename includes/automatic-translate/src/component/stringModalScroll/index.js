@@ -96,8 +96,17 @@ const updateTranslatedContent = (provider) => {
  * updating the UI, and stopping the translation progress.
  * 
  * @param {HTMLElement} container - The container element for translation.
+ * @param {number} startTime - The start time of the translation.
+ * @param {number} endTime - The end time of the translation.
+ * @param {Function} translateStatus - The function to call when the translation is complete.
  */
-const onCompleteTranslation = ({container,provider}) => {
+const onCompleteTranslation = ({container,provider, startTime, endTime, translateStatus}) => {
+    const stringContainer = container.querySelector(".atfp_string_container");
+
+    if(!stringContainer){
+        return;
+    }
+
     container.querySelector(".atfp_translate_progress").style.display = "none";
     container.querySelector(".atfp_string_container").style.animation = "none";
     document.body.style.top = '0';
@@ -108,6 +117,9 @@ const onCompleteTranslation = ({container,provider}) => {
     saveButton.classList.remove('notranslate');
 
     updateTranslatedContent(provider);
+
+    StoreTimeTaken({ prefix: 'yandex', start: startTime, end: endTime, translateStatus: true });
+    translateStatus();
 }
 
 /**
@@ -173,34 +185,32 @@ const ModalStringScroll = (translateStatus,provider) => {
             var isScrolledToBottom = (stringContainer.scrollTop + stringContainer.clientHeight + 50 >= stringContainer.scrollHeight);
 
             if (isScrolledToBottom && !translateComplete) {
-                StoreTimeTaken({ prefix: 'yandex', start: startTime, end: new Date().getTime(), translateStatus: true });
+                const endTime = new Date().getTime();
                 setTimeout(() => {
-                    onCompleteTranslation({container,provider});
-                    translateStatus();
+                    onCompleteTranslation({container,provider, startTime, endTime, translateStatus});
                 }, 4000);
                 translateComplete = true;
             }
         });
 
         if (stringContainer.clientHeight + 10 >= scrollHeight) {
-            StoreTimeTaken({ prefix: 'yandex', start: startTime, end: new Date().getTime(), translateStatus: true });
             jQuery(`.${provider}-translator_progress`).css('width', '100%');
             jQuery(`.${provider}-translator_progress`).text('100%');
             jQuery(`.${provider}-translator-strings-count`).show();
+            const endTime = new Date().getTime();
+            
             setTimeout(() => {
-                onCompleteTranslation({container,provider});
-                translateStatus();
+                onCompleteTranslation({container,provider, startTime, endTime, translateStatus});
             }, 4000);
         }
     } else {
-        StoreTimeTaken({ prefix: 'yandex', start: startTime, end: new Date().getTime(), translateStatus: true });
         jQuery(`.${provider}-translator_progress`).css('width', '100%');
         jQuery(`.${provider}-translator_progress`).text('100%');
         jQuery(`.${provider}-translator-strings-count`).show();
+        const endTime = new Date().getTime();
    
         setTimeout(() => {
-            onCompleteTranslation({container,provider});
-            translateStatus();
+            onCompleteTranslation({container,provider, startTime, endTime, translateStatus});
         }, 4000);
     }
 }

@@ -213,6 +213,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			if ( isset( $_GET['_wpnonce'] ) &&
 				 wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'new-post-translation' ) ) {
 				$target_language = '';
+				$source_language = pll_get_post_language(absint( $_GET['from_post'] ), 'name');
 				if ( function_exists( 'PLL' ) ) {
 					$target_code = isset( $_GET['new_lang'] ) ? sanitize_key( $_GET['new_lang'] ) : '';
 					$languages   = PLL()->model->get_languages_list();
@@ -224,7 +225,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 				}
 				?>
 				<input type="button" class="button button-primary" name="atfp_meta_box_translate" id="atfp-translate-button" value="<?php echo esc_attr__( 'Translate Content', 'automatic-translations-for-polylang' ); ?>" readonly/><br><br>
-				<p style="margin-bottom: .5rem;"><?php echo esc_html( sprintf( __( 'Translate or duplicate content from Hindi to %s', 'automatic-translations-for-polylang' ), $target_language ) ); ?></p>
+				<p style="margin-bottom: .5rem;"><?php echo esc_html( sprintf( __( 'Translate or duplicate content from %s to %s', 'automatic-translations-for-polylang' ), $source_language, $target_language ) ); ?></p>
 				<?php
 				if(class_exists('CPT_Dashboard') && !CPT_Dashboard::cpt_hide_review_notice_status('atfp')){
 					?>

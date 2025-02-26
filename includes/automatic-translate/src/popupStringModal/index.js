@@ -20,12 +20,13 @@ const popStringModal = (props) => {
      */ 
     const serviceLabel = () => {
         const serviceProvider = props.service;
+
         if (serviceProvider === 'yandex') {
             return 'Yandex Translate';
         } else if (serviceProvider === 'google') {
             return 'Google Translate';
-        } else if (serviceProvider === 'local-ai-translator') {
-            return 'Local AI Translator';
+        } else if (serviceProvider === 'localAiTranslator') {
+            return 'Chrome AI Translator';
         }
         return serviceProvider;
     }
@@ -80,7 +81,7 @@ const popStringModal = (props) => {
     useEffect(() => {
         setPopupVisibility(true);
 
-        if (translateStatus && translatePending) {
+        if (translateStatus) {
             setCharacterCount(translateData?.targetCharacterCount || 0);
             setTranslatePending(false);
         }
