@@ -16,6 +16,11 @@ const config = {
         exclude: /node_modules/,
       },
       {
+        test: /\.js$/,
+        use: "babel-loader",
+        exclude: /node_modules/,
+      },
+      {
         test: /\.svg$/,
         use: ["@svgr/webpack"],
       },
@@ -45,14 +50,17 @@ const config = {
 };
 
 module.exports = (env, argv) => {
-  if (argv.mode === "production" || argv.mode === "development") {
-    const dirDist = path.resolve(__dirname, "../assets/block-translator");
+  if ((argv.mode === "production" || argv.mode === "development") && argv.env && argv.env.BT) {
+
     const dirSrc = path.resolve(__dirname, "block-translator");
+    const dirDist = path.resolve(__dirname, "../assets/block-translator");
+    const dirEntry = `${dirSrc}/editorAssets/index.ts`;
+
 
     return {
       ...config,
       entry: {
-        index: `${dirSrc}/editorAssets/index.ts`,
+        index: dirEntry,
       },
       output: {
         path: dirDist,

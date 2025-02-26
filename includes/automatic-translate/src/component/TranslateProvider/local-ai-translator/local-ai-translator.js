@@ -20,12 +20,13 @@ class ChromeAiTranslator {
         this.sourceLanguage = options.sourceLanguage || "en"; // Default source language
         this.targetLanguage = options.targetLanguage || "hi"; // Default target language
         this.targetLanguageLabel = options.targetLanguageLabel || "Hindi"; // Label for the target language
+        this.sourceLanguageLabel = options.sourceLanguageLabel || "English"; // Label for the source language
     }
 
     // Method to check language support and return relevant data
     extraData = async () => {
         // Check if the language is supported
-        const langSupportedStatus = await ChromeAiTranslator.languageSupportedStatus(this.sourceLanguage, this.targetLanguage, this.targetLanguageLabel); 
+        const langSupportedStatus = await ChromeAiTranslator.languageSupportedStatus(this.sourceLanguage, this.targetLanguage, this.targetLanguageLabel, this.sourceLanguageLabel); 
 
         if(langSupportedStatus !== true){
             this.onLanguageError(langSupportedStatus); // Handle language error
@@ -52,8 +53,8 @@ class ChromeAiTranslator {
      * @param {string} targetLanguageLabel - The label for the target language (e.g., "Hindi").
      * @returns {Promise<boolean|jQuery>} - Returns true if the languages are supported, or a jQuery message if not.
      */
-    static languageSupportedStatus = async (sourceLanguage, targetLanguage, targetLanguageLabel) => {
-        const supportedLanguages = ['en','es', 'ja', 'ar', 'bn', 'de', 'fr', 'hi', 'it', 'ko', 'nl', 'pl', 'pt', 'ru', 'th', 'tr', 'vi', 'zh', 'zh-hant', 'bg', 'cs', 'da', 'el', 'fi', 'hr', 'hu', 'id', 'iw', 'lt', 'no', 'ro', 'sk', 'sl', 'sv', 'uk', 'en-zh'].map(lang => lang.toLowerCase());
+    static languageSupportedStatus = async (sourceLanguage, targetLanguage, targetLanguageLabel, sourceLanguageLabel) => {
+        const supportedLanguages = ['en','es', 'ja', 'ar', 'de', 'bn', 'fr', 'hi', 'it', 'ko', 'nl', 'pl', 'pt', 'ru', 'th', 'tr', 'vi', 'zh', 'zh-hant', 'bg', 'cs', 'da', 'el', 'fi', 'hr', 'hu', 'id', 'iw', 'lt', 'no', 'ro', 'sk', 'sl', 'sv', 'uk', 'en-zh'].map(lang => lang.toLowerCase());
 
         // Browser check
         if(!window.hasOwnProperty('chrome') || !navigator.userAgent.includes('Chrome') || navigator.userAgent.includes('Edg')){
@@ -68,7 +69,13 @@ class ChromeAiTranslator {
 
         // Check if the target language is supported
         if (!supportedLanguages.includes(targetLanguage.toLowerCase())) {
-            const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">Unfortunately, the <strong>${targetLanguageLabel} (${targetLanguage})</strong> language is currently not supported by the Local Translator AI modal. Please check and read the docs which languages are currently supported by <a href="https://developer.chrome.com/docs/ai/translator-api#bypass_language_restrictions_for_local_testing" target="_blank">clicking here</a>.</span>`);
+            const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">Current version of Chrome AI Translator doesn't support the <strong>${targetLanguageLabel} (${targetLanguage})</strong> language. You can refer of supported languages <a href="visiting chrome://on-device-translation-internals">click here</a></span>`);
+            return message;
+        }
+
+        // Check if the source language is supported
+        if (!supportedLanguages.includes(sourceLanguage.toLowerCase())) {
+            const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">Current version of Chrome AI Translator doesn't support the <strong>${sourceLanguageLabel} (${sourceLanguage})</strong> language. You can refer of supported languages <a href="visiting chrome://on-device-translation-internals">click here</a></span>`);
             return message;
         }
 
@@ -78,16 +85,15 @@ class ChromeAiTranslator {
             targetLanguage: targetLanguage,
         });
 
-
         // Handle case for language pack after download
         if (status === "after-download") {
-            const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">Please install the <strong>${targetLanguageLabel} (${targetLanguage})</strong> language pack to proceed.To install the language pack, visit <strong>chrome://on-device-translation-internals</strong>. For further assistance, refer to the <a href="https://developer.chrome.com/docs/ai/translator-api#bypass_language_restrictions_for_local_testing" target="_blank">documentation</a>.</span>`);
+            const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">To proceed, please install the language pack for <strong>${targetLanguageLabel} (${targetLanguage})</strong> or <strong>${sourceLanguageLabel} (${sourceLanguage})</strong>. You can install it by visiting <strong>chrome://on-device-translation-internals</strong>. For more help, refer to the <a href="https://developer.chrome.com/docs/ai/translator-api#bypass_language_restrictions_for_local_testing" target="_blank">documentation</a>.</span>`);
             return message;
         }
 
         // Handle case for language pack not readily available
         if (status !== 'readily') {
-            const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">Please ensure that the <strong>${targetLanguageLabel} (${targetLanguage})</strong> language pack is installed and set as a preferred language in your browser. To install the language pack, visit <strong>chrome://on-device-translation-internals</strong>. For further assistance, refer to the <a href="https://developer.chrome.com/docs/ai/translator-api#bypass_language_restrictions_for_local_testing" target="_blank">documentation</a>.</span>`);
+            const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">Please make sure that the language pack for <strong>${targetLanguageLabel} (${targetLanguage})</strong> or <strong>${sourceLanguageLabel} (${sourceLanguage})</strong> is installed and set as a preferred language in your browser. To install the language pack, visit <strong>chrome://on-device-translation-internals</strong>. For further assistance, refer to the <a href="https://developer.chrome.com/docs/ai/translator-api#bypass_language_restrictions_for_local_testing" target="_blank">documentation</a>.</span>`);
             return message;
         }
 
@@ -114,6 +120,21 @@ class ChromeAiTranslator {
     appendBtn = () => {
         this.translateBtn = jQuery(`<button class="button button-primary${this.btnClass ? ' ' + this.btnClass : ''}">${this.btnText}</button>`);
         jQuery(this.btnSelector).append(this.translateBtn);
+    }
+
+    /**
+     * Formats a number by converting it to a string and removing any non-numeric characters.
+     * 
+     * @param {number} number - The number to format.
+     * @returns returns formatted number
+     */
+    formatCharacterCount = (number) => {
+        if (number >= 1000000) {
+            return (number / 1000000).toFixed(1) + 'M';
+        } else if (number >= 1000) {
+            return (number / 1000).toFixed(1) + 'K';
+        }
+        return number;
     }
 
     // Method to set up button events for translation
@@ -204,7 +225,7 @@ class ChromeAiTranslator {
         if (index === this.translateStringEle.length - 1) {
             this.translateBtn.prop("disabled", true); // Disable the button
             this.onComplete({characterCount: this.completedCharacterCount}); // Call the complete callback
-            jQuery(this.progressBarSelector).find(".chrome-ai-translator-strings-count").show().find(".totalChars").text(this.completedCharacterCount);
+            jQuery(this.progressBarSelector).find(".chrome-ai-translator-strings-count").show().find(".totalChars").text(this.formatCharacterCount(this.completedCharacterCount));
         }
     };
 

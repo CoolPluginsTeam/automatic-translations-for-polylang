@@ -1,0 +1,170 @@
+.modalOverlay {
+    background-color: rgba(0, 0, 0, 0.79) !important;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 9999999999;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .modalContainer {
+        color: black;
+        background: white;
+        padding: 1.5rem;
+        border-radius: 1rem;
+        position: relative;
+        max-height: 70%;
+        margin: auto;
+        display: flex;
+
+        .modalCloseButton {
+            position: absolute;
+            top: calc(1.5rem - 11px);
+            right: 1.5rem;
+            cursor: pointer;
+            font-size: 2.5rem;
+            z-index: 99;
+        }
+
+        .error {
+            padding: .5rem;
+            border: 1px solid #ff4646;
+            border-radius: 0.5em;
+            max-width: 400px;
+            font-size: 1rem;
+            line-height: 1.4;
+
+            .errorBtnGroup {
+                display: flex;
+                justify-content: flex-end;
+                gap: 0.5em;
+                margin-top: 1rem;
+
+                .btnCloseStyle {
+                    border: 1px solid #ff4646;
+                    background: #ff4646;
+                    color: white;
+                    transition: all 0.3s ease;
+                    opacity: 0.8;
+                    padding: .2rem .3rem;
+                    font-size: .9rem;
+                    border-radius: .2rem;
+                    cursor: pointer;
+                    &:hover {
+                        opacity: 1;
+                    }
+                }
+
+                .btnContinueStyle {
+                    background: transparent;
+                    border: 1px solid #007cba;
+                    background : #007cba;
+                    color: white;
+                    transition: all 0.3s ease;
+                    opacity: 0.8;
+                    padding: .2rem .3rem;
+                    font-size: .9rem;
+                    border-radius: .2rem;
+                    cursor: pointer;
+                    &:hover {
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+
+        .modal {
+            width: 400px;
+            height: 100%;
+
+            .controls {
+                height: 100%;
+            }
+
+
+            .langWrapper {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 0.5em;
+            }
+
+            .translatedButtonWrp {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 1rem;
+            }
+
+            .translatedContent {
+                height: calc(100% - 118px);
+            }
+
+            .translatedContent p {
+                border: 1px solid #d1d5db;
+                padding: .5rem;
+                border-radius: 5px;
+                margin-top: .5rem;
+                height: calc(100% - 26px);
+                margin-bottom: 1rem;
+                overflow: auto;
+            }
+
+            .translatedContent label {
+                font-size: 13px;
+                font-weight: 500;
+                line-height: 1.4;
+                text-transform: uppercase;
+                box-sizing: border-box;
+                display: block;
+                padding-top: 0px;
+                padding-bottom: 0px;
+                max-width: 100%;
+                z-index: 1;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                color: rgb(30, 30, 30);
+                margin: 0px;
+                text-wrap: pretty;
+            }
+
+            .btnStyle {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: .5rem;
+                border-radius: 5px;
+                margin-top: .5rem;
+                font-weight: 600;
+                transition: all 0.3s ease;
+                color: white;
+                opacity: 0.8;
+            }
+
+            .btnStyle:hover {
+                opacity: 1;
+                color: white !important;
+            }
+
+            .replaceBtn {
+                background: transparent;
+                border: 1px solid #007cba;
+                background: #007cba;
+            }
+
+            .copyBtn {
+                background: transparent;
+                border: 1px solid black;
+                background: black;
+            }
+
+            .closeBtn {
+                background: transparent;
+                border: 1px solid #da1c4b;
+                background: #da1c4b;
+            }
+        }
+    }
+}

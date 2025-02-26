@@ -1,21 +1,44 @@
 import { useEffect, useState } from "@wordpress/element";
+import { updateTranslateData } from "../helper";
+import { select } from "@wordpress/data";
 import StringPopUpHeader from "./header";
 import StringPopUpBody from "./body";
 import StringPopUpFooter from "./footer";
-import TranslateService from "../component/TranslateProvider";
 
 const popStringModal = (props) => {
-    const [popupVisibility, setPopupVisibility] = useState(props.visibility);
+    const translateData = select('block-atfp/translate').getTranslationInfo().translateData[props.service] || false;
+    const translateStatus=translateData?.translateStatus || false;
+
+    const [popupVisibility, setPopupVisibility] = useState(true);
     const [refPostData, setRefPostData] = useState('');
     const [translatePending, setTranslatePending] = useState(true);
-    const [translateObj, setTranslateObj] = useState({});
-    const [stringCount, setStringCount] = useState(false);
+    const [characterCount, setCharacterCount] = useState(translateData?.targetCharacterCount || 0);
 
-    const stringCountHandler = (number) => {
-        if (popupVisibility) {
-            setStringCount(number);
+    /**
+     * Returns the label for the service provider.
+     * @returns {string} The label for the service provider.
+     */ 
+    const serviceLabel = () => {
+        const serviceProvider = props.service;
+
+        if (serviceProvider === 'yandex') {
+            return 'Yandex Translate';
+        } else if (serviceProvider === 'google') {
+            return 'Google Translate';
+        } else if (serviceProvider === 'localAiTranslator') {
+            return 'Chrome AI Translator';
         }
+        return serviceProvider;
     }
+
+    /**
+     * Fetches the post data.
+     */
+    useEffect(() => {
+        if (!props.postDataFetchStatus) {
+                props.fetchPostData({ postId: props.postId, sourceLang: props.sourceLang, targetLang: props.targetLang, updatePostDataFetch: props.updatePostDataFetch, refPostData: data => setRefPostData(data) });
+        }
+    }, [props.postDataFetchStatus, props.modalRender])
 
     /**
      * Updates the post content data.
@@ -37,31 +60,32 @@ const popStringModal = (props) => {
 
         setTranslatePending(true);
         setPopupVisibility(false);
-        props.updateFetch(state);
     }
 
     const translateStatusHandler = () => {
+        const characterCount = select('block-atfp/translate').getTranslationInfo().translateData[props.service]?.targetCharacterCount || 0;
+
+        setCharacterCount(characterCount);
         setTranslatePending(false);
     }
 
-    useEffect(() => {
-        document.documentElement.setAttribute('translate', 'no');
-        document.body.classList.add('notranslate');
+    const updatePostDataHandler = () => {
+        const postContent = refPostData;
+        const modalClose = () => setPopupVisibility(false);
 
-        /**
-         * Calls the translate service provider based on the service type.
-         * For example, it can call services like yandex Translate.
-        */
-        const service = props.service;
-        const id = `atfp_${service}_translate_element`;
-        if (undefined === translateObj[service] && true !== translateObj[service] && refPostData && stringCount) {
-            setTranslateObj(prev => { return { ...prev, [service]: true } });
-            TranslateService[service]({ sourceLang: props.sourceLang, targetLang: props.targetLang, translateStatus: translateStatusHandler, ID: id });
-        }
-    }, [props.service, refPostData, stringCount]);
+        props.translatePost({ postContent: postContent, modalClose: modalClose, service: props.service });
+        props.pageTranslate(true);
+        updateTranslateData({ provider: props.service, sourceLang: props.sourceLang, targetLang: props.targetLang, postId: props.currentPostId });
+    }
 
     useEffect(() => {
         setPopupVisibility(true);
+
+        if (translateStatus) {
+            setCharacterCount(translateData?.targetCharacterCount || 0);
+            setTranslatePending(false);
+        }
+
         setTimeout(() => {
             const stringModal = document.querySelector('.atfp_string_container');
             if (stringModal) {
@@ -71,14 +95,46 @@ const popStringModal = (props) => {
     }, [props.modalRender])
 
     return (
-        <>
-            <div id={`atfp-${props.service}-strings-modal`} class="modal-container" style={{ display: popupVisibility ? 'flex' : 'none' }}>
-                <div class="modal-content">
-                    <StringPopUpHeader modalRender={props.modalRender} setPopupVisibility={setPopupVisibilityHandler} postContent={refPostData} blockRules={props.blockRules} translateStatus={translatePending} pageTranslate={props.pageTranslate} />
-                    <StringPopUpBody {...props} updatePostContent={updatePostContentHandler} blockRules={props.blockRules} stringCountHandler={stringCountHandler} />
-                    <StringPopUpFooter modalRender={props.modalRender} setPopupVisibility={setPopupVisibilityHandler} postContent={refPostData} blockRules={props.blockRules} translateStatus={translatePending} pageTranslate={props.pageTranslate} stringCount={stringCount} />
+        <> {popupVisibility &&
+            <div id={`atfp-${props.service}-strings-modal`} className="modal-container" style={{ display: popupVisibility ? 'flex' : 'none' }} data-render-id={props.modalRender}>
+                <div className="modal-content">
+                    <StringPopUpHeader
+                        modalRender={props.modalRender}
+                        setPopupVisibility={setPopupVisibilityHandler}
+                        postContent={refPostData}
+                        translatePendingStatus={translatePending}
+                        pageTranslate={props.pageTranslate}
+                        service={props.service}
+                        serviceLabel={serviceLabel()}
+                        updatePostData={updatePostDataHandler}
+                        characterCount={characterCount}
+                    />
+                    <StringPopUpBody {...props}
+                        updatePostContent={updatePostContentHandler}
+                        contentLoading={props.contentLoading}
+                        postDataFetchStatus={props.postDataFetchStatus}
+                        translatePendingStatus={translatePending}
+                        service={props.service}
+                        sourceLang={props.sourceLang}
+                        targetLang={props.targetLang}
+                        translateStatusHandler={translateStatusHandler}
+                        modalRender={props.modalRender}
+                        translateStatus={translateStatus}
+                    />
+                    <StringPopUpFooter
+                        modalRender={props.modalRender}
+                        setPopupVisibility={setPopupVisibilityHandler}
+                        postContent={refPostData}
+                        translatePendingStatus={translatePending}
+                        pageTranslate={props.pageTranslate}
+                        service={props.service}
+                        serviceLabel={serviceLabel()}
+                        updatePostData={updatePostDataHandler}
+                        characterCount={characterCount}
+                    />
                 </div>
             </div>
+        }
         </>
     );
 }

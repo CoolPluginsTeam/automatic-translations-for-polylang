@@ -6,8 +6,10 @@
   "scripts": {
     "build:at": "wp-scripts build automatic-translate/src/index.js --output-path=../assets/automatic-translate/",
     "start:at": "wp-scripts start automatic-translate/src/index.js --output-path=../assets/automatic-translate/",
-    "build:bt": "webpack --mode production",
-    "start:bt": "webpack --mode development --watch"
+    "build:et": "webpack --mode production --env ET=true",
+    "start:et": "webpack --mode development --env ET=true --watch",
+    "build:bt": "webpack --mode production --env BT=true",
+    "start:bt": "webpack --mode development --env BT=true --watch"
   },
   "repository": {
     "type": "git",
@@ -38,21 +40,22 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.4.0",
+    "react-loading-skeleton": "^3.5.0",
     "showdown": "^2.1.0"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.24.6",
-    "@wordpress/browserslist-config": "^6.0.0",
-    "@wordpress/scripts": "^28.0.0",
-    "browserslist": "^4.23.0",
     "@svgr/webpack": "^8.1.0",
     "@types/node": "18.11.18",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@types/tinymce": "4.6.5",
     "@types/wordpress__edit-post": "^8.4.0",
+    "@wordpress/browserslist-config": "^6.0.0",
+    "@wordpress/scripts": "^28.0.0",
     "ajv": "^7.2.4",
     "autoprefixer": "^10.4.20",
+    "browserslist": "^4.23.0",
     "postcss": "^8.4.49",
     "postcss-loader": "^8.1.1",
     "postcss-nested": "^7.0.2",

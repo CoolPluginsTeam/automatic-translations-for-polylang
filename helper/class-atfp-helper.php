@@ -85,7 +85,7 @@ if (! class_exists('ATFP_Helper')) {
 
 		public function get_block_parse_rules()
 		{
-			$response = wp_remote_get(ATFP_URL . 'includes/automatic-translate/translate-block-rules/block-rules.json', array(
+			$response = wp_remote_get(ATFP_URL . 'includes/block-translation-rules/block-rules.json', array(
 				'timeout'     => 15,
 				'sslverify'   => false, // Disable SSL verification to avoid cURL error 60
 			));
@@ -187,6 +187,14 @@ if (! class_exists('ATFP_Helper')) {
 			}
 
 			return $content;
+		}
+
+		public static function get_translation_data($key_exists=array()){
+			if(class_exists('CPT_Dashboard') && method_exists('CPT_Dashboard', 'get_translation_data')){
+				return CPT_Dashboard::get_translation_data('atfp', $key_exists);
+			}else{
+				return false;
+			}
 		}
 	}
 }

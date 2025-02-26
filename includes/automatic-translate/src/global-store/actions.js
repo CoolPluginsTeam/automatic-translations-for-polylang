@@ -15,12 +15,14 @@ export const titleSaveSource = (data) => {
 /**
  * Action creator for saving the translated title.
  * @param {string} data - The translated title to be saved.
- * @returns {Object} The action object containing the type and text.
+ * @param {string} provider - The provider of the translated title.
+ * @returns {Object} The action object containing the type, text, and provider.
  */
-export const titleSaveTranslate = (data) => {
+export const titleSaveTranslate = (data, provider) => {
     return {
         type: AtfpActionTypes.traslatedTitle, // Action type for saving the translated title
         text: data, // The translated title text
+        provider: provider // The provider of the translated title
     }
 };
 
@@ -39,12 +41,14 @@ export const excerptSaveSource = (data) => {
 /**
  * Action creator for saving the translated excerpt.
  * @param {string} data - The translated excerpt to be saved.
- * @returns {Object} The action object containing the type and text.
+ * @param {string} provider - The provider of the translated excerpt.
+ * @returns {Object} The action object containing the type, text, and provider.
  */
-export const excerptSaveTranslate = (data) => {
+export const excerptSaveTranslate = (data, provider) => {
     return {
         type: AtfpActionTypes.traslatedExcerpt, // Action type for saving the translated excerpt
         text: data, // The translated excerpt text
+        provider: provider // The provider of the translated excerpt
     }
 };
 
@@ -67,14 +71,16 @@ export const contentSaveSource = (id, data) => {
  * @param {string} id - The identifier for the content.
  * @param {string} data - The translated content to be saved.
  * @param {string} source - The source of the translated content.
- * @returns {Object} The action object containing the type, text, id, and source.
+ * @param {string} provider - The provider of the translated content.
+ * @returns {Object} The action object containing the type, text, id, source, and provider.
  */
-export const contentSaveTranslate = (id, data, source) => {
+export const contentSaveTranslate = (id, data, source, provider) => {
     return {
         type: AtfpActionTypes.traslatedContent, // Action type for saving the translated content
         text: data, // The translated content text
         id: id, // The identifier for the content
-        source: source // The source of the translated content
+        source: source, // The source of the translated content
+        provider: provider // The provider of the translated content
     }
 };
 
@@ -97,13 +103,45 @@ export const metaFieldsSaveSource = (id, data) => {
  * @param {string} id - The identifier for the meta fields.
  * @param {Object} data - The translated meta fields to be saved.
  * @param {string} source - The source of the translated meta fields.
- * @returns {Object} The action object containing the type, text, id, and source.
+ * @param {string} provider - The provider of the translated meta fields.
+ * @returns {Object} The action object containing the type, text, id, source, and provider.
  */
-export const metaFieldsSaveTranslate = (id, data, source) => {
+export const metaFieldsSaveTranslate = (id, data, source, provider) => {
     return {
         type: AtfpActionTypes.traslatedMetaFields, // Action type for saving the translated meta fields
         text: data, // The translated meta fields text
         id: id, // The identifier for the meta fields
-        source: source // The source of the translated meta fields
+        source: source, // The source of the translated meta fields
+        provider: provider // The provider of the translated meta fields
+    }
+};
+
+/**
+ * Action creator for saving the block rules.
+ * @param {Object} data - The block rules to be saved.
+ * @returns {Object} The action object containing the type and data.
+ */
+export const setBlockRules = (data) => {
+    return {
+        type: AtfpActionTypes.setBlockRules, // Action type for saving the block rules
+        data: data // The block rules data
+    }
+};
+
+/**
+ * Action creator for saving the translation info.
+ * @param {Object} data - The translation info to be saved.
+ * @returns {Object} The action object containing the type and data.
+ */
+export const translationInfo = ({ sourceWordCount = null, sourceCharacterCount = null, timeTaken = null, provider = null, targetWordCount = null, targetCharacterCount = null, translateStatus = null }) => {
+    return {
+        type: AtfpActionTypes.translationInfo, // Action type for saving the translation info
+        sourceWordCount: sourceWordCount,
+        sourceCharacterCount: sourceCharacterCount, // The character count
+        timeTaken: timeTaken, // The time taken
+        targetWordCount: targetWordCount,
+        targetCharacterCount: targetCharacterCount,
+        provider: provider, // The provider
+        translateStatus: translateStatus // The translate status
     }
 };

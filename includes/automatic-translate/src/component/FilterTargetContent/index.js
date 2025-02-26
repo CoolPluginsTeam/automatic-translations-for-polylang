@@ -147,12 +147,6 @@ const FilterTargetContent = (props) => {
      */
     const content = 'yandex' === props.service || 'localAiTranslator' === props.service ? filterSourceData(props.content) : props.content;
 
-    props.translateContent(content);
-
-    if (props.currentIndex === props.totalString) {
-        props.translateContent({ stringRenderComplete: true });
-    }
-
     /**
      * Regular expression pattern to match the span elements that should not be translated.
      */
