@@ -101,6 +101,7 @@ This plugin provides automatic translation services for Polylang using the Yande
 2. Content Translation Preview.
 3. AI Translation Preview.
 4. Gutenberg Block inline Translation.
+5. Elementor Ai Translation.
 
 == Frequently Asked Questions ==
 = What does the "AI Translation for Polylang" plugin do? =
