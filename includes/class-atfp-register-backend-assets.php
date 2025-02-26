@@ -208,6 +208,7 @@ class ATFP_Register_Backend_Assets
             'editor_type'        => $editor_type,
             'current_post_id'    => $post_id,
             'translation_data'   => is_array($translation_data) ? (function() use (&$translation_data) { unset($translation_data['data']); return $translation_data; })() : array(),
+            'pro_version_url'=>esc_url('https://coolplugins.net/product/ai-translation-for-polylang-pro/'),
         ), $extra_data);
 
         wp_localize_script(
