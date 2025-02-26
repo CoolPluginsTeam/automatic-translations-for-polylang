@@ -1,5 +1,4 @@
-﻿=== AI Translation for Polylang ===
-Contributors: narinder-singh,satindersingh,coolplugins
+=== AI Translation for Polylang ===
 Tags: Polylang, AI Translation, Content Translation, Translate
 Requires at least: 5.0
 Tested up to: 6.7.2
