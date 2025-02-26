@@ -62,7 +62,7 @@ const ScrollAnimation = (props) => {
 /**
  * Updates the translated content in the string container based on the provided translation object.
  */
-const updateTranslatedContent = (provider) => {
+const updateTranslatedContent = ({provider, startTime, endTime}) => {
     const container = document.getElementById("atfp_strings_model");
     const stringContainer = container.querySelector('.atfp_string_container');
     const translatedData = stringContainer.querySelectorAll('td.translate[data-string-type]:not([data-translate-status="translated"])');
@@ -87,6 +87,8 @@ const updateTranslatedContent = (provider) => {
         if(index === totalTranslatedData - 1){
             jQuery(`.${provider}-translator_progress`).css('width', '100%');
             jQuery(`.${provider}-translator-strings-count`).show();
+
+            StoreTimeTaken({ prefix: 'yandex', start: startTime, end: endTime, translateStatus: true });
         }
     });
 }
@@ -116,9 +118,8 @@ const onCompleteTranslation = ({container,provider, startTime, endTime, translat
     saveButton.classList.add('translated');
     saveButton.classList.remove('notranslate');
 
-    updateTranslatedContent(provider);
+    updateTranslatedContent({provider, startTime, endTime});
 
-    StoreTimeTaken({ prefix: 'yandex', start: startTime, end: endTime, translateStatus: true });
     translateStatus();
 }
 
