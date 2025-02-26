@@ -28,58 +28,6 @@
     }
 
     /* ******Popup***** */
-    #atfp-setting-modal .modal-header .close {
-        color: #5f5f5f;
-        font-size: 28px;
-        font-weight: 700;
-        position: absolute;
-        right: 16px;
-        top: 9px;
-    }
-
-    .modal-header h2 {
-        font-size: 17px;
-    }
-
-    #atfp-setting-modal .modal-header .atfp-error-message {
-        background-color: #f1f1f1;
-        margin: .5rem 0 .5rem 0;
-        padding: .5rem;
-        font-weight: 500;
-        line-height: 17px;
-    }
-
-    .modal-content hr {
-        margin-bottom: 9px;
-    }
-
-    #atfp-setting-modal .modal-content .atfp-service-btn {
-        margin-block: .3rem;
-        background-color: #2271b1;
-        color: white;
-        border: none;
-        padding: 7px 11px;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    #atfp-setting-modal .modal-content .atfp-service-btn[disabled] {
-        margin-block: .3rem;
-        color: #a7aaad !important;
-        background: #f6f7f7 !important;
-        border-color: #dcdcde !important;
-        border: none;
-        padding: 7px 11px;
-        border-radius: 4px;
-        box-shadow: none !important;
-        text-shadow: none !important;
-        cursor: default;
-    }
-
-    .modal-content ul {
-        line-height: 25px;
-        padding: 0px 10px 10px 6px;
-    }
 
     .save_it.button-primary[disabled] {
         color: #a7aaad !important;
@@ -107,34 +55,4 @@
 
     #atfp_strings_model .save_btn_cont button:not([disabled])::before {
         line-height: 14px !important;
-    }
-
-    .local_ai_translator_btn.button-primary {
-        background: #2271b1;
-        border-color: #2271b1;
-        color: #fff;
-        text-decoration: none;
-        text-shadow: none;
-        border: none;
-        min-height: 30px;
-        margin: 0;
-        padding: 0 10px;
-        min-width: 190px;
-        border-radius: 2px;
-        cursor: pointer;
-    }
-
-    .local_ai_translator_btn.button-primary[disabled] {
-        color: #a7aaad !important;
-        background: #f6f7f7 !important;
-        border-color: #dcdcde !important;
-        text-decoration: none;
-        text-shadow: none;
-        border: none;
-        min-height: 30px;
-        margin: 0;
-        padding: 0 10px;
-        min-width: 190px;
-        border-radius: 2px;
-        cursor: default;
     }

@@ -9,6 +9,7 @@
     background-color: rgba(0, 0, 0, 0.75);
     justify-content: center;
     align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 :is(#atfp-modal-open-warning-wrapper, #atfp-setting-modal) .modal-content {
@@ -26,6 +27,7 @@
     animation-duration: 0.6s;
     animation-fill-mode: forwards;
     padding-block: 1rem;
+    color: black;
 }
 
 #atfp-modal-open-warning-wrapper .modal-content {
@@ -143,14 +145,23 @@
 }
 
 #atfp-setting-modal .modal-header h2 {
-    margin-top: 0px;
-    padding-top: 0px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: black;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 1rem;
 }
 
 #atfp-setting-modal .modal-header h4 {
     background-color: #f1f1f1;
+    margin: 0;
     padding: .5rem;
     margin-bottom: 0px;
+    color: black;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1;
 }
 
 #atfp-setting-modal .modal-header .atfp-error-message {
@@ -158,14 +169,100 @@
     margin: .5rem 0 .5rem 0;
     padding: .5rem;
     font-weight: 500;
+    font-size: 13px;
+    line-height: 1.2;
 }
 
 #atfp-setting-modal .modal-content>*:not(hr) {
+    padding: 0;
     padding-inline: 1rem;
+    margin: 0;
+}
+
+#atfp-setting-modal .modal-content .atlt-heading{
+    font-size: 13px;
+    line-height: 1.1;
+    font-weight: 600;
+    padding: 0;
+    padding-inline: 1rem;
+    margin: 0;
+}
+
+#atfp-setting-modal .modal-content .inputGroup{
+    margin: 0;
+    padding: 0;
+    padding-inline: 1rem;
+}
+
+#atfp-setting-modal .modal-content .inputGroup a{
+    display: block;
+    padding: 0;
+    margin: 0;
+    line-height: 1;
+}
+
+#atfp-setting-modal .modal-content .inputGroup a:hover,
+#atfp-setting-modal .modal-content .inputGroup a:focus,
+#atfp-setting-modal .modal-content .inputGroup a:active,
+#atfp-setting-modal .modal-content .inputGroup a:focus-visible,
+#atfp-setting-modal .modal-content .inputGroup a:focus-within{
+    box-shadow: none;
+    border: 0;
+    outline: 0;
+}
+
+#atfp-setting-modal .modal-content ul{
+    margin: 0;
+    padding: 0;
+    padding-inline: 1rem;
+}
+
+#atfp-setting-modal .modal-content ul li{
+    padding: 0;
+    margin: 0;
+    font-size: 13px;
+    color: black;
+    line-height: 2;
+}
+
+#atfp-setting-modal .modal-content ul li a{
+    color: #2271b1;
+    transition-property: border, background, color;
+    transition-duration: .05s;
+    transition-timing-function: ease-in-out;
+    text-decoration: underline;
+}
+
+#atfp-setting-modal .modal-content ul li a:hover{
+    color: #135e96;
 }
 
 #atfp-setting-modal .modal-content .atfp-service-btn {
     margin-block: .3rem;
+    background-color: #2271b1;
+    color: white;
+    border: none;
+    padding: 7px 11px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    line-height: 1;
+    min-height: unset;
+    font-family: inherit;
+}
+
+#atfp-setting-modal .modal-content .atfp-service-btn[disabled] {
+    margin: 0;
+    margin-block: .3rem;
+    color: #a7aaad !important;
+    background: #f6f7f7 !important;
+    border-color: #dcdcde !important;
+    border: none;
+    padding: 7px 11px;
+    border-radius: 4px;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    cursor: default;
 }
 
 #atfp-setting-modal .modal-content .atfp-error-message {
@@ -195,15 +292,32 @@
 
 button.atfp-setting-close {
     margin-top: .9rem;
-    /* font-weight: 500; */
+    font-weight: 500;
     font-size: 1rem;
-    padding: .1rem .4rem;
+    padding: .3rem .4rem;
     cursor: pointer;
     opacity: 0.7;
+    background: #f4f4f4;
+    border: 1px solid black;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-self: end;
+    line-height: 1;
+    color: black;
 }
 
 button.atfp-setting-close:hover {
     opacity: 1;
+}
+
+#atfp-setting-modal hr{
+    border: 0;
+    border-top: 1px solid #dcdcde;
+    border-bottom: 1px solid #f6f7f7;
+    margin-bottom: 0px;
+    margin-top: 0px;
 }
 
 #atfp-setting-modal .modal-header .close {
@@ -212,7 +326,12 @@ button.atfp-setting-close:hover {
     font-weight: bold;
     position: absolute;
     right: 16px;
-    top: 16px;
+    top: 10px;
+}
+
+body.rtl #atfp-setting-modal .modal-header .close {
+    right: auto;
+    left: 16px;
 }
 
 #atfp-setting-modal .modal-footer {
@@ -262,6 +381,44 @@ button.atfp-setting-close:hover {
     color: #fff;
     animation: moveit 5s infinite;
     -webkit-animation: moveit 1s infinite;
+}
+
+
+.local_ai_translator_btn.button-primary {
+    background: #2271b1;
+    border-color: #2271b1;
+    color: #fff;
+    text-shadow: none;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 13px;
+    line-height: 2.15384615;
+    min-height: 30px;
+    margin: 0;
+    padding: 0 10px;
+    cursor: pointer;
+    border-width: 1px;
+    border-style: solid;
+    -webkit-appearance: none;
+    border-radius: 3px;
+    white-space: nowrap;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+.local_ai_translator_btn.button-primary[disabled] {
+    color: #a7aaad !important;
+    background: #f6f7f7 !important;
+    border-color: #dcdcde !important;
+    text-decoration: none;
+    text-shadow: none;
+    border: none;
+    min-height: 30px;
+    margin: 0;
+    padding: 0 10px;
+    min-width: 190px;
+    border-radius: 2px;
+    cursor: default;
 }
 
 @keyframes moveit {
