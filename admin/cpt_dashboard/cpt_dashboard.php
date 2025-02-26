@@ -325,7 +325,7 @@ if(!class_exists('Cpt_Dashboard')){
                 __('You\'ve translated', 'cp-notice'),
                 esc_html__(esc_html($total_character_count).' characters', 'cp-notice'),
                 esc_html__('so far using our plugin!', 'cp-notice'),
-                __('If our plugin has saved you time and effort, please consider leaving a', 'cp-notice'),
+                __('If our plugin has saved your time and effort, please consider leaving a', 'cp-notice'),
                 __('review to support our work. Your feedback means the world to us!', 'cp-notice')
             );
 

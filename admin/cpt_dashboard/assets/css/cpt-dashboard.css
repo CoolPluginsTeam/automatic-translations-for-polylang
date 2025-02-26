@@ -25,9 +25,14 @@
 }
 
 .cpt-review-notice .cpt-not-interested {
-    position: absolute;
-    top: 5px;
-    right: 5px;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+body.rtl .cpt-review-notice .cpt-not-interested {
+  right: auto;
+  left: 5px;
 }
 
 .cpt-review-notice :where(.cpt-not-interested, .cpt-already-reviewed)::before {
@@ -42,6 +47,10 @@
 
 .cpt-dashboard {
   padding: 20px;
+}
+
+.cpt-review-notice .cpt-review-notice-content{
+  max-width: calc(100% - 240px);
 }
 
 .cpt-dashboard .cpt-dashboard-tabs {
