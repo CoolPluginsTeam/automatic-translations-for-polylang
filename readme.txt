@@ -1,4 +1,5 @@
-=== AI Translation for Polylang ===
+﻿=== AI Translation for Polylang ===
+Contributors: narinder-singh,satindersingh,coolplugins
 Tags: Polylang, AI Translation, Content Translation, Translate
 Requires at least: 5.0
 Tested up to: 6.7.2
@@ -16,9 +17,9 @@ https://youtu.be/ecHsOyIL_J4
 
 This addon duplicates and translates **page/post titles, content, images, galleries, and meta fields,** eliminating the need to manually adjust featured images, layouts, and other elements. 
 
-https://youtu.be/bmmc-Ynwj8w
-
 Whether you're using **Elementor** or **Gutenberg**, this addon makes the translation process easier, allowing you to focus on expanding your global audience effortlessly.
+
+https://youtu.be/bmmc-Ynwj8w
 
 ### Why Choose AI Translation for Polylang?
 
@@ -49,9 +50,10 @@ Additionally, **[AI Translation for TranslatePress ](https://coolplugins.net/pro
 
 > **Important Notice:** This plugin serves as an AI translation extension for the official **[Polylang](https://wordpress.org/plugins/polylang/)** plugin.
 
-> **Important Notice:** This plugin provides AI translation functionality only for Gutenberg blocks.
 
 > **Disclaimer:** This plugin is not developed by or affiliated with the **[Polylang developers](https://wordpress.org/plugins/polylang/)**. It is a third-party addon that offers automatic translation functionality, enabling you to quickly translate your posts while maintaining the same styles in other languages.
+
+
 
 == Custom Blocks Support ==
 To make your custom blocks translation-ready, follow these steps:
@@ -95,12 +97,18 @@ This plugin provides automatic translation services for Polylang using the Yande
 ### 🌴 Important Links & Information
 * [Yandex Translate Terms](https://yandex.com/legal/translate_termsofuse/)
 * [Yandex Privacy Policy](https://yandex.com/legal/confidential/)
+* [Chrome Built-in AI APIs Documentation](https://developer.chrome.com/docs/ai/built-in-apis)  
+* [Chrome Summarizer API Documentation](https://developer.chrome.com/docs/ai/summarizer-api)  
+* [Chrome Prompt API Documentation for Extensions](https://developer.chrome.com/docs/extensions/ai/prompt-api)
+
+
 
 == Screenshots ==
-1. AI Translation for Polylang Translation Preview.
-2. Content Translation Preview.
-3. AI Translation Preview.
+1. Gutenberg Page Content Translation Preview.
+2. Elementor Page Content Translation Preview.
+3. AI Translation for Polylang Preview.
 4. Gutenberg Block inline Translation.
+
 
 == Frequently Asked Questions ==
 = What does the "AI Translation for Polylang" plugin do? =
@@ -132,6 +140,10 @@ You can update the plugin through the WordPress dashboard like any other plugin.
 
 = Will this plugin slow down my website? =
 The plugin is optimized for performance, but the speed impact may vary depending on your hosting environment and the size of your content. The automatic translation process occurs in the background to minimize any potential impact on site performance.
+
+= How can I report security bugs? = 
+You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities.[Report a security vulnerability](https://patchstack.com/database/wordpress/plugin/automatic-translations-for-polylang/vdp)
+
 
 == Changelog ==
 = Version 1.3.0 | 26 February 2024 =
