@@ -4,7 +4,7 @@ Tags: Polylang, AI Translation, Content Translation, Translate
 Requires at least: 5.0
 Tested up to: 6.7.2
 Requires PHP: 5.6
-Stable tag: 1.3.0
+Stable tag: 1.3.1
 Author URI: https://coolplugins.net/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -146,7 +146,9 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
-= Version 1.3.0 | 26 February 2024 =
+= Version 1.3.1 | 27 February 2025 =
+* **Fixed:** Popup modal not appearing and the translate button not working properly in Gutenberg.
+= Version 1.3.0 | 26 February 2025 =
 * **Added:** Elementor Page translation.
 * **Added:** Gutenberg block inline translation feature.
 * **Added:** Review Notice.
