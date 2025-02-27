@@ -188,7 +188,7 @@ if (editorType === 'gutenberg') {
 
     const buttonElement = jQuery('input#atfp-translate-button[name="atfp_meta_box_translate"]');
 
-    if(!window.atfp_global_object.translation_data || !window.atfp_global_object.translation_data.total_string_count ){
+    if(!window.atfp_global_object.translation_data || (!window.atfp_global_object.translation_data.total_string_count && 0 !== window.atfp_global_object.translation_data.total_string_count) ){
       buttonElement.attr('disabled', 'disabled');
       buttonElement.attr('title', 'Translation data not found.');
       return;
