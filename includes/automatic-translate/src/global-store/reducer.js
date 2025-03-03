@@ -14,7 +14,8 @@ const TranslateDefaultState = {
     title: {}, // Initial state for title translations
     excerpt: {}, // Initial state for excerpt translations
     content: [], // Initial state for content translations
-    metaFields: {} // Initial state for meta field translations
+    metaFields: {}, // Initial state for meta field translations
+    allowedMetaFields: {} // Initial state for allowed meta fields
 };
 
 /**
@@ -112,6 +113,10 @@ const reducer = (state = TranslateDefaultState, action) => {
             }
 
             return { ...state, translationInfo: { ...state.translationInfo, ...data } };
+
+        case AtfpActionTypes.allowedMetaFields: // Action to save the allowed meta fields
+            // Update the state with the new allowed meta fields
+            return { ...state, allowedMetaFields: { ...state.allowedMetaFields, [action.id]: { ...(state.allowedMetaFields[action.id] || []), inputType: action.inputType } } };
 
         default: // If the action type does not match any case
             return state; // Return the current state unchanged

@@ -145,3 +145,16 @@ export const translationInfo = ({ sourceWordCount = null, sourceCharacterCount =
         translateStatus: translateStatus // The translate status
     }
 };
+
+/**
+ * Action creator for saving the allowed meta fields.
+ * @param {Object} data - The allowed meta fields to be saved.
+ * @returns {Object} The action object containing the type and data.
+ */
+export const allowedMetaFields = ({id, type}) => {
+    return {
+        type: AtfpActionTypes.allowedMetaFields,
+        id: id,
+        inputType: type
+    }
+}

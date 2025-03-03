@@ -105,6 +105,11 @@ export const getTranslatedString = (state, type, source, id = null, provider = n
     return source;
 }
 
+/**
+ * Retrieves the translation info from the given state.
+ * @param {Object} state - The state object containing translation data.
+ * @returns {Object} The translation info.
+ */
 export const getTranslationInfo = (state) => {
     return {
         sourceWordCount: state?.translationInfo?.sourceWordCount || 0,
@@ -113,3 +118,11 @@ export const getTranslationInfo = (state) => {
     };
 }
 
+/** 
+ * Retrieves the allowed meta fields from the given state.
+ * @param {Object} state - The state object containing translation data.
+ * @returns {Object} The allowed meta fields.
+ */
+export const getAllowedMetaFields = (state) => {
+    return state.allowedMetaFields || {};
+}

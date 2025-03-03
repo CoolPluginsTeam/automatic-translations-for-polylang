@@ -1,6 +1,5 @@
 import FilterBlockNestedAttr from "../../component/FilterNestedAttr";
-import AllowedMetaFields from "../../AllowedMetafileds";
-const { dispatch } = wp.data;
+import { dispatch, select } from "@wordpress/data";
 
 /**
  * Filters and translates attributes of a block.
@@ -117,6 +116,9 @@ const blockAttributeContent = (parseBlock, blockRules) => {
  * @param {Object} blockRules - The rules for translating the block.
  */
 const GutenbergBlockSaveSource = (block, blockRules) => {
+
+    const AllowedMetaFields = select('block-atfp/translate').getAllowedMetaFields();
+
     Object.keys(block).forEach(key => {
         if (key === 'content') {
             blockAttributeContent(block[key], blockRules);
@@ -129,6 +131,19 @@ const GutenbergBlockSaveSource = (block, blockRules) => {
                     }
                 }
             });
+
+            // Store ACF fields
+            if(acf){
+                acf.getFields().forEach(field => {
+                    if(field.data && AllowedMetaFields[field.data.key]){
+                        const name = field.data.name;
+
+                        if(block[key] && block[key][name] && '' !== block[key][name] && undefined !== block[key][name]){
+                            dispatch('block-atfp/translate').metaFieldsSaveSource(field.data.key, block[key][name][0]);
+                        }
+                    }
+                });
+            }
         } else if(['title', 'excerpt'].includes(key)){
             if(block[key] && block[key].trim() !== ''){
                 const action = `${key}SaveSource`;

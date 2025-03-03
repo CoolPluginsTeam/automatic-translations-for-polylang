@@ -1,7 +1,6 @@
 import createBlocks from './createBlock';
 import { dispatch, select } from '@wordpress/data';
 import YoastSeoFields from './SeoMetaFields/YoastSeoFields';
-import AllowedMetaFields from '../../AllowedMetafileds';
 import RankMathSeo from './SeoMetaFields/RankMathSeo';
 import SeoPressFields from './SeoMetaFields/SeoPress';
 
@@ -38,22 +37,52 @@ const translatePost = (props) => {
      */
     const postMetaFieldsUpdate = () => {
         const metaFieldsData = postContent.metaFields;
+        const AllowedMetaFields = select('block-atfp/translate').getAllowedMetaFields();
+
         Object.keys(metaFieldsData).forEach(key => {
             // Update yoast seo meta fields
-            if(Object.keys(AllowedMetaFields).includes(key) && AllowedMetaFields[key].type === 'string') {
+            if (Object.keys(AllowedMetaFields).includes(key)) {
                 const translatedMetaFields = select('block-atfp/translate').getTranslatedString('metaFields', metaFieldsData[key][0], key, service);
-                if(key.startsWith('_yoast_wpseo_')) {
+
+                if (key.startsWith('_yoast_wpseo_') && AllowedMetaFields[key].type === 'string') {
                     YoastSeoFields({ key: key, value: translatedMetaFields });
-                } else if(key.startsWith('rank_math_')) {
+                } else if (key.startsWith('rank_math_') && AllowedMetaFields[key].type === 'string') {
                     RankMathSeo({ key: key, value: translatedMetaFields });
-                }else if(key.startsWith('_seopress_')){
+                } else if (key.startsWith('_seopress_') && AllowedMetaFields[key].type === 'string') {
                     SeoPressFields({ key: key, value: translatedMetaFields });
-                }
-                else{
+                } else {
                     editPost({ meta: { [key]: translatedMetaFields } });
                 }
             };
         });
+    }
+
+    /**
+     * Updates the post ACF fields based on translation.
+     */
+    const postAcfFieldsUpdate = () => {
+        const AllowedMetaFields = select('block-atfp/translate').getAllowedMetaFields();
+        const metaFieldsData = postContent.metaFields;
+
+        if (acf) {
+            acf.getFields().forEach(field => {
+               if(field.data && field.data.key && Object.keys(AllowedMetaFields).includes(field.data.key)){
+                    const acfFieldObj = acf.getField(field.data.key);
+                    const fieldKey = field.data.key;
+                    const fieldName = field.data.name;
+                    const inputType = acfFieldObj.data.type;
+
+                    const translatedMetaFields = select('block-atfp/translate').getTranslatedString('metaFields', metaFieldsData[fieldName][0], fieldKey, service);
+
+                    if('wysiwyg' === inputType && tinymce){
+                        const editorId = acfFieldObj.data.id;
+                        tinymce.get(editorId)?.setContent(translatedMetaFields);
+                    }else{
+                        acf.getField(fieldKey)?.val(translatedMetaFields);
+                    }
+               }
+            });
+        }
     }
 
     /**
@@ -75,6 +104,8 @@ const translatePost = (props) => {
     postDataUpdate();
     // Update post meta fields
     postMetaFieldsUpdate();
+    // Update post ACF fields
+    postAcfFieldsUpdate();
     // Update post content
     postContentUpdate();
     // Close string modal box

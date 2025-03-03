@@ -7,6 +7,8 @@ import StoreTimeTaken from "../../../component/StoreTimeTaken";
 const localAiTranslator = async (props) => {
     const targetLangName = atfp_global_object.languageObject[props.targetLang];
     const sourceLangName = atfp_global_object.languageObject[props.sourceLang];
+    const AllowedMetaFields = select('block-atfp/translate').getAllowedMetaFields();
+
     const { translateStatusHandler, translateStatus } = props;
 
     let startTime = 0;
@@ -57,7 +59,7 @@ const localAiTranslator = async (props) => {
         const key = ele.dataset.key;
         const sourceText = ele.closest('tr').querySelector('td[data-source="source_text"]').innerText;
 
-        SaveTranslation({ type: type, key: key, translateContent: translatedText, source: sourceText, provider: 'localAiTranslator' });
+        SaveTranslation({ type: type, key: key, translateContent: translatedText, source: sourceText, provider: 'localAiTranslator', AllowedMetaFields });
 
         const translationEntry = select('block-atfp/translate').getTranslationInfo().translateData?.localAiTranslator;
         const previousTargetWordCount = translationEntry && translationEntry.targetWordCount ? translationEntry.targetWordCount : 0;
