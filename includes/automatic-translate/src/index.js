@@ -36,13 +36,13 @@ const StringModalBodyNotice=()=>{
     const postMetaSync = atfp_global_object.postMetaSync === 'true';
 
     if(postMetaSync){
-      notices.push({className: 'atfp-notice atfp-notice-warning', message: 'If you want to translate ACF fields, please disable Custom fields synchronization in the polylang settings.'});
+      notices.push({className: 'atfp-notice atfp-notice-warning', message: 'To ensure accurate translation of ACF fields, please disable the Custom Fields synchronization option in the Polylang settings, as this will affect all linked posts or pages meta field content.'});
     }
     
     const blockRules = select('block-atfp/translate').getBlockRules();
 
     if(!blockRules.AtfpBlockParseRules || Object.keys(blockRules.AtfpBlockParseRules).length === 0){
-      notices.push({className: 'atfp-notice atfp-notice-error', message: 'No block rules found. Please check the block rules not found or block rules JSON file may be blocked by your server.'});
+      notices.push({className: 'atfp-notice atfp-notice-error', message: 'No block rules were found. It appears that the block-rules.JSON file could not be fetched, possibly because it is blocked by your server settings. Please check your server configuration to resolve this issue.'});
     }
   }
 
