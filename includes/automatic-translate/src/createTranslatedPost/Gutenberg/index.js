@@ -64,15 +64,18 @@ const translatePost = (props) => {
         const AllowedMetaFields = select('block-atfp/translate').getAllowedMetaFields();
         const metaFieldsData = postContent.metaFields;
 
+        
         if (acf) {
             acf.getFields().forEach(field => {
                if(field.data && field.data.key && Object.keys(AllowedMetaFields).includes(field.data.key)){
-                    const acfFieldObj = acf.getField(field.data.key);
-                    const fieldKey = field.data.key;
-                    const fieldName = field.data.name;
-                    const inputType = acfFieldObj.data.type;
+                   const acfFieldObj = acf.getField(field.data.key);
+                   const fieldKey = field.data.key;
+                   const fieldName = field.data.name;
+                   const inputType = acfFieldObj.data.type;
 
-                    const translatedMetaFields = select('block-atfp/translate').getTranslatedString('metaFields', metaFieldsData[fieldName][0], fieldKey, service);
+                   const sourceValue = metaFieldsData[fieldName]? metaFieldsData[fieldName][0] : acf.getField(fieldKey)?.val();
+
+                    const translatedMetaFields = select('block-atfp/translate').getTranslatedString('metaFields', sourceValue, fieldKey, service);
 
                     if('wysiwyg' === inputType && tinymce){
                         const editorId = acfFieldObj.data.id;

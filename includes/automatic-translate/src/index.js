@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import GutenbergPostFetch from './FetchPost/Gutenberg';
 import UpdateGutenbergPage from './createTranslatedPost/Gutenberg';
 import ProVersionNotice from './component/ProVersionNotice';
+import Notice from './component/Notice';
+import { select } from '@wordpress/data';
 
 // Elementor post fetch and update page
 import ElementorPostFetch from './FetchPost/Elementor';
@@ -24,6 +26,35 @@ const init = () => {
     document.body.insertAdjacentHTML('beforeend', modal);
   });
 }
+
+const StringModalBodyNotice=()=>{
+
+  const notices= [];
+  
+  if(editorType === 'gutenberg'){
+
+    const postMetaSync = atfp_global_object.postMetaSync === 'true';
+
+    if(postMetaSync){
+      notices.push({className: 'atfp-notice atfp-notice-warning', message: 'If you want to translate ACF fields, please disable Custom fields synchronization in the polylang settings.'});
+    }
+    
+    const blockRules = select('block-atfp/translate').getBlockRules();
+
+    if(!blockRules.AtfpBlockParseRules || Object.keys(blockRules.AtfpBlockParseRules).length === 0){
+      notices.push({className: 'atfp-notice atfp-notice-error', message: 'No block rules found. Please check the block rules not found or block rules JSON file may be blocked by your server.'});
+    }
+  }
+
+  const noticeLength = notices.length;
+
+  if(notices.length > 0){
+    return notices.map((notice, index) => <Notice className={notice.className} message={notice.message} key={index} lastNotice={index === noticeLength - 1}/>);
+  }
+
+  return;
+}
+
 
 const App = () => {
   const [pageTranslate, setPageTranslate] = useState(false);
@@ -98,7 +129,7 @@ const App = () => {
 
   return (
     <>
-      {!pageTranslate && sourceLang && '' !== sourceLang && <SettingModal contentLoading={loading} updatePostDataFetch={updatePostDataFetch} postDataFetchStatus={postDataFetchStatus} pageTranslate={handlePageTranslate} postId={postId} currentPostId={currentPostId} targetLang={targetLang} postType={postType} fetchPostData={fetchPostData} translatePost={translatePost} translateWrpSelector={translateWrpSelector} />}
+      {!pageTranslate && sourceLang && '' !== sourceLang && <SettingModal contentLoading={loading} updatePostDataFetch={updatePostDataFetch} postDataFetchStatus={postDataFetchStatus} pageTranslate={handlePageTranslate} postId={postId} currentPostId={currentPostId} targetLang={targetLang} postType={postType} fetchPostData={fetchPostData} translatePost={translatePost} translateWrpSelector={translateWrpSelector} stringModalBodyNotice={StringModalBodyNotice}/>}
     </>
   );
 };

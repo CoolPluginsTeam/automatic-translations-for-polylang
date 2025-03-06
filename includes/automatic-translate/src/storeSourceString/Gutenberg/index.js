@@ -137,9 +137,14 @@ const GutenbergBlockSaveSource = (block, blockRules) => {
                 acf.getFields().forEach(field => {
                     if(field.data && AllowedMetaFields[field.data.key]){
                         const name = field.data.name;
+                        const currentValue=acf.getField(field.data.key)?.val();
 
-                        if(block[key] && block[key][name] && '' !== block[key][name] && undefined !== block[key][name]){
-                            dispatch('block-atfp/translate').metaFieldsSaveSource(field.data.key, block[key][name][0]);
+                        if(block[key] && block[key][name]){
+                            if('' !== block[key][name] && undefined !== block[key][name]){
+                                dispatch('block-atfp/translate').metaFieldsSaveSource(field.data.key, block[key][name][0]);
+                            }
+                        }else if(currentValue && '' !== currentValue && undefined !== currentValue){
+                            dispatch('block-atfp/translate').metaFieldsSaveSource(field.data.key, currentValue);
                         }
                     }
                 });

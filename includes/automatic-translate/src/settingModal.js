@@ -106,6 +106,7 @@ const SettingModal = (props) => {
                     translatePost={props.translatePost}
                     contentLoading={props.contentLoading}
                     updatePostDataFetch={props.updatePostDataFetch}
+                    stringModalBodyNotice={props.stringModalBodyNotice}
                 />);
             }
         }
