@@ -491,13 +491,13 @@ body.rtl #atfp-setting-modal .modal-header .close {
 #atfp_strings_model .atfp_string_container {
     overflow-y: auto;
     overflow-x: hidden;
-    height: calc(100vh - 330px - var(--atfp-notice-wrapper-height,0px));
+    max-height: calc(100vh - 330px - var(--atfp-notice-wrapper-height,0px));
     width: 100%;
     position: relative;
 }
 
 #atfp_strings_model .atfp_string_container.atfp_empty_string {
-    height: calc(100vh - 196px - var(--atfp-notice-wrapper-height,0px));
+    max-height: calc(100vh - 196px - var(--atfp-notice-wrapper-height,0px));
     display: flex;
     align-items: center;
 }
@@ -719,7 +719,7 @@ body>div.skiptranslate iframe.skiptranslate[frameborder][src][style="visibility:
 }
 
 #atfp_strings_model #atfp-localAiTranslator-strings-modal .atfp_string_container{
-    height: calc(100vh - 270px - var(--atfp-notice-wrapper-height,0px));
+    max-height: calc(100vh - 270px - var(--atfp-notice-wrapper-height,0px));
     box-shadow: 0 -1px 4px #0000005e inset;
 }
 
