@@ -133,7 +133,7 @@ const GutenbergBlockSaveSource = (block, blockRules) => {
             });
 
             // Store ACF fields
-            if(acf){
+            if(window.acf){
                 acf.getFields().forEach(field => {
                     if(field.data && AllowedMetaFields[field.data.key]){
                         const name = field.data.name;

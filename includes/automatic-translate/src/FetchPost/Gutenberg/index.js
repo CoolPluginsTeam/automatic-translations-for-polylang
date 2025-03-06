@@ -18,7 +18,7 @@ const GutenbergPostFetch = async (props) => {
     const AcfFields = () =>{
         const postMetaSync = atfp_global_object.postMetaSync === 'true';
 
-        if(acf && !postMetaSync){
+        if(window.acf && !postMetaSync){
             const allowedTypes = ['text', 'textarea', 'wysiwyg'];
             acf.getFields().forEach(field => {
                 if(field.data && allowedTypes.includes(field.data.type)){

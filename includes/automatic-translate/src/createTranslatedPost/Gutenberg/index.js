@@ -65,7 +65,7 @@ const translatePost = (props) => {
         const metaFieldsData = postContent.metaFields;
 
         
-        if (acf) {
+        if (window.acf) {
             acf.getFields().forEach(field => {
                if(field.data && field.data.key && Object.keys(AllowedMetaFields).includes(field.data.key)){
                    const acfFieldObj = acf.getField(field.data.key);
