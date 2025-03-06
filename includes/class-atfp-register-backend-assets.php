@@ -131,6 +131,12 @@ class ATFP_Register_Backend_Assets
                         'parent_post_id'     => $from_post_id,
                     );
 
+                    if(!isset(PLL()->options['sync']) || (isset(PLL()->options['sync']) && !in_array('post_meta', PLL()->options['sync']))){
+                        $data['postMetaSync'] = 'false';
+                    }else{
+                        $data['postMetaSync'] = 'true';
+                    }
+
                     $this->enqueue_automatic_translate_assets(pll_get_post_language($from_post_id, 'slug'), $lang, 'gutenberg', $data);
                 }
             }
