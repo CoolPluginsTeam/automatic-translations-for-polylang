@@ -149,7 +149,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 == Changelog ==
 = Version 1.3.2 | 06 March 2025 =
 * **Added:** Added support for ACF fields translation only with type(text, textarea & wysiwyg).
-* **Improved:** Added notice message in string modal body for better user experience.
+* **Added:** Added notice message in string modal body for better user experience.
 * **Improved:** String modal box styling.
 = Version 1.3.1 | 27 February 2025 =
 * **Fixed:** Popup modal not appearing and the translate button not working properly in Gutenberg.
