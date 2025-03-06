@@ -35,7 +35,7 @@ https://youtu.be/yamFwNRWEbc
 * **Elementor Page Translation** - Translate entire Elementor pages, including all sections, widgets, and content, without losing styles or design.
 * **Gutenberg Block Compatibility** - Automatically translate content within Gutenberg blocks, including core blocks and popular third-party blocks like Spectra, Kadence, Stackable, Otter, and Essential.
 * **Automatic Content Translation** - Effortlessly translate post titles, content, images, galleries, and meta fields from one language to another using Machine & AI Translations.
-* **ACF Fields Translation** - Translate ACF fields only with type(text, textarea & wysiwyg) in Gutenberg editor.
+* **ACF Fields Translation** - Translate ACF fields only with type(text, textarea & wysiwyg) in Gutenberg pages.
 * **One-Click Duplication** - Easily duplicate your original or default language content into other languages, saving time and reducing manual work.
 * **Style and Format Preservation** - The plugin maintains all styles, formats, and layouts from the original post, ensuring that your translated content maintains a consistent appearance.
 * **Multilingual Management** - Simplifies the process of managing a multilingual website by automating translation and reducing the need for repetitive actions.
