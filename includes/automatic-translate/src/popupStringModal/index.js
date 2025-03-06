@@ -120,6 +120,7 @@ const popStringModal = (props) => {
                         translateStatusHandler={translateStatusHandler}
                         modalRender={props.modalRender}
                         translateStatus={translateStatus}
+                        stringModalBodyNotice={props.stringModalBodyNotice}
                     />
                     <StringPopUpFooter
                         modalRender={props.modalRender}

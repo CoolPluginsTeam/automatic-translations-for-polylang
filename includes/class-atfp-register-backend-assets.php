@@ -131,6 +131,12 @@ class ATFP_Register_Backend_Assets
                         'parent_post_id'     => $from_post_id,
                     );
 
+                    if(!isset(PLL()->options['sync']) || (isset(PLL()->options['sync']) && !in_array('post_meta', PLL()->options['sync']))){
+                        $data['postMetaSync'] = 'false';
+                    }else{
+                        $data['postMetaSync'] = 'true';
+                    }
+
                     $this->enqueue_automatic_translate_assets(pll_get_post_language($from_post_id, 'slug'), $lang, 'gutenberg', $data);
                 }
             }
@@ -200,6 +206,7 @@ class ATFP_Register_Backend_Assets
             'ajax_url'           => admin_url('admin-ajax.php'),
             'ajax_nonce'         => wp_create_nonce('atfp_translate_nonce'),
             'atfp_url'           => esc_url(ATFP_URL),
+            'admin_url'     => admin_url(),
             'update_translate_data' => 'atfp_update_translate_data',
             'source_lang'        => $source_lang,
             'target_lang'        => $target_lang,

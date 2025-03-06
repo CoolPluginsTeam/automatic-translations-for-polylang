@@ -11,6 +11,7 @@ const StringPopUpBody = (props) => {
 
     const { service: service } = props;
     const translateContent = select("block-atfp/translate").getTranslationEntry();
+    const StringModalBodyNotice = props.stringModalBodyNotice;
 
     useEffect(() => {
 
@@ -37,6 +38,7 @@ const StringPopUpBody = (props) => {
         <div className="modal-body">
             {translateContent.length > 0 && props.postDataFetchStatus ?
                 <>
+                    {StringModalBodyNotice && <div className="atfp-body-notice-wrapper"><StringModalBodyNotice /></div>}
                     <div className="atfp_translate_progress" key={props.modalRender}>{__("Automatic translation is in progress....", 'automatic-translations-for-polylang')}<br />{__("It will take few minutes, enjoy ☕ coffee in this time!", 'automatic-translations-for-polylang')}<br /><br />{__("Please do not leave this window or browser tab while translation is in progress...", 'automatic-translations-for-polylang')}</div>
                     <div className={`translator-widget ${service}`} style={{ display: `${props.service === 'localAiTranslator' ? 'flex' : 'block'}` }}>
                         {props.service === 'localAiTranslator' ?

@@ -2,7 +2,7 @@
 /*
 Plugin Name: AI Translation For Polylang
 Plugin URI: https://coolplugins.net/
-Version: 1.3.1
+Version: 1.3.2
 Author: Cool Plugins
 Author URI: https://coolplugins.net/
 Description: Streamline your Polylang experience with this plugin that not only duplicates content but also translates core and specific blocks across multiple languages.
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 if ( ! defined( 'ATFP_V' ) ) {
-	define( 'ATFP_V', '1.3.1' );
+	define( 'ATFP_V', '1.3.2' );
 }
 if ( ! defined( 'ATFP_DIR_PATH' ) ) {
 	define( 'ATFP_DIR_PATH', plugin_dir_path( __FILE__ ) );
@@ -233,7 +233,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 					<div class="atfp-review-meta-box">
 					<p><?php echo esc_html__( 'We hope you find our plugin helpful for your translation needs. Your feedback is valuable to us!', 'automatic-translations-for-polylang' ); ?>
 					<br>
-					<a href="<?php echo esc_url( 'https://wordpress.org/plugins/automatic-translations-for-polylang/reviews/#new-post' ); ?>" class="components-button is-primary is-small" target="_blank"><?php echo esc_html__( 'Rate Us', 'automatic-translations-for-polylang' ); ?><span> ★★★★★</span></a>
+					<a href="<?php echo esc_url( 'https://wordpress.org/support/plugin/automatic-translations-for-polylang/reviews/#new-post' ); ?>" class="components-button is-primary is-small" target="_blank"><?php echo esc_html__( 'Rate Us', 'automatic-translations-for-polylang' ); ?><span> ★★★★★</span></a>
 					</p>
 					</div>
 					<?php

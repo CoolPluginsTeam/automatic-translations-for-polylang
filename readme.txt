@@ -4,7 +4,7 @@ Tags: Polylang, AI Translation, Content Translation, Translate
 Requires at least: 5.0
 Tested up to: 6.7.2
 Requires PHP: 5.6
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 Author URI: https://coolplugins.net/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -35,6 +35,7 @@ https://youtu.be/yamFwNRWEbc
 * **Elementor Page Translation** - Translate entire Elementor pages, including all sections, widgets, and content, without losing styles or design.
 * **Gutenberg Block Compatibility** - Automatically translate content within Gutenberg blocks, including core blocks and popular third-party blocks like Spectra, Kadence, Stackable, Otter, and Essential.
 * **Automatic Content Translation** - Effortlessly translate post titles, content, images, galleries, and meta fields from one language to another using Machine & AI Translations.
+* **ACF Fields Translation** - Translate ACF fields only with type(text, textarea & wysiwyg) in Gutenberg pages.
 * **One-Click Duplication** - Easily duplicate your original or default language content into other languages, saving time and reducing manual work.
 * **Style and Format Preservation** - The plugin maintains all styles, formats, and layouts from the original post, ensuring that your translated content maintains a consistent appearance.
 * **Multilingual Management** - Simplifies the process of managing a multilingual website by automating translation and reducing the need for repetitive actions.
@@ -146,6 +147,10 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= Version 1.3.2 | 06 March 2025 =
+* **Added:** Added support for ACF fields translation only with type(text, textarea & wysiwyg).
+* **Improved:** Added notice message in string modal body for better user experience.
+* **Improved:** String modal box styling.
 = Version 1.3.1 | 27 February 2025 =
 * **Fixed:** Popup modal not appearing and the translate button not working properly in Gutenberg.
 = Version 1.3.0 | 26 February 2025 =
