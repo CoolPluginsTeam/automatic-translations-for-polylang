@@ -87,6 +87,11 @@
     border-left-width: 4px;
     padding: .3rem;
     margin-top: .5rem;
+}
+
+#atfp_strings_model .atfp-notice p{
+    padding: 0;
+    margin: 0;
     font-size: 14px;
 }
 
