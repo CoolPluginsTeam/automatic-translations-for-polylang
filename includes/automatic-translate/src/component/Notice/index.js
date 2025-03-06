@@ -25,7 +25,7 @@ const Notice = (props) => {
     }, [props.lastNotice]);
 
     return (
-        <div className={props.className}>{props.message}</div>
+        <div className={props.className}>{props.children}</div>
     );
 };
 

@@ -206,6 +206,7 @@ class ATFP_Register_Backend_Assets
             'ajax_url'           => admin_url('admin-ajax.php'),
             'ajax_nonce'         => wp_create_nonce('atfp_translate_nonce'),
             'atfp_url'           => esc_url(ATFP_URL),
+            'admin_url'     => admin_url(),
             'update_translate_data' => 'atfp_update_translate_data',
             'source_lang'        => $source_lang,
             'target_lang'        => $target_lang,
