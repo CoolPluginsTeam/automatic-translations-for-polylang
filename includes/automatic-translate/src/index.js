@@ -1,4 +1,4 @@
-import SettingModal from './settingModal';
+import SettingModal from './popupSettingModal';
 import './global-store';
 import { useEffect, useState } from 'react';
 import GutenbergPostFetch from './FetchPost/Gutenberg';
@@ -12,6 +12,7 @@ import ElementorPostFetch from './FetchPost/Elementor';
 import ElementorUpdatePage from './createTranslatedPost/Elementor';
 
 import ReactDOM from "react-dom/client";
+
 
 const editorType = window.atfp_global_object.editor_type;
 

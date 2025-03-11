@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import FilterTargetContent from "../component/FilterTargetContent";
-const { __ } = wp.i18n;
-const { select } = wp.data;
-const { Fragment } = wp.element;
+import { __ } from "@wordpress/i18n";
+import { select } from "@wordpress/data";
+import { Fragment } from "@wordpress/element";
 import TranslateService from "../component/TranslateProvider";
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css'

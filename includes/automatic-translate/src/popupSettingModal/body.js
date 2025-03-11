@@ -1,0 +1,38 @@
+import { __ } from "@wordpress/i18n";
+const SettingModalBody = ({ yandexSupport, fetchContent, imgFolder, targetLangName }) => {
+    return (
+        <div className="atfp-setting-modal-body">
+            <hr />
+            <strong className="atlt-heading">{__("Translate Using Yandex Page Translate Widget", 'automatic-translations-for-polylang')}</strong>
+            <div className="inputGroup">
+                {yandexSupport ?
+                    <>
+                        <button className="atfp-service-btn translate button button-primary" data-service="yandex" data-service-label="Yandex Translate" onClick={fetchContent}>{__("Yandex Translate", 'automatic-translations-for-polylang')}</button>
+                        <br />
+                    </>
+                    :
+                    <>
+                        <button className="atfp-service-btn translate button button-primary" disabled={true}>{__("Yandex Translate", 'automatic-translations-for-polylang')}</button><br />
+                        <span className="atfp-error-message">{targetLangName} {__('language is not supported by Yandex Translate', 'automatic-translations-for-polylang')}.</span>
+                    </>
+                }
+                <a href="https://translate.yandex.com/" target="_blank"><img className="pro-features-img" src={`${imgFolder}powered-by-yandex.png`} alt="powered by Yandex Translate Widget" /></a>
+            </div>
+            <hr />
+            <ul style={{ margin: "0" }}>
+                <li><span style={{ color: "green" }}>✔</span> {__("Unlimited Translations with Yandex Translate", 'automatic-translations-for-polylang')}</li>
+                <li><span style={{ color: "green" }}>✔</span> {__("No API Key Required for Yandex Translate", 'automatic-translations-for-polylang')}</li>
+                <li><span style={{ color: "green" }}>✔</span> {__("Supports Multiple Languages", 'automatic-translations-for-polylang')} - <a href="https://yandex.com/support2/translate-desktop/en/supported-langs" target="_blank">{__("See Supported Languages", 'automatic-translations-for-polylang')}</a></li>
+            </ul>
+            <hr />
+            <strong className="atlt-heading">{__("Translate Using Chrome Built-in API", 'automatic-translations-for-polylang')}</strong>
+            <div className="inputGroup">
+                <button id="local_ai_translator_btn" className="atfp-service-btn button button-primary" data-service="localAiTranslator" data-service-label="Chrome Built-in API" onClick={fetchContent}>{__("Chrome AI Translator (Beta)", 'automatic-translations-for-polylang')}</button>
+                <br /><a href="https://developer.chrome.com/docs/ai/translator-api" target="_blank">Powered by <img className="pro-features-img" src={`${imgFolder}chrome-ai-translator.png`} alt="powered by Chrome built-in API" /> Built-in API</a>
+            </div>
+            <hr />
+        </div>
+    );
+}
+
+export default SettingModalBody;
