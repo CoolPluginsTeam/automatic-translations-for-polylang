@@ -36,7 +36,7 @@ const StringModalBodyNotice=()=>{
     const postMetaSync = atfp_global_object.postMetaSync === 'true';
 
     if(postMetaSync){
-      notices.push({className: 'atfp-notice atfp-notice-warning', message: <p>For accurate ACF field translations, please disable the Custom Fields synchronization in <a href={`${atfp_global_object.admin_url}/admin.php?page=mlang_settings`} target="_blank">Polylang settings</a>. This may affect linked posts or pages.</p>});   
+      notices.push({className: 'atfp-notice atfp-notice-warning', message: <p>For accurate ACF field translations, please disable the Custom Fields synchronization in <a href={`${atfp_global_object.admin_url}admin.php?page=mlang_settings`} target="_blank">Polylang settings</a>. This may affect linked posts or pages.</p>});   
     }
     
     const blockRules = select('block-atfp/translate').getBlockRules();
