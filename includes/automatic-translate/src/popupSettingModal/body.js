@@ -1,6 +1,7 @@
 import { __ } from "@wordpress/i18n";
 import Providers from "./providers";
-const SettingModalBody = ({ yandexSupport, imgFolder, targetLangName, postType, sourceLangName, fetchContent }) => {
+
+const SettingModalBody = ({ yandexSupport, imgFolder, targetLangName, postType, sourceLangName, fetchContent, chromeAiBtnDisabled, openErrorModalHandler }) => {
     const providers = [
         {
             Service: "yandex",
@@ -9,9 +10,9 @@ const SettingModalBody = ({ yandexSupport, imgFolder, targetLangName, postType, 
             ServiceLabel: "Yandex Translate",
             ButtonText: __("Yandex Translate", 'automatic-translations-for-polylang'),
             ProviderLink: "https://translate.yandex.com/",
-            Docs: "https://translate.yandex.com/",
+            // Docs: "https://translate.yandex.com/",
             ButtonDisabled: !yandexSupport,
-            ErrorMessage: !yandexSupport ? __('language is not supported by Yandex Translate', 'automatic-translations-for-polylang') : false,
+            ErrorMessage: !yandexSupport ? <p className="atfp-error-message">{__('language is not supported by Yandex Translate', 'automatic-translations-for-polylang')}</p> : <></>,
             ButtonAction: fetchContent,
         },
         {
@@ -21,7 +22,9 @@ const SettingModalBody = ({ yandexSupport, imgFolder, targetLangName, postType, 
             Logo: `${imgFolder}chrome-built-in-ai-logo.png`,
             ButtonText: __("Chrome AI Translator", 'automatic-translations-for-polylang'),
             ProviderLink: "https://developer.chrome.com/docs/ai/translator-api",
-            Docs: "https://developer.chrome.com/docs/ai/translator-api",
+            // Docs: "https://developer.chrome.com/docs/ai/translator-api",
+            ButtonDisabled: chromeAiBtnDisabled,
+            ErrorMessage: chromeAiBtnDisabled ? <button className="atfp-localai-disabled-message" onClick={() => openErrorModalHandler("localAiTranslator")}>{__('Translator button is disabled. Click for details.', 'automatic-translations-for-polylang')}</button> : <></>,
             BetaEnabled: true,
             ButtonAction: fetchContent,
         }

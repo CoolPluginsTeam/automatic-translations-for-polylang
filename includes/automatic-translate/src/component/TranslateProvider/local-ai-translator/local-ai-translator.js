@@ -73,7 +73,7 @@ class ChromeAiTranslator {
             const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">
                 <h4>Steps to Enable the Translator AI Modal:</h4>
                 <ol>
-                    <li>Open this URL in a new Chrome tab: <strong><span data-clipboard-text="chrome://flags/#translation-api" target="_blank" class="chrome-ai-translator-flags">chrome://flags/#translation-api</span></strong>. Click on the URL to copy it, then open a new window and paste this URL to access the settings.</li>
+                    <li>Open this URL in a new Chrome tab: <strong><span data-clipboard-text="chrome://flags/#translation-api" target="_blank" class="chrome-ai-translator-flags">chrome://flags/#translation-api ${ChromeAiTranslator.svgIcons('copy')}</span></strong>. Click on the URL to copy it, then open a new window and paste this URL to access the settings.</li>
                     <li>Ensure that the <strong>Experimental translation API</strong> option is set to <strong>Enabled</strong>.</li>
                     <li>Click on the <strong>Save</strong> button to apply the changes.</li>
                     <li>The Translator AI modal should now be enabled and ready for use.</li>
@@ -91,7 +91,7 @@ class ChromeAiTranslator {
                 <strong>Language Support Information:</strong>
                 <ol>
                     <li>The current version of Chrome AI Translator does not support the <strong>${targetLanguageLabel} (${targetLanguage})</strong> language.</li>
-                    <li>To view the list of supported languages, please <span data-clipboard-text="chrome://on-device-translation-internals" target="_blank" class="chrome-ai-translator-flags">click here</span>. Click on the URL to copy it, then open a new window and paste this URL to access the settings.</li>
+                    <li>To view the list of supported languages, please <span data-clipboard-text="chrome://on-device-translation-internals" target="_blank" class="chrome-ai-translator-flags">chrome://on-device-translation-internals ${ChromeAiTranslator.svgIcons('copy')}</span>. Click on the URL to copy it, then open a new window and paste this URL to access the settings.</li>
                     <li>Ensure your Chrome browser is updated to the latest version for optimal performance.</li>
                 </ol>
             </span>`);
@@ -104,7 +104,7 @@ class ChromeAiTranslator {
                 <strong>Language Support Information:</strong>
                 <ol>
                     <li>The current version of Chrome AI Translator does not support the <strong>${sourceLanguageLabel} (${sourceLanguage})</strong> language.</li>
-                    <li>To view the list of supported languages, please <span data-clipboard-text="chrome://on-device-translation-internals" target="_blank" class="chrome-ai-translator-flags">click here</span>. Click on the URL to copy it, then open a new window and paste this URL to access the settings.</li>
+                    <li>To view the list of supported languages, please <span data-clipboard-text="chrome://on-device-translation-internals" target="_blank" class="chrome-ai-translator-flags">chrome://on-device-translation-internals ${ChromeAiTranslator.svgIcons('copy')}</span>. Click on the URL to copy it, then open a new window and paste this URL to access the settings.</li>
                     <li>Ensure your Chrome browser is updated to the latest version for optimal performance.</li>
                 </ol>
             </span>`);
@@ -126,7 +126,7 @@ class ChromeAiTranslator {
                     <li>You can install it by visiting the following link: 
                         <strong>
                             <span data-clipboard-text="chrome://on-device-translation-internals" target="_blank" class="chrome-ai-translator-flags">
-                                chrome://on-device-translation-internals
+                                chrome://on-device-translation-internals ${ChromeAiTranslator.svgIcons('copy')}
                             </span>
                         </strong>. Click on the URL to copy it, then open a new window and paste this URL to access the settings.
                     </li>
@@ -142,7 +142,7 @@ class ChromeAiTranslator {
                 <h4>Language Pack Installation Required</h4>
                 <ol>
                     <li>Please ensure that the language pack for <strong>${targetLanguageLabel} (${targetLanguage})</strong> or <strong>${sourceLanguageLabel} (${sourceLanguage})</strong> is installed and set as a preferred language in your browser.</li>
-                    <li>To install the language pack, visit <strong><span data-clipboard-text="chrome://on-device-translation-internals" target="_blank" class="chrome-ai-translator-flags">chrome://on-device-translation-internals</span></strong>. Click on the URL to copy it, then open a new window and paste this URL to access the settings.</li>
+                    <li>To install the language pack, visit <strong><span data-clipboard-text="chrome://on-device-translation-internals" target="_blank" class="chrome-ai-translator-flags">chrome://on-device-translation-internals ${ChromeAiTranslator.svgIcons('copy')}</span></strong>. Click on the URL to copy it, then open a new window and paste this URL to access the settings.</li>
                     <li>If you encounter any issues, please refer to the <a href="https://developer.chrome.com/docs/ai/translator-api#supported-languages" target="_blank">documentation to check supported languages</a> for further assistance.</li>
                 </ol>
             </span>`);
@@ -337,6 +337,15 @@ class ChromeAiTranslator {
     startTranslation = () => {
         this.translateStatus = true; // Set translation status to true
         this.startTranslationProcess(this.completedTranslateIndex + 1); // Start translation process
+    }
+
+    
+    static svgIcons=(iconName)=>{
+        const Icons={
+            'copy':`<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="16px" width="16px" xmlns="http://www.w3.org/2000/svg" fill="#2271b1"><path d="M433.941 65.941l-51.882-51.882A48 48 0 0 0 348.118 0H176c-26.51 0-48 21.49-48 48v48H48c-26.51 0-48 21.49-48 48v320c0 26.51 21.49 48 48 48h224c26.51 0 48-21.49 48-48v-48h80c26.51 0 48-21.49 48-48V99.882a48 48 0 0 0-14.059-33.941zM266 464H54a6 6 0 0 1-6-6V150a6 6 0 0 1 6-6h74v224c0 26.51 21.49 48 48 48h96v42a6 6 0 0 1-6 6zm128-96H182a6 6 0 0 1-6-6V54a6 6 0 0 1 6-6h106v88c0 13.255 10.745 24 24 24h88v202a6 6 0 0 1-6 6zm6-256h-64V48h9.632c1.591 0 3.117.632 4.243 1.757l48.368 48.368a6 6 0 0 1 1.757 4.243V112z"></path></svg>`
+        }
+
+        return Icons[iconName] || '';
     }
 }
 

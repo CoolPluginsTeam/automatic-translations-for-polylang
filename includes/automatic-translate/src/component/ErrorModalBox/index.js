@@ -18,6 +18,12 @@ const ErrorModalBox = ({ message, onClose, Title }) => {
 
                 element.addEventListener('click', (e) => {
                     e.preventDefault();
+                    const toolTipExists = element.querySelector('.atfp-tooltip');
+                    
+                    if(toolTipExists){
+                        return;
+                    }
+
                     let toolTipElement = document.createElement('span');
                     toolTipElement.textContent = "Text to be copied.";
                     toolTipElement.className = 'atfp-tooltip';
@@ -27,8 +33,8 @@ const ErrorModalBox = ({ message, onClose, Title }) => {
                         toolTipElement.classList.add('atfp-tooltip-active');
                     }, endCopyStatus: () => {
                         setTimeout(() => {
-                            toolTipElement.classList.remove('atfp-tooltip-active');
-                        }, 1000);
+                            toolTipElement.remove();
+                        }, 800);
                     } });
                 });
             });

@@ -21,6 +21,7 @@ const SettingModal = (props) => {
     const yandexSupport = yandexLanguage().includes(targetLang);
     const [serviceModalErrors, setServiceModalErrors] = useState({});
     const [errorModalVisibility, setErrorModalVisibility] = useState(false);
+    const [chromeAiBtnDisabled, setChromeAiBtnDisabled] = useState(false);
 
     const openModalOnLoadHandler = (e) => {
         e.preventDefault();
@@ -36,6 +37,11 @@ const SettingModal = (props) => {
 
     const closeErrorModal = () => {
         setErrorModalVisibility(false);
+    }
+
+    const openErrorModalHandler = (service) => {
+        setSettingVisibility(false);
+        setErrorModalVisibility(service);
     }
 
     /**
@@ -68,8 +74,9 @@ const SettingModal = (props) => {
             const translateBtn = document.querySelector('.atfp-service-btn#atfp-local-ai-translator-btn');
 
             if (localAiTranslatorSupport !== true && typeof localAiTranslatorSupport === 'object' && translateBtn) {
-                // translateBtn.disabled = true;
-                    setServiceModalErrors(prev => ({ ...prev, localAiTranslator: {message: localAiTranslatorSupport, Title: __("Chrome AI Translator", 'automatic-translations-for-polylang')} }));
+                setChromeAiBtnDisabled(true);
+    
+                setServiceModalErrors(prev => ({ ...prev, localAiTranslator: {message: localAiTranslatorSupport, Title: __("Chrome AI Translator", 'automatic-translations-for-polylang')} }));
             }
         };
         languageSupportedStatus();
@@ -131,7 +138,6 @@ const SettingModal = (props) => {
         if (dataService === 'localAiTranslator') {
             const localAiTranslatorSupport = await ChromeLocalAiTranslator.languageSupportedStatus(sourceLang, targetLang, targetLangName);
             if (localAiTranslatorSupport !== true && typeof localAiTranslatorSupport === 'object') {
-                setErrorModalVisibility(dataService);
                 return;
             }
         }
@@ -165,6 +171,8 @@ const SettingModal = (props) => {
                             targetLangName={targetLangName}
                             postType={props.postType}
                             sourceLangName={sourceLangName}
+                            chromeAiBtnDisabled={chromeAiBtnDisabled}
+                            openErrorModalHandler={openErrorModalHandler}
                         />
                         <SettingModalFooter
                             handleSettingVisibility={handleSettingVisibility}
