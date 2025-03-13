@@ -42,6 +42,9 @@ https://youtu.be/yamFwNRWEbc
 * **Custom Block Support** - While optimized for Gutenberg blocks, the plugin also works with several third-party block plugins, extending its versatility.
 * **Easy to Use** - Designed with a user-friendly interface, making it accessible even for those with limited technical knowledge.
 
+### Important Information Regarding Classic Editor Compatibility
+Our current version doesn't support translation for the Classic Editor. It only works with **Gutenberg** and **Elementor** pages.
+
 ### Check out our advanced Automatic Translate Addon for Loco Translate
 
 Looking for a way to translate WordPress themes and plugins automatically? Check out our  **[AI Translation for Loco Translate](https://locoaddon.com/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=atlt_get_pro&utm_content=check_out)**, which enables PO file translations using advanced Machine & AI-powered translation tools.
@@ -119,7 +122,7 @@ This plugin automatically copies and translates your posts, including titles, co
 No, this plugin is not developed by or affiliated with the Polylang developers. It is a third-party addon designed to extend Polylang's functionality by adding automatic translation capabilities.
 
 = Do I need an API key to use this plugin? =
-No, this plugin does not require an API key. It uses Chrome built-in AI  to provide automatic translations.
+No, this plugin does not require an API key. It uses Chrome built-in AI to provide automatic translations.
 
 = Can I use this plugin with custom blocks or themes? =
 This plugin works with Gutenberg blocks and several popular third-party blocks (e.g., Spectra, Kadence, Stackable, Otter, and Essential). While it may work with custom blocks or themes, compatibility is not guaranteed, so we recommend doing testing.
@@ -141,6 +144,9 @@ You can update the plugin through the WordPress dashboard like any other plugin.
 
 = Will this plugin slow down my website? =
 The plugin is optimized for performance, but the speed impact may vary depending on your hosting environment and the size of your content. The automatic translation process occurs in the background to minimize any potential impact on site performance.
+
+= Does this plugin support the Classic Editor? =
+Currently, this plugin does not support automatic translations for content created with the Classic Editor. It is designed to work with Elementor and Gutenberg blocks only.
 
 = How can I report security bugs? = 
 You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities.[Report a security vulnerability](https://patchstack.com/database/wordpress/plugin/automatic-translations-for-polylang/vdp)
