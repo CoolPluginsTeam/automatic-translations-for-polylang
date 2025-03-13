@@ -17,12 +17,12 @@ const ScrollAnimation = (props) => {
         return;
     }
 
-    const scrollHeight = element.scrollHeight - element.offsetHeight + 100;
     const progressBar = jQuery(`.${provider}-translator_progress_bar`);
     
     let startTime = null;
     let startScrollTop = element.scrollTop;
     const animateScroll = () => {
+        const scrollHeight = element.scrollHeight - element.offsetHeight + 100;
         const currentTime = performance.now();
         const duration = scrollSpeed;
         const scrollTarget = scrollHeight + 2000;
