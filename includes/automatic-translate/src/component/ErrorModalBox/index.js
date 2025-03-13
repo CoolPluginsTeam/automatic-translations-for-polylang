@@ -1,13 +1,49 @@
-const ErrorModalBox = ({message, onClose, Title}) => {
+import CopyClipboard from "../CopyClipboard";
+import { useEffect } from "@wordpress/element";
+
+const ErrorModalBox = ({ message, onClose, Title }) => {
 
     let dummyElement = jQuery('<div>').append(message);
     const stringifiedMessage = dummyElement.html();
     dummyElement.remove();
-    dummyElement=null;
+    dummyElement = null;
+
+    useEffect(() => {
+        const clipboardElements = document.querySelectorAll('.chrome-ai-translator-flags');
+
+        if (clipboardElements.length > 0) {
+            clipboardElements.forEach(element => {
+
+                element.classList.add('atfp-tooltip-element');
+
+                element.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    let toolTipElement = document.createElement('span');
+                    toolTipElement.textContent = "Text to be copied.";
+                    toolTipElement.className = 'atfp-tooltip';
+                    element.appendChild(toolTipElement);
+
+                    CopyClipboard({ text: element.getAttribute('data-clipboard-text'), startCopyStatus: () => {
+                        toolTipElement.classList.add('atfp-tooltip-active');
+                    }, endCopyStatus: () => {
+                        setTimeout(() => {
+                            toolTipElement.classList.remove('atfp-tooltip-active');
+                        }, 1000);
+                    } });
+                });
+            });
+
+            return () => {
+                clipboardElements.forEach(element => {
+                    element.removeEventListener('click', () => { });
+                });
+            };
+        }
+    }, []);
 
     return (
         <div className="atfp-error-modal-box-container">
-            <div className="atfp-error-modal-box">  
+            <div className="atfp-error-modal-box">
                 <div className="atfp-error-modal-box-header">
                     <span className="atfp-error-modal-box-close" onClick={onClose}>×</span>
                     {Title && <h3>{Title}</h3>}

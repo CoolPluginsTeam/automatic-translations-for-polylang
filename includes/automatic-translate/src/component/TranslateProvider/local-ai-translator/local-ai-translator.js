@@ -73,7 +73,7 @@ class ChromeAiTranslator {
             const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">
                 <h4>Steps to Enable the Translator AI Modal:</h4>
                 <ol>
-                    <li>Open this URL in a new Chrome tab: <strong><p data-clipboard-text="chrome://flags/#translation-api" target="_blank" class="chrome-ai-translator-flags">chrome://flags/#translation-api</p></strong>. Click on the URL to copy it, then open a new window and paste this URL to access the settings.</li>
+                    <li>Open this URL in a new Chrome tab: <strong><span data-clipboard-text="chrome://flags/#translation-api" target="_blank" class="chrome-ai-translator-flags">chrome://flags/#translation-api</span></strong>. Click on the URL to copy it, then open a new window and paste this URL to access the settings.</li>
                     <li>Ensure that the <strong>Experimental translation API</strong> option is set to <strong>Enabled</strong>.</li>
                     <li>Click on the <strong>Save</strong> button to apply the changes.</li>
                     <li>The Translator AI modal should now be enabled and ready for use.</li>
@@ -90,9 +90,8 @@ class ChromeAiTranslator {
             const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">
                 <strong>Language Support Information:</strong>
                 <ol>
-                    <li>Current version of Chrome AI Translator does not support the <strong>${targetLanguageLabel} (${targetLanguage})</strong> language.</li>
-                    <li>To view the list of supported languages, please visit <p data-clipboard-text="chrome://on-device-translation-internals" target="_blank" class="chrome-ai-translator-flags">this link</p>. Click on the URL to copy it, then open a new window and paste this URL to access the settings.</li>
-                    <li>Ensure language pack is installed & set as a preferred language in your browser which you want to translate to.</li>
+                    <li>The current version of Chrome AI Translator does not support the <strong>${targetLanguageLabel} (${targetLanguage})</strong> language.</li>
+                    <li>To view the list of supported languages, please <span data-clipboard-text="chrome://on-device-translation-internals" target="_blank" class="chrome-ai-translator-flags">click here</span>. Click on the URL to copy it, then open a new window and paste this URL to access the settings.</li>
                     <li>Ensure your Chrome browser is updated to the latest version for optimal performance.</li>
                 </ol>
             </span>`);
@@ -105,7 +104,7 @@ class ChromeAiTranslator {
                 <strong>Language Support Information:</strong>
                 <ol>
                     <li>The current version of Chrome AI Translator does not support the <strong>${sourceLanguageLabel} (${sourceLanguage})</strong> language.</li>
-                    <li>To view the list of supported languages, please <p data-clipboard-text="chrome://on-device-translation-internals" target="_blank" class="chrome-ai-translator-flags">click here</p>. Click on the URL to copy it, then open a new window and paste this URL to access the settings.</li>
+                    <li>To view the list of supported languages, please <span data-clipboard-text="chrome://on-device-translation-internals" target="_blank" class="chrome-ai-translator-flags">click here</span>. Click on the URL to copy it, then open a new window and paste this URL to access the settings.</li>
                     <li>Ensure your Chrome browser is updated to the latest version for optimal performance.</li>
                 </ol>
             </span>`);
@@ -126,9 +125,9 @@ class ChromeAiTranslator {
                     <li>To proceed, please install the language pack for <strong>${targetLanguageLabel} (${targetLanguage})</strong> or <strong>${sourceLanguageLabel} (${sourceLanguage})</strong>.</li>
                     <li>You can install it by visiting the following link: 
                         <strong>
-                            <p data-clipboard-text="chrome://on-device-translation-internals" target="_blank" class="chrome-ai-translator-flags">
+                            <span data-clipboard-text="chrome://on-device-translation-internals" target="_blank" class="chrome-ai-translator-flags">
                                 chrome://on-device-translation-internals
-                            </p>
+                            </span>
                         </strong>. Click on the URL to copy it, then open a new window and paste this URL to access the settings.
                     </li>
                     <li>For more help, refer to the <a href="https://developer.chrome.com/docs/ai/translator-api#supported-languages" target="_blank">documentation to check supported languages</a>.</li>
@@ -143,7 +142,7 @@ class ChromeAiTranslator {
                 <h4>Language Pack Installation Required</h4>
                 <ol>
                     <li>Please ensure that the language pack for <strong>${targetLanguageLabel} (${targetLanguage})</strong> or <strong>${sourceLanguageLabel} (${sourceLanguage})</strong> is installed and set as a preferred language in your browser.</li>
-                    <li>To install the language pack, visit <strong><p data-clipboard-text="chrome://on-device-translation-internals" target="_blank" class="chrome-ai-translator-flags">chrome://on-device-translation-internals</p></strong>. Click on the URL to copy it, then open a new window and paste this URL to access the settings.</li>
+                    <li>To install the language pack, visit <strong><span data-clipboard-text="chrome://on-device-translation-internals" target="_blank" class="chrome-ai-translator-flags">chrome://on-device-translation-internals</span></strong>. Click on the URL to copy it, then open a new window and paste this URL to access the settings.</li>
                     <li>If you encounter any issues, please refer to the <a href="https://developer.chrome.com/docs/ai/translator-api#supported-languages" target="_blank">documentation to check supported languages</a> for further assistance.</li>
                 </ol>
             </span>`);

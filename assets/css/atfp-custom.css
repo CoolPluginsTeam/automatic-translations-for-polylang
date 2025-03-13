@@ -129,6 +129,7 @@
     font-size: 2rem;
     font-weight: bold;
     color: #646970;
+    cursor: pointer;
 }
 
 #atfp-setting-modal .atfp-error-modal-box-body p{
@@ -1129,6 +1130,66 @@ body>div.skiptranslate iframe.skiptranslate[frameborder][src][style="visibility:
     background-color: #f09dff;
     /* Darker shade on hover */
 }
+
+/* Tooltip element */
+#atfp-setting-modal .atfp-tooltip-element {
+    position: relative;
+    overflow: visible;
+    cursor: pointer;
+}
+  
+  #atfp-setting-modal .atfp-tooltip-element .atfp-tooltip {
+    display: block;
+    font-size: 80%;
+    position: absolute;
+    background: #5cb85c;
+    color: #fff !important;
+    padding: 0.2rem .5rem;
+    border-radius: 4px;
+    top: 0;
+    left: 20px;
+    right: 20px;
+    margin: auto;
+    opacity: 0;
+    width: 121px;
+  }
+  #atfp-setting-modal .atfp-tooltip-element .atfp-tooltip.atfp-tooltip-active {
+    -webkit-animation: slide-up 0.15s cubic-bezier(0.51, 0.92, 0.265, 1.55) both;
+    animation: slide-up 0.15s cubic-bezier(0.51, 0.92, 0.265, 1.55) both;
+  }
+  #atfp-setting-modal .atfp-tooltip-element .atfp-tooltip:after {
+    content: "";
+    position: absolute;
+    top: 98%;
+    left: 50%;
+    margin-left: -8px;
+    width: 0;
+    height: 0;
+    border-top: 8px solid #5cb85c;
+    border-right: 8px solid transparent;
+    border-left: 8px solid transparent;
+  }
+  
+  @-webkit-keyframes slide-up {
+    0% {
+      transform: translateY(0) scale(0.8);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(-35px) scale(1);
+      opacity: 1;
+    }
+  }
+  @keyframes slide-up {
+    0% {
+      transform: translateY(0) scale(0.8);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(-35px) scale(1);
+      opacity: 1;
+    }
+  }
 
 @media screen and (max-width: 767px) and (min-width: 567px){
     #atfp-setting-modal .atfp-translator-row .atfp-translator-column{
