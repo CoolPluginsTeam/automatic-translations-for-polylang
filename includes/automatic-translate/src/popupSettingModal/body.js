@@ -1,8 +1,43 @@
 import { __ } from "@wordpress/i18n";
-const SettingModalBody = ({ yandexSupport, fetchContent, imgFolder, targetLangName }) => {
+import Providers from "./providers";
+const SettingModalBody = ({ yandexSupport, imgFolder, targetLangName, postType, sourceLangName, fetchContent }) => {
+    const providers = [
+        {
+            Service: "yandex",
+            Title: __("Translate Using Yandex Page Translate Widget", 'automatic-translations-for-polylang'),
+            Logo: `${imgFolder}yandex-translate-logo.png`,
+            ServiceLabel: "Yandex Translate",
+            ButtonText: __("Yandex Translate", 'automatic-translations-for-polylang'),
+            ProviderLink: "https://translate.yandex.com/",
+            Docs: "https://translate.yandex.com/",
+            ButtonDisabled: !yandexSupport,
+            ErrorMessage: !yandexSupport ? __('language is not supported by Yandex Translate', 'automatic-translations-for-polylang') : false,
+            ButtonAction: fetchContent,
+        },
+        {
+            Service: "localAiTranslator",
+            ServiceLabel: "Chrome Built-in API",
+            Title: __("Translate Using Chrome Built-in API", 'automatic-translations-for-polylang'),
+            Logo: `${imgFolder}chrome-built-in-ai-logo.png`,
+            ButtonText: __("Chrome AI Translator", 'automatic-translations-for-polylang'),
+            ProviderLink: "https://developer.chrome.com/docs/ai/translator-api",
+            Docs: "https://developer.chrome.com/docs/ai/translator-api",
+            BetaEnabled: true,
+            ButtonAction: fetchContent,
+        }
+    ]
     return (
         <div className="atfp-setting-modal-body">
-            <hr />
+            <div className="atfp-setting-modal-notice-wrapper">
+                <h4>{sprintf(__("Translate %(postType)s content from %(source)s to %(target)s", 'automatic-translations-for-polylang'), { postType: postType, source: sourceLangName, target: targetLangName })}</h4>
+                <p className="atfp-error-message" style={{ marginBottom: '.5rem' }}>{sprintf(__("This translation widget replaces the current %(postType)s content with the original %(source)s %(postType)s and translates it into %(target)s", 'automatic-translations-for-polylang'), { postType: postType, source: sourceLangName, target: targetLangName })}</p>
+            </div>
+            <div className="atfp-translator-row">
+                {providers.map((provider) => (
+                    <Providers key={provider.Service} {...provider} />
+                ))}
+            </div>
+            {/* <hr />
             <strong className="atlt-heading">{__("Translate Using Yandex Page Translate Widget", 'automatic-translations-for-polylang')}</strong>
             <div className="inputGroup">
                 {yandexSupport ?
@@ -30,7 +65,7 @@ const SettingModalBody = ({ yandexSupport, fetchContent, imgFolder, targetLangNa
                 <button id="local_ai_translator_btn" className="atfp-service-btn button button-primary" data-service="localAiTranslator" data-service-label="Chrome Built-in API" onClick={fetchContent}>{__("Chrome AI Translator (Beta)", 'automatic-translations-for-polylang')}</button>
                 <br /><a href="https://developer.chrome.com/docs/ai/translator-api" target="_blank">Powered by <img className="pro-features-img" src={`${imgFolder}chrome-ai-translator.png`} alt="powered by Chrome built-in API" /> Built-in API</a>
             </div>
-            <hr />
+            <hr /> */}
         </div>
     );
 }

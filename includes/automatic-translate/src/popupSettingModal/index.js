@@ -7,6 +7,7 @@ import SettingModalHeader from "./header";
 import SettingModalBody from "./body";
 import SettingModalFooter from "./footer";
 import { sprintf, __ } from "@wordpress/i18n";
+import ErrorModalBox from "../component/ErrorModalBox";
 
 const SettingModal = (props) => {
     const [targetBtn, setTargetBtn] = useState({});
@@ -18,6 +19,8 @@ const SettingModal = (props) => {
     const targetLangName = atfp_global_object.languageObject[targetLang];
     const imgFolder = atfp_global_object.atfp_url + 'assets/images/';
     const yandexSupport = yandexLanguage().includes(targetLang);
+    const [serviceModalErrors, setServiceModalErrors] = useState({});
+    const [errorModalVisibility, setErrorModalVisibility] = useState(false);
 
     const openModalOnLoadHandler = (e) => {
         e.preventDefault();
@@ -29,6 +32,10 @@ const SettingModal = (props) => {
         }
 
         btnElement.closest('#atfp-modal-open-warning-wrapper').remove();
+    }
+
+    const closeErrorModal = () => {
+        setErrorModalVisibility(false);
     }
 
     /**
@@ -58,11 +65,11 @@ const SettingModal = (props) => {
     useEffect(() => {
         const languageSupportedStatus = async () => {
             const localAiTranslatorSupport = await ChromeLocalAiTranslator.languageSupportedStatus(sourceLang, targetLang, targetLangName, sourceLangName);
-            const translateBtn = document.querySelector('.atfp-service-btn#local_ai_translator_btn');
+            const translateBtn = document.querySelector('.atfp-service-btn#atfp-local-ai-translator-btn');
 
             if (localAiTranslatorSupport !== true && typeof localAiTranslatorSupport === 'object' && translateBtn) {
-                translateBtn.disabled = true;
-                jQuery(translateBtn).after(localAiTranslatorSupport);
+                // translateBtn.disabled = true;
+                    setServiceModalErrors(prev => ({ ...prev, localAiTranslator: {message: localAiTranslatorSupport, Title: __("Chrome AI Translator", 'automatic-translations-for-polylang')} }));
             }
         };
         languageSupportedStatus();
@@ -113,15 +120,22 @@ const SettingModal = (props) => {
      */
     const fetchContent = async (e) => {
         let targetElement = !e.target.classList.contains('atfp-service-btn') ? e.target.closest('.atfp-service-btn') : e.target;
+
+        if (!targetElement) {
+            return;
+        }
+
         const dataService = targetElement.dataset && targetElement.dataset.service;
         setSettingVisibility(false);
 
         if (dataService === 'localAiTranslator') {
             const localAiTranslatorSupport = await ChromeLocalAiTranslator.languageSupportedStatus(sourceLang, targetLang, targetLangName);
             if (localAiTranslatorSupport !== true && typeof localAiTranslatorSupport === 'object') {
+                setErrorModalVisibility(dataService);
                 return;
             }
         }
+        
         setModalRender(prev => prev + 1);
         setTargetBtn(targetElement);
     };
@@ -132,12 +146,29 @@ const SettingModal = (props) => {
 
     return (
         <>
+            {errorModalVisibility && serviceModalErrors[errorModalVisibility] &&
+                <ErrorModalBox onClose={closeErrorModal} {...serviceModalErrors[errorModalVisibility]}/>
+            }
             {settingVisibility &&
                 <div className="modal-container" style={{ display: settingVisibility ? 'flex' : 'none' }}>
                     <div className="atfp-settings modal-content">
-                        <SettingModalHeader setSettingVisibility={handleSettingVisibility} postType={props.postType} sourceLangName={sourceLangName} targetLangName={targetLangName} />
-                        <SettingModalBody yandexSupport={yandexSupport} fetchContent={fetchContent} imgFolder={imgFolder} targetLangName={targetLangName} />
-                        <SettingModalFooter handleSettingVisibility={handleSettingVisibility} />
+                        <SettingModalHeader
+                            setSettingVisibility={handleSettingVisibility}
+                            postType={props.postType}
+                            sourceLangName={sourceLangName}
+                            targetLangName={targetLangName}
+                        />
+                        <SettingModalBody
+                            yandexSupport={yandexSupport}
+                            fetchContent={fetchContent}
+                            imgFolder={imgFolder}
+                            targetLangName={targetLangName}
+                            postType={props.postType}
+                            sourceLangName={sourceLangName}
+                        />
+                        <SettingModalFooter
+                            handleSettingVisibility={handleSettingVisibility}
+                        />
                     </div>
                 </div>
             }
