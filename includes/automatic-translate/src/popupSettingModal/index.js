@@ -175,7 +175,7 @@ const SettingModal = (props) => {
                             openErrorModalHandler={openErrorModalHandler}
                         />
                         <SettingModalFooter
-                            handleSettingVisibility={handleSettingVisibility}
+                            setSettingVisibility={handleSettingVisibility}
                         />
                     </div>
                 </div>

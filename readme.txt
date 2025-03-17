@@ -4,7 +4,7 @@ Tags: Polylang, AI Translation, Content Translation, Translate
 Requires at least: 5.0
 Tested up to: 6.7.2
 Requires PHP: 5.6
-Stable tag: 1.3.2
+Stable tag: 1.3.3
 Author URI: https://coolplugins.net/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -153,6 +153,12 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= Version 1.3.3 | 17 March 2025 =
+* **Added:** Message to let users know that the Classic Editor is not supported.
+* **Added:** New Error Modal box to make it easier to see translation errors.
+* **Fixed:** Fixed the problem where Yandex translation would freeze when scrolling through long content.
+* **Improved:** Made the settings modal look better and more user-friendly.
+
 = Version 1.3.2 | 06 March 2025 =
 * **Added:** Added support for ACF fields translation only with type(text, textarea & wysiwyg).
 * **Added:** Added notice message in string modal body for better user experience.
