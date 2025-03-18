@@ -258,6 +258,7 @@
     padding: 10px 19px 30px;
     text-align: center;
     cursor: pointer;
+    box-sizing: border-box;
 }
 
 
