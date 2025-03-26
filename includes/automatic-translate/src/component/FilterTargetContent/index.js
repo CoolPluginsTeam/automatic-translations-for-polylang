@@ -155,8 +155,9 @@ const FilterTargetContent = (props) => {
         // Filter shortcode content
         const shortcodePattern = /\[(.*?)\]/g;
         const shortcodeMatches = content.match(shortcodePattern);
+
         if (shortcodeMatches) {
-            content = shortcodeMatches.map(match => `#atfp_open_translate_span#${match}#atfp_close_translate_span#`).join('');
+            content = content.replace(shortcodePattern, (match) => `#atfp_open_translate_span#${match}#atfp_close_translate_span#`);
         }
 
         return splitContent(content);
