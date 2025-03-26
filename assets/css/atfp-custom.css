@@ -81,33 +81,367 @@
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-#atfp_strings_model .atfp-notice{
-    box-shadow: 0 1px 1px rgba(0,0,0,.04);
+
+/* Setting Modal CSS Start */
+#atfp-setting-modal .atfp-error-modal-box-container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+#atfp-setting-modal .atfp-error-modal-box{
+    background-color: #fefefe;
+    width: clamp(200px, 500px, 80%);
+    height: auto;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#atfp-setting-modal .atfp-error-modal-box-header{
+    position: relative;
+}   
+
+#atfp-setting-modal .atfp-error-modal-box-header h3{
+    height: unset;
+    padding: 8px 36px 8px 25px;
+    border: none;
+    background: 0 0;
+    border-bottom: 1px solid #dcdcde;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 2;
+    margin: 0;
+}   
+
+#atfp-setting-modal .atfp-error-modal-box-header .atfp-error-modal-box-close{
+    right: 15px;
+    top: 13px;
+    border-radius: 0!important;
+    height: 30px!important;
+    width: 20px!important;
+    position: absolute;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #646970;
+    cursor: pointer;
+}
+
+#atfp-setting-modal .atfp-error-modal-box-body p{
+    margin: 0;
+    padding: 0;
+}
+
+#atfp-setting-modal .atfp-error-modal-box-body p *{
+    color:  red !important;
+    font-size: 1rem;
+    box-shadow: unset;
+    outline: unset;
+    border: unset;
+}
+
+#atfp-setting-modal .atfp-error-modal-box-body p a{
+    color: #2271b1 !important;
+    text-decoration: underline;
+}
+
+#atfp-setting-modal .atfp-error-modal-box-body{
+    min-height: 0px;
+    max-height: none;
+    height: auto;
+    padding: 22px;
+    overflow: auto;
+    padding-top: 11px;
+}
+
+#atfp-setting-modal .atfp-error-modal-box-footer{
+    background: 0 0;
+    border: none;
+    border-top: 1px solid #dcdcde;
+    margin-top: 0;
+    padding: 16px;
+    text-align: end;
+    margin-right: .4rem;
+}
+
+#atfp-setting-modal .atfp-error-modal-box-footer .atfp-error-modal-box-close{
+    display: inline-block;
+    text-decoration: none;
+    font-size: 13px;
+    line-height: 2;
+    height: 28px;
+    margin: 12px 0;
+    padding: 0 10px 1px;
+    cursor: pointer;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 3px;
+    white-space: nowrap;
+    box-sizing: border-box;
+    color: #50575e;
+    border-color: #c3c4c7;
+    background: #f6f7f7;
+    box-shadow: 0 1px 0 #c3c4c7;
+    vertical-align: top;
+}
+
+#atfp-setting-modal .modal-content {
+    width: fit-content;
+    border-radius: 0px;
+    padding: 0px;
+    max-width: 80%;
+}
+
+#atfp-setting-modal .atfp-error-message {
+     margin: .3rem 0 .8rem 0 !important;
+     padding: .5rem;
+     font-weight: 500;
+     font-size: 13px;
+     line-height: 1.2;
+     color: red;
+}
+
+#atfp-setting-modal .modal-header h2 {
+    height: unset;
+    padding: 8px 36px 8px 25px;
+    border: none;
+    background: 0 0;
+    border-bottom: 1px solid #dcdcde;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 2;
+    margin: 0;
+}
+
+#atfp-setting-modal .modal-header span.close {
+    right: 15px;
+    top: 13px;
+    border-radius: 0!important;
+    height: 30px!important;
+    width: 20px!important;
+    position: absolute;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #646970;
+    cursor: pointer;
+}
+
+#atfp-setting-modal .atfp-setting-modal-body {
+    min-height: 0px;
+    max-height: none;
+    height: auto;
+    padding: 22px;
+    overflow: auto;
+    padding-top: 11px;
+}
+
+#atfp-setting-modal .atfp-setting-modal-body .atfp-setting-modal-notice-wrapper *{
+    padding: 0;
+    margin: 0;
+}
+
+#atfp-setting-modal .atfp-translator-row {
+    display: flex;
+    gap: 1.3rem;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+#atfp-setting-modal .atfp-translator-row .atfp-translator-column {
+    border: 1px solid #dcdcde;
+    border-radius: 10px;
+    padding: 10px 19px 30px;
+    text-align: center;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+
+#atfp-setting-modal .atfp-translator-row .atfp-translator-column:hover {
+    background-color: #73e97338;
+    border-color: #73e9734f;
+}
+
+#atfp-setting-modal .atfp-translator-row:has(> :nth-child(1)) .atfp-translator-column {
+    width: 100%;
+}
+
+#atfp-setting-modal .atfp-translator-row:has(> :nth-child(2)) .atfp-translator-column {
+    width: calc(50% - (1.3rem / 2));
+}
+
+#atfp-setting-modal .atfp-translator-row:has(> :nth-child(3)) .atfp-translator-column {
+    width: calc(33% - (2.3rem / 3));
+}
+
+#atfp-setting-modal .atfp-translator-row .atfp-translator-header {
+    display: flex;
+    justify-content: flex-end;
+    gap: 7px;
+    margin-bottom: 10px;
+}
+
+#atfp-setting-modal .atfp-translator-row .atfp-translator-header svg{
+    width: 18px;
+    height: 18px;
+}
+
+#atfp-setting-modal .atfp-translator-row .atfp-translator-body strong{
+    margin-bottom: 10px;
+    display: inline-block;
+    color: #000;
+    font-size: 1rem;
+    line-height: 1.4em;
+}
+
+#atfp-setting-modal .atfp-translator-row .atfp-translator-body a{
+    box-shadow: unset;
+    outline: unset;
+    border: unset;
+}
+
+#atfp-setting-modal .atfp-translator-row .atfp-translator-body img{
+    margin-top: 5px;
+    height: 21px;
+    width: auto;
+    margin-bottom: 10px;
+}
+
+#atfp-setting-modal .atfp-translator-row .atfp-translator-body .atfp-service-btn{
+    display: inline-block;
+    line-height: 2.15384615;
+    min-height: 30px;
+    margin: 0;
+    padding: 0 10px;
+    cursor: pointer;
+    border-width: 1px;
+    border-style: solid;
+    -webkit-appearance: none;
+    white-space: nowrap;
+    box-sizing: border-box;
+    background: #4664eb;
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: 1em;
+    border-color: #2271b1;
+    color: #fff;
+    text-decoration: none;
+    text-shadow: none;
+}
+
+#atfp-setting-modal .atfp-translator-row .atfp-translator-body .atfp-translator-beta-btn{
+    background: green;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: monospace;
+    padding: 4px 6px;
+    border-radius: 3px;
+    display: inline-block;
+    margin: 2px 0 2px 10px;
+}
+
+#atfp-setting-modal .atfp-translator-row .atfp-translator-footer{
+    text-align: center;
+}
+
+#atfp-setting-modal .atfp-translator-row .atfp-translator-footer .atfp-error-message{
+    max-width: 100%;
+}
+
+#atfp-setting-modal .atfp-translator-row .atfp-translator-footer .atfp-localai-disabled-message{
+    display: inline-block;
+    line-height: 1.4;
+    min-height: 30px;
+    margin: 0;
+    padding: 0 10px;
+    cursor: pointer;
+    border-width: 1px;
+    border-style: solid;
+    -webkit-appearance: none;
+    white-space: wrap;
+    box-sizing: border-box;
+    background: #ff2d2d;
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: 1em;
+    border-color: red;
+    color: #fff;
+    text-decoration: none;
+    text-shadow: none;
+    margin-top: .5rem;
+    transition: background 0.3s ease;
+}
+
+#atfp-setting-modal .atfp-translator-row .atfp-translator-footer .atfp-localai-disabled-message:hover{
+    background: red;
+}
+
+#atfp-setting-modal .modal-footer {
+    background: 0 0;
+    border: none;
+    border-top: 1px solid #dcdcde;
+    margin-top: 0;
+    padding: 16px;
+    text-align: end;
+    margin-right: .4rem;
+}
+
+#atfp-setting-modal .modal-footer .atfp-setting-close{
+    display: inline-block;
+    text-decoration: none;
+    font-size: 13px;
+    line-height: 2;
+    height: 28px;
+    margin: 0;
+    padding: 0 10px 1px;
+    cursor: pointer;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 3px;
+    white-space: nowrap;
+    box-sizing: border-box;
+    color: #50575e;
+    border-color: #c3c4c7;
+    background: #f6f7f7;
+    box-shadow: 0 1px 0 #c3c4c7;
+    vertical-align: top;
+}
+
+/* Setting Modal CSS End */
+
+#atfp_strings_model .atfp-notice {
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
     border: 1px solid #c3c4c7;
     border-left-width: 4px;
     padding: .3rem;
     margin-top: .5rem;
 }
 
-#atfp_strings_model .atfp-notice p{
+#atfp_strings_model .atfp-notice p {
     padding: 0;
     margin: 0;
     font-size: 14px;
 }
 
-#atfp_strings_model .atfp-notice-info{
+#atfp_strings_model .atfp-notice-info {
     border-left-color: #72aee6;
 }
 
-#atfp_strings_model .atfp-notice-warning{
+#atfp_strings_model .atfp-notice-warning {
     border-left-color: #f0ad4e;
 }
 
-#atfp_strings_model .atfp-notice-error{
+#atfp_strings_model .atfp-notice-error {
     border-left-color: #d9534f;
 }
 
-#atfp_strings_model .atfp-notice-success{
+#atfp_strings_model .atfp-notice-success {
     border-left-color: #5cb85c;
 }
 
@@ -170,6 +504,7 @@
     }
 }
 
+/* 
 #atfp-setting-modal .modal-header * {
     margin-bottom: 1rem;
 }
@@ -297,7 +632,7 @@
 
 #atfp-setting-modal .modal-content .atfp-error-message {
     color: red;
-}
+} */
 
 #atfp_strings_model .modal-header {
     padding: 2px 16px;
@@ -342,7 +677,7 @@ button.atfp-setting-close:hover {
     opacity: 1;
 }
 
-#atfp-setting-modal hr{
+/* #atfp-setting-modal hr{
     border: 0;
     border-top: 1px solid #dcdcde;
     border-bottom: 1px solid #f6f7f7;
@@ -373,7 +708,7 @@ body.rtl #atfp-setting-modal .modal-header .close {
     color: #000;
     text-decoration: none;
     cursor: pointer;
-}
+} */
 
 #atfp_strings_model .modal-header .close {
     color: white;
@@ -496,13 +831,13 @@ body.rtl #atfp-setting-modal .modal-header .close {
 #atfp_strings_model .atfp_string_container {
     overflow-y: auto;
     overflow-x: hidden;
-    max-height: calc(100vh - 330px - var(--atfp-notice-wrapper-height,0px));
+    max-height: calc(100vh - 330px - var(--atfp-notice-wrapper-height, 0px));
     width: 100%;
     position: relative;
 }
 
 #atfp_strings_model .atfp_string_container.atfp_empty_string {
-    max-height: calc(100vh - 196px - var(--atfp-notice-wrapper-height,0px));
+    max-height: calc(100vh - 196px - var(--atfp-notice-wrapper-height, 0px));
     display: flex;
     align-items: center;
 }
@@ -516,7 +851,7 @@ body.rtl #atfp-setting-modal .modal-header .close {
     padding: 1rem;
 }
 
-#atfp_strings_model .modal-footer{
+#atfp_strings_model .modal-footer {
     display: flex;
     align-items: center;
 }
@@ -536,7 +871,7 @@ body.rtl #atfp-setting-modal .modal-header .close {
     padding-left: 0px;
 }
 
-#atfp_strings_model .modal-footer .notice.atfp_string_count p{
+#atfp_strings_model .modal-footer .notice.atfp_string_count p {
     margin: 0px !important;
     padding: 0px !important;
     font-size: 1rem;
@@ -651,15 +986,15 @@ body>div.skiptranslate iframe.skiptranslate[frameborder][src][style="visibility:
     border-radius: 5px !important;
 }
 
-.atfp-review-meta-box p{
+.atfp-review-meta-box p {
     margin: 0px;
 }
 
-.atfp-review-meta-box p a{
+.atfp-review-meta-box p a {
     margin-top: .5rem;
 }
 
-.atfp-review-meta-box p a span{
+.atfp-review-meta-box p a span {
     color: #ffb900 !important;
     margin-left: 5px;
 }
@@ -670,8 +1005,10 @@ body>div.skiptranslate iframe.skiptranslate[frameborder][src][style="visibility:
     height: 100%;
     width: 100%;
     overflow: hidden;
-    background-color: #e0e0e0; /* Light gray background */
-    border-radius: 4px; /* Rounded corners */
+    background-color: #e0e0e0;
+    /* Light gray background */
+    border-radius: 4px;
+    /* Rounded corners */
     top: 0;
     left: 0;
     opacity: 0.9;
@@ -692,14 +1029,16 @@ body>div.skiptranslate iframe.skiptranslate[frameborder][src][style="visibility:
     0% {
         left: -100%;
     }
+
     100% {
         left: 100%;
     }
 }
+
 /* meta box review notice style end */
 
 /* Chrome AI Translator Widget */
-#atfp-setting-modal .inputGroup #local_ai_translator_btn ~ a{
+/* #atfp-setting-modal .inputGroup #local_ai_translator_btn ~ a{
     margin-top: .2rem 0 .3rem;
     text-decoration: none;
     font-size: 1.1rem;
@@ -712,24 +1051,24 @@ body>div.skiptranslate iframe.skiptranslate[frameborder][src][style="visibility:
 #atfp-setting-modal .inputGroup #local_ai_translator_btn ~ a img{
     width: 28px;
     margin: 0 2px;
-}
+} */
 
-#atfp-localAiTranslator-strings-modal .translator-widget{
+#atfp-localAiTranslator-strings-modal .translator-widget {
     justify-content: space-between;
     align-items: center;
 }
 
-#atfp_strings_model #atfp-localAiTranslator-strings-modal h3{
+#atfp_strings_model #atfp-localAiTranslator-strings-modal h3 {
     margin: 20px 0px;
 }
 
-#atfp_strings_model #atfp-localAiTranslator-strings-modal .atfp_string_container{
-    max-height: calc(100vh - 270px - var(--atfp-notice-wrapper-height,0px));
+#atfp_strings_model #atfp-localAiTranslator-strings-modal .atfp_string_container {
+    max-height: calc(100vh - 270px - var(--atfp-notice-wrapper-height, 0px));
     box-shadow: 0 -1px 4px #0000005e inset;
 }
 
-#atfp_strings_model .react-loading-skeleton-atfp{
-    height: calc(100vh - 235px - var(--atfp-notice-wrapper-height,0px))!important;
+#atfp_strings_model .react-loading-skeleton-atfp {
+    height: calc(100vh - 235px - var(--atfp-notice-wrapper-height, 0px)) !important;
     margin-block: 1rem;
 }
 
@@ -778,7 +1117,7 @@ body>div.skiptranslate iframe.skiptranslate[frameborder][src][style="visibility:
     border-bottom: 1px solid black;
 }
 
-#atfp-pro-notice-wrapper .atfp-pro-notice .atfp-notice-header h2{
+#atfp-pro-notice-wrapper .atfp-pro-notice .atfp-notice-header h2 {
     margin: 0px !important;
     padding: 0px !important;
 }
@@ -802,7 +1141,7 @@ body>div.skiptranslate iframe.skiptranslate[frameborder][src][style="visibility:
     line-height: 1.5rem;
 }
 
-#atfp-pro-notice-wrapper .atfp-pro-notice .atfp-notice-content p{
+#atfp-pro-notice-wrapper .atfp-pro-notice .atfp-notice-content p {
     font-size: 1rem;
     line-height: 1.5rem;
     margin: 0px !important;
@@ -826,5 +1165,82 @@ body>div.skiptranslate iframe.skiptranslate[frameborder][src][style="visibility:
 }
 
 #atfp-pro-notice-wrapper .atfp-pro-notice .atfp-notice-footer .atfp-upgrade-button:hover {
-    background-color: #f09dff; /* Darker shade on hover */
+    background-color: #f09dff;
+    /* Darker shade on hover */
+}
+
+/* Tooltip element */
+#atfp-setting-modal .atfp-tooltip-element {
+    position: relative;
+    overflow: visible;
+    cursor: pointer;
+}
+  
+  #atfp-setting-modal .atfp-tooltip-element .atfp-tooltip {
+    display: block;
+    font-size: 80%;
+    position: absolute;
+    background: #5cb85c;
+    color: #fff !important;
+    padding: 0.2rem .5rem;
+    border-radius: 4px;
+    top: 0;
+    left: 20px;
+    right: 20px;
+    margin: auto;
+    opacity: 0;
+    width: 121px;
+  }
+  #atfp-setting-modal .atfp-tooltip-element .atfp-tooltip.atfp-tooltip-active {
+    -webkit-animation: slide-up 0.15s cubic-bezier(0.51, 0.92, 0.265, 1.55) both;
+    animation: slide-up 0.15s cubic-bezier(0.51, 0.92, 0.265, 1.55) both;
+  }
+  #atfp-setting-modal .atfp-tooltip-element .atfp-tooltip:after {
+    content: "";
+    position: absolute;
+    top: 98%;
+    left: 50%;
+    margin-left: -8px;
+    width: 0;
+    height: 0;
+    border-top: 8px solid #5cb85c;
+    border-right: 8px solid transparent;
+    border-left: 8px solid transparent;
+  }
+  
+  @-webkit-keyframes slide-up {
+    0% {
+      transform: translateY(0) scale(0.8);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(-35px) scale(1);
+      opacity: 1;
+    }
+  }
+  @keyframes slide-up {
+    0% {
+      transform: translateY(0) scale(0.8);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(-35px) scale(1);
+      opacity: 1;
+    }
+  }
+
+@media screen and (max-width: 767px) and (min-width: 567px){
+    #atfp-setting-modal .atfp-translator-row .atfp-translator-column{
+        width: 100% !important;
+    }
+
+    #atfp-setting-modal .atfp-translator-row:has(> :nth-child(2)) .atfp-translator-column{
+        width: calc(50% - (1.3rem / 2)) !important;
+    }
+}
+
+@media screen and (max-width: 567px){
+    #atfp-setting-modal .atfp-translator-row .atfp-translator-column{
+        width: 100% !important;
+    }
 }

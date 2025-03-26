@@ -1,5 +1,5 @@
 import StringPopUpNotice from "./notice";
-const { sprintf, __ } = wp.i18n;
+import { sprintf, __ } from "@wordpress/i18n";
 import FormatNumberCount from "../component/FormateNumberCount";
 
 const StringPopUpFooter = (props) => {
