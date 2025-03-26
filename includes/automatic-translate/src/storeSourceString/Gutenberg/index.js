@@ -19,7 +19,7 @@ const filterTranslateAttr = (blockId, blockAttr, filterAttr) => {
      * @param {Object} filterAttrObj - The filter attribute object.
      */
     const saveTranslatedAttr = (idArr, filterAttrObj) => {
-
+       
         if (true === filterAttrObj) {
             const newIdArr = new Array(...idArr);
             const childIdArr = new Array();

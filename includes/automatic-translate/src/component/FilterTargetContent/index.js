@@ -138,6 +138,13 @@ const FilterTargetContent = (props) => {
             content= filterSeoContent(content);
         }
 
+        // Filter shortcode content
+        const shortcodePattern = /\[(.*?)\]/g;
+        const shortcodeMatches = content.match(shortcodePattern);
+        if (shortcodeMatches) {
+            content = shortcodeMatches.map(match => `#atfp_open_translate_span#${match}#atfp_close_translate_span#`).join('');
+        }
+
         return splitContent(content);
     }
 
