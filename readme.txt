@@ -157,6 +157,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 = Version 1.3.4 | 27 March 2025 =
 * **Fixed:** Fixed issues with shortcode translations.
 * **Fixed:** Removed extra spaces after translations.
+* **Fixed:** Fixed kadence infoBox block translation issue.
 * **Improved:** String modal box overlay styling.
 
 = Version 1.3.3 | 17 March 2025 =
