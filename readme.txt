@@ -4,7 +4,7 @@ Tags: Polylang, AI Translation, Content Translation, Translate
 Requires at least: 5.0
 Tested up to: 6.7.2
 Requires PHP: 5.6
-Stable tag: 1.3.3
+Stable tag: 1.3.4
 Author URI: https://coolplugins.net/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -153,6 +153,12 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+
+= Version 1.3.4 | 27 March 2025 =
+* **Fixed:** Fixed issues with shortcode translations.
+* **Fixed:** Removed extra spaces after translations.
+* **Improved:** String modal box overlay styling.
+
 = Version 1.3.3 | 17 March 2025 =
 * **Added:** Message to let users know that the Classic Editor is not supported.
 * **Added:** New Error Modal box to make it easier to see translation errors.
