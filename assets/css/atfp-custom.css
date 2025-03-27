@@ -962,6 +962,7 @@ body.rtl #atfp-setting-modal .modal-header .close {
     font-weight: bold;
     text-align: center;
     padding-top: 30px;
+    height: calc(100vh - 40px - 86px - 66px);
 }
 
 #atfp_strings_model .atfp_translate_element_wrapper {
