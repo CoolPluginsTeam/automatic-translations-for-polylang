@@ -195,10 +195,15 @@ class ATFP_Register_Backend_Assets
         foreach ($languages as $lang) {
             $lang_object[$lang->slug] = $lang->name;
         }
+        
+        if(function_exists('wp_set_script_translations')){
+            wp_set_script_translations('atfp-automatic-translate', 'automatic-translations-for-polylang', ATFP_DIR_PATH . 'languages/');
+        }
 
         wp_enqueue_style('atfp-automatic-translate-custom');
         wp_enqueue_style('atfp-automatic-translate');
         wp_enqueue_script('atfp-automatic-translate');
+
 
         $post_id = get_the_ID();
 

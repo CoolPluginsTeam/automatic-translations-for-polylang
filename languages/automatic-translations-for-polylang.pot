@@ -1,0 +1,323 @@
+# Copyright (C) 2025 Cool Plugins
+# This file is distributed under the GPLv2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: AI Translation For Polylang 1.3.5\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/automatic-translations-for-polylang\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-04-02T13:09:49+02:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.10.0\n"
+"X-Domain: automatic-translations-for-polylang\n"
+
+#. Plugin Name of the plugin
+#: D:\wp-local\sites\polylang\app\public\wp-content\plugins\automatic-translations-for-polylang\automatic-translation-for-polylang.php
+msgid "AI Translation For Polylang"
+msgstr ""
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+#: D:\wp-local\sites\polylang\app\public\wp-content\plugins\automatic-translations-for-polylang\automatic-translation-for-polylang.php
+msgid "https://coolplugins.net/"
+msgstr ""
+
+#. Description of the plugin
+#: D:\wp-local\sites\polylang\app\public\wp-content\plugins\automatic-translations-for-polylang\automatic-translation-for-polylang.php
+msgid "AI Translation for Polylang simplifies your translation process by automatically translating all pages/posts content from one language to another."
+msgstr ""
+
+#. Author of the plugin
+#: D:\wp-local\sites\polylang\app\public\wp-content\plugins\automatic-translations-for-polylang\automatic-translation-for-polylang.php
+msgid "Cool Plugins"
+msgstr ""
+
+#: admin/atfp-menu-pages/class-atfp-supported-blocks.php:70
+#: admin/atfp-menu-pages/class-atfp-supported-blocks.php:71
+msgid "Support Blocks"
+msgstr ""
+
+#: admin/atfp-menu-pages/class-atfp-supported-blocks.php:84
+msgid "Supported Blocks for AI Translation For Polylang"
+msgstr ""
+
+#: admin/atfp-menu-pages/class-atfp-supported-blocks.php:87
+msgid "Blocks Category:"
+msgstr ""
+
+#: admin/atfp-menu-pages/class-atfp-supported-blocks.php:89
+#: admin/atfp-menu-pages/class-atfp-supported-blocks.php:97
+msgid "All Blocks"
+msgstr ""
+
+#: admin/atfp-menu-pages/class-atfp-supported-blocks.php:95
+msgid "Filter Blocks:"
+msgstr ""
+
+#: admin/atfp-menu-pages/class-atfp-supported-blocks.php:98
+msgid "Supported Blocks"
+msgstr ""
+
+#: admin/atfp-menu-pages/class-atfp-supported-blocks.php:99
+msgid "Unsupported Blocks"
+msgstr ""
+
+#: admin/atfp-menu-pages/class-atfp-supported-blocks.php:108
+msgid "S No"
+msgstr ""
+
+#: admin/atfp-menu-pages/class-atfp-supported-blocks.php:109
+msgid "Block Name"
+msgstr ""
+
+#: admin/atfp-menu-pages/class-atfp-supported-blocks.php:110
+msgid "Block Title"
+msgstr ""
+
+#: admin/atfp-menu-pages/class-atfp-supported-blocks.php:111
+msgid "Status"
+msgstr ""
+
+#: admin/atfp-menu-pages/class-atfp-supported-blocks.php:112
+msgid "Modify"
+msgstr ""
+
+#: admin/atfp-menu-pages/class-atfp-supported-blocks.php:180
+msgid "Add"
+msgstr ""
+
+#: admin/atfp-menu-pages/class-atfp-supported-blocks.php:180
+msgid "Edit"
+msgstr ""
+
+#: admin/feedback/atfp-users-feedback.php:54
+#: admin/feedback/atfp-users-feedback.php:132
+msgid "The plugin didn't work as expected"
+msgstr ""
+
+#: admin/feedback/atfp-users-feedback.php:58
+#: admin/feedback/atfp-users-feedback.php:136
+msgid "I found a better plugin"
+msgstr ""
+
+#: admin/feedback/atfp-users-feedback.php:59
+#: admin/feedback/atfp-users-feedback.php:137
+msgid "Please share which plugin"
+msgstr ""
+
+#: admin/feedback/atfp-users-feedback.php:62
+#: admin/feedback/atfp-users-feedback.php:140
+msgid "The plugin is not working"
+msgstr ""
+
+#: admin/feedback/atfp-users-feedback.php:66
+#: admin/feedback/atfp-users-feedback.php:144
+msgid "It's a temporary deactivation"
+msgstr ""
+
+#: admin/feedback/atfp-users-feedback.php:70
+#: admin/feedback/atfp-users-feedback.php:148
+msgid "Other"
+msgstr ""
+
+#: admin/feedback/atfp-users-feedback.php:71
+#: admin/feedback/atfp-users-feedback.php:149
+msgid "Please share the reason"
+msgstr ""
+
+#: admin/feedback/atfp-users-feedback.php:80
+msgid "Quick Feedback"
+msgstr ""
+
+#: admin/feedback/atfp-users-feedback.php:93
+msgid "If you have a moment, please share why you are deactivating this plugin."
+msgstr ""
+
+#: admin/feedback/atfp-users-feedback.php:111
+msgid "I consent to having Cool Plugins store my all submitted information via this form, they can also respond to my inquiry."
+msgstr ""
+
+#. translators: 1: Plugin Name, 2: Plugin URL
+#: automatic-translation-for-polylang.php:140
+msgid "In order to use %1$s plugin, please install and activate the latest version  of %2$s"
+msgstr ""
+
+#: automatic-translation-for-polylang.php:204
+msgid "Automatic Translate"
+msgstr ""
+
+#: automatic-translation-for-polylang.php:228
+msgid "Translate Page"
+msgstr ""
+
+#: automatic-translation-for-polylang.php:229
+msgid "Translate or duplicate content from %s to %s"
+msgstr ""
+
+#: automatic-translation-for-polylang.php:235
+msgid "We hope you find our plugin helpful for your translation needs. Your feedback is valuable to us!"
+msgstr ""
+
+#: automatic-translation-for-polylang.php:237
+msgid "Rate Us"
+msgstr ""
+
+#: helper/class-atfp-ajax-handler.php:72
+#: helper/class-atfp-ajax-handler.php:92
+#: helper/class-atfp-ajax-handler.php:128
+#: helper/class-atfp-ajax-handler.php:145
+#: helper/class-atfp-ajax-handler.php:215
+#: helper/class-atfp-ajax-handler.php:271
+msgid "Invalid security token sent."
+msgstr ""
+
+#: helper/class-atfp-ajax-handler.php:119
+msgid "Invalid Post ID."
+msgstr ""
+
+#: helper/class-atfp-ajax-handler.php:138
+msgid "No custom blocks found."
+msgstr ""
+
+#: helper/class-atfp-ajax-handler.php:174
+msgid "Automatic Translation for Polylang: Custom Blocks data updated successfully"
+msgstr ""
+
+#: helper/class-atfp-ajax-handler.php:256
+msgid "Translation data updated successfully"
+msgstr ""
+
+#: helper/class-atfp-ajax-handler.php:260
+msgid "CPT_Dashboard class not found"
+msgstr ""
+
+#: helper/class-atfp-ajax-handler.php:277
+msgid "Translation Data class not found."
+msgstr ""
+
+#: helper/class-atfp-ajax-handler.php:283
+msgid "Get Translation Data method not found."
+msgstr ""
+
+#: helper/class-atfp-ajax-handler.php:291
+msgid "Character count not found."
+msgstr ""
+
+#: helper/class-atfp-ajax-handler.php:299
+msgid "Character count limit reached."
+msgstr ""
+
+#: assets/automatic-translate/index.js:1
+#: includes/automatic-translate/src/popupStringModal/header.js:15
+msgid "Step 2 - Start Automatic Translation Process"
+msgstr ""
+
+#: assets/automatic-translate/index.js:1
+#: includes/automatic-translate/src/popupStringModal/footer.js:11
+#: includes/automatic-translate/src/popupStringModal/header.js:17
+msgid "Update Content"
+msgstr ""
+
+#: assets/automatic-translate/index.js:1
+#: includes/automatic-translate/src/component/TranslateProvider/local-ai-translator/index.js:77
+msgid "Translate To"
+msgstr ""
+
+#: assets/automatic-translate/index.js:1
+#: includes/automatic-translate/src/popupStringModal/body.js:42
+msgid "Automatic translation is in progress...."
+msgstr ""
+
+#: assets/automatic-translate/index.js:1
+#: includes/automatic-translate/src/popupStringModal/body.js:42
+msgid "It will take few minutes, enjoy ☕ coffee in this time!"
+msgstr ""
+
+#: assets/automatic-translate/index.js:1
+#: includes/automatic-translate/src/popupStringModal/body.js:42
+msgid "Please do not leave this window or browser tab while translation is in progress..."
+msgstr ""
+
+#: assets/automatic-translate/index.js:1
+#: includes/automatic-translate/src/popupStringModal/body.js:45
+msgid "Translate Using Chrome built-in API"
+msgstr ""
+
+#: assets/automatic-translate/index.js:1
+#: includes/automatic-translate/src/popupStringModal/body.js:47
+msgid "Choose language"
+msgstr ""
+
+#: assets/automatic-translate/index.js:1
+#: includes/automatic-translate/src/popupStringModal/body.js:61
+msgid "S.No"
+msgstr ""
+
+#: assets/automatic-translate/index.js:1
+#: includes/automatic-translate/src/popupStringModal/body.js:62
+msgid "Source Text"
+msgstr ""
+
+#: assets/automatic-translate/index.js:1
+#: includes/automatic-translate/src/popupStringModal/body.js:63
+msgid "Translation"
+msgstr ""
+
+#: assets/automatic-translate/index.js:1
+#: includes/automatic-translate/src/popupStringModal/body.js:97
+msgid "No strings are available for translation"
+msgstr ""
+
+#: assets/automatic-translate/index.js:1
+#: includes/automatic-translate/src/popupSettingModal/header.js:6
+msgid "Step 1 - Select Translation Provider"
+msgstr ""
+
+#: assets/automatic-translate/index.js:1
+#: includes/automatic-translate/src/popupSettingModal/body.js:8
+msgid "Translate Using Yandex Page Translate Widget"
+msgstr ""
+
+#: assets/automatic-translate/index.js:1
+#: includes/automatic-translate/src/popupSettingModal/body.js:11
+msgid "Yandex Translate"
+msgstr ""
+
+#: assets/automatic-translate/index.js:1
+#: includes/automatic-translate/src/popupSettingModal/body.js:15
+msgid "language is not supported by Yandex Translate"
+msgstr ""
+
+#: assets/automatic-translate/index.js:1
+#: includes/automatic-translate/src/popupSettingModal/body.js:21
+msgid "Translate Using Chrome Built-in API"
+msgstr ""
+
+#: assets/automatic-translate/index.js:1
+#: includes/automatic-translate/src/popupSettingModal/body.js:23
+#: includes/automatic-translate/src/popupSettingModal/index.js:79
+msgid "Chrome AI Translator"
+msgstr ""
+
+#: assets/automatic-translate/index.js:1
+#: includes/automatic-translate/src/popupSettingModal/body.js:27
+msgid "Translator button is disabled. Click for details."
+msgstr ""
+
+#: assets/automatic-translate/index.js:1
+#: includes/automatic-translate/src/popupSettingModal/body.js:35
+msgid "Translate page content from %(source)s to %(target)s"
+msgstr ""
+
+#: assets/automatic-translate/index.js:1
+#: includes/automatic-translate/src/popupSettingModal/body.js:36
+msgid "The page content will be saved as a draft after translating it into %(target)s. You can publish it after reviewing the translation."
+msgstr ""
+
+#: assets/automatic-translate/index.js:1
+#: includes/automatic-translate/src/popupSettingModal/footer.js:6
+msgid "Close"
+msgstr ""
