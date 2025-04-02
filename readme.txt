@@ -164,7 +164,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 = Version 1.3.5 | 02 April 2025 =
 * **Enhanced:** Added FAQ section for Page/Post sync for better user support.
-* **Minor:** Minor text improvements.
+* **Minor:** Textual changes.
 
 = Version 1.3.4 | 27 March 2025 =
 * **Fixed:** Fixed shortcode translation issue.
