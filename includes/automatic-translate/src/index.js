@@ -1,15 +1,18 @@
-import SettingModal from './settingModal';
+import SettingModal from './popupSettingModal';
 import './global-store';
 import { useEffect, useState } from 'react';
 import GutenbergPostFetch from './FetchPost/Gutenberg';
 import UpdateGutenbergPage from './createTranslatedPost/Gutenberg';
 import ProVersionNotice from './component/ProVersionNotice';
+import Notice from './component/Notice';
+import { select } from '@wordpress/data';
 
 // Elementor post fetch and update page
 import ElementorPostFetch from './FetchPost/Elementor';
 import ElementorUpdatePage from './createTranslatedPost/Elementor';
 
 import ReactDOM from "react-dom/client";
+
 
 const editorType = window.atfp_global_object.editor_type;
 
@@ -24,6 +27,35 @@ const init = () => {
     document.body.insertAdjacentHTML('beforeend', modal);
   });
 }
+
+const StringModalBodyNotice=()=>{
+
+  const notices= [];
+  
+  if(editorType === 'gutenberg'){
+
+    const postMetaSync = atfp_global_object.postMetaSync === 'true';
+
+    if(postMetaSync){
+      notices.push({className: 'atfp-notice atfp-notice-warning', message: <p>For accurate ACF field translations, please disable the Custom Fields synchronization in <a href={`${atfp_global_object.admin_url}admin.php?page=mlang_settings`} target="_blank">Polylang settings</a>. This may affect linked posts or pages.</p>});   
+    }
+    
+    const blockRules = select('block-atfp/translate').getBlockRules();
+
+    if(!blockRules.AtfpBlockParseRules || Object.keys(blockRules.AtfpBlockParseRules).length === 0){
+      notices.push({className: 'atfp-notice atfp-notice-error', message: <p>No block rules were found. It appears that the block-rules.JSON file could not be fetched, possibly because it is blocked by your server settings. Please check your server configuration to resolve this issue.</p>});
+    }
+  }
+
+  const noticeLength = notices.length;
+
+  if(notices.length > 0){
+    return notices.map((notice, index) => <Notice className={notice.className} key={index} lastNotice={index === noticeLength - 1}>{notice.message}</Notice>);
+  }
+
+  return;
+}
+
 
 const App = () => {
   const [pageTranslate, setPageTranslate] = useState(false);
@@ -98,7 +130,7 @@ const App = () => {
 
   return (
     <>
-      {!pageTranslate && sourceLang && '' !== sourceLang && <SettingModal contentLoading={loading} updatePostDataFetch={updatePostDataFetch} postDataFetchStatus={postDataFetchStatus} pageTranslate={handlePageTranslate} postId={postId} currentPostId={currentPostId} targetLang={targetLang} postType={postType} fetchPostData={fetchPostData} translatePost={translatePost} translateWrpSelector={translateWrpSelector} />}
+      {!pageTranslate && sourceLang && '' !== sourceLang && <SettingModal contentLoading={loading} updatePostDataFetch={updatePostDataFetch} postDataFetchStatus={postDataFetchStatus} pageTranslate={handlePageTranslate} postId={postId} currentPostId={currentPostId} targetLang={targetLang} postType={postType} fetchPostData={fetchPostData} translatePost={translatePost} translateWrpSelector={translateWrpSelector} stringModalBodyNotice={StringModalBodyNotice}/>}
     </>
   );
 };
@@ -188,7 +220,7 @@ if (editorType === 'gutenberg') {
 
     const buttonElement = jQuery('input#atfp-translate-button[name="atfp_meta_box_translate"]');
 
-    if(!window.atfp_global_object.translation_data || !window.atfp_global_object.translation_data.total_string_count ){
+    if(!window.atfp_global_object.translation_data || (!window.atfp_global_object.translation_data.total_string_count && 0 !== window.atfp_global_object.translation_data.total_string_count) ){
       buttonElement.attr('disabled', 'disabled');
       buttonElement.attr('title', 'Translation data not found.');
       return;

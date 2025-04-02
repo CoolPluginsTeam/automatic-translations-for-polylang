@@ -45,7 +45,10 @@ const FilterTargetContent = (props) => {
             return wrappedFirstTag;
         }
 
-        const firstElementHtml = firstElement.innerHTML;
+        let firstElementHtml = firstElement.innerHTML;
+
+        firstElementHtml = firstElementHtml.replace(/^\s+|\s+$/g, (match) => `#atfp_open_translate_span#${match}#atfp_close_translate_span#`);
+
         firstElement.innerHTML = '';
 
         let openTag = `#atfp_open_translate_span#${firstElementOpeningTag}#atfp_close_translate_span#`;
@@ -111,23 +114,34 @@ const FilterTargetContent = (props) => {
      */
     const filterSourceData = (string) => {
         function replaceInnerTextWithSpan(doc) {
-            let childElements = doc.children;
+            let childElements = doc.childNodes;
+            
+            const childElementsReplace = (index) => {
+                if (childElements.length > index) {
+                    let element = childElements[index];
+                    let textNode=null;
 
-            const childElementsReplace = () => {
-                if (childElements.length > 0) {
-                    let element = childElements[0];
-                    let filterContent = wrapFirstAndMatchingClosingTag(element.outerHTML);
-                    const textNode = document.createTextNode(filterContent);
-
+                    if(element.nodeType === 3){
+                        const textContent = element.textContent.replace(/^\s+|\s+$/g, (match) => `#atfp_open_translate_span#${match}#atfp_close_translate_span#`);
+                        textNode = document.createTextNode(textContent);
+                    }else{
+                        let filterContent = wrapFirstAndMatchingClosingTag(element.outerHTML);
+                        textNode = document.createTextNode(filterContent);
+                    }
+                    
                     element.replaceWith(textNode);
-                    childElementsReplace();
+                    
+                    index++;
+                    childElementsReplace(index);
                 }
             }
-            childElementsReplace();
+            
+            childElementsReplace(0);
             return doc;
         }
 
         const tempElement = document.createElement('div');
+        
         tempElement.innerHTML = string;
         replaceInnerTextWithSpan(tempElement);
 
@@ -136,6 +150,14 @@ const FilterTargetContent = (props) => {
         const isSeoContent = /^(_yoast_wpseo_|rank_math_|_seopress_)/.test(props.contentKey.trim());
         if (isSeoContent) {
             content= filterSeoContent(content);
+        }
+
+        // Filter shortcode content
+        const shortcodePattern = /\[(.*?)\]/g;
+        const shortcodeMatches = content.match(shortcodePattern);
+
+        if (shortcodeMatches) {
+            content = content.replace(shortcodePattern, (match) => `#atfp_open_translate_span#${match}#atfp_close_translate_span#`);
         }
 
         return splitContent(content);

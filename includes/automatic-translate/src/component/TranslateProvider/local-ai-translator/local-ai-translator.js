@@ -26,9 +26,9 @@ class ChromeAiTranslator {
     // Method to check language support and return relevant data
     extraData = async () => {
         // Check if the language is supported
-        const langSupportedStatus = await ChromeAiTranslator.languageSupportedStatus(this.sourceLanguage, this.targetLanguage, this.targetLanguageLabel, this.sourceLanguageLabel); 
+        const langSupportedStatus = await ChromeAiTranslator.languageSupportedStatus(this.sourceLanguage, this.targetLanguage, this.targetLanguageLabel, this.sourceLanguageLabel);
 
-        if(langSupportedStatus !== true){
+        if (langSupportedStatus !== true) {
             this.onLanguageError(langSupportedStatus); // Handle language error
             return {}; // Return empty object if language is not supported
         }
@@ -36,15 +36,15 @@ class ChromeAiTranslator {
         this.defaultLang = this.targetLanguage; // Set default language
 
         // Return methods for translation control
-        return { 
-            continueTranslation: this.continueTranslation, 
-            stopTranslation: this.stopTranslation, 
-            startTranslation: this.startTranslation, 
-            reInit: this.reInit, 
-            init: this.init 
+        return {
+            continueTranslation: this.continueTranslation,
+            stopTranslation: this.stopTranslation,
+            startTranslation: this.startTranslation,
+            reInit: this.reInit,
+            init: this.init
         };
     }
-    
+
     /**
      * Checks if the specified source and target languages are supported by the Local Translator AI modal.
      * 
@@ -54,28 +54,60 @@ class ChromeAiTranslator {
      * @returns {Promise<boolean|jQuery>} - Returns true if the languages are supported, or a jQuery message if not.
      */
     static languageSupportedStatus = async (sourceLanguage, targetLanguage, targetLanguageLabel, sourceLanguageLabel) => {
-        const supportedLanguages = ['en','es', 'ja', 'ar', 'de', 'bn', 'fr', 'hi', 'it', 'ko', 'nl', 'pl', 'pt', 'ru', 'th', 'tr', 'vi', 'zh', 'zh-hant', 'bg', 'cs', 'da', 'el', 'fi', 'hr', 'hu', 'id', 'iw', 'lt', 'no', 'ro', 'sk', 'sl', 'sv', 'uk', 'en-zh'].map(lang => lang.toLowerCase());
+        const supportedLanguages = ['en', 'es', 'ja', 'ar', 'de', 'bn', 'fr', 'hi', 'it', 'ko', 'nl', 'pl', 'pt', 'ru', 'th', 'tr', 'vi', 'zh', 'zh-hant', 'bg', 'cs', 'da', 'el', 'fi', 'hr', 'hu', 'id', 'iw', 'lt', 'no', 'ro', 'sk', 'sl', 'sv', 'uk', 'en-zh'].map(lang => lang.toLowerCase());
 
         // Browser check
-        if(!window.hasOwnProperty('chrome') || !navigator.userAgent.includes('Chrome') || navigator.userAgent.includes('Edg')){
-            const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">The Translator API, which uses local AI models, only works in the Chrome browser. For more details, <a href="https://developer.chrome.com/docs/ai/translator-api" target="_blank">click here</a>.</span>`);
+        if (!window.hasOwnProperty('chrome') || !navigator.userAgent.includes('Chrome') || navigator.userAgent.includes('Edg')) {
+            const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">
+                <strong>Important Notice:</strong>
+                <ol>
+                    <li>The Translator API, which leverages local AI models, is designed specifically for use with the Chrome browser.</li>
+                    <li>For comprehensive information about the Translator API, <a href="https://developer.chrome.com/docs/ai/translator-api" target="_blank">click here</a>.</li>
+                </ol>
+                <p>Please ensure you are using the Chrome browser for optimal performance and compatibility.</p>
+            </span>`);
             return message;
         }
         // Check if the translation API is available
         if (!('translation' in self && 'createTranslator' in self.translation)) {
-            const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">The Translator AI modal is currently not supported or disabled in your browser. Please enable it. For detailed instructions on how to enable the Translator AI modal in your Chrome browser, <a href="https://developer.chrome.com/docs/ai/translator-api#bypass_language_restrictions_for_local_testing" target="_blank">click here</a>.</span>`);
+            const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">
+                <h4>Steps to Enable the Translator AI Modal:</h4>
+                <ol>
+                    <li>Open this URL in a new Chrome tab: <strong><span data-clipboard-text="chrome://flags/#translation-api" target="_blank" class="chrome-ai-translator-flags">chrome://flags/#translation-api ${ChromeAiTranslator.svgIcons('copy')}</span></strong>. Click on the URL to copy it, then open a new window and paste this URL to access the settings.</li>
+                    <li>Ensure that the <strong>Experimental translation API</strong> option is set to <strong>Enabled</strong>.</li>
+                    <li>Click on the <strong>Save</strong> button to apply the changes.</li>
+                    <li>The Translator AI modal should now be enabled and ready for use.</li>
+                </ol>
+                <p>For more information, please refer to the <a href="https://developer.chrome.com/docs/ai/translator-api" target="_blank">documentation</a>.</p>   
+                <p>If the issue persists, please ensure that your browser is up to date and restart your browser.</p>
+                <p>If the problem continues, please contact the support team for further assistance.</p>
+            </span>`);
             return message;
         }
 
         // Check if the target language is supported
         if (!supportedLanguages.includes(targetLanguage.toLowerCase())) {
-            const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">Current version of Chrome AI Translator doesn't support the <strong>${targetLanguageLabel} (${targetLanguage})</strong> language. You can refer of supported languages <a href="visiting chrome://on-device-translation-internals">click here</a></span>`);
+            const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">
+                <strong>Language Support Information:</strong>
+                <ol>
+                    <li>The current version of Chrome AI Translator does not support the <strong>${targetLanguageLabel} (${targetLanguage})</strong> language.</li>
+                    <li>To view the list of supported languages, please <span data-clipboard-text="chrome://on-device-translation-internals" target="_blank" class="chrome-ai-translator-flags">chrome://on-device-translation-internals ${ChromeAiTranslator.svgIcons('copy')}</span>. Click on the URL to copy it, then open a new window and paste this URL to access the settings.</li>
+                    <li>Ensure your Chrome browser is updated to the latest version for optimal performance.</li>
+                </ol>
+            </span>`);
             return message;
         }
 
         // Check if the source language is supported
         if (!supportedLanguages.includes(sourceLanguage.toLowerCase())) {
-            const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">Current version of Chrome AI Translator doesn't support the <strong>${sourceLanguageLabel} (${sourceLanguage})</strong> language. You can refer of supported languages <a href="visiting chrome://on-device-translation-internals">click here</a></span>`);
+            const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">
+                <strong>Language Support Information:</strong>
+                <ol>
+                    <li>The current version of Chrome AI Translator does not support the <strong>${sourceLanguageLabel} (${sourceLanguage})</strong> language.</li>
+                    <li>To view the list of supported languages, please <span data-clipboard-text="chrome://on-device-translation-internals" target="_blank" class="chrome-ai-translator-flags">chrome://on-device-translation-internals ${ChromeAiTranslator.svgIcons('copy')}</span>. Click on the URL to copy it, then open a new window and paste this URL to access the settings.</li>
+                    <li>Ensure your Chrome browser is updated to the latest version for optimal performance.</li>
+                </ol>
+            </span>`);
             return message;
         }
 
@@ -87,13 +119,33 @@ class ChromeAiTranslator {
 
         // Handle case for language pack after download
         if (status === "after-download") {
-            const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">To proceed, please install the language pack for <strong>${targetLanguageLabel} (${targetLanguage})</strong> or <strong>${sourceLanguageLabel} (${sourceLanguage})</strong>. You can install it by visiting <strong>chrome://on-device-translation-internals</strong>. For more help, refer to the <a href="https://developer.chrome.com/docs/ai/translator-api#bypass_language_restrictions_for_local_testing" target="_blank">documentation</a>.</span>`);
+            const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">
+                <h4>Installation Instructions for Language Packs:</h4>
+                <ol>
+                    <li>To proceed, please install the language pack for <strong>${targetLanguageLabel} (${targetLanguage})</strong> or <strong>${sourceLanguageLabel} (${sourceLanguage})</strong>.</li>
+                    <li>You can install it by visiting the following link: 
+                        <strong>
+                            <span data-clipboard-text="chrome://on-device-translation-internals" target="_blank" class="chrome-ai-translator-flags">
+                                chrome://on-device-translation-internals ${ChromeAiTranslator.svgIcons('copy')}
+                            </span>
+                        </strong>. Click on the URL to copy it, then open a new window and paste this URL to access the settings.
+                    </li>
+                    <li>For more help, refer to the <a href="https://developer.chrome.com/docs/ai/translator-api#supported-languages" target="_blank">documentation to check supported languages</a>.</li>
+                </ol>
+            </span>`);
             return message;
         }
 
         // Handle case for language pack not readily available
         if (status !== 'readily') {
-            const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">Please make sure that the language pack for <strong>${targetLanguageLabel} (${targetLanguage})</strong> or <strong>${sourceLanguageLabel} (${sourceLanguage})</strong> is installed and set as a preferred language in your browser. To install the language pack, visit <strong>chrome://on-device-translation-internals</strong>. For further assistance, refer to the <a href="https://developer.chrome.com/docs/ai/translator-api#bypass_language_restrictions_for_local_testing" target="_blank">documentation</a>.</span>`);
+            const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">
+                <h4>Language Pack Installation Required</h4>
+                <ol>
+                    <li>Please ensure that the language pack for <strong>${targetLanguageLabel} (${targetLanguage})</strong> or <strong>${sourceLanguageLabel} (${sourceLanguage})</strong> is installed and set as a preferred language in your browser.</li>
+                    <li>To install the language pack, visit <strong><span data-clipboard-text="chrome://on-device-translation-internals" target="_blank" class="chrome-ai-translator-flags">chrome://on-device-translation-internals ${ChromeAiTranslator.svgIcons('copy')}</span></strong>. Click on the URL to copy it, then open a new window and paste this URL to access the settings.</li>
+                    <li>If you encounter any issues, please refer to the <a href="https://developer.chrome.com/docs/ai/translator-api#supported-languages" target="_blank">documentation to check supported languages</a> for further assistance.</li>
+                </ol>
+            </span>`);
             return message;
         }
 
@@ -107,7 +159,7 @@ class ChromeAiTranslator {
         this.completedTranslateIndex = 0; // Index of the last completed translation
         this.completedCharacterCount = 0; // Count of characters translated
         this.translateBtnEvents(); // Set up button events
-        if(this.progressBarSelector) {
+        if (this.progressBarSelector) {
             this.addProgressBar(); // Add progress bar to the UI
         }
     };
@@ -155,7 +207,7 @@ class ChromeAiTranslator {
                 this.stringTranslation(this.completedTranslateIndex + 1); // Start translating the next string
             });
         } else {
-            this.onComplete({translatedStringsCount: this.completedCharacterCount}); // Call the complete callback
+            this.onComplete({ translatedStringsCount: this.completedCharacterCount }); // Call the complete callback
             this.translateBtn.prop("disabled", true); // Disable the button
         }
     };
@@ -191,27 +243,27 @@ class ChromeAiTranslator {
         const orignalText = ele.innerText;
         let originalString = [];
 
-        if(ele.childNodes.length > 0 && !ele.querySelector('.notranslate')){
+        if (ele.childNodes.length > 0 && !ele.querySelector('.notranslate')) {
             ele.childNodes.forEach(child => {
-                if(child.nodeType === 3 && child.nodeValue.trim() !== ''){
+                if (child.nodeType === 3 && child.nodeValue.trim() !== '') {
                     originalString.push(child);
                 }
             });
-        }else if(ele.querySelector('.notranslate')){
-           ele.childNodes.forEach(child => {
-            if(child.nodeType === 3 && child.nodeValue.trim() !== ''){
-                originalString.push(child);
+        } else if (ele.querySelector('.notranslate')) {
+            ele.childNodes.forEach(child => {
+                if (child.nodeType === 3 && child.nodeValue.trim() !== '') {
+                    originalString.push(child);
                 }
             });
         }
 
-        if(originalString.length > 0){
+        if (originalString.length > 0) {
             await this.stringTranslationBatch(originalString, 0);
         }
 
         this.completedCharacterCount += orignalText.length; // Update character count
         this.completedTranslateIndex = index; // Update completed index
-        if(this.progressBarSelector) {
+        if (this.progressBarSelector) {
             this.updateProgressBar(); // Update the progress bar
         }
         this.onAfterTranslate(ele); // Call the after translation callback
@@ -224,7 +276,7 @@ class ChromeAiTranslator {
         // If all strings are translated, complete the process
         if (index === this.translateStringEle.length - 1) {
             this.translateBtn.prop("disabled", true); // Disable the button
-            this.onComplete({characterCount: this.completedCharacterCount}); // Call the complete callback
+            this.onComplete({ characterCount: this.completedCharacterCount }); // Call the complete callback
             jQuery(this.progressBarSelector).find(".chrome-ai-translator-strings-count").show().find(".totalChars").text(this.formatCharacterCount(this.completedCharacterCount));
         }
     };
@@ -236,7 +288,7 @@ class ChromeAiTranslator {
             originalString[index].nodeValue = translatedString; // Set the translated string
         }
 
-        if(index < originalString.length - 1){
+        if (index < originalString.length - 1) {
             await this.stringTranslationBatch(originalString, index + 1);
         }
 
@@ -285,6 +337,15 @@ class ChromeAiTranslator {
     startTranslation = () => {
         this.translateStatus = true; // Set translation status to true
         this.startTranslationProcess(this.completedTranslateIndex + 1); // Start translation process
+    }
+
+    
+    static svgIcons=(iconName)=>{
+        const Icons={
+            'copy':`<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="16px" width="16px" xmlns="http://www.w3.org/2000/svg" fill="#2271b1"><path d="M433.941 65.941l-51.882-51.882A48 48 0 0 0 348.118 0H176c-26.51 0-48 21.49-48 48v48H48c-26.51 0-48 21.49-48 48v320c0 26.51 21.49 48 48 48h224c26.51 0 48-21.49 48-48v-48h80c26.51 0 48-21.49 48-48V99.882a48 48 0 0 0-14.059-33.941zM266 464H54a6 6 0 0 1-6-6V150a6 6 0 0 1 6-6h74v224c0 26.51 21.49 48 48 48h96v42a6 6 0 0 1-6 6zm128-96H182a6 6 0 0 1-6-6V54a6 6 0 0 1 6-6h106v88c0 13.255 10.745 24 24 24h88v202a6 6 0 0 1-6 6zm6-256h-64V48h9.632c1.591 0 3.117.632 4.243 1.757l48.368 48.368a6 6 0 0 1 1.757 4.243V112z"></path></svg>`
+        }
+
+        return Icons[iconName] || '';
     }
 }
 

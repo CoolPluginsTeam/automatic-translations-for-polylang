@@ -1,9 +1,10 @@
-=== AI Translation for Polylang ===
+﻿=== AI Translation for Polylang ===
+Contributors: narinder-singh,satindersingh,coolplugins
 Tags: Polylang, AI Translation, Content Translation, Translate
 Requires at least: 5.0
 Tested up to: 6.7.2
 Requires PHP: 5.6
-Stable tag: 1.3.0
+Stable tag: 1.3.5
 Author URI: https://coolplugins.net/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -16,9 +17,9 @@ https://youtu.be/ecHsOyIL_J4
 
 This addon duplicates and translates **page/post titles, content, images, galleries, and meta fields,** eliminating the need to manually adjust featured images, layouts, and other elements. 
 
-https://youtu.be/bmmc-Ynwj8w
-
 Whether you're using **Elementor** or **Gutenberg**, this addon makes the translation process easier, allowing you to focus on expanding your global audience effortlessly.
+
+https://youtu.be/bmmc-Ynwj8w
 
 ### Why Choose AI Translation for Polylang?
 
@@ -34,11 +35,15 @@ https://youtu.be/yamFwNRWEbc
 * **Elementor Page Translation** - Translate entire Elementor pages, including all sections, widgets, and content, without losing styles or design.
 * **Gutenberg Block Compatibility** - Automatically translate content within Gutenberg blocks, including core blocks and popular third-party blocks like Spectra, Kadence, Stackable, Otter, and Essential.
 * **Automatic Content Translation** - Effortlessly translate post titles, content, images, galleries, and meta fields from one language to another using Machine & AI Translations.
+* **ACF Fields Translation** - Translate ACF fields only with type(text, textarea & wysiwyg) in Gutenberg pages.
 * **One-Click Duplication** - Easily duplicate your original or default language content into other languages, saving time and reducing manual work.
 * **Style and Format Preservation** - The plugin maintains all styles, formats, and layouts from the original post, ensuring that your translated content maintains a consistent appearance.
 * **Multilingual Management** - Simplifies the process of managing a multilingual website by automating translation and reducing the need for repetitive actions.
 * **Custom Block Support** - While optimized for Gutenberg blocks, the plugin also works with several third-party block plugins, extending its versatility.
 * **Easy to Use** - Designed with a user-friendly interface, making it accessible even for those with limited technical knowledge.
+
+### Important Information Regarding Classic Editor Compatibility
+Our current version doesn't support translation for the Classic Editor. It only works with **Gutenberg** and **Elementor** pages.
 
 ### Check out our advanced Automatic Translate Addon for Loco Translate
 
@@ -49,9 +54,10 @@ Additionally, **[AI Translation for TranslatePress ](https://coolplugins.net/pro
 
 > **Important Notice:** This plugin serves as an AI translation extension for the official **[Polylang](https://wordpress.org/plugins/polylang/)** plugin.
 
-> **Important Notice:** This plugin provides AI translation functionality only for Gutenberg blocks.
 
 > **Disclaimer:** This plugin is not developed by or affiliated with the **[Polylang developers](https://wordpress.org/plugins/polylang/)**. It is a third-party addon that offers automatic translation functionality, enabling you to quickly translate your posts while maintaining the same styles in other languages.
+
+
 
 == Custom Blocks Support ==
 To make your custom blocks translation-ready, follow these steps:
@@ -95,13 +101,19 @@ This plugin provides automatic translation services for Polylang using the Yande
 ### 🌴 Important Links & Information
 * [Yandex Translate Terms](https://yandex.com/legal/translate_termsofuse/)
 * [Yandex Privacy Policy](https://yandex.com/legal/confidential/)
+* [Chrome Built-in AI APIs Documentation](https://developer.chrome.com/docs/ai/built-in-apis)  
+* [Chrome Summarizer API Documentation](https://developer.chrome.com/docs/ai/summarizer-api)  
+* [Chrome Prompt API Documentation for Extensions](https://developer.chrome.com/docs/extensions/ai/prompt-api)
+
+
 
 == Screenshots ==
-1. AI Translation for Polylang Translation Preview.
-2. Content Translation Preview.
-3. AI Translation Preview.
+1. Gutenberg Page Content Translation Preview.
+2. Elementor Page Content Translation Preview.
+3. AI Translation for Polylang Preview.
 4. Gutenberg Block inline Translation.
 5. Elementor Ai Translation.
+
 
 == Frequently Asked Questions ==
 = What does the "AI Translation for Polylang" plugin do? =
@@ -111,13 +123,20 @@ This plugin automatically copies and translates your posts, including titles, co
 No, this plugin is not developed by or affiliated with the Polylang developers. It is a third-party addon designed to extend Polylang's functionality by adding automatic translation capabilities.
 
 = Do I need an API key to use this plugin? =
-No, this plugin does not require an API key. It uses Chrome built-in AI  to provide automatic translations.
+No, this plugin does not require an API key. It uses Chrome built-in AI to provide automatic translations.
 
 = Can I use this plugin with custom blocks or themes? =
 This plugin works with Gutenberg blocks and several popular third-party blocks (e.g., Spectra, Kadence, Stackable, Otter, and Essential). While it may work with custom blocks or themes, compatibility is not guaranteed, so we recommend doing testing.
 
 = Does the plugin translate all content on my website? =
 The plugin automatically translates the entire content within your Elementor widgets and Gutenberg blocks. It does not translate content outside of these blocks or widgets, such as custom widgets, shortcodes, or other plugins' content that doesn't utilize Gutenberg blocks or Elementor widgets.
+
+= Does this plugin support page & post sync for translations? =
+Currently, our plugin does not support automatic synchronization of pages and posts across multiple languages. This means updates made to the original content will not automatically appear in the translated versions.
+
+However, you can manually copy the original content into the translated page, and then use our inline translation feature to translate that content.
+
+We’re considering adding sync support in future updates based on user feedback.
 
 = How do I manage the translated content? =
 The translated content is managed within the WordPress editor, just like your original content. The plugin duplicates your content into other languages, which you can then later review and adjust as needed.
@@ -134,8 +153,38 @@ You can update the plugin through the WordPress dashboard like any other plugin.
 = Will this plugin slow down my website? =
 The plugin is optimized for performance, but the speed impact may vary depending on your hosting environment and the size of your content. The automatic translation process occurs in the background to minimize any potential impact on site performance.
 
+= Does this plugin support the Classic Editor? =
+Currently, this plugin does not support automatic translations for content created with the Classic Editor. It is designed to work with Elementor and Gutenberg blocks only.
+
+= How can I report security bugs? = 
+You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities.[Report a security vulnerability](https://patchstack.com/database/wordpress/plugin/automatic-translations-for-polylang/vdp)
+
+
 == Changelog ==
-= Version 1.3.0 | 26 February 2024 =
+
+= Version 1.3.5 | 02 April 2025 =
+* **Enhanced:** Added FAQ section for Page/Post sync for better user support.
+* **Minor:** Minor text improvements.
+
+= Version 1.3.4 | 27 March 2025 =
+* **Fixed:** Fixed shortcode translation issue.
+* **Fixed:** Removed extra spaces after translations.
+* **Fixed:** Fixed kadence infoBox block translation issue.
+* **Improved:** String modal box overlay styling.
+
+= Version 1.3.3 | 17 March 2025 =
+* **Added:** Message to let users know that the Classic Editor is not supported.
+* **Added:** New Error Modal box to make it easier to see translation errors.
+* **Fixed:** Fixed the problem where Yandex translation would freeze when scrolling through long content.
+* **Improved:** Made the settings modal look better and more user-friendly.
+
+= Version 1.3.2 | 06 March 2025 =
+* **Added:** Added support for ACF fields translation only with type(text, textarea & wysiwyg).
+* **Added:** Added notice message in string modal body for better user experience.
+* **Improved:** String modal box styling.
+= Version 1.3.1 | 27 February 2025 =
+* **Fixed:** Popup modal not appearing and the translate button not working properly in Gutenberg.
+= Version 1.3.0 | 26 February 2025 =
 * **Added:** Elementor Page translation.
 * **Added:** Gutenberg block inline translation feature.
 * **Added:** Review Notice.

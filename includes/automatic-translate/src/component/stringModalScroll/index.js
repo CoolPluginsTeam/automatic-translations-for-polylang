@@ -17,12 +17,12 @@ const ScrollAnimation = (props) => {
         return;
     }
 
-    const scrollHeight = element.scrollHeight - element.offsetHeight + 100;
     const progressBar = jQuery(`.${provider}-translator_progress_bar`);
     
     let startTime = null;
     let startScrollTop = element.scrollTop;
     const animateScroll = () => {
+        const scrollHeight = element.scrollHeight - element.offsetHeight + 100;
         const currentTime = performance.now();
         const duration = scrollSpeed;
         const scrollTarget = scrollHeight + 2000;
@@ -67,6 +67,7 @@ const updateTranslatedContent = ({provider, startTime, endTime}) => {
     const stringContainer = container.querySelector('.atfp_string_container');
     const translatedData = stringContainer.querySelectorAll('td.translate[data-string-type]:not([data-translate-status="translated"])');
     const totalTranslatedData = translatedData.length;
+    const AllowedMetaFields = select('block-atfp/translate').getAllowedMetaFields();
 
     translatedData.forEach((ele, index) => {
         const translatedText = ele.innerText;
@@ -74,7 +75,7 @@ const updateTranslatedContent = ({provider, startTime, endTime}) => {
         const type = ele.dataset.stringType;
         const sourceText = ele.closest('tr').querySelector('td[data-source="source_text"]').innerText;
 
-        SaveTranslation({ type: type, key: key, translateContent: translatedText, source: sourceText, provider: provider });
+        SaveTranslation({ type: type, key: key, translateContent: translatedText, source: sourceText, provider: provider, AllowedMetaFields });
 
         const translationEntry = select('block-atfp/translate').getTranslationInfo().translateData[provider];
         const previousTargetWordCount = translationEntry && translationEntry.targetWordCount ? translationEntry.targetWordCount : 0;

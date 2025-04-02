@@ -1,11 +1,40 @@
 import GutenbergBlockSaveSource from "../../storeSourceString/Gutenberg";
-const GutenbergPostFetch = async (props) => {
-    const { __ } = wp.i18n;
-    const { parse } = wp.blocks;
-    const { dispatch } = wp.data;
+import { dispatch } from "@wordpress/data";
+import { parse } from "@wordpress/blocks";
+import { __ } from "@wordpress/i18n";
 
+import AllowedMetaFields from "../../AllowedMetafileds";
+
+const GutenbergPostFetch = async (props) => {
     const apiUrl = atfp_global_object.ajax_url;
     let blockRules = {};
+
+    // Update allowed meta fields
+    const updateAllowedMetaFields = (data) => {
+        dispatch('block-atfp/translate').allowedMetaFields(data);
+    }
+
+    // Update ACF fields allowed meta fields
+    const AcfFields = () =>{
+        const postMetaSync = atfp_global_object.postMetaSync === 'true';
+
+        if(window.acf && !postMetaSync){
+            const allowedTypes = ['text', 'textarea', 'wysiwyg'];
+            acf.getFields().forEach(field => {
+                if(field.data && allowedTypes.includes(field.data.type)){
+                    updateAllowedMetaFields({id: field.data.key, type: field.data.type});
+                }
+            });
+        }
+    }
+
+    // Update allowed meta fields
+    Object.keys(AllowedMetaFields).forEach(key => {
+        updateAllowedMetaFields({id: key, type: AllowedMetaFields[key].type});
+    });
+
+    // Update ACF fields allowed meta fields
+    AcfFields();
 
     const blockRulesApiSendData = {
         atfp_nonce: atfp_global_object.ajax_nonce,

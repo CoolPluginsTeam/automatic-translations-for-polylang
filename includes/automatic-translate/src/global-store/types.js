@@ -35,6 +35,9 @@ const AtfpActionTypes = {
 
     // Action type for saving the translatio info of the translated content
     translationInfo: 'SAVE_TRANSLATE_INFO',
+
+    // Action type for saving the allowed meta fields
+    allowedMetaFields: 'ALLOWED_META_FIELDS',
 };
 
 export default AtfpActionTypes;
