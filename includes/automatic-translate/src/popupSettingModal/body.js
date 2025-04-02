@@ -32,8 +32,8 @@ const SettingModalBody = ({ yandexSupport, imgFolder, targetLangName, postType, 
     return (
         <div className="atfp-setting-modal-body">
             <div className="atfp-setting-modal-notice-wrapper">
-                <h4>{sprintf(__("Translate %(postType)s content from %(source)s to %(target)s", 'automatic-translations-for-polylang'), { postType: postType, source: sourceLangName, target: targetLangName })}</h4>
-                <p className="atfp-error-message" style={{ marginBottom: '.5rem' }}>{sprintf(__("This translation will replace the current %(postType)s content with the original %(source)s version and translate it to %(target)s.", 'automatic-translations-for-polylang'), { postType: postType, source: sourceLangName, target: targetLangName })}</p>
+                <h4>{sprintf(__("Translate page content from %(source)s to %(target)s", 'automatic-translations-for-polylang'), { source: sourceLangName, target: targetLangName })}</h4>
+                <p className="atfp-error-message" style={{ marginBottom: '.5rem' }}>{sprintf(__("The page content will be saved as a draft after translating it into %(target)s. You can publish it after reviewing the translation.", 'automatic-translations-for-polylang'), { target: targetLangName })}</p>
             </div>
             <div className="atfp-translator-row">
                 {providers.map((provider) => (

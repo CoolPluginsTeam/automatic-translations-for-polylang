@@ -5,7 +5,7 @@ Plugin URI: https://coolplugins.net/
 Version: 1.3.4
 Author: Cool Plugins
 Author URI: https://coolplugins.net/
-Description: Streamline your Polylang experience with this plugin that not only duplicates content but also translates core and specific blocks across multiple languages.
+Description: AI Translation for Polylang simplifies your translation process by automatically translating all pages/posts content from one language to another.
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: automatic-translations-for-polylang

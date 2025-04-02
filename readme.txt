@@ -130,6 +130,13 @@ This plugin works with Gutenberg blocks and several popular third-party blocks (
 = Does the plugin translate all content on my website? =
 The plugin automatically translates the entire content within your Elementor widgets and Gutenberg blocks. It does not translate content outside of these blocks or widgets, such as custom widgets, shortcodes, or other plugins' content that doesn't utilize Gutenberg blocks or Elementor widgets.
 
+= Does this plugin support page & post sync for translations? =
+Currently, our plugin does not support automatic synchronization of pages and posts across multiple languages. This means updates made to the original content will not automatically appear in the translated versions.
+
+However, you can manually copy the original content into the translated page, and then use our inline translation feature to translate that content.
+
+We’re considering adding sync support in future updates based on user feedback.
+
 = How do I manage the translated content? =
 The translated content is managed within the WordPress editor, just like your original content. The plugin duplicates your content into other languages, which you can then later review and adjust as needed.
 
