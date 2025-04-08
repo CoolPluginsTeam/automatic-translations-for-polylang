@@ -48,7 +48,7 @@ const atfpUpdateMetaFields = (metaFields, service) => {
                     YoastSeoFields({ key: key, value: translatedMetaFields });
                 } else if (key.startsWith('rank_math_') && AllowedMetaFields[key].inputType === 'string') {
                     RankMathSeo({ key: key, value: translatedMetaFields });
-                } else if (key.startsWith('_seopress_') && AllowedMetaFields[key].inputT === 'string') {
+                } else if (key.startsWith('_seopress_') && AllowedMetaFields[key].inputType === 'string') {
                     elementor?.settings?.page?.model?.setExternalChange(key, translatedMetaFields);
                 }
             };
@@ -160,7 +160,6 @@ const updateElementorPage = ({ postContent, modalClose, service }) => {
 
     // Update Meta Fields
     atfpUpdateMetaFields(postContent.metaFields, service);
-    return;
     const elementorData = JSON.stringify(elementor.elements.toJSON());
 
     modalClose();
