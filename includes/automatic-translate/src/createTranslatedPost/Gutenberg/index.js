@@ -1,8 +1,8 @@
 import createBlocks from './createBlock';
 import { dispatch, select } from '@wordpress/data';
-import YoastSeoFields from './SeoMetaFields/YoastSeoFields';
-import RankMathSeo from './SeoMetaFields/RankMathSeo';
-import SeoPressFields from './SeoMetaFields/SeoPress';
+import YoastSeoFields from '../../component/TranslateSeoFields/YoastSeoFields';
+import RankMathSeo from '../../component/TranslateSeoFields/RankMathSeo';
+import SeoPressFields from '../../component/TranslateSeoFields/SeoPress';
 
 /**
  * Translates the post content and updates the post title, excerpt, and content.
@@ -43,12 +43,11 @@ const translatePost = (props) => {
             // Update yoast seo meta fields
             if (Object.keys(AllowedMetaFields).includes(key)) {
                 const translatedMetaFields = select('block-atfp/translate').getTranslatedString('metaFields', metaFieldsData[key][0], key, service);
-
-                if (key.startsWith('_yoast_wpseo_') && AllowedMetaFields[key].type === 'string') {
+                if (key.startsWith('_yoast_wpseo_') && AllowedMetaFields[key].inputType === 'string') {
                     YoastSeoFields({ key: key, value: translatedMetaFields });
-                } else if (key.startsWith('rank_math_') && AllowedMetaFields[key].type === 'string') {
+                } else if (key.startsWith('rank_math_') && AllowedMetaFields[key].inputType === 'string') {
                     RankMathSeo({ key: key, value: translatedMetaFields });
-                } else if (key.startsWith('_seopress_') && AllowedMetaFields[key].type === 'string') {
+                } else if (key.startsWith('_seopress_') && AllowedMetaFields[key].inputType === 'string') {
                     SeoPressFields({ key: key, value: translatedMetaFields });
                 } else {
                     editPost({ meta: { [key]: translatedMetaFields } });

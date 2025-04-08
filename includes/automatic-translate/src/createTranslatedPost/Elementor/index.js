@@ -1,5 +1,6 @@
 import { select } from '@wordpress/data';
-
+import YoastSeoFields from '../../component/TranslateSeoFields/YoastSeoFields';
+import RankMathSeo from '../../component/TranslateSeoFields/RankMathSeo';
 
 // Update widget content with translations
 const atfpUpdateWidgetContent = (translations) => {
@@ -34,6 +35,24 @@ const atfpUpdateWidgetContent = (translations) => {
 
     // After updating content, ensure that the changes are saved or published
     $e.internal('document/save/set-is-modified', { status: true });
+}
+
+const atfpUpdateMetaFields = (metaFields, service) => {
+    const AllowedMetaFields = select('block-atfp/translate').getAllowedMetaFields();
+
+        Object.keys(metaFields).forEach(key => {
+            // Update yoast seo meta fields
+            if (Object.keys(AllowedMetaFields).includes(key)) {
+                const translatedMetaFields = select('block-atfp/translate').getTranslatedString('metaFields', metaFields[key][0], key, service);
+                if (key.startsWith('_yoast_wpseo_') && AllowedMetaFields[key].inputType === 'string') {
+                    YoastSeoFields({ key: key, value: translatedMetaFields });
+                } else if (key.startsWith('rank_math_') && AllowedMetaFields[key].inputType === 'string') {
+                    RankMathSeo({ key: key, value: translatedMetaFields });
+                } else if (key.startsWith('_seopress_') && AllowedMetaFields[key].inputT === 'string') {
+                    elementor?.settings?.page?.model?.setExternalChange(key, translatedMetaFields);
+                }
+            };
+        });
 }
 
 // Find Elementor model by ID
@@ -134,11 +153,14 @@ const updateElementorPage = ({ postContent, modalClose, service }) => {
         }
     }
 
-    postContent.map(widget => storeSourceStrings(widget));
+    postContent.widgetsContent.map(widget => storeSourceStrings(widget));
 
     // Update widget content with translations
     atfpUpdateWidgetContent(translations);
 
+    // Update Meta Fields
+    atfpUpdateMetaFields(postContent.metaFields, service);
+    return;
     const elementorData = JSON.stringify(elementor.elements.toJSON());
 
     modalClose();
