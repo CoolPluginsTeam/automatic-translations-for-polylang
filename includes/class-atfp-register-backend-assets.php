@@ -140,7 +140,7 @@ class ATFP_Register_Backend_Assets
     public function enqueue_elementor_translate_assets()
     {
 
-    
+        $this->elementor_widget_translator_script();
 
         $page_translated = get_post_meta(get_the_ID(), 'atfp_elementor_translated', true);
         $parent_post_language_slug = get_post_meta(get_the_ID(), 'atfp_parent_post_language_slug', true);
@@ -226,5 +226,49 @@ class ATFP_Register_Backend_Assets
             'atfp_global_object',
             $data
         );
+    }
+
+    /**
+     * Enqueue the elementor widget translator script.
+     */
+    public function elementor_widget_translator_script()
+    {
+        if (defined('POLYLANG_VERSION')) {
+            if (function_exists('pll_current_language')) {
+                $current_language = pll_current_language();
+                $current_language_name = pll_current_language('name');
+            } else {
+                $current_language = '';
+                $current_language_name = '';
+            }
+
+            $asset = require_once ATFP_DIR_PATH . 'assets/elementor-widget-translator/index.asset.php';
+            wp_enqueue_script(
+                'atfp-elementor-widget-translator',
+                ATFP_URL . 'assets/elementor-widget-translator/index.js',
+                array_merge(
+                    $asset['dependencies'],
+                    [
+                        'backbone-marionette',
+                        'elementor-common',
+                        'elementor-web-cli',
+                        'elementor-editor-modules',
+                    ]
+                ),
+                $asset['version'],
+                true
+            );
+
+            if ($current_language && $current_language !== '') {
+                wp_localize_script(
+                    'atfp-elementor-widget-translator',
+                    'atfpElementorWidgetTranslator',
+                    array(
+                        'pageLanguage' => $current_language,
+                        'pageLanguageName' => $current_language_name,
+                    )
+                );
+            }
+        }
     }
 }
