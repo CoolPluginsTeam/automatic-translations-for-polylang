@@ -124,8 +124,8 @@ const GutenbergBlockSaveSource = (block, blockRules) => {
             blockAttributeContent(block[key], blockRules);
         }else if(key === 'metaFields'){
             Object.keys(block[key]).forEach(metaKey => {
-                // Store yoast seo meta fields
-                if(Object.keys(AllowedMetaFields).includes(metaKey) && AllowedMetaFields[metaKey].type === 'string'){
+                // Store meta fields
+                if(Object.keys(AllowedMetaFields).includes(metaKey) && AllowedMetaFields[metaKey].inputType === 'string'){
                     if('' !== block[key][metaKey][0] && undefined !== block[key][metaKey][0]){
                         dispatch('block-atfp/translate').metaFieldsSaveSource(metaKey, block[key][metaKey][0]);
                     }

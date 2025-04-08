@@ -131,12 +131,6 @@ class ATFP_Register_Backend_Assets
                         'parent_post_id'     => $from_post_id,
                     );
 
-                    if(!isset(PLL()->options['sync']) || (isset(PLL()->options['sync']) && !in_array('post_meta', PLL()->options['sync']))){
-                        $data['postMetaSync'] = 'false';
-                    }else{
-                        $data['postMetaSync'] = 'true';
-                    }
-
                     $this->enqueue_automatic_translate_assets(pll_get_post_language($from_post_id, 'slug'), $lang, 'gutenberg', $data);
                 }
             }
@@ -164,9 +158,12 @@ class ATFP_Register_Backend_Assets
             return;
         }
 
+        $meta_fields=get_post_meta($current_post_id);
+
         $data = array(
             'update_elementor_data' => 'atfp_update_elementor_data',
             'elementorData' => $elementor_data,
+            'metaFields' => $meta_fields,
         );
 
         wp_enqueue_style('atfp-elementor-translate', ATFP_URL . 'assets/css/atfp-elementor-translate.min.css', array(), ATFP_V);
@@ -217,6 +214,12 @@ class ATFP_Register_Backend_Assets
             'translation_data'   => is_array($translation_data) ? (function() use (&$translation_data) { unset($translation_data['data']); return $translation_data; })() : array(),
             'pro_version_url'=>esc_url('https://coolplugins.net/product/ai-translation-for-polylang-pro/'),
         ), $extra_data);
+
+        if(!isset(PLL()->options['sync']) || (isset(PLL()->options['sync']) && !in_array('post_meta', PLL()->options['sync']))){
+            $data['postMetaSync'] = 'false';
+        }else{
+            $data['postMetaSync'] = 'true';
+        }
 
         wp_localize_script(
             'atfp-automatic-translate',
