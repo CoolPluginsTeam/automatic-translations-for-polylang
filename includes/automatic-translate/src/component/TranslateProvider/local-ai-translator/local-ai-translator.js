@@ -69,7 +69,7 @@ class ChromeAiTranslator {
             return message;
         }
         // Check if the translation API is available
-        if (!('translation' in self && 'createTranslator' in self.translation)) {
+        if (!('translation' in self && 'createTranslator' in self.translation) && !('ai' in self && 'translator' in self.ai )) {
             const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">
                 <h4>Steps to Enable the Translator AI Modal:</h4>
                 <ol>
@@ -112,10 +112,7 @@ class ChromeAiTranslator {
         }
 
         // Check if translation can be performed
-        const status = await translation.canTranslate({
-            sourceLanguage: sourceLanguage,
-            targetLanguage: targetLanguage,
-        });
+        const status = await ChromeAiTranslator.languagePairAvality(sourceLanguage, targetLanguage);
 
         // Handle case for language pack after download
         if (status === "after-download") {
@@ -150,6 +147,45 @@ class ChromeAiTranslator {
         }
 
         return true;
+    }
+
+    static languagePairAvality=async (source, target)=>{
+
+        if(('translation' in self && 'createTranslator' in self.translation)){
+            const status = await self.translation.canTranslate({
+                sourceLanguage: source,
+                targetLanguage: target,
+            });
+
+            return status;
+        }else if(('ai' in self && 'translator' in self.ai )){
+            const translatorCapabilities = await self.ai.translator.capabilities();
+            const status = await translatorCapabilities.languagePairAvailable(source, target);
+
+            return status;
+        }
+
+        return false;
+    }
+
+    AITranslator=async (targetLanguage)=>{
+        if(('translation' in self && 'createTranslator' in self.translation)){
+            const translator=await self.translation.createTranslator({
+                sourceLanguage: this.sourceLanguage,
+                targetLanguage,
+            });
+
+            return translator;
+        }else if(('ai' in self && 'translator' in self.ai )){
+            const translator = await self.ai.translator.create({
+                sourceLanguage: this.sourceLanguage,
+                targetLanguage,
+              });
+
+            return translator;
+        }
+
+        return false;
     }
 
     // Method to initialize the translation process
@@ -224,10 +260,7 @@ class ChromeAiTranslator {
         this.totalStringCount = Array.from(this.translateStringEle).map(ele => ele.innerText.length).reduce((a, b) => a + b, 0);
 
         // Create a translator instance
-        this.translator = await self.translation.createTranslator({
-            sourceLanguage: this.sourceLanguage,
-            targetLanguage: langCode,
-        });
+        this.translator = await this.AITranslator(langCode);
 
         // Start translating if there are strings to translate
         if (this.translateStringEle.length > 0) {
