@@ -305,7 +305,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
                 $post_id = intval( $_POST['post_id'] );
                 $elementor_data = sanitize_textarea_field( wp_unslash( $_POST['elementor_data'] ) ); // Sanitize the JSON data
                 update_post_meta( $post_id, '_elementor_data', $elementor_data );
-				update_post_meta($post_id, 'atfp_elementor_translated', 'true');
+				update_post_meta($post_id, '_atfp_elementor_translated', 'true');
 				delete_post_meta( $post_id, 'atfp_parent_post_language_slug');
                 wp_send_json_success( 'Elementor data updated.' );
 				exit;

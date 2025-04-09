@@ -142,7 +142,7 @@ class ATFP_Register_Backend_Assets
 
         $this->elementor_widget_translator_script();
 
-        $page_translated = get_post_meta(get_the_ID(), 'atfp_elementor_translated', true);
+        $page_translated = get_post_meta(get_the_ID(), '_atfp_elementor_translated', true);
         $parent_post_language_slug = get_post_meta(get_the_ID(), 'atfp_parent_post_language_slug', true);
 
         if((!empty($page_translated) && $page_translated === 'true') || empty($parent_post_language_slug)){
