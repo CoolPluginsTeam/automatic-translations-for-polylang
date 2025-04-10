@@ -6,7 +6,10 @@ import StringPopUpBody from "./body";
 import StringPopUpFooter from "./footer";
 
 const popStringModal = (props) => {
-    const translateData = select('block-atfp/translate').getTranslationInfo().translateData[props.service] || false;
+
+    let selectedService = props.service;
+
+    const translateData = select('block-atfp/translate').getTranslationInfo().translateData[selectedService] || false;
     const translateStatus=translateData?.translateStatus || false;
 
     const [popupVisibility, setPopupVisibility] = useState(true);
@@ -23,9 +26,7 @@ const popStringModal = (props) => {
 
         if (serviceProvider === 'yandex') {
             return 'Yandex Translate';
-        } else if (serviceProvider === 'google') {
-            return 'Google Translate';
-        } else if (serviceProvider === 'localAiTranslator') {
+        }else if (serviceProvider === 'localAiTranslator') {
             return 'Chrome AI Translator';
         }
         return serviceProvider;
@@ -62,20 +63,22 @@ const popStringModal = (props) => {
         setPopupVisibility(false);
     }
 
-    const translateStatusHandler = () => {
-        const characterCount = select('block-atfp/translate').getTranslationInfo().translateData[props.service]?.targetCharacterCount || 0;
+    const translateStatusHandler = (status) => {
+        let service = props.service;
 
+        const characterCount = select('block-atfp/translate').getTranslationInfo().translateData[service]?.targetCharacterCount || 0;
         setCharacterCount(characterCount);
-        setTranslatePending(false);
+        setTranslatePending(status);
     }
 
     const updatePostDataHandler = () => {
         const postContent = refPostData;
         const modalClose = () => setPopupVisibility(false);
+        let service=props.service;
 
-        props.translatePost({ postContent: postContent, modalClose: modalClose, service: props.service });
+        props.translatePost({ postContent: postContent, modalClose: modalClose, service: service });
         props.pageTranslate(true);
-        updateTranslateData({ provider: props.service, sourceLang: props.sourceLang, targetLang: props.targetLang, postId: props.currentPostId });
+        updateTranslateData({ provider: service, sourceLang: props.sourceLang, targetLang: props.targetLang, postId: props.currentPostId });
     }
 
     useEffect(() => {

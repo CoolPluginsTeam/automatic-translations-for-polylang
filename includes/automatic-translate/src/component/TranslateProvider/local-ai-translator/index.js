@@ -25,7 +25,7 @@ const localAiTranslator = async (props) => {
     const completeTranslation = () => {
         StoreTimeTaken({ prefix: 'localAiTranslator', start: startTime, end: new Date().getTime(), translateStatus: true });
         setTimeout(() => {
-            translateStatusHandler();
+            translateStatusHandler(false);
             jQuery("#atfp_strings_model .atfp_translate_progress").fadeOut("slow");
         }, 4000);
     }

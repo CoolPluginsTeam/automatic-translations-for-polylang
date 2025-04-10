@@ -6,7 +6,7 @@ import ChromeLocalAiTranslator from "../component/TranslateProvider/local-ai-tra
 import SettingModalHeader from "./header";
 import SettingModalBody from "./body";
 import SettingModalFooter from "./footer";
-import { sprintf, __ } from "@wordpress/i18n";
+import { __ } from "@wordpress/i18n";
 import ErrorModalBox from "../component/ErrorModalBox";
 
 const SettingModal = (props) => {
@@ -165,13 +165,13 @@ const SettingModal = (props) => {
                             targetLangName={targetLangName}
                         />
                         <SettingModalBody
-                            yandexSupport={yandexSupport}
+                            yandexDisabled={!yandexSupport}
                             fetchContent={fetchContent}
                             imgFolder={imgFolder}
                             targetLangName={targetLangName}
                             postType={props.postType}
                             sourceLangName={sourceLangName}
-                            chromeAiBtnDisabled={chromeAiBtnDisabled}
+                            localAiTranslatorDisabled={chromeAiBtnDisabled}
                             openErrorModalHandler={openErrorModalHandler}
                         />
                         <SettingModalFooter

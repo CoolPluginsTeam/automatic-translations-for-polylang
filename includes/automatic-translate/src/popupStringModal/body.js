@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import FilterTargetContent from "../component/FilterTargetContent";
 import { __ } from "@wordpress/i18n";
 import { select } from "@wordpress/data";
@@ -12,6 +12,23 @@ const StringPopUpBody = (props) => {
     const { service: service } = props;
     const translateContent = select("block-atfp/translate").getTranslationEntry();
     const StringModalBodyNotice = props.stringModalBodyNotice;
+    const [onDestroy, setOnDestroy] = useState([]);
+
+    const updateDestroyHandler = (callback) => {
+        setOnDestroy(prev => [...prev, callback]);
+    }
+
+    useEffect(() => {
+        return () => {
+            if (onDestroy.length > 0) {
+                onDestroy.forEach(callback => {
+                    if (typeof callback === 'function') {
+                        callback();
+                    }
+                });
+            }
+        }
+    }, [onDestroy]);
 
     useEffect(() => {
 
@@ -30,7 +47,8 @@ const StringPopUpBody = (props) => {
         const translateContent = wp.data.select('block-atfp/translate').getTranslationEntry();
 
         if (translateContent.length > 0 && props.postDataFetchStatus) {
-            TranslateService[service]({ sourceLang: props.sourceLang, targetLang: props.targetLang, translateStatusHandler: props.translateStatusHandler, ID: id, translateStatus: props.translateStatus, modalRenderId: props.modalRender });
+            const ServiceSetting = TranslateService({ Service: service });
+            ServiceSetting.Provider({ sourceLang: props.sourceLang, targetLang: props.targetLang, translateStatusHandler: props.translateStatusHandler, ID: id, translateStatus: props.translateStatus, modalRenderId: props.modalRender, destroyUpdateHandler: updateDestroyHandler });
         }
     }, [props.modalRender, props.postDataFetchStatus]);
 
@@ -40,17 +58,11 @@ const StringPopUpBody = (props) => {
                 <>
                     {StringModalBodyNotice && <div className="atfp-body-notice-wrapper"><StringModalBodyNotice /></div>}
                     <div className="atfp_translate_progress" key={props.modalRender}>{__("Automatic translation is in progress....", 'automatic-translations-for-polylang')}<br />{__("It will take few minutes, enjoy ☕ coffee in this time!", 'automatic-translations-for-polylang')}<br /><br />{__("Please do not leave this window or browser tab while translation is in progress...", 'automatic-translations-for-polylang')}</div>
-                    <div className={`translator-widget ${service}`} style={{ display: `${props.service === 'localAiTranslator' ? 'flex' : 'block'}` }}>
-                        {props.service === 'localAiTranslator' ?
-                            <h3 className="choose-lang">{__("Translate Using Chrome built-in API", 'automatic-translations-for-polylang')} <span className="dashicons-before dashicons-translation"></span></h3>
-                            :
-                            <h3 className="choose-lang">{__("Choose language", 'automatic-translations-for-polylang')} <span className="dashicons-before dashicons-translation"></span></h3>
-                        }
+                    <div className={`translator-widget ${service}`} style={{ display: `${['localAiTranslator', 'ai_modal'].includes(props.service) ? 'flex' : 'block'}` }}>
+                        <h3 className="choose-lang">{TranslateService({ Service: props.service }).heading} <span className="dashicons-before dashicons-translation"></span></h3>
+
                         <div className={`atfp_translate_element_wrapper ${props.translateStatus ? 'translate-completed' : ''}`}>
-                            {service === 'localAiTranslator' ?
-                                <div id="atfp_localAiTranslator_translate_element"></div>
-                                :
-                                <div id="atfp_yandex_translate_element"></div>}
+                            <div id={`atfp_${props.service}_translate_element`}></div>
                         </div>
                     </div>
 
@@ -80,6 +92,7 @@ const StringPopUpBody = (props) => {
                                                                         <FilterTargetContent service={props.service} content={data.source} totalString={350} currentIndex={index + 1} contentKey={data.id} />
                                                                     </td>
                                                                 }
+
                                                             </tr>
                                                         </>
                                                     }
