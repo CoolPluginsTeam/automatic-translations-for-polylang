@@ -2,9 +2,9 @@
 Contributors: narinder-singh,satindersingh,coolplugins
 Tags: Polylang, AI Translation, Content Translation, Translate
 Requires at least: 5.0
-Tested up to: 6.7.2
+Tested up to: 6.8
 Requires PHP: 5.6
-Stable tag: 1.3.5
+Stable tag: 1.3.6
 Author URI: https://coolplugins.net/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -161,6 +161,14 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+
+= Version 1.3.6 | 10 April 2025 =
+* **Added:** SEO fields translation support on elementor pages.
+* **Added:** Elementor inline translation feature.
+* **Added:** Wordpress core image block caption translation support.
+* **Fixed:** Fixed Chrome Local AI translation not working with latest version.
+* **Fixed:** Elementor translation button visibility issue.
+* **Tested up to:** WordPress 6.8.
 
 = Version 1.3.5 | 02 April 2025 =
 * **Enhanced:** Added FAQ section for Page/Post sync for better user support.
