@@ -26,25 +26,25 @@
     animation-name: animatetopsetting;
     animation-duration: 0.6s;
     animation-fill-mode: forwards;
-    padding-block: 1rem;
+    padding-block: 16px;
     color: black;
 }
 
 #atfp-modal-open-warning-wrapper .modal-content {
-    padding: 1rem;
+    padding: 16px;
     text-align: center;
 }
 
 #atfp-modal-open-warning-wrapper .modal-content p {
-    font-size: 1.2rem;
+    font-size: 19.2px;
     font-weight: 500;
 }
 
 #atfp-modal-open-warning-wrapper .modal-content button {
-    font-size: 1rem;
+    font-size: 16px;
     font-weight: 500;
-    padding: .3rem .5rem;
-    margin-inline: .3rem;
+    padding: 4.8px 8px;
+    margin-inline: 4.8px;
     cursor: pointer;
     opacity: 0.8;
 }
@@ -57,13 +57,13 @@
     background-color: #28a745;
     color: white;
     border: 1px solid #28a745;
-    padding: 0.375rem 0.75rem;
+    padding: 6px 12px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 1rem;
+    font-size: 16px;
     line-height: 1.5;
-    border-radius: 0.25rem;
+    border-radius: 4px;
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
@@ -71,13 +71,13 @@
     background-color: #dc3545;
     color: white;
     border: 1px solid #dc3545;
-    padding: 0.375rem 0.75rem;
+    padding: 6px 12px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 1rem;
+    font-size: 16px;
     line-height: 1.5;
-    border-radius: 0.25rem;
+    border-radius: 4px;
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
@@ -118,6 +118,7 @@
     font-weight: 600;
     line-height: 2;
     margin: 0;
+    color: black;
 }   
 
 #atfp-setting-modal .atfp-error-modal-box-header .atfp-error-modal-box-close{
@@ -127,7 +128,7 @@
     height: 30px!important;
     width: 20px!important;
     position: absolute;
-    font-size: 2rem;
+    font-size: 32px;
     font-weight: bold;
     color: #646970;
     cursor: pointer;
@@ -147,7 +148,7 @@
     margin-top: 0;
     margin-bottom: 24px;
     list-style-type: decimal;
-    margin-left: 2em;
+    margin-left: 32px;
     box-sizing: border-box;
     padding: 0;
 }
@@ -164,7 +165,7 @@
 
 #atfp-setting-modal .atfp-error-modal-box-body p *{
     color:  red !important;
-    font-size: 1rem;
+    font-size: 16px;
     box-shadow: unset;
     outline: unset;
     border: unset;
@@ -192,7 +193,7 @@
     margin-top: 0;
     padding: 16px;
     text-align: end;
-    margin-right: .4rem;
+    margin-right: 6.4px;
 }
 
 #atfp-setting-modal .atfp-error-modal-box-footer .atfp-error-modal-box-close{
@@ -224,8 +225,8 @@
 }
 
 #atfp-setting-modal .atfp-error-message {
-     margin: .3rem 0 .8rem 0 !important;
-     padding: .5rem;
+     margin: 4.8px 0 12.8px 0 !important;
+     padding: 8px;
      font-weight: 500;
      font-size: 13px;
      line-height: 1.2;
@@ -251,7 +252,7 @@
     height: 30px!important;
     width: 20px!important;
     position: absolute;
-    font-size: 2rem;
+    font-size: 32px;
     font-weight: bold;
     color: #646970;
     cursor: pointer;
@@ -273,7 +274,7 @@
 
 #atfp-setting-modal .atfp-translator-row {
     display: flex;
-    gap: 1.3rem;
+    gap: 21.3px;
     flex-wrap: wrap;
     justify-content: space-between;
 }
@@ -298,11 +299,11 @@
 }
 
 #atfp-setting-modal .atfp-translator-row:has(> :nth-child(2)) .atfp-translator-column {
-    width: calc(50% - (1.3rem / 2));
+    width: calc(50% - (21.3px / 2));
 }
 
 #atfp-setting-modal .atfp-translator-row:has(> :nth-child(3)) .atfp-translator-column {
-    width: calc(33% - (2.3rem / 3));
+    width: calc(33% - (24.8px / 3));
 }
 
 #atfp-setting-modal .atfp-translator-row .atfp-translator-header {
@@ -321,8 +322,8 @@
     margin-bottom: 10px;
     display: inline-block;
     color: #000;
-    font-size: 1rem;
-    line-height: 1.4em;
+    font-size: 16px;
+    line-height: 22.4px;
 }
 
 #atfp-setting-modal .atfp-translator-row .atfp-translator-body a{
@@ -353,7 +354,7 @@
     background: #4664eb;
     border-radius: 5px;
     font-family: inherit;
-    font-size: 1em;
+    font-size: 13px;
     border-color: #2271b1;
     color: #fff;
     text-decoration: none;
@@ -383,6 +384,7 @@
     margin: 0;
     padding: 0 10px;
     border-radius: 5px;
+    font-size: 13px;
 }
 
 #atfp-setting-modal .atfp-translator-row .atfp-translator-footer{
@@ -408,12 +410,12 @@
     background: #ff2d2d;
     border-radius: 5px;
     font-family: inherit;
-    font-size: 1em;
+    font-size: 13px;
     border-color: red;
     color: #fff;
     text-decoration: none;
     text-shadow: none;
-    margin-top: .5rem;
+    margin-top: 8px;
     transition: background 0.3s ease;
 }
 
@@ -428,7 +430,7 @@
     margin-top: 0;
     padding: 16px;
     text-align: end;
-    margin-right: .4rem;
+    margin-right: 6.4px;
 }
 
 #atfp-setting-modal .modal-footer .atfp-setting-close{
@@ -458,8 +460,8 @@
     box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
     border: 1px solid #c3c4c7;
     border-left-width: 4px;
-    padding: .3rem;
-    margin-top: .5rem;
+    padding: 4.8px;
+    margin-top: 8px;
 }
 
 #atfp_strings_model .atfp-notice p {
@@ -545,22 +547,22 @@
 
 /* 
 #atfp-setting-modal .modal-header * {
-    margin-bottom: 1rem;
+    margin-bottom: 16px;
 }
 
 #atfp-setting-modal .modal-header h2 {
-    font-size: 1.1rem;
+    font-size: 1.16px;
     font-weight: 700;
     color: black;
     margin: 0;
     padding: 0;
-    margin-bottom: 1rem;
+    margin-bottom: 16px;
 }
 
 #atfp-setting-modal .modal-header h4 {
     background-color: #f1f1f1;
     margin: 0;
-    padding: .5rem;
+    padding: 8px;
     margin-bottom: 0px;
     color: black;
     font-size: 13px;
@@ -570,8 +572,8 @@
 
 #atfp-setting-modal .modal-header .atfp-error-message {
     background-color: #f1f1f1;
-    margin: .5rem 0 .5rem 0;
-    padding: .5rem;
+    margin: 8px 0 8px 0;
+    padding: 8px;
     font-weight: 500;
     font-size: 13px;
     line-height: 1.2;
@@ -579,7 +581,7 @@
 
 #atfp-setting-modal .modal-content>*:not(hr) {
     padding: 0;
-    padding-inline: 1rem;
+    padding-inline: 16px;
     margin: 0;
 }
 
@@ -588,14 +590,14 @@
     line-height: 1.1;
     font-weight: 600;
     padding: 0;
-    padding-inline: 1rem;
+    padding-inline: 16px;
     margin: 0;
 }
 
 #atfp-setting-modal .modal-content .inputGroup{
     margin: 0;
     padding: 0;
-    padding-inline: 1rem;
+    padding-inline: 16px;
 }
 
 #atfp-setting-modal .modal-content .inputGroup a{
@@ -618,7 +620,7 @@
 #atfp-setting-modal .modal-content ul{
     margin: 0;
     padding: 0;
-    padding-inline: 1rem;
+    padding-inline: 16px;
 }
 
 #atfp-setting-modal .modal-content ul li{
@@ -642,7 +644,7 @@
 }
 
 #atfp-setting-modal .modal-content .atfp-service-btn {
-    margin-block: .3rem;
+    margin-block: 4.8px;
     background-color: #2271b1;
     color: white;
     border: none;
@@ -657,7 +659,7 @@
 
 #atfp-setting-modal .modal-content .atfp-service-btn[disabled] {
     margin: 0;
-    margin-block: .3rem;
+    margin-block: 4.8px;
     color: #a7aaad !important;
     background: #f6f7f7 !important;
     border-color: #dcdcde !important;
@@ -695,10 +697,10 @@
 /* The Close Button */
 
 button.atfp-setting-close {
-    margin-top: .9rem;
+    margin-top: 14.4px;
     font-weight: 500;
-    font-size: 1rem;
-    padding: .3rem .4rem;
+    font-size: 16px;
+    padding: 4.8px 6.4px;
     cursor: pointer;
     opacity: 0.7;
     background: #f4f4f4;
@@ -873,6 +875,7 @@ body.rtl #atfp-setting-modal .modal-header .close {
     max-height: calc(100vh - 330px - var(--atfp-notice-wrapper-height, 0px));
     width: 100%;
     position: relative;
+    color: #3c3c3c;
 }
 
 #atfp_strings_model .atfp_string_container.atfp_empty_string {
@@ -883,11 +886,11 @@ body.rtl #atfp-setting-modal .modal-header .close {
 
 #atfp_strings_model .atfp_string_container.atfp_empty_string p {
     text-align: center;
-    font-size: 2rem;
+    font-size: 32px;
     font-weight: bolder;
     color: #5cb85c;
     background: whitesmoke;
-    padding: 1rem;
+    padding: 16px;
 }
 
 #atfp_strings_model .modal-footer {
@@ -903,7 +906,7 @@ body.rtl #atfp-setting-modal .modal-header .close {
 #atfp_strings_model .notice.atfp_string_count {
     top: unset;
     left: unset;
-    font-size: 1rem;
+    font-size: 16px;
     background: transparent;
     border-width: 0px;
     margin-left: 0px;
@@ -969,7 +972,7 @@ body.rtl #atfp-setting-modal .modal-header .close {
     display: flex;
     justify-content: start;
     align-items: start;
-    column-gap: 0.5rem;
+    column-gap: 8px;
 }
 
 #atfp_strings_model .atfp_translate_element_wrapper>button {
@@ -978,7 +981,7 @@ body.rtl #atfp-setting-modal .modal-header .close {
 }
 
 #atfp_strings_model .atfp_translate_element_wrapper #yt-widget .yt-wrapper_align_right {
-    margin-bottom: 1rem;
+    margin-bottom: 16px;
 }
 
 #atfp_strings_model .modal-footer {
@@ -1010,8 +1013,8 @@ body.rtl #atfp-setting-modal .modal-header .close {
 
 #atfp_strings_model.atfp_fetch_error span.atfp_string_error_msg {
     color: red;
-    font-size: 1.5rem;
-    padding: 2rem;
+    font-size: 24px;
+    padding: 32px;
 }
 
 body>div.skiptranslate iframe.skiptranslate[frameborder][src][style="visibility:visible"] {
@@ -1031,7 +1034,7 @@ body>div.skiptranslate iframe.skiptranslate[frameborder][src][style="visibility:
 }
 
 .atfp-review-meta-box p a {
-    margin-top: .5rem;
+    margin-top: 8px;
 }
 
 .atfp-review-meta-box p a span {
@@ -1079,9 +1082,9 @@ body>div.skiptranslate iframe.skiptranslate[frameborder][src][style="visibility:
 
 /* Chrome AI Translator Widget */
 /* #atfp-setting-modal .inputGroup #local_ai_translator_btn ~ a{
-    margin-top: .2rem 0 .3rem;
+    margin-top: .32px 0 4.8px;
     text-decoration: none;
-    font-size: 1.1rem;
+    font-size: 1.16px;
     display: inline-flex;
     color: #000;
     font-weight: 600;
@@ -1109,7 +1112,7 @@ body>div.skiptranslate iframe.skiptranslate[frameborder][src][style="visibility:
 
 #atfp_strings_model .react-loading-skeleton-atfp {
     height: calc(100vh - 235px - var(--atfp-notice-wrapper-height, 0px)) !important;
-    margin-block: 1rem;
+    margin-block: 16px;
 }
 
 
@@ -1129,7 +1132,7 @@ body>div.skiptranslate iframe.skiptranslate[frameborder][src][style="visibility:
     z-index: 9999;
     opacity: 0;
     transition: opacity 0.5s ease;
-    padding: 1rem;
+    padding: 16px;
     color: black;
 }
 
@@ -1153,7 +1156,7 @@ body>div.skiptranslate iframe.skiptranslate[frameborder][src][style="visibility:
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: .9rem 10px;
+    padding: 14.4px 10px;
     border-bottom: 1px solid black;
 }
 
@@ -1176,14 +1179,14 @@ body>div.skiptranslate iframe.skiptranslate[frameborder][src][style="visibility:
 
 #atfp-pro-notice-wrapper .atfp-pro-notice .atfp-notice-content {
     margin: 10px;
-    font-size: 1rem;
+    font-size: 16px;
     color: #3c3c3c;
-    line-height: 1.5rem;
+    line-height: 18px;
 }
 
 #atfp-pro-notice-wrapper .atfp-pro-notice .atfp-notice-content p {
-    font-size: 1rem;
-    line-height: 1.5rem;
+    font-size: 16px;
+    line-height: 18px;
     margin: 0px !important;
     padding: 0px !important;
 }
@@ -1222,7 +1225,7 @@ body>div.skiptranslate iframe.skiptranslate[frameborder][src][style="visibility:
     position: absolute;
     background: #5cb85c;
     color: #fff !important;
-    padding: 0.2rem .5rem;
+    padding: 3.2px 8px;
     border-radius: 4px;
     top: 0;
     left: 20px;
@@ -1278,7 +1281,7 @@ body>div.skiptranslate iframe.skiptranslate[frameborder][src][style="visibility:
     }
 
     #atfp-setting-modal .atfp-translator-row:has(> :nth-child(2)) .atfp-translator-column{
-        width: calc(50% - (1.3rem / 2)) !important;
+        width: calc(50% - (21.3px / 2)) !important;
     }
 }
 

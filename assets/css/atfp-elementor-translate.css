@@ -16,9 +16,9 @@
 
     /* Footer Close Button */
     button.atfp-setting-close {
-        margin-top: .9rem;
-        font-size: 1rem;
-        padding: .1rem .4rem;
+        margin-top: 14.4px;
+        font-size: 16px;
+        padding: 1.6px 6.4px;
         cursor: pointer;
         opacity: .7;
     }
