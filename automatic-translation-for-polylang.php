@@ -61,6 +61,119 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			register_activation_hook( ATFP_FILE, array( $this, 'atfp_activate' ) );
 			register_deactivation_hook( ATFP_FILE, array( $this, 'atfp_deactivate' ) );
 			add_action('init', array($this, 'load_plugin_textdomain'));
+			add_action( 'admin_menu', array( $this, 'atfp_add_submenu_page' ), 11 );
+			add_action( 'admin_enqueue_scripts', array( $this, 'atfp_set_dashboard_style' ) );
+
+		}
+
+		/**
+		 * Enqueue editor CSS for the supported blocks page.
+		 */
+		public function atfp_set_dashboard_style( $hook ) {
+			if(isset($_GET['page']) && $_GET['page'] == 'polylang-atfp-dashboard') {
+				wp_enqueue_style( 'atfp-dashboard-style', ATFP_URL . 'admin/atfp-dashboard/css/admin-styles.css',null, ATFP_V, 'all' );
+			}
+		}
+
+		/**
+		 * Add submenu page under the Polylang menu.
+		 */
+		public function atfp_add_submenu_page() {
+			add_submenu_page(
+				'mlang', // Parent slug
+				__( 'Polylang - Auto Translate Addon', 'automatic-translations-for-polylang' ), // Page title
+				__( 'Polylang - Auto Translate Addon', 'automatic-translations-for-polylang' ), // Menu title
+				'manage_options', // Capability
+				'polylang-atfp-dashboard', // Menu slug
+				array( $this, 'atfp_render_dashboard_page' ) // Callback function
+			);
+		}
+
+		public function atfp_render_dashboard_page() {
+			$text_domain = 'ATFP';
+			$file_prefix = 'admin/atfp-dashboard/views/';
+			
+			$valid_tabs = [
+				'dashboard'       => __('Dashboard', $text_domain),
+				'ai-translations' => __('AI Translations', $text_domain),
+				'settings'        => __('Settings', $text_domain),
+				'license'         => __('License', $text_domain),
+				'free-vs-pro'     => __('Free vs Pro', $text_domain)
+			];
+	
+			// Get current tab with fallback
+	
+			$tab 			= isset($_GET['tab']) ? sanitize_key($_GET['tab']) : 'dashboard';
+			$current_tab 	= array_key_exists($tab, $valid_tabs) ? $tab : 'dashboard';
+			
+			// Action buttons configuration
+			$buttons = [
+				[
+					'url'  => 'https://coolplugins.net/product/automatic-translate-addon-for-translatepress-pro/?utm_source=tpa_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=dashboard_header#pricing',
+					'img'  => 'upgrade-now.svg',
+					'alt'  => __('premium', $text_domain),
+					'text' => __('Unlock Pro Features', $text_domain)
+				],
+				[
+					'url' => 'https://docs.coolplugins.net/docs/automatic-translate-addon-for-translatepress-pro/?utm_source=tpa_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_header',
+					'img' => 'document.svg',
+					'alt' => __('document', $text_domain)
+				],
+				[
+					'url' => 'https://coolplugins.net/support/?utm_source=tpa_plugin&utm_medium=inside&utm_campaign=support&utm_content=dashboard_header',
+					'img' => 'contact.svg',
+					'alt' => __('contact', $text_domain)
+				]
+			];
+	
+			// Start HTML output
+			?>
+			<div class="atfp-dashboard-wrapper">
+				<div class="atfp-dashboard-header">
+					<div class="atfp-dashboard-header-left">
+						<img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/loco-addon-logo.svg'); ?>" 
+							alt="<?php esc_attr_e('Polylang Addon Logo', $text_domain); ?>">
+						<div class="atfp-dashboard-tab-title">
+							<span>↳</span> <?php echo esc_html($valid_tabs[$current_tab]); ?>
+						</div>
+					</div>
+					<div class="atfp-dashboard-header-right">
+						<span><?php esc_html_e('Auto translate pages and posts.', $text_domain); ?></span>
+						<?php foreach ($buttons as $button): ?>
+							<a href="<?php echo esc_url($button['url']); ?>" 
+							class="atfp-dashboard-btn" 
+							target="_blank"
+							aria-label="<?php echo isset($button['alt']) ? esc_attr($button['alt']) : ''; ?>">
+								<img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/' . $button['img']); ?>" 
+									alt="<?php echo esc_attr($button['alt']); ?>">
+								<?php if (isset($button['text'])): ?>
+									<span><?php echo esc_html($button['text']); ?></span>
+								<?php endif; ?>
+							</a>
+						<?php endforeach; ?>
+					</div>
+				</div>
+				
+				<nav class="nav-tab-wrapper" aria-label="<?php esc_attr_e('Dashboard navigation', $text_domain); ?>">
+					<?php foreach ($valid_tabs as $tab_key => $tab_title): ?>
+						<a href="?page=polylang-atfp-dashboard&tab=<?php echo esc_attr($tab_key); ?>" 
+						class="nav-tab <?php echo esc_attr($tab === $tab_key ? 'nav-tab-active' : ''); ?>">
+							<?php echo esc_html($tab_title); ?>
+						</a>
+					<?php endforeach; ?>
+				</nav>
+				
+				<div class="tab-content">
+					<?php
+					require_once ATFP_DIR_PATH . $file_prefix . $tab . '.php';
+					require_once ATFP_DIR_PATH . $file_prefix . 'sidebar.php';
+					
+					?>
+				</div>
+				
+				<?php require_once ATFP_DIR_PATH . $file_prefix . 'footer.php'; ?>
+			</div>
+			<?php
 		}
 
 		public function atfp_load_files() {

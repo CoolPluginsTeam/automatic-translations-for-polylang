@@ -45,7 +45,7 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 		 * Constructor for the ATFP_Supported_Blocks class.
 		 */
 		private function __construct() {
-			add_action( 'admin_menu', array( $this, 'atfp_add_submenu_page' ), 11 );
+			add_action( 'admin_menu', array( $this, 'atfp_add_submenu_page' ), 12 );
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_editor_assets' ) );
 
 		}
@@ -68,7 +68,7 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 			add_submenu_page(
 				'mlang', // Parent slug
 				__( 'Support Blocks', 'automatic-translations-for-polylang' ), // Page title
-				__( 'Support Blocks', 'automatic-translations-for-polylang' ), // Menu title
+				__( '↳ Support Blocks', 'automatic-translations-for-polylang' ), // Menu title
 				'manage_options', // Capability
 				'atfp-supported-blocks', // Menu slug
 				array( $this, 'atfp_render_support_blocks_page' ) // Callback function
