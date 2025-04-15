@@ -13,7 +13,7 @@
     <p><?php _e('Your license key provides access to pro version updates and support.', $text_domain); ?></p>
     
     <p>
-        <?php _e('You\'re using <strong>Automatic Translate Addon for Loco Translate (free)</strong> - no license needed. Enjoy! 😊', $text_domain); ?>
+        <?php _e('You\'re using <strong>AI Translation For Polylang (free)</strong> - no license needed. Enjoy! 😊', $text_domain); ?>
     </p>
 
     <div class="atfp-dashboard-upgrade-box">

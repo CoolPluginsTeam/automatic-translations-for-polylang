@@ -30,6 +30,11 @@
                     'name' => 'OpenAI',
                     'doc_url' => 'https://locoaddon.com/docs/how-to-generate-open-api-key/',
                     'placeholder' => 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+                ],
+                'openrouter' => [
+                    'name' => 'Openrouter',
+                    'doc_url' => 'https://locoaddon.com/docs/how-to-generate-open-api-key/',
+                    'placeholder' => 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
                 ]
             ];
 
@@ -50,6 +55,18 @@
                     esc_html($settings['name'])
                 );
             endforeach; ?>
+
+            <!-- Add Context Aware textarea -->
+            <label for="context-aware">
+                <?php _e('Context Aware', $text_domain); ?>
+            </label>
+            <textarea 
+                id="context-aware" 
+                rows="3" 
+                cols="50"
+                placeholder="<?php esc_attr_e('Enter context information here...', $text_domain); ?>"
+                disabled
+            ></textarea>
 
             <div class="atfp-dashboard-save-btn-container">
                 <button disabled class="button button-primary"><?php _e('Save', $text_domain); ?></button>

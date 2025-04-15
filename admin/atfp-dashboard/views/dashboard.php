@@ -7,8 +7,8 @@
                 <h2><?php echo esc_html__('Welcome To Polylang Addon', $text_domain); ?></h2>
                 <p><?php echo esc_html__('Translate WordPress plugins or themes instantly with Loco Addon. One-click, thousands of strings - no extra cost!', $text_domain); ?></p>
                 <div class="atfp-dashboard-btns-row">
-                    <a href="<?php echo esc_url(admin_url('admin.php?page=loco-plugin')); ?>" class="atfp-dashboard-btn primary"><?php echo esc_html__('Translate Plugins', $text_domain); ?></a>
-                    <a href="<?php echo esc_url(admin_url('admin.php?page=loco-theme')); ?>" class="atfp-dashboard-btn"><?php echo esc_html__('Translate Themes', $text_domain); ?></a>
+                    <a href="<?php echo esc_url(admin_url('edit.php?post_type=page')); ?>" target="_blank" class="atfp-dashboard-btn primary"><?php echo esc_html__('Translate Pages', $text_domain); ?></a>
+                    <a href="<?php echo esc_url(admin_url('admin.php?page=atfp-supported-blocks')); ?>" target="_blank" class="atfp-dashboard-btn"><?php echo esc_html__('Support Blocks', $text_domain); ?></a>
                 </div>
                 <a class="atfp-dashboard-docs" href="<?php echo esc_url('https://locoaddon.com/docs/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard'); ?>" target="_blank"><img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/document.svg'); ?>" alt="document"> <?php echo esc_html__('Read Plugin Docs', $text_domain); ?></a>
             </div>
@@ -31,11 +31,11 @@
                 <?php
 
                 $providers = [
-                    ["Gemini AI", "gemini-ai-logo.png", "Pro", ["Unlimited Translations", "Fast Translations via AI", "Gemini API Key Required"], esc_url('https://locoaddon.com/docs/gemini-ai-translations-wordpress/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_gemini'), esc_url('admin.php?page=loco-atfp-dashboard&tab=settings')],
-                    ["OpenAI", "gemini-ai-logo.png", "Pro", ["Unlimited Translations", "Fast Translations via AI", "Gemini API Key Required"], esc_url('https://locoaddon.com/docs/gemini-ai-translations-wordpress/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_gemini'), esc_url('admin.php?page=loco-atfp-dashboard&tab=settings')],
-                    ["Openrouter AI", "gemini-ai-logo.png", "Pro", ["Unlimited Translations", "Fast Translations via AI", "Gemini API Key Required"], esc_url('https://locoaddon.com/docs/gemini-ai-translations-wordpress/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_gemini'), esc_url('admin.php?page=loco-atfp-dashboard&tab=settings')],
-                    ["Chrome Built-in AI", "chrome-built-in-ai-logo.png", "Pro", ["Fast AI Translations in Browser", "Unlimited Free Translations", "Use Translation Modals"], esc_url('https://locoaddon.com/docs/how-to-use-chrome-ai-auto-translations/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_chrome')],
+                    ["Gemini AI", "gemini-ai-logo.png", "Pro", ["Unlimited Translations", "Fast Translations via AI", "Gemini API Key Required"], esc_url('https://locoaddon.com/docs/gemini-ai-translations-wordpress/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_gemini'), esc_url('admin.php?page=polylang-atfp-dashboard&tab=settings')],
+                    ["OpenAI", "gemini-ai-logo.png", "Pro", ["Unlimited Translations", "Fast Translations via AI", "Gemini API Key Required"], esc_url('https://locoaddon.com/docs/gemini-ai-translations-wordpress/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_gemini'), esc_url('admin.php?page=polylang-atfp-dashboard&tab=settings')],
+                    ["Openrouter AI", "gemini-ai-logo.png", "Pro", ["Unlimited Translations", "Fast Translations via AI", "Gemini API Key Required"], esc_url('https://locoaddon.com/docs/gemini-ai-translations-wordpress/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_gemini'), esc_url('admin.php?page=polylang-atfp-dashboard&tab=settings')],
                     ["Google Translate", "google-translate-logo.png", "Pro", ["Unlimited Free Translations", "Fast & No API Key Required"], esc_url('https://locoaddon.com/docs/auto-translations-via-google-translate/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_google')],
+                    ["Chrome Built-in AI", "chrome-built-in-ai-logo.png", "Free", ["Fast AI Translations in Browser", "Unlimited Free Translations", "Use Translation Modals"], esc_url('https://locoaddon.com/docs/how-to-use-chrome-ai-auto-translations/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_chrome')],
                     ["Yandex Translate", "yandex-translate-logo.png", "Free", ["Unlimited Free Translations", "No API & No Extra Cost"], esc_url('https://locoaddon.com/docs/translate-plugin-theme-via-yandex-translate/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_yandex')],
                 ];
 
@@ -54,7 +54,7 @@
                         </ul>
                         <div class="atfp-dashboard-provider-buttons">
                             <a href="<?php echo esc_url($provider[4]); ?>" class="atfp-dashboard-btn" target="_blank">Docs</a>
-                            <?php if ($index === 0) { ?>
+                            <?php if (isset($provider[5])) { ?>
                                 <a href="<?php echo esc_url($provider[5]); ?>" class="atfp-dashboard-btn">Settings</a>
                             <?php } ?>
                         </div>

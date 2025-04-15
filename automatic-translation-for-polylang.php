@@ -64,6 +64,11 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			add_action( 'admin_menu', array( $this, 'atfp_add_submenu_page' ), 11 );
 			add_action( 'admin_enqueue_scripts', array( $this, 'atfp_set_dashboard_style' ) );
 
+			// Add the action to hide unrelated notices
+			if(isset($_GET['page']) && $_GET['page'] == 'polylang-atfp-dashboard'){
+				add_action('admin_print_scripts', array($this, 'atfp_hide_unrelated_notices'));
+			}
+
 		}
 
 		/**
@@ -73,6 +78,71 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			if(isset($_GET['page']) && $_GET['page'] == 'polylang-atfp-dashboard') {
 				wp_enqueue_style( 'atfp-dashboard-style', ATFP_URL . 'admin/atfp-dashboard/css/admin-styles.css',null, ATFP_V, 'all' );
 			}
+		}
+
+		/*
+		|------------------------------------------------------------------------
+		|  Hide unrelated notices
+		|------------------------------------------------------------------------
+		*/
+
+		public function atfp_hide_unrelated_notices()
+			{ // phpcs:ignore Generic.Metrics.CyclomaticComplexity.MaxExceeded, Generic.Metrics.NestingLevel.MaxExceeded
+				$cfkef_pages = false;
+
+				if(isset($_GET['page']) && $_GET['page'] == 'polylang-atfp-dashboard'){
+					$cfkef_pages = true;
+				}
+
+				if ($cfkef_pages) {
+					global $wp_filter;
+					// Define rules to remove callbacks.
+					$rules = [
+						'user_admin_notices' => [], // remove all callbacks.
+						'admin_notices'      => [],
+						'all_admin_notices'  => [],
+						'admin_footer'       => [
+							'render_delayed_admin_notices', // remove this particular callback.
+						],
+					];
+					$notice_types = array_keys($rules);
+					foreach ($notice_types as $notice_type) {
+						if (empty($wp_filter[$notice_type]->callbacks) || ! is_array($wp_filter[$notice_type]->callbacks)) {
+							continue;
+						}
+						$remove_all_filters = empty($rules[$notice_type]);
+						foreach ($wp_filter[$notice_type]->callbacks as $priority => $hooks) {
+							foreach ($hooks as $name => $arr) {
+								if (is_object($arr['function']) && is_callable($arr['function'])) {
+									if ($remove_all_filters) {
+										unset($wp_filter[$notice_type]->callbacks[$priority][$name]);
+									}
+									continue;
+								}
+								$class = ! empty($arr['function'][0]) && is_object($arr['function'][0]) ? strtolower(get_class($arr['function'][0])) : '';
+								// Remove all callbacks except WPForms notices.
+								if ($remove_all_filters && strpos($class, 'wpforms') === false) {
+									unset($wp_filter[$notice_type]->callbacks[$priority][$name]);
+									continue;
+								}
+								$cb = is_array($arr['function']) ? $arr['function'][1] : $arr['function'];
+								// Remove a specific callback.
+								if (! $remove_all_filters) {
+									if (in_array($cb, $rules[$notice_type], true)) {
+										unset($wp_filter[$notice_type]->callbacks[$priority][$name]);
+									}
+									continue;
+								}
+							}
+						}
+					}
+				}
+
+				add_action( 'admin_notices', [ $this, 'atfp_admin_notices' ], PHP_INT_MAX );
+			}
+
+		function atfp_admin_notices() {
+			do_action( 'atfp_display_admin_notices' );
 		}
 
 		/**
@@ -90,7 +160,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 		}
 
 		public function atfp_render_dashboard_page() {
-			$text_domain = 'ATFP';
+			$text_domain = 'automatic-translations-for-polylang';
 			$file_prefix = 'admin/atfp-dashboard/views/';
 			
 			$valid_tabs = [
@@ -177,9 +247,9 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 		}
 
 		public function atfp_load_files() {
-			if(!class_exists('CPT_Dashboard')) {
+			if(!class_exists('Atfp_Dashboard')) {
 				require_once ATFP_DIR_PATH . 'admin/cpt_dashboard/cpt_dashboard.php';
-				new CPT_Dashboard();
+				new Atfp_Dashboard();
 			}
 
 			require_once ATFP_DIR_PATH . '/helper/class-atfp-helper.php';
@@ -210,8 +280,8 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 				$this->atfp_initialize_elementor_translation();
 
 				// Review Notice
-				if(class_exists('Cpt_Dashboard') && !defined('ATFPP_V')) {
-					Cpt_Dashboard::review_notice(
+				if(class_exists('Atfp_Dashboard') && !defined('ATFPP_V')) {
+					Atfp_Dashboard::review_notice(
 						'atfp', // Required
 						'AI Translation For Polylang', // Required
 						'https://wordpress.org/plugins/automatic-translations-for-polylang/reviews/#new-post', // Required
@@ -340,7 +410,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 				<input type="button" class="button button-primary" name="atfp_meta_box_translate" id="atfp-translate-button" value="<?php echo esc_attr__( 'Translate Page', 'automatic-translations-for-polylang' ); ?>" readonly/><br><br>
 				<p style="margin-bottom: .5rem;"><?php echo esc_html( sprintf( __( 'Translate or duplicate content from %s to %s', 'automatic-translations-for-polylang' ), $source_language, $target_language ) ); ?></p>
 				<?php
-				if(class_exists('CPT_Dashboard') && !CPT_Dashboard::cpt_hide_review_notice_status('atfp')){
+				if(class_exists('Atfp_Dashboard') && !Atfp_Dashboard::atfp_hide_review_notice_status('atfp')){
 					?>
 					<hr>
 					<div class="atfp-review-meta-box">

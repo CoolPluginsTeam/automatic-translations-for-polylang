@@ -532,7 +532,7 @@ ul.atfp-dashboard-sts-btm li span:first-child {
     border-radius: 14px;
     padding: 13px 15px 15px 15px;
     text-align: start;
-    flex: 1;
+    width: 31.5%;
 }
 
 .atfp-dashboard-ai-translations .atfp-dashboard-translation-card h3{
@@ -690,6 +690,7 @@ ul.atfp-dashboard-sts-btm li span:first-child {
 }
 
 .atfp-dashboard-api-settings a {
+    margin-bottom: 20px;
     display: inline-block;
     font-size: 14px;
     color: #0073aa;

@@ -58,7 +58,7 @@
     <div class="atfp-dashboard-rate-us">
         <h3><?php _e('Rate Us ⭐⭐⭐⭐⭐', $text_domain); ?></h3>
         <p><?php _e('We\'d love your feedback! Hope this addon made auto-translations easier for you.', $text_domain); ?></p>
-        <a href="https://wordpress.org/support/plugin/automatic-translate-addon-for-translatepress/reviews/#new-post" class="review-link" target="_blank"><?php _e('Submit a Review →', $text_domain); ?></a>
+        <a href="https://wordpress.org/support/plugin/automatic-translations-for-polylang/reviews/#new-post" class="review-link" target="_blank"><?php _e('Submit a Review →', $text_domain); ?></a>
     </div>
 </div>
 
