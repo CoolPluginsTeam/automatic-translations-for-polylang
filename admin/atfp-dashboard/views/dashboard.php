@@ -8,7 +8,7 @@
                 <p><?php echo esc_html__('Translate WordPress plugins or themes instantly with Loco Addon. One-click, thousands of strings - no extra cost!', $text_domain); ?></p>
                 <div class="atfp-dashboard-btns-row">
                     <a href="<?php echo esc_url(admin_url('edit.php?post_type=page')); ?>" target="_blank" class="atfp-dashboard-btn primary"><?php echo esc_html__('Translate Pages', $text_domain); ?></a>
-                    <a href="<?php echo esc_url(admin_url('admin.php?page=atfp-supported-blocks')); ?>" target="_blank" class="atfp-dashboard-btn"><?php echo esc_html__('Support Blocks', $text_domain); ?></a>
+                    <a href="<?php echo esc_url(admin_url('admin.php?page=atfp-supported-blocks')); ?>" target="_blank" class="atfp-dashboard-btn"><?php echo esc_html__('Supported Blocks', $text_domain); ?></a>
                 </div>
                 <a class="atfp-dashboard-docs" href="<?php echo esc_url('https://locoaddon.com/docs/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard'); ?>" target="_blank"><img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/document.svg'); ?>" alt="document"> <?php echo esc_html__('Read Plugin Docs', $text_domain); ?></a>
             </div>

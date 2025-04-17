@@ -4,7 +4,7 @@
         <h1><?php _e('Free VS Pro', $text_domain); ?></h1>
         <div class="atfp-dashboard-status">
             <span class="status"><?php _e('Inactive', $text_domain); ?></span>
-            <a href="<?php echo esc_url('https://locoaddon.com/pricing/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=freevspro'); ?>" class='atfp-dashboard-btn' target="_blank">
+            <a href="<?php echo esc_url('https://coolplugins.net/product/ai-translation-for-polylang-pro/'); ?>" class='atfp-dashboard-btn' target="_blank">
               <img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/upgrade-now.svg'); ?>" alt="<?php echo esc_attr(__('Upgrade Now', $text_domain)); ?>">
                 <?php echo esc_html(__('Upgrade Now', $text_domain)); ?>
             </a>
@@ -25,13 +25,11 @@
             <?php
                 $features = [
                     'Yandex Translate Widget Support' => [true, true],
+                    'Chrome Built-in AI Support' => [true, true],
                     'No API Key Required' => [true, true],
                     'Unlimited Translations' => [true, true],
                     'Google Translate Widget Support' => [false, true],
-                    'Chrome Built-in AI Support' => [false, true],
-                    'AI Translator (Gemini/OpenAI) Support' => [false, true],
-                    'ChatGPT Translator Support' => [false, true],
-                    'DeepL Doc Translator Support' => [false, true],
+                    'AI Translator (Gemini/OpenAI/Openrouter) Support' => [false, true],
                     'Premium Support' => [false, true],
                 ];
              foreach ($features as $feature => $availability): ?>

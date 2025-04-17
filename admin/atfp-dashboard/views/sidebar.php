@@ -1,7 +1,7 @@
 <!-- Right Sidebar -->
 <div class="atfp-dashboard-sidebar">
     <div class="atfp-dashboard-status">
-        <h3><?php _e('Auto Translation status', $text_domain); ?></h3>
+        <h3><?php _e('Auto Translation Status', $text_domain); ?></h3>
         <div class="atfp-dashboard-sts-top">
             <?php
 

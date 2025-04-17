@@ -4,7 +4,7 @@
         <h1><?php _e('Polylang Addon Settings', $text_domain); ?></h1>
         <div class="atfp-dashboard-status">
             <span><?php _e('Inactive', $text_domain); ?></span>
-            <a href="https://locoaddon.com/pricing/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=settings" class='atfp-dashboard-btn' target="_blank">
+            <a href="https://coolplugins.net/product/ai-translation-for-polylang-pro/" class='atfp-dashboard-btn' target="_blank">
                 <img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/upgrade-now.svg'); ?>" alt="<?php esc_attr_e('Upgrade Now', $text_domain); ?>">
                 <?php _e('Upgrade Now', $text_domain); ?>
             </a>
