@@ -52,8 +52,14 @@ if ( ! class_exists( 'ATFP_Elementor_Translate' ) ) {
 					$parent_elementor_data = get_post_meta( $parent_post_id, '_elementor_data', true );
 
 					if($parent_editor === 'builder' || !empty($parent_elementor_data)){
+						// Delete this old post meta data
+						delete_post_meta( $parent_post_id, 'atfpp_elementor_translated' );
+						delete_post_meta( $parent_post_id, 'atfp_parent_post_language_slug' );
+						delete_post_meta( $current_post_id, 'atfpp_elementor_translated' );
+						delete_post_meta( $current_post_id, 'atfp_parent_post_language_slug' );
+
 						$parent_post_language_slug = pll_get_post_language( $parent_post_id, 'slug' );
-						update_post_meta( $parent_post_id, 'atfp_parent_post_language_slug', $parent_post_language_slug );
+						update_post_meta( $current_post_id, '_atfp_parent_post_language_slug', $parent_post_language_slug );
 					}
 				}
 			}
