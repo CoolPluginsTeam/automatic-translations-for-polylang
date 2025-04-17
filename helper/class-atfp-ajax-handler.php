@@ -229,7 +229,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 			$time_taken = isset($_POST['timeTaken']) ? absint($_POST['timeTaken']) : 0;
 			$post_id = isset($_POST['post_id']) ? absint($_POST['post_id']) : 0;
 
-			if (class_exists('CPT_Dashboard')) {
+			if (class_exists('Atfp_Dashboard')) {
 				$translation_data = array(
 					'post_id' => $post_id,
 					'service_provider' => $provider,
@@ -245,7 +245,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 					'version_type' => 'free'
 				);
 
-				CPT_Dashboard::store_options(
+				Atfp_Dashboard::store_options(
 					'atfp',
 					'post_id', 
 					'update',
@@ -257,7 +257,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				));
 			} else {
 				wp_send_json_error(array(
-					'message' => __('CPT_Dashboard class not found', 'automatic-translations-for-polylang') 
+					'message' => __('Atfp_Dashboard class not found', 'automatic-translations-for-polylang') 
 				));
 			}
 			exit;
@@ -273,19 +273,19 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				exit();
 			}
 
-			if(!class_exists("CPT_Dashboard")){
+			if(!class_exists("Atfp_Dashboard")){
 				wp_send_json_error( __( 'Translation Data class not found.', 'automatic-translations-for-polylang' ) );
 				wp_die( '0', 400 );
 				exit();
 			}
 
-			if(!method_exists("CPT_Dashboard", "get_translation_data")){
+			if(!method_exists("Atfp_Dashboard", "get_translation_data")){
 				wp_send_json_error( __( 'Get Translation Data method not found.', 'automatic-translations-for-polylang' ) );
 				wp_die( '0', 400 );
 				exit();
 			}	
 
-			$translation_data = CPT_Dashboard::get_translation_data('atfp');
+			$translation_data = Atfp_Dashboard::get_translation_data('atfp');
 
 			if(!isset($translation_data['total_character_count'])){
 				wp_send_json_error( __( 'Character count not found.', 'automatic-translations-for-polylang' ) );

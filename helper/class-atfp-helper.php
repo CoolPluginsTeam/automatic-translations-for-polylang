@@ -196,5 +196,42 @@ if (! class_exists('ATFP_Helper')) {
 				return false;
 			}
 		}
+
+		public static function translation_data_migration(){
+			$already_migrated = get_option('atfp_translation_string_migration', false);
+
+			if(!$already_migrated){
+				$translation_data = self::get_translation_data();
+				
+				$old_data=get_option('cpt_dashboard_data', array());
+
+				$updated=array();
+
+				if(isset($old_data['atfp']) && count($old_data['atfp']) > 0){
+					foreach($old_data['atfp'] as $data){
+						$updated_data=$data;
+						if(isset($data['string_count'])){
+							$updated_data['word_count']=$data['string_count'];
+							$updated_data['string_count']=$data['string_count'] / 30;
+						}
+
+						if(isset($data['source_string_count'])){
+							$updated_data['source_word_count']=$data['source_string_count'];
+							$updated_data['source_string_count']=$data['source_string_count'] / 30;
+						}
+
+						$updated[]=$updated_data;
+					}
+
+					if(count($updated) > 0){
+						$old_data['atfp']=$updated;
+
+						update_option('cpt_dashboard_data', $old_data);
+					}
+				}
+
+				update_option('atfp_translation_string_migration', true);
+			}
+		}
 	}
 }

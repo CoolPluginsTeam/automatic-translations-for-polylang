@@ -63,10 +63,21 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			add_action('init', array($this, 'load_plugin_textdomain'));
 			add_action( 'admin_menu', array( $this, 'atfp_add_submenu_page' ), 11 );
 			add_action( 'admin_enqueue_scripts', array( $this, 'atfp_set_dashboard_style' ) );
+			add_action('init', array($this, 'atfp_translation_string_migration'));
 
 			// Add the action to hide unrelated notices
 			if(isset($_GET['page']) && $_GET['page'] == 'polylang-atfp-dashboard'){
 				add_action('admin_print_scripts', array($this, 'atfp_hide_unrelated_notices'));
+			}
+
+		}
+
+		public function atfp_translation_string_migration(){
+			$previous_version=get_option('atfp-v', false);
+			$migration_status=get_option('atfp_translation_string_migration', false);
+
+			if($previous_version && version_compare($previous_version, '1.4.0', '<') && !$migration_status){
+				ATFP_Helper::translation_data_migration();
 			}
 
 		}
@@ -430,6 +441,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 		|----------------------------------------------------------------------------
 		*/
 		public static function atfp_activate() {
+			$this->atfp_translation_string_migration();
 			update_option( 'atfp-v', ATFP_V );
 			update_option( 'atfp-type', 'FREE' );
 			update_option( 'atfp-installDate', gmdate( 'Y-m-d h:i:s' ) );
