@@ -218,10 +218,12 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 			}
 
 			$provider = isset($_POST['provider']) ? sanitize_text_field($_POST['provider']) : '';
+			$total_string_count = isset($_POST['totalStringCount']) ? absint($_POST['totalStringCount']) : 0;
 			$total_word_count = isset($_POST['totalWordCount']) ? absint($_POST['totalWordCount']) : 0;
 			$total_char_count = isset($_POST['totalCharacterCount']) ? absint($_POST['totalCharacterCount']) : 0;
 			$editor_type = isset($_POST['editorType']) ? sanitize_text_field($_POST['editorType']) : '';
 			$date = isset($_POST['date']) ? date('Y-m-d H:i:s', strtotime(sanitize_text_field($_POST['date']))) : '';
+			$source_string_count = isset($_POST['sourceStringCount']) ? absint($_POST['sourceStringCount']) : 0;	
 			$source_word_count = isset($_POST['sourceWordCount']) ? absint($_POST['sourceWordCount']) : 0;
 			$source_char_count = isset($_POST['sourceCharacterCount']) ? absint($_POST['sourceCharacterCount']) : 0;
 			$source_lang = isset($_POST['sourceLang']) ? sanitize_text_field($_POST['sourceLang']) : '';
@@ -236,9 +238,11 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 					'source_language' => $source_lang,
 					'target_language' => $target_lang,
 					'time_taken' => $time_taken,
-					'string_count' => $total_word_count,
+					'string_count' => $total_string_count,
+					'word_count' => $total_word_count,
 					'character_count' => $total_char_count,
-					'source_string_count' => $source_word_count,
+					'source_string_count' => $source_string_count,
+					'source_word_count' => $source_word_count,
 					'source_character_count' => $source_char_count,
 					'editor_type' => $editor_type,
 					'date_time' => $date,
