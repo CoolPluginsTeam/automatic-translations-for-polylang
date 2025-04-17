@@ -111,7 +111,7 @@ const translatePost = (props) => {
     // Update post content
     postContentUpdate();
     // Close string modal box
-    // modalClose();
+    modalClose();
 }
 
 export default translatePost;
