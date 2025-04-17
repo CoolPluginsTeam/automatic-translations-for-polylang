@@ -1,7 +1,7 @@
 <div class="atfp-dashboard-settings">
     <div class="atfp-dashboard-settings-container">
     <div class="header">
-        <h1><?php _e('Loco Addon Settings', $text_domain); ?></h1>
+        <h1><?php _e('Polylang Addon Settings', $text_domain); ?></h1>
         <div class="atfp-dashboard-status">
             <span><?php _e('Inactive', $text_domain); ?></span>
             <a href="https://locoaddon.com/pricing/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=settings" class='atfp-dashboard-btn' target="_blank">

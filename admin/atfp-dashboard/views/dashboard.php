@@ -16,8 +16,8 @@
                 <a href="https://locoaddon.com/docs/translate-plugin-theme-via-yandex-translate/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_video" target="_blank" class="atfp-dashboard-video-link">
                     <img decoding="async" src="<?php echo ATFP_URL . 'admin/atfp-dashboard/images/video.svg'; ?>" class="play-icon" alt="play-icon">
                     <picture>
-                        <source srcset="<?php echo ATFP_URL . 'admin/atfp-dashboard/images/loco-addon-video.avifs'; ?>" type="image/avif">
-                        <img src="<?php echo ATFP_URL . 'admin/atfp-dashboard/images/loco-addon-video.jpg'; ?>" class="loco-video" alt="loco translate addon preview">
+                        <source srcset="<?php echo ATFP_URL . 'admin/atfp-dashboard/images/polylang-addon-video.png'; ?>" type="image/webp">
+                        <img src="<?php echo ATFP_URL . 'admin/atfp-dashboard/images/polylang-addon-video.png'; ?>" class="loco-video" alt="loco translate addon preview">
                     </picture>
                 </a>
             </div>
@@ -31,9 +31,9 @@
                 <?php
 
                 $providers = [
-                    ["Gemini AI", "gemini-ai-logo.png", "Pro", ["Unlimited Translations", "Fast Translations via AI", "Gemini API Key Required"], esc_url('https://locoaddon.com/docs/gemini-ai-translations-wordpress/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_gemini'), esc_url('admin.php?page=polylang-atfp-dashboard&tab=settings')],
-                    ["OpenAI", "gemini-ai-logo.png", "Pro", ["Unlimited Translations", "Fast Translations via AI", "Gemini API Key Required"], esc_url('https://locoaddon.com/docs/gemini-ai-translations-wordpress/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_gemini'), esc_url('admin.php?page=polylang-atfp-dashboard&tab=settings')],
-                    ["Openrouter AI", "gemini-ai-logo.png", "Pro", ["Unlimited Translations", "Fast Translations via AI", "Gemini API Key Required"], esc_url('https://locoaddon.com/docs/gemini-ai-translations-wordpress/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_gemini'), esc_url('admin.php?page=polylang-atfp-dashboard&tab=settings')],
+                    ["Gemini AI", "geminiai-logo.png", "Pro", ["Unlimited Translations", "Fast Translations via AI", "Gemini API Key Required"], esc_url('https://locoaddon.com/docs/gemini-ai-translations-wordpress/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_gemini'), esc_url('admin.php?page=polylang-atfp-dashboard&tab=settings')],
+                    ["OpenAI", "openai-translate-logo.png", "Pro", ["Unlimited Translations", "Fast Translations via AI", "Gemini API Key Required"], esc_url('https://locoaddon.com/docs/gemini-ai-translations-wordpress/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_gemini'), esc_url('admin.php?page=polylang-atfp-dashboard&tab=settings')],
+                    ["Openrouter AI", "openrouter-translate-logo.png", "Pro", ["Unlimited Translations", "Fast Translations via AI", "Gemini API Key Required"], esc_url('https://locoaddon.com/docs/gemini-ai-translations-wordpress/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_gemini'), esc_url('admin.php?page=polylang-atfp-dashboard&tab=settings')],
                     ["Google Translate", "google-translate-logo.png", "Pro", ["Unlimited Free Translations", "Fast & No API Key Required"], esc_url('https://locoaddon.com/docs/auto-translations-via-google-translate/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_google')],
                     ["Chrome Built-in AI", "chrome-built-in-ai-logo.png", "Free", ["Fast AI Translations in Browser", "Unlimited Free Translations", "Use Translation Modals"], esc_url('https://locoaddon.com/docs/how-to-use-chrome-ai-auto-translations/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_chrome')],
                     ["Yandex Translate", "yandex-translate-logo.png", "Free", ["Unlimited Free Translations", "No API & No Extra Cost"], esc_url('https://locoaddon.com/docs/translate-plugin-theme-via-yandex-translate/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_yandex')],

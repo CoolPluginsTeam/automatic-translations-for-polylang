@@ -101,7 +101,7 @@ if(!class_exists('Atfp_Dashboard')){
         }
 
         public function __construct(){
-            add_action('wp_ajax_atlt_hide_review_notice', array($this, 'atlt_hide_review_notice'));
+            add_action('wp_ajax_atfp_hide_review_notice', array($this, 'atfp_hide_review_notice'));
         }
 
         /**
@@ -216,10 +216,10 @@ if(!class_exists('Atfp_Dashboard')){
         }
 
         public static function ctp_enqueue_assets(){
-            if(function_exists('wp_style_is') && !wp_style_is('atlt-review-style', 'enqueued')){
+            if(function_exists('wp_style_is') && !wp_style_is('atfp-review-style', 'enqueued')){
                 $plugin_url = plugin_dir_url(__FILE__);
-                wp_enqueue_style('atlt-review-style', esc_url($plugin_url.'assets/css/cpt-dashboard.css'), array(), '1.0.0', 'all');
-                wp_enqueue_script('atlt-review-script', esc_url($plugin_url.'assets/js/cpt-dashboard.js'), array('jquery'), '1.0.0', true);
+                wp_enqueue_style('atfp-review-style', esc_url($plugin_url.'assets/css/cpt-dashboard.css'), array(), '1.0.0', 'all');
+                wp_enqueue_script('atfp-review-script', esc_url($plugin_url.'assets/js/cpt-dashboard.js'), array('jquery'), '1.0.0', true);
             }
         }
 
@@ -272,7 +272,7 @@ if(!class_exists('Atfp_Dashboard')){
                 if($icon){
                     $html .= '<img class="cpt-review-notice-icon" src="'.$icon.'" alt="'.$plugin_name.'">';
                 }
-                $html .= '<div class="cpt-review-notice-content"><p>'.$message.'</p><div class="atlt-review-notice-dismiss" data-prefix="'.$prefix.'" data-nonce="'.wp_create_nonce('atlt_hide_review_notice').'"><a href="'. $url .'" target="_blank" class="button button-primary">Rate Now! ★★★★★</a><button class="button cpt-not-interested">'.__('Not Interested', 'cp-notice').'</button><button class="button cpt-already-reviewed">'.__('Already Reviewed', 'cp-notice').'</button></div></div></div>';
+                $html .= '<div class="cpt-review-notice-content"><p>'.$message.'</p><div class="atfp-review-notice-dismiss" data-prefix="'.$prefix.'" data-nonce="'.wp_create_nonce('atfp_hide_review_notice').'"><a href="'. $url .'" target="_blank" class="button button-primary">Rate Now! ★★★★★</a><button class="button cpt-not-interested">'.__('Not Interested', 'cp-notice').'</button><button class="button cpt-already-reviewed">'.__('Already Reviewed', 'cp-notice').'</button></div></div></div>';
                 
                 echo $html;
             });
@@ -282,7 +282,7 @@ if(!class_exists('Atfp_Dashboard')){
                 if($icon){
                     $html .= '<img class="cpt-review-notice-icon" src="'.$icon.'" alt="'.$plugin_name.'">';
                 }
-                $html .= '<div class="cpt-review-notice-content"><p>'.$message.'</p><div class="atlt-review-notice-dismiss" data-prefix="'.$prefix.'" data-nonce="'.wp_create_nonce('atlt_hide_review_notice').'"><a href="'. $url .'" target="_blank" class="button button-primary">Rate Now! ★★★★★</a><button class="button cpt-not-interested">'.__('Not Interested', 'cp-notice').'</button><button class="button cpt-already-reviewed">'.__('Already Reviewed', 'cp-notice').'</button></div></div></div>';
+                $html .= '<div class="cpt-review-notice-content"><p>'.$message.'</p><div class="atfp-review-notice-dismiss" data-prefix="'.$prefix.'" data-nonce="'.wp_create_nonce('atfp_hide_review_notice').'"><a href="'. $url .'" target="_blank" class="button button-primary">Rate Now! ★★★★★</a><button class="button cpt-not-interested">'.__('Not Interested', 'cp-notice').'</button><button class="button cpt-already-reviewed">'.__('Already Reviewed', 'cp-notice').'</button></div></div></div>';
                 
                 echo $html;
             });
@@ -294,7 +294,7 @@ if(!class_exists('Atfp_Dashboard')){
         }
 
         public function atfp_hide_review_notice(){
-            if(wp_verify_nonce($_POST['nonce'], 'atlt_hide_review_notice')){
+            if(wp_verify_nonce($_POST['nonce'], 'atfp_hide_review_notice')){
                 $prefix = sanitize_key($_POST['prefix']);
                 $review_notice_dismissed = get_option('cpt_review_notice_dismissed', array());
                 $review_notice_dismissed[$prefix] = true;

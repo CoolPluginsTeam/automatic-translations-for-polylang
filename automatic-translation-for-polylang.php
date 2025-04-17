@@ -212,7 +212,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			<div class="atfp-dashboard-wrapper">
 				<div class="atfp-dashboard-header">
 					<div class="atfp-dashboard-header-left">
-						<img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/loco-addon-logo.svg'); ?>" 
+						<img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/polylang-addon-logo.svg'); ?>" 
 							alt="<?php esc_attr_e('Polylang Addon Logo', $text_domain); ?>">
 						<div class="atfp-dashboard-tab-title">
 							<span>↳</span> <?php echo esc_html($valid_tabs[$current_tab]); ?>

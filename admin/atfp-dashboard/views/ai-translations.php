@@ -17,27 +17,27 @@
         <?php
         $ai_translations = [
             [
-                'logo' => 'gemini-ai-logo.png',
+                'logo' => 'geminiai-logo.png',
                 'alt' => 'Gemini AI',
                 'title' => __('AI Translations', $text_domain),
-                'description' => __('Leverage Gemini/OpenAI for seamless and context-aware translations.', $text_domain),
+                'description' => __('Leverage GeminiAI for seamless and context-aware translations.', $text_domain),
                 'icon' => 'gemini-translate.png',
                 'url' => 'https://locoaddon.com/docs/gemini-ai-translations-wordpress/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=docs&utm_content=gemini_ai_translations'
             ],
             [
-                'logo' => 'gemini-ai-logo.png',
+                'logo' => 'openai-translate-logo.png',
                 'alt' => 'OpenAI',
                 'title' => __('AI Translations', $text_domain),
-                'description' => __('Leverage Gemini/OpenAI for seamless and context-aware translations.', $text_domain),
-                'icon' => 'gemini-translate.png',
+                'description' => __('Leverage OpenAI for seamless and context-aware translations.', $text_domain),
+                'icon' => 'open-ai-translate.png',
                 'url' => 'https://locoaddon.com/docs/gemini-ai-translations-wordpress/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=docs&utm_content=gemini_ai_translations'
             ],
             [
-                'logo' => 'gemini-ai-logo.png',
+                'logo' => 'openrouter-translate-logo.png',
                 'alt' => 'Openrouter AI',
                 'title' => __('AI Translations', $text_domain),
-                'description' => __('Leverage Gemini/OpenAI for seamless and context-aware translations.', $text_domain),
-                'icon' => 'gemini-translate.png',
+                'description' => __('Leverage Openrouter AI for seamless and context-aware translations.', $text_domain),
+                'icon' => 'openrouter-ai-translate.png',
                 'url' => 'https://locoaddon.com/docs/gemini-ai-translations-wordpress/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=docs&utm_content=gemini_ai_translations'
             ],
             [
