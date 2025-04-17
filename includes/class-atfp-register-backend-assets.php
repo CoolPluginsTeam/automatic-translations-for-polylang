@@ -212,7 +212,7 @@ class ATFP_Register_Backend_Assets
             'editor_type'        => $editor_type,
             'current_post_id'    => $post_id,
             'translation_data'   => is_array($translation_data) ? (function() use (&$translation_data) { unset($translation_data['data']); return $translation_data; })() : array(),
-            'pro_version_url'=>esc_url('https://coolplugins.net/product/ai-translation-for-polylang-pro/'),
+            'pro_version_url'=>esc_url('https://coolplugins.net/product/ai-translation-for-polylang-pro/?utm_source=atfp_plugin&utm_medium=page&utm_campaign=get_pro&utm_content=buy_pro'),
         ), $extra_data);
 
         if(!isset(PLL()->options['sync']) || (isset(PLL()->options['sync']) && !in_array('post_meta', PLL()->options['sync']))){
