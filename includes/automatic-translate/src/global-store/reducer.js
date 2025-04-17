@@ -88,6 +88,8 @@ const reducer = (state = TranslateDefaultState, action) => {
             // Update the state with the new translation info
             const data = {}
 
+            // Source String Count
+            action.sourceStringCount && (data.sourceStringCount = action.sourceStringCount);
             // Source Word Count
             action.sourceWordCount && (data.sourceWordCount = action.sourceWordCount);
             // Source Character Count
@@ -100,6 +102,8 @@ const reducer = (state = TranslateDefaultState, action) => {
                     [action.provider]: {
                         // If the provider already exists, update the existing provider data    
                         ...(state.translationInfo?.translateData?.[action.provider] || {}),
+                        // Update the source string count
+                        ...(action.targetStringCount && { targetStringCount: action.targetStringCount }),
                         // Update the target word count, target character count, translate status, time taken
                         ...(action.targetWordCount && { targetWordCount: action.targetWordCount }),
                         // Update the target character count
