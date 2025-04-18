@@ -9,7 +9,7 @@
             </span>
         </p>
         <a href="https://coolplugins.net/support/?utm_source=tpa_plugin&utm_medium=inside&utm_campaign=support&utm_content=dashboard_header" target="_blank"><?php _e('Support', $text_domain); ?></a> |
-        <a href="https://locoaddon.com/docs/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_footer" target="_blank"><?php _e('Docs', $text_domain); ?></a>
+        <a href="https://docs.coolplugins.net/docs/ai-translation-for-polylang/" target="_blank"><?php _e('Docs', $text_domain); ?></a>
         <div class="atfp-dashboard-social-icons">
             <?php
             $social_links = [

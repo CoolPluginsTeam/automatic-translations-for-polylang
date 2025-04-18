@@ -13,7 +13,7 @@
     
     <!-- Add the description here -->
     <p class="description">
-        <?php _e('Configure your settings for the Loco Addon to optimize your translation experience. Enter your API keys and manage your preferences for seamless integration.', $text_domain); ?>
+        <?php _e('Configure your settings for the Polylang Addon to optimize your translation experience. Enter your API keys and manage your preferences for seamless integration.', $text_domain); ?>
     </p>
 
     <div class="atfp-dashboard-api-settings-container">

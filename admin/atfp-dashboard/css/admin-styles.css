@@ -77,10 +77,6 @@ Polylang Addon Dashboard - Admin Panel Styles
     border-color: var(--border-color);
 }
 
-.atfp-dashboard-btn.svg-hover:hover svg path {
-    stroke: var(--primary-color);
-}
-
 /*
 
 
@@ -548,10 +544,9 @@ ul.atfp-dashboard-sts-btm li span:first-child {
 	background-color: white;
     left: 20px;
     position: absolute;
-    top: -12px;
+    top: -14px;
     border: 1px solid var(--border-color);
     border-radius: 30px;
-    width: 95px;
     padding: 4px 10px;
     text-align: center;
     display: flex;
@@ -560,8 +555,8 @@ ul.atfp-dashboard-sts-btm li span:first-child {
 }
 
 .atfp-dashboard-ai-translations .atfp-dashboard-translation-card .logo img{
-    width: 85%;
-    height: 100%;
+    width: 100%;
+    height: 20px;
 }
 
 
@@ -761,36 +756,47 @@ ul.atfp-dashboard-sts-btm li span:first-child {
 }
 }
 @media (max-width: 767px) {
-
-	.atfp-dashboard-wrapper .tab-content{
-    flex-direction: column;
-	gap: 0px;
-}
-	.atfp-dashboard-sidebar {
-    width: auto;
-}
-	.atfp-dashboard-header {
-    padding: 0px 11px 11px 20px;
-    height: 145px;
-	flex-direction: column;
-    gap: 0px;
-	top: 47px;
-}
-	.atfp-dashboard-welcome {
-    flex-direction: column;
-}
-.atfp-dashboard-welcome-text {
-    width: calc(100% - 0px);
-}
-.atfp-dashboard-welcome-video {
-    width: 100%;
-}
-	.atfp-dashboard-wrapper{
-	padding:60px 12px 0px 0px;
-	}
-	.atfp-dashboard-header-right {
-    gap: 6px;
-}
+    .atfp-dashboard-wrapper .tab-content {
+        flex-direction: column;
+        gap: 0px;
+    }
+    .atfp-dashboard-sidebar {
+        width: auto;
+    }
+    .atfp-dashboard-header {
+        padding: 0px 11px 11px 20px;
+        height: auto;
+        min-height: 110px;
+        flex-direction: column;
+        gap: 15px;
+        top: 0;
+    }
+    .atfp-dashboard-welcome {
+        flex-direction: column;
+    }
+    .atfp-dashboard-welcome-text {
+        width: 100%;
+    }
+    .atfp-dashboard-welcome-video {
+        width: 100%;
+    }
+    .atfp-dashboard-wrapper {
+        padding: 60px 12px 0px 0px;
+    }
+    .atfp-dashboard-header-right {
+        gap: 6px;
+    }
+    .atfp-dashboard-ai-translations .atfp-dashboard-ai-translations-container .header,
+    .atfp-dashboard-free-vs-pro-container .header,
+    .atfp-dashboard-settings-container .header,
+    .atfp-dashboard-license-container .header {
+        flex-direction: column;
+        align-items: start;
+        padding-bottom: 10px;
+    }
+    .atfp-dashboard-ai-translations .atfp-dashboard-translations {
+        flex-direction: column;
+    }
 }
 @media (max-width: 766px) and  (min-width:601px){
 	.atfp-dashboard-header {

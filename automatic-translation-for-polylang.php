@@ -190,13 +190,13 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			// Action buttons configuration
 			$buttons = [
 				[
-					'url'  => 'https://coolplugins.net/product/automatic-translate-addon-for-translatepress-pro/?utm_source=tpa_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=dashboard_header#pricing',
+					'url'  => 'https://coolplugins.net/product/ai-translation-for-polylang-pro/',
 					'img'  => 'upgrade-now.svg',
 					'alt'  => __('premium', $text_domain),
 					'text' => __('Unlock Pro Features', $text_domain)
 				],
 				[
-					'url' => 'https://docs.coolplugins.net/docs/automatic-translate-addon-for-translatepress-pro/?utm_source=tpa_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_header',
+					'url' => 'https://docs.coolplugins.net/docs/ai-translation-for-polylang/',
 					'img' => 'document.svg',
 					'alt' => __('document', $text_domain)
 				],
