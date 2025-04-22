@@ -72,7 +72,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 
 		}
 
-		public function atfp_translation_string_migration(){
+		public static function atfp_translation_string_migration(){
 			$previous_version=get_option('atfp-v', false);
 			$migration_status=get_option('atfp_translation_string_migration', false);
 
@@ -441,7 +441,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 		|----------------------------------------------------------------------------
 		*/
 		public static function atfp_activate() {
-			$this->atfp_translation_string_migration();
+			self::atfp_translation_string_migration();
 			update_option( 'atfp-v', ATFP_V );
 			update_option( 'atfp-type', 'FREE' );
 			update_option( 'atfp-installDate', gmdate( 'Y-m-d h:i:s' ) );
