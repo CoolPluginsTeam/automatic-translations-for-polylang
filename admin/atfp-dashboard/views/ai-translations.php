@@ -22,7 +22,7 @@
                 'title' => __('AI Translations', $text_domain),
                 'description' => __('Leverage GeminiAI for seamless and context-aware translations.', $text_domain),
                 'icon' => 'gemini-translate.png',
-                'url' => 'https://locoaddon.com/docs/gemini-ai-translations-wordpress/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=docs&utm_content=gemini_ai_translations'
+                'url' => '#'
             ],
             [
                 'logo' => 'openai-translate-logo.png',
@@ -30,7 +30,7 @@
                 'title' => __('AI Translations', $text_domain),
                 'description' => __('Leverage OpenAI for seamless and context-aware translations.', $text_domain),
                 'icon' => 'open-ai-translate.png',
-                'url' => 'https://locoaddon.com/docs/gemini-ai-translations-wordpress/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=docs&utm_content=gemini_ai_translations'
+                'url' => '#'
             ],
             [
                 'logo' => 'openrouter-translate-logo.png',
@@ -38,7 +38,7 @@
                 'title' => __('AI Translations', $text_domain),
                 'description' => __('Leverage Openrouter AI for seamless and context-aware translations.', $text_domain),
                 'icon' => 'openrouter-ai-translate.png',
-                'url' => 'https://locoaddon.com/docs/gemini-ai-translations-wordpress/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=docs&utm_content=gemini_ai_translations'
+                'url' => '#'
             ],
             [
                 'logo' => 'chrome-built-in-ai-logo.png',
@@ -46,7 +46,7 @@
                 'title' => __('Chrome Built-in AI', $text_domain),
                 'description' => __('Utilize Chrome\'s built-in AI for seamless translation experience.', $text_domain),
                 'icon' => 'chrome-ai-translate.png',
-                'url' => 'https://locoaddon.com/docs/how-to-use-chrome-ai-auto-translations/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=docs&utm_content=chrome_ai_translations'
+                'url' => 'https://docs.coolplugins.net/docs/ai-translation-for-polylang/how-to-automatically-translate-your-website-content-via-chrome-ai/'
             ]
         ];
 

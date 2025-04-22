@@ -31,10 +31,10 @@
                 <?php
 
                 $providers = [
-                    ["Gemini AI", "geminiai-logo.png", "Pro", ["Unlimited Translations", "Fast Translations via AI", "Gemini API Key Required"], esc_url('https://locoaddon.com/docs/gemini-ai-translations-wordpress/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_gemini'), esc_url('admin.php?page=polylang-atfp-dashboard&tab=settings')],
-                    ["OpenAI", "openai-translate-logo.png", "Pro", ["Unlimited Translations", "Fast Translations via AI", "Gemini API Key Required"], esc_url('https://locoaddon.com/docs/gemini-ai-translations-wordpress/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_gemini'), esc_url('admin.php?page=polylang-atfp-dashboard&tab=settings')],
-                    ["Openrouter AI", "openrouter-translate-logo.png", "Pro", ["Unlimited Translations", "Fast Translations via AI", "Gemini API Key Required"], esc_url('https://locoaddon.com/docs/gemini-ai-translations-wordpress/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_gemini'), esc_url('admin.php?page=polylang-atfp-dashboard&tab=settings')],
-                    ["Google Translate", "google-translate-logo.png", "Pro", ["Unlimited Free Translations", "Fast & No API Key Required"], esc_url('https://locoaddon.com/docs/auto-translations-via-google-translate/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_google')],
+                    ["Gemini AI", "geminiai-logo.png", "Pro", ["Unlimited Translations", "Fast Translations via AI", "Gemini API Key Required"], esc_url('#'), esc_url('admin.php?page=polylang-atfp-dashboard&tab=settings')],
+                    ["OpenAI", "openai-translate-logo.png", "Pro", ["Unlimited Translations", "Fast Translations via AI", "OpenAI API Key Required"], esc_url('#'), esc_url('admin.php?page=polylang-atfp-dashboard&tab=settings')],
+                    ["Openrouter AI", "openrouter-translate-logo.png", "Pro", ["Unlimited Translations", "Fast Translations via AI", "Openrouter API Key Required"], esc_url('#'), esc_url('admin.php?page=polylang-atfp-dashboard&tab=settings')],
+                    ["Google Translate", "google-translate-logo.png", "Pro", ["Unlimited Free Translations", "Fast & No API Key Required"], esc_url('#')],
                     ["Chrome Built-in AI", "chrome-built-in-ai-logo.png", "Free", ["Fast AI Translations in Browser", "Unlimited Free Translations", "Use Translation Modals"], esc_url('https://docs.coolplugins.net/docs/ai-translation-for-polylang/how-to-automatically-translate-your-website-content-via-chrome-ai/')],
                     ["Yandex Translate", "yandex-translate-logo.png", "Free", ["Unlimited Free Translations", "No API & No Extra Cost"], esc_url('https://docs.coolplugins.net/docs/ai-translation-for-polylang/how-to-automatically-translate-your-website-content-via-yandex/')],
                 ];
