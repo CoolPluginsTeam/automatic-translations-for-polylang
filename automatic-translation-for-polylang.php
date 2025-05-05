@@ -61,6 +61,62 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			register_activation_hook( ATFP_FILE, array( $this, 'atfp_activate' ) );
 			register_deactivation_hook( ATFP_FILE, array( $this, 'atfp_deactivate' ) );
 			add_action('init', array($this, 'load_plugin_textdomain'));
+			//Append view languages link in page
+			add_action('current_screen', array($this, 'atfp_append_view_languages_link'));
+		}
+
+		public function atfp_append_view_languages_link($current_screen) {
+			if(is_admin()) {
+
+				global $polylang;
+        
+				if(!$polylang || !property_exists($polylang, 'model')){
+					return;
+				}
+
+				$translated_post_types = $polylang->model->get_translated_post_types();
+				$translated_post_types = array_keys($translated_post_types);
+
+				if(!in_array($current_screen->post_type, $translated_post_types)){
+					return;
+				}
+
+				add_filter( "views_{$current_screen->id}", array($this, 'list_table_views_filter') );
+			}
+		}
+
+		public function list_table_views_filter($views) {
+			if(!function_exists('PLL') || !function_exists('pll_count_posts') || !function_exists('get_current_screen') || !property_exists(PLL(), 'model') || !function_exists('pll_current_language')){
+				return $views;
+			}
+
+			$pll_languages =  PLL()->model->get_languages_list();
+			$current_screen=get_current_screen();
+			$index=0;
+			$total_languages=count($pll_languages);
+			$pll_active_languages=pll_current_language();
+
+			$post_type=isset($current_screen->post_type) ? $current_screen->post_type : '';
+			$post_status=(isset($_GET['post_status']) && 'trash' === sanitize_text_field(wp_unslash($_GET['post_status']))) ? 'trash' : 'publish';
+
+			if(count($pll_languages) > 1){
+				echo "<div class='atfp_subsubsub' style='display:none; clear:both;'>
+					<ul class='subsubsub atfp_subsubsub_list'>";
+					foreach($pll_languages as $lang){
+	
+						$flag=isset($lang->flag) ? $lang->flag : '';
+						$language_slug=isset($lang->slug) ? $lang->slug : '';
+						$current_class=$pll_active_languages && $pll_active_languages == $language_slug ? 'current' : '';
+						$translated_post_count=pll_count_posts($language_slug, array('post_type'=>$post_type, 'post_status'=>$post_status));
+						// echo $flag; // phpcs:ignore WordPress.Security.EscapeOutput
+						echo "<li class='atfp_pll_lang_".esc_attr($language_slug)."'><a href='edit.php?post_type=".esc_attr($post_type)."&lang=".esc_attr($language_slug)."' class='".esc_attr($current_class)."'>".esc_html($lang->name)." <span class='count'>(".esc_html($translated_post_count).")</span></a>".($index < $total_languages-1 ? ' |&nbsp;' : '')."</li>";
+						$index++;
+					}
+				echo "</ul>
+				</div>";
+			}
+
+			return $views;
 		}
 
 		public function atfp_load_files() {

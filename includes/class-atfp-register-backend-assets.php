@@ -31,6 +31,7 @@ class ATFP_Register_Backend_Assets
         add_action('admin_enqueue_scripts', array($this, 'enqueue_gutenberg_translate_assets'));
         add_action('enqueue_block_assets', array($this, 'register_block_translator_assets'));
         add_action('elementor/editor/before_enqueue_scripts', array($this, 'enqueue_elementor_translate_assets'));
+        add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_assets'));
     }
 
     /**
@@ -57,6 +58,29 @@ class ATFP_Register_Backend_Assets
                 ));
             }
         }
+    }
+
+    public function enqueue_admin_assets(){
+        if(!is_admin()){
+            return;
+        }
+
+        global $polylang;
+        
+		if(!$polylang || !property_exists($polylang, 'model') || !function_exists('get_current_screen')){
+            return;
+		}
+        
+		$current_screen = get_current_screen();
+        
+		$translated_post_types = $polylang->model->get_translated_post_types();
+		$translated_post_types = array_keys($translated_post_types);
+        
+		if(!in_array($current_screen->post_type, $translated_post_types)){
+            return;
+		}
+        
+        wp_enqueue_script('atfp-views-link-admin', ATFP_URL . 'assets/js/atfp-admin-views-link.js', array('jquery'), ATFP_V, true);
     }
 
     /**
