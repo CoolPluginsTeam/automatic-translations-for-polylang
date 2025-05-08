@@ -69,7 +69,7 @@ class ChromeAiTranslator {
             return message;
         }
         // Check if the translation API is available
-        if (!('translation' in self && 'createTranslator' in self.translation) && !('ai' in self && 'translator' in self.ai )) {
+        if (!('translation' in self && 'createTranslator' in self.translation) && !('ai' in self && 'translator' in self.ai ) && !("Translator" in self && "create" in self.Translator)) {
             const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">
                 <h4>Steps to Enable the Translator AI Modal:</h4>
                 <ol>
@@ -133,8 +133,58 @@ class ChromeAiTranslator {
             return message;
         }
 
+        // Handle case for language pack unavailable
+        if (status === "unavailable") {
+            const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">
+                <h4>Language Pack Unavailable:</h4>
+                <ol>
+                    <li>The language pack for <strong>${targetLanguageLabel} (${targetLanguage})</strong> or <strong>${sourceLanguageLabel} (${sourceLanguage})</strong> is currently not available.</li>
+                    <li>You can view the list of available languages <a href="https://developer.chrome.com/docs/ai/translator-api#supported-languages" target="_blank">here</a>.</li>
+                </ol>
+            </span>`);
+            return message;
+        }
+
+        // Handle case for language pack downloadable
+        if (status === "downloadable") {
+            const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">
+                <h4>Language Pack Downloadable:</h4>
+                <ol>
+                    <li>The language pack for <strong>${targetLanguageLabel} (${targetLanguage})</strong> or <strong>${sourceLanguageLabel} (${sourceLanguage})</strong> is downloadable.</li>
+                    <li>Click on the following link to start the download: 
+                        <strong>
+                            <span data-clipboard-text="chrome://on-device-translation-internals" target="_blank" class="chrome-ai-translator-flags">
+                                chrome://on-device-translation-internals ${ChromeAiTranslator.svgIcons('copy')}
+                            </span>
+                        </strong>. Click on the URL to copy it, then open a new window and paste this URL to access the settings.
+                    </li>
+                    <li>For more help, refer to the <a href="https://developer.chrome.com/docs/ai/translator-api#supported-languages" target="_blank">documentation to check supported languages</a>.</li>
+                </ol>
+            </span>`);
+            return message;
+        }
+
+        // Handle case for language pack downloading
+        if (status === "downloading") {
+            const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">
+                <h4>Language Pack Downloading:</h4>
+                <ol>
+                    <li>The language pack for <strong>${targetLanguageLabel} (${targetLanguage})</strong> or <strong>${sourceLanguageLabel} (${sourceLanguage})</strong> is currently downloading.</li>
+                    <li>You can check the download progress by visiting the following link: 
+                        <strong>
+                            <span data-clipboard-text="chrome://on-device-translation-internals" target="_blank" class="chrome-ai-translator-flags">
+                                chrome://on-device-translation-internals ${ChromeAiTranslator.svgIcons('copy')}
+                            </span>
+                        </strong>. Click on the URL to copy it, then open a new window and paste this URL to access the settings.
+                    </li>
+                    <li>For more help, refer to the <a href="https://developer.chrome.com/docs/ai/translator-api#supported-languages" target="_blank">documentation to check supported languages</a>.</li>
+                </ol>
+            </span>`);
+            return message;
+        }
+
         // Handle case for language pack not readily available
-        if (status !== 'readily') {
+        if (status !== 'readily' && status !== 'available') {
             const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">
                 <h4>Language Pack Installation Required</h4>
                 <ol>
@@ -163,6 +213,13 @@ class ChromeAiTranslator {
             const status = await translatorCapabilities.languagePairAvailable(source, target);
 
             return status;
+        }else if("Translator" in self && "create" in self.Translator){
+            const status = await self.Translator.availability({
+                sourceLanguage: source,
+                targetLanguage: target,
+            });
+
+            return status;
         }
 
         return false;
@@ -181,6 +238,13 @@ class ChromeAiTranslator {
                 sourceLanguage: this.sourceLanguage,
                 targetLanguage,
               });
+
+            return translator;
+        }else if("Translator" in self && "create" in self.Translator){
+            const translator = await self.Translator.create({
+                sourceLanguage: this.sourceLanguage,
+                targetLanguage,
+            });
 
             return translator;
         }
