@@ -162,9 +162,8 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 == Changelog ==
 
-== Version 1.3.7 | 08 May 2025 =
+= Version 1.3.7 | 08 May 2025 =
 * **Fixed:** Fixed Chrome Local AI translation not working with latest version.
-
 
 = Version 1.3.6 | 10 April 2025 =
 * **Added:** SEO fields translation support on elementor pages.
