@@ -263,8 +263,10 @@ if(!class_exists('Cpt_Dashboard')){
                     'data' => array_map(function($item) {
                         return array_map('sanitize_text_field', $item);
                     }, $all_data[$prefix]),
-                    'total_string_count' => $total_string_count,
-                    'total_character_count' => $total_character_count,
+                    'total_string_count' => 0,
+                    'total_character_count' => 0,
+                    // 'total_string_count' => $total_string_count,
+                    // 'total_character_count' => $total_character_count,
                 );
             }else{
                 $data = array(

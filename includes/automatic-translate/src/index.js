@@ -97,7 +97,6 @@ const App = () => {
       totalCharacterCount += characterCount;
       totalWordCount += wordCount;
     });
-
     wp.data.dispatch('block-atfp/translate').translationInfo({ sourceWordCount: totalWordCount, sourceCharacterCount: totalCharacterCount });
   }
 
@@ -202,6 +201,7 @@ const appendElementorTranslateBtn = () => {
       buttonElement.attr('title', 'Translation is not available because there is no Elementor data.');
       return;
     }
+    
     // Append app root wrapper in body
     init();
   

@@ -160,7 +160,45 @@ const updateElementorPage = ({ postContent, modalClose, service }) => {
 
     // Update Meta Fields
     atfpUpdateMetaFields(postContent.metaFields, service);
-    const elementorData = JSON.stringify(elementor.elements.toJSON());
+
+    const replaceSourceString=()=>{
+        const elementorData = atfp_global_object.elementorData;
+        const translateStrings=wp.data.select('block-atfp/translate').getTranslationEntry();
+
+        translateStrings.forEach(translation => {
+            const sourceString = translation.source;
+            const ids = translation.id;
+            const translatedContent = translation.translatedData;
+            const type=translation.type;
+
+            if(!sourceString || '' === sourceString && 'content' !== type){
+                return;
+            }
+            
+            const keyArray = ids.split('_atfp_');
+            
+            const translateValue = translatedContent[service];
+            let parentElement = null;
+            let parentKey = null;
+
+            let currentElement = elementorData;
+               
+            keyArray.forEach(key => {
+                parentElement = currentElement;
+                parentKey = key;
+                currentElement = currentElement[key];
+            });
+
+            if(parentElement && parentKey && parentElement[parentKey] && parentElement[parentKey] === sourceString){
+                parentElement[parentKey] = translateValue;
+            }
+        });
+
+        return elementorData;
+    }
+
+    
+    const elementorData = replaceSourceString();
 
     modalClose();
 
@@ -174,7 +212,7 @@ const updateElementorPage = ({ postContent, modalClose, service }) => {
             {
                 action: atfp_global_object.update_elementor_data,
                 post_id: postID,
-                elementor_data: elementorData,
+                elementor_data: JSON.stringify(elementorData),
                 atfp_nonce: atfp_global_object.ajax_nonce
             }
         )
