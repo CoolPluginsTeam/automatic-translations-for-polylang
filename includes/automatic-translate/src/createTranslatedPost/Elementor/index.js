@@ -200,8 +200,6 @@ const updateElementorPage = ({ postContent, modalClose, service }) => {
     
     const elementorData = replaceSourceString();
 
-    modalClose();
-
     fetch(atfp_global_object.ajax_url, {
         method: 'POST',
         headers: {
@@ -228,8 +226,11 @@ const updateElementorPage = ({ postContent, modalClose, service }) => {
             } else {
                 console.error('Failed to update Elementor data:', data.data);
             }
+
+            modalClose();
         })
         .catch(error => {
+            modalClose();
             console.error('Error updating Elementor data:', error);
         });
 }
