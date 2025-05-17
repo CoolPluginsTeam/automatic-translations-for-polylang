@@ -108,6 +108,14 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 						$language_slug=isset($lang->slug) ? $lang->slug : '';
 						$current_class=$pll_active_languages && $pll_active_languages == $language_slug ? 'current' : '';
 						$translated_post_count=pll_count_posts($language_slug, array('post_type'=>$post_type, 'post_status'=>$post_status));
+
+						if('publish' === $post_status){
+							$draft_post_count=pll_count_posts($language_slug, array('post_type'=>$post_type, 'post_status'=>'draft'));
+							$translated_post_count+=$draft_post_count;
+
+							$pending_post_count=pll_count_posts($language_slug, array('post_type'=>$post_type, 'post_status'=>'pending'));
+							$translated_post_count+=$pending_post_count;
+						}
 						// echo $flag; // phpcs:ignore WordPress.Security.EscapeOutput
 						echo "<li class='atfp_pll_lang_".esc_attr($language_slug)."'><a href='edit.php?post_type=".esc_attr($post_type)."&lang=".esc_attr($language_slug)."' class='".esc_attr($current_class)."'>".esc_html($lang->name)." <span class='count'>(".esc_html($translated_post_count).")</span></a>".($index < $total_languages-1 ? ' |&nbsp;' : '')."</li>";
 						$index++;
