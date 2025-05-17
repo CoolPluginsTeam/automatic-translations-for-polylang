@@ -8,6 +8,7 @@ const updateAllowedMetaFields = (data) => {
 }
 
 const fetchPostContent = async (props) => {
+
     const elementorPostData = atfp_global_object.elementorData && typeof atfp_global_object.elementorData === 'string' ? JSON.parse(atfp_global_object.elementorData) : atfp_global_object.elementorData;
     const metaFields=atfp_global_object?.metaFields;
 
