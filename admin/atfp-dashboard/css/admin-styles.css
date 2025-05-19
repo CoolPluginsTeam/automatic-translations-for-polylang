@@ -166,6 +166,51 @@ Polylang Addon Dashboard - Admin Panel Styles
 	gap: 5px;
 }
 
+.atfp-dashboard-get-started{
+    margin-top: 24px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
+}
+
+.atfp-dashboard-get-started-grid{
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 13px 15px 15px 15px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.atfp-dashboard-get-started-grid div{
+    max-width: 100%;
+}
+
+.atfp-dashboard-get-started-grid div ul{
+    list-style: disc;
+    padding-left: 40px;
+}
+
+.atfp-dashboard-get-started-grid div:nth-child(2){
+   display: flex;
+}
+
+.atfp-dashboard-get-started-grid iframe{
+    max-width: 100%;
+    width: 100%;
+}
+
+.atfp-dashboard-get-started-grid:nth-child(3) div:nth-child(1){
+    order: 3;
+}
+
+.atfp-dashboard-get-started-grid:nth-child(3){
+    margin-block: 24px;
+}
+
 .atfp-dashboard-translation-providers{
     margin-top: 24px;
 }

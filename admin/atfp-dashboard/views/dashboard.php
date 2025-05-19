@@ -1,5 +1,5 @@
 
-    <div class="atfp-dashboard-left-section">
+<div class="atfp-dashboard-left-section">
         
         <!-- Welcome Section -->
         <div class="atfp-dashboard-welcome">
@@ -23,46 +23,79 @@
             </div>
         </div>
 
-        <!-- Translation Providers -->  
-        <div class="atfp-dashboard-translation-providers">
-            <h3><?php _e('Translation Providers', $text_domain); ?></h3>
-            <div class="atfp-dashboard-providers-grid">
-                
-                <?php
-
-                $providers = [
-                    ["Gemini AI", "geminiai-logo.png", "Pro", ["Unlimited Translations", "Fast Translations via AI", "Gemini API Key Required"], esc_url('#'), esc_url('admin.php?page=polylang-atfp-dashboard&tab=settings')],
-                    ["OpenAI", "openai-translate-logo.png", "Pro", ["Unlimited Translations", "Fast Translations via AI", "OpenAI API Key Required"], esc_url('#'), esc_url('admin.php?page=polylang-atfp-dashboard&tab=settings')],
-                    ["Openrouter AI", "openrouter-translate-logo.png", "Pro", ["Unlimited Translations", "Fast Translations via AI", "Openrouter API Key Required"], esc_url('#'), esc_url('admin.php?page=polylang-atfp-dashboard&tab=settings')],
-                    ["Google Translate", "google-translate-logo.png", "Pro", ["Unlimited Free Translations", "Fast & No API Key Required"], esc_url('#')],
-                    ["Chrome Built-in AI", "chrome-built-in-ai-logo.png", "Free", ["Fast AI Translations in Browser", "Unlimited Free Translations", "Use Translation Modals"], esc_url('https://docs.coolplugins.net/docs/ai-translation-for-polylang/how-to-automatically-translate-your-website-content-via-chrome-ai/')],
-                    ["Yandex Translate", "yandex-translate-logo.png", "Free", ["Unlimited Free Translations", "No API & No Extra Cost"], esc_url('https://docs.coolplugins.net/docs/ai-translation-for-polylang/how-to-automatically-translate-your-website-content-via-yandex/')],
-                ];
-
-                foreach ($providers as $index => $provider) {
-                    ?>
-                    <div class="atfp-dashboard-provider-card">
-                        <div class="atfp-dashboard-provider-header">
-                            <a href="<?php echo esc_url($provider[4]); ?>" target="_blank"><img src="<?php echo esc_url(ATFP_URL . 'assets/images/' . $provider[1]); ?>" alt="<?php echo esc_html($provider[0]); ?>"></a>
-                            <span class="atfp-dashboard-badge <?php echo strtolower($provider[2]); ?>"><?php echo $provider[2]; ?></span>
-                        </div>
-                        <h4><?php echo $provider[0]; ?></h4>
+        <div class="atfp-dashboard-get-started">
+           <div class="atfp-dashboard-get-started-container">
+                <h3><?php echo esc_html__('Get Started', $text_domain); ?></h3>
+                <div class="atfp-dashboard-get-started-grid">
+                    <div class="atfp-dashboard-get-started-grid-content">
+                        <span>Step 1</span>
+                        <h2>Plugin Installation :-</h2>
                         <ul>
-                            <?php foreach ($provider[3] as $feature) { ?>
-                                <li>✅ <?php echo $feature; ?></li>
-                            <?php } ?>
+                            <li>Navigate to the Plugins section and click on the <strong>“Add New”</strong> button.</li>
+                            <li>Now search for “Polylang” plugin. Install &amp; Activate the plugin.</li>
+                            <li>From the Plugins section, search for <strong>“AI Translation for Polylang”</strong>. Install &amp; Activate the plugin.</li>
                         </ul>
-                        <div class="atfp-dashboard-provider-buttons">
-                            <a href="<?php echo esc_url($provider[4]); ?>" class="atfp-dashboard-btn" target="_blank">Docs</a>
-                            <?php if (isset($provider[5])) { ?>
-                                <a href="<?php echo esc_url($provider[5]); ?>" class="atfp-dashboard-btn">Settings</a>
-                            <?php } ?>
-                        </div>
                     </div>
-                    <?php
-                }
-                ?>
-            </div>
+
+                    <div>
+                        <iframe title="How to Install AI Translation for Polylang"
+                                src="https://www.youtube.com/embed/bmmc-Ynwj8w?feature=oembed"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                referrerpolicy="strict-origin-when-cross-origin"
+                                allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+                <div class="atfp-dashboard-get-started-grid">
+                    <div class="atfp-dashboard-get-started-grid-content">
+                        <span>Step 2</span>
+                        <h2>Automate the Translation Process :-</h2>
+
+                        <ul>
+                            <li>Go to <strong>Pages &gt; All Pages</strong> in your WordPress dashboard. Find the page you want to translate and click to open it.</li>
+                            <li>From the languages section, click the <strong>“+” icon</strong> next to the language you want page to translate into.</li>
+                            <li>Next, select your preferred translation provider.</li>
+                            <li>Click the <strong>“Translate”</strong> button. The plugin will automatically generate the translation.</li>
+                            <li>Review the content, make any edits if needed, then click <strong>“Update”</strong> to save the translated page.</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <iframe title="Automate the Translation Process with AI Translation for Polylang"
+                                src="https://www.youtube.com/embed/ecHsOyIL_J4?feature=oembed"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                referrerpolicy="strict-origin-when-cross-origin"
+                                allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+                <div class="atfp-dashboard-get-started-grid">
+                    <div class="atfp-dashboard-get-started-grid-content">
+                        <span>Step 3</span>
+                        <h2>Elementor Page Translation :-</h2>
+
+                        <ul>
+                            <li>Navigate to the Plugins section and click on the <strong>“Add New”</strong> button.</li>
+                            <li>Now, click on the <strong>“Edit with Elementor”</strong> option. </li>
+                            <li>Click on the <strong>Translate</strong> button within the Elementor editor interface.</li>
+                            <li>Next, select your preferred translation provider.</li>
+                            <li>Click the <strong>“Translate”</strong> button. The plugin will automatically generate the translation.</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <iframe title="Elementor Page Translation with AI Translation for Polylang"
+                                src="https://www.youtube.com/embed/bmmc-Ynwj8w?feature=oembed"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                referrerpolicy="strict-origin-when-cross-origin"
+                                allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+           </div>
         </div>
     </div>
 

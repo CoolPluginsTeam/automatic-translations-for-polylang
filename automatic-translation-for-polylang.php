@@ -176,7 +176,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			
 			$valid_tabs = [
 				'dashboard'       => __('Dashboard', $text_domain),
-				'ai-translations' => __('AI Translations', $text_domain),
+				// 'ai-translations' => __('AI Translations', $text_domain),
 				'settings'        => __('Settings', $text_domain),
 				'license'         => __('License', $text_domain),
 				'free-vs-pro'     => __('Free vs Pro', $text_domain)
