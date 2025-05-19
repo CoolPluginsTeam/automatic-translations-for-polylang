@@ -185,13 +185,21 @@ Polylang Addon Dashboard - Admin Panel Styles
     gap: 1rem;
 }
 
+/* .atfp-dashboard-get-started-grid span{
+    background: var(--primary-color);
+    color: #fff;
+    border-color: var(--secondary-color);
+    padding: .3rem .8rem;
+    border-radius: 2rem;
+} */
+
 .atfp-dashboard-get-started-grid div{
     max-width: 100%;
 }
 
 .atfp-dashboard-get-started-grid div ul{
     list-style: disc;
-    padding-left: 40px;
+    padding-left: 30px;
 }
 
 .atfp-dashboard-get-started-grid div:nth-child(2){

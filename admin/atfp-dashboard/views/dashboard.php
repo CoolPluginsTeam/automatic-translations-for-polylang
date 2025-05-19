@@ -28,7 +28,7 @@
                 <h3><?php echo esc_html__('Get Started', $text_domain); ?></h3>
                 <div class="atfp-dashboard-get-started-grid">
                     <div class="atfp-dashboard-get-started-grid-content">
-                        <span>Step 1</span>
+                        <!-- <span>Step 1</span> -->
                         <h2>Plugin Installation :-</h2>
                         <ul>
                             <li>Navigate to the Plugins section and click on the <strong>“Add New”</strong> button.</li>
@@ -49,15 +49,15 @@
                 </div>
                 <div class="atfp-dashboard-get-started-grid">
                     <div class="atfp-dashboard-get-started-grid-content">
-                        <span>Step 2</span>
+                        <!-- <span>Step 2</span> -->
                         <h2>Automate the Translation Process :-</h2>
 
                         <ul>
-                            <li>Go to <strong>Pages &gt; All Pages</strong> in your WordPress dashboard. Find the page you want to translate and click to open it.</li>
-                            <li>From the languages section, click the <strong>“+” icon</strong> next to the language you want page to translate into.</li>
-                            <li>Next, select your preferred translation provider.</li>
-                            <li>Click the <strong>“Translate”</strong> button. The plugin will automatically generate the translation.</li>
-                            <li>Review the content, make any edits if needed, then click <strong>“Update”</strong> to save the translated page.</li>
+                            <li>Open <strong>Pages &gt; All Pages</strong> and click the page you want to translate.</li>
+                            <li>Click the <strong>“+” icon</strong> next to the language you want.</li>
+                            <li>Choose a translation provider.</li>
+                            <li>Click <strong>“Translate”</strong> to auto-translate the page.</li>
+                            <li>Check the translation, edit if needed, then click <strong>“Update”</strong> to save.</li>
                         </ul>
                     </div>
 
@@ -73,15 +73,16 @@
                 </div>
                 <div class="atfp-dashboard-get-started-grid">
                     <div class="atfp-dashboard-get-started-grid-content">
-                        <span>Step 3</span>
+                        <!-- <span>Step 3</span> -->
                         <h2>Elementor Page Translation :-</h2>
 
                         <ul>
-                            <li>Navigate to the Plugins section and click on the <strong>“Add New”</strong> button.</li>
+                            <li>In <strong>Pages &gt; All Pages</strong>, click the page and then the <strong>“+” icon</strong> for your target language.</li>
                             <li>Now, click on the <strong>“Edit with Elementor”</strong> option. </li>
-                            <li>Click on the <strong>Translate</strong> button within the Elementor editor interface.</li>
-                            <li>Next, select your preferred translation provider.</li>
-                            <li>Click the <strong>“Translate”</strong> button. The plugin will automatically generate the translation.</li>
+                            <li>Click the <strong>Translate</strong> button in Elementor.</li>
+                            <li>Choose a translation provider.</li>
+                            <li>Click <strong>“Translate”</strong> to auto-translate the page.</li>
+                            <li>Check the translation, edit if needed, then click <strong>“Update”</strong> to save.</li>
                         </ul>
                     </div>
 
