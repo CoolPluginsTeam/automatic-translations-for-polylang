@@ -156,7 +156,8 @@ if (! class_exists('ATFP_Helper')) {
 		public static function replace_links_with_translations($content, $locale, $current_locale)
 		{
 			$pattern = '/href="([^"]*)"/';
-			
+			$terms_data=self::get_terms_data();
+
 			if (preg_match_all($pattern, $content, $matches)) {
 				foreach ($matches[1] as $href) {
 					$postID = url_to_postid($href);
@@ -173,8 +174,25 @@ if (! class_exists('ATFP_Helper')) {
 					} else {
 						$path = trim(str_replace(pll_home_url($current_locale), '', $href), '/');
 						$category_slug = end(array_filter(explode('/', $path)));
-						$category = get_term_by('slug', $category_slug, 'category');
+						$taxonomy_name=self::extract_taxonomy_name($path, $terms_data);
+						$taxonomy_name=$taxonomy_name ? $taxonomy_name : 'category';
 
+						$category = get_term_by('slug', $category_slug, $taxonomy_name);
+
+						if(!$category){
+								// Remove the language prefix if using Polylang
+							$languages = pll_languages_list(); // e.g., ['en', 'fr']
+							$segments = explode('/', $path);
+							if (in_array($segments[0], $languages)) {
+								$lang_code=$segments[0];
+								$category_id=Pll()->model->term_exists_by_slug($category_slug, $lang_code, $taxonomy_name);
+
+								if($category_id){
+									$category=get_term($category_id, $taxonomy_name);
+								}
+							}
+						}
+						
 						if ($category) {
 							$term_id = pll_get_term($category->term_id, $locale);
 							if ($term_id > 0) {
@@ -189,11 +207,49 @@ if (! class_exists('ATFP_Helper')) {
 			return $content;
 		}
 
+		private static function extract_taxonomy_name($path, $terms_data){
+			// Remove the language prefix if using Polylang
+			$languages = pll_languages_list(); // e.g., ['en', 'fr']
+			$segments = explode('/', $path);
+			if (in_array($segments[0], $languages)) {
+				array_shift($segments); // remove 'en', 'fr', etc.
+			}
+			
+			if (empty($segments)) {
+				return null;
+			}
+
+			// First segment after language is usually the taxonomy slug
+			$possible_tax = $segments[0];
+
+			if (taxonomy_exists($possible_tax) || (isset($terms_data[$possible_tax]) && taxonomy_exists($terms_data[$possible_tax]))) {
+		   		return isset($terms_data[$possible_tax]) ? $terms_data[$possible_tax] : $possible_tax;
+			}
+
+			return false;
+		}
+
+		private static function get_terms_data(){
+			$taxonomies=get_taxonomies([],'objects');
+
+			$taxonomies_data=array();
+			foreach($taxonomies as $key=>$taxonomy){
+				if(isset($taxonomy->rewrite['slug'])){
+					$taxonomies_data[$taxonomy->rewrite['slug']]=$key;
+				}else{
+					$taxonomies_data[$key]=$key;
+				}
+			}
+
+			return $taxonomies_data;
+		}
+
 		public static function get_translation_data($key_exists=array()){
 			if(class_exists('Atfp_Dashboard') && method_exists('Atfp_Dashboard', 'get_translation_data')){
 				return Atfp_Dashboard::get_translation_data('atfp', $key_exists);
 			}else{
 				return false;
+
 			}
 		}
 
