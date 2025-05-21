@@ -28,27 +28,6 @@
                 <h3><?php echo esc_html__('Get Started', $text_domain); ?></h3>
                 <div class="atfp-dashboard-get-started-grid">
                     <div class="atfp-dashboard-get-started-grid-content">
-                        <!-- <span>Step 1</span> -->
-                        <h2>Plugin Installation :-</h2>
-                        <ul>
-                            <li>Navigate to the Plugins section and click on the <strong>“Add New”</strong> button.</li>
-                            <li>Now search for “Polylang” plugin. Install &amp; Activate the plugin.</li>
-                            <li>From the Plugins section, search for <strong>“AI Translation for Polylang”</strong>. Install &amp; Activate the plugin.</li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <iframe title="How to Install AI Translation for Polylang"
-                                src="https://www.youtube.com/embed/bmmc-Ynwj8w?feature=oembed"
-                                frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                referrerpolicy="strict-origin-when-cross-origin"
-                                allowfullscreen>
-                        </iframe>
-                    </div>
-                </div>
-                <div class="atfp-dashboard-get-started-grid">
-                    <div class="atfp-dashboard-get-started-grid-content">
                         <!-- <span>Step 2</span> -->
                         <h2>Automate the Translation Process :-</h2>
 
