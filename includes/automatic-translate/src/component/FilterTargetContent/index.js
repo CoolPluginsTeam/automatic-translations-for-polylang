@@ -145,9 +145,13 @@ const FilterTargetContent = (props) => {
 
                     if(element.nodeType === 3){
                         const textContent = element.textContent.replace(/^\s+|\s+$/g, (match) => `#atfp_open_translate_span#${match}#atfp_close_translate_span#`);
+
                         textNode = document.createTextNode(textContent);
+                    }else if(element.nodeType === 8){
+                        textNode = document.createTextNode(`<!--${element.textContent}-->`);
                     }else{
                         let filterContent = wrapFirstAndMatchingClosingTag(element.outerHTML);
+
                         textNode = document.createTextNode(filterContent);
                     }
                     
