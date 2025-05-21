@@ -218,10 +218,12 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 			}
 
 			$provider = isset($_POST['provider']) ? sanitize_text_field($_POST['provider']) : '';
+			$total_string_count = isset($_POST['totalStringCount']) ? absint($_POST['totalStringCount']) : 0;
 			$total_word_count = isset($_POST['totalWordCount']) ? absint($_POST['totalWordCount']) : 0;
 			$total_char_count = isset($_POST['totalCharacterCount']) ? absint($_POST['totalCharacterCount']) : 0;
 			$editor_type = isset($_POST['editorType']) ? sanitize_text_field($_POST['editorType']) : '';
 			$date = isset($_POST['date']) ? date('Y-m-d H:i:s', strtotime(sanitize_text_field($_POST['date']))) : '';
+			$source_string_count = isset($_POST['sourceStringCount']) ? absint($_POST['sourceStringCount']) : 0;	
 			$source_word_count = isset($_POST['sourceWordCount']) ? absint($_POST['sourceWordCount']) : 0;
 			$source_char_count = isset($_POST['sourceCharacterCount']) ? absint($_POST['sourceCharacterCount']) : 0;
 			$source_lang = isset($_POST['sourceLang']) ? sanitize_text_field($_POST['sourceLang']) : '';
@@ -229,23 +231,25 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 			$time_taken = isset($_POST['timeTaken']) ? absint($_POST['timeTaken']) : 0;
 			$post_id = isset($_POST['post_id']) ? absint($_POST['post_id']) : 0;
 
-			if (class_exists('CPT_Dashboard')) {
+			if (class_exists('Atfp_Dashboard')) {
 				$translation_data = array(
 					'post_id' => $post_id,
 					'service_provider' => $provider,
 					'source_language' => $source_lang,
 					'target_language' => $target_lang,
 					'time_taken' => $time_taken,
-					'string_count' => $total_word_count,
+					'string_count' => $total_string_count,
+					'word_count' => $total_word_count,
 					'character_count' => $total_char_count,
-					'source_string_count' => $source_word_count,
+					'source_string_count' => $source_string_count,
+					'source_word_count' => $source_word_count,
 					'source_character_count' => $source_char_count,
 					'editor_type' => $editor_type,
 					'date_time' => $date,
 					'version_type' => 'free'
 				);
 
-				CPT_Dashboard::store_options(
+				Atfp_Dashboard::store_options(
 					'atfp',
 					'post_id', 
 					'update',
@@ -257,7 +261,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				));
 			} else {
 				wp_send_json_error(array(
-					'message' => __('CPT_Dashboard class not found', 'automatic-translations-for-polylang') 
+					'message' => __('Atfp_Dashboard class not found', 'automatic-translations-for-polylang') 
 				));
 			}
 			exit;
@@ -273,19 +277,19 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				exit();
 			}
 
-			if(!class_exists("CPT_Dashboard")){
+			if(!class_exists("Atfp_Dashboard")){
 				wp_send_json_error( __( 'Translation Data class not found.', 'automatic-translations-for-polylang' ) );
 				wp_die( '0', 400 );
 				exit();
 			}
 
-			if(!method_exists("CPT_Dashboard", "get_translation_data")){
+			if(!method_exists("Atfp_Dashboard", "get_translation_data")){
 				wp_send_json_error( __( 'Get Translation Data method not found.', 'automatic-translations-for-polylang' ) );
 				wp_die( '0', 400 );
 				exit();
 			}	
 
-			$translation_data = CPT_Dashboard::get_translation_data('atfp');
+			$translation_data = Atfp_Dashboard::get_translation_data('atfp');
 
 			if(!isset($translation_data['total_character_count'])){
 				wp_send_json_error( __( 'Character count not found.', 'automatic-translations-for-polylang' ) );

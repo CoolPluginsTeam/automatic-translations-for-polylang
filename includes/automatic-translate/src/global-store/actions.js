@@ -133,12 +133,14 @@ export const setBlockRules = (data) => {
  * @param {Object} data - The translation info to be saved.
  * @returns {Object} The action object containing the type and data.
  */
-export const translationInfo = ({ sourceWordCount = null, sourceCharacterCount = null, timeTaken = null, provider = null, targetWordCount = null, targetCharacterCount = null, translateStatus = null }) => {
+export const translationInfo = ({ sourceStringCount = null, sourceWordCount = null, sourceCharacterCount = null, timeTaken = null, provider = null, targetStringCount = null, targetWordCount = null, targetCharacterCount = null, translateStatus = null }) => {
     return {
         type: AtfpActionTypes.translationInfo, // Action type for saving the translation info
+        sourceStringCount: sourceStringCount,
         sourceWordCount: sourceWordCount,
         sourceCharacterCount: sourceCharacterCount, // The character count
         timeTaken: timeTaken, // The time taken
+        targetStringCount: targetStringCount,
         targetWordCount: targetWordCount,
         targetCharacterCount: targetCharacterCount,
         provider: provider, // The provider

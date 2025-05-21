@@ -11,11 +11,11 @@ jQuery(document).ready(function($){
         $('#cpt-'+tab+'-table').show();
     });
 
-    $('.cpt-review-notice-dismiss button').click(function(){
-        var prefix = $(this).closest('.cpt-review-notice-dismiss').data('prefix');
-        var nonce = $(this).closest('.cpt-review-notice-dismiss').data('nonce');
+    $('.atfp-review-notice-dismiss button').click(function(){
+        var prefix = $(this).closest('.atfp-review-notice-dismiss').data('prefix');
+        var nonce = $(this).closest('.atfp-review-notice-dismiss').data('nonce');
 
-        $.post(ajaxurl, {action: 'cpt_hide_review_notice', prefix: prefix, nonce: nonce}, (response)=>{
+        $.post(ajaxurl, {action: 'atfp_hide_review_notice', prefix: prefix, nonce: nonce}, (response)=>{
             $(this).closest('.cpt-review-notice').slideUp();
         });
     });
