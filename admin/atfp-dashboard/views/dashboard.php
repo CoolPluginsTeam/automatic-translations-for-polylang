@@ -33,7 +33,7 @@
 
                         <ul>
                             <li>Open <strong>Pages &gt; All Pages</strong> and click the page you want to translate.</li>
-                            <li>Click the <strong>“+” icon</strong> next to the language you want.</li>
+                            <li>Click the <strong>“+”</strong> icon next to the language you want.</li>
                             <li>Choose a translation provider.</li>
                             <li>Click <strong>“Translate”</strong> to auto-translate the page.</li>
                             <li>Check the translation, edit if needed, then click <strong>“Update”</strong> to save.</li>
@@ -56,7 +56,7 @@
                         <h2>Elementor Page Translation :-</h2>
 
                         <ul>
-                            <li>In <strong>Pages &gt; All Pages</strong>, click the page and then the <strong>“+” icon</strong> for your target language.</li>
+                            <li>In <strong>Pages &gt; All Pages</strong>, click the page and then the <strong>“+”</strong> icon for your target language.</li>
                             <li>Now, click on the <strong>“Edit with Elementor”</strong> option. </li>
                             <li>Click the <strong>Translate</strong> button in Elementor.</li>
                             <li>Choose a translation provider.</li>
