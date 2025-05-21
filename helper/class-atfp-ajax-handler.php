@@ -307,10 +307,28 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 
             if ( isset( $_POST['post_id'] ) && isset( $_POST['elementor_data'] ) ) {
                 $post_id = intval( $_POST['post_id'] );
-                $elementor_data = sanitize_textarea_field( wp_unslash( $_POST['elementor_data'] ) ); // Sanitize the JSON data
-                update_post_meta( $post_id, '_elementor_data', $elementor_data );
+
+				$elementor_data = $_POST['elementor_data'];
+		
+				// Check if the current post has Elementor data
+				if($elementor_data && '' !== $elementor_data){
+					if(class_exists('Elementor\Plugin')){
+						$plugin=\Elementor\Plugin::$instance;
+						$document=$plugin->documents->get($post_id);
+						
+						$document->save( [
+							'elements' => json_decode( stripslashes( $elementor_data ), true ),
+						] );
+
+						$plugin->files_manager->clear_cache();
+					}else{
+						// $elementor_data = sanitize_textarea_field( wp_unslash( $post_data['meta_fields']['_elementor_data']));
+						$elementor_data=preg_replace('#(?<!\\\\)/#', '\\/', $elementor_data);
+						update_post_meta($post_id, '_elementor_data', $elementor_data);
+					}
+				}
+				
 				update_post_meta($post_id, '_atfp_elementor_translated', 'true');
-				delete_post_meta( $post_id, 'atfp_parent_post_language_slug');
                 wp_send_json_success( 'Elementor data updated.' );
 				exit;
             } else {
