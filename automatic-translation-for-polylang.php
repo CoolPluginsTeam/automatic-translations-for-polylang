@@ -64,6 +64,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			add_action( 'admin_menu', array( $this, 'atfp_add_submenu_page' ), 11 );
 			add_action( 'admin_enqueue_scripts', array( $this, 'atfp_set_dashboard_style' ) );
 			add_action('init', array($this, 'atfp_translation_string_migration'));
+			add_action('admin_menu', array($this, 'atfp_add_support_blocks_submenu_page'), 12);
 
 			// Add the action to hide unrelated notices
 			if(isset($_GET['page']) && $_GET['page'] == 'polylang-atfp-dashboard'){
@@ -170,6 +171,18 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			);
 		}
 
+		// Add submenu page for support blocks
+		public function atfp_add_support_blocks_submenu_page() {
+			add_submenu_page(
+				'mlang', // Parent slug
+				__( 'Support Blocks', 'automatic-translations-for-polylang' ), // Page title
+				__( '↳ Support Blocks', 'automatic-translations-for-polylang' ), // Menu title
+				'manage_options', // Capability
+				'polylang-atfp-dashboard&tab=support-blocks', // Menu slug (unique slug for submenu page)
+				array( $this, 'atfp_render_dashboard_page' ) // Callback function
+			);
+		}
+
 		public function atfp_render_dashboard_page() {
 			$text_domain = 'automatic-translations-for-polylang';
 			$file_prefix = 'admin/atfp-dashboard/views/';
@@ -179,7 +192,8 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 				// 'ai-translations' => __('AI Translations', $text_domain),
 				'settings'        => __('Settings', $text_domain),
 				'license'         => __('License', $text_domain),
-				'free-vs-pro'     => __('Free vs Pro', $text_domain)
+				'free-vs-pro'     => __('Free vs Pro', $text_domain),
+				'support-blocks'  => __('Support Blocks', $text_domain)
 			];
 	
 			// Get current tab with fallback
@@ -247,7 +261,9 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 				<div class="tab-content">
 					<?php
 					require_once ATFP_DIR_PATH . $file_prefix . $tab . '.php';
-					require_once ATFP_DIR_PATH . $file_prefix . 'sidebar.php';
+					if($tab !== 'support-blocks'){
+						require_once ATFP_DIR_PATH . $file_prefix . 'sidebar.php';
+					}
 					
 					?>
 				</div>
@@ -329,7 +345,6 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 
 			require_once ATFP_DIR_PATH . '/helper/class-atfp-helper.php';
 			require_once ATFP_DIR_PATH . 'admin/atfp-menu-pages/class-atfp-custom-block-post.php';
-			require_once ATFP_DIR_PATH . 'admin/atfp-menu-pages/class-atfp-supported-blocks.php';
 			require_once ATFP_DIR_PATH . 'includes/class-atfp-register-backend-assets.php';
 			require_once ATFP_DIR_PATH . 'includes/elementor-translate/class-atfp-elementor-translate.php';
 		}

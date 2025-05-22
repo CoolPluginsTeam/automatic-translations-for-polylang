@@ -1,9 +1,10 @@
 .atfp-supported-blocks-wrapper {
-  margin: 1rem;
-  padding: 1rem;
-  -webkit-box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  border-radius: 1rem;
+  width: 100%;
+  margin-top: 25px;
+  background: white;
+  padding: 24px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
 }
 
 .atfp-supported-blocks-wrapper .atfp-supported-blocks-filters {
@@ -234,7 +235,7 @@
 
 #atfp-supported-blocks-table_wrapper .dt-layout-row:nth-child(2) label {
   margin: 0 .5rem 0 0;
-  font-size: 21.3px;
+  font-size: 1.3em;
   font-weight: 600;
 }
 
