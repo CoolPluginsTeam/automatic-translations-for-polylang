@@ -71,6 +71,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 				add_action('admin_print_scripts', array($this, 'atfp_hide_unrelated_notices'));
 			}
 
+			add_action('current_screen', array($this, 'atfp_append_view_languages_link'));
 		}
 
 		public static function atfp_translation_string_migration(){
@@ -272,7 +273,6 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			</div>
 			<?php
 			//Append view languages link in page
-			add_action('current_screen', array($this, 'atfp_append_view_languages_link'));
 		}
 
 		public function atfp_append_view_languages_link($current_screen) {
