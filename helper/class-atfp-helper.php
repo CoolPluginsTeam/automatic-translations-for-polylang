@@ -155,12 +155,16 @@ if (! class_exists('ATFP_Helper')) {
 
 		public static function replace_links_with_translations($content, $locale, $current_locale)
 		{
-			$pattern = '/href="([^"]*)"/';
+			// Get all URLs in the content that start with the current home page URL (current domain), regardless of attribute or tag
+			$home_url = preg_quote(get_home_url(), '/');
+			$pattern = '/(' . $home_url . '[^\s"\'<>]*)/i';
 			$terms_data=self::get_terms_data();
 
 			if (preg_match_all($pattern, $content, $matches)) {
+
 				foreach ($matches[1] as $href) {
 					$postID = url_to_postid($href);
+		
 					if ($postID > 0) {
 						$translatedPost = pll_get_post($postID, $locale);
 						if ($translatedPost) {
@@ -172,7 +176,7 @@ if (! class_exists('ATFP_Helper')) {
 							}
 						}
 					} else {
-						$path = trim(str_replace(pll_home_url($current_locale), '', $href), '/');
+						$path = trim(str_replace(home_url(), '', $href), '/');
 						$category_slug = end(array_filter(explode('/', $path)));
 						$taxonomy_name=self::extract_taxonomy_name($path, $terms_data);
 						$taxonomy_name=$taxonomy_name ? $taxonomy_name : 'category';
@@ -192,6 +196,7 @@ if (! class_exists('ATFP_Helper')) {
 								}
 							}
 						}
+
 						
 						if ($category) {
 							$term_id = pll_get_term($category->term_id, $locale);
@@ -203,7 +208,7 @@ if (! class_exists('ATFP_Helper')) {
 					}
 				}
 			}
-
+			
 			return $content;
 		}
 
