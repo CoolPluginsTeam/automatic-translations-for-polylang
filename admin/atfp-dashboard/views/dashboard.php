@@ -28,15 +28,14 @@
                 <h3><?php echo esc_html__('Get Started', $text_domain); ?></h3>
                 <div class="atfp-dashboard-get-started-grid">
                     <div class="atfp-dashboard-get-started-grid-content">
-                        <!-- <span>Step 2</span> -->
-                        <h2>Automate the Translation Process :-</h2>
+                        <h2><?php echo esc_html__('Automate the Translation Process :-', $text_domain); ?></h2>
 
                         <ul>
-                            <li>Open <strong>Pages &gt; All Pages</strong> and click the page you want to translate.</li>
-                            <li>Click the <strong>“+”</strong> icon next to the language you want.</li>
-                            <li>Choose a translation provider.</li>
-                            <li>Click <strong>“Translate”</strong> to auto-translate the page.</li>
-                            <li>Check the translation, edit if needed, then click <strong>“Update”</strong> to save.</li>
+                            <li><?php echo sprintf(esc_html__('Open %sPages &gt; All Pages%s and click the page you want to translate.', $text_domain), '<strong>', '</strong>'); ?></li>
+                            <li><?php echo sprintf(esc_html__('Click the %s“+”%s icon next to the language you want.', $text_domain), '<strong>', '</strong>'); ?></li>
+                            <li><?php echo sprintf(esc_html__('Choose a translation provider.', $text_domain)); ?></li>
+                            <li><?php echo sprintf(esc_html__('Click %s“Translate”%s to auto-translate the page.', $text_domain), '<strong>', '</strong>'); ?></li>
+                            <li><?php echo sprintf(esc_html__('Check the translation, edit if needed, then click %s“Update”%s to save.', $text_domain), '<strong>', '</strong>'); ?></li>
                         </ul>
                     </div>
 
@@ -52,16 +51,15 @@
                 </div>
                 <div class="atfp-dashboard-get-started-grid">
                     <div class="atfp-dashboard-get-started-grid-content">
-                        <!-- <span>Step 3</span> -->
-                        <h2>Elementor Page Translation :-</h2>
+                        <h2><?php echo esc_html__('Elementor Page Translation :-', $text_domain); ?></h2>
 
                         <ul>
-                            <li>In <strong>Pages &gt; All Pages</strong>, click the page and then the <strong>“+”</strong> icon for your target language.</li>
-                            <li>Now, click on the <strong>“Edit with Elementor”</strong> option. </li>
-                            <li>Click the <strong>Translate</strong> button in Elementor.</li>
-                            <li>Choose a translation provider.</li>
-                            <li>Click <strong>“Translate”</strong> to auto-translate the page.</li>
-                            <li>Check the translation, edit if needed, then click <strong>“Update”</strong> to save.</li>
+                            <li><?php echo sprintf(esc_html__('In %sPages &gt; All Pages%s, click the page and then the %s“+”%s icon for your target language.', $text_domain), '<strong>', '</strong>', '<strong>', '</strong>'); ?></li>
+                            <li><?php echo sprintf(esc_html__('Now, click on the %s“Edit with Elementor”%s option. ', $text_domain), '<strong>', '</strong>'); ?></li>
+                            <li><?php echo sprintf(esc_html__('Click the %s“Translate”%s button in Elementor.', $text_domain), '<strong>', '</strong>'); ?></li>
+                            <li><?php echo sprintf(esc_html__('Choose a translation provider.', $text_domain)); ?></li>
+                            <li><?php echo sprintf(esc_html__('Click %s“Translate”%s to auto-translate the page.', $text_domain), '<strong>', '</strong>'); ?></li>
+                            <li><?php echo sprintf(esc_html__('Check the translation, edit if needed, then click %s“Update”%s to save.', $text_domain), '<strong>', '</strong>'); ?></li>
                         </ul>
                     </div>
 
