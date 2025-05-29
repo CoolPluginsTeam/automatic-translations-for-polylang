@@ -45,34 +45,22 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 		 * Constructor for the ATFP_Supported_Blocks class.
 		 */
 		private function __construct() {
-			add_action( 'admin_menu', array( $this, 'atfp_add_submenu_page' ), 11 );
-			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_editor_assets' ) );
+			// wp:phpcs:ignore Wordpress.security Nonce verification is not required here
+			if(isset($_GET['tab']) && $_GET['page'] == 'polylang-atfp-dashboard' && $_GET['tab'] == 'support-blocks'){
+				$this->atfp_render_support_blocks_page();
+				$this->enqueue_editor_assets();
+			}
 
 		}
 
 		/**
 		 * Enqueue editor CSS for the supported blocks page.
 		 */
-		public function enqueue_editor_assets( $hook ) {
-			if ( $hook === 'languages_page_atfp-supported-blocks' ) {
-				wp_enqueue_script( 'atfp-datatable-script', ATFP_URL . 'assets/js/dataTables.min.js', array(), ATFP_V, true );
-				wp_enqueue_script( 'atfp-datatable-style', ATFP_URL . 'assets/js/dataTables.min.js', array(), ATFP_V, true );
-				wp_enqueue_style( 'atfp-editor-supported-blocks', ATFP_URL . 'assets/css/atfp-supported-blocks.min.css', array(), ATFP_V );
-				wp_enqueue_script( 'atfp-editor-supported-blocks', ATFP_URL . 'assets/js/atfp-supported-block.min.js', array('atfp-datatable-script'), ATFP_V, true );
-			}
-		}
-		/**
-		 * Add submenu page under the Polylang menu.
-		 */
-		public function atfp_add_submenu_page() {
-			add_submenu_page(
-				'mlang', // Parent slug
-				__( 'Support Blocks', 'automatic-translations-for-polylang' ), // Page title
-				__( 'Support Blocks', 'automatic-translations-for-polylang' ), // Menu title
-				'manage_options', // Capability
-				'atfp-supported-blocks', // Menu slug
-				array( $this, 'atfp_render_support_blocks_page' ) // Callback function
-			);
+		public function enqueue_editor_assets( ) {
+			wp_enqueue_script( 'atfp-datatable-script', ATFP_URL . 'assets/js/dataTables.min.js', array(), ATFP_V, true );
+			wp_enqueue_script( 'atfp-datatable-style', ATFP_URL . 'assets/js/dataTables.min.js', array(), ATFP_V, true );
+			wp_enqueue_style( 'atfp-editor-supported-blocks', ATFP_URL . 'assets/css/atfp-supported-blocks.min.css', array(), ATFP_V );
+			wp_enqueue_script( 'atfp-editor-supported-blocks', ATFP_URL . 'assets/js/atfp-supported-block.min.js', array('atfp-datatable-script'), ATFP_V, true );
 		}
 
 		/**
@@ -118,6 +106,7 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 							?>
 						</tbody>
 					</table>
+				</div>
 			</div>
 		</div>
 			<?php

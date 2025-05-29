@@ -10,13 +10,13 @@ if(!defined('ABSPATH')){
  * example:
  * 
  * Dashbord initialize
- * if(!class_exists('Cpt_Dashboard')){
- * $dashboard=Cpt_Dashboard::instance();
+ * if(!class_exists('Atfp_Dashboard')){
+ * $dashboard=Atfp_Dashboard::instance();
  * }
  * 
  * Store options
- * if(class_exists('Cpt_Dashboard')){
- *  Cpt_Dashboard::store_options(
+ * if(class_exists('Atfp_Dashboard')){
+ *  Atfp_Dashboard::store_options(
  *      'prefix', // Required plugin prefix
  *      'unique_key',// Optional unique key is used to update the data based on post/page id or plugin/themes name
  *      'update', // Optional preview string count or character count update or replace
@@ -53,8 +53,8 @@ if(!defined('ABSPATH')){
  * });
  * 
  * Display review notice
- * if(class_exists('Cpt_Dashboard')){
- *  Cpt_Dashboard::review_notice(
+ * if(class_exists('Atfp_Dashboard')){
+ *  Atfp_Dashboard::review_notice(
  *      'prefix', // Required
  *      'plugin_name', // Required
  *      'url', // Required
@@ -63,8 +63,8 @@ if(!defined('ABSPATH')){
  * }
  * 
  * Get translation data
- * if(class_exists('Cpt_Dashboard')){
- *  Cpt_Dashboard::get_translation_data(
+ * if(class_exists('Atfp_Dashboard')){
+ *  Atfp_Dashboard::get_translation_data(
  *      'prefix', // Required
  *      array(
  *          'editor_type' => 'gutenberg', // optional return data based on editor type
@@ -74,8 +74,8 @@ if(!defined('ABSPATH')){
  * }
  */
 
-if(!class_exists('Cpt_Dashboard')){
-    class Cpt_Dashboard{
+if(!class_exists('Atfp_Dashboard')){
+    class Atfp_Dashboard{
 
         /**
          * Init
@@ -101,70 +101,7 @@ if(!class_exists('Cpt_Dashboard')){
         }
 
         public function __construct(){
-            // add_action('admin_menu', array($this, 'add_menu_page'));
-            // add_action('admin_enqueue_scripts', array($this, 'dashboard_assets'));
-            add_action('wp_ajax_cpt_hide_review_notice', array($this, 'cpt_hide_review_notice'));
-        }
-
-        /**
-         * Add menu page
-         * @return void
-         */
-        public function add_menu_page(){
-            add_options_page(
-                esc_html__('Cool Translate Dashboard', 'cp-notice'), // Page title
-                esc_html__('Cool Translate Dashboard', 'cp-notice'), // Menu title 
-                'manage_options', // Capability required
-                'cool-translate-dashboard', // Menu slug
-                array($this, 'render_dashboard') // Callback function
-            );
-        }
-
-        public function render_dashboard(){
-            $tabs = apply_filters('cpt_dashboard_tabs', $this->tabs_data);
-            $translation_entries = get_option('cpt_dashboard_data', array());
-
-            echo "<section class='cpt-dashboard'>";
-            $tab_html = '<div class="cpt-dashboard-tabs">';
-            $table_html = '<div class="cpt-dashboard-tables">';
-
-            foreach($tabs as $key => $value){
-                $active_tab = $key === 0 ? ' cpt-active' : '';
-                if(isset($value['prefix']) && isset($value['tab_name']) && isset($value['columns'])){
-                   $prefix = sanitize_key($value['prefix']);
-                   $tab_name = sanitize_text_field($value['tab_name']);
-                   $columns = array_map('sanitize_text_field', $value['columns']);
-
-                   $tab_html .= '<div id="cpt-'.esc_attr($prefix).'-tab" class="cpt-dashboard-tab'.esc_attr($active_tab).'" data-tab="'.esc_attr($prefix).'">'.esc_html($tab_name).'</div>';
-                   $table_html .= '<table id="cpt-'.esc_attr($prefix).'-table" class="cpt-dashboard-table widefat fixed striped'.esc_attr($active_tab).'" data-tab="'.esc_attr($prefix).'">';
-                   $table_html .= '<thead><tr>';
-                   $table_html .= '<th>S.No</th>';
-                   foreach($columns as $column_name => $column_value){
-                    $table_html .= '<th data-column="'.esc_attr($column_name).'">'.esc_html($column_value).'</th>';
-                   }
-                   $table_html .= '</tr></thead>';
-                   $table_html .= '<tbody>';
-                   $translation_data = isset($translation_entries[$prefix]) ? $translation_entries[$prefix] : array();
-                   
-                   foreach($translation_data as $key => $value){
-                    $table_html .= '<tr data-row="'.esc_attr($key).'">';
-                    $table_html .= '<td>'.esc_html($key+1).'</td>';
-                    $column_data = self::sort_column_data($columns, array_map('sanitize_text_field', $value));
-
-                    foreach($column_data as $column_name => $column_value){
-                        $table_html .= '<td data-column="'.esc_attr($column_name).'">'.esc_html($column_value).'</td>';
-                    }
-                    $table_html .= '</tr>';
-                   }
-                   $table_html .= '</table>';
-                }
-            }
-
-            $tab_html .= '</div>';
-            $table_html .= '</div>';
-
-            echo wp_kses_post($tab_html.$table_html);
-            echo "</section>";
+            add_action('wp_ajax_atfp_hide_review_notice', array($this, 'atfp_hide_review_notice'));
         }
 
         /**
@@ -206,6 +143,7 @@ if(!class_exists('Cpt_Dashboard')){
                             if($old_data=='update'){
                                 $data['string_count'] = absint($data['string_count']) + absint($translate_data['string_count']);
                                 $data['character_count'] = absint($data['character_count']) + absint($translate_data['character_count']);
+                                $data['time_taken'] = absint($data['time_taken']) + absint($translate_data['time_taken']);
                             }
                             
                             foreach($data as $id => $value){
@@ -277,17 +215,11 @@ if(!class_exists('Cpt_Dashboard')){
             return $data;
         }
 
-        public function dashboard_assets($page){
-            if($page === 'settings_page_cool-translate-dashboard'){
-                self::ctp_enqueue_assets();
-            }
-        }
-
         public static function ctp_enqueue_assets(){
-            if(function_exists('wp_style_is') && !wp_style_is('cpt-dashboard-style', 'enqueued')){
+            if(function_exists('wp_style_is') && !wp_style_is('atfp-review-style', 'enqueued')){
                 $plugin_url = plugin_dir_url(__FILE__);
-                wp_enqueue_style('cpt-dashboard-style', esc_url($plugin_url.'assets/css/cpt-dashboard.css'), array(), '1.0.0', 'all');
-                wp_enqueue_script('cpt-dashboard-script', esc_url($plugin_url.'assets/js/cpt-dashboard.js'), array('jquery'), '1.0.0', true);
+                wp_enqueue_style('atfp-review-style', esc_url($plugin_url.'assets/css/cpt-dashboard.css'), array(), '1.0.0', 'all');
+                wp_enqueue_script('atfp-review-script', esc_url($plugin_url.'assets/js/cpt-dashboard.js'), array('jquery'), '1.0.0', true);
             }
         }
 
@@ -301,7 +233,7 @@ if(!class_exists('Cpt_Dashboard')){
         }
 
         public static function review_notice($prefix, $plugin_name, $url, $icon=''){
-            if(self::cpt_hide_review_notice_status($prefix)){
+            if(self::atfp_hide_review_notice_status($prefix)){
                 return;
             }
             
@@ -340,19 +272,29 @@ if(!class_exists('Cpt_Dashboard')){
                 if($icon){
                     $html .= '<img class="cpt-review-notice-icon" src="'.$icon.'" alt="'.$plugin_name.'">';
                 }
-                $html .= '<div class="cpt-review-notice-content"><p>'.$message.'</p><div class="cpt-review-notice-dismiss" data-prefix="'.$prefix.'" data-nonce="'.wp_create_nonce('cpt_hide_review_notice').'"><a href="'. $url .'" target="_blank" class="button button-primary">Rate Now! ★★★★★</a><button class="button cpt-not-interested">'.__('Not Interested', 'cp-notice').'</button><button class="button cpt-already-reviewed">'.__('Already Reviewed', 'cp-notice').'</button></div></div></div>';
+                $html .= '<div class="cpt-review-notice-content"><p>'.$message.'</p><div class="atfp-review-notice-dismiss" data-prefix="'.$prefix.'" data-nonce="'.wp_create_nonce('atfp_hide_review_notice').'"><a href="'. $url .'" target="_blank" class="button button-primary">Rate Now! ★★★★★</a><button class="button cpt-not-interested">'.__('Not Interested', 'cp-notice').'</button><button class="button cpt-already-reviewed">'.__('Already Reviewed', 'cp-notice').'</button></div></div></div>';
+                
+                echo $html;
+            });
+
+            add_action('atfp_display_admin_notices', function() use ($message, $prefix, $url, $icon, $plugin_name){
+                $html= '<div class="notice notice-info cpt-review-notice">';
+                if($icon){
+                    $html .= '<img class="cpt-review-notice-icon" src="'.$icon.'" alt="'.$plugin_name.'">';
+                }
+                $html .= '<div class="cpt-review-notice-content"><p>'.$message.'</p><div class="atfp-review-notice-dismiss" data-prefix="'.$prefix.'" data-nonce="'.wp_create_nonce('atfp_hide_review_notice').'"><a href="'. $url .'" target="_blank" class="button button-primary">Rate Now! ★★★★★</a><button class="button cpt-not-interested">'.__('Not Interested', 'cp-notice').'</button><button class="button cpt-already-reviewed">'.__('Already Reviewed', 'cp-notice').'</button></div></div></div>';
                 
                 echo $html;
             });
         }
 
-        public static function cpt_hide_review_notice_status($prefix){
+        public static function atfp_hide_review_notice_status($prefix){
             $review_notice_dismissed = get_option('cpt_review_notice_dismissed', array());
             return isset($review_notice_dismissed[$prefix]) ? $review_notice_dismissed[$prefix] : false;
         }
 
-        public function cpt_hide_review_notice(){
-            if(wp_verify_nonce($_POST['nonce'], 'cpt_hide_review_notice')){
+        public function atfp_hide_review_notice(){
+            if(wp_verify_nonce($_POST['nonce'], 'atfp_hide_review_notice')){
                 $prefix = sanitize_key($_POST['prefix']);
                 $review_notice_dismissed = get_option('cpt_review_notice_dismissed', array());
                 $review_notice_dismissed[$prefix] = true;

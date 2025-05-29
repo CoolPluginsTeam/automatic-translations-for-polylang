@@ -83,9 +83,10 @@ const updateElementorPage = ({ postContent, modalClose, service }) => {
         'opacity', 'width', 'height', 'display', 'position', 'z_index', 'visibility', 'align', 'max_width', 'content_typography_typography', 'flex_justify_content', 'title_color', 'description_color', 'email_content'
     ];
 
-    const storeSourceStrings = (element) => {
+    const storeSourceStrings = (element,index, ids=[]) => {
         const widgetId = element.id;
         const settings = element.settings;
+        ids.push(index)
 
         // Check if settings is an object
         if (typeof settings === 'object' && settings !== null) {
@@ -102,7 +103,7 @@ const updateElementorPage = ({ postContent, modalClose, service }) => {
                 // Check if the key includes any of the specified substrings
                 if (substringsToCheck.some(substring => key.toLowerCase().includes(substring)) &&
                     typeof settings[key] === 'string' && settings[key].trim() !== '') {
-                    const uniqueKey = key + '_atfp_' + widgetId;
+                    const uniqueKey = ids.join('_atfp_') + '_atfp_settings_atfp_' + key;
 
                     const translatedData = select('block-atfp/translate').getTranslatedString('content', settings[key], uniqueKey, service);
 
@@ -128,7 +129,7 @@ const updateElementorPage = ({ postContent, modalClose, service }) => {
                                     typeof item[repeaterKey] === 'string' && item[repeaterKey].trim() !== '') {
 
                                     const fieldKey = `${key}[${index}].${repeaterKey}`
-                                    const uniqueKey = fieldKey + '_atfp_' + widgetId;
+                                    const uniqueKey = ids.join('_atfp_') + '_atfp_settings_atfp_' + key + '_atfp_' + index + '_atfp_' + repeaterKey;
 
                                     const translatedData = select('block-atfp/translate').getTranslatedString('content', item[repeaterKey], uniqueKey, service);
 
@@ -147,22 +148,58 @@ const updateElementorPage = ({ postContent, modalClose, service }) => {
 
         // If there are nested elements, process them recursively
         if (element.elements && Array.isArray(element.elements)) {
-            element.elements.forEach(nestedElement => {
-                storeSourceStrings(nestedElement);
+            element.elements.forEach((nestedElement,index) => {
+                storeSourceStrings(nestedElement,index, [...ids, 'elements']);
             });
         }
     }
 
-    postContent.widgetsContent.map(widget => storeSourceStrings(widget));
+    postContent.widgetsContent.map((widget,index) => storeSourceStrings(widget,index,[]));
 
     // Update widget content with translations
     atfpUpdateWidgetContent(translations);
-
+    
     // Update Meta Fields
     atfpUpdateMetaFields(postContent.metaFields, service);
-    const elementorData = JSON.stringify(elementor.elements.toJSON());
 
-    modalClose();
+    const replaceSourceString=()=>{
+        const elementorData = atfp_global_object.elementorData;
+        const translateStrings=wp.data.select('block-atfp/translate').getTranslationEntry();
+
+        translateStrings.forEach(translation => {
+            const sourceString = translation.source;
+            const ids = translation.id;
+            const translatedContent = translation.translatedData;
+            const type=translation.type;
+
+            if(!sourceString || '' === sourceString && 'content' !== type){
+                return;
+            }
+            
+            const keyArray = ids.split('_atfp_');
+            
+            const translateValue = translatedContent[service];
+            let parentElement = null;
+            let parentKey = null;
+
+            let currentElement = elementorData;
+               
+            keyArray.forEach(key => {
+                parentElement = currentElement;
+                parentKey = key;
+                currentElement = currentElement[key];
+            });
+
+            if(parentElement && parentKey && parentElement[parentKey] && parentElement[parentKey] === sourceString){
+                parentElement[parentKey] = translateValue;
+            }
+        });
+
+        return elementorData;
+    }
+
+    
+    const elementorData = replaceSourceString();
 
     fetch(atfp_global_object.ajax_url, {
         method: 'POST',
@@ -174,7 +211,7 @@ const updateElementorPage = ({ postContent, modalClose, service }) => {
             {
                 action: atfp_global_object.update_elementor_data,
                 post_id: postID,
-                elementor_data: elementorData,
+                elementor_data: JSON.stringify(elementorData),
                 atfp_nonce: atfp_global_object.ajax_nonce
             }
         )
@@ -190,8 +227,11 @@ const updateElementorPage = ({ postContent, modalClose, service }) => {
             } else {
                 console.error('Failed to update Elementor data:', data.data);
             }
+
+            modalClose();
         })
         .catch(error => {
+            modalClose();
             console.error('Error updating Elementor data:', error);
         });
 }

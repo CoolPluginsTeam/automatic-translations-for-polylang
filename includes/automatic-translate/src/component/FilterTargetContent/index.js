@@ -1,5 +1,5 @@
 const FilterTargetContent = (props) => {
-
+    const skipTags=props.skipTags || [];
     /**
      * Wraps the first element and its matching closing tag with translation spans.
      * If no elements are found, returns the original HTML.
@@ -30,7 +30,8 @@ const FilterTargetContent = (props) => {
 
         // Get the opening tag of the first element
         // const firstElementOpeningTag = firstElement.outerHTML.match(/^<[^>]+>/)[0];
-        const firstElementOpeningTag = firstElement.outerHTML.match(/^<[^>]+>/)[0];
+        let firstElementOpeningTag = firstElement.outerHTML.match(/^<[^>]+>/)[0];
+        firstElementOpeningTag = firstElementOpeningTag.replace(/#atfp_open_translate_span#|#atfp_close_translate_span#/g, '');
 
         // Check if the first element has a corresponding closing tag
         const openTagName = firstElement.tagName.toLowerCase();
@@ -50,14 +51,21 @@ const FilterTargetContent = (props) => {
         firstElementHtml = firstElementHtml.replace(/^\s+|\s+$/g, (match) => `#atfp_open_translate_span#${match}#atfp_close_translate_span#`);
 
         firstElement.innerHTML = '';
-
-        let openTag = `#atfp_open_translate_span#${firstElementOpeningTag}#atfp_close_translate_span#`;
         let closeTag = '';
+        let openTag='';
         let filterContent = '';
 
+        openTag = `#atfp_open_translate_span#${firstElementOpeningTag}#atfp_close_translate_span#`;
         if (closingTagMatch) {
             closeTag = `#atfp_open_translate_span#</${openTagName}>#atfp_close_translate_span#`;
         }
+
+        if(skipTags.includes(openTagName)){
+            // Remove the custom span markers from the HTML if the tag is in skipTags
+            firstElementHtml = firstElementHtml.replace(/#atfp_open_translate_span#|#atfp_close_translate_span#/g, '');
+            firstElementHtml = "#atfp_open_translate_span#"+firstElementHtml+"#atfp_close_translate_span#";
+        }
+
 
         if ('' !== firstElementHtml) {
             if ('' !== openTag) {
@@ -113,6 +121,20 @@ const FilterTargetContent = (props) => {
      * @returns {Array} An array of strings after splitting based on the pattern.
      */
     const filterSourceData = (string) => {
+
+        const isSeoContent = /^(_yoast_wpseo_|rank_math_|_seopress_)/.test(props.contentKey.trim());
+        if (isSeoContent) {
+            string= filterSeoContent(string);
+        }
+
+        // Filter shortcode content
+        const shortcodePattern = /\[(.*?)\]/g;
+        const shortcodeMatches = string.match(shortcodePattern);
+
+        if (shortcodeMatches) {
+            string = string.replace(shortcodePattern, (match) => `#atfp_open_translate_span#${match}#atfp_close_translate_span#`);
+        }
+
         function replaceInnerTextWithSpan(doc) {
             let childElements = doc.childNodes;
             
@@ -123,9 +145,13 @@ const FilterTargetContent = (props) => {
 
                     if(element.nodeType === 3){
                         const textContent = element.textContent.replace(/^\s+|\s+$/g, (match) => `#atfp_open_translate_span#${match}#atfp_close_translate_span#`);
+
                         textNode = document.createTextNode(textContent);
+                    }else if(element.nodeType === 8){
+                        textNode = document.createTextNode(`<!--${element.textContent}-->`);
                     }else{
                         let filterContent = wrapFirstAndMatchingClosingTag(element.outerHTML);
+
                         textNode = document.createTextNode(filterContent);
                     }
                     
@@ -147,19 +173,6 @@ const FilterTargetContent = (props) => {
 
         let content = tempElement.innerText;
 
-        const isSeoContent = /^(_yoast_wpseo_|rank_math_|_seopress_)/.test(props.contentKey.trim());
-        if (isSeoContent) {
-            content= filterSeoContent(content);
-        }
-
-        // Filter shortcode content
-        const shortcodePattern = /\[(.*?)\]/g;
-        const shortcodeMatches = content.match(shortcodePattern);
-
-        if (shortcodeMatches) {
-            content = content.replace(shortcodePattern, (match) => `#atfp_open_translate_span#${match}#atfp_close_translate_span#`);
-        }
-
         return splitContent(content);
     }
 
@@ -167,7 +180,7 @@ const FilterTargetContent = (props) => {
      * The content to be filtered based on the service type.
      * If the service is 'yandex', the content is filtered using filterSourceData function, otherwise, the content remains unchanged.
      */
-    const content = 'yandex' === props.service || 'localAiTranslator' === props.service ? filterSourceData(props.content) : props.content;
+    const content = ['yandex', 'localAiTranslator', 'google'].includes(props.service) ? filterSourceData(props.content) : props.content;
 
     /**
      * Regular expression pattern to match the span elements that should not be translated.
@@ -186,7 +199,7 @@ const FilterTargetContent = (props) => {
 
     return (
         <>
-            {'yandex' === props.service || 'localAiTranslator' === props.service ?
+            {['yandex', 'localAiTranslator', 'google'].includes(props.service) ?
                 content.map((data, index) => {
                     const notTranslate = notTranslatePattern.test(data);
                     if (notTranslate) {

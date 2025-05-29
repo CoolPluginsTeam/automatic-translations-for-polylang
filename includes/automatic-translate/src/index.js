@@ -86,19 +86,22 @@ const App = () => {
 
     const allEntries = wp.data.select('block-atfp/translate').getTranslationEntry();
 
+    let totalStringCount = 0;
     let totalCharacterCount = 0;
     let totalWordCount = 0;
 
     allEntries.map(entries => {
       const source = entries.source ? entries.source : '';
+      const stringCount=source.split(/(?<=[.!?]+)\s+/).length;
       const wordCount = source.trim().split(/\s+/).filter(word => /[^\p{L}\p{N}]/.test(word)).length;
       const characterCount = source.length;
 
+      totalStringCount += stringCount
       totalCharacterCount += characterCount;
       totalWordCount += wordCount;
     });
 
-    wp.data.dispatch('block-atfp/translate').translationInfo({ sourceWordCount: totalWordCount, sourceCharacterCount: totalCharacterCount });
+    wp.data.dispatch('block-atfp/translate').translationInfo({ sourceStringCount: totalStringCount, sourceWordCount: totalWordCount, sourceCharacterCount: totalCharacterCount });
   }
 
   const updatePostDataFetch = (status) => {
@@ -202,6 +205,7 @@ const appendElementorTranslateBtn = () => {
       buttonElement.attr('title', 'Translation is not available because there is no Elementor data.');
       return;
     }
+    
     // Append app root wrapper in body
     init();
   

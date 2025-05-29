@@ -1,7 +1,8 @@
 import SaveTranslation from "../storeTranslatedString";
 import { select, dispatch } from "@wordpress/data";
 import StoreTimeTaken from "../StoreTimeTaken";
-import FormatNumberCount from "../FormateNumberCount";
+import AddProgressBar from "../ProgressBar";
+import ShowStringCount from "../ProgressBar/showStringCount";
 
 /**
  * Handles the scrolling animation of a specified element.
@@ -46,7 +47,7 @@ const ScrollAnimation = (props) => {
         progressBar.find(`.${provider}-translator_progress`).text(percentage + '%');
 
         if (scrollPosition > scrollHeight) {
-            jQuery(`.${provider}-translator-strings-count`).show();
+            ShowStringCount(provider, 'block');
             return; // Stop animate scroll
         }
 
@@ -78,16 +79,17 @@ const updateTranslatedContent = ({provider, startTime, endTime}) => {
         SaveTranslation({ type: type, key: key, translateContent: translatedText, source: sourceText, provider: provider, AllowedMetaFields });
 
         const translationEntry = select('block-atfp/translate').getTranslationInfo().translateData[provider];
+        const previousTargetStringCount = translationEntry && translationEntry.targetStringCount ? translationEntry.targetStringCount : 0;
         const previousTargetWordCount = translationEntry && translationEntry.targetWordCount ? translationEntry.targetWordCount : 0;
         const previousTargetCharacterCount = translationEntry && translationEntry.targetCharacterCount ? translationEntry.targetCharacterCount : 0;
 
         if (translatedText.trim() !== '' && translatedText.trim().length > 0) {
-            dispatch('block-atfp/translate').translationInfo({ targetWordCount: previousTargetWordCount + sourceText.trim().split(/\s+/).filter(word => /[^\p{L}\p{N}]/.test(word)).length, targetCharacterCount: previousTargetCharacterCount + sourceText.trim().length, provider: provider });
+            dispatch('block-atfp/translate').translationInfo({ targetStringCount: previousTargetStringCount + sourceText.trim().split(/(?<=[.!?]+)\s+/).length, targetWordCount: previousTargetWordCount + sourceText.trim().split(/\s+/).filter(word => /[^\p{L}\p{N}]/.test(word)).length, targetCharacterCount: previousTargetCharacterCount + sourceText.trim().length, provider: provider });
         }
 
         if(index === totalTranslatedData - 1){
             jQuery(`.${provider}-translator_progress`).css('width', '100%');
-            jQuery(`.${provider}-translator-strings-count`).show();
+            ShowStringCount(provider, 'block');
 
             StoreTimeTaken({ prefix: provider, start: startTime, end: endTime, translateStatus: true });
         }
@@ -122,40 +124,8 @@ const onCompleteTranslation = ({container,provider, startTime, endTime, translat
 
     updateTranslatedContent({provider, startTime, endTime});
 
-    translateStatus();
+    translateStatus(false);
 }
-
-/**
- * Adds a progress bar to the container.
- * 
- * @param {HTMLElement} container - The container element for translation.
- */
-const addProgressBar = (provider) => {
-
-    const characterCount = select('block-atfp/translate').getTranslationInfo().sourceCharacterCount;
-
-    const progressBarSelector = "#atfp_strings_model .atfp_translate_progress";
-
-    if (!document.querySelector(`#atfp-${provider}-strings-modal .${provider}-translator_progress_bar`)) {
-        const progressBar = jQuery(`
-            <div class="${provider}-translator_progress_bar" style="background-color: #f3f3f3;border-radius: 10px;overflow: hidden;margin: 1.5rem auto; width: 50%;">
-            <div class="${provider}-translator_progress" style="overflow: hidden;transition: width .2s ease-in-out; border-radius: 10px;text-align: center;width: 0%;height: 20px;box-sizing: border-box;background-color: #4caf50; color: #fff; font-weight: 600;"></div>
-            </div>
-            <div style="display:none; color: white;" class="${provider}-translator-strings-count hidden">
-                Wahooo! You have saved your valuable time via auto translating 
-                <strong class="totalChars">${FormatNumberCount({number: characterCount})}</strong> characters using 
-                <strong>
-                    ${provider} Translator
-                </strong>
-            </div>
-        `);
-        jQuery(progressBarSelector).append(progressBar); // Append the progress bar to the specified selector
-    }else{
-        jQuery(`.${provider}-translator_progress`).css('width', '0%');
-        jQuery(`.${provider}-translator-strings-count`).hide();
-    }
-}
-
 
 /**
  * Automatically scrolls the string container and triggers the completion callback
@@ -168,7 +138,7 @@ const ModalStringScroll = (translateStatus,provider,modalRenderId) => {
     const startTime = new Date().getTime();
 
     let translateComplete = false;
-    addProgressBar(provider);
+    AddProgressBar(provider);
 
     const container = document.getElementById("atfp_strings_model");
     const stringContainer = container.querySelector('.atfp_string_container');
@@ -199,7 +169,7 @@ const ModalStringScroll = (translateStatus,provider,modalRenderId) => {
         if (stringContainer.clientHeight + 10 >= scrollHeight) {
             jQuery(`.${provider}-translator_progress`).css('width', '100%');
             jQuery(`.${provider}-translator_progress`).text('100%');
-            jQuery(`.${provider}-translator-strings-count`).show();
+            ShowStringCount(provider, 'block');
             const endTime = new Date().getTime();
             
             setTimeout(() => {
@@ -209,7 +179,7 @@ const ModalStringScroll = (translateStatus,provider,modalRenderId) => {
     } else {
         jQuery(`.${provider}-translator_progress`).css('width', '100%');
         jQuery(`.${provider}-translator_progress`).text('100%');
-        jQuery(`.${provider}-translator-strings-count`).show();
+        ShowStringCount(provider, 'block');
         const endTime = new Date().getTime();
    
         setTimeout(() => {

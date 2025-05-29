@@ -25,7 +25,7 @@ const localAiTranslator = async (props) => {
     const completeTranslation = () => {
         StoreTimeTaken({ prefix: 'localAiTranslator', start: startTime, end: new Date().getTime(), translateStatus: true });
         setTimeout(() => {
-            translateStatusHandler();
+            translateStatusHandler(false);
             jQuery("#atfp_strings_model .atfp_translate_progress").fadeOut("slow");
         }, 4000);
     }
@@ -62,11 +62,12 @@ const localAiTranslator = async (props) => {
         SaveTranslation({ type: type, key: key, translateContent: translatedText, source: sourceText, provider: 'localAiTranslator', AllowedMetaFields });
 
         const translationEntry = select('block-atfp/translate').getTranslationInfo().translateData?.localAiTranslator;
+        const previousTargetStringCount = translationEntry && translationEntry.targetStringCount ? translationEntry.targetStringCount : 0;
         const previousTargetWordCount = translationEntry && translationEntry.targetWordCount ? translationEntry.targetWordCount : 0;
         const previousTargetCharacterCount = translationEntry && translationEntry.targetCharacterCount ? translationEntry.targetCharacterCount : 0;
 
         if (translatedText.trim() !== '' && translatedText.trim().length > 0) {
-            dispatch('block-atfp/translate').translationInfo({ targetWordCount: previousTargetWordCount + sourceText.trim().split(/\s+/).filter(word => /[^\p{L}\p{N}]/.test(word)).length, targetCharacterCount: previousTargetCharacterCount + sourceText.trim().length, provider: 'localAiTranslator' });
+            dispatch('block-atfp/translate').translationInfo({ targetStringCount: previousTargetStringCount + sourceText.trim().split(/(?<=[.!?]+)\s+/).length, targetWordCount: previousTargetWordCount + sourceText.trim().split(/\s+/).filter(word => /[^\p{L}\p{N}]/.test(word)).length, targetCharacterCount: previousTargetCharacterCount + sourceText.trim().length, provider: 'localAiTranslator' });
         }
     }
 

@@ -155,11 +155,16 @@ if (! class_exists('ATFP_Helper')) {
 
 		public static function replace_links_with_translations($content, $locale, $current_locale)
 		{
-			$pattern = '/href="([^"]*)"/';
-			
+			// Get all URLs in the content that start with the current home page URL (current domain), regardless of attribute or tag
+			$home_url = preg_quote(get_home_url(), '/');
+			$pattern = '/(' . $home_url . '[^\s"\'<>]*)/i';
+			$terms_data=self::get_terms_data();
+
 			if (preg_match_all($pattern, $content, $matches)) {
+
 				foreach ($matches[1] as $href) {
 					$postID = url_to_postid($href);
+		
 					if ($postID > 0) {
 						$translatedPost = pll_get_post($postID, $locale);
 						if ($translatedPost) {
@@ -171,10 +176,28 @@ if (! class_exists('ATFP_Helper')) {
 							}
 						}
 					} else {
-						$path = trim(str_replace(pll_home_url($current_locale), '', $href), '/');
+						$path = trim(str_replace(home_url(), '', $href), '/');
 						$category_slug = end(array_filter(explode('/', $path)));
-						$category = get_term_by('slug', $category_slug, 'category');
+						$taxonomy_name=self::extract_taxonomy_name($path, $terms_data);
+						$taxonomy_name=$taxonomy_name ? $taxonomy_name : 'category';
 
+						$category = get_term_by('slug', $category_slug, $taxonomy_name);
+
+						if(!$category){
+								// Remove the language prefix if using Polylang
+							$languages = pll_languages_list(); // e.g., ['en', 'fr']
+							$segments = explode('/', $path);
+							if (in_array($segments[0], $languages)) {
+								$lang_code=$segments[0];
+								$category_id=Pll()->model->term_exists_by_slug($category_slug, $lang_code, $taxonomy_name);
+
+								if($category_id){
+									$category=get_term($category_id, $taxonomy_name);
+								}
+							}
+						}
+
+						
 						if ($category) {
 							$term_id = pll_get_term($category->term_id, $locale);
 							if ($term_id > 0) {
@@ -185,15 +208,90 @@ if (! class_exists('ATFP_Helper')) {
 					}
 				}
 			}
-
+			
 			return $content;
 		}
 
+		private static function extract_taxonomy_name($path, $terms_data){
+			// Remove the language prefix if using Polylang
+			$languages = pll_languages_list(); // e.g., ['en', 'fr']
+			$segments = explode('/', $path);
+			if (in_array($segments[0], $languages)) {
+				array_shift($segments); // remove 'en', 'fr', etc.
+			}
+			
+			if (empty($segments)) {
+				return null;
+			}
+
+			// First segment after language is usually the taxonomy slug
+			$possible_tax = $segments[0];
+
+			if (taxonomy_exists($possible_tax) || (isset($terms_data[$possible_tax]) && taxonomy_exists($terms_data[$possible_tax]))) {
+		   		return isset($terms_data[$possible_tax]) ? $terms_data[$possible_tax] : $possible_tax;
+			}
+
+			return false;
+		}
+
+		private static function get_terms_data(){
+			$taxonomies=get_taxonomies([],'objects');
+
+			$taxonomies_data=array();
+			foreach($taxonomies as $key=>$taxonomy){
+				if(isset($taxonomy->rewrite['slug'])){
+					$taxonomies_data[$taxonomy->rewrite['slug']]=$key;
+				}else{
+					$taxonomies_data[$key]=$key;
+				}
+			}
+
+			return $taxonomies_data;
+		}
+
 		public static function get_translation_data($key_exists=array()){
-			if(class_exists('CPT_Dashboard') && method_exists('CPT_Dashboard', 'get_translation_data')){
-				return CPT_Dashboard::get_translation_data('atfp', $key_exists);
+			if(class_exists('Atfp_Dashboard') && method_exists('Atfp_Dashboard', 'get_translation_data')){
+				return Atfp_Dashboard::get_translation_data('atfp', $key_exists);
 			}else{
 				return false;
+
+			}
+		}
+
+		public static function translation_data_migration(){
+			$already_migrated = get_option('atfp_translation_string_migration', false);
+
+			if(!$already_migrated){
+				$translation_data = self::get_translation_data();
+				
+				$old_data=get_option('cpt_dashboard_data', array());
+
+				$updated=array();
+
+				if(isset($old_data['atfp']) && count($old_data['atfp']) > 0){
+					foreach($old_data['atfp'] as $data){
+						$updated_data=$data;
+						if(isset($data['string_count'])){
+							$updated_data['word_count']=$data['string_count'];
+							$updated_data['string_count']=$data['string_count'] / 30;
+						}
+
+						if(isset($data['source_string_count'])){
+							$updated_data['source_word_count']=$data['source_string_count'];
+							$updated_data['source_string_count']=$data['source_string_count'] / 30;
+						}
+
+						$updated[]=$updated_data;
+					}
+
+					if(count($updated) > 0){
+						$old_data['atfp']=$updated;
+
+						update_option('cpt_dashboard_data', $old_data);
+					}
+				}
+
+				update_option('atfp_translation_string_migration', true);
 			}
 		}
 	}
