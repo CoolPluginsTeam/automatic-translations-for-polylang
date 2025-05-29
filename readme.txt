@@ -168,7 +168,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 * **Fixed:** Fixed translation of post tags and custom taxonomies.
 * **Fixed:** Fixed Elementor content formatting and button visibility issues.
 * **Fixed:** Fixed errors with Gutenberg blocks.
-* 
+
 = Version 1.3.7 | 08 May 2025 =
 * **Fixed:** Fixed Chrome Local AI translation not working with latest version.
 
