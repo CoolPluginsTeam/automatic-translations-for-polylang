@@ -162,7 +162,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 == Changelog ==
 
-= Version 1.4.0 | 28 May 2025 =
+= Version 1.4.0 | 29 May 2025 =
 * **Added:** Added language filter links with post counts.
 * **Added:** Added Auto Translate Addon dashboard and Get start page.
 * **Fixed:** Fixed translation of post tags and custom taxonomies.
