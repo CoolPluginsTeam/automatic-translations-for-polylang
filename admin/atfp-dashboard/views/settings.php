@@ -4,7 +4,7 @@
         <h1><?php _e('Polylang Addon Settings', $text_domain); ?></h1>
         <div class="atfp-dashboard-status">
             <span><?php _e('Inactive', $text_domain); ?></span>
-            <a href="https://coolplugins.net/product/ai-translation-for-polylang-pro/" class='atfp-dashboard-btn' target="_blank">
+            <a href="https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin&utm_medium=dashboard&utm_campaign=get_pro&utm_content=buy_pro" class='atfp-dashboard-btn' target="_blank">
                 <img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/upgrade-now.svg'); ?>" alt="<?php esc_attr_e('Upgrade Now', $text_domain); ?>">
                 <?php _e('Upgrade Now', $text_domain); ?>
             </a>
@@ -23,17 +23,17 @@
             $api_settings = [
                 'gemini' => [
                     'name' => 'Gemini',
-                    'doc_url' => 'https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin&utm_medium=page&utm_campaign=get_pro&utm_content=gemini_api',
+                    'doc_url' => 'https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin&utm_medium=dashboard&utm_campaign=get_pro&utm_content=gemini_api',
                     'placeholder' => 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
                 ],
                 'openai' => [
                     'name' => 'OpenAI',
-                    'doc_url' => 'https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin&utm_medium=page&utm_campaign=get_pro&utm_content=openai_api',
+                    'doc_url' => 'https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin&utm_medium=dashboard&utm_campaign=get_pro&utm_content=openai_api',
                     'placeholder' => 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
                 ],
                 'openrouter' => [
                     'name' => 'Openrouter',
-                    'doc_url' => 'https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin&utm_medium=page&utm_campaign=get_pro&utm_content=openrouter_api',
+                    'doc_url' => 'https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin&utm_medium=dashboard&utm_campaign=get_pro&utm_content=openrouter_api',
                     'placeholder' => 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
                 ]
             ];
