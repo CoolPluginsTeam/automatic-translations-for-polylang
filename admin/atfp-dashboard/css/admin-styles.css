@@ -885,3 +885,13 @@ ul.atfp-dashboard-sts-btm li span:first-child {
     gap: 7px;
 }
 }
+
+@media (max-width: 600px) {
+    .atfp-dashboard-get-started-grid{
+        display: block;
+    }
+
+    .atfp-dashboard-get-started-grid div:nth-child(2){
+        display: block;
+    }
+}
