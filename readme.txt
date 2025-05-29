@@ -4,7 +4,7 @@ Tags: Polylang, AI Translation, Content Translation, Translate
 Requires at least: 5.0
 Tested up to: 6.8.1
 Requires PHP: 5.6
-Stable tag: 1.3.7
+Stable tag: 1.4.0
 Author URI: https://coolplugins.net/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -162,6 +162,13 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 == Changelog ==
 
+= Version 1.4.0 | 28 May 2025 =
+* **Added:** Added language filter links with post counts.
+* **Added:** Added Auto Translate Addon dashboard and Get start page.
+* **Fixed:** Fixed translation of post tags and custom taxonomies.
+* **Fixed:** Fixed Elementor content formatting and button visibility issues.
+* **Fixed:** Fixed errors with Gutenberg blocks.
+* 
 = Version 1.3.7 | 08 May 2025 =
 * **Fixed:** Fixed Chrome Local AI translation not working with latest version.
 

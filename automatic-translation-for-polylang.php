@@ -2,7 +2,7 @@
 /*
 Plugin Name: AI Translation For Polylang
 Plugin URI: https://coolplugins.net/
-Version: 1.3.7
+Version: 1.4.0
 Author: Cool Plugins
 Author URI: https://coolplugins.net/
 Description: AI Translation for Polylang simplifies your translation process by automatically translating all pages/posts content from one language to another.
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 if ( ! defined( 'ATFP_V' ) ) {
-	define( 'ATFP_V', '1.3.7' );
+	define( 'ATFP_V', '1.4.0' );
 }
 if ( ! defined( 'ATFP_DIR_PATH' ) ) {
 	define( 'ATFP_DIR_PATH', plugin_dir_path( __FILE__ ) );
@@ -65,6 +65,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			add_action( 'admin_enqueue_scripts', array( $this, 'atfp_set_dashboard_style' ) );
 			add_action('init', array($this, 'atfp_translation_string_migration'));
 			add_action('admin_menu', array($this, 'atfp_add_support_blocks_submenu_page'), 12);
+			add_action( 'activated_plugin', array( $this, 'atfp_plugin_redirection' ) );
 
 			// Add the action to hide unrelated notices
 			if(isset($_GET['page']) && $_GET['page'] == 'polylang-atfp-dashboard'){
@@ -72,6 +73,16 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			}
 
 			add_action('current_screen', array($this, 'atfp_append_view_languages_link'));
+		}
+
+		public function atfp_plugin_redirection($plugin) {
+			if ( ! is_plugin_active( 'polylang/polylang.php' ) && ! is_plugin_active( 'polylang-pro/polylang.php' ) ) {
+				return false;
+			}
+
+			if ( $plugin == plugin_basename( __FILE__ ) ) {
+				exit( wp_redirect( admin_url( 'admin.php?page=polylang-atfp-dashboard&tab=dashboard' ) ) );
+			}	
 		}
 
 		public static function atfp_translation_string_migration(){
