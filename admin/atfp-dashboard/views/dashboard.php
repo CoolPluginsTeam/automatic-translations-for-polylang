@@ -13,7 +13,7 @@
                 <a class="atfp-dashboard-docs" href="<?php echo esc_url('https://docs.coolplugins.net/docs/ai-translation-for-polylang/'); ?>" target="_blank"><img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/document.svg'); ?>" alt="document"> <?php echo esc_html__('Read Plugin Docs', $text_domain); ?></a>
             </div>
             <div class="atfp-dashboard-welcome-video">
-                <a href="https://coolplugins.net/product/automatic-translations-for-polylang/" target="_blank" class="atfp-dashboard-video-link">
+                <a href="https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin&utm_medium=page&utm_campaign=get_pro&utm_content=buy_pro" target="_blank" class="atfp-dashboard-video-link">
                     <img decoding="async" src="<?php echo ATFP_URL . 'admin/atfp-dashboard/images/video.svg'; ?>" class="play-icon" alt="play-icon">
                     <picture>
                         <source srcset="<?php echo ATFP_URL . 'admin/atfp-dashboard/images/polylang-addon-video.png'; ?>" type="image/webp">

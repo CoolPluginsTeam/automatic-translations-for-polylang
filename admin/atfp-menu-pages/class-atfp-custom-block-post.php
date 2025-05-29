@@ -43,7 +43,7 @@ if ( ! class_exists( 'ATFP_Custom_Block_Post' ) ) {
 				wp_enqueue_style( 'atfp-supported-blocks', ATFP_URL . 'assets/css/atfp-supported-blocks.min.css', array(), ATFP_V, 'all' );
 
 				wp_localize_script( 'atfp-add-new-block', 'atfpAddBlockVars', array(
-					'atfp_demo_page_url' => esc_url('https://coolplugins.net/product/automatic-translations-for-polylang/'),
+					'atfp_demo_page_url' => esc_url('https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin&utm_medium=page&utm_campaign=get_pro&utm_content=buy_pro'),
 				) );
 			}
 		}

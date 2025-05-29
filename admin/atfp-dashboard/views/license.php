@@ -19,7 +19,7 @@
     <div class="atfp-dashboard-upgrade-box">
         <p>
             <?php _e('To unlock more features, consider', $text_domain); ?>
-            <a href="https://locoaddon.com/pricing/?utm_source=atlt_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=license" target="_blank"><?php _e('upgrading to Pro', $text_domain); ?></a>.
+            <a href="https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin&utm_medium=page&utm_campaign=get_pro&utm_content=buy_pro" target="_blank"><?php _e('upgrading to Pro', $text_domain); ?></a>.
         </p>
         <em><?php _e('As a valued user, you automatically receive an exclusive discount on the Annual License and an even greater discount on the POPULAR Lifetime License at checkout!', $text_domain); ?></em>
     </div>

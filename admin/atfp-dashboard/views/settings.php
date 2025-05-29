@@ -23,17 +23,17 @@
             $api_settings = [
                 'gemini' => [
                     'name' => 'Gemini',
-                    'doc_url' => 'https://locoaddon.com/docs/pro-plugin/how-to-use-gemini-ai-to-translate-plugins-or-themes/generate-gemini-api-key/',
+                    'doc_url' => 'https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin&utm_medium=page&utm_campaign=get_pro&utm_content=gemini_api',
                     'placeholder' => 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
                 ],
                 'openai' => [
                     'name' => 'OpenAI',
-                    'doc_url' => 'https://locoaddon.com/docs/how-to-generate-open-api-key/',
+                    'doc_url' => 'https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin&utm_medium=page&utm_campaign=get_pro&utm_content=openai_api',
                     'placeholder' => 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
                 ],
                 'openrouter' => [
                     'name' => 'Openrouter',
-                    'doc_url' => 'https://locoaddon.com/docs/how-to-generate-open-api-key/',
+                    'doc_url' => 'https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin&utm_medium=page&utm_campaign=get_pro&utm_content=openrouter_api',
                     'placeholder' => 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
                 ]
             ];
