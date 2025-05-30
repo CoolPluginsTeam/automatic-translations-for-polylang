@@ -181,8 +181,8 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 		public function atfp_add_submenu_page() {
 			add_submenu_page(
 				'mlang', // Parent slug
-				__( 'Polylang - Auto Translate Addon', 'automatic-translations-for-polylang' ), // Page title
-				__( 'Polylang - Auto Translate Addon', 'automatic-translations-for-polylang' ), // Menu title
+				__( 'AI Translation For Polylang', 'automatic-translations-for-polylang' ), // Page title
+				__( 'Auto Translate Addon', 'automatic-translations-for-polylang' ), // Menu title
 				'manage_options', // Capability
 				'polylang-atfp-dashboard', // Menu slug
 				array( $this, 'atfp_render_dashboard_page' ) // Callback function
