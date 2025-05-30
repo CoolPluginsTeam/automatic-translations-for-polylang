@@ -167,7 +167,6 @@ Polylang Addon Dashboard - Admin Panel Styles
 }
 
 .atfp-dashboard-get-started{
-    margin-top: 24px;
     padding: 20px;
     background: #fff;
     border-radius: 8px;
@@ -180,9 +179,6 @@ Polylang Addon Dashboard - Admin Panel Styles
     border: 1px solid var(--border-color);
     border-radius: 14px;
     padding: 13px 15px 15px 15px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
 }
 
 /* .atfp-dashboard-get-started-grid span{
@@ -209,10 +205,7 @@ Polylang Addon Dashboard - Admin Panel Styles
 .atfp-dashboard-get-started-grid iframe{
     max-width: 100%;
     width: 100%;
-}
-
-.atfp-dashboard-get-started-grid:nth-child(3) div:nth-child(1){
-    order: 3;
+    aspect-ratio: 2/1;
 }
 
 .atfp-dashboard-get-started-grid:nth-child(3){
@@ -884,14 +877,4 @@ ul.atfp-dashboard-sts-btm li span:first-child {
 	.atfp-dashboard-ai-translations .atfp-dashboard-translations {
     gap: 7px;
 }
-}
-
-@media (max-width: 600px) {
-    .atfp-dashboard-get-started-grid{
-        display: block;
-    }
-
-    .atfp-dashboard-get-started-grid div:nth-child(2){
-        display: block;
-    }
 }

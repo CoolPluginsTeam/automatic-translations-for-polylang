@@ -29,11 +29,11 @@
             // Update the time taken string using the new function
             $time_taken_str = atfp_format_time_taken($totals['time_taken'] ,$text_domain);
             ?>
-            <span><?php echo esc_html(atfp_format_number($totals['string_count'], $text_domain)); ?></span>
-            <span><?php _e('Total Strings Translated!', $text_domain); ?></span>
+              <span><?php echo esc_html(atfp_format_number($totals['character_count'], $text_domain)); ?></span>
+            <span><?php _e('Total Characters Translated!', $text_domain); ?></span>
         </div>
         <ul class="atfp-dashboard-sts-btm">
-            <li><span><?php _e('Total Characters', $text_domain); ?></span> <span><?php echo esc_html(atfp_format_number($totals['character_count'], $text_domain)); ?></span></li>
+            <li><span><?php _e('Total Strings', $text_domain); ?></span> <span><?php echo esc_html(atfp_format_number($totals['string_count'], $text_domain)); ?></span></li>
             <li><span><?php _e('Total Pages / Posts', $text_domain); ?></span> <span><?php echo esc_html($totals['translation_count']); ?></span></li>
             <li><span><?php _e('Time Taken', $text_domain); ?></span> <span><?php echo esc_html($time_taken_str); ?></span></li>
         </ul>

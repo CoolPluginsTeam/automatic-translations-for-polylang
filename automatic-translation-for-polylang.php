@@ -216,17 +216,6 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			// Action buttons configuration
 			$buttons = [
 				[
-					'url'  => 'https://coolplugins.net/product/ai-translation-for-polylang-pro/',
-					'img'  => 'upgrade-now.svg',
-					'alt'  => __('premium', $text_domain),
-					'text' => __('Unlock Pro Features', $text_domain)
-				],
-				[
-					'url' => 'https://docs.coolplugins.net/docs/ai-translation-for-polylang/',
-					'img' => 'document.svg',
-					'alt' => __('document', $text_domain)
-				],
-				[
 					'url' => 'https://coolplugins.net/support/?utm_source=tpa_plugin&utm_medium=inside&utm_campaign=support&utm_content=dashboard_header',
 					'img' => 'contact.svg',
 					'alt' => __('contact', $text_domain)
@@ -385,7 +374,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 					Atfp_Dashboard::review_notice(
 						'atfp', // Required
 						'AI Translation For Polylang', // Required
-						'https://wordpress.org/plugins/automatic-translations-for-polylang/reviews/#new-post', // Required
+						'https://wordpress.org/support/plugin/automatic-translations-for-polylang/reviews/#new-post', // Required
 						ATFP_URL .'assets/images/ai-automatic-translation-for-polylang.png' // Required
 					);
 				}
