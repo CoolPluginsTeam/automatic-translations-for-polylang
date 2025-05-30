@@ -66,6 +66,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			add_action('init', array($this, 'atfp_translation_string_migration'));
 			add_action('admin_menu', array($this, 'atfp_add_support_blocks_submenu_page'), 12);
 			add_action( 'activated_plugin', array( $this, 'atfp_plugin_redirection' ) );
+			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'atfp_plugin_action_links' ) );
 
 			// Add the action to hide unrelated notices
 			if(isset($_GET['page']) && $_GET['page'] == 'polylang-atfp-dashboard'){
@@ -73,6 +74,11 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			}
 
 			add_action('current_screen', array($this, 'atfp_append_view_languages_link'));
+		}
+
+		public function atfp_plugin_action_links($links) {
+			$links[] = '<a href="https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin&utm_medium=plugin_page&utm_campaign=get_pro&utm_content=buy_pro" target="_blank">' . __( 'Get Pro', 'automatic-translations-for-polylang' ) . '</a>';
+			return $links;
 		}
 
 		public function atfp_plugin_redirection($plugin) {
