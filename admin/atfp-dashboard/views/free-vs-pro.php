@@ -27,7 +27,7 @@
                     'Yandex Translate Widget Support' => [true, true],
                     'Chrome Built-in AI Support' => [true, true],
                     'No API Key Required' => [true, true],
-                    'Unlimited Translations' => [true, true],
+                    'Unlimited Translations' => [false, true],
                     'Google Translate Widget Support' => [false, true],
                     'AI Translator (Gemini/OpenAI/Openrouter) Support' => [false, true],
                     'Premium Support' => [false, true],
