@@ -900,7 +900,11 @@ body.rtl #atfp-setting-modal .modal-header .close {
 
 #atfp_strings_model .modal-footer .notice.atfp_string_count {
     display: block;
-    max-width: calc(100% - 123px) !important;
+    max-width: calc(100% - 165px) !important;
+}
+
+#atfp_strings_model .modal-footer .notice.atfp_string_count a{
+    white-space: nowrap;
 }
 
 #atfp_strings_model .notice.atfp_string_count {
@@ -911,6 +915,7 @@ body.rtl #atfp-setting-modal .modal-header .close {
     border-width: 0px;
     margin-left: 0px;
     padding-left: 0px;
+    padding-right: 0px;
 }
 
 #atfp_strings_model .modal-footer .notice.atfp_string_count p {
@@ -994,6 +999,7 @@ body.rtl #atfp-setting-modal .modal-header .close {
     bottom: 0;
     height: 66px;
     max-height: 66px;
+    box-sizing: border-box;
 }
 
 #yt-widget .yt-listbox__input:not(:checked)~.yt-listbox__text {
