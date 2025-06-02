@@ -77,7 +77,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 		}
 
 		public function atfp_plugin_action_links($links) {
-			$links[] = '<a href="https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin&utm_medium=plugin_page&utm_campaign=get_pro&utm_content=buy_pro" target="_blank">' . __( 'Get Pro', 'automatic-translations-for-polylang' ) . '</a>';
+			$links[] = '<a href="https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin&utm_medium=plugin_page&utm_campaign=get_pro&utm_content=buy_pro" target="_blank">' . __( 'Buy Pro', 'automatic-translations-for-polylang' ) . '</a>';
 			return $links;
 		}
 
