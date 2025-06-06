@@ -11,6 +11,8 @@ import Skeleton from 'react-loading-skeleton';
 import skeletonStyles from 'react-loading-skeleton/dist/skeleton.css'
 import ModalStyle from './modalStyle';
 import ButtonGroup from './ButtonGroup';
+import { svgIcons } from './svgIcons';
+import ErrorModalBox from '../errorModal';
 
 import {
   Modal,
@@ -64,6 +66,7 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [safeBrowserError, setSafeBrowserError] = useState<boolean>(false);
   const [errorBtns, setErrorBtns] = useState<ButtonProps[]>([]);
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState<boolean>(false);
   const safeBrowser = window.location.protocol === 'https:';
 
   useEffect(() => {
@@ -77,17 +80,53 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
 
     // Browser check
     if (!window.hasOwnProperty('chrome') || !navigator.userAgent.includes('Chrome') || navigator.userAgent.includes('Edg')) {
-      setApiError('<span style="color: #ff4646; display: inline-block;">The Translator API, which uses local AI models, only works in the Chrome browser. For more details, <a href="https://developer.chrome.com/docs/ai/translator-api" target="_blank">click here</a>.</span>');
+      setLangError(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">
+          <strong>Important Notice:</strong>
+          <ol>
+              <li>The Translator API, which leverages Chrome local AI models, is designed specifically for use with the Chrome browser.</li>
+              <li>For comprehensive information about the Translator API, <a href="https://developer.chrome.com/docs/ai/translator-api" target="_blank">click here</a>.</li>
+          </ol>
+          <p>Please ensure you are using the Chrome browser for optimal performance and compatibility.</p>
+      </span>`);
       return;
     }
 
-    if (!isTranslatorApiAvailable()) {
-      setApiError('<span style="color: #ff4646; display: inline-block;">The Translator AI modal is currently not supported or disabled in your browser. Please enable it. For detailed instructions on how to enable the Translator AI modal in your Chrome browser, <a href="https://developer.chrome.com/docs/ai/translator-api#bypass_language_restrictions_for_local_testing" target="_blank">click here</a>.</span>');
+    if (!isTranslatorApiAvailable() && !safeBrowser) {
+      setLangError(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">
+                <strong>Important Notice:</strong>
+                <ol>
+                    <li>
+                        The Translator API is not functioning due to an insecure connection.
+                    </li>
+                    <li>
+                        Please switch to a secure connection (HTTPS) or add this URL to the list of insecure origins treated as secure by visiting 
+                        <span data-clipboard-text="chrome://flags/#unsafely-treat-insecure-origin-as-secure" target="_blank" class="chrome-ai-translator-flags">
+                            chrome://flags/#unsafely-treat-insecure-origin-as-secure ${svgIcons({iconName: 'copy'})}
+                        </span>.
+                        Click on the URL to copy it, then open a new window and paste this URL to access the settings.
+                    </li>
+                </ol>
+            </span>`);
       return;
-    }
+    }else if(!isTranslatorApiAvailable()){
+      setLangError(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">
+          <h4>Steps to Enable the Translator AI Modal:</h4>
+          <ol>
+              <li>Open this URL in a new Chrome tab: <strong><span data-clipboard-text="chrome://flags/#translation-api" target="_blank" class="chrome-ai-translator-flags">chrome://flags/#translation-api ${svgIcons({iconName: 'copy'})}</span></strong>. Click on the URL to copy it, then open a new window and paste this URL to access the settings.</li>
+              <li>Ensure that the <strong>Experimental translation API</strong> option is set to <strong>Enabled</strong>.</li>
+              <li>Click on the <strong>Save</strong> button to apply the changes.</li>
+              <li>The Translator AI modal should now be enabled and ready for use.</li>
+          </ol>
+          <p>For more information, please refer to the <a href="https://developer.chrome.com/docs/ai/translator-api" target="_blank">documentation</a>.</p>   
+          <p>If the issue persists, please ensure that your browser is up to date and restart your browser.</p>
+          <p>If you continue to experience issues after following the above steps, please <a href="https://my.coolplugins.net/account/support-tickets/" target="_blank" rel="noopener">open a support ticket</a> with our team. We are here to help you resolve any problems and ensure a smooth translation experience.</p>
+      </span>`)
+
+      return;
+    } 
 
     if(!isLanguageDetectorPaiAvailable() && !safeBrowser && !safeBrowserError){
-      setApiError('<span style="color: #ff4646; display: inline-block;">The Language Detector API is not functioning due to an insecure connection. Please switch to a secure connection or add this URL to the list of insecure origins treated as secure by visiting <strong>chrome://flags/#unsafely-treat-insecure-origin-as-secure</strong>. Or you can continue without detection by clicking on the "Continue Without Detection" button and select the language manually.</span>');
+      setApiError('<span style="color: #ff4646; display: inline-block;">Language detection is unavailable because your connection is not secure (HTTP) or the Language Detection API is disabled in your browser. For best results, please use a secure (HTTPS) connection.<br /><br />To enable language detection in Chrome, you can:<ul style="margin: 0 0 0 1.2em; padding: 0;"><li>Enable the Language Detection API at <strong>chrome://flags/#language-detection-api</strong></li><li>Or, treat this site as secure at <strong>chrome://flags/#unsafely-treat-insecure-origin-as-secure</strong></li></ul>You can also continue without automatic detection by clicking "Continue Without Detection" and selecting the language manually.</span>');
       setSafeBrowserError(true);
       setErrorBtns([
         {
@@ -207,17 +246,13 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
     HandlerTranslate(value, sourceLang);
   }
 
-  const HandlerTranslate = async (targetLang, sourceLang) => {
+  const HandlerTranslate = async (targetLang: string, sourceLang: string) => {
     setTranslatedContent("");
 
-    if(!Object.keys(languages).includes(targetLang)){
-      setLangError(`<span style="color: #ff4646; display: inline-block;">Translation to ${notSupportedLang[targetLang].replace(' (Not Supported)', '')} (${targetLang}) is not available. Please select a supported target language from the dropdown menu.</span>`);
-      return;
-    }
     const text = selectedText && '' !== selectedText ? selectedText : value;
 
 
-    const translatorObject = new Translator(sourceLang, targetLang, languages[targetLang]);
+    const translatorObject = new Translator(sourceLang, targetLang, languages[targetLang], languages[sourceLang]);
 
     const status = await translatorObject.LanguagePairStatus();
 
@@ -240,7 +275,7 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
 
     const allNodes=element.childNodes;
 
-    const translateOnlyText= async(allNodes, index)=>{
+    const translateOnlyText= async(allNodes: string | any[] | NodeListOf<ChildNode>, index: number)=>{
       if(index >= allNodes.length){
         return;
       }
@@ -273,7 +308,7 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
     HandlerCloseModal();
   }
 
-  const HandlerCopyText = async (e) => {
+  const HandlerCopyText = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     if (!translatedContent || translatedContent === "") return;
 
@@ -299,86 +334,99 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
     }
   }
 
-  return (isModalOpen ? (
-    <>
-    <ModalStyle modalContainer={styles.modalContainer} />
-    <Modal
-      title="Chrome built-in translator AI"
-      onRequestClose={HandlerCloseModal}
-      className={styles.modalContainer}
-      overlayClassName={styles.modalOverlay}
-      isDismissible={false}
-      bodyOpenClassName={'body-class'}
-    >
-      <div className={styles.modalCloseButton} onClick={HandlerCloseModal}>&times;</div>
-      {apiError && apiError !== "" ? (
-        <div className={styles.error}><p dangerouslySetInnerHTML={{ __html: apiError }} />{errorBtns.length > 0 && <ButtonGroup className={styles.errorBtnGroup} buttons={errorBtns} />}</div>
-      ) : (
-        <div className={styles.modal}>
+  const HandlerLanguageError = () => {
+    setIsErrorModalOpen(true);
+    setIsModalOpen(false);
+  }
 
-          <div className={styles.controls}>
-            <div className={styles.langWrapper}>
-              <SelectControl
-                label="Source Language"
-                value={sourceLang}
-                options={[...sourceLang !== "not-selected" ? [] : [{
-                  label: 'Select Language',
-                  value: 'not-selected',
-                }], ...Object.keys(Languages).filter((lang) => lang !== notSupportedLang).map((lang) => ({
-                  label: Languages[lang],
-                  value: lang,
-                }))]}
-                onChange={(value) => HandlerSourceLanguageChange(value)}
-                className={styles.translatedContent}
-              />
-              <SelectControl
-                label="Target Language"
-                value={targetLang}
-                options={targetLanguages.map((lang) => ({
-                  label: Languages[lang] || notSupportedLang[lang],
-                  value: lang,
-                }))}
-                onChange={(value) => HandlerTargetLanguageChange(value)}
-                className={styles.translatedContent}
-              />
-            </div>
-            {langError && langError !== "" && <div className={styles.error} dangerouslySetInnerHTML={{ __html: langError }}></div>}
-            {isLoading && !langError && <Skeleton 
-              count={1}
-              height='70px'
-              width="100%"
-              className={skeletonStyles['react-loading-skeleton']}
-            />}
-            {translatedContent && (!langError || langError === "") && !isLoading && translatedContent !== "" &&
-              <>
-                <div className={styles.translatedContent}><label>Translated Text</label><p>{translatedContent}</p></div>
-                <div className={styles.translatedButtonWrp}>
-                  <Button
-                    className={styles.replaceBtn + " " + styles.btnStyle}
-                    onClick={HandlerReplaceText}
-                  >
-                    Replace
-                  </Button>
-                  <Button
-                    className={styles.copyBtn + " " + styles.btnStyle}
-                    onClick={HandlerCopyText}
-                  >
-                    {copyStatus}
-                  </Button>
-                  <Button
-                    className={styles.closeBtn + " " + styles.btnStyle}
-                    onClick={HandlerCloseModal}
-                  >
-                    Close
-                  </Button>
+  return (isErrorModalOpen ? <ErrorModalBox message={langError} onClose={() => {setIsErrorModalOpen(false); setIsModalOpen(true)}} Title={__("Chrome built-in translator AI", 'automatic-translations-for-polylang')}/> : isModalOpen ? (
+    isModalOpen ? (
+      <>
+      <ModalStyle modalContainer={styles.modalContainer} />
+      <Modal
+        title="Chrome built-in translator AI"
+        onRequestClose={HandlerCloseModal}
+        className={styles.modalContainer}
+        overlayClassName={styles.modalOverlay}
+        isDismissible={false}
+        bodyOpenClassName={'body-class'}
+      >
+        <div className={styles.modalCloseButton} onClick={HandlerCloseModal}>&times;</div>
+        {apiError && apiError !== "" ? (
+          <div className={styles.error}><p dangerouslySetInnerHTML={{ __html: apiError }} />{errorBtns.length > 0 && <ButtonGroup className={styles.errorBtnGroup} buttons={errorBtns} />}</div>
+        ) : (
+          <div className={styles.modal}>
+  
+            <div className={styles.controls}>
+              <div className={styles.langWrapper}>
+                <SelectControl
+                  label="Source Language"
+                  value={sourceLang}
+                  options={[...sourceLang !== "not-selected" ? [] : [{
+                    label: 'Select Language',
+                    value: 'not-selected',
+                  }], ...Object.keys(Languages).filter((lang) => lang !== notSupportedLang).map((lang) => ({
+                    label: Languages[lang],
+                    value: lang,
+                  }))]}
+                  onChange={(value) => HandlerSourceLanguageChange(value)}
+                  className={styles.translatedContent}
+                />
+                <SelectControl
+                  label="Target Language"
+                  value={targetLang}
+                  options={targetLanguages.map((lang) => ({
+                    label: Languages[lang] || notSupportedLang[lang],
+                    value: lang,
+                  }))}
+                  onChange={(value) => HandlerTargetLanguageChange(value)}
+                  className={styles.translatedContent}
+                />
+              </div>
+              {langError && langError !== "" && (
+                <div className={styles.languageErrorButtonWrapper}>
+                  <button className={styles.languageErrorButton} onClick={HandlerLanguageError}>
+                    {__("Language Error Details", 'automatic-translations-for-polylang')}
+                  </button>
                 </div>
-              </>
-            }
+              )}
+              {isLoading && !langError && <Skeleton 
+                count={1}
+                height='70px'
+                width="100%"
+                className={skeletonStyles['react-loading-skeleton']}
+              />}
+              {translatedContent && (!langError || langError === "") && !isLoading && translatedContent !== "" &&
+                <>
+                  <div className={styles.translatedContent}><label>Translated Text</label><p>{translatedContent}</p></div>
+                  <div className={styles.translatedButtonWrp}>
+                    <Button
+                      className={styles.replaceBtn + " " + styles.btnStyle}
+                      onClick={HandlerReplaceText}
+                    >
+                      Replace
+                    </Button>
+                    <Button
+                      className={styles.copyBtn + " " + styles.btnStyle}
+                      onClick={HandlerCopyText}
+                    >
+                      {copyStatus}
+                    </Button>
+                    <Button
+                      className={styles.closeBtn + " " + styles.btnStyle}
+                      onClick={HandlerCloseModal}
+                    >
+                      Close
+                    </Button>
+                  </div>
+                </>
+              }
+            </div>
           </div>
-        </div>
-      )}
-    </Modal>
-    </>
+        )}
+      </Modal>
+      </>
+    ) : null
   ) : null);
 }
 

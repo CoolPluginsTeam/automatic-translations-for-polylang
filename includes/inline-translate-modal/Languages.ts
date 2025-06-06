@@ -1,10 +1,10 @@
-const languages = {
+const languages={
     'en': 'English',
     'es': 'Spanish',
     'ja': 'Japanese',
     'ar': 'Arabic',
-    'bn': 'Bengali',
     'de': 'Dutch',
+    'bn': 'Bengali',
     'fr': 'French',
     'hi': 'Hindi',
     'it': 'Italian',
@@ -35,6 +35,10 @@ const languages = {
     'sv': 'Swedish',
     'uk': 'Ukrainian',
     'en-zh': 'English (Chinese)',
-};
+    'kn': 'Kannada',
+    'ta': 'Tamil',
+    'te': 'Telugu',
+    'mr': 'Marathi'
+}
 
 export default languages;
