@@ -1,7 +1,7 @@
 import ControlBase from './control-base';
 
 const App = () => {
-    const prefix = 'atfpElementorWidgetTranslator';
+    const prefix = 'atfpElementorInlineTranslation';
     return new ControlBase(prefix);
 }
 

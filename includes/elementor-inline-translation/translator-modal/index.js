@@ -1,9 +1,9 @@
-import TranslatorModal from '../../common/AiTranslator/modal';
+import TranslatorModal from '../../inline-translate-modal/modal';
 
 
 const ElementorWidgetTranslator = (props) => {
   const value = props.getControlValue();
-  const activePageLanguage = window.atfpElementorWidgetTranslator?.pageLanguage || 'en';
+  const activePageLanguage = window.atfpElementorInlineTranslation?.pageLanguage || 'en';
 
   const onUpdateHandler = (value) => {
     props.activeController(value);

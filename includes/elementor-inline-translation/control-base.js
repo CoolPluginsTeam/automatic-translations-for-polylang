@@ -20,7 +20,7 @@ export default class ControlBase extends elementorModules.editor.utils.Module {
 
         if (['text', 'textarea'].includes(aiConfig.type)) {
 
-            behaviors.atfpElementorWidgetTranslator = {
+            behaviors.atfpElementorInlineTranslation = {
                 behaviorClass: ElementorTranslator,
                 pluginPrefix: this.pluginPrefix,
                 controlType,

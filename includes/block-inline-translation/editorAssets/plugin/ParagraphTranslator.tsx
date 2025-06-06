@@ -7,11 +7,11 @@ import {
 } from "@wordpress/components";
 import { useState, useEffect } from "@wordpress/element";
 import styles from "./ParagraphTranslator.module.css";
-import isTranslatorApiAvailable from "../../../common/AiTranslator/isTranslatorApiAvailable";
-import TranslatorModal from "../../../common/AiTranslator/modal";
+import isTranslatorApiAvailable from "../../../inline-translate-modal/isTranslatorApiAvailable";
+import TranslatorModal from "../../../inline-translate-modal/modal";
 
 const ParagraphRewriter = ({ value, onChange }) => {
-  const activePageLanguage = (window as any).atfpBlockTranslator?.pageLanguage || 'en';
+  const activePageLanguage = (window as any).atfpBlockInlineTranslation?.pageLanguage || 'en';
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedText, setSelectedText] = useState<string>("");
@@ -84,13 +84,11 @@ const ParagraphRewriter = ({ value, onChange }) => {
   );
 };
 
-if (isTranslatorApiAvailable()) {
-  registerFormatType("atfp/paragraph-rewriter", {
-    title: "AI Paragraph Rewriter",
-    name: "atfp/paragraph-rewriter",
-    interactive: true,
-    tagName: "atfp-paragraph-rewriter",
-    className: null,
-    edit: ParagraphRewriter,
-  });
-}
+registerFormatType("atfp/paragraph-rewriter", {
+  title: "AI Paragraph Rewriter",
+  name: "atfp/paragraph-rewriter",
+  interactive: true,
+  tagName: "atfp-paragraph-rewriter",
+  className: null,
+  edit: ParagraphRewriter,
+});
