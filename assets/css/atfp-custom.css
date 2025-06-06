@@ -177,9 +177,22 @@
     text-decoration: underline;
 }
 
+#atfp-setting-modal .atfp-error-modal-box-body button.atfpp-error-reload-btn{
+    background: #0073aa;
+    color: #fff !important;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 9px;
+    cursor: pointer;
+}
+
+button.atfpp-error-reload-btn:hover{
+    background: #005682 !important;
+}
+
 #atfp-setting-modal .atfp-error-modal-box-body{
     min-height: 0px;
-    max-height: none;
+    max-height: 65vh;
     height: auto;
     padding: 22px;
     overflow: auto;

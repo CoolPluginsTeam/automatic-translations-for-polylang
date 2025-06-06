@@ -23,11 +23,18 @@ class BlockFilterSorter {
         }
       });
 
-      this.atfpDataTableObj.on('draw.dt', function() {
+      this.atfpDataTableObj.on('draw.dt', function(e) {
         const rows=jQuery(this).find('tbody tr');
 
+        if(rows.length.length === 0){
+          this.atfpDataTableObj.empty();
+        }
+
         rows.each(function(index,row){
-          row.children[0].textContent=index+1;
+          const emptyCell=row.querySelector('td.dt-empty');
+          if(!emptyCell){
+            row.children[0].textContent=index+1;
+          }
         });
       });
 

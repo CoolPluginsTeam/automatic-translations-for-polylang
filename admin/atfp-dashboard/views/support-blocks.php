@@ -72,17 +72,17 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 			<h3><?php esc_html_e( 'Supported Blocks for AI Translation For Polylang', 'automatic-translations-for-polylang' ); ?></h3>
 			<div class="atfp-supported-blocks-filters">
 				<div class="atfp-category-tab">
-					<h3><?php esc_html_e( 'Blocks Category:', 'automatic-translations-for-polylang' ); ?></h3>
+					<label for="atfp-blocks-category"><?php esc_html_e( 'Block Type Category:', 'automatic-translations-for-polylang' ); ?></label>
 					<select id="atfp-blocks-category" name="atfp_blocks_category">
-						<option value="all"><?php esc_html_e( 'All Blocks', 'automatic-translations-for-polylang' ); ?></option>
+						<option value="all"><?php esc_html_e( 'All', 'automatic-translations-for-polylang' ); ?></option>
 						<option value="core">Core</option>
 						<?php $this->atfp_get_blocks_category(); ?>
 					</select>
 				</div>
 				<div class="atfp-filter-tab">
-					<h3><?php esc_html_e( 'Filter Blocks:', 'automatic-translations-for-polylang' ); ?></h3>
+					<label for="atfp-blocks-filter"><?php esc_html_e( 'Show Blocks:', 'automatic-translations-for-polylang' ); ?></label>
 					<select id="atfp-blocks-filter" name="atfp_blocks_filter">
-						<option value="all"><?php esc_html_e( 'All Blocks', 'automatic-translations-for-polylang' ); ?></option>
+						<option value="all"><?php esc_html_e( 'All', 'automatic-translations-for-polylang' ); ?></option>
 						<option value="supported"><?php esc_html_e( 'Supported Blocks', 'automatic-translations-for-polylang' ); ?></option>
 						<option value="unsupported"><?php esc_html_e( 'Unsupported Blocks', 'automatic-translations-for-polylang' ); ?></option>
 					</select>
@@ -93,7 +93,7 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 					<table class="atfp-supported-blocks-table" id="atfp-supported-blocks-table">
 						<thead>
 							<tr>
-								<th><?php esc_html_e( 'S No', 'automatic-translations-for-polylang' ); ?></th>
+								<th><?php esc_html_e( 'Sr.No', 'automatic-translations-for-polylang' ); ?></th>
 								<th><?php esc_html_e( 'Block Name', 'automatic-translations-for-polylang' ); ?></th>
 								<th><?php esc_html_e( 'Block Title', 'automatic-translations-for-polylang' ); ?></th>
 								<th><?php esc_html_e( 'Status', 'automatic-translations-for-polylang' ); ?></th>
