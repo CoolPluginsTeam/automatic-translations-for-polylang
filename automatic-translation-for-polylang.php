@@ -2,7 +2,7 @@
 /*
 Plugin Name: AI Translation For Polylang
 Plugin URI: https://coolplugins.net/
-Version: 1.4.0
+Version: 1.4.1
 Author: Cool Plugins
 Author URI: https://coolplugins.net/
 Description: AI Translation for Polylang simplifies your translation process by automatically translating all pages/posts content from one language to another.
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 if ( ! defined( 'ATFP_V' ) ) {
-	define( 'ATFP_V', '1.4.0' );
+	define( 'ATFP_V', '1.4.1' );
 }
 if ( ! defined( 'ATFP_DIR_PATH' ) ) {
 	define( 'ATFP_DIR_PATH', plugin_dir_path( __FILE__ ) );
@@ -64,9 +64,9 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			add_action( 'admin_menu', array( $this, 'atfp_add_submenu_page' ), 11 );
 			add_action( 'admin_enqueue_scripts', array( $this, 'atfp_set_dashboard_style' ) );
 			add_action('init', array($this, 'atfp_translation_string_migration'));
-			add_action('admin_menu', array($this, 'atfp_add_support_blocks_submenu_page'), 12);
+			add_action('admin_menu', array($this, 'atfp_add_support_blocks_submenu_page'), 11);
 			add_action( 'activated_plugin', array( $this, 'atfp_plugin_redirection' ) );
-			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'atfp_plugin_action_links' ) );
+			// add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'atfp_plugin_action_links' ) );
 
 			// Add the action to hide unrelated notices
 			if(isset($_GET['page']) && $_GET['page'] == 'polylang-atfp-dashboard'){
@@ -182,7 +182,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			add_submenu_page(
 				'mlang', // Parent slug
 				__( 'AI Translation For Polylang', 'automatic-translations-for-polylang' ), // Page title
-				__( 'Auto Translate Addon', 'automatic-translations-for-polylang' ), // Menu title
+				__( 'AI Translation Settings', 'automatic-translations-for-polylang' ), // Menu title
 				'manage_options', // Capability
 				'polylang-atfp-dashboard', // Menu slug
 				array( $this, 'atfp_render_dashboard_page' ) // Callback function
@@ -211,7 +211,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 				'settings'        => __('Settings', $text_domain),
 				'license'         => __('License', $text_domain),
 				'free-vs-pro'     => __('Free vs Pro', $text_domain),
-				'support-blocks'  => __('Support Blocks', $text_domain)
+				'support-blocks'  => __('Supported Blocks', $text_domain)
 			];
 	
 			// Get current tab with fallback

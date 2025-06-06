@@ -4,7 +4,7 @@ Tags: Polylang, AI Translation, Content Translation, Translate
 Requires at least: 5.0
 Tested up to: 6.8.1
 Requires PHP: 5.6
-Stable tag: 1.4.0
+Stable tag: 1.4.1
 Author URI: https://coolplugins.net/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -42,8 +42,11 @@ https://youtu.be/yamFwNRWEbc
 * **Custom Block Support** - While optimized for Gutenberg blocks, the plugin also works with several third-party block plugins, extending its versatility.
 * **Easy to Use** - Designed with a user-friendly interface, making it accessible even for those with limited technical knowledge.
 
-### Important Information Regarding Classic Editor Compatibility
-Our current version doesn't support translation for the Classic Editor. It only works with **Gutenberg** and **Elementor** pages.
+### Check It Now
+
+[Language Switcher – Polylang for Divi](https://wordpress.org/plugins/language-switcher-for-divi-polylang/) is a language switcher plugin to add a language switcher to Divi pages with Polylang.
+
+[Language Switcher for Elementor & Polylang](https://go.coolplugins.net/language-switcher) Add a language switcher to Elementor and link translated templates with Polylang.
 
 ### Check out our advanced Automatic Translate Addon for Loco Translate
 
@@ -52,12 +55,36 @@ Looking for a way to translate WordPress themes and plugins automatically? Check
 
 Additionally, **[AI Translation for TranslatePress ](https://coolplugins.net/product/automatic-translate-addon-for-translatepress-pro/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=tpa_get_pro&utm_content=check_out)** automatically translates entire web pages, eliminating the need for manual translation. Powered by advanced AI translator resources, it delivers accurate and fast translations, helping you reach a global audience with ease.
 
+### Important Information Regarding Classic Editor Compatibility
+Our current version doesn't support translation for the Classic Editor. It only works with **Gutenberg** and **Elementor** pages.
+
 > **Important Notice:** This plugin serves as an AI translation extension for the official **[Polylang](https://wordpress.org/plugins/polylang/)** plugin.
 
 
 > **Disclaimer:** This plugin is not developed by or affiliated with the **[Polylang developers](https://wordpress.org/plugins/polylang/)**. It is a third-party addon that offers automatic translation functionality, enabling you to quickly translate your posts while maintaining the same styles in other languages.
 
+== Installation ==
 
+To install and set up AI Translation for Polylang, please follow these steps:
+
+1. **Ensure Compatibility:**  
+   Confirm that your website is running WordPress version 5.0 or higher.
+
+2. **Install and Activate Polylang:**  
+   - Navigate to your WordPress dashboard.  
+   - Go to **Plugins > Add New**.  
+   - Search for "**Polylang**".  
+   - Click **Install Now** and then **Activate** the [Polylang plugin](https://wordpress.org/plugins/polylang/).
+
+3. **Install AI Translation for Polylang:**  
+   - In the WordPress dashboard, go to **Plugins > Add New**.  
+   - Search for "**AI Translation for Polylang**".  
+   - Click **Install Now** next to the plugin.
+
+4. **Activate the Plugin:**  
+   - After installation, click **Activate** to enable AI Translation for Polylang on your site.
+
+Your plugin is now ready to use. You can access its settings and begin translating your content automatically.
 
 == Custom Blocks Support ==
 To make your custom blocks translation-ready, follow these steps:
@@ -161,6 +188,13 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+
+= Version 1.4.1 | 07 June 2025 =
+* **Fixed:** Fixed inline translation issue with browser latest version.
+* **Improved:** Chrome Local AI translation Error message & step by step guide.
+* **Improved:** Dashboard page title to AI Translation Settings.
+* **Improved:** Improve string modal box footer styling.
+* **Improved:** Get started page content & styling.
 
 = Version 1.4.0 | 29 May 2025 =
 * **Added:** Added language filter links with post counts.
