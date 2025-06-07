@@ -69,6 +69,7 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
   const [errorBtns, setErrorBtns] = useState<ButtonProps[]>([]);
   const [isErrorModalOpen, setIsErrorModalOpen] = useState<boolean>(false);
   const safeBrowser = window.location.protocol === 'https:';
+  const clipBoard=window?.navigator?.clipboard;
 
   useEffect(() => {
     setLangError("");
@@ -92,7 +93,7 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
       return;
     }
 
-    if (!isTranslatorApiAvailable() && !safeBrowser) {
+    if (!isTranslatorApiAvailable() && !safeBrowser && !clipBoard) {
       setLangError(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">
                 <strong>Important Notice:</strong>
                 <ol>

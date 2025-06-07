@@ -57,6 +57,7 @@ class ChromeAiTranslator {
         const supportedLanguages = ['en', 'es', 'ja', 'ar', 'de', 'bn', 'fr', 'hi', 'it', 'ko', 'nl', 'pl', 'pt', 'ru', 'th', 'tr', 'vi', 'zh', 'zh-hant', 'bg', 'cs', 'da', 'el', 'fi', 'hr', 'hu', 'id', 'iw', 'lt', 'no', 'ro', 'sk', 'sl', 'sv', 'uk','kn','ta','te','mr' ].map(lang => lang.toLowerCase());
 
         const safeBrowser = window.location.protocol === 'https:';
+        const clipBoard=window?.navigator?.clipboard;
 
         // Browser check
         if (!window.hasOwnProperty('chrome') || !navigator.userAgent.includes('Chrome') || navigator.userAgent.includes('Edg')) {
@@ -71,7 +72,7 @@ class ChromeAiTranslator {
             return message;
         }
 
-        if (!('translation' in self && 'createTranslator' in self.translation) && !('ai' in self && 'translator' in self.ai ) && !("Translator" in self && "create" in self.Translator) && !safeBrowser) {
+        if (!('translation' in self && 'createTranslator' in self.translation) && !('ai' in self && 'translator' in self.ai ) && !("Translator" in self && "create" in self.Translator) && !safeBrowser && !clipBoard) {
             const message = jQuery(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">
                 <strong>Important Notice:</strong>
                 <ol>
