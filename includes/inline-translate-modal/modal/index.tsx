@@ -62,6 +62,7 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
   const [targetLanguages, setTargetLanguages] = useState<Array<string>>(Object.keys({...Languages,...notSupportedLang}).filter((lang) => lang !== activeSourceLang));
   const [apiError, setApiError] = useState<string>("");
   const [langError, setLangError] = useState<string>("");
+  const [shortLangError, setShortLangError] = useState<string>("");
   const [copyStatus, setCopyStatus] = useState<string>("Copy");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [safeBrowserError, setSafeBrowserError] = useState<boolean>(false);
@@ -182,7 +183,9 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
 
   const HandlerCloseModal = () => {
     setIsModalOpen(false);
+    setIsErrorModalOpen(false);
     setLangError("");
+    setShortLangError("");
     setApiError("");
     setTranslatedContent("");
     setErrorBtns([]);
@@ -249,6 +252,11 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
   const HandlerTranslate = async (targetLang: string, sourceLang: string) => {
     setTranslatedContent("");
 
+    if(!Object.keys(languages).includes(targetLang)){
+      setShortLangError(`<span style="color: #ff4646; display: inline-block;">Translation to ${notSupportedLang[targetLang].replace(' (Not Supported)', '')} (${targetLang}) is not available. Please select a supported target language from the dropdown menu.</span>`);
+      return;
+    }
+
     const text = selectedText && '' !== selectedText ? selectedText : value;
 
 
@@ -259,9 +267,11 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
 
     if (status !== true && status.hasOwnProperty('error') && status.error !== "") {
       setLangError(status.error);
+      setShortLangError("");
       return;
     } else if (langError !== "") {
       setLangError("");
+      setShortLangError("");
     }
 
     if (!translatorObject || !translatorObject.hasOwnProperty('startTranslation')) {
@@ -389,6 +399,9 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
                     {__("Language Error Details", 'automatic-translations-for-polylang')}
                   </button>
                 </div>
+              )}
+              {shortLangError && shortLangError !== "" && (
+                <div className={styles.error}><p dangerouslySetInnerHTML={{ __html: shortLangError }} /></div>
               )}
               {isLoading && !langError && <Skeleton 
                 count={1}

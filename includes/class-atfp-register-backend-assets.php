@@ -53,7 +53,7 @@ class ATFP_Register_Backend_Assets
             wp_enqueue_script('atfp-block-translator-toolbar');
 
             if ($current_language && $current_language !== '') {
-                wp_localize_script('atfp-block-translator-toolbar', 'atfpBlockTranslator', array(
+                wp_localize_script('atfp-block-translator-toolbar', 'atfpBlockInlineTranslation', array(
                     'pageLanguage' => $current_language,
                 ));
             }
@@ -286,7 +286,7 @@ class ATFP_Register_Backend_Assets
             if ($current_language && $current_language !== '') {
                 wp_localize_script(
                     'atfp-elementor-widget-translator',
-                    'atfpElementorWidgetTranslator',
+                    'atfpElementorInlineTranslation',
                     array(
                         'pageLanguage' => $current_language,
                         'pageLanguageName' => $current_language_name,
