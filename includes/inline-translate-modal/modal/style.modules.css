@@ -81,52 +81,6 @@
   line-height: 1.4;
 }
 
-.modalOverlay .modalContainer .error .errorBtnGroup {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
-  gap: 0.5em;
-  margin-top: 1rem;
-}
-
-.modalOverlay .modalContainer .error .errorBtnGroup .btnCloseStyle {
-  border: 1px solid #ff4646;
-  background: #ff4646;
-  color: white;
-  -webkit-transition: all 0.3s ease;
-  transition: all 0.3s ease;
-  opacity: 0.8;
-  padding: .2rem .3rem;
-  font-size: .9rem;
-  border-radius: .2rem;
-  cursor: pointer;
-}
-
-.modalOverlay .modalContainer .error .errorBtnGroup .btnCloseStyle:hover {
-  opacity: 1;
-}
-
-.modalOverlay .modalContainer .error .errorBtnGroup .btnContinueStyle {
-  background: transparent;
-  border: 1px solid #007cba;
-  background: #007cba;
-  color: white;
-  -webkit-transition: all 0.3s ease;
-  transition: all 0.3s ease;
-  opacity: 0.8;
-  padding: .2rem .3rem;
-  font-size: .9rem;
-  border-radius: .2rem;
-  cursor: pointer;
-}
-
-.modalOverlay .modalContainer .error .errorBtnGroup .btnContinueStyle:hover {
-  opacity: 1;
-}
-
 .modalOverlay .modalContainer .modal {
   width: 400px;
   height: 100%;
@@ -227,6 +181,52 @@
   background: transparent;
   border: 1px solid #da1c4b;
   background: #da1c4b;
+}
+
+.errorBtnGroup {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  gap: 0.5em;
+  margin-top: 1rem;
+}
+
+.errorBtnGroup .btnCloseStyle {
+  border: 1px solid #ff4646;
+  background: #ff4646;
+  color: white;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  opacity: 0.8;
+  padding: .2rem .3rem;
+  font-size: .9rem;
+  border-radius: .2rem;
+  cursor: pointer;
+}
+
+.errorBtnGroup .btnCloseStyle:hover {
+  opacity: 1;
+}
+
+.errorBtnGroup .btnContinueStyle {
+  background: transparent;
+  border: 1px solid #007cba;
+  background: #007cba;
+  color: white;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  opacity: 0.8;
+  padding: .2rem .3rem;
+  font-size: .9rem;
+  border-radius: .2rem;
+  cursor: pointer;
+}
+
+.errorBtnGroup .btnContinueStyle:hover {
+  opacity: 1;
 }
 
 /* Setting Modal CSS Start */

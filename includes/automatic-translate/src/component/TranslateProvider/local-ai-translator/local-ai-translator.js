@@ -147,7 +147,7 @@ class ChromeAiTranslator {
                     </li>
                     <li>
                         After installing the language pack, add this language to your browser's system languages in Chrome settings.<br>
-                        Go to <strong>Settings &gt; Languages &gt; Add languages</strong> and add <strong>${targetLanguageLabel}</strong> or <strong>${sourceLanguageLabel}</strong> to your preferred languages list.
+                        Go to <strong>Settings &gt; Languages &gt; Add languages</strong> and add <strong>${targetLanguageLabel}</strong> or <strong>${sourceLanguageLabel}</strong> to your preferred languages list & reload the page.
                     </li>
                     <li>
                         You can install it by visiting the following link: 

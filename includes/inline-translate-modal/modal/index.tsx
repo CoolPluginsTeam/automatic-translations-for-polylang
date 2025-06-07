@@ -65,7 +65,6 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
   const [shortLangError, setShortLangError] = useState<string>("");
   const [copyStatus, setCopyStatus] = useState<string>("Copy");
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [safeBrowserError, setSafeBrowserError] = useState<boolean>(false);
   const [errorBtns, setErrorBtns] = useState<ButtonProps[]>([]);
   const [isErrorModalOpen, setIsErrorModalOpen] = useState<boolean>(false);
   const safeBrowser = window.location.protocol === 'https:';
@@ -127,31 +126,20 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
       return;
     } 
 
-    if(!isLanguageDetectorPaiAvailable() && !safeBrowser && !safeBrowserError){
-      setApiError('<span style="color: #ff4646; display: inline-block;">Language detection is unavailable because your connection is not secure (HTTP) or the Language Detection API is disabled in your browser. For best results, please use a secure (HTTPS) connection.<br /><br />To enable language detection in Chrome, you can:<ul style="margin: 0 0 0 1.2em; padding: 0;"><li>Enable the Language Detection API at <strong>chrome://flags/#language-detection-api</strong></li><li>Or, treat this site as secure at <strong>chrome://flags/#unsafely-treat-insecure-origin-as-secure</strong></li></ul>You can also continue without automatic detection by clicking "Continue Without Detection" and selecting the language manually.</span>');
-      setSafeBrowserError(true);
-      setErrorBtns([
-        {
-          label: 'Continue Without Detection',
-          className: styles.btnContinueStyle,
-          onClick: () => {
-            setSourceLang("not-selected");
-            setApiError("");
-            setErrorBtns([]);
-            setSafeBrowserError(true);
-          }
-        },
-        {
-          label: 'Close',
-          className: styles.btnCloseStyle,
-          onClick: () => {
-            HandlerCloseModal();
-          }
-        },
-      ]);
-      return;
-    }else if (!isLanguageDetectorPaiAvailable() && !safeBrowserError) {
-      setApiError('<span style="color: #ff4646; display: inline-block;">The Language Detector AI modal is currently not supported or disabled in your browser. Please enable it. For detailed instructions on how to enable the Language Detector AI modal in your Chrome browser, <a href="https://developer.chrome.com/docs/ai/language-detection#add_support_to_localhost" target="_blank">click here</a>. Or you can continue without detection by clicking on the "Continue Without Detection" button and select the language manually.</span>');
+    if(!isLanguageDetectorPaiAvailable() && !safeBrowser && !clipBoard){
+      setLangError(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">
+          <h4>Important Notice:</h4>
+          <ol>
+              <li>
+                  The Language Detection API is not functioning due to an insecure connection.
+              </li>
+              <li>
+                  Please switch to a secure connection (HTTPS) or add this URL to the list of insecure origins treated as secure by visiting 
+                  <strong><span data-clipboard-text="chrome://flags/#unsafely-treat-insecure-origin-as-secure" target="_blank" class="chrome-ai-translator-flags">chrome://flags/#unsafely-treat-insecure-origin-as-secure ${svgIcons({iconName: 'copy'})}</span></strong>.
+                  Copy the URL and open a new window and paste this URL to access the settings.
+              </li>
+          </ol>
+      </span>`);
 
       setErrorBtns([
         {
@@ -159,18 +147,51 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
           className: styles.btnContinueStyle,
           onClick: () => {
             setSourceLang("not-selected");
-            setApiError("");
+            setLangError("");
             setErrorBtns([]);
-            setSafeBrowserError(true);
+            setIsErrorModalOpen(false);
+            setIsModalOpen(true);
           }
-        },
+        }
+      ]);
+      return;
+    }else if (!isLanguageDetectorPaiAvailable()) {
+      setLangError(`<span style="color: #ff4646; display: inline-block;">
+        <h4>Language Detection API is not available:</h4>
+        <ol>
+              <li>
+                Open a new Chrome tab and go to 
+                <strong>
+                  <span data-clipboard-text="chrome://flags/#language-detection-api" target="_blank" class="chrome-ai-translator-flags">
+                    chrome://flags/#language-detection-api ${svgIcons({iconName: 'copy'})}
+                  </span>
+                </strong>. Click to copy, then paste it in the address bar.
+              </li>
+              <li>Enable the <strong>Experimental language detection API</strong> flag.</li>
+              <li>
+                For more details, see the 
+                <a href="https://developer.chrome.com/docs/ai/language-detection#add_support_to_localhost" target="_blank">
+                  official documentation
+                </a>.
+              </li>
+              <li>
+                You can also continue without detection by clicking the "Continue Without Detection" button and select the language manually.
+              </li>
+            </ol>
+      </span>`);
+
+      setErrorBtns([
         {
-          label: 'Close',
-          className: styles.btnCloseStyle,
+          label: 'Continue Without Detection',
+          className: styles.btnContinueStyle,
           onClick: () => {
-            HandlerCloseModal();
+            setSourceLang("not-selected");
+            setLangError("");
+            setErrorBtns([]);
+            setIsErrorModalOpen(false);
+            setIsModalOpen(true);
           }
-        },
+        }
       ]);
       return;
     }
@@ -190,7 +211,6 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
     setApiError("");
     setTranslatedContent("");
     setErrorBtns([]);
-    setSafeBrowserError(false);
     onModalClose && onModalClose();
   }
 
@@ -350,7 +370,9 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
     setIsModalOpen(false);
   }
 
-  return (isErrorModalOpen ? <ErrorModalBox message={langError} onClose={() => {setIsErrorModalOpen(false); setIsModalOpen(true)}} Title={__("Chrome built-in translator AI", 'automatic-translations-for-polylang')}/> : isModalOpen ? (
+  return (isErrorModalOpen ? <ErrorModalBox message={langError} onClose={() => {setIsErrorModalOpen(false); setIsModalOpen(true)}} Title={__("Chrome built-in translator AI", 'automatic-translations-for-polylang')}>
+    {errorBtns.length > 0 && <ButtonGroup className={styles.errorBtnGroup} buttons={errorBtns} />}
+  </ErrorModalBox> : isModalOpen ? (
     isModalOpen ? (
       <>
       <ModalStyle modalContainer={styles.modalContainer} />

@@ -8,11 +8,12 @@ interface ErrorModalBoxProps {
     message: string;
     onClose: () => void;
     Title?: string;
+    children?: React.ReactNode;
 }
 
 declare const jQuery: any;
 
-const ErrorModalBox: FC<ErrorModalBoxProps> = ({ message, onClose, Title }) => {
+const ErrorModalBox: FC<ErrorModalBoxProps> = ({ message, onClose, Title, children }) => {
     // Safely convert message to HTML string
     let dummyElement: any = jQuery('<div>').append(message);
     const stringifiedMessage: string = dummyElement.html();
@@ -80,7 +81,9 @@ const ErrorModalBox: FC<ErrorModalBoxProps> = ({ message, onClose, Title }) => {
           isDismissible={true}
           bodyOpenClassName={'body-class'}
           >
-            <div className={styles.errorModalBoxBody}><p dangerouslySetInnerHTML={{ __html: stringifiedMessage }} /></div>
+            <div className={styles.errorModalBoxBody}><p dangerouslySetInnerHTML={{ __html: stringifiedMessage }} />
+            {children}
+            </div>
             <div className={styles.errorModalBoxFooter}>
             <button className={styles.errorModalBoxClose} onClick={onClose}>Close</button>
             </div>

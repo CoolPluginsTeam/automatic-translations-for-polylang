@@ -67,44 +67,6 @@
             max-width: 400px;
             font-size: 1rem;
             line-height: 1.4;
-
-            .errorBtnGroup {
-                display: flex;
-                justify-content: flex-end;
-                gap: 0.5em;
-                margin-top: 1rem;
-
-                .btnCloseStyle {
-                    border: 1px solid #ff4646;
-                    background: #ff4646;
-                    color: white;
-                    transition: all 0.3s ease;
-                    opacity: 0.8;
-                    padding: .2rem .3rem;
-                    font-size: .9rem;
-                    border-radius: .2rem;
-                    cursor: pointer;
-                    &:hover {
-                        opacity: 1;
-                    }
-                }
-
-                .btnContinueStyle {
-                    background: transparent;
-                    border: 1px solid #007cba;
-                    background : #007cba;
-                    color: white;
-                    transition: all 0.3s ease;
-                    opacity: 0.8;
-                    padding: .2rem .3rem;
-                    font-size: .9rem;
-                    border-radius: .2rem;
-                    cursor: pointer;
-                    &:hover {
-                        opacity: 1;
-                    }
-                }
-            }
         }
 
         .modal {
@@ -199,6 +161,44 @@
         }
     }
 
+}
+
+.errorBtnGroup {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5em;
+    margin-top: 1rem;
+
+    .btnCloseStyle {
+        border: 1px solid #ff4646;
+        background: #ff4646;
+        color: white;
+        transition: all 0.3s ease;
+        opacity: 0.8;
+        padding: .2rem .3rem;
+        font-size: .9rem;
+        border-radius: .2rem;
+        cursor: pointer;
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    .btnContinueStyle {
+        background: transparent;
+        border: 1px solid #007cba;
+        background : #007cba;
+        color: white;
+        transition: all 0.3s ease;
+        opacity: 0.8;
+        padding: .2rem .3rem;
+        font-size: .9rem;
+        border-radius: .2rem;
+        cursor: pointer;
+        &:hover {
+            opacity: 1;
+        }
+    }
 }
 
 /* Setting Modal CSS Start */
