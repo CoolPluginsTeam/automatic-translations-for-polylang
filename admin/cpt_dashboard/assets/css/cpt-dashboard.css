@@ -45,6 +45,10 @@ body.rtl .cpt-review-notice .cpt-not-interested {
   height: 22px;
 }
 
+.cpt-review-notice a.button.button-primary{
+ margin-right: 10px;
+}
+
 .cpt-dashboard {
   padding: 20px;
 }
