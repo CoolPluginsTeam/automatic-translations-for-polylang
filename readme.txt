@@ -192,7 +192,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 = Version 1.4.1 | 09 June 2025 =
 * **Fixed:** Fixed inline translation issue with browser latest version.
 * **Improved:** Chrome Local AI translation Error message & step by step guide.
-* **Improved:** Dashboard page title to AI Translation Settings.
+* **Improved:** Dashboard page title to AI Translation.
 * **Improved:** Improve string modal box footer styling.
 * **Improved:** Get started page content & styling.
 
