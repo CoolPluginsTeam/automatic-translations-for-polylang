@@ -222,7 +222,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			// Action buttons configuration
 			$buttons = [
 				[
-					'url' => 'https://coolplugins.net/support/?utm_source=tpa_plugin&utm_medium=inside&utm_campaign=support&utm_content=dashboard_header',
+					'url' => 'https://coolplugins.net/support/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=support&utm_content=dashboard_header',
 					'img' => 'contact.svg',
 					'alt' => __('contact', $text_domain)
 				]
