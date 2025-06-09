@@ -365,6 +365,10 @@
   text-decoration: underline;
 }
 
+.ErrorModalContainer .errorModalBoxBody p strong {
+  font-weight: 600;
+}
+
 .ErrorModalContainer .errorModalBoxBody button.errorReloadBtn {
   background: #0073aa;
   color: #fff !important;
