@@ -73,7 +73,7 @@ class AtfpUsersFeedback {
 		);
 
 		?>
-		<div id="cool-plugins-deactivate-feedback-dialog-wrapper" class="hide-feedback-popup">
+		<div id="cool-plugins-deactivate-feedback-dialog-wrapper" class="hide-feedback-popup" data-slug="<?php echo esc_attr( $this->plugin_slug ); ?>">
 						
 			<div class="cool-plugins-deactivation-response">
 			<div id="cool-plugins-deactivate-feedback-dialog-header">

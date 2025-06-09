@@ -10,12 +10,12 @@
             event.preventDefault();
             $('#wpwrap').css('opacity', '0.4');
 
-            $("#cool-plugins-deactivate-feedback-dialog-wrapper").animate({
+            $("#cool-plugins-deactivate-feedback-dialog-wrapper[data-slug='" + plugin_slug + "']").animate({
                 opacity: 1
             }, 200, function() {
-                $("#cool-plugins-deactivate-feedback-dialog-wrapper").removeClass('hide-feedback-popup');
-                $("#cool-plugins-deactivate-feedback-dialog-wrapper").find('#cool-plugin-submitNdeactivate').addClass(plugin_slug);
-                $("#cool-plugins-deactivate-feedback-dialog-wrapper").find('#cool-plugin-skipNdeactivate').addClass(plugin_slug);
+                $("#cool-plugins-deactivate-feedback-dialog-wrapper[data-slug='" + plugin_slug + "']").removeClass('hide-feedback-popup');
+                $("#cool-plugins-deactivate-feedback-dialog-wrapper[data-slug='" + plugin_slug + "']").find('#cool-plugin-submitNdeactivate').addClass(plugin_slug);
+                $("#cool-plugins-deactivate-feedback-dialog-wrapper[data-slug='" + plugin_slug + "']").find('#cool-plugin-skipNdeactivate').addClass(plugin_slug);
             });
         });
 
