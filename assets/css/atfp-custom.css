@@ -1236,6 +1236,7 @@ body>div.skiptranslate iframe.skiptranslate[frameborder][src][style="visibility:
     position: relative;
     overflow: visible;
     cursor: pointer;
+    white-space: nowrap;
 }
   
   #atfp-setting-modal .atfp-tooltip-element .atfp-tooltip {
