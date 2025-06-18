@@ -1,6 +1,6 @@
 ﻿=== AI Translation for Polylang ===
 Contributors: narinder-singh,satindersingh,coolplugins
-Tags: Polylang, AI Translation, Content Translation, Translate
+Tags: Polylang, AI Translation, Content Translation, Translatedfsdfd
 Requires at least: 5.0
 Tested up to: 6.8.1
 Requires PHP: 5.6
