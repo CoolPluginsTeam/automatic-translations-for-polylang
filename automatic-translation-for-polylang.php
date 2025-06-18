@@ -117,6 +117,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 		public function atfp_set_dashboard_style( $hook ) {
 			if(isset($_GET['page']) && $_GET['page'] == 'polylang-atfp-dashboard') {
 				wp_enqueue_style( 'atfp-dashboard-style', ATFP_URL . 'admin/atfp-dashboard/css/admin-styles.css',null, ATFP_V, 'all' );
+				wp_enqueue_script( 'atfp-dashboard-script', ATFP_URL . 'admin/atfp-dashboard/js/atfp-data-share-setting.js', array('jquery'), ATFP_V, true );
 			}
 		}
 
@@ -643,12 +644,12 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			update_option( 'atfp-type', 'FREE' );
 			update_option( 'atfp-installDate', gmdate( 'Y-m-d h:i:s' ) );
 
-			if(!get_option('tpa-install-date')) {
-				add_option('tpa-install-date', gmdate('Y-m-d h:i:s'));
+			if(!get_option('atfp-install-date')) {
+				add_option('atfp-install-date', gmdate('Y-m-d h:i:s'));
 			}
 
 			if (!get_option( 'atfp_initial_save_version' ) ) {
-				add_option( 'atfp_initial_save_version', ATFP_VERSION );
+				add_option( 'atfp_initial_save_version', ATFP_V );
 			}
 
 			$get_opt_in = get_option('atfp_feedback_opt_in');

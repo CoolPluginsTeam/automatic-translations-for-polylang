@@ -155,14 +155,24 @@ class AtfpUsersFeedback {
 			$sanitized_message = sanitize_text_field( $_POST['message'] ) == '' ? 'N/A' : sanitize_text_field( $_POST['message'] );
 			$admin_email       = sanitize_email( get_option( 'admin_email' ) );
 			$site_url          = esc_url( site_url() );
+			$install_date      = get_option('atfp-install-date');
+			$plugin_initial =  get_option( 'atfp_initial_save_version' );
+			$unique_key     = '41';  // Ensure this key is unique per plugin to prevent collisions when site URL and install date are the same across plugins
+			$server_info 	   = \Automatic_Translations_For_Polylang::atfp_get_user_info()['server_info'];
+			$extra_details 	   = \Automatic_Translations_For_Polylang::atfp_get_user_info()['extra_details'];
+			$site_id        = $site_url . '-' . $install_date . '-' . $unique_key;
 			$feedback_url      = esc_url( 'http://feedback.coolplugins.net/wp-json/coolplugins-feedback/v1/feedback' );
 			$response          = wp_remote_post(
 				$feedback_url,
 				array(
 					'timeout' => 30,
 					'body'    => array(
+						'site_id'=>md5($site_id),
+						'server_info' => serialize($server_info),
+						'extra_details' => serialize($extra_details),
 						'plugin_version' => $this->plugin_version,
 						'plugin_name'    => $this->plugin_name,
+						'plugin_initial'  => isset($plugin_initial) ? sanitize_text_field($plugin_initial) : 'N/A',
 						'reason'         => $deativation_reason,
 						'review'         => $sanitized_message,
 						'email'          => $admin_email,

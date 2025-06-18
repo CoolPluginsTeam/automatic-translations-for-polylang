@@ -1,3 +1,33 @@
+<?php
+
+    // Process form submission
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['atfp_optin_nonce']) && wp_verify_nonce($_POST['atfp_optin_nonce'], 'atfp_save_optin_settings')) {
+
+            // Handle feedback checkbox
+            if (get_option('cpfm_opt_in_choice_cool_translations')) {
+                $feedback_opt_in = isset($_POST['atfp-dashboard-feedback-checkbox']) ? 'yes' : 'no';
+                update_option('atfp_feedback_opt_in', $feedback_opt_in);
+            }
+
+        // If user opted out, remove the cron job
+        if ($feedback_opt_in === 'no' && wp_next_scheduled('atfp_extra_data_update') ){
+                
+            wp_clear_scheduled_hook('atfp_extra_data_update');
+        
+        }
+
+        if ($feedback_opt_in === 'yes' && !wp_next_scheduled('atfp_extra_data_update')) {
+
+                wp_schedule_event(time(), 'every_30_days', 'atfp_extra_data_update');   
+
+                if (class_exists('ATFP_cronjob')) {
+
+                    ATFP_cronjob::atfp_send_data();
+                } 
+        }
+        
+    }
+?>
 <div class="atfp-dashboard-settings">
     <div class="atfp-dashboard-settings-container">
     <div class="header">
@@ -18,59 +48,82 @@
 
     <div class="atfp-dashboard-api-settings-container">
         <div class="atfp-dashboard-api-settings">
-            <?php
-            // Define all API-related settings in a single configuration array
-            $api_settings = [
-                'gemini' => [
-                    'name' => 'Gemini',
-                    'doc_url' => 'https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin&utm_medium=dashboard&utm_campaign=get_pro&utm_content=gemini_api',
-                    'placeholder' => 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-                ],
-                'openai' => [
-                    'name' => 'OpenAI',
-                    'doc_url' => 'https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin&utm_medium=dashboard&utm_campaign=get_pro&utm_content=openai_api',
-                    'placeholder' => 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-                ],
-                'openrouter' => [
-                    'name' => 'Openrouter',
-                    'doc_url' => 'https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin&utm_medium=dashboard&utm_campaign=get_pro&utm_content=openrouter_api',
-                    'placeholder' => 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-                ]
-            ];
+            <form method="post">
+                <?php wp_nonce_field('atfp_save_optin_settings', 'atfp_optin_nonce'); ?>
+                <div class="atfp-dashboard-api-settings-form">
+                    <?php
+                    // Define all API-related settings in a single configuration array
+                    $api_settings = [
+                        'gemini' => [
+                            'name' => 'Gemini',
+                            'doc_url' => 'https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin&utm_medium=dashboard&utm_campaign=get_pro&utm_content=gemini_api',
+                            'placeholder' => 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+                        ],
+                        'openai' => [
+                            'name' => 'OpenAI',
+                            'doc_url' => 'https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin&utm_medium=dashboard&utm_campaign=get_pro&utm_content=openai_api',
+                            'placeholder' => 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+                        ],
+                        'openrouter' => [
+                            'name' => 'Openrouter',
+                            'doc_url' => 'https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin&utm_medium=dashboard&utm_campaign=get_pro&utm_content=openrouter_api',
+                            'placeholder' => 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+                        ]
+                    ];
 
-            foreach ($api_settings as $key => $settings): ?>
-                <label for="<?php echo esc_attr($key); ?>-api">
-                    <?php printf(__('Add %s API key', $text_domain), esc_html($settings['name'])); ?>
-                </label>
-                <input 
-                    type="text" 
-                    id="<?php echo esc_attr($key); ?>-api" 
-                    placeholder="<?php echo esc_attr($settings['placeholder']); ?>" 
-                    disabled
-                >
-                <?php
-                printf(
-                    __('%s to See How to Generate %s API Key', $text_domain),
-                    '<a href="' . esc_url($settings['doc_url']) . '" target="_blank">' . esc_html__('Click Here', $text_domain) . '</a>',
-                    esc_html($settings['name'])
-                );
-            endforeach; ?>
+                    foreach ($api_settings as $key => $settings): ?>
+                        <label for="<?php echo esc_attr($key); ?>-api">
+                            <?php printf(__('Add %s API key', $text_domain), esc_html($settings['name'])); ?>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="<?php echo esc_attr($key); ?>-api" 
+                            placeholder="<?php echo esc_attr($settings['placeholder']); ?>" 
+                            disabled
+                        >
+                        <?php
+                        printf(
+                            __('%s to See How to Generate %s API Key', $text_domain),
+                            '<a href="' . esc_url($settings['doc_url']) . '" target="_blank">' . esc_html__('Click Here', $text_domain) . '</a>',
+                            esc_html($settings['name'])
+                        );
+                    endforeach; ?>
 
-            <!-- Add Context Aware textarea -->
-            <label for="context-aware">
-                <?php _e('Context Aware', $text_domain); ?>
-            </label>
-            <textarea 
-                id="context-aware" 
-                rows="3" 
-                cols="50"
-                placeholder="<?php esc_attr_e('Enter context information here...', $text_domain); ?>"
-                disabled
-            ></textarea>
-
-            <div class="atfp-dashboard-save-btn-container">
-                <button disabled class="button button-primary"><?php _e('Save', $text_domain); ?></button>
-            </div>
+                    <!-- Add Context Aware textarea -->
+                    <label for="context-aware">
+                        <?php _e('Context Aware', $text_domain); ?>
+                    </label>
+                    <textarea 
+                        id="context-aware" 
+                        rows="3" 
+                        cols="50"
+                        placeholder="<?php esc_attr_e('Enter context information here...', $text_domain); ?>"
+                        disabled
+                    ></textarea>
+                </div>
+                <?php if (get_option('cpfm_opt_in_choice_cool_translations')) : ?>
+                    <div class="atfp-dashboard-feedback-container">
+                            <div class="atfp-dashboard-feedback-row">
+                                <input type="checkbox" 
+                                    id="atfp-dashboard-feedback-checkbox" 
+                                    name="atfp-dashboard-feedback-checkbox"
+                                    <?php checked(get_option('atfp_feedback_opt_in'), 'yes'); ?>>
+                                <p><?php _e('Help us make this plugin more compatible with your site by sharing non-sensitive site data.', $text_domain); ?></p>
+                                <a href="#" class="atfp-see-terms">[See terms]</a>
+                            </div>
+                            <div id="termsBox" style="display: none;padding-left: 20px; margin-top: 10px; font-size: 12px; color: #999;">
+                                    <p><?php _e("Opt in to receive email updates about security improvements, new features, helpful tutorials, and occasional special offers. We'll collect:", 'ccpw'); ?></p>
+                                    <ul style="list-style-type:auto;">
+                                        <li><?php esc_html_e('Your website home URL and WordPress admin email.', 'ccpw'); ?></li>
+                                        <li><?php esc_html_e('To check plugin compatibility, we will collect the following: list of active plugins and themes, server type, MySQL version, WordPress version, memory limit, site language and database prefix.', 'ccpw'); ?></li>
+                                    </ul>
+                            </div>
+                        </div>
+                <?php endif; ?>
+                <div class="atfp-dashboard-save-btn-container">
+                    <button <?php echo get_option('cpfm_opt_in_choice_cool_translations') ? '' : 'disabled'; ?> class="button button-primary"><?php _e('Save', $text_domain); ?></button>
+                </div>
+            </form>
         </div>
     </div>
     </div>

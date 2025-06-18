@@ -77,11 +77,11 @@ if (!class_exists('ATFP_cronjob')) {
             $extra_details  = $extra_data_details['extra_details'];
             $site_url       = get_site_url();
             $install_date   = get_option('atfp-install-date');
-            $unique_key     = '17';  // Ensure this key is unique per plugin to prevent collisions when site URL and install date are the same across plugins
+            $unique_key     = '41';  // Ensure this key is unique per plugin to prevent collisions when site URL and install date are the same across plugins
             $site_id        = $site_url . '-' . $install_date . '-' . $unique_key;
             $initial_version = get_option('atfp_initial_save_version');
             $initial_version = is_string($initial_version) ? sanitize_text_field($initial_version) : 'N/A';
-            $plugin_version     = ATFP_VERSION;
+            $plugin_version     = ATFP_V;
             $admin_email    = sanitize_email(get_option('admin_email') ?: 'N/A');
             $post_data = array(
                 
