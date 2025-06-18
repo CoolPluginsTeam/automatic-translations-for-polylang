@@ -2,6 +2,7 @@
     $(document).ready(function() {
         let plugin_name = 'automatic-translations-for-polylang';
         let plugin_slug = 'automatic-translations-for-polylang';
+        let plugin_domain = 'atfp';
         $target = $('#the-list').find('[data-slug="' + plugin_name + '"] span.deactivate a');
 
         var plugin_deactivate_link = $target.attr('href');
@@ -20,7 +21,7 @@
         });
 
         $('.cool-plugins-deactivate-feedback-dialog-input').on('click', function() {
-            if ($('#cool-plugins-GDPR-data-notice').is(":checked") === true && $('.cool-plugins-deactivate-feedback-dialog-input').is(':checked') === true) {
+            if ($('#cool-plugins-GDPR-data-notice-' + plugin_domain).is(":checked") === true && $('.cool-plugins-deactivate-feedback-dialog-input').is(':checked') === true) {
                 $('#cool-plugin-submitNdeactivate').removeClass('button-deactivate');
             } else {
                 $('#cool-plugin-submitNdeactivate').addClass('button-deactivate');
@@ -28,9 +29,9 @@
 
         });
 
-        $('#cool-plugins-GDPR-data-notice').on('click', function() {
+        $('#cool-plugins-GDPR-data-notice-' + plugin_domain).on('click', function() {
 
-            if ($('#cool-plugins-GDPR-data-notice').is(":checked") === true && $('.cool-plugins-deactivate-feedback-dialog-input').is(':checked') === true) {
+            if ($('#cool-plugins-GDPR-data-notice-' + plugin_domain).is(":checked") === true && $('.cool-plugins-deactivate-feedback-dialog-input').is(':checked') === true) {
                 $('#cool-plugin-submitNdeactivate').removeClass('button-deactivate');
             } else {
                 $('#cool-plugin-submitNdeactivate').addClass('button-deactivate');

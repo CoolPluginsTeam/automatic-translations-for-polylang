@@ -12,6 +12,7 @@ class AtfpUsersFeedback {
 	private $plugin_version = ATFP_V;
 	private $plugin_name    = 'Automatic Translations For Polylang';
 	private $plugin_slug    = 'automatic-translations-for-polylang';
+	private $plugin_domain  = 'atfp';
 	/*
 	|-----------------------------------------------------------------|
 	|   Use this constructor to fire all actions and filters          |
@@ -108,7 +109,7 @@ class AtfpUsersFeedback {
 							<?php endif; ?>
 						</div>
 					<?php endforeach; ?>
-					<input class="cool-plugins-GDPR-data-notice" id="cool-plugins-GDPR-data-notice" type="checkbox"><label for="cool-plugins-GDPR-data-notice"><?php echo esc_html( __( 'I consent to having Cool Plugins store my all submitted information via this form, they can also respond to my inquiry.', 'automatic-translations-for-polylang' ) ); ?></label>
+					<input class="cool-plugins-GDPR-data-notice" id="cool-plugins-GDPR-data-notice-<?php echo esc_attr( $this->plugin_domain ); ?>" type="checkbox"><label for="cool-plugins-GDPR-data-notice"><?php echo esc_html( __( 'I consent to having Cool Plugins store my all submitted information via this form, they can also respond to my inquiry.', 'automatic-translations-for-polylang' ) ); ?></label>
 				</div>
 				<div class="cool-plugin-popup-button-wrapper">
 					<a class="cool-plugins-button button-deactivate" id="cool-plugin-submitNdeactivate">Submit and Deactivate</a>
