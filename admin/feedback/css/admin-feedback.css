@@ -8,10 +8,11 @@
 }
 .cool-plugins-deactivation-response{
     position: fixed;
-    left: 35%;
+    left: 18%;
     top: 22%;
+    right: 18%;
     z-index: 9999;
-    color:white;
+    color: white;
 }
 .cool-plugins-button{
     border: none;
