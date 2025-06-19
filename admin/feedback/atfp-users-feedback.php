@@ -162,7 +162,7 @@ class AtfpUsersFeedback {
 			$server_info 	   = \Automatic_Translations_For_Polylang::atfp_get_user_info()['server_info'];
 			$extra_details 	   = \Automatic_Translations_For_Polylang::atfp_get_user_info()['extra_details'];
 			$site_id        = $site_url . '-' . $install_date . '-' . $unique_key;
-			$feedback_url      = esc_url( 'http://feedback.coolplugins.net/wp-json/coolplugins-feedback/v1/feedback' );
+			$feedback_url      = esc_url( ATFP_FEEDBACK_API . 'wp-json/coolplugins-feedback/v1/feedback' );
 			$response          = wp_remote_post(
 				$feedback_url,
 				array(
