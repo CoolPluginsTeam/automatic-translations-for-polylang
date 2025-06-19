@@ -12,10 +12,6 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 AI Translation for Polylang simplifies your translation process by automatically translating all pages/posts content from one language to another.
 
-AI Translation for Polylang simplifies your translation process by automatically translating all pages/posts content from one language to another.
-
-AI Translation for Polylang simplifies your translation process by automatically translating all pages/posts content from one language to another.
-
 == Description ==
 https://youtu.be/ecHsOyIL\_J4
 
@@ -244,7 +240,9 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 * **Added:** Added support for ACF fields translation only with type(text, textarea & wysiwyg).
 * **Added:** Added notice message in string modal body for better user experience.
 * **Improved:** String modal box styling.
-  = Version 1.3.1 | 27 February 2025 =
+
+= Version 1.3.1 | 27 February 2025 =
+
 * **Fixed:** Popup modal not appearing and the translate button not working properly in Gutenberg.
   = Version 1.3.0 | 26 February 2025 =
 * **Added:** Elementor Page translation.
@@ -253,25 +251,39 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 * **Fixed:** Translated text conflict issue with yandex & local ai translation.
 * **Improved:** Improved Modal box styling.
 * **Improved:** Improved String Modal box.
-  = Version 1.2.0 | 30 December 2024 =
+
+= Version 1.2.0 | 30 December 2024 =
+
 * **Added:** Translation support for the Classic Paragraph Block (Automattic).
 * **Added:** Translation support for YOST SEO plugin, Rank Math SEO plugin, and SEOPress plugin.
-  = Version 1.1.1 | 11 December 2024 =
+
+= Version 1.1.1 | 11 December 2024 =
+
 * **Improved:** Renamed plugin to "AI Automatic Translations For Polylang".
 * **Minor:** Minor textual changes.
-  = Version 1.1.0 | 09 December 2024 =
+
+= Version 1.1.0 | 09 December 2024 =
+
 * **Added:** Chrome built-in Translator API using local AI modal.
 * **Tested up to:** Added support for WordPress 6.7.1.
-  = Version 1.0.4 | 15 November 2024 =
+
+= Version 1.0.4 | 15 November 2024 =
+
 * **Added:** Supported Blocks Page for easily adding custom blocks for translation.
 * **Fixed:** Permalinks translation issue.
 * **Fixed:** Load text domain issue.
 * **Tested up to:** Added support for WordPress 6.7.
-  = Version 1.0.3 | 21 August 2024 =
+
+= Version 1.0.3 | 21 August 2024 =
+
 * **Tested up to:** Tested with WordPress 6.6.
-  = Version 1.0.2 | 20 August 2024 =
+
+= Version 1.0.2 | 20 August 2024 =
+
 * **Fixed:** Minor bug fixes.
-  = Version 1.0.1 | 07 August 2024 =
+
+= Version 1.0.1 | 07 August 2024 =
+
 * **Added:** Service provider details to the README file for easier access.
 * **Fixed:** Resolved security issues by adding escaping functions in all necessary places.
 * **Improved:** Code improvements for better performance and maintainability.
