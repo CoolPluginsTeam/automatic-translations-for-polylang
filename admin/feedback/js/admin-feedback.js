@@ -22,9 +22,9 @@
 
         $('.cool-plugins-deactivate-feedback-dialog-input').on('click', function() {
             if ($('#cool-plugins-GDPR-data-notice-' + plugin_domain).is(":checked") === true && $('.cool-plugins-deactivate-feedback-dialog-input').is(':checked') === true) {
-                $('#cool-plugin-submitNdeactivate').removeClass('button-deactivate');
+                $('#cool-plugin-submitNdeactivate.' + plugin_slug).removeClass('button-deactivate');
             } else {
-                $('#cool-plugin-submitNdeactivate').addClass('button-deactivate');
+                $('#cool-plugin-submitNdeactivate.' + plugin_slug).addClass('button-deactivate');
             }
 
         });
@@ -32,9 +32,9 @@
         $('#cool-plugins-GDPR-data-notice-' + plugin_domain).on('click', function() {
 
             if ($('#cool-plugins-GDPR-data-notice-' + plugin_domain).is(":checked") === true && $('.cool-plugins-deactivate-feedback-dialog-input').is(':checked') === true) {
-                $('#cool-plugin-submitNdeactivate').removeClass('button-deactivate');
+                $('#cool-plugin-submitNdeactivate.' + plugin_slug).removeClass('button-deactivate');
             } else {
-                $('#cool-plugin-submitNdeactivate').addClass('button-deactivate');
+                $('#cool-plugin-submitNdeactivate.' + plugin_slug).addClass('button-deactivate');
             }
         })
 
@@ -57,12 +57,12 @@
             let reason = $('.cool-plugins-deactivate-feedback-dialog-input:checked').val();
             let message = '';
 
-            if ($('textarea[name="reason_' + reason + '"]').length > 0) {
-                if ($('textarea[name="reason_' + reason + '"]').val() == '') {
+            if ($('textarea[name="' + plugin_domain + '_reason_' + reason + '"]').length >     0) {
+                if ($('textarea[name="' + plugin_domain + '_reason_' + reason + '"]').val() == '') {
                     alert('Please provide some extra information!');
                     return;
                 } else {
-                    message = $('textarea[name="reason_' + reason + '"]').val();
+                    message = $('textarea[name="' + plugin_domain + '_reason_' + reason + '"]').val();
                 }
             }
             $.ajax({
