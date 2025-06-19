@@ -287,5 +287,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 * **Added:** Service provider details to the README file for easier access.
 * **Fixed:** Resolved security issues by adding escaping functions in all necessary places.
 * **Improved:** Code improvements for better performance and maintainability.
-  = Version 1.0.0 | 02 July 2024 =
+
+= Version 1.0.0 | 02 July 2024 =
+
 * **New:** Initial Plugin Release
