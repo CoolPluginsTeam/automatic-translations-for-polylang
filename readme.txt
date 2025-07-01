@@ -44,6 +44,42 @@ https://youtu.be/yamFwNRWEbc
 * **Custom Block Support** - While optimized for Gutenberg blocks, the plugin also works with several third-party block plugins, extending its versatility.
 * **Easy to Use** - Designed with a user-friendly interface, making it accessible even for those with limited technical knowledge.
 
+#### FREE v/s Premium Addon Comparison
+
+**Free License**
+
+* ✅ **Yandex Translate Widget Support:** Available
+* ✅ **Unlimited Free Translations:** Available (Only via Yandex)
+* ✅ **API Key Required:** Not Required (Yandex Widget Support)
+* ✅  **Gutenberg Block Compatibility**
+* **✅  Elementor Page Translation**
+* **✅ Inline Translation**
+* **❌ Classic Editor Translation:** Not Available
+* **❌ Custom Block Translation:** Not Available
+* ❌ **Google Translate Widget Support:** Not Available
+* ❌ **OpenAI Translation Support:** Not Available
+* ❌ **Gemini Translation Support:** Not Available
+* ❌ **Premium Support:** Not Available
+
+**Premium License**
+
+* **✅ Classic Editor Translation**
+* ✅  **Gutenberg Block Compatibility**
+* **✅  Elementor Page Translation**
+* **✅ Bulk Translation**
+* **✅ Inline Translation**
+* **✅ Custom Block Translation**
+* ✅ **Chrome Built-in AI Translation Support:** Available
+* ✅ **Gemini Translation Support:** Available
+* ✅ **Google Translate Widget Support:** Available
+* ✅ **OpenAI Translation Support:** Available
+* ✅ **Unlimited Free Translations:** Available
+* ✅ **API Key Required:** Not Required
+* ✅ **Premium Support:** [Quick Support](https://coolplugins.net/support?utm_source=atlt_plugin&utm_medium=readme&utm_campaign=support&utm_content=premium_support)
+  (**Support time:- 24-48 hours**)
+
+&#x20;[**Upgrade to Pro!**](https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?utm_source=atfp_plugin&utm_medium=page&utm_campaign=get_pro&utm_content=buy_pro)
+
 #### Check It Now
 
 [Language Switcher – Polylang for Divi](https://wordpress.org/plugins/language-switcher-for-divi-polylang/) is a language switcher plugin to add a language switcher to Divi pages with Polylang.
@@ -52,13 +88,8 @@ https://youtu.be/yamFwNRWEbc
 
 #### Check out our advanced Automatic Translate Addon for Loco Translate
 
-Looking for a way to translate WordPress themes and plugins automatically? Check out our [**AI Translation for Loco Translate**](https://locoaddon.com/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=atlt_get_pro&utm_content=check_out), which enables PO file translations using advanced Machine & AI-powered translation tools.
-
-Additionally, [**AI Translation for TranslatePress** ](https://coolplugins.net/product/automatic-translate-addon-for-translatepress-pro/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=tpa_get_pro&utm_content=check_out)automatically translates entire web pages, eliminating the need for manual translation. Powered by advanced AI translator resources, it delivers accurate and fast translations, helping you reach a global audience with ease.
-
-#### Important Information Regarding Classic Editor Compatibility
-
-Our current version doesn't support translation for the Classic Editor. It only works with **Gutenberg** and **Elementor** pages.
+* [**Automatic Translate Addon for Loco Translate**](https://locoaddon.com/plugin/automatic-translate-addon-for-loco-translate-pro/?utm_source=tpa_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=buy_pro) is an addon that enhances the functionality of the **Loco Translate** plugin by enabling the **automatic translation of WordPress themes and plugins**. This addon connects with sources like Google, Yandex, DeepL, or AI-powered sources like **ChatGPT,** **Gemini AI** and **Chrome AI** to provide instant and automated translations.
+* [**AI Translation for TranslatePress**](https://coolplugins.net/product/automatic-translate-addon-for-translatepress-pro/?utm_source=atlt_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=tpa_check_out) is a powerful addon that enhances the functionality of the TranslatePress plugin. This addon uses advanced translation services, like Google Translate, Yandex, and Chrome AI translator, to provide accurate and instant translations for your web pages automatically.
 
 > **Important Notice:** This plugin serves as an AI translation extension for the official [**Polylang**](https://wordpress.org/plugins/polylang/) plugin.
 
