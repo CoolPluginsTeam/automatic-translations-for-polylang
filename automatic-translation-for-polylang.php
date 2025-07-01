@@ -1,11 +1,11 @@
 <?php
 /*
-Plugin Name: AI Translation For Polylang
+Plugin Name: AutoPoly - AI Translation For Polylang
 Plugin URI: https://coolplugins.net/
 Version: 1.4.1
 Author: Cool Plugins
 Author URI: https://coolplugins.net/
-Description: AI Translation for Polylang simplifies your translation process by automatically translating all pages/posts content from one language to another.
+Description: AutoPoly - AI Translation For Polylang simplifies your translation process by automatically translating all pages/posts content from one language to another.
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: automatic-translations-for-polylang
@@ -64,7 +64,6 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			add_action( 'admin_menu', array( $this, 'atfp_add_submenu_page' ), 11 );
 			add_action( 'admin_enqueue_scripts', array( $this, 'atfp_set_dashboard_style' ) );
 			add_action('init', array($this, 'atfp_translation_string_migration'));
-			add_action('admin_menu', array($this, 'atfp_add_support_blocks_submenu_page'), 11);
 			add_action( 'activated_plugin', array( $this, 'atfp_plugin_redirection' ) );
 			// add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'atfp_plugin_action_links' ) );
 
@@ -181,22 +180,10 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 		public function atfp_add_submenu_page() {
 			add_submenu_page(
 				'mlang', // Parent slug
-				__( 'AI Translation For Polylang', 'automatic-translations-for-polylang' ), // Page title
-				__( 'AI Translation', 'automatic-translations-for-polylang' ), // Menu title
+				__( 'AutoPoly - AI Translation For Polylang', 'automatic-translations-for-polylang' ), // Page title
+				__( 'AutoPoly', 'automatic-translations-for-polylang' ), // Menu title
 				'manage_options', // Capability
 				'polylang-atfp-dashboard', // Menu slug
-				array( $this, 'atfp_render_dashboard_page' ) // Callback function
-			);
-		}
-
-		// Add submenu page for support blocks
-		public function atfp_add_support_blocks_submenu_page() {
-			add_submenu_page(
-				'mlang', // Parent slug
-				__( 'Support Blocks', 'automatic-translations-for-polylang' ), // Page title
-				__( '↳ Support Blocks', 'automatic-translations-for-polylang' ), // Menu title
-				'manage_options', // Capability
-				'polylang-atfp-dashboard&tab=support-blocks', // Menu slug (unique slug for submenu page)
 				array( $this, 'atfp_render_dashboard_page' ) // Callback function
 			);
 		}
@@ -233,8 +220,9 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			<div class="atfp-dashboard-wrapper">
 				<div class="atfp-dashboard-header">
 					<div class="atfp-dashboard-header-left">
-						<img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/polylang-addon-logo.svg'); ?>" 
-							alt="<?php esc_attr_e('Polylang Addon Logo', $text_domain); ?>">
+						<a href="?page=polylang-atfp-dashboard&tab=dashboard" class="atfp-dashboard-logo-link">
+							<img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/polylang-addon-logo.svg'); ?>" alt="<?php esc_attr_e('Polylang Addon Logo', $text_domain); ?>">
+						</a>
 						<div class="atfp-dashboard-tab-title">
 							<span>↳</span> <?php echo esc_html($valid_tabs[$current_tab]); ?>
 						</div>
@@ -379,9 +367,9 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 				if(class_exists('Atfp_Dashboard') && !defined('ATFPP_V')) {
 					Atfp_Dashboard::review_notice(
 						'atfp', // Required
-						'AI Translation For Polylang', // Required
+						'AutoPoly - AI Translation For Polylang (Pro)', // Required
 						'https://wordpress.org/support/plugin/automatic-translations-for-polylang/reviews/#new-post', // Required
-						ATFP_URL .'assets/images/ai-automatic-translation-for-polylang.png' // Required
+						ATFP_URL .'assets/images/ai-translation-for-Polylang.svg' // Required
 					);
 				}
 

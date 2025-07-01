@@ -33,14 +33,6 @@
                 'url' => '#'
             ],
             [
-                'logo' => 'openrouter-translate-logo.png',
-                'alt' => 'Openrouter AI',
-                'title' => __('AI Translations', $text_domain),
-                'description' => __('Leverage Openrouter AI for seamless and context-aware translations.', $text_domain),
-                'icon' => 'openrouter-ai-translate.png',
-                'url' => '#'
-            ],
-            [
                 'logo' => 'chrome-built-in-ai-logo.png',
                 'alt' => 'Chrome Built-in AI',
                 'title' => __('Chrome Built-in AI', $text_domain),

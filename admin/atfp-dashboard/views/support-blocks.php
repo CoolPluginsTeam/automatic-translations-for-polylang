@@ -10,7 +10,7 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 	/**
 	 * Class ATFP_Supported_Blocks
 	 *
-	 * This class handles the supported blocks for the AI Translation For Polylang plugin.
+	 * This class handles the supported blocks for the AutoPoly - AI Translation For Polylang plugin.
 	 *
 	 * @package ATFP
 	 */
@@ -69,8 +69,8 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 		public function atfp_render_support_blocks_page() {
 			?>
 		<div class="atfp-supported-blocks-wrapper">
-			<h3><?php esc_html_e( 'Supported Blocks for AI Translation For Polylang', 'automatic-translations-for-polylang' ); ?></h3>
-			<div class="atfp-supported-blocks-filters">
+		<h3><?php printf( esc_html__( 'Supported Blocks for %s', 'automatic-translations-for-polylang' ), 'AutoPoly - AI Translation For Polylang' ); ?></h3>
+		<div class="atfp-supported-blocks-filters">
 				<div class="atfp-category-tab">
 					<label for="atfp-blocks-category"><?php esc_html_e( 'Block Type Category:', 'automatic-translations-for-polylang' ); ?></label>
 					<select id="atfp-blocks-category" name="atfp_blocks_category">
