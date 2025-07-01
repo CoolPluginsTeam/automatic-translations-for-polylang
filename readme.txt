@@ -15,7 +15,7 @@ AutoPoly - AI Translation For Polylang simplifies your translation process by au
 == Description ==
 https://youtu.be/ecHsOyIL\_J4
 
-**AutoPoly - AI Translation For Polylang** reduces your translation **workload by 90%**. With this powerful addon, you can translate your **Gutenberg** and **Elementor pages**, sections, and widgets within a few minutes.
+**AutoPoly - AI Translation For Polylang** reduces your translation **workload by 90%**. With this powerful addon, you can translate your **Gutenberg** and **Elementor pages**, sections, and widgets within a few clicks.
 
 This addon duplicates and translates **page/post titles, content, images, galleries, and meta fields,** eliminating the need to manually adjust featured images, layouts, and other elements.
 
