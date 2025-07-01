@@ -1,6 +1,6 @@
-# Automatic Translations for Polylang
+# AutoPoly - AI Translation For Polylang
 
-=== AI Translation for Polylang ===
+=== AutoPoly - AI Translation For Polylang ===
 Contributors: narinder-singh,satindersingh,coolplugins
 Tags: Polylang, AI Translation, Content Translation, Translate
 Requires at least: 5.0
@@ -10,12 +10,12 @@ Stable tag: 1.4.1
 Author URI: https://coolplugins.net/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-AI Translation for Polylang simplifies your translation process by automatically translating all pages/posts content from one language to another.
+AutoPoly - AI Translation For Polylang simplifies your translation process by automatically translating all pages/posts content from one language to another.
 
 == Description ==
 https://youtu.be/ecHsOyIL\_J4
 
-**AI Translation for Polylang** reduces your translation **workload by 90%**. With this powerful addon, you can translate your **Gutenberg** and **Elementor pages**, sections, and widgets within a few minutes.
+**AutoPoly - AI Translation For Polylang** reduces your translation **workload by 90%**. With this powerful addon, you can translate your **Gutenberg** and **Elementor pages**, sections, and widgets within a few minutes.
 
 This addon duplicates and translates **page/post titles, content, images, galleries, and meta fields,** eliminating the need to manually adjust featured images, layouts, and other elements.
 
@@ -23,11 +23,11 @@ Whether you're using **Elementor** or **Gutenberg**, this addon makes the transl
 
 https://youtu.be/bmmc-Ynwj8w
 
-#### Why Choose AI Translation for Polylang?
+#### Why Choose AutoPoly - AI Translation For Polylang?
 
-AI Translation for Polylang is the ultimate solution for translating your **Elementor** and **Gutenberg** content easily. Unlike traditional methods that require manual translation and reformatting, this powerful addon **automates the entire process** while preserving your website's design and structure.
+**AutoPoly - AI Translation For Polylang** is the ultimate solution for translating your **Elementor** and **Gutenberg** content easily. Unlike traditional methods that require manual translation and reformatting, this powerful addon **automates the entire process** while preserving your website's design and structure.
 
-[**🔗Read More!**](https://coolplugins.net/wordpress-automatic-translations-polylang/?utm_source=atfp_plugin\&utm_medium=readme+\&utm_campaign=blog+\&utm_content=read_more)
+[**🔗Read More!**](https://coolplugins.net/wordpress-automatic-translations-polylang/?utm_source=atfp_plugin&utm_medium=readme+&utm_campaign=blog+&utm_content=read_more)
 
 https://youtu.be/yamFwNRWEbc
 
@@ -52,9 +52,9 @@ https://youtu.be/yamFwNRWEbc
 
 #### Check out our advanced Automatic Translate Addon for Loco Translate
 
-Looking for a way to translate WordPress themes and plugins automatically? Check out our [**AI Translation for Loco Translate**](https://locoaddon.com/?utm_source=atfp_plugin\&utm_medium=readme\&utm_campaign=atlt_get_pro\&utm_content=check_out), which enables PO file translations using advanced Machine & AI-powered translation tools.
+Looking for a way to translate WordPress themes and plugins automatically? Check out our [**AI Translation for Loco Translate**](https://locoaddon.com/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=atlt_get_pro&utm_content=check_out), which enables PO file translations using advanced Machine & AI-powered translation tools.
 
-Additionally, [**AI Translation for TranslatePress** ](https://coolplugins.net/product/automatic-translate-addon-for-translatepress-pro/?utm_source=atfp_plugin\&utm_medium=inside\&utm_campaign=tpa_get_pro\&utm_content=check_out)automatically translates entire web pages, eliminating the need for manual translation. Powered by advanced AI translator resources, it delivers accurate and fast translations, helping you reach a global audience with ease.
+Additionally, [**AI Translation for TranslatePress** ](https://coolplugins.net/product/automatic-translate-addon-for-translatepress-pro/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=tpa_get_pro&utm_content=check_out)automatically translates entire web pages, eliminating the need for manual translation. Powered by advanced AI translator resources, it delivers accurate and fast translations, helping you reach a global audience with ease.
 
 #### Important Information Regarding Classic Editor Compatibility
 
@@ -66,7 +66,7 @@ Our current version doesn't support translation for the Classic Editor. It only 
 
 == Installation ==
 
-To install and set up AI Translation for Polylang, please follow these steps:
+To install and set up **AutoPoly - AI Translation For Polylang**, please follow these steps:
 
 1. **Ensure Compatibility:**
    Confirm that your website is running WordPress version 5.0 or higher.
@@ -75,12 +75,12 @@ To install and set up AI Translation for Polylang, please follow these steps:
    * Go to **Plugins > Add New**.
    * Search for "**Polylang**".
    * Click **Install Now** and then **Activate** the [Polylang plugin](https://wordpress.org/plugins/polylang/).
-3. **Install AI Translation for Polylang:**
+3. **Install AutoPoly - AI Translation For Polylang:**
    * In the WordPress dashboard, go to **Plugins > Add New**.
-   * Search for "**AI Translation for Polylang**".
+   * Search for "**AutoPoly - AI Translation For Polylang**".
    * Click **Install Now** next to the plugin.
 4. **Activate the Plugin:**
-   * After installation, click **Activate** to enable AI Translation for Polylang on your site.
+   * After installation, click **Activate** to enable **AutoPoly - AI Translation For Polylang** on your site.
 
 Your plugin is now ready to use. You can access its settings and begin translating your content automatically.
 
@@ -103,9 +103,9 @@ To make your custom blocks translation-ready, follow these steps:
   Save your changes to the page.
 * **Translate Your Content:**
   Use Polylang's translation tools to translate your content.
-  Your custom blocks will be automatically translated using the AI Translation for Polylang.
+  Your custom blocks will be automatically translated using the **AutoPoly - AI Translation For Polylang**.
 
-By following these steps, you can ensure that your custom blocks are ready for translation and can be easily translated into multiple languages. For a visual guide, check out our demo video on how to add custom blocks for translation: [Demo Video](https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin\&utm_medium=readme\&utm_campaign=demo\&utm_content=video_tutorial#custom-block-translate).
+By following these steps, you can ensure that your custom blocks are ready for translation and can be easily translated into multiple languages. For a visual guide, check out our demo video on how to add custom blocks for translation: [Demo Video](https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=demo&utm_content=video_tutorial#custom-block-translate).
 
 == Special Thanks ==
 
@@ -137,12 +137,12 @@ This plugin provides automatic translation services for Polylang using the Yande
 
 1. Gutenberg Page Content Translation Preview.
 2. Elementor Page Content Translation Preview.
-3. AI Translation for Polylang Preview.
+3. **AutoPoly - AI Translation For Polylang** Preview.
 4. Gutenberg Block inline Translation.
 5. Elementor Ai Translation.
 
 == Frequently Asked Questions ==
-= What does the "AI Translation for Polylang" plugin do? =
+= What does the "**AutoPoly - AI Translation For Polylang**" plugin do? =
 This plugin automatically copies and translates your posts, including titles, content, images, galleries, and meta fields, from one language to another using Chrome AI. It works with Elementor and Gutenberg blocks, replicating the original content and styles across different languages.
 
 = Is this plugin officially developed by Polylang? =
