@@ -170,8 +170,17 @@ The translated content is managed within the WordPress editor, just like your or
 = Can I undo the automatic translations if needed? =
 Yes, you can manually edit or remove the translated content in the WordPress editor after it has been automatically translated.
 
+**=** Which editors and page builders are supported? =
+
+AutoPoly fully supports Gutenberg blocks, Elementor pages, and several popular third-party block libraries such as Spectra, Kadence Blocks, Otter Blocks, Stackable, and Essential Blocks.
+It also supports the Classic Editor, allowing translation of standard content created without blocks.
+
 = What if the translation quality is not accurate? =
 While the plugin uses Chrome AI for automatic translations, you can manually adjust the translated content within the WordPress editor to ensure accuracy.
+
+= Can I translate all posts and pages in bulk? =
+
+Yes! The plugin includes a Bulk Translate feature that lets you automatically duplicate and translate multiple posts, pages, or custom post types in one click. Simply select the source language and target languages, and the plugin will process them all at once
 
 = How do I update the plugin to the latest version? =
 You can update the plugin through the WordPress dashboard like any other plugin. Regular updates will ensure you have the latest features and security improvements.
