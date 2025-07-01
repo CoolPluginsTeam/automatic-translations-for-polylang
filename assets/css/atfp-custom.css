@@ -28,6 +28,7 @@
     animation-fill-mode: forwards;
     padding-block: 16px;
     color: black;
+    border-radius: 8px;
 }
 
 #atfp-modal-open-warning-wrapper .modal-content {
@@ -40,50 +41,55 @@
     font-weight: 500;
 }
 
-#atfp-modal-open-warning-wrapper .modal-content button {
-    font-size: 16px;
-    font-weight: 500;
-    padding: 4.8px 8px;
-    margin-inline: 4.8px;
+#atfp-modal-open-warning-wrapper .modal-content div[data-value] {
+    display: inline-block;
+    font-size: 13px;
+    line-height: 2.15384615;
+    min-height: 30px;
+    margin: 0;
     cursor: pointer;
-    opacity: 0.8;
-}
-
-#atfp-modal-open-warning-wrapper .modal-content button:hover {
-    opacity: 1;
-}
-
-#atfp-modal-open-warning-wrapper .modal-content button:nth-child(1) {
-    background-color: #28a745;
-    color: white;
-    border: 1px solid #28a745;
-    padding: 6px 12px;
-    text-align: center;
+    border-width: 1px;
+    border-style: solid;
+    -webkit-appearance: none;
+    border-radius: 3px;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-weight: inherit;
+    vertical-align: top;
     text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    line-height: 1.5;
-    border-radius: 4px;
-    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-
-#atfp-modal-open-warning-wrapper .modal-content button:nth-child(2) {
-    background-color: #dc3545;
-    color: white;
-    border: 1px solid #dc3545;
-    padding: 6px 12px;
+    text-shadow: none;
     text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    line-height: 1.5;
-    border-radius: 4px;
-    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
+#atfp-modal-open-warning-wrapper .modal-content div[data-value="yes"] {
+    padding: 2px 11px;
+    white-space: nowrap;
+    background: #3db63d;
+    border-color: #33a133;
+    color: #fff;
+}
+
+#atfp-modal-open-warning-wrapper .modal-content div[data-value="yes"]:hover{
+    background: #37a737;
+    border-color: #238b23;
+}
+
+#atfp-modal-open-warning-wrapper .modal-content div[data-value="no"] {
+    background: #ee4237;
+    border-color: #dd362b;
+    color: #fff;
+    padding: 2px 11px;
+    display: inline-flex;
+    align-items: center;
+}
+
+#atfp-modal-open-warning-wrapper .modal-content div[data-value="no"]:hover{
+    background: #dd382e;
+    border-color: #c72a20;
+}
 
 /* Setting Modal CSS Start */
-#atfp-setting-modal .atfp-error-modal-box-container{
+#atfp-setting-modal .atfp-error-modal-box-container {
     position: fixed;
     top: 0;
     left: 0;
@@ -97,18 +103,19 @@
     z-index: 99999;
 }
 
-#atfp-setting-modal .atfp-error-modal-box{
+#atfp-setting-modal .atfp-error-modal-box {
     background-color: #fefefe;
     width: clamp(200px, 500px, 80%);
     height: auto;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 8px;
 }
 
-#atfp-setting-modal .atfp-error-modal-box-header{
+#atfp-setting-modal .atfp-error-modal-box-header {
     position: relative;
-}   
+}
 
-#atfp-setting-modal .atfp-error-modal-box-header h3{
+#atfp-setting-modal .atfp-error-modal-box-header h3 {
     height: unset;
     padding: 8px 36px 8px 25px;
     border: none;
@@ -119,14 +126,14 @@
     line-height: 2;
     margin: 0;
     color: black;
-}   
+}
 
-#atfp-setting-modal .atfp-error-modal-box-header .atfp-error-modal-box-close{
+#atfp-setting-modal .atfp-error-modal-box-header .atfp-error-modal-box-close {
     right: 15px;
     top: 13px;
-    border-radius: 0!important;
-    height: 30px!important;
-    width: 20px!important;
+    border-radius: 0 !important;
+    height: 30px !important;
+    width: 20px !important;
     position: absolute;
     font-size: 32px;
     font-weight: bold;
@@ -134,7 +141,7 @@
     cursor: pointer;
 }
 
-#atfp-setting-modal .atfp-error-modal-box-body h4{
+#atfp-setting-modal .atfp-error-modal-box-body h4 {
     margin: 0;
     margin-top: 0;
     margin-bottom: 24px;
@@ -144,7 +151,7 @@
     box-sizing: border-box;
 }
 
-#atfp-setting-modal .atfp-error-modal-box-body ol{
+#atfp-setting-modal .atfp-error-modal-box-body ol {
     margin-top: 0;
     margin-bottom: 24px;
     list-style-type: decimal;
@@ -153,18 +160,18 @@
     padding: 0;
 }
 
-#atfp-setting-modal .atfp-error-modal-box-body ol li{
+#atfp-setting-modal .atfp-error-modal-box-body ol li {
     margin-bottom: 6px;
     list-style: decimal;
 }
 
-#atfp-setting-modal .atfp-error-modal-box-body p{
+#atfp-setting-modal .atfp-error-modal-box-body p {
     margin: 0;
     padding: 0;
 }
 
-#atfp-setting-modal .atfp-error-modal-box-body p *{
-    color:  red !important;
+#atfp-setting-modal .atfp-error-modal-box-body p * {
+    color: red !important;
     font-size: 16px;
     box-shadow: unset;
     outline: unset;
@@ -172,12 +179,12 @@
     line-height: 1.5;
 }
 
-#atfp-setting-modal .atfp-error-modal-box-body p a{
+#atfp-setting-modal .atfp-error-modal-box-body p a {
     color: #2271b1 !important;
     text-decoration: underline;
 }
 
-#atfp-setting-modal .atfp-error-modal-box-body button.atfpp-error-reload-btn{
+button.atfpp-error-reload-btn{
     background: #0073aa;
     color: #fff !important;
     border: none;
@@ -187,63 +194,75 @@
 }
 
 button.atfpp-error-reload-btn:hover{
-    background: #005682 !important;
+    background: #005682;
 }
 
-#atfp-setting-modal .atfp-error-modal-box-body{
+#atfp-setting-modal .atfp-error-modal-box-body {
     min-height: 0px;
     max-height: 65vh;
     height: auto;
     padding: 22px;
     overflow: auto;
-    padding-top: 11px;
 }
 
-#atfp-setting-modal .atfp-error-modal-box-footer{
+#atfp-setting-modal .atfp-error-modal-box-footer {
     background: 0 0;
     border: none;
     border-top: 1px solid #dcdcde;
     margin-top: 0;
-    padding: 10px 22.4px 10px 16px;
+    padding: 16px 22.4px;
     text-align: end;
-    margin-right: 6.4px;
 }
 
-#atfp-setting-modal .atfp-error-modal-box-footer .atfp-error-modal-box-close{
-    display: inline-block;
-    text-decoration: none;
-    font-size: 13px;
-    line-height: 2;
-    height: 28px;
-    margin: 12px 0;
-    padding: 0 10px 1px;
-    cursor: pointer;
-    border-width: 1px;
-    border-style: solid;
-    border-radius: 3px;
-    white-space: nowrap;
-    box-sizing: border-box;
-    color: #50575e;
-    border-color: #c3c4c7;
+#atfp-setting-modal .atfp-error-modal-box-footer .atfp-error-modal-box-close {
     background: #f6f7f7;
-    box-shadow: 0 1px 0 #c3c4c7;
-    vertical-align: top;
+    border: 1px solid #c3c4c7;
+    color: #50575e;
 }
+
+#atfp-setting-modal .atfp-error-modal-box-footer .atfp-error-modal-box-close:hover {
+    background-color: #e1e1e1;
+    border-color: #c9c9c9;
+}
+
 
 #atfp-setting-modal .modal-content {
-    width: fit-content;
-    border-radius: 0px;
+    width: clamp(200px,520px,100vw);
     padding: 0px;
-    max-width: 80%;
 }
 
 #atfp-setting-modal .atfp-error-message {
-     margin: 4.8px 0 12.8px 0 !important;
-     padding: 8px;
-     font-weight: 500;
-     font-size: 13px;
-     line-height: 1.2;
-     color: red;
+    margin: 0!important;
+    padding: 0 0 10px;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 1.2;
+    color: red;
+    text-align: start;
+}
+
+#atfp-setting-modal .atfp-provider-error {
+    background: #ee4237;
+    border-color: #dd362b;
+    color: #fff;
+    padding: 2px 11px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+    
+#atfp-setting-modal .atfp-provider-error:hover{
+    background: #dd382e;
+    border-color: #c72a20;
+}
+
+#atfp-setting-modal .atfp-provider-error img {
+    display: inline-flex;
+    margin-bottom: 0px !important;
+    margin-top: 0px !important;
+    filter: invert(1) brightness(2);
+    height: 22px !important;
+    margin-right: 3px;
 }
 
 #atfp-setting-modal .modal-header h2 {
@@ -261,9 +280,9 @@ button.atfpp-error-reload-btn:hover{
 #atfp-setting-modal .modal-header span.close {
     right: 15px;
     top: 13px;
-    border-radius: 0!important;
-    height: 30px!important;
-    width: 20px!important;
+    border-radius: 0 !important;
+    height: 30px !important;
+    width: 20px !important;
     position: absolute;
     font-size: 32px;
     font-weight: bold;
@@ -271,168 +290,146 @@ button.atfpp-error-reload-btn:hover{
     cursor: pointer;
 }
 
-#atfp-setting-modal .atfp-setting-modal-body {
-    min-height: 0px;
-    max-height: none;
-    height: auto;
-    padding: 22px;
-    overflow: auto;
-    padding-top: 11px;
+
+.atfp-setting-modal-body{
+    max-width: 100vw;
+    overflow-x: auto;
 }
-
-#atfp-setting-modal .atfp-setting-modal-body .atfp-setting-modal-notice-wrapper *{
-    padding: 0;
-    margin: 0;
-}
-
-#atfp-setting-modal .atfp-translator-row {
-    display: flex;
-    gap: 21.3px;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-
-#atfp-setting-modal .atfp-translator-row .atfp-translator-column {
-    border: 1px solid #dcdcde;
-    border-radius: 10px;
-    padding: 10px 19px 30px;
-    text-align: center;
-    cursor: pointer;
-    box-sizing: border-box;
-}
-
-
-#atfp-setting-modal .atfp-translator-row .atfp-translator-column:hover {
-    background-color: #73e97338;
-    border-color: #73e9734f;
-}
-
-#atfp-setting-modal .atfp-translator-row:has(> :nth-child(1)) .atfp-translator-column {
+    
+.atfp-setting-modal-body table{
     width: 100%;
+    border-collapse: collapse;
 }
 
-#atfp-setting-modal .atfp-translator-row:has(> :nth-child(2)) .atfp-translator-column {
-    width: calc(50% - (21.3px / 2));
+.atfp-setting-modal-body thead{
+        background: #f3f3f3;
+}
+.atfp-setting-modal-body thead th{
+    text-align: left;
+    font-weight: 500;
+    font-size: 14px;
+    color: #555;
+    padding-block: 1rem;
 }
 
-#atfp-setting-modal .atfp-translator-row:has(> :nth-child(3)) .atfp-translator-column {
-    width: calc(33% - (24.8px / 3));
+.atfp-setting-modal-body thead th:nth-child(1){
+    padding-left: 28px;
 }
 
-#atfp-setting-modal .atfp-translator-row .atfp-translator-header {
+.atfp-setting-modal-body thead th:nth-child(2){
+    padding-left: 90px;
+}
+
+.atfp-setting-modal-body thead th:nth-child(3){
+    padding-right: 25px;
+    text-align: center;
+}
+
+.atfp-setting-modal-body tbody tr{
+    border-top: 1px solid #eee;
+    height: 64px;
+}
+
+.atfp-setting-modal-body tbody td.atfp-provider-name{
     display: flex;
-    justify-content: flex-end;
-    gap: 7px;
-    margin-bottom: 10px;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-block: .5rem;
 }
 
-#atfp-setting-modal .atfp-translator-row .atfp-translator-header svg{
-    width: 18px;
-    height: 18px;
+.atfp-setting-modal-body tbody td img{
+    width: 45px;
+    margin-right: 15px;
 }
 
-#atfp-setting-modal .atfp-translator-row .atfp-translator-body strong{
-    margin-bottom: 10px;
+.atfp-setting-modal-body tbody td:nth-child(1){
+    padding-left: 25px;
+}
+
+.atfp-setting-modal-body tbody td:nth-child(2){
+    padding-left: 90px;
+    padding-right: 20px;
+}
+
+.atfp-setting-modal-body tbody td:nth-child(3){
+    padding-right: 25px;
+    text-align: center;
+}
+
+.atfp-setting-modal-body tbody .button{
+    width: 123px;
     display: inline-block;
-    color: #000;
-    font-size: 16px;
-    line-height: 22.4px;
-}
-
-#atfp-setting-modal .atfp-translator-row .atfp-translator-body a{
-    box-shadow: unset;
-    outline: unset;
-    border: unset;
-}
-
-#atfp-setting-modal .atfp-translator-row .atfp-translator-body img{
-    margin-top: 5px;
-    height: 21px;
-    width: auto;
-    margin-bottom: 10px;
-}
-
-#atfp-setting-modal .atfp-translator-row .atfp-translator-body .atfp-service-btn{
-    display: inline-block;
+    font-size: 13px;
     line-height: 2.15384615;
     min-height: 30px;
     margin: 0;
-    padding: 0 10px;
     cursor: pointer;
     border-width: 1px;
     border-style: solid;
     -webkit-appearance: none;
-    white-space: nowrap;
-    box-sizing: border-box;
-    background: #4664eb;
-    border-radius: 5px;
-    font-family: inherit;
-    font-size: 13px;
-    border-color: #2271b1;
-    color: #fff;
-    text-decoration: none;
-    text-shadow: none;
-}
-
-#atfp-setting-modal .atfp-translator-row .atfp-translator-body .atfp-translator-beta-btn{
-    background: green;
-    color: #fff;
-    font-size: 12px;
-    font-weight: 700;
-    font-family: monospace;
-    padding: 4px 6px;
     border-radius: 3px;
-    display: inline-block;
-    margin: 2px 0 2px 10px;
-}
-
-#atfp-setting-modal .atfp-translator-service-btn:disabled{
-    color: #a7aaad!important;
-    background: #f6f7f7!important;
-    border-color: #d6d6d6!important;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-weight: inherit;
+    vertical-align: top;
     text-decoration: none;
     text-shadow: none;
-    border: 1px solid;
-    min-height: 30px;
-    margin: 0;
-    padding: 0 10px;
-    border-radius: 5px;
-    font-size: 13px;
-}
-
-#atfp-setting-modal .atfp-translator-row .atfp-translator-footer{
     text-align: center;
 }
-
-#atfp-setting-modal .atfp-translator-row .atfp-translator-footer .atfp-error-message{
-    max-width: 100%;
-}
-
-#atfp-setting-modal .atfp-translator-row .atfp-translator-footer .atfp-localai-disabled-message{
-    display: inline-block;
-    line-height: 1.4;
-    min-height: 30px;
-    margin: 0;
-    padding: 0 10px;
-    cursor: pointer;
-    border-width: 1px;
-    border-style: solid;
-    -webkit-appearance: none;
-    white-space: wrap;
-    box-sizing: border-box;
-    background: #ff2d2d;
-    border-radius: 5px;
-    font-family: inherit;
-    font-size: 13px;
-    border-color: red;
+.atfp-setting-modal-body tbody .button.atfp-service-btn{
+    padding: 2px 11px;
+    white-space: nowrap;
+    background: #3db63d;
+    border-color: #33a133;
     color: #fff;
-    text-decoration: none;
-    text-shadow: none;
-    margin-top: 8px;
-    transition: background 0.3s ease;
+}
+.atfp-setting-modal-body tbody .button.atfp-service-btn:hover{
+    background: #37a737;
+    border-color: #238b23;
 }
 
-#atfp-setting-modal .atfp-translator-row .atfp-translator-footer .atfp-localai-disabled-message:hover{
+.atfp-setting-modal-body tbody .button.atfp-provider-error{
+    background: #ee4237;
+    border-color: #dd362b;
+    color: #fff;
+    padding: 2px 11px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.atfp-setting-modal-body tbody .button.atfp-provider-error img{
+    display: inline-flex;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    filter: invert(1) brightness(2);
+    height: 22px;
+    margin-right: 3px;
+    width: unset !important;
+}
+
+.atfp-setting-modal-body tbody .button.atfp-provider-error:hover{
+    background: #dd382e;
+    border-color: #c72a20;
+}
+
+.atfp-setting-modal-body tbody .atfp-doc-icon {
+    display: inline-flex;
+    width: 20px;
+    height: 26px;
+}
+
+.atfp-setting-modal-body tbody .atfp-doc-icon:focus{
+    outline: none;
+    box-shadow: unset;
+}
+
+.atfp-setting-modal-body tbody .atfp-doc-icon svg{
+    width: 20px;
+    height: 28px;
+}
+
+#atfp-setting-modal .atfp-translator-row .atfp-translator-footer .atfp-localai-disabled-message:hover {
     background: red;
 }
 
@@ -441,30 +438,19 @@ button.atfpp-error-reload-btn:hover{
     border: none;
     border-top: 1px solid #dcdcde;
     margin-top: 0;
-    padding: 16px;
+    padding: 16px 22.4px;
     text-align: end;
-    margin-right: 6.4px;
 }
 
-#atfp-setting-modal .modal-footer .atfp-setting-close{
-    display: inline-block;
-    text-decoration: none;
-    font-size: 13px;
-    line-height: 2;
-    height: 28px;
-    margin: 0;
-    padding: 0 10px 1px;
-    cursor: pointer;
-    border-width: 1px;
-    border-style: solid;
-    border-radius: 3px;
-    white-space: nowrap;
-    box-sizing: border-box;
-    color: #50575e;
-    border-color: #c3c4c7;
+#atfp-setting-modal .modal-footer .atfp-setting-close {
     background: #f6f7f7;
-    box-shadow: 0 1px 0 #c3c4c7;
-    vertical-align: top;
+    border: 1px solid #c3c4c7;
+    color: #50575e;
+}
+
+#atfp-setting-modal .modal-footer .atfp-setting-close:hover {
+    background-color: #e1e1e1;
+    border-color: #c9c9c9;
 }
 
 /* Setting Modal CSS End */
@@ -503,14 +489,15 @@ button.atfpp-error-reload-btn:hover{
     position: relative;
     background-color: #fefefe;
     width: 80%;
-    height: calc(100% - 40px);
+    max-height: calc(100% - 40px);
+    min-height: 70vh;
     overflow: hidden;
     border-radius: 5px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,.2),0 6px 20px 0 rgba(0,0,0,.19);
     -webkit-animation-name: animatetop;
-    -webkit-animation-duration: 0.6s;
+    -webkit-animation-duration: .6s;
     animation-name: animatetop;
-    animation-duration: 0.6s;
+    animation-duration: .6s;
     animation-fill-mode: forwards;
 }
 
@@ -558,136 +545,6 @@ button.atfpp-error-reload-btn:hover{
     }
 }
 
-/* 
-#atfp-setting-modal .modal-header * {
-    margin-bottom: 16px;
-}
-
-#atfp-setting-modal .modal-header h2 {
-    font-size: 1.16px;
-    font-weight: 700;
-    color: black;
-    margin: 0;
-    padding: 0;
-    margin-bottom: 16px;
-}
-
-#atfp-setting-modal .modal-header h4 {
-    background-color: #f1f1f1;
-    margin: 0;
-    padding: 8px;
-    margin-bottom: 0px;
-    color: black;
-    font-size: 13px;
-    font-weight: 600;
-    line-height: 1;
-}
-
-#atfp-setting-modal .modal-header .atfp-error-message {
-    background-color: #f1f1f1;
-    margin: 8px 0 8px 0;
-    padding: 8px;
-    font-weight: 500;
-    font-size: 13px;
-    line-height: 1.2;
-}
-
-#atfp-setting-modal .modal-content>*:not(hr) {
-    padding: 0;
-    padding-inline: 16px;
-    margin: 0;
-}
-
-#atfp-setting-modal .modal-content .atlt-heading{
-    font-size: 13px;
-    line-height: 1.1;
-    font-weight: 600;
-    padding: 0;
-    padding-inline: 16px;
-    margin: 0;
-}
-
-#atfp-setting-modal .modal-content .inputGroup{
-    margin: 0;
-    padding: 0;
-    padding-inline: 16px;
-}
-
-#atfp-setting-modal .modal-content .inputGroup a{
-    display: block;
-    padding: 0;
-    margin: 0;
-    line-height: 1;
-}
-
-#atfp-setting-modal .modal-content .inputGroup a:hover,
-#atfp-setting-modal .modal-content .inputGroup a:focus,
-#atfp-setting-modal .modal-content .inputGroup a:active,
-#atfp-setting-modal .modal-content .inputGroup a:focus-visible,
-#atfp-setting-modal .modal-content .inputGroup a:focus-within{
-    box-shadow: none;
-    border: 0;
-    outline: 0;
-}
-
-#atfp-setting-modal .modal-content ul{
-    margin: 0;
-    padding: 0;
-    padding-inline: 16px;
-}
-
-#atfp-setting-modal .modal-content ul li{
-    padding: 0;
-    margin: 0;
-    font-size: 13px;
-    color: black;
-    line-height: 2;
-}
-
-#atfp-setting-modal .modal-content ul li a{
-    color: #2271b1;
-    transition-property: border, background, color;
-    transition-duration: .05s;
-    transition-timing-function: ease-in-out;
-    text-decoration: underline;
-}
-
-#atfp-setting-modal .modal-content ul li a:hover{
-    color: #135e96;
-}
-
-#atfp-setting-modal .modal-content .atfp-service-btn {
-    margin-block: 4.8px;
-    background-color: #2271b1;
-    color: white;
-    border: none;
-    padding: 7px 11px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 13px;
-    line-height: 1;
-    min-height: unset;
-    font-family: inherit;
-}
-
-#atfp-setting-modal .modal-content .atfp-service-btn[disabled] {
-    margin: 0;
-    margin-block: 4.8px;
-    color: #a7aaad !important;
-    background: #f6f7f7 !important;
-    border-color: #dcdcde !important;
-    border: none;
-    padding: 7px 11px;
-    border-radius: 4px;
-    box-shadow: none !important;
-    text-shadow: none !important;
-    cursor: default;
-}
-
-#atfp-setting-modal .modal-content .atfp-error-message {
-    color: red;
-} */
-
 #atfp_strings_model .modal-header {
     padding: 2px 16px;
     background-color: #5cb85c;
@@ -710,59 +567,15 @@ button.atfpp-error-reload-btn:hover{
 /* The Close Button */
 
 button.atfp-setting-close {
-    margin-top: 14.4px;
-    font-weight: 500;
-    font-size: 16px;
-    padding: 4.8px 6.4px;
-    cursor: pointer;
-    opacity: 0.7;
-    background: #f4f4f4;
-    border: 1px solid black;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    justify-self: end;
-    line-height: 1;
-    color: black;
+    background: #f6f7f7;
+    border: 1px solid #c3c4c7;
+    color: #50575e;
 }
 
 button.atfp-setting-close:hover {
-    opacity: 1;
+    background-color: #e1e1e1;
+    border-color: #c9c9c9;
 }
-
-/* #atfp-setting-modal hr{
-    border: 0;
-    border-top: 1px solid #dcdcde;
-    border-bottom: 1px solid #f6f7f7;
-    margin-bottom: 0px;
-    margin-top: 0px;
-}
-
-#atfp-setting-modal .modal-header .close {
-    color: #5f5f5f;
-    font-size: 28px;
-    font-weight: bold;
-    position: absolute;
-    right: 16px;
-    top: 10px;
-}
-
-body.rtl #atfp-setting-modal .modal-header .close {
-    right: auto;
-    left: 16px;
-}
-
-#atfp-setting-modal .modal-footer {
-    text-align: end;
-}
-
-#atfp-setting-modal .modal-header .close:hover,
-#atfp-setting-modal .modal-header .close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-} */
 
 #atfp_strings_model .modal-header .close {
     color: white;
@@ -835,7 +648,7 @@ body.rtl #atfp-setting-modal .modal-header .close {
     min-height: 30px;
     margin: 0;
     padding: 0 10px;
-    min-width: 190px;
+    white-space: nowrap;
     border-radius: 2px;
     cursor: default;
 }
@@ -862,7 +675,6 @@ body.rtl #atfp-setting-modal .modal-header .close {
 
 #atfp_strings_model .modal-body {
     padding: 2px 16px;
-    position: relative;
 }
 
 #atfp_strings_model .notice-dismiss {
@@ -874,8 +686,8 @@ body.rtl #atfp-setting-modal .modal-header .close {
     display: inline-block;
     font-size: 22px;
     padding: 0;
-    margin: 20px 0 10px;
     color: #5cb85c;
+    margin: 0px !important;
 }
 
 #translate_element {
@@ -885,10 +697,11 @@ body.rtl #atfp-setting-modal .modal-header .close {
 #atfp_strings_model .atfp_string_container {
     overflow-y: auto;
     overflow-x: hidden;
-    max-height: calc(100vh - 330px - var(--atfp-notice-wrapper-height, 0px));
+    max-height: calc(100vh - 204px - var(--atfp-notice-wrapper-height,0px));
     width: 100%;
     position: relative;
     color: #3c3c3c;
+    margin-bottom: 76px;
 }
 
 #atfp_strings_model .atfp_string_container.atfp_empty_string {
@@ -913,7 +726,7 @@ body.rtl #atfp-setting-modal .modal-header .close {
 
 #atfp_strings_model .modal-footer .notice.atfp_string_count {
     display: block;
-    max-width: calc(100% - 165px) !important;
+    max-width: calc(100% - 165px)!important;
 }
 
 #atfp_strings_model .modal-footer .notice.atfp_string_count a{
@@ -969,10 +782,10 @@ body.rtl #atfp-setting-modal .modal-header .close {
 #atfp_strings_model .atfp_translate_progress {
     position: absolute;
     display: none;
-    top: 0;
+    top: 92px;
     left: 10px;
     color: #fff;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0,0,0,.5);
     width: calc(100% - 22px);
     border-radius: 3px;
     height: 100%;
@@ -980,10 +793,10 @@ body.rtl #atfp-setting-modal .modal-header .close {
     box-sizing: border-box;
     font-size: 16px;
     line-height: 20px;
-    font-weight: bold;
+    font-weight: 700;
     text-align: center;
     padding-top: 30px;
-    height: calc(100vh - 40px - 86px - 66px);
+    height: calc(100% - 164px);
 }
 
 #atfp_strings_model .atfp_translate_element_wrapper {
@@ -991,15 +804,12 @@ body.rtl #atfp-setting-modal .modal-header .close {
     justify-content: start;
     align-items: start;
     column-gap: 8px;
+    margin-block: 1rem;
 }
 
 #atfp_strings_model .atfp_translate_element_wrapper>button {
     height: 34px;
     pointer-events: none;
-}
-
-#atfp_strings_model .atfp_translate_element_wrapper #yt-widget .yt-wrapper_align_right {
-    margin-bottom: 16px;
 }
 
 #atfp_strings_model .modal-footer {
@@ -1018,6 +828,50 @@ body.rtl #atfp-setting-modal .modal-header .close {
 #yt-widget .yt-listbox__input:not(:checked)~.yt-listbox__text {
     display: none !important;
 }
+
+/* Strings modal skeleton loader start */
+.atfp-skeleton-loader-wrapper .atfp-skeleton-loader-mini {
+    height: 19px;
+    padding: 9px;
+    box-sizing: border-box;
+    width: 100%;
+    border-radius: 3px;
+    background: linear-gradient(
+        90deg,
+        #e0e0e0 25%,
+        #f5f5f5 50%,
+        #e0e0e0 75%
+      );
+    background-size: 200% 100%;
+    animation: atfp-shimmer 1.2s infinite linear;
+}
+
+.atfp-skeleton-loader-wrapper .translate-widget{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 10px;
+    height: 88px;
+    align-items: center;
+}
+
+.atfp-skeleton-loader-wrapper .translate-widget .atfp-skeleton-loader-mini{
+    height: 30px;
+    max-width: 180px;
+    margin-left: auto;
+}
+
+.atfp-skeleton-loader-wrapper .translate-widget .atfp-skeleton-loader-mini:nth-child(1){
+    max-width: 280px;
+    margin-left: 0px;
+    margin-right: auto;
+}
+
+.atfp-skeleton-loader-wrapper table .atfp-skeleton-loader-mini{
+    max-width: 80%;
+    margin: .3rem auto;
+}
+
+/* Strings modal skeleton loader end */
 
 /* error message css start */
 #atfp_strings_model.atfp_fetch_error .atfp_string_container {
@@ -1083,39 +937,26 @@ body>div.skiptranslate iframe.skiptranslate[frameborder][src][style="visibility:
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.6) 50%, rgba(255, 255, 255, 0.2) 100%);
-    animation: shimmer 1.5s infinite;
+    background: linear-gradient(
+        90deg,
+        #e0e0e0 25%,
+        #f5f5f5 50%,
+        #e0e0e0 75%
+      );
+    background-size: 200% 100%;
+    animation: atfp-shimmer 1.5s infinite linear;
 }
 
-@keyframes shimmer {
+@keyframes atfp-shimmer {
     0% {
-        left: -100%;
-    }
-
-    100% {
-        left: 100%;
-    }
+        background-position: 100%;
+      }
+      100% {
+        background-position: -100%;
+      }
 }
 
-/* meta box review notice style end */
-
-/* Chrome AI Translator Widget */
-/* #atfp-setting-modal .inputGroup #local_ai_translator_btn ~ a{
-    margin-top: .32px 0 4.8px;
-    text-decoration: none;
-    font-size: 1.16px;
-    display: inline-flex;
-    color: #000;
-    font-weight: 600;
-    align-items: center;
-}
-
-#atfp-setting-modal .inputGroup #local_ai_translator_btn ~ a img{
-    width: 28px;
-    margin: 0 2px;
-} */
-
-#atfp-localAiTranslator-strings-modal .translator-widget {
+:where(#atfp-localAiTranslator-strings-modal, #atfp-yandex-strings-modal) .translator-widget {
     justify-content: space-between;
     align-items: center;
 }
@@ -1163,41 +1004,39 @@ body>div.skiptranslate iframe.skiptranslate[frameborder][src][style="visibility:
     position: relative;
     top: 0;
     left: 0;
-    width: 400px;
+    max-width: 500px;
     background: #fff;
     border-radius: 10px;
     overflow: hidden;
 }
 
-#atfp-pro-notice-wrapper .atfp-pro-notice .atfp-notice-header {
-    background-color: #f3f3f3;
-    color: black;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 14.4px 10px;
-    border-bottom: 1px solid black;
-}
-
 #atfp-pro-notice-wrapper .atfp-pro-notice .atfp-notice-header h2 {
-    margin: 0px !important;
-    padding: 0px !important;
+    height: unset;
+    padding: 8px 36px 8px 25px;
+    border: none;
+    background: 0 0;
+    border-bottom: 1px solid #dcdcde;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 2;
+    margin: 0;
 }
 
 #atfp-pro-notice-wrapper .atfp-pro-notice .atfp-notice-header .atfp-close-button {
-    cursor: pointer;
-    font-size: 19px;
+    right: 15px;
+    top: 13px;
+    border-radius: 0!important;
+    height: 30px!important;
+    width: 20px!important;
+    position: absolute;
+    font-size: 32px;
     font-weight: 700;
-    background: transparent;
-    box-shadow: unset;
-    border: 0px;
-    color: black;
-    display: inline-flex;
-    line-height: 1;
+    color: #646970;
+    cursor: pointer;
 }
 
 #atfp-pro-notice-wrapper .atfp-pro-notice .atfp-notice-content {
-    margin: 10px;
+    margin: 15px 20px;
     font-size: 16px;
     color: #3c3c3c;
     line-height: 18px;
@@ -1211,24 +1050,42 @@ body>div.skiptranslate iframe.skiptranslate[frameborder][src][style="visibility:
 }
 
 #atfp-pro-notice-wrapper .atfp-pro-notice .atfp-notice-footer {
-    background-color: #f3f3f3;
-    padding: 10px;
-    border-top: 1px solid black;
+    padding: 15px 20px;
+    border-top: 1px solid #dcdcde;
 }
 
 #atfp-pro-notice-wrapper .atfp-pro-notice .atfp-notice-footer .atfp-upgrade-button {
-    background-color: #F0ABFC;
-    color: black;
-    text-decoration: none;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
+    background: #db352b;
+    border-color: #dd362b;
+    color: #fff;
+    padding: 2px 11px;
+    align-items: center;
+    margin-inline: auto;
+    align-self: center;
+    justify-content: center;
+    width: 123px;
     display: inline-block;
+    font-size: 13px;
+    line-height: 2.15384615;
+    min-height: 30px;
+    margin: 0;
+    cursor: pointer;
+    border-width: 1px;
+    border-style: solid;
+    -webkit-appearance: none;
+    border-radius: 3px;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-weight: inherit;
+    vertical-align: top;
+    text-decoration: none;
+    text-shadow: none;
+    text-align: center;
 }
 
 #atfp-pro-notice-wrapper .atfp-pro-notice .atfp-notice-footer .atfp-upgrade-button:hover {
-    background-color: #f09dff;
-    /* Darker shade on hover */
+    background: #dd382e;
+    border-color: #c72a20;
 }
 
 /* Tooltip element */
@@ -1238,8 +1095,8 @@ body>div.skiptranslate iframe.skiptranslate[frameborder][src][style="visibility:
     cursor: pointer;
     white-space: nowrap;
 }
-  
-  #atfp-setting-modal .atfp-tooltip-element .atfp-tooltip {
+
+#atfp-setting-modal .atfp-tooltip-element .atfp-tooltip {
     display: block;
     font-size: 12.8px;
     position: absolute;
@@ -1254,14 +1111,14 @@ body>div.skiptranslate iframe.skiptranslate[frameborder][src][style="visibility:
     opacity: 0;
     width: 121px;
     white-space: nowrap;
-  }
+}
 
-  #atfp-setting-modal .atfp-tooltip-element .atfp-tooltip.atfp-tooltip-active {
-    -webkit-animation: slide-up 0.15s cubic-bezier(0.51, 0.92, 0.265, 1.55) both;
-    animation: slide-up 0.15s cubic-bezier(0.51, 0.92, 0.265, 1.55) both;
-  }
+#atfp-setting-modal .atfp-tooltip-element .atfp-tooltip.atfp-tooltip-active {
+    -webkit-animation: atfp-slide-up 0.15s cubic-bezier(0.51, 0.92, 0.265, 1.55) both;
+    animation: atfp-slide-up 0.15s cubic-bezier(0.51, 0.92, 0.265, 1.55) both;
+}
 
-  #atfp-setting-modal .atfp-tooltip-element .atfp-tooltip:after {
+#atfp-setting-modal .atfp-tooltip-element .atfp-tooltip:after {
     content: "";
     position: absolute;
     top: 98%;
@@ -1272,41 +1129,56 @@ body>div.skiptranslate iframe.skiptranslate[frameborder][src][style="visibility:
     border-top: 8px solid #5cb85c;
     border-right: 8px solid transparent;
     border-left: 8px solid transparent;
-  }
-  
-  @-webkit-keyframes slide-up {
-    0% {
-      transform: translateY(0) scale(0.8);
-      opacity: 0;
-    }
-    100% {
-      transform: translateY(-35px) scale(1);
-      opacity: 1;
-    }
-  }
-  @keyframes slide-up {
-    0% {
-      transform: translateY(0) scale(0.8);
-      opacity: 0;
-    }
-    100% {
-      transform: translateY(-35px) scale(1);
-      opacity: 1;
-    }
-  }
+}
 
-@media screen and (max-width: 767px) and (min-width: 567px){
-    #atfp-setting-modal .atfp-translator-row .atfp-translator-column{
-        width: 100% !important;
+
+/* rtl css start */
+
+body.rtl #atfp-setting-modal .modal-header h2 {
+    padding: 8px 25px 8px 36px;
+}
+
+body.rtl #atfp_strings_model .modal-header .close {
+    left: 10px;
+    right: unset;
+}
+
+body.rtl #atfp_strings_model .modal-header h2 {
+    margin: 18px 0px 5px 159px;
+}
+
+body.rtl #atfp-setting-modal .modal-header span.close {
+    left: 15px;
+    right: unset;
+}
+
+body.rtl #atfp_strings_model .save_btn_cont {
+    left: 40px;
+    right: unset;
+}
+
+/* rtl css end */
+
+@-webkit-keyframes atfp-slide-up {
+    0% {
+        transform: translateY(0) scale(0.8);
+        opacity: 0;
     }
 
-    #atfp-setting-modal .atfp-translator-row:has(> :nth-child(2)) .atfp-translator-column{
-        width: calc(50% - (21.3px / 2)) !important;
+    100% {
+        transform: translateY(-35px) scale(1);
+        opacity: 1;
     }
 }
 
-@media screen and (max-width: 567px){
-    #atfp-setting-modal .atfp-translator-row .atfp-translator-column{
-        width: 100% !important;
+@keyframes atfp-slide-up {
+    0% {
+        transform: translateY(0) scale(0.8);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(-35px) scale(1);
+        opacity: 1;
     }
 }

@@ -27,11 +27,11 @@ const ProVersionNotice = ({ characterCount = 0, url = '' }) => {
             <div id="atfp-pro-notice-wrapper" className={`${activeClass ? 'atfp-active' : ''}`}>
                 <div className="atfp-pro-notice">
                     <div className="atfp-notice-header">
-                        <h2>AI Translation for Polylang Pro Notice</h2>
-                        <button className="atfp-close-button" onClick={() => setShowNotice(false)} aria-label="Close Notice">✖</button>
+                        <h2>AutoPoly - AI Translation For Polylang</h2>
+                        <span className="atfp-close-button" onClick={() => setShowNotice(false)} aria-label="Close Notice">×</span>
                     </div>
                     <div className="atfp-notice-content">
-                        <p>You have reached the character limit of <strong><FormatNumberCount number={characterCount} /></strong> for your translations. To continue translating beyond this limit, please consider upgrading to AI Translation for Polylang Pro.</p>
+                        <p>You have reached the character limit of <strong><FormatNumberCount number={characterCount} /></strong> for your translations. To continue translating beyond this limit, please consider upgrading to <strong>AutoPoly - AI Translation For Polylang Pro</strong>.</p>
                     </div>
                     <div className="atfp-notice-footer">
                         <a href={url} target="_blank" rel="noopener noreferrer" className="atfp-upgrade-button">Upgrade to Pro</a>

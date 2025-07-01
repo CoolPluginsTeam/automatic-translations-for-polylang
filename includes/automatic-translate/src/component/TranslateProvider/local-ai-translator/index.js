@@ -5,8 +5,8 @@ import SaveTranslation from "../../storeTranslatedString";
 import StoreTimeTaken from "../../../component/StoreTimeTaken";
 
 const localAiTranslator = async (props) => {
-    const targetLangName = atfp_global_object.languageObject[props.targetLang];
-    const sourceLangName = atfp_global_object.languageObject[props.sourceLang];
+    const targetLangName = atfp_global_object.languageObject[props.targetLang]['name'];
+    const sourceLangName = atfp_global_object.languageObject[props.sourceLang]['name'];
     const AllowedMetaFields = select('block-atfp/translate').getAllowedMetaFields();
 
     const { translateStatusHandler, translateStatus } = props;

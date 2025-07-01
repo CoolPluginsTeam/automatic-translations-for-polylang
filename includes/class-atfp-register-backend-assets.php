@@ -214,7 +214,7 @@ class ATFP_Register_Backend_Assets
         $languages = PLL()->model->get_languages_list();
         $lang_object = array();
         foreach ($languages as $lang) {
-            $lang_object[$lang->slug] = $lang->name;
+            $lang_object[$lang->slug] = array('name' => $lang->name, 'flag' => $lang->flag_url, 'locale' => $lang->locale);
         }
 
         wp_enqueue_style('atfp-automatic-translate-custom');
