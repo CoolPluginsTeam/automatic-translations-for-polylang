@@ -22,7 +22,7 @@
                 'title' => __('AI Translations', $text_domain),
                 'description' => __('Leverage GeminiAI for seamless and context-aware translations.', $text_domain),
                 'icon' => 'gemini-translate.png',
-                'url' => '#'
+                'url' => 'https://docs.coolplugins.net/doc/translate-via-gemini-ai-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard'
             ],
             [
                 'logo' => 'openai-translate-logo.png',
@@ -30,7 +30,7 @@
                 'title' => __('AI Translations', $text_domain),
                 'description' => __('Leverage OpenAI for seamless and context-aware translations.', $text_domain),
                 'icon' => 'open-ai-translate.png',
-                'url' => '#'
+                'url' => 'https://docs.coolplugins.net/doc/translate-via-open-ai-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard'
             ],
             [
                 'logo' => 'chrome-built-in-ai-logo.png',
@@ -38,7 +38,7 @@
                 'title' => __('Chrome Built-in AI', $text_domain),
                 'description' => __('Utilize Chrome\'s built-in AI for seamless translation experience.', $text_domain),
                 'icon' => 'chrome-ai-translate.png',
-                'url' => 'https://docs.coolplugins.net/docs/ai-translation-for-polylang/how-to-automatically-translate-your-website-content-via-chrome-ai/'
+                'url' => 'https://docs.coolplugins.net/doc/chrome-ai-translation-polylang/?utm_source=atfpp_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=dashboard'
             ]
         ];
 

@@ -23,12 +23,12 @@
             $api_settings = [
                 'gemini' => [
                     'name' => 'Gemini',
-                    'doc_url' => 'https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin&utm_medium=dashboard&utm_campaign=get_pro&utm_content=gemini_api',
+                    'doc_url' => 'https://docs.coolplugins.net/doc/generate-gemini-api-key/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=api_key&utm_content=dashboard',
                     'placeholder' => 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
                 ],
                 'openai' => [
                     'name' => 'OpenAI',
-                    'doc_url' => 'https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin&utm_medium=dashboard&utm_campaign=get_pro&utm_content=openai_api',
+                    'doc_url' => 'https://docs.coolplugins.net/doc/generate-open-ai-api-key/?utm_source=atfpp_plugin&utm_medium=inside&utm_campaign=api_key&utm_content=dashboard',
                     'placeholder' => 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
                 ]
             ];
