@@ -80,11 +80,11 @@ https://youtu.be/yamFwNRWEbc
 
 &#x20;[**Upgrade to Pro!**](https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?utm_source=atfp_plugin&utm_medium=page&utm_campaign=get_pro&utm_content=buy_pro)
 
-#### Check It Now
+#### Our Advanced Language Switcher Plugins
 
-[Language Switcher – Polylang for Divi](https://wordpress.org/plugins/language-switcher-for-divi-polylang/) is a language switcher plugin to add a language switcher to Divi pages with Polylang.
+[Language Switcher – Polylang for Divi](https://wordpress.org/plugins/language-switcher-for-divi-polylang/): Add a customizable language switcher to your website inside the Divi Builder using Polylang.
 
-[Language Switcher for Elementor & Polylang](https://go.coolplugins.net/language-switcher) Add a language switcher to Elementor and link translated templates with Polylang.
+[Language Switcher for Elementor & Polylang](https://go.coolplugins.net/language-switcher): Add a powerful language switcher to your website and easily translate Elementor Templates.
 
 #### Check out our advanced Automatic Translate Addon for Loco Translate
 
