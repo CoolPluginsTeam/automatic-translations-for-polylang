@@ -5,6 +5,10 @@ const ProVersionNotice = ({ characterCount = 0, url = '' }) => {
     const [showNotice, setShowNotice] = useState(false);
     const [activeClass, setActiveClass] = useState(false);
 
+    if(url !== ''){
+        url = url+'?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=popup';
+    }
+
     useEffect(() => {
         const translateButton = document.querySelector('button.atfp-translate-button[name="atfp_meta_box_translate"],input#atfp-translate-button[name="atfp_meta_box_translate"]');
 

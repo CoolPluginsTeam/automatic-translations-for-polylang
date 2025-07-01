@@ -76,7 +76,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 		}
 
 		public function atfp_plugin_action_links($links) {
-			$links[] = '<a href="https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin&utm_medium=plugin_page&utm_campaign=get_pro&utm_content=buy_pro" target="_blank">' . __( 'Buy Pro', 'automatic-translations-for-polylang' ) . '</a>';
+			$links[] = '<a href="https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=plugin_list" target="_blank">' . __( 'Buy Pro', 'automatic-translations-for-polylang' ) . '</a>';
 			return $links;
 		}
 
@@ -299,10 +299,11 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			$index=0;
 			$total_languages=count($pll_languages);
 			$pll_active_languages=pll_current_language();
-
+			
 			$post_type=isset($current_screen->post_type) ? $current_screen->post_type : '';
 			$post_status=(isset($_GET['post_status']) && 'trash' === sanitize_text_field(wp_unslash($_GET['post_status']))) ? 'trash' : 'publish';
-
+			$all_translated_post_count=0;
+			$list_html='';
 			if(count($pll_languages) > 1){
 				echo "<div class='atfp_subsubsub' style='display:none; clear:both;'>
 					<ul class='subsubsub atfp_subsubsub_list'>";
@@ -320,10 +321,15 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 							$pending_post_count=pll_count_posts($language_slug, array('post_type'=>$post_type, 'post_status'=>'pending'));
 							$translated_post_count+=$pending_post_count;
 						}
+
+						$all_translated_post_count+=$translated_post_count;
 						// echo $flag; // phpcs:ignore WordPress.Security.EscapeOutput
-						echo "<li class='atfp_pll_lang_".esc_attr($language_slug)."'><a href='edit.php?post_type=".esc_attr($post_type)."&lang=".esc_attr($language_slug)."' class='".esc_attr($current_class)."'>".esc_html($lang->name)." <span class='count'>(".esc_html($translated_post_count).")</span></a>".($index < $total_languages-1 ? ' |&nbsp;' : '')."</li>";
+						$list_html.="<li class='atfp_pll_lang_".esc_attr($language_slug)."'><a href='edit.php?post_type=".esc_attr($post_type)."&lang=".esc_attr($language_slug)."' class='".esc_attr($current_class)."'>".esc_html($lang->name)." <span class='count'>(".esc_html($translated_post_count).")</span></a>".($index < $total_languages-1 ? ' |&nbsp;' : '')."</li>";
 						$index++;
 					}
+
+					echo "<li class='atfp_pll_lang_all'><a href='edit.php?post_type=".esc_attr($post_type)."&lang=all"."' class=''>All Languages<span class='count'>(".esc_html($all_translated_post_count).")</span></a> |&nbsp;</li>";
+					echo $list_html;
 				echo "</ul>
 				</div>";
 			}
@@ -340,6 +346,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			require_once ATFP_DIR_PATH . '/helper/class-atfp-helper.php';
 			require_once ATFP_DIR_PATH . 'admin/atfp-menu-pages/class-atfp-custom-block-post.php';
 			require_once ATFP_DIR_PATH . 'includes/class-atfp-register-backend-assets.php';
+			require_once ATFP_DIR_PATH . '/includes/bulk-translation/class-atfp-bulk-translation.php';
 			require_once ATFP_DIR_PATH . 'includes/elementor-translate/class-atfp-elementor-translate.php';
 		}
 		/**
@@ -359,6 +366,11 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 				}
 
 				add_action( 'add_meta_boxes', array( $this, 'atfp_shortcode_metabox' ) );
+
+				if(class_exists('ATFP_Bulk_Translation')) {
+					ATFP_Bulk_Translation::get_instance();
+				}
+
 				$this->atfp_register_backend_assets();
 
 				$this->atfp_initialize_elementor_translation();

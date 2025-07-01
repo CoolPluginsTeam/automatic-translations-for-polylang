@@ -45,7 +45,7 @@ export default (props) => {
             heading: __("Choose Language", "automatic-translations-for-polylang"),
             BetaEnabled: false,
             ButtonDisabled: true,
-            ErrorMessage: <a className="atfp-provider-error button button-primary" href={window.atfp_global_object.pro_version_url || ''} target="_blank">{__('Buy Pro', 'automatic-translations-for-polylang')}</a>,
+            ErrorMessage: <a className="atfp-provider-error button button-primary" href={window.atfp_global_object.pro_version_url || '' + '?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=popup_google'} target="_blank">{__('Buy Pro', 'automatic-translations-for-polylang')}</a>,
             Logo: 'google.png'
         },
         openai_ai: {
@@ -56,7 +56,7 @@ export default (props) => {
             Docs: "https://docs.coolplugins.net/doc/generate-gemini-openai-openrouter-api-key/",
             BetaEnabled: true,
             ButtonDisabled: true,
-            ErrorMessage: <a className={`atfp-provider-error button button-primary`} href={window.atfp_global_object.pro_version_url || ''} target="_blank">{__('Buy Pro', 'automatic-translations-for-polylang')}</a>,
+            ErrorMessage: <a className={`atfp-provider-error button button-primary`} href={window.atfp_global_object.pro_version_url || '' + '?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=popup_openai'} target="_blank">{__('Buy Pro', 'automatic-translations-for-polylang')}</a>,
             Logo: 'openai.png',
             filterHtmlContent: true
         },
@@ -68,7 +68,7 @@ export default (props) => {
             Docs: "https://docs.coolplugins.net/doc/generate-gemini-openai-openrouter-api-key/",
             BetaEnabled: true,
             ButtonDisabled: true,
-            ErrorMessage: <a className={`atfp-provider-error button button-primary`} href={window.atfp_global_object.pro_version_url || ''} target="_blank">{__('Buy Pro', 'automatic-translations-for-polylang')}</a>,
+            ErrorMessage: <a className={`atfp-provider-error button button-primary`} href={window.atfp_global_object.pro_version_url || '' + '?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=popup_gemini'} target="_blank">{__('Buy Pro', 'automatic-translations-for-polylang')}</a>,
             Logo: 'gemini.png',
             filterHtmlContent: true
         },
