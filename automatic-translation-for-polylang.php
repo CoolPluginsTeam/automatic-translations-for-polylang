@@ -236,7 +236,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 						</div>
 					</div>
 					<div class="atfp-dashboard-header-right">
-						<span><?php esc_html_e('Auto translate pages and posts.', $text_domain); ?></span>
+						<span><?php echo esc_html('AutoPoly - AI Translation For Polylang'); ?></span>
 						<?php foreach ($buttons as $button): ?>
 							<a href="<?php echo esc_url($button['url']); ?>" 
 							class="atfp-dashboard-btn" 
