@@ -166,6 +166,7 @@ This plugin provides automatic translation services for Polylang using the Yande
 5. Elementor Ai Translation.
 
 == Frequently Asked Questions ==
+
 = What does the "**AutoPoly - AI Translation For Polylang**" plugin do? =
 This plugin automatically copies and translates your posts, including titles, content, images, galleries, and meta fields, from one language to another using Chrome AI. It works with Elementor and Gutenberg blocks, replicating the original content and styles across different languages.
 
