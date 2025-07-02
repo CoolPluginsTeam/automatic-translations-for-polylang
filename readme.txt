@@ -58,18 +58,18 @@ https://youtu.be/bmmc-Ynwj8w
 
 **Premium License**
 
-* **✅ Classic Editor Translation**
-* ✅  **Gutenberg Block Compatibility**
-* **✅  Elementor Page Translation**
-* **✅ Bulk Translation**
-* **✅ Inline Translation**
-* **✅ Custom Block Translation**
-* ✅ **Chrome Built-in AI Translation Support:** Available
-* ✅ **Gemini Translation Support:** Available
-* ✅ **Google Translate Widget Support:** Available
-* ✅ **OpenAI Translation Support:** Available
-* ✅ **Unlimited Free Translations:** Available
-* ✅ **API Key Required:** Not Required
+* **✅ Classic Editor Translation:** Easily translate all content created with the Classic WordPress Editor
+* ✅  **Gutenberg Block Compatibility:** Fully compatible with Gutenberg, this plugin allow you to translate block-based layouts.
+* **✅  Elementor Page Translation:** Automatically translate entire Elementor pages, sections, and widgets.
+* **✅ Bulk Translation:** Translate multiple posts, pages, or products at once to save time.
+* **✅ Inline Translation:** Translate specific text blocks or widgets directly on the front end.
+* **✅ Custom Block Translation:** Easily translate content across different block types.
+* ✅ **Chrome Built-in AI Translation Support:** Instantly translate content directly inside browser using Chrome’s built-in AI translator.
+* ✅ **Gemini Translation Support:** Use Gemini AI to generate high-quality, context-aware translations.
+* ✅ **Google Translate Widget Support:** Automate the translation process using the Google Translate Widget.
+* ✅ **OpenAI Translation Support:** Access OpenAI’s advanced language models for more natural translations.
+* ✅ **Unlimited Free Translations:** Translate unlimited content without any usage restrictions or extra fees.
+* ✅ **API Key Required:** Start translating instantly without any paid API keys or complicated setup.
 * ✅ **Premium Support:** [Quick Support](https://coolplugins.net/support?utm_source=atlt_plugin&utm_medium=readme&utm_campaign=support&utm_content=premium_support)
   (**Support time:- 24-48 hours**)
 
