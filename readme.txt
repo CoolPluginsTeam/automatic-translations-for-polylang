@@ -73,7 +73,7 @@ https://youtu.be/bmmc-Ynwj8w
 * ✅ **Premium Support:** [Quick Support](https://coolplugins.net/support?utm_source=atlt_plugin&utm_medium=readme&utm_campaign=support&utm_content=premium_support)
   (**Support time:- 24-48 hours**)
 
-&#x20;[**Upgrade to Pro!**](https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?utm_source=atfp_plugin&utm_medium=page&utm_campaign=get_pro&utm_content=buy_pro)
+&#x20;[**Upgrade to Pro!**](https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=get_pro)
 
 #### Our Advanced Language Switcher Plugins
 
