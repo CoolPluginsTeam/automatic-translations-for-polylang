@@ -149,7 +149,7 @@ This plugin provides automatic translation services for Polylang using the Yande
 * **Benefits:**
   By using the Yandex Translate API, you can enjoy improved translation accuracy and efficiency, making it easier to manage your multilingual content.
 
-#### 🌴 Important Links & Information
+#### Important Links & Information
 
 * [Yandex Translate Terms](https://yandex.com/legal/translate_termsofuse/)
 * [Yandex Privacy Policy](https://yandex.com/legal/confidential/)
