@@ -10,7 +10,7 @@ Stable tag: 1.4.1
 Author URI: https://coolplugins.net/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-AutoPoly - AI Translation For Polylang simplifies your translation process by automatically translating all pages/posts content from one language to another.
+&#x20;AI Translation For Polylang simplifies your translation process by automatically translating all pages/posts content from one language to another.
 
 == Description ==
 **Translate Your WordPress Website 10X Faster – Powered by AI, Built for Polylang**.
