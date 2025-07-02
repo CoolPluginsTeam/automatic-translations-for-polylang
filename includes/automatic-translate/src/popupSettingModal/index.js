@@ -77,7 +77,7 @@ const SettingModal = (props) => {
             if (localAiTranslatorSupport !== true && typeof localAiTranslatorSupport === 'object' && translateBtn) {
                 setChromeAiBtnDisabled(true);
     
-                setServiceModalErrors(prev => ({ ...prev, localAiTranslator: {message: localAiTranslatorSupport, Title: __("Chrome AI Translator", 'automatic-translations-for-polylang')} }));
+                setServiceModalErrors(prev => ({ ...prev, localAiTranslator: {message: localAiTranslatorSupport, Title: __("Chrome AI Translator", 'autopoly-ai-translation-for-polylang')} }));
             }
         };
         if(settingVisibility){
@@ -86,10 +86,10 @@ const SettingModal = (props) => {
                     ...prev,
                     yandex: {
                         message: "<p style={{ fontSize: '1rem', color: '#ff4646' }}>"+sprintf(
-                            __("Yandex Translate does not support the target language: %s.", 'automatic-translations-for-polylang'),
+                            __("Yandex Translate does not support the target language: %s.", 'autopoly-ai-translation-for-polylang'),
                             "<strong>"+targetLangName+"</strong>"
                         )+"</p>",
-                        Title: __("Yandex Translate", 'automatic-translations-for-polylang')
+                        Title: __("Yandex Translate", 'autopoly-ai-translation-for-polylang')
                     }
                 }));
             };

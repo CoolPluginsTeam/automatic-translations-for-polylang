@@ -69,7 +69,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 		 */
 		public function block_parsing_rules() {
 			if ( ! check_ajax_referer( 'atfp_translate_nonce', 'atfp_nonce', false ) ) {
-				wp_send_json_error( __( 'Invalid security token sent.', 'automatic-translations-for-polylang' ) );
+				wp_send_json_error( __( 'Invalid security token sent.', 'autopoly-ai-translation-for-polylang' ) );
 				wp_die( '0', 400 );
 				exit();
 			}
@@ -89,7 +89,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 		 */
 		public function fetch_post_content() {
 			if ( ! check_ajax_referer( 'atfp_translate_nonce', 'atfp_nonce', false ) ) {
-				wp_send_json_error( __( 'Invalid security token sent.', 'automatic-translations-for-polylang' ) );
+				wp_send_json_error( __( 'Invalid security token sent.', 'autopoly-ai-translation-for-polylang' ) );
 				wp_die( '0', 400 );
 				exit();
 			}
@@ -116,7 +116,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 
 				return wp_send_json_success( $data );
 			} else {
-				wp_send_json_error( __( 'Invalid Post ID.', 'automatic-translations-for-polylang' ) );
+				wp_send_json_error( __( 'Invalid Post ID.', 'autopoly-ai-translation-for-polylang' ) );
 				wp_die( '0', 400 );
 			}
 
@@ -125,7 +125,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 
 		public function get_custom_blocks_content() {
 			if ( ! check_ajax_referer( 'atfp_block_update_nonce', 'atfp_nonce', false ) ) {
-				wp_send_json_error( __( 'Invalid security token sent.', 'automatic-translations-for-polylang' ) );
+				wp_send_json_error( __( 'Invalid security token sent.', 'autopoly-ai-translation-for-polylang' ) );
 				wp_die( '0', 400 );
 				exit();
 			}
@@ -135,14 +135,14 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 			if ( $custom_content && is_string( $custom_content ) && ! empty( trim( $custom_content ) ) ) {
 				return wp_send_json_success( array( 'block_data' => $custom_content ) );
 			} else {
-				return wp_send_json_success( array( 'message' => __( 'No custom blocks found.', 'automatic-translations-for-polylang' ) ) );
+				return wp_send_json_success( array( 'message' => __( 'No custom blocks found.', 'autopoly-ai-translation-for-polylang' ) ) );
 			}
 			exit();
 		}
 
 		public function update_custom_blocks_content() {
 			if ( ! check_ajax_referer( 'atfp_block_update_nonce', 'atfp_nonce', false ) ) {
-				wp_send_json_error( __( 'Invalid security token sent.', 'automatic-translations-for-polylang' ) );
+				wp_send_json_error( __( 'Invalid security token sent.', 'autopoly-ai-translation-for-polylang' ) );
 				wp_die( '0', 400 );
 				exit();
 			}
@@ -171,7 +171,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				}
 			}
 
-			return wp_send_json_success( array( 'message' => __( 'Automatic Translation for Polylang: Custom Blocks data updated successfully', 'automatic-translations-for-polylang' ) ) );
+			return wp_send_json_success( array( 'message' => __( 'Automatic Translation for Polylang: Custom Blocks data updated successfully', 'autopoly-ai-translation-for-polylang' ) ) );
 		}
 
 		private function verify_block_data( $id_keys, $value, $block_rules ) {
@@ -212,7 +212,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 
 		public function atfp_update_translate_data() {
 			if ( ! check_ajax_referer( 'atfp_translate_nonce', 'atfp_nonce', false ) ) {
-				wp_send_json_error( __( 'Invalid security token sent.', 'automatic-translations-for-polylang' ) );
+				wp_send_json_error( __( 'Invalid security token sent.', 'autopoly-ai-translation-for-polylang' ) );
 				wp_die( '0', 400 );
 				exit();
 			}
@@ -257,11 +257,11 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				);
 
 				wp_send_json_success(array(
-					'message' => __('Translation data updated successfully', 'automatic-translations-for-polylang')
+					'message' => __('Translation data updated successfully', 'autopoly-ai-translation-for-polylang')
 				));
 			} else {
 				wp_send_json_error(array(
-					'message' => __('Atfp_Dashboard class not found', 'automatic-translations-for-polylang') 
+					'message' => __('Atfp_Dashboard class not found', 'autopoly-ai-translation-for-polylang') 
 				));
 			}
 			exit;
@@ -272,19 +272,19 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
          */
         public function update_elementor_data() {
 			if ( ! check_ajax_referer( 'atfp_translate_nonce', 'atfp_nonce', false ) ) {
-				wp_send_json_error( __( 'Invalid security token sent.', 'automatic-translations-for-polylang' ) );
+				wp_send_json_error( __( 'Invalid security token sent.', 'autopoly-ai-translation-for-polylang' ) );
 				wp_die( '0', 400 );
 				exit();
 			}
 
 			if(!class_exists("Atfp_Dashboard")){
-				wp_send_json_error( __( 'Translation Data class not found.', 'automatic-translations-for-polylang' ) );
+				wp_send_json_error( __( 'Translation Data class not found.', 'autopoly-ai-translation-for-polylang' ) );
 				wp_die( '0', 400 );
 				exit();
 			}
 
 			if(!method_exists("Atfp_Dashboard", "get_translation_data")){
-				wp_send_json_error( __( 'Get Translation Data method not found.', 'automatic-translations-for-polylang' ) );
+				wp_send_json_error( __( 'Get Translation Data method not found.', 'autopoly-ai-translation-for-polylang' ) );
 				wp_die( '0', 400 );
 				exit();
 			}	
@@ -292,7 +292,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 			$translation_data = Atfp_Dashboard::get_translation_data('atfp');
 
 			if(!isset($translation_data['total_character_count'])){
-				wp_send_json_error( __( 'Character count not found.', 'automatic-translations-for-polylang' ) );
+				wp_send_json_error( __( 'Character count not found.', 'autopoly-ai-translation-for-polylang' ) );
 				wp_die( '0', 400 );
 				exit();
 			}
@@ -300,7 +300,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 			$total_character_count = $translation_data['total_character_count'];
 			
 			if($total_character_count > 500000){
-				wp_send_json_error( __( 'Character count limit reached.', 'automatic-translations-for-polylang' ) );
+				wp_send_json_error( __( 'Character count limit reached.', 'autopoly-ai-translation-for-polylang' ) );
 				wp_die( '0', 400 );
 				exit();
 			}

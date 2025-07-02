@@ -10,8 +10,8 @@ class AtfpUsersFeedback {
 
 	private $plugin_url     = ATFP_URL;
 	private $plugin_version = ATFP_V;
-	private $plugin_name    = 'Automatic Translations For Polylang';
-	private $plugin_slug    = 'automatic-translations-for-polylang';
+	private $plugin_name    = 'AutoPoly - AI Translation For Polylang';
+	private $plugin_slug    = 'autopoly-ai-translation-for-polylang';
 	/*
 	|-----------------------------------------------------------------|
 	|   Use this constructor to fire all actions and filters          |
@@ -51,24 +51,24 @@ class AtfpUsersFeedback {
 		}
 		$deactivate_reasons = array(
 			'didnt_work_as_expected'         => array(
-				'title'             => esc_html( __( 'The plugin didn\'t work as expected', 'automatic-translations-for-polylang' ) ),
+				'title'             => esc_html( __( 'The plugin didn\'t work as expected', 'autopoly-ai-translation-for-polylang' ) ),
 				'input_placeholder' => 'What did you expect?',
 			),
 			'found_a_better_plugin'          => array(
-				'title'             => esc_html( __( 'I found a better plugin', 'automatic-translations-for-polylang' ) ),
-				'input_placeholder' => esc_html( __( 'Please share which plugin', 'automatic-translations-for-polylang' ) ),
+				'title'             => esc_html( __( 'I found a better plugin', 'autopoly-ai-translation-for-polylang' ) ),
+				'input_placeholder' => esc_html( __( 'Please share which plugin', 'autopoly-ai-translation-for-polylang' ) ),
 			),
 			'couldnt_get_the_plugin_to_work' => array(
-				'title'             => esc_html( __( 'The plugin is not working', 'automatic-translations-for-polylang' ) ),
+				'title'             => esc_html( __( 'The plugin is not working', 'autopoly-ai-translation-for-polylang' ) ),
 				'input_placeholder' => 'Please share your issue. So we can fix that for other users.',
 			),
 			'temporary_deactivation'         => array(
-				'title'             => esc_html( __( 'It\'s a temporary deactivation', 'automatic-translations-for-polylang' ) ),
+				'title'             => esc_html( __( 'It\'s a temporary deactivation', 'autopoly-ai-translation-for-polylang' ) ),
 				'input_placeholder' => '',
 			),
 			'other'                          => array(
-				'title'             => esc_html( __( 'Other', 'automatic-translations-for-polylang' ) ),
-				'input_placeholder' => esc_html( __( 'Please share the reason', 'automatic-translations-for-polylang' ) ),
+				'title'             => esc_html( __( 'Other', 'autopoly-ai-translation-for-polylang' ) ),
+				'input_placeholder' => esc_html( __( 'Please share the reason', 'autopoly-ai-translation-for-polylang' ) ),
 			),
 		);
 
@@ -77,7 +77,7 @@ class AtfpUsersFeedback {
 						
 			<div class="cool-plugins-deactivation-response">
 			<div id="cool-plugins-deactivate-feedback-dialog-header">
-				<span id="cool-plugins-feedback-form-title"><?php echo esc_html( __( 'Quick Feedback', 'automatic-translations-for-polylang' ) ); ?></span>
+				<span id="cool-plugins-feedback-form-title"><?php echo esc_html( __( 'Quick Feedback', 'autopoly-ai-translation-for-polylang' ) ); ?></span>
 			</div>
 			<div id="cool-plugins-loader-wrapper">
 				<div class="cool-plugins-loader-container">
@@ -90,7 +90,7 @@ class AtfpUsersFeedback {
 				wp_nonce_field( '_cool-plugins_deactivate_feedback_nonce', "$this->plugin_slug-wpnonce" );
 				?>
 				<input type="hidden" name="action" value="cool-plugins_deactivate_feedback" />
-				<div id="cool-plugins-deactivate-feedback-dialog-form-caption"><?php echo esc_html( __( 'If you have a moment, please share why you are deactivating this plugin.', 'automatic-translations-for-polylang' ) ); ?></div>
+				<div id="cool-plugins-deactivate-feedback-dialog-form-caption"><?php echo esc_html( __( 'If you have a moment, please share why you are deactivating this plugin.', 'autopoly-ai-translation-for-polylang' ) ); ?></div>
 				<div id="cool-plugins-deactivate-feedback-dialog-form-body">
 					<?php
 					foreach ( $deactivate_reasons as $reason_key => $reason ) :
@@ -108,7 +108,7 @@ class AtfpUsersFeedback {
 							<?php endif; ?>
 						</div>
 					<?php endforeach; ?>
-					<input class="cool-plugins-GDPR-data-notice" id="cool-plugins-GDPR-data-notice" type="checkbox"><label for="cool-plugins-GDPR-data-notice"><?php echo esc_html( __( 'I consent to having Cool Plugins store my all submitted information via this form, they can also respond to my inquiry.', 'automatic-translations-for-polylang' ) ); ?></label>
+					<input class="cool-plugins-GDPR-data-notice" id="cool-plugins-GDPR-data-notice" type="checkbox"><label for="cool-plugins-GDPR-data-notice"><?php echo esc_html( __( 'I consent to having Cool Plugins store my all submitted information via this form, they can also respond to my inquiry.', 'autopoly-ai-translation-for-polylang' ) ); ?></label>
 				</div>
 				<div class="cool-plugin-popup-button-wrapper">
 					<a class="cool-plugins-button button-deactivate" id="cool-plugin-submitNdeactivate">Submit and Deactivate</a>
@@ -129,24 +129,24 @@ class AtfpUsersFeedback {
 			$reason             = sanitize_text_field( $_POST['reason'] );
 			$deactivate_reasons = array(
 				'didnt_work_as_expected'         => array(
-					'title'             => esc_html( __( 'The plugin didn\'t work as expected', 'automatic-translations-for-polylang' ) ),
+					'title'             => esc_html( __( 'The plugin didn\'t work as expected', 'autopoly-ai-translation-for-polylang' ) ),
 					'input_placeholder' => 'What did you expect?',
 				),
 				'found_a_better_plugin'          => array(
-					'title'             => esc_html( __( 'I found a better plugin', 'automatic-translations-for-polylang' ) ),
-					'input_placeholder' => esc_html( __( 'Please share which plugin', 'automatic-translations-for-polylang' ) ),
+					'title'             => esc_html( __( 'I found a better plugin', 'autopoly-ai-translation-for-polylang' ) ),
+					'input_placeholder' => esc_html( __( 'Please share which plugin', 'autopoly-ai-translation-for-polylang' ) ),
 				),
 				'couldnt_get_the_plugin_to_work' => array(
-					'title'             => esc_html( __( 'The plugin is not working', 'automatic-translations-for-polylang' ) ),
+					'title'             => esc_html( __( 'The plugin is not working', 'autopoly-ai-translation-for-polylang' ) ),
 					'input_placeholder' => 'Please share your issue. So we can fix that for other users.',
 				),
 				'temporary_deactivation'         => array(
-					'title'             => esc_html( __( 'It\'s a temporary deactivation', 'automatic-translations-for-polylang' ) ),
+					'title'             => esc_html( __( 'It\'s a temporary deactivation', 'autopoly-ai-translation-for-polylang' ) ),
 					'input_placeholder' => '',
 				),
 				'other'                          => array(
-					'title'             => esc_html( __( 'Other', 'automatic-translations-for-polylang' ) ),
-					'input_placeholder' => esc_html( __( 'Please share the reason', 'automatic-translations-for-polylang' ) ),
+					'title'             => esc_html( __( 'Other', 'autopoly-ai-translation-for-polylang' ) ),
+					'input_placeholder' => esc_html( __( 'Please share the reason', 'autopoly-ai-translation-for-polylang' ) ),
 				),
 			);
 

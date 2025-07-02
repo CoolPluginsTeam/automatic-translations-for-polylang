@@ -75,7 +75,7 @@ const localAiTranslator = async (props) => {
         mainWrapperSelector: "#atfp_strings_model",
         btnSelector: `#${props.ID}`,
         btnClass: "local_ai_translator_btn",
-        btnText: __("Translate To", 'automatic-translations-for-polylang') + ' ' + targetLangName + ' (Beta)',
+        btnText: __("Translate To", 'autopoly-ai-translation-for-polylang') + ' ' + targetLangName + ' (Beta)',
         stringSelector: ".atfp_string_container tbody tr td.translate:not([data-translate-status='translated'])",
         progressBarSelector: "#atfp_strings_model .atfp_translate_progress",
         sourceLanguage: props.sourceLang,

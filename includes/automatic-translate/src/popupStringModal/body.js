@@ -38,7 +38,7 @@ const StringPopUpBody = (props) => {
             {translateContent.length > 0 && props.postDataFetchStatus ?
                 <>
                     {StringModalBodyNotice && <div className="atfp-body-notice-wrapper"><StringModalBodyNotice /></div>}
-                    <div className="atfp_translate_progress" key={props.modalRender}>{__("Automatic translation is in progress....", 'automatic-translations-for-polylang')}<br />{__("It will take few minutes, enjoy ☕ coffee in this time!", 'automatic-translations-for-polylang')}<br /><br />{__("Please do not leave this window or browser tab while translation is in progress...", 'automatic-translations-for-polylang')}</div>
+                    <div className="atfp_translate_progress" key={props.modalRender}>{__("Automatic translation is in progress....", 'autopoly-ai-translation-for-polylang')}<br />{__("It will take few minutes, enjoy ☕ coffee in this time!", 'autopoly-ai-translation-for-polylang')}<br /><br />{__("Please do not leave this window or browser tab while translation is in progress...", 'autopoly-ai-translation-for-polylang')}</div>
                     <div className={`translator-widget ${service}`} style={{ display: 'flex' }}>
                         <h3 className="choose-lang">{TranslateService({ Service: props.service }).heading} <span className="dashicons-before dashicons-translation"></span></h3>
 
@@ -51,9 +51,9 @@ const StringPopUpBody = (props) => {
                         <table className="scrolldown" id="stringTemplate">
                             <thead>
                                 <tr>
-                                    <th className="notranslate">{__("S.No", 'automatic-translations-for-polylang')}</th>
-                                    <th className="notranslate">{__("Source Text", 'automatic-translations-for-polylang')}</th>
-                                    <th className="notranslate">{__("Translation", 'automatic-translations-for-polylang')}</th>
+                                    <th className="notranslate">{__("S.No", 'autopoly-ai-translation-for-polylang')}</th>
+                                    <th className="notranslate">{__("Source Text", 'autopoly-ai-translation-for-polylang')}</th>
+                                    <th className="notranslate">{__("Translation", 'autopoly-ai-translation-for-polylang')}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -87,7 +87,7 @@ const StringPopUpBody = (props) => {
                     </div>
                 </> :
                 props.postDataFetchStatus ?
-                    <p>{__('No strings are available for translation', 'automatic-translations-for-polylang')}</p> :
+                    <p>{__('No strings are available for translation', 'autopoly-ai-translation-for-polylang')}</p> :
 
                     <div className="atfp-skeleton-loader-wrapper">
                         <div className="translate-widget">
@@ -97,9 +97,9 @@ const StringPopUpBody = (props) => {
                         <table>
                             <thead>
                                 <tr>
-                                    <th className="notranslate">{__("S.No", 'automatic-translations-for-polylang')}</th>
-                                    <th className="notranslate">{__("Source Text", 'automatic-translations-for-polylang')}</th>
-                                    <th className="notranslate">{__("Translation", 'automatic-translations-for-polylang')}</th>
+                                    <th className="notranslate">{__("S.No", 'autopoly-ai-translation-for-polylang')}</th>
+                                    <th className="notranslate">{__("Source Text", 'autopoly-ai-translation-for-polylang')}</th>
+                                    <th className="notranslate">{__("Translation", 'autopoly-ai-translation-for-polylang')}</th>
                                 </tr>
                             </thead>
                             <tbody>

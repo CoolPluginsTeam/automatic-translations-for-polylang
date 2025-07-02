@@ -40,15 +40,15 @@ const StringModalBodyNotice = () => {
     if (postMetaSync) {
       notices.push({
         className: 'atfp-notice atfp-notice-warning', message: <p>
-          {__('For accurate custom field translations, please disable the Custom Fields synchronization in ', 'automatic-translations-for-polylang')}
+          {__('For accurate custom field translations, please disable the Custom Fields synchronization in ', 'autopoly-ai-translation-for-polylang')}
           <a
             href={`${atfp_global_object.admin_url}admin.php?page=mlang_settings`}
             target="_blank"
             rel="noopener noreferrer"
           >
-            {__('Polylang settings', 'automatic-translations-for-polylang')}
+            {__('Polylang settings', 'autopoly-ai-translation-for-polylang')}
           </a>
-          {__('. This may affect linked posts or pages.', 'automatic-translations-for-polylang')}
+          {__('. This may affect linked posts or pages.', 'autopoly-ai-translation-for-polylang')}
         </p>
       });
     }
@@ -56,7 +56,7 @@ const StringModalBodyNotice = () => {
     const blockRules = select('block-atfp/translate').getBlockRules();
 
     if (!blockRules.AtfpBlockParseRules || Object.keys(blockRules.AtfpBlockParseRules).length === 0) {
-      notices.push({ className: 'atfp-notice atfp-notice-error', message: <p>{__('No block rules were found. It appears that the block-rules.JSON file could not be fetched, possibly because it is blocked by your server settings. Please check your server configuration to resolve this issue.', 'automatic-translations-for-polylang')}</p> });
+      notices.push({ className: 'atfp-notice atfp-notice-error', message: <p>{__('No block rules were found. It appears that the block-rules.JSON file could not be fetched, possibly because it is blocked by your server settings. Please check your server configuration to resolve this issue.', 'autopoly-ai-translation-for-polylang')}</p> });
     }
   }
 
@@ -131,7 +131,7 @@ const App = () => {
       const metaFieldBtn = document.querySelector(translateWrpSelector);
       if (metaFieldBtn) {
         metaFieldBtn.disabled = true;
-        metaFieldBtn.value = __("Already Translated", "automatic-translations-for-polylang");
+        metaFieldBtn.value = __("Already Translated", 'autopoly-ai-translation-for-polylang');
       }
     }
   }, [pageTranslate]);
@@ -166,10 +166,10 @@ const createMessagePopup = () => {
   messagePopup.innerHTML = `
     <div class="modal-container" style="display: flex">
       <div class="modal-content">
-        <p>${sprintf(__("Would you like to duplicate your original %s content and have it automatically translated into %s?", "automatic-translations-for-polylang"), postType, targetLangName)}</p>
+        <p>${sprintf(__("Would you like to duplicate your original %s content and have it automatically translated into %s?", 'autopoly-ai-translation-for-polylang'), postType, targetLangName)}</p>
         <div>
-          <div data-value="yes">${__("Yes", "automatic-translations-for-polylang")}</div>
-          <div data-value="no">${__("No", "automatic-translations-for-polylang")}</div>
+          <div data-value="yes">${__("Yes", 'autopoly-ai-translation-for-polylang')}</div>
+          <div data-value="no">${__("No", 'autopoly-ai-translation-for-polylang')}</div>
         </div>
       </div>
     </div>`;
