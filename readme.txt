@@ -25,9 +25,7 @@ https://youtu.be/bmmc-Ynwj8w
 
 #### Why Choose AutoPoly - AI Translation For Polylang?
 
-**AutoPoly - AI Translation For Polylang** is the ultimate solution for translating your **Elementor** and **Gutenberg** content easily. Unlike traditional methods that require manual translation and reformatting, this powerful addon **automates the entire process** while preserving your website's design and structure.
-
-[**🔗Read More!**](https://coolplugins.net/wordpress-automatic-translations-polylang/?utm_source=atfp_plugin&utm_medium=readme+&utm_campaign=blog+&utm_content=read_more)
+[**AutoPoly - AI Translation For Polylang**](https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=top_description) is the ultimate solution for translating your **Elementor** and **Gutenberg** content easily. Unlike traditional methods that require manual translation and reformatting, this powerful addon **automates the entire process** while preserving your website's design and structure.
 
 https://youtu.be/yamFwNRWEbc
 
@@ -89,8 +87,8 @@ https://youtu.be/yamFwNRWEbc
 
 #### Check out our advanced Automatic Translate Addon for Loco Translate
 
-* [**Automatic Translate Addon for Loco Translate**](https://locoaddon.com/plugin/automatic-translate-addon-for-loco-translate-pro/?utm_source=tpa_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=buy_pro) is an addon that enhances the functionality of the **Loco Translate** plugin by enabling the **automatic translation of WordPress themes and plugins**. This addon connects with sources like Google, Yandex, DeepL, or AI-powered sources like **ChatGPT,** **Gemini AI** and **Chrome AI** to provide instant and automated translations.
-* [**AI Translation for TranslatePress**](https://coolplugins.net/product/automatic-translate-addon-for-translatepress-pro/?utm_source=atlt_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=tpa_check_out) is a powerful addon that enhances the functionality of the TranslatePress plugin. This addon uses advanced translation services, like Google Translate, Yandex, and Chrome AI translator, to provide accurate and instant translations for your web pages automatically.
+* [**Automatic Translate Addon for Loco Translate**](https://locoaddon.com/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=atlt_check_out) is an addon that enhances the functionality of the **Loco Translate** plugin by enabling the **automatic translation of WordPress themes and plugins**. This addon connects with sources like Google, Yandex, DeepL, or AI-powered sources like **ChatGPT,** **Gemini AI** and **Chrome AI** to provide instant and automated translations.
+* [**AI Translation for TranslatePress**](https://coolplugins.net/product/automatic-translate-addon-for-translatepress-pro/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=tpa_check_out) is a powerful addon that enhances the functionality of the TranslatePress plugin. This addon uses advanced translation services, like Google Translate, Yandex, and Chrome AI translator, to provide accurate and instant translations for your web pages automatically.
 
 > **Important Notice:** This plugin serves as an AI translation extension for the official [**Polylang**](https://wordpress.org/plugins/polylang/) plugin.
 
@@ -137,7 +135,7 @@ To make your custom blocks translation-ready, follow these steps:
   Use Polylang's translation tools to translate your content.
   Your custom blocks will be automatically translated using the **AutoPoly - AI Translation For Polylang**.
 
-By following these steps, you can ensure that your custom blocks are ready for translation and can be easily translated into multiple languages. For a visual guide, check out our demo video on how to add custom blocks for translation: [Demo Video](https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=demo&utm_content=video_tutorial#custom-block-translate).
+By following these steps, you can ensure that your custom blocks are ready for translation and can be easily translated into multiple languages. For a visual guide, check out our demo video on how to add custom blocks for translation.
 
 == Special Thanks ==
 
