@@ -85,6 +85,10 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 				return false;
 			}
 
+			if(defined('ATFPP_V')){
+				return false;
+			}
+
 			if ( $plugin == plugin_basename( __FILE__ ) ) {
 				exit( wp_redirect( admin_url( 'admin.php?page=polylang-atfp-dashboard&tab=dashboard' ) ) );
 			}	
@@ -178,6 +182,10 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 		 * Add submenu page under the Polylang menu.
 		 */
 		public function atfp_add_submenu_page() {
+			if(defined('ATFPP_V')){
+				return;
+			}
+
 			add_submenu_page(
 				'mlang', // Parent slug
 				__( 'AutoPoly - AI Translation For Polylang', 'automatic-translations-for-polylang' ), // Page title
