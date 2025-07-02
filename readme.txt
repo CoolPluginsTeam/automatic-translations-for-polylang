@@ -59,6 +59,7 @@ https://youtu.be/yamFwNRWEbc
 * ❌ **Google Translate Widget Support:** Not Available
 * ❌ **OpenAI Translation Support:** Not Available
 * ❌ **Gemini Translation Support:** Not Available
+* ❌ **Bulk Translation:** Not Available
 * ❌ **Premium Support:** Not Available
 
 **Premium License**
