@@ -13,21 +13,17 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 AutoPoly - AI Translation For Polylang simplifies your translation process by automatically translating all pages/posts content from one language to another.
 
 == Description ==
+
+
 https://youtu.be/ecHsOyIL\_J4
 
-**AutoPoly - AI Translation For Polylang** reduces your translation **workload by 90%**. With this powerful addon, you can translate your **Gutenberg** and **Elementor pages**, sections, and widgets within a few clicks.
+[**AutoPoly - AI Translation For Polylang**](https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=top_description) reduces your translation **workload by 90%**. With this powerful addon, you can translate your **Gutenberg** and **Elementor pages**, sections, and widgets within a few clicks.
 
 This addon duplicates and translates **page/post titles, content, images, galleries, and meta fields,** eliminating the need to manually adjust featured images, layouts, and other elements.
 
 Whether you're using **Elementor** or **Gutenberg**, this addon makes the translation process easier, allowing you to focus on expanding your global audience effortlessly.
 
 https://youtu.be/bmmc-Ynwj8w
-
-#### Why Choose AutoPoly - AI Translation For Polylang?
-
-[**AutoPoly - AI Translation For Polylang**](https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=top_description) is the ultimate solution for translating your **Elementor** and **Gutenberg** content easily. Unlike traditional methods that require manual translation and reformatting, this powerful addon **automates the entire process** while preserving your website's design and structure.
-
-https://youtu.be/yamFwNRWEbc
 
 == Key Features ==
 
