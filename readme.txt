@@ -46,8 +46,8 @@ https://youtu.be/bmmc-Ynwj8w
 * ✅ **Gutenberg Block Compatibility**
 * ✅ **Elementor Page Translation**
 * ✅ **Inline Translation**
-* ❌ ** Classic Editor Translation:** Not Available
-* ❌ ** Custom Block Translation:** Not Available
+* ❌ **Classic Editor Translation:** Not Available
+* ❌ **Custom Block Translation:** Not Available
 * ❌ **Google Translate Widget Support:** Not Available
 * ❌ **OpenAI Translation Support:** Not Available
 * ❌ **Gemini Translation Support:** Not Available
