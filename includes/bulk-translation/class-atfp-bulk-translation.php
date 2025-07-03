@@ -49,7 +49,7 @@ if(!class_exists('ATFP_Bulk_Translation')):
 
         public function atfp_bulk_translate_button($views)
         {
-            echo "<a class='button atfp-bulk-translate-btn' style='display:none;' title='Bulk Translate option is avialable in pro version only' href='https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=bulk_translate' target='_blank'>Bulk Translate</a>";
+            echo "<a class='button atfp-bulk-translate-btn' style='display:none;' title='Bulk Translate option is avialable in pro version only' href='https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=bulk_translate' target='_blank'>Bulk Translate (Pro)</a>";
 
             return $views;
         }
