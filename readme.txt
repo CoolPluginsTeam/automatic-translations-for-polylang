@@ -1,5 +1,3 @@
-# AutoPoly - AI Translation For Polylang
-
 === AutoPoly - AI Translation For Polylang ===
 Contributors: narinder-singh,satindersingh,coolplugins
 Tags: Polylang, AI Translation, Content Translation, Translate
@@ -45,11 +43,11 @@ https://youtu.be/bmmc-Ynwj8w
 * ✅ **Yandex Translate Widget Support:** Available
 * ✅ **Unlimited Free Translations:** Available (Only via Yandex)
 * ✅ **API Key Required:** Not Required (Yandex Widget Support)
-* ✅  **Gutenberg Block Compatibility**
-* **✅  Elementor Page Translation**
-* **✅ Inline Translation**
-* **❌ Classic Editor Translation:** Not Available
-* **❌ Custom Block Translation:** Not Available
+* ✅ **Gutenberg Block Compatibility**
+* ✅ **Elementor Page Translation**
+* ✅ **Inline Translation**
+* ❌ ** Classic Editor Translation:** Not Available
+* ❌ ** Custom Block Translation:** Not Available
 * ❌ **Google Translate Widget Support:** Not Available
 * ❌ **OpenAI Translation Support:** Not Available
 * ❌ **Gemini Translation Support:** Not Available
@@ -58,11 +56,11 @@ https://youtu.be/bmmc-Ynwj8w
 
 **Premium License**
 
-* **✅ Bulk Translation:** Translate multiple posts, pages, or products at once to save time.
-* **✅  Elementor Page Translation:** Automatically translate entire Elementor pages, sections, and widgets.
-* **✅ Classic Editor Translation:** Easily translate all content created with the Classic WordPress Editor.
-* **✅ Inline Translation:** Translate specific text blocks or widgets directly on the front end.
-* ✅  **Gutenberg Block Compatibility:** Fully compatible with Gutenberg, this plugin allow you to translate block-based layouts.
+* ✅ **Bulk Translation:** Translate multiple posts, pages, or products at once to save time.
+* ✅ **Elementor Page Translation:** Automatically translate entire Elementor pages, sections, and widgets.
+* ✅ **Classic Editor Translation:** Easily translate all content created with the Classic WordPress Editor.
+* ✅ **Inline Translation:** Translate specific text blocks or widgets directly on the front end.
+* ✅ **Gutenberg Block Compatibility:** Fully compatible with Gutenberg, this plugin allow you to translate block-based layouts.
 * ✅ **Chrome Built-in AI Translation Support:** Instantly translate content directly inside browser using Chrome’s built-in AI translator.
 * ✅ **Gemini Translation Support:** Use Gemini AI to generate high-quality, context-aware translations.
 * ✅ **Google Translate Widget Support:** Automate the translation process using the Google Translate Widget.
