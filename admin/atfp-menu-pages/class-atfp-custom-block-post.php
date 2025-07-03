@@ -10,7 +10,7 @@ if ( ! class_exists( 'ATFP_Custom_Block_Post' ) ) {
 	/**
 	 * Class ATFP_Custom_Block_Post
 	 *
-	 * This class handles the custom block post type for the AI Translation For Polylang plugin.
+	 * This class handles the custom block post type for the AutoPoly - AI Translation For Polylang plugin.
 	 * It manages the registration of the custom post type, adds submenu pages under the Polylang menu,
 	 * and handles post save actions.
 	 *

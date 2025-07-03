@@ -1,14 +1,14 @@
-=== AutoPoly - AI Translation For Polylang ===
+﻿=== AutoPoly - AI Translation For Polylang ===
 Contributors: narinder-singh,satindersingh,coolplugins
 Tags: Polylang, AI Translation, Content Translation, Translate
 Requires at least: 5.0
 Tested up to: 6.8.1
 Requires PHP: 5.6
-Stable tag: 1.4.1
+Stable tag: 1.4.2
 Author URI: https://coolplugins.net/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-&#x20;AI Translation For Polylang simplifies your translation process by automatically translating all pages/posts content from one language to another.
+AI Translation For Polylang simplifies your translation process by automatically translating all pages/posts content from one language to another.
 
 == Description ==
 **Translate Your WordPress Website 10X Faster – Powered by AI, Built for Polylang**.

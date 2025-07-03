@@ -1,5 +1,64 @@
 const FilterTargetContent = (props) => {
     const skipTags=props.skipTags || [];
+
+    function fixHtmlTags(content) {
+        if (typeof content !== 'string' || !content.trim()) return content;
+    
+        const tagRegex = /<\/?([a-zA-Z0-9]+)(\s[^>]*)?>/g;
+        const stack = [];
+        let result = '';
+        let lastIndex = 0;
+        let match;
+    
+        while ((match = tagRegex.exec(content)) !== null) {
+            const [fullMatch, tagName] = match;
+            const isClosingTag = fullMatch.startsWith('</');
+            const currentIndex = match.index;
+    
+            // Append content before this tag
+            if (currentIndex > lastIndex) {
+                result += content.slice(lastIndex, currentIndex);
+            }
+    
+            if (!isClosingTag) {
+                // Opening tag: push to stack
+                stack.push({ tag: tagName });
+                result += fullMatch;
+            } else {
+                // Closing tag
+                const openIndex = stack.findIndex(t => t.tag === tagName);
+                if (openIndex !== -1) {
+                    // Match found: remove opening from stack
+                    stack.splice(openIndex, 1);
+                    result += fullMatch;
+                } else {
+                    // No opening tag: insert missing opening tag before closing
+                    result += `#atfp_temp_tag_open#<${tagName}>#atfp_temp_tag_close#` + fullMatch;
+                }
+            }
+    
+            lastIndex = tagRegex.lastIndex;
+        }
+    
+        // Append any remaining content after last tag
+        if (lastIndex < content.length) {
+            result += content.slice(lastIndex);
+        }
+    
+        // Add missing closing tags at the end
+        for (let i = stack.length - 1; i >= 0; i--) {
+            const { tag } = stack[i];
+            result += `#atfp_temp_tag_open#</${tag}>#atfp_temp_tag_close#`;
+        }
+    
+        // Clear references to free memory (optional in GC-based engines, but helpful)
+        match = null;
+        stack.length = 0;
+        content = null;
+    
+        return result;
+    }
+
     /**
      * Wraps the first element and its matching closing tag with translation spans.
      * If no elements are found, returns the original HTML.
@@ -18,13 +77,28 @@ const FilterTargetContent = (props) => {
             return html; // If no elements, return the original HTML
         }
 
-        let childElements = firstElement.children;
-        const length = childElements.length;
-        if (length > 0) {
-            for (let i = 0; i < length; i++) {
-                let element = childElements[i];
-                let filterContent = wrapFirstAndMatchingClosingTag(element.outerHTML);
-                element.outerHTML = filterContent;
+
+        let childNodes = firstElement.childNodes;
+        let childNodesLength = childNodes.length;
+        if (childNodesLength > 0) {
+            // Sort so that nodeType 3 (Text nodes) come first
+            childNodes = Array.from(childNodes).sort((a, b) => (a.nodeType === 3 ? -1 : b.nodeType === 3 ? 1 : 0));
+            for (let i = 0; i < childNodesLength; i++) {
+                let element = childNodes[i];
+
+                if(element.nodeType === 3){
+                    let textContent = element.textContent.replace(/^\s+|^\.\s+|^\s.|\s+$|\.\s+$|\s.\+$/g, (match) => `#atfp_open_translate_span#${match}#atfp_close_translate_span#`);
+
+                    element.textContent = textContent;
+                }
+                else if(element.nodeType === 8){
+                    let textContent = `<!--${element.textContent}-->`;
+                    element.textContent = textContent;
+                }
+                else{
+                    let filterContent = wrapFirstAndMatchingClosingTag(element.outerHTML);
+                    element.outerHTML = filterContent;
+                }
             }
         }
 
@@ -48,7 +122,7 @@ const FilterTargetContent = (props) => {
 
         let firstElementHtml = firstElement.innerHTML;
 
-        firstElementHtml = firstElementHtml.replace(/^\s+|\s+$/g, (match) => `#atfp_open_translate_span#${match}#atfp_close_translate_span#`);
+        firstElementHtml = firstElementHtml.replace(/^\s+|^\.\s+|^\s.|\s+$|\.\s+$|\s.\+$/g, (match) => `#atfp_open_translate_span#${match}#atfp_close_translate_span#`);
 
         firstElement.innerHTML = '';
         let closeTag = '';
@@ -65,7 +139,6 @@ const FilterTargetContent = (props) => {
             firstElementHtml = firstElementHtml.replace(/#atfp_open_translate_span#|#atfp_close_translate_span#/g, '');
             firstElementHtml = "#atfp_open_translate_span#"+firstElementHtml+"#atfp_close_translate_span#";
         }
-
 
         if ('' !== firstElementHtml) {
             if ('' !== openTag) {
@@ -144,7 +217,7 @@ const FilterTargetContent = (props) => {
                     let textNode=null;
 
                     if(element.nodeType === 3){
-                        const textContent = element.textContent.replace(/^\s+|\s+$/g, (match) => `#atfp_open_translate_span#${match}#atfp_close_translate_span#`);
+                        const textContent = element.textContent.replace(/^\s+|^\.\s+|^\s.|\s+$|\.\s+$|\s.\+$/g, (match) => `#atfp_open_translate_span#${match}#atfp_close_translate_span#`);
 
                         textNode = document.createTextNode(textContent);
                     }else if(element.nodeType === 8){
@@ -166,12 +239,16 @@ const FilterTargetContent = (props) => {
             return doc;
         }
 
+
+
         const tempElement = document.createElement('div');
-        
-        tempElement.innerHTML = string;
+        tempElement.innerHTML = fixHtmlTags(string);
         replaceInnerTextWithSpan(tempElement);
 
         let content = tempElement.innerText;
+
+        // remoove all the #atfp_temp_tag_open# and #atfp_open_translate_span#
+        content = content.replace(/#atfp_temp_tag_open#([\s\S]*?)#atfp_temp_tag_close#/g, '');
 
         return splitContent(content);
     }

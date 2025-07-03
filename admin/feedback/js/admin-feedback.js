@@ -1,7 +1,7 @@
 (function($) {
     $(document).ready(function() {
-        let plugin_name = 'automatic-translations-for-polylang';
-        let plugin_slug = 'automatic-translations-for-polylang';
+        let plugin_name = 'autopoly-ai-translation-for-polylang';
+        let plugin_slug = 'autopoly-ai-translation-for-polylang';
         $target = $('#the-list').find('[data-slug="' + plugin_name + '"] span.deactivate a');
 
         var plugin_deactivate_link = $target.attr('href');

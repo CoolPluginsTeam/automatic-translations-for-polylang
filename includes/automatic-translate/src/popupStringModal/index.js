@@ -16,6 +16,23 @@ const popStringModal = (props) => {
     const [refPostData, setRefPostData] = useState('');
     const [translatePending, setTranslatePending] = useState(true);
     const [characterCount, setCharacterCount] = useState(translateData?.targetCharacterCount || 0);
+    const [onDestroy, setOnDestroy] = useState([]);
+
+    const updateDestroyHandler = (callback) => {
+        setOnDestroy(prev => [...prev, callback]);
+    }
+
+    useEffect(() => {
+        if(!popupVisibility){
+            if (onDestroy.length > 0) {
+                onDestroy.forEach(callback => {
+                    if (typeof callback === 'function') {
+                        callback();
+                    }
+                });
+            }
+        }
+    }, [popupVisibility, onDestroy]);
 
     /**
      * Returns the label for the service provider.
@@ -24,12 +41,11 @@ const popStringModal = (props) => {
     const serviceLabel = () => {
         const serviceProvider = props.service;
 
-        if (serviceProvider === 'yandex') {
-            return 'Yandex Translate';
-        }else if (serviceProvider === 'localAiTranslator') {
+        if (serviceProvider === 'localAiTranslator') {
             return 'Chrome AI Translator';
+        }else{
+            return serviceProvider.replace(/^\w/, c => c.toUpperCase()) + ' Translate';
         }
-        return serviceProvider;
     }
 
     /**
@@ -37,7 +53,7 @@ const popStringModal = (props) => {
      */
     useEffect(() => {
         if (!props.postDataFetchStatus) {
-                props.fetchPostData({ postId: props.postId, sourceLang: props.sourceLang, targetLang: props.targetLang, updatePostDataFetch: props.updatePostDataFetch, refPostData: data => setRefPostData(data) });
+                props.fetchPostData({ postId: props.postId, sourceLang: props.sourceLang, targetLang: props.targetLang, updatePostDataFetch: props.updatePostDataFetch, refPostData: data => setRefPostData(data), updateDestroyHandler: updateDestroyHandler });
         }
     }, [props.postDataFetchStatus, props.modalRender])
 
@@ -124,6 +140,7 @@ const popStringModal = (props) => {
                         modalRender={props.modalRender}
                         translateStatus={translateStatus}
                         stringModalBodyNotice={props.stringModalBodyNotice}
+                        updateDestroyHandler={updateDestroyHandler}
                     />
                     <StringPopUpFooter
                         modalRender={props.modalRender}

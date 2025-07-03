@@ -1,21 +1,21 @@
 <?php
 /*
-Plugin Name: AI Translation For Polylang
+Plugin Name: AutoPoly - AI Translation For Polylang
 Plugin URI: https://coolplugins.net/
-Version: 1.4.1
+Version: 1.4.2
 Author: Cool Plugins
 Author URI: https://coolplugins.net/
-Description: AI Translation for Polylang simplifies your translation process by automatically translating all pages/posts content from one language to another.
+Description: AutoPoly - AI Translation For Polylang simplifies your translation process by automatically translating all pages/posts content from one language to another.
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: automatic-translations-for-polylang
+Text Domain: autopoly-ai-translation-for-polylang
 */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 if ( ! defined( 'ATFP_V' ) ) {
-	define( 'ATFP_V', '1.4.1' );
+	define( 'ATFP_V', '1.4.2' );
 }
 if ( ! defined( 'ATFP_DIR_PATH' ) ) {
 	define( 'ATFP_DIR_PATH', plugin_dir_path( __FILE__ ) );
@@ -28,13 +28,13 @@ if ( ! defined( 'ATFP_FILE' ) ) {
 	define( 'ATFP_FILE', __FILE__ );
 }
 
-if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
-	final class Automatic_Translations_For_Polylang {
+if ( ! class_exists( 'AutoPoly' ) ) {
+	final class AutoPoly {
 
 		/**
 		 * Plugin instance.
 		 *
-		 * @var Automatic_Translations_For_Polylang
+		 * @var AutoPoly
 		 * @access private
 		 */
 		private static $instance = null;
@@ -42,7 +42,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 		/**
 		 * Get plugin instance.
 		 *
-		 * @return Automatic_Translations_For_Polylang
+		 * @return AutoPoly
 		 * @static
 		 */
 		public static function get_instance() {
@@ -64,9 +64,8 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			add_action( 'admin_menu', array( $this, 'atfp_add_submenu_page' ), 11 );
 			add_action( 'admin_enqueue_scripts', array( $this, 'atfp_set_dashboard_style' ) );
 			add_action('init', array($this, 'atfp_translation_string_migration'));
-			add_action('admin_menu', array($this, 'atfp_add_support_blocks_submenu_page'), 11);
 			add_action( 'activated_plugin', array( $this, 'atfp_plugin_redirection' ) );
-			// add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'atfp_plugin_action_links' ) );
+			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'atfp_plugin_action_links' ) );
 
 			// Add the action to hide unrelated notices
 			if(isset($_GET['page']) && $_GET['page'] == 'polylang-atfp-dashboard'){
@@ -77,12 +76,16 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 		}
 
 		public function atfp_plugin_action_links($links) {
-			$links[] = '<a href="https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin&utm_medium=plugin_page&utm_campaign=get_pro&utm_content=buy_pro" target="_blank">' . __( 'Buy Pro', 'automatic-translations-for-polylang' ) . '</a>';
+			$links[] = '<a href="https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=plugin_list" target="_blank">' . __( 'Buy Pro', 'autopoly-ai-translation-for-polylang' ) . '</a>';
 			return $links;
 		}
 
 		public function atfp_plugin_redirection($plugin) {
 			if ( ! is_plugin_active( 'polylang/polylang.php' ) && ! is_plugin_active( 'polylang-pro/polylang.php' ) ) {
+				return false;
+			}
+
+			if(defined('ATFPP_V')){
 				return false;
 			}
 
@@ -179,35 +182,27 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 		 * Add submenu page under the Polylang menu.
 		 */
 		public function atfp_add_submenu_page() {
+			if(defined('ATFPP_V')){
+				return;
+			}
+
 			add_submenu_page(
 				'mlang', // Parent slug
-				__( 'AI Translation For Polylang', 'automatic-translations-for-polylang' ), // Page title
-				__( 'AI Translation', 'automatic-translations-for-polylang' ), // Menu title
+				__( 'AutoPoly - AI Translation For Polylang', 'autopoly-ai-translation-for-polylang' ), // Page title
+				__( 'AutoPoly', 'autopoly-ai-translation-for-polylang' ), // Menu title
 				'manage_options', // Capability
 				'polylang-atfp-dashboard', // Menu slug
 				array( $this, 'atfp_render_dashboard_page' ) // Callback function
 			);
 		}
 
-		// Add submenu page for support blocks
-		public function atfp_add_support_blocks_submenu_page() {
-			add_submenu_page(
-				'mlang', // Parent slug
-				__( 'Support Blocks', 'automatic-translations-for-polylang' ), // Page title
-				__( '↳ Support Blocks', 'automatic-translations-for-polylang' ), // Menu title
-				'manage_options', // Capability
-				'polylang-atfp-dashboard&tab=support-blocks', // Menu slug (unique slug for submenu page)
-				array( $this, 'atfp_render_dashboard_page' ) // Callback function
-			);
-		}
-
 		public function atfp_render_dashboard_page() {
-			$text_domain = 'automatic-translations-for-polylang';
+			$text_domain = 'autopoly-ai-translation-for-polylang';
 			$file_prefix = 'admin/atfp-dashboard/views/';
 			
 			$valid_tabs = [
 				'dashboard'       => __('Dashboard', $text_domain),
-				// 'ai-translations' => __('AI Translations', $text_domain),
+				'ai-translations' => __('AI Translations', $text_domain),
 				'settings'        => __('Settings', $text_domain),
 				'license'         => __('License', $text_domain),
 				'free-vs-pro'     => __('Free vs Pro', $text_domain),
@@ -233,14 +228,15 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			<div class="atfp-dashboard-wrapper">
 				<div class="atfp-dashboard-header">
 					<div class="atfp-dashboard-header-left">
-						<img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/polylang-addon-logo.svg'); ?>" 
-							alt="<?php esc_attr_e('Polylang Addon Logo', $text_domain); ?>">
+						<a href="?page=polylang-atfp-dashboard&tab=dashboard" class="atfp-dashboard-logo-link">
+							<img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/polylang-addon-logo.svg'); ?>" alt="<?php esc_attr_e('Polylang Addon Logo', $text_domain); ?>">
+						</a>
 						<div class="atfp-dashboard-tab-title">
 							<span>↳</span> <?php echo esc_html($valid_tabs[$current_tab]); ?>
 						</div>
 					</div>
 					<div class="atfp-dashboard-header-right">
-						<span><?php esc_html_e('Auto translate pages and posts.', $text_domain); ?></span>
+						<span><?php echo esc_html('AutoPoly - AI Translation For Polylang'); ?></span>
 						<?php foreach ($buttons as $button): ?>
 							<a href="<?php echo esc_url($button['url']); ?>" 
 							class="atfp-dashboard-btn" 
@@ -311,10 +307,11 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			$index=0;
 			$total_languages=count($pll_languages);
 			$pll_active_languages=pll_current_language();
-
+			
 			$post_type=isset($current_screen->post_type) ? $current_screen->post_type : '';
 			$post_status=(isset($_GET['post_status']) && 'trash' === sanitize_text_field(wp_unslash($_GET['post_status']))) ? 'trash' : 'publish';
-
+			$all_translated_post_count=0;
+			$list_html='';
 			if(count($pll_languages) > 1){
 				echo "<div class='atfp_subsubsub' style='display:none; clear:both;'>
 					<ul class='subsubsub atfp_subsubsub_list'>";
@@ -332,10 +329,15 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 							$pending_post_count=pll_count_posts($language_slug, array('post_type'=>$post_type, 'post_status'=>'pending'));
 							$translated_post_count+=$pending_post_count;
 						}
+
+						$all_translated_post_count+=$translated_post_count;
 						// echo $flag; // phpcs:ignore WordPress.Security.EscapeOutput
-						echo "<li class='atfp_pll_lang_".esc_attr($language_slug)."'><a href='edit.php?post_type=".esc_attr($post_type)."&lang=".esc_attr($language_slug)."' class='".esc_attr($current_class)."'>".esc_html($lang->name)." <span class='count'>(".esc_html($translated_post_count).")</span></a>".($index < $total_languages-1 ? ' |&nbsp;' : '')."</li>";
+						$list_html.="<li class='atfp_pll_lang_".esc_attr($language_slug)."'><a href='edit.php?post_type=".esc_attr($post_type)."&lang=".esc_attr($language_slug)."' class='".esc_attr($current_class)."'>".esc_html($lang->name)." <span class='count'>(".esc_html($translated_post_count).")</span></a>".($index < $total_languages-1 ? ' |&nbsp;' : '')."</li>";
 						$index++;
 					}
+
+					echo "<li class='atfp_pll_lang_all'><a href='edit.php?post_type=".esc_attr($post_type)."&lang=all"."' class=''>All Languages<span class='count'>(".esc_html($all_translated_post_count).")</span></a> |&nbsp;</li>";
+					echo $list_html;
 				echo "</ul>
 				</div>";
 			}
@@ -352,6 +354,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 			require_once ATFP_DIR_PATH . '/helper/class-atfp-helper.php';
 			require_once ATFP_DIR_PATH . 'admin/atfp-menu-pages/class-atfp-custom-block-post.php';
 			require_once ATFP_DIR_PATH . 'includes/class-atfp-register-backend-assets.php';
+			require_once ATFP_DIR_PATH . '/includes/bulk-translation/class-atfp-bulk-translation.php';
 			require_once ATFP_DIR_PATH . 'includes/elementor-translate/class-atfp-elementor-translate.php';
 		}
 		/**
@@ -371,6 +374,11 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 				}
 
 				add_action( 'add_meta_boxes', array( $this, 'atfp_shortcode_metabox' ) );
+
+				if(class_exists('ATFP_Bulk_Translation')) {
+					ATFP_Bulk_Translation::get_instance();
+				}
+
 				$this->atfp_register_backend_assets();
 
 				$this->atfp_initialize_elementor_translation();
@@ -379,9 +387,9 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 				if(class_exists('Atfp_Dashboard') && !defined('ATFPP_V')) {
 					Atfp_Dashboard::review_notice(
 						'atfp', // Required
-						'AI Translation For Polylang', // Required
+						'AutoPoly - AI Translation For Polylang (Pro)', // Required
 						'https://wordpress.org/support/plugin/automatic-translations-for-polylang/reviews/#new-post', // Required
-						ATFP_URL .'assets/images/ai-automatic-translation-for-polylang.png' // Required
+						ATFP_URL .'assets/images/ai-translation-for-Polylang.svg' // Required
 					);
 				}
 
@@ -398,7 +406,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 		 * Load plugin textdomain.
 		 */
 		public function load_plugin_textdomain() {
-			load_plugin_textdomain( 'automatic-translations-for-polylang', false, basename( dirname( __FILE__ ) ) . '/languages/' );
+			load_plugin_textdomain( 'autopoly-ai-translation-for-polylang', false, basename( dirname( __FILE__ ) ) . '/languages/' );
 		}
 
 
@@ -417,7 +425,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 					// translators: 1: Plugin Name, 2: Plugin URL
 					esc_html__(
 						'In order to use %1$s plugin, please install and activate the latest version  of %2$s',
-						'automatic-translations-for-polylang'
+						'autopoly-ai-translation-for-polylang'
 					),
 					wp_kses( '<strong>' . esc_html( $plugin_info['Name'] ) . '</strong>', 'strong' ),
 					wp_kses( '<a href="' . esc_url( $url ) . '" class="thickbox" title="' . esc_attr( $title ) . '">' . esc_html( $title ) . '</a>', 'a' )
@@ -479,7 +487,7 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 						if ( ! function_exists( 'PLL' ) || ! PLL()->model->is_translated_post_type( $post->post_type ) ) {
 							return;
 						}
-						add_meta_box( 'atfp-meta-box', __( 'Automatic Translate', 'automatic-translations-for-polylang' ), array( $this, 'atfp_shortcode_text' ), null, 'side', 'high' );
+						add_meta_box( 'atfp-meta-box', __( 'Automatic Translate', 'autopoly-ai-translation-for-polylang' ), array( $this, 'atfp_shortcode_text' ), null, 'side', 'high' );
 					}
 				}
 			}
@@ -503,16 +511,16 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 					}
 				}
 				?>
-				<input type="button" class="button button-primary" name="atfp_meta_box_translate" id="atfp-translate-button" value="<?php echo esc_attr__( 'Translate Page', 'automatic-translations-for-polylang' ); ?>" readonly/><br><br>
-				<p style="margin-bottom: .5rem;"><?php echo esc_html( sprintf( __( 'Translate or duplicate content from %s to %s', 'automatic-translations-for-polylang' ), $source_language, $target_language ) ); ?></p>
+				<input type="button" class="button button-primary" name="atfp_meta_box_translate" id="atfp-translate-button" value="<?php echo esc_attr__( 'Translate Page', 'autopoly-ai-translation-for-polylang' ); ?>" readonly/><br><br>
+				<p style="margin-bottom: .5rem;"><?php echo esc_html( sprintf( __( 'Translate or duplicate content from %s to %s', 'autopoly-ai-translation-for-polylang' ), $source_language, $target_language ) ); ?></p>
 				<?php
 				if(class_exists('Atfp_Dashboard') && !Atfp_Dashboard::atfp_hide_review_notice_status('atfp')){
 					?>
 					<hr>
 					<div class="atfp-review-meta-box">
-					<p><?php echo esc_html__( 'We hope you find our plugin helpful for your translation needs. Your feedback is valuable to us!', 'automatic-translations-for-polylang' ); ?>
+					<p><?php echo esc_html__( 'We hope you find our plugin helpful for your translation needs. Your feedback is valuable to us!', 'autopoly-ai-translation-for-polylang' ); ?>
 					<br>
-					<a href="<?php echo esc_url( 'https://wordpress.org/support/plugin/automatic-translations-for-polylang/reviews/#new-post' ); ?>" class="components-button is-primary is-small" target="_blank"><?php echo esc_html__( 'Rate Us', 'automatic-translations-for-polylang' ); ?><span> ★★★★★</span></a>
+					<a href="<?php echo esc_url( 'https://wordpress.org/support/plugin/automatic-translations-for-polylang/reviews/#new-post' ); ?>" class="components-button is-primary is-small" target="_blank"><?php echo esc_html__( 'Rate Us', 'autopoly-ai-translation-for-polylang' ); ?><span> ★★★★★</span></a>
 					</p>
 					</div>
 					<?php
@@ -544,8 +552,8 @@ if ( ! class_exists( 'Automatic_Translations_For_Polylang' ) ) {
 
 }
 
-function Automatic_Translations_For_Polylang() {
-	return Automatic_Translations_For_Polylang::get_instance();
+function AutoPoly() {
+	return AutoPoly::get_instance();
 }
 
-$Automatic_Translations_For_Polylang = Automatic_Translations_For_Polylang();
+$AutoPoly = AutoPoly();

@@ -107,7 +107,11 @@ Polylang Addon Dashboard - Admin Panel Styles
     align-items: center;
     gap: 15px;
 }
-  	.atfp-dashboard-header-left img{
+.atfp-dashboard-logo-link:focus,
+.atfp-dashboard-logo-link:hover {
+    box-shadow: none;
+}
+.atfp-dashboard-header-left img{
 	max-width: 170px;
 }
 .atfp-dashboard-header-left svg {
@@ -713,32 +717,74 @@ ul.atfp-dashboard-sts-btm li span:first-child {
 }
 
 .atfp-dashboard-api-settings {
-    width: 55%;
+    width: 100%;
 }
 
 .atfp-dashboard-api-settings label {
     display: block;
     font-weight: bold;
-    margin: 10px 0px;
+    margin: 30px 0px 10px 0px;
+}
+
+.atfp-dashboard-api-settings .input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 60%;
+}
+
+.atfp-dashboard-api-settings .input-group input {
+    width: calc(100% - 70px);
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    margin: 0;
 }
 
 .atfp-dashboard-api-settings input {
     width: 100%;
     padding: 8px;
-    margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
+.atfp-dashboard-api-settings textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    margin: 0;
+    font-family: inherit;
+    resize: vertical;
+}
+
 .atfp-dashboard-api-settings a {
-    margin-bottom: 20px;
+    margin: 10px 0px 10px 0px;
     display: inline-block;
     font-size: 14px;
     color: #0073aa;
     text-decoration: none;
 }
+
+.atfp-bulk-translation-post-status-options{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.atfp-bulk-translation-post-status-options input{
+    margin-right: 10px;
+    width: 10px;
+}
+
+.atfp-bulk-translation-post-status-options label{
+    margin-right: 10px;
+    margin-block: 0px;
+}
+
 .atfp-dashboard-api-settings .atfp-dashboard-save-btn-container{
-    margin-top: 15px;
+    margin-top: 20px;
 }
 
 /* ================================================
