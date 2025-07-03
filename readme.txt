@@ -4,7 +4,7 @@ Tags: Polylang, AI Translation, Content Translation, Translate
 Requires at least: 5.0
 Tested up to: 6.8.1
 Requires PHP: 5.6
-Stable tag: 1.4.1
+Stable tag: 1.4.2
 Author URI: https://coolplugins.net/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -188,6 +188,15 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+
+= Version 1.4.2 | 03 July 2025 =
+* **Fixed:** Content format issue after translation.
+* **Added:** Bulk Translation Pro button & pro version AI providers buttons.
+* **Improved:** Settings modal styling and content.
+* **Improved:** Dashboard pages styling and content.
+* **Improved:** Text domain same as plugin name.
+* **Renamed:** AI Translation for Polylang to AutoPoly - AI Translation For Polylang.
+* **Tested up to:** Elementor 3.30.1 & Elementor Pro 3.30.0.
 
 = Version 1.4.1 | 09 June 2025 =
 * **Fixed:** Fixed inline translation issue with browser latest version.
