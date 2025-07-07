@@ -12,6 +12,7 @@ class AtfpUsersFeedback {
 	private $plugin_version = ATFP_V;
 	private $plugin_name    = 'AutoPoly - AI Translation For Polylang';
 	private $plugin_slug    = 'autopoly-ai-translation-for-polylang';
+	private $plugin_domain  = 'atfp';
 	/*
 	|-----------------------------------------------------------------|
 	|   Use this constructor to fire all actions and filters          |
@@ -99,7 +100,7 @@ class AtfpUsersFeedback {
 							<input id="cool-plugins-deactivate-feedback-<?php echo esc_attr( $reason_key ); ?>" class="cool-plugins-deactivate-feedback-dialog-input" type="radio" name="reason_key" value="<?php echo esc_attr( $reason_key ); ?>" />
 							<label for="cool-plugins-deactivate-feedback-<?php echo esc_attr( $reason_key ); ?>" class="cool-plugins-deactivate-feedback-dialog-label"><?php echo esc_html( $reason['title'] ); ?></label>
 							<?php if ( ! empty( $reason['input_placeholder'] ) ) : ?>
-								<textarea class="cool-plugins-feedback-text" type="textarea" name="reason_<?php echo esc_attr( $reason_key ); ?>" placeholder="<?php echo esc_attr( $reason['input_placeholder'] ); ?>"></textarea>
+								<textarea class="cool-plugins-feedback-text" type="textarea" name="<?php echo esc_attr( $this->plugin_domain ); ?>_reason_<?php echo esc_attr( $reason_key ); ?>" placeholder="<?php echo esc_attr( $reason['input_placeholder'] ); ?>"></textarea>
 								<?php
 							endif;
 							?>
@@ -108,7 +109,7 @@ class AtfpUsersFeedback {
 							<?php endif; ?>
 						</div>
 					<?php endforeach; ?>
-					<input class="cool-plugins-GDPR-data-notice" id="cool-plugins-GDPR-data-notice" type="checkbox"><label for="cool-plugins-GDPR-data-notice"><?php echo esc_html( __( 'I consent to having Cool Plugins store my all submitted information via this form, they can also respond to my inquiry.', 'autopoly-ai-translation-for-polylang' ) ); ?></label>
+					<input class="cool-plugins-GDPR-data-notice" id="cool-plugins-GDPR-data-notice-<?php echo esc_attr( $this->plugin_domain ); ?>" type="checkbox"><label for="cool-plugins-GDPR-data-notice"><?php echo esc_html( __( 'I agree to share anonymous usage data and basic site details (such as server, PHP, and WordPress versions) to support AI Translation Addon for Polylang improvement efforts. Additionally, I allow Cool Plugins to store all information provided through this form and to respond to my inquiry.', 'autopoly-ai-translation-for-polylang' ) ); ?></label>
 				</div>
 				<div class="cool-plugin-popup-button-wrapper">
 					<a class="cool-plugins-button button-deactivate" id="cool-plugin-submitNdeactivate">Submit and Deactivate</a>
@@ -155,14 +156,24 @@ class AtfpUsersFeedback {
 			$sanitized_message = sanitize_text_field( $_POST['message'] ) == '' ? 'N/A' : sanitize_text_field( $_POST['message'] );
 			$admin_email       = sanitize_email( get_option( 'admin_email' ) );
 			$site_url          = esc_url( site_url() );
-			$feedback_url      = esc_url( 'http://feedback.coolplugins.net/wp-json/coolplugins-feedback/v1/feedback' );
+			$install_date      = get_option('atfp-install-date');
+			$plugin_initial =  get_option( 'atfp_initial_save_version' );
+			$unique_key     = '41';  // Ensure this key is unique per plugin to prevent collisions when site URL and install date are the same across plugins
+			$server_info 	   = \Automatic_Translations_For_Polylang::atfp_get_user_info()['server_info'];
+			$extra_details 	   = \Automatic_Translations_For_Polylang::atfp_get_user_info()['extra_details'];
+			$site_id        = $site_url . '-' . $install_date . '-' . $unique_key;
+			$feedback_url      = esc_url( ATFP_FEEDBACK_API . 'wp-json/coolplugins-feedback/v1/feedback' );
 			$response          = wp_remote_post(
 				$feedback_url,
 				array(
 					'timeout' => 30,
 					'body'    => array(
+						'site_id'=>md5($site_id),
+						'server_info' => serialize($server_info),
+						'extra_details' => serialize($extra_details),
 						'plugin_version' => $this->plugin_version,
 						'plugin_name'    => $this->plugin_name,
+						'plugin_initial'  => isset($plugin_initial) ? sanitize_text_field($plugin_initial) : 'N/A',
 						'reason'         => $deativation_reason,
 						'review'         => $sanitized_message,
 						'email'          => $admin_email,

@@ -28,6 +28,10 @@ if ( ! defined( 'ATFP_FILE' ) ) {
 	define( 'ATFP_FILE', __FILE__ );
 }
 
+if ( ! defined( 'ATFP_FEEDBACK_API' ) ) {
+	define( 'ATFP_FEEDBACK_API', "https://feedback.coolplugins.net/" );
+}
+
 if ( ! class_exists( 'AutoPoly' ) ) {
 	final class AutoPoly {
 
@@ -65,6 +69,12 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 			add_action( 'admin_enqueue_scripts', array( $this, 'atfp_set_dashboard_style' ) );
 			add_action('init', array($this, 'atfp_translation_string_migration'));
 			add_action( 'activated_plugin', array( $this, 'atfp_plugin_redirection' ) );
+			
+			// Initialize cron
+			$this->init_cron();
+
+			// Initialize feedback notice.
+			$this->init_feedback_notice();
 			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'atfp_plugin_action_links' ) );
 
 			// Add the action to hide unrelated notices
@@ -110,8 +120,62 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 		public function atfp_set_dashboard_style( $hook ) {
 			if(isset($_GET['page']) && $_GET['page'] == 'polylang-atfp-dashboard') {
 				wp_enqueue_style( 'atfp-dashboard-style', ATFP_URL . 'admin/atfp-dashboard/css/admin-styles.css',null, ATFP_V, 'all' );
+				wp_enqueue_script( 'atfp-dashboard-script', ATFP_URL . 'admin/atfp-dashboard/js/atfp-data-share-setting.js', array('jquery'), ATFP_V, true );
 			}
 		}
+
+		/**
+		 * Initialize the cron job for the plugin.
+		 */
+		public function init_cron(){
+			// if (is_admin()) {
+			require_once ATFP_DIR_PATH . '/admin/cpfm-feedback/cron/atfp-cron.php';
+			$cron = new ATFP_cronjob();
+			$cron->atfp_cron_init_hooks();
+			// }
+			}
+
+			/**
+			 * Initialize the feedback notice for the plugin.
+			 */
+
+			public function init_feedback_notice() {
+				if (is_admin()) {
+	
+					if(!class_exists('CPFM_Feedback_Notice')){
+						require_once ATFP_DIR_PATH . '/admin/cpfm-feedback/cpfm-common-notice.php';
+
+					}
+	
+				add_action('cpfm_register_notice', function () {
+					if (!class_exists('CPFM_Feedback_Notice') || !current_user_can('manage_options')) {
+						return;
+					}
+					
+					$notice = [
+						'title' => __('AutoPoly - AI Translation For Polylang', 'ATFP'),
+						'message' => __('Help us make this plugin more compatible with your site by sharing non-sensitive site data.', 'ATFP'),
+						'pages' => ['polylang-atfp-dashboard'],
+						'always_show_on' => ['polylang-atfp-dashboard'], // This enables auto-show
+						'plugin_name'=>'atfp'
+					];
+					CPFM_Feedback_Notice::cpfm_register_notice('cool_translations', $notice);
+						if (!isset($GLOBALS['cool_plugins_feedback'])) {
+							$GLOBALS['cool_plugins_feedback'] = [];
+						}
+						$GLOBALS['cool_plugins_feedback']['cool_translations'][] = $notice;
+				});
+	
+				add_action('cpfm_after_opt_in_atfp', function($category) {
+					if ($category === 'cool_translations') {
+						ATFP_cronjob::atfp_send_data();
+						$options = get_option('atfp_feedback_opt_in');
+						$options = 'yes';
+						update_option('atfp_feedback_opt_in', $options);	
+					}
+				  });
+				}
+			}
 
 		/*
 		|------------------------------------------------------------------------
@@ -176,6 +240,55 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 
 		function atfp_admin_notices() {
 			do_action( 'atfp_display_admin_notices' );
+		}
+
+
+		/*
+		|------------------------------------------------------------------------
+		|  Get user info
+		|------------------------------------------------------------------------
+		*/
+
+		public static function atfp_get_user_info() {
+			global $wpdb;
+			$server_info = [
+			'server_software'        => sanitize_text_field($_SERVER['SERVER_SOFTWARE'] ?? 'N/A'),
+			'mysql_version'          => sanitize_text_field($wpdb->get_var("SELECT VERSION()")),
+			'php_version'            => sanitize_text_field(phpversion()),
+			'wp_version'             => sanitize_text_field(get_bloginfo('version')),
+			'wp_debug'               => sanitize_text_field(defined('WP_DEBUG') && WP_DEBUG ? 'Enabled' : 'Disabled'),
+			'wp_memory_limit'        => sanitize_text_field(ini_get('memory_limit')),
+			'wp_max_upload_size'     => sanitize_text_field(ini_get('upload_max_filesize')),
+			'wp_permalink_structure' => sanitize_text_field(get_option('permalink_structure', 'Default')),
+			'wp_multisite'           => sanitize_text_field(is_multisite() ? 'Enabled' : 'Disabled'),
+			'wp_language'            => sanitize_text_field(get_option('WPLANG', get_locale()) ?: get_locale()),
+			'wp_prefix'              => sanitize_key($wpdb->prefix), // Sanitizing database prefix
+			];
+			$theme_data = [
+			'name'      => sanitize_text_field(wp_get_theme()->get('Name')),
+			'version'   => sanitize_text_field(wp_get_theme()->get('Version')),
+			'theme_uri' => esc_url(wp_get_theme()->get('ThemeURI')),
+			];
+			if (!function_exists('get_plugins')) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+			}
+			$plugin_data = array_map(function ($plugin) {
+			$plugin_info = get_plugin_data(WP_PLUGIN_DIR . '/' . sanitize_text_field($plugin));
+			$author_url = ( isset( $plugin_info['AuthorURI'] ) && !empty( $plugin_info['AuthorURI'] ) ) ? esc_url( $plugin_info['AuthorURI'] ) : 'N/A';
+			$plugin_url = ( isset( $plugin_info['PluginURI'] ) && !empty( $plugin_info['PluginURI'] ) ) ? esc_url( $plugin_info['PluginURI'] ) : '';
+			return [
+				'name'       => sanitize_text_field($plugin_info['Name']),
+				'version'    => sanitize_text_field($plugin_info['Version']),
+				'plugin_uri' => !empty($plugin_url) ? $plugin_url : $author_url,
+			];
+			}, get_option('active_plugins', []));
+			return [
+				'server_info' => $server_info,
+				'extra_details' => [
+					'wp_theme' => $theme_data,
+					'active_plugins' => $plugin_data,
+				]
+			];
 		}
 
 		/**
@@ -538,6 +651,21 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 			update_option( 'atfp-v', ATFP_V );
 			update_option( 'atfp-type', 'FREE' );
 			update_option( 'atfp-installDate', gmdate( 'Y-m-d h:i:s' ) );
+
+			if(!get_option('atfp-install-date')) {
+				add_option('atfp-install-date', gmdate('Y-m-d h:i:s'));
+			}
+
+			if (!get_option( 'atfp_initial_save_version' ) ) {
+				add_option( 'atfp_initial_save_version', ATFP_V );
+			}
+
+			$get_opt_in = get_option('atfp_feedback_opt_in');
+			
+			if ($get_opt_in =='yes' && !wp_next_scheduled('atfp_extra_data_update')) {
+
+				wp_schedule_event(time(), 'every_30_days', 'atfp_extra_data_update');
+			}
 		}
 
 		/*
@@ -546,6 +674,7 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 		|----------------------------------------------------------------------------
 		*/
 		public static function atfp_deactivate() {
+			wp_clear_scheduled_hook('atfp_extra_data_update');
 		}
 
 	}

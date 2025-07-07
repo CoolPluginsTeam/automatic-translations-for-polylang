@@ -1,3 +1,33 @@
+<?php
+
+    // Process form submission
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['atfp_optin_nonce']) && wp_verify_nonce($_POST['atfp_optin_nonce'], 'atfp_save_optin_settings')) {
+
+            // Handle feedback checkbox
+            if (get_option('cpfm_opt_in_choice_cool_translations')) {
+                $feedback_opt_in = isset($_POST['atfp-dashboard-feedback-checkbox']) ? 'yes' : 'no';
+                update_option('atfp_feedback_opt_in', $feedback_opt_in);
+            }
+
+        // If user opted out, remove the cron job
+        if ($feedback_opt_in === 'no' && wp_next_scheduled('atfp_extra_data_update') ){
+                
+            wp_clear_scheduled_hook('atfp_extra_data_update');
+        
+        }
+
+        if ($feedback_opt_in === 'yes' && !wp_next_scheduled('atfp_extra_data_update')) {
+
+                wp_schedule_event(time(), 'every_30_days', 'atfp_extra_data_update');   
+
+                if (class_exists('ATFP_cronjob')) {
+
+                    ATFP_cronjob::atfp_send_data();
+                } 
+        }
+        
+    }
+?>
 <div class="atfp-dashboard-settings">
     <div class="atfp-dashboard-settings-container">
     <div class="header">
@@ -18,6 +48,9 @@
 
     <div class="atfp-dashboard-api-settings-container">
         <div class="atfp-dashboard-api-settings">
+            <form method="post">
+                <?php wp_nonce_field('atfp_save_optin_settings', 'atfp_optin_nonce'); ?>
+                <div class="atfp-dashboard-api-settings-form">
             <?php
             // Define all API-related settings in a single configuration array
             $api_settings = [
@@ -76,10 +109,31 @@
                 <input type="radio" name="draft" id="draft" value="draft" checked disabled>
                 <label for="draft"><?php _e('Draft', $text_domain); ?></label>
             </div>
-
-            <div class="atfp-dashboard-save-btn-container">
-                <button disabled class="button button-primary"><?php _e('Save', $text_domain); ?></button>
             </div>
+
+            <?php if (get_option('cpfm_opt_in_choice_cool_translations')) : ?>
+                <div class="atfp-dashboard-feedback-container">
+                    <div class="atfp-dashboard-feedback-row">
+                        <input type="checkbox" 
+                            id="atfp-dashboard-feedback-checkbox" 
+                            name="atfp-dashboard-feedback-checkbox"
+                            <?php checked(get_option('atfp_feedback_opt_in'), 'yes'); ?>>
+                        <p><?php _e('Help us make this plugin more compatible with your site by sharing non-sensitive site data.', $text_domain); ?></p>
+                        <a href="#" class="atfp-see-terms">[See terms]</a>
+                    </div>
+                    <div id="termsBox" style="display: none;padding-left: 20px; margin-top: 10px; font-size: 12px; color: #999;">
+                            <p><?php _e("Opt in to receive email updates about security improvements, new features, helpful tutorials, and occasional special offers. We'll collect:", 'ccpw'); ?></p>
+                            <ul style="list-style-type:auto;">
+                                <li><?php esc_html_e('Your website home URL and WordPress admin email.', 'ccpw'); ?></li>
+                                <li><?php esc_html_e('To check plugin compatibility, we will collect the following: list of active plugins and themes, server type, MySQL version, WordPress version, memory limit, site language and database prefix.', 'ccpw'); ?></li>
+                            </ul>
+                    </div>
+                </div>
+            <?php endif; ?>
+            <div class="atfp-dashboard-save-btn-container">
+                <button <?php echo get_option('cpfm_opt_in_choice_cool_translations') ? '' : 'disabled'; ?> class="button button-primary"><?php _e('Save', $text_domain); ?></button>
+            </div>
+            </form>
         </div>
     </div>
     </div>

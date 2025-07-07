@@ -710,6 +710,10 @@ ul.atfp-dashboard-sts-btm li span:first-child {
 	line-height: 25px;
 }
 
+.atfp-dashboard-feedback-container {
+    margin: 25px 0px 18px 0px;
+}
+
 .atfp-dashboard-api-settings-container {
     display: flex;
     justify-content: space-between;
@@ -741,11 +745,17 @@ ul.atfp-dashboard-sts-btm li span:first-child {
     margin: 0;
 }
 
-.atfp-dashboard-api-settings input {
+.atfp-dashboard-api-settings input[type="text"] {
     width: 100%;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
+}
+
+.atfp-dashboard-feedback-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .atfp-dashboard-api-settings textarea {

@@ -8,10 +8,11 @@
 }
 .cool-plugins-deactivation-response{
     position: fixed;
-    left: 35%;
+    left: 18%;
     top: 22%;
+    right: 18%;
     z-index: 9999;
-    color:white;
+    color: white;
 }
 .cool-plugins-button{
     border: none;
@@ -118,7 +119,7 @@ a.cool-plugins-button:hover {
     background-color: silver;
 }
 
-#cool-plugins-form-wrapper input#cool-plugins-GDPR-data-notice {
+#cool-plugins-form-wrapper input#cool-plugins-GDPR-data-notice-atfp {
     float: left;
     margin-top: 4px !important;
 }
