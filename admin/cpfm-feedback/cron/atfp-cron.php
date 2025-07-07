@@ -72,7 +72,7 @@ if (!class_exists('ATFP_cronjob')) {
 
             $feedback_url = ATFP_FEEDBACK_API.'wp-json/coolplugins-feedback/v1/site';
 
-            $extra_data_details = Automatic_Translations_For_Polylang::atfp_get_user_info();
+            $extra_data_details = AutoPoly::atfp_get_user_info();
             $server_info    = $extra_data_details['server_info'];
             $extra_details  = $extra_data_details['extra_details'];
             $site_url       = get_site_url();
@@ -87,7 +87,7 @@ if (!class_exists('ATFP_cronjob')) {
                 
                 'site_id'           => md5($site_id),
                 'plugin_version'    => $plugin_version,
-                'plugin_name'       => 'AI Translation For Polylang',
+                'plugin_name'       => 'AutoPoly - AI Translation For Polylang',
                 'plugin_initial'    => $initial_version,
                 'email'             => $admin_email,
                 'site_url'          => esc_url_raw($site_url),

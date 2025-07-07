@@ -4,7 +4,7 @@
         <h1><?php _e('AI Translations', $text_domain); ?></h1>
         <div class="atfp-dashboard-status">
             <span><?php _e('Inactive', $text_domain); ?></span>
-            <a href="<?php echo esc_url('https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin&utm_medium=dashboard&utm_campaign=get_pro&utm_content=buy_pro'); ?>" class='atfp-dashboard-btn' target="_blank">
+            <a href="<?php echo esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=ai_translations'); ?>" class='atfp-dashboard-btn' target="_blank">
                 <img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/upgrade-now.svg'); ?>" alt="<?php _e('Upgrade Now', $text_domain); ?>">
                 <?php _e('Upgrade Now', $text_domain); ?>
             </a>
@@ -22,7 +22,7 @@
                 'title' => __('AI Translations', $text_domain),
                 'description' => __('Leverage GeminiAI for seamless and context-aware translations.', $text_domain),
                 'icon' => 'gemini-translate.png',
-                'url' => '#'
+                'url' => 'https://docs.coolplugins.net/doc/translate-via-gemini-ai-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard'
             ],
             [
                 'logo' => 'openai-translate-logo.png',
@@ -30,15 +30,7 @@
                 'title' => __('AI Translations', $text_domain),
                 'description' => __('Leverage OpenAI for seamless and context-aware translations.', $text_domain),
                 'icon' => 'open-ai-translate.png',
-                'url' => '#'
-            ],
-            [
-                'logo' => 'openrouter-translate-logo.png',
-                'alt' => 'Openrouter AI',
-                'title' => __('AI Translations', $text_domain),
-                'description' => __('Leverage Openrouter AI for seamless and context-aware translations.', $text_domain),
-                'icon' => 'openrouter-ai-translate.png',
-                'url' => '#'
+                'url' => 'https://docs.coolplugins.net/doc/translate-via-open-ai-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard'
             ],
             [
                 'logo' => 'chrome-built-in-ai-logo.png',
@@ -46,7 +38,7 @@
                 'title' => __('Chrome Built-in AI', $text_domain),
                 'description' => __('Utilize Chrome\'s built-in AI for seamless translation experience.', $text_domain),
                 'icon' => 'chrome-ai-translate.png',
-                'url' => 'https://docs.coolplugins.net/docs/ai-translation-for-polylang/how-to-automatically-translate-your-website-content-via-chrome-ai/'
+                'url' => 'https://docs.coolplugins.net/doc/chrome-ai-translation-polylang/?utm_source=atfpp_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=dashboard'
             ]
         ];
 

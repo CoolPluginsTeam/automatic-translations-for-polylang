@@ -6,6 +6,7 @@ import UpdateGutenbergPage from './createTranslatedPost/Gutenberg';
 import ProVersionNotice from './component/ProVersionNotice';
 import Notice from './component/Notice';
 import { select } from '@wordpress/data';
+import { sprintf, __ } from '@wordpress/i18n';
 
 // Elementor post fetch and update page
 import ElementorPostFetch from './FetchPost/Elementor';
@@ -28,28 +29,40 @@ const init = () => {
   });
 }
 
-const StringModalBodyNotice=()=>{
+const StringModalBodyNotice = () => {
 
-  const notices= [];
-  
-  if(editorType === 'gutenberg'){
+  const notices = [];
+
+  if (editorType === 'gutenberg') {
 
     const postMetaSync = atfp_global_object.postMetaSync === 'true';
 
-    if(postMetaSync){
-      notices.push({className: 'atfp-notice atfp-notice-warning', message: <p>For accurate custom field translations, please disable the Custom Fields synchronization in <a href={`${atfp_global_object.admin_url}admin.php?page=mlang_settings`} target="_blank">Polylang settings</a>. This may affect linked posts or pages.</p>});   
+    if (postMetaSync) {
+      notices.push({
+        className: 'atfp-notice atfp-notice-warning', message: <p>
+          {__('For accurate custom field translations, please disable the Custom Fields synchronization in ', 'autopoly-ai-translation-for-polylang')}
+          <a
+            href={`${atfp_global_object.admin_url}admin.php?page=mlang_settings`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {__('Polylang settings', 'autopoly-ai-translation-for-polylang')}
+          </a>
+          {__('. This may affect linked posts or pages.', 'autopoly-ai-translation-for-polylang')}
+        </p>
+      });
     }
-    
+
     const blockRules = select('block-atfp/translate').getBlockRules();
 
-    if(!blockRules.AtfpBlockParseRules || Object.keys(blockRules.AtfpBlockParseRules).length === 0){
-      notices.push({className: 'atfp-notice atfp-notice-error', message: <p>No block rules were found. It appears that the block-rules.JSON file could not be fetched, possibly because it is blocked by your server settings. Please check your server configuration to resolve this issue.</p>});
+    if (!blockRules.AtfpBlockParseRules || Object.keys(blockRules.AtfpBlockParseRules).length === 0) {
+      notices.push({ className: 'atfp-notice atfp-notice-error', message: <p>{__('No block rules were found. It appears that the block-rules.JSON file could not be fetched, possibly because it is blocked by your server settings. Please check your server configuration to resolve this issue.', 'autopoly-ai-translation-for-polylang')}</p> });
     }
   }
 
   const noticeLength = notices.length;
 
-  if(notices.length > 0){
+  if (notices.length > 0) {
     return notices.map((notice, index) => <Notice className={notice.className} key={index} lastNotice={index === noticeLength - 1}>{notice.message}</Notice>);
   }
 
@@ -67,11 +80,11 @@ const App = () => {
   const sourceLang = window.atfp_global_object.source_lang;
 
   // Elementor post fetch and update page
-  if(editorType === 'elementor'){
+  if (editorType === 'elementor') {
     translateWrpSelector = 'button.atfp-translate-button[name="atfp_meta_box_translate"]';
     translatePost = ElementorUpdatePage;
     fetchPost = ElementorPostFetch;
-  }else if(editorType === 'gutenberg'){
+  } else if (editorType === 'gutenberg') {
     translateWrpSelector = 'input#atfp-translate-button[name="atfp_meta_box_translate"]';
     translatePost = UpdateGutenbergPage;
     fetchPost = GutenbergPostFetch;
@@ -92,7 +105,7 @@ const App = () => {
 
     allEntries.map(entries => {
       const source = entries.source ? entries.source : '';
-      const stringCount=source.split(/(?<=[.!?]+)\s+/).length;
+      const stringCount = source.split(/(?<=[.!?]+)\s+/).length;
       const wordCount = source.trim().split(/\s+/).filter(word => /[^\p{L}\p{N}]/.test(word)).length;
       const characterCount = source.length;
 
@@ -118,11 +131,12 @@ const App = () => {
       const metaFieldBtn = document.querySelector(translateWrpSelector);
       if (metaFieldBtn) {
         metaFieldBtn.disabled = true;
+        metaFieldBtn.value = __("Already Translated", 'autopoly-ai-translation-for-polylang');
       }
     }
   }, [pageTranslate]);
 
-  if(!sourceLang || '' === sourceLang) {
+  if (!sourceLang || '' === sourceLang) {
     const metaFieldBtn = document.querySelector(translateWrpSelector);
     if (metaFieldBtn) {
       metaFieldBtn.title = `Parent ${window.atfp_global_object.post_type} may be deleted.`;
@@ -133,7 +147,7 @@ const App = () => {
 
   return (
     <>
-      {!pageTranslate && sourceLang && '' !== sourceLang && <SettingModal contentLoading={loading} updatePostDataFetch={updatePostDataFetch} postDataFetchStatus={postDataFetchStatus} pageTranslate={handlePageTranslate} postId={postId} currentPostId={currentPostId} targetLang={targetLang} postType={postType} fetchPostData={fetchPostData} translatePost={translatePost} translateWrpSelector={translateWrpSelector} stringModalBodyNotice={StringModalBodyNotice}/>}
+      {!pageTranslate && sourceLang && '' !== sourceLang && <SettingModal contentLoading={loading} updatePostDataFetch={updatePostDataFetch} postDataFetchStatus={postDataFetchStatus} pageTranslate={handlePageTranslate} postId={postId} currentPostId={currentPostId} targetLang={targetLang} postType={postType} fetchPostData={fetchPostData} translatePost={translatePost} translateWrpSelector={translateWrpSelector} stringModalBodyNotice={StringModalBodyNotice} />}
     </>
   );
 };
@@ -145,17 +159,17 @@ const App = () => {
 const createMessagePopup = () => {
   const postType = window.atfp_global_object.post_type;
   const targetLang = window.atfp_global_object.target_lang;
-  const targetLangName = atfp_global_object.languageObject[targetLang];
+  const targetLangName = atfp_global_object.languageObject[targetLang]['name'];
 
   const messagePopup = document.createElement('div');
   messagePopup.id = 'atfp-modal-open-warning-wrapper';
   messagePopup.innerHTML = `
     <div class="modal-container" style="display: flex">
       <div class="modal-content">
-        <p>Would you like to duplicate your original ${postType} content and have it automatically translated into ${targetLangName}?</p>
+        <p>${sprintf(__("Would you like to duplicate your original %s content and have it automatically translated into %s?", 'autopoly-ai-translation-for-polylang'), postType, targetLangName)}</p>
         <div>
-          <button data-value="yes">Yes</button>
-          <button data-value="no">No</button>
+          <div data-value="yes">${__("Yes", 'autopoly-ai-translation-for-polylang')}</div>
+          <div data-value="no">${__("No", 'autopoly-ai-translation-for-polylang')}</div>
         </div>
       </div>
     </div>`;
@@ -176,8 +190,8 @@ const insertMessagePopup = () => {
  */
 const appendElementorTranslateBtn = () => {
   const translateButtonGroup = jQuery('.MuiButtonGroup-root.MuiButtonGroup-contained').parent();
-  const buttonElement=jQuery(translateButtonGroup).find('.elementor-button.atfp-translate-button');
-  if(translateButtonGroup.length > 0 && buttonElement.length === 0){
+  const buttonElement = jQuery(translateButtonGroup).find('.elementor-button.atfp-translate-button');
+  if (translateButtonGroup.length > 0 && buttonElement.length === 0) {
     const buttonHtml = '<button class="elementor-button atfp-translate-button" name="atfp_meta_box_translate">Translate</button>';
     const buttonElement = jQuery(buttonHtml);
 
@@ -200,7 +214,7 @@ const appendElementorTranslateBtn = () => {
       return;
     }
 
-    if('' === window.atfp_global_object.elementorData || window.atfp_global_object.elementorData.length < 1 || elementor.elements.length < 1){
+    if ('' === window.atfp_global_object.elementorData || window.atfp_global_object.elementorData.length < 1 || elementor.elements.length < 1) {
       buttonElement.attr('disabled', 'disabled');
       buttonElement.attr('title', 'Translation is not available because there is no Elementor data.');
       return;
@@ -208,7 +222,7 @@ const appendElementorTranslateBtn = () => {
     
     // Append app root wrapper in body
     init();
-  
+
     const root = ReactDOM.createRoot(document.getElementById('atfp-setting-modal'));
     root.render(<App />);
   }
@@ -218,7 +232,7 @@ const appendElementorTranslateBtn = () => {
 if (editorType === 'gutenberg') {
   // Render App
   window.addEventListener('load', () => {
-
+    
     // Append app root wrapper in body
     init();
 
@@ -242,7 +256,7 @@ if (editorType === 'gutenberg') {
 
     const sourceLang = window.atfp_global_object.source_lang
 
-    if(sourceLang && '' !== sourceLang){
+    if (sourceLang && '' !== sourceLang) {
       insertMessagePopup();
     }
 

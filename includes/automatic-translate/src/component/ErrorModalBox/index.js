@@ -58,7 +58,7 @@ const ErrorModalBox = ({ message, onClose, Title }) => {
                     <p dangerouslySetInnerHTML={{ __html: stringifiedMessage }} />
                 </div>
                 <div className="atfp-error-modal-box-footer">
-                    <button className="atfp-error-modal-box-close" onClick={onClose}>Close</button>
+                    <button className="atfp-error-modal-box-close button button-primary" onClick={onClose}>Close</button>
                 </div>
             </div>
         </div>

@@ -6,7 +6,7 @@ import ChromeLocalAiTranslator from "../component/TranslateProvider/local-ai-tra
 import SettingModalHeader from "./header";
 import SettingModalBody from "./body";
 import SettingModalFooter from "./footer";
-import { __ } from "@wordpress/i18n";
+import { __ , sprintf } from "@wordpress/i18n";
 import ErrorModalBox from "../component/ErrorModalBox";
 
 const SettingModal = (props) => {
@@ -15,8 +15,8 @@ const SettingModal = (props) => {
     const [settingVisibility, setSettingVisibility] = useState(false);
     const sourceLang = atfp_global_object.source_lang;
     const targetLang = props.targetLang;
-    const sourceLangName = atfp_global_object.languageObject[sourceLang];
-    const targetLangName = atfp_global_object.languageObject[targetLang];
+    const sourceLangName = atfp_global_object.languageObject[sourceLang]['name'];
+    const targetLangName = atfp_global_object.languageObject[targetLang]['name'];
     const imgFolder = atfp_global_object.atfp_url + 'assets/images/';
     const yandexSupport = yandexLanguage().includes(targetLang);
     const [serviceModalErrors, setServiceModalErrors] = useState({});
@@ -49,11 +49,12 @@ const SettingModal = (props) => {
      * Triggers the setSettingVisibility only when user click on meta field Button.
     */
     useEffect(() => {
-        const firstRenderBtns = document.querySelectorAll('#atfp-modal-open-warning-wrapper .modal-content button');
+        const firstRenderBtns = document.querySelectorAll('#atfp-modal-open-warning-wrapper .modal-content div[data-value]');
         const metaFieldBtn = document.querySelector(props.translateWrpSelector);
 
         if (metaFieldBtn) {
-            metaFieldBtn.addEventListener('click', () => {
+            metaFieldBtn.addEventListener('click', (e) => {
+                e.preventDefault();
                 setSettingVisibility(prev => !prev);
             });
         }
@@ -76,10 +77,25 @@ const SettingModal = (props) => {
             if (localAiTranslatorSupport !== true && typeof localAiTranslatorSupport === 'object' && translateBtn) {
                 setChromeAiBtnDisabled(true);
     
-                setServiceModalErrors(prev => ({ ...prev, localAiTranslator: {message: localAiTranslatorSupport, Title: __("Chrome AI Translator", 'automatic-translations-for-polylang')} }));
+                setServiceModalErrors(prev => ({ ...prev, localAiTranslator: {message: localAiTranslatorSupport, Title: __("Chrome AI Translator", 'autopoly-ai-translation-for-polylang')} }));
             }
         };
-        languageSupportedStatus();
+        if(settingVisibility){
+            if(!yandexSupport){
+                setServiceModalErrors(prev => ({
+                    ...prev,
+                    yandex: {
+                        message: "<p style={{ fontSize: '1rem', color: '#ff4646' }}>"+sprintf(
+                            __("Yandex Translate does not support the target language: %s.", 'autopoly-ai-translation-for-polylang'),
+                            "<strong>"+targetLangName+"</strong>"
+                        )+"</p>",
+                        Title: __("Yandex Translate", 'autopoly-ai-translation-for-polylang')
+                    }
+                }));
+            };
+
+            languageSupportedStatus();
+        }
     }, [settingVisibility]);
 
     /**
@@ -175,6 +191,9 @@ const SettingModal = (props) => {
                             openErrorModalHandler={openErrorModalHandler}
                         />
                         <SettingModalFooter
+                            targetLangName={targetLangName}
+                            postType={props.postType}
+                            sourceLangName={sourceLangName}
                             setSettingVisibility={handleSettingVisibility}
                         />
                     </div>

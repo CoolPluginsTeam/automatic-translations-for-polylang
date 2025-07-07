@@ -7,7 +7,7 @@
                 <div class="atfp-dashboard-get-started-grid">
                     <div class="atfp-dashboard-get-started-grid-content">
                         <h2><?php echo esc_html__('Automate the Translation Process :-', $text_domain); ?></h2>
-                        <iframe title="Automate the Translation Process with AI Translation for Polylang"
+                        <iframe title="Automate the Translation Process with AutoPoly - AI Translation For Polylang"
                                 src="https://www.youtube.com/embed/ecHsOyIL_J4?feature=oembed"
                                 frameborder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -26,7 +26,7 @@
                 <div class="atfp-dashboard-get-started-grid">
                     <div class="atfp-dashboard-get-started-grid-content">
                         <h2><?php echo esc_html__('Elementor Page Translation :-', $text_domain); ?></h2>
-                        <iframe title="Elementor Page Translation with AI Translation for Polylang"
+                        <iframe title="Elementor Page Translation with AutoPoly - AI Translation For Polylang"
                                 src="https://www.youtube.com/embed/bmmc-Ynwj8w?feature=oembed"
                                 frameborder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

@@ -4,7 +4,7 @@
         <h1><?php _e('Free VS Pro', $text_domain); ?></h1>
         <div class="atfp-dashboard-status">
             <span class="status"><?php _e('Inactive', $text_domain); ?></span>
-            <a href="<?php echo esc_url('https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin&utm_medium=dashboard&utm_campaign=get_pro&utm_content=buy_pro'); ?>" class='atfp-dashboard-btn' target="_blank">
+            <a href="<?php echo esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=freevspro'); ?>" class='atfp-dashboard-btn' target="_blank">
               <img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/upgrade-now.svg'); ?>" alt="<?php echo esc_attr(__('Upgrade Now', $text_domain)); ?>">
                 <?php echo esc_html(__('Upgrade Now', $text_domain)); ?>
             </a>
@@ -29,7 +29,7 @@
                     'No API Key Required' => [true, true],
                     'Unlimited Translations' => [false, true],
                     'Google Translate Widget Support' => [false, true],
-                    'AI Translator (Gemini/OpenAI/Openrouter) Support' => [false, true],
+                    'AI Translator (Gemini/OpenAI) Support' => [false, true],
                     'Premium Support' => [false, true],
                 ];
              foreach ($features as $feature => $availability): ?>
