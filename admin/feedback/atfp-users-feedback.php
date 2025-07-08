@@ -159,8 +159,8 @@ class AtfpUsersFeedback {
 			$install_date      = get_option('atfp-install-date');
 			$plugin_initial =  get_option( 'atfp_initial_save_version' );
 			$unique_key     = '41';  // Ensure this key is unique per plugin to prevent collisions when site URL and install date are the same across plugins
-			$server_info 	   = \Automatic_Translations_For_Polylang::atfp_get_user_info()['server_info'];
-			$extra_details 	   = \Automatic_Translations_For_Polylang::atfp_get_user_info()['extra_details'];
+			$server_info 	   = \AutoPoly::atfp_get_user_info()['server_info'];
+			$extra_details 	   = \AutoPoly::atfp_get_user_info()['extra_details'];
 			$site_id        = $site_url . '-' . $install_date . '-' . $unique_key;
 			$feedback_url      = esc_url( ATFP_FEEDBACK_API . 'wp-json/coolplugins-feedback/v1/feedback' );
 			$response          = wp_remote_post(
