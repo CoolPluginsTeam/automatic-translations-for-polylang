@@ -10,8 +10,8 @@ class AtfpUsersFeedback {
 
 	private $plugin_url     = ATFP_URL;
 	private $plugin_version = ATFP_V;
-	private $plugin_name    = 'AutoPoly - AI Translation For Polylang';
-	private $plugin_slug    = 'autopoly-ai-translation-for-polylang';
+	private $plugin_name    = 'Automatic Translations For Polylang';
+	private $plugin_slug    = 'automatic-translations-for-polylang';
 	private $plugin_domain  = 'atfp';
 	/*
 	|-----------------------------------------------------------------|
