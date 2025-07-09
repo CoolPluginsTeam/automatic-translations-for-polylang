@@ -157,11 +157,10 @@ This plugin provides automatic translation services for Polylang using the Yande
 * [Chrome Prompt API Documentation for Extensions](https://developer.chrome.com/docs/extensions/ai/prompt-api)
 
 == Screenshots ==
-1. Gutenberg Page Content Translation Preview.
-2. Elementor Page Content Translation Preview.
+1. AutoPoly Auto Translate Button & Translation modal.
+2. Elementor Page Translation.
 3. AutoPoly - AI Translation For Polylang Preview.
 4. Gutenberg Block inline Translation.
-5. Elementor AI Translation.
 
 == Frequently Asked Questions ==
 
