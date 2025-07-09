@@ -13,7 +13,7 @@ AI Translation For Polylang simplifies your translation process by automatically
 == Description ==
 **Translate Your WordPress Website 10X Faster – Powered by AI, Built for Polylang**.
 
-https://youtu.be/ecHsOyIL\_J4
+https://www.youtube.com/watch?v=QGOueushC8U
 
 [**AutoPoly - AI Translation For Polylang**](https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=top_description) reduces your translation **workload by 90%**. With this powerful addon, you can translate your **Gutenberg** and **Elementor pages**, sections, and widgets within a few clicks.
 
@@ -21,7 +21,6 @@ This addon duplicates and translates **page/post titles, content, images, galler
 
 Whether you're using **Elementor** or **Gutenberg**, this addon makes the translation process easier, allowing you to focus on expanding your global audience effortlessly.
 
-https://youtu.be/bmmc-Ynwj8w
 
 == Key Features ==
 
@@ -70,6 +69,8 @@ https://youtu.be/bmmc-Ynwj8w
   (**Support time:- 24-48 hours**)
 
 &#x20;[**Upgrade to Pro!**](https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=get_pro)
+
+https://www.youtube.com/watch?v=M-3Miv_JTY4
 
 #### Our Advanced Language Switcher Plugins
 
