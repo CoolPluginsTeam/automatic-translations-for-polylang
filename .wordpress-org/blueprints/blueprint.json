@@ -1,0 +1,67 @@
+{
+  "landingPage": "/wp-admin/",
+  "preferredVersions": {
+    "php": "8.2",
+    "wp": "latest"
+  },
+  "phpExtensionBundles": [
+    "kitchen-sink"
+  ],
+  "features": {
+    "networking": true
+  },
+  "steps": [
+    {
+      "step": "login",
+      "username": "admin",
+      "password": "password"
+    },
+    {
+      "step": "installPlugin",
+      "pluginData": {
+        "resource": "wordpress.org/plugins",
+        "slug": "polylang"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
+      "step": "installPlugin",
+      "pluginData": {
+        "resource": "wordpress.org/plugins",
+        "slug": "automatic-translations-for-polylang"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
+      "step": "writeFile",
+      "path": "/wordpress/wp-content/mu-plugins/set-polylang-options.php",
+      "data": "<?php\nadd_action('plugins_loaded', function () {\n    if (!function_exists('PLL')) return;\n\n    if (!PLL()->model->get_languages_list()) {\n        PLL()->model->add_language([\n            'name' => 'English', 'slug' => 'en', 'locale' => 'en_US', 'rtl' => 0, 'flag_code' => 'us', 'term_group' => 0\n        ]);\n        PLL()->model->add_language([\n            'name' => 'Français', 'slug' => 'fr', 'locale' => 'fr_FR', 'rtl' => 0, 'flag_code' => 'fr', 'term_group' => 0\n        ]);\n        PLL()->model->add_language([\n            'name' => 'Español', 'slug' => 'es', 'locale' => 'es_ES', 'rtl' => 0, 'flag_code' => 'es', 'term_group' => 0\n        ]);\n    }\n\n    update_option('pll_dismissed_notices', ['wizard']);\n});"
+    },
+    {
+      "step": "writeFile",
+      "path": "/wordpress/wp-content/mu-plugins/disable-polylang-wizard.php",
+      "data": "<?php\nadd_action('init', function () {\n     delete_transient('pll_activation_redirect');\n\n   update_option('pll_dismissed_notices', ['wizard']);\n    update_option('pll_setup_wizard_done', true);\n    update_option('pll_setup_wizard_step', 'last');\n});\n\nadd_action('admin_init', function() {\n     if (isset($_GET['page']) && $_GET['page'] === 'mlang_wizard') {\n        wp_safe_redirect(admin_url());\n        exit;\n    }\n});"
+    },
+    {
+      "step": "importWxr",
+      "file": {
+        "resource": "url",
+        "url": "https://raw.githubusercontent.com/CoolPluginsTeam/wp-playground-repo/main/translation/automatic-translate-pages.xml"
+      }
+    },
+    {
+      "step": "writeFile",
+      "path": "/wordpress/wp-content/mu-plugins/automatic-translations-for-polylang-notice.php",
+      "data": "<?php\nadd_action('admin_footer', function () {\n    $home_url = esc_url(home_url());\n  ?>\n   <style>\n.components-modal__screen-overlay{display: none !important} \n</style> \n<script>\n    document.addEventListener('DOMContentLoaded', function () {\n        const notice = document.createElement('div');\n        notice.className = 'notice notice-info is-dismissible';\n        notice.style = 'padding: 25px; font-family: sans-serif; margin: 25px 20px; border-left: 5px solid #00a0d2; background: #fff;';\n        notice.innerHTML = `\n            <h2 style='margin-top: 0; display: flex; align-items: center; gap: 10px;'>\n                Easily add powerful AI translations anywhere on your site using the AI Translation for Polylang plugin.\n            </h2>\n            <p style='margin-bottom: 15px; font-size: 15px;'>\n             AI Translation for Polylang makes website translation easy. It automatically translates entire web pages, eliminating the need for manual translation\n            </p>\n            <div style='display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px;'>\n         <a href='/wp-admin/post-new.php?post_type=page&from_post=2623&new_lang=fr' class='button button-secondary' style='padding: 10px 24px; font-size: 14px;'>🛠 Translate Page</a>\n       <a href='https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?utm_source=atf[…]inside&utm_campaign=get_pro&utm_content=wp_playground_preview' target='_blank' class='button' style='padding: 10px 24px; font-size: 14px; background: linear-gradient(90deg, #d54e21, #ff851b); color: white; border: none;'>⭐ Get PRO — Unlock All Features</a>\n            </div>\n            <p style='font-size: 13px; margin-top: 15px; color: #555;'>🧩 Pro is the enhanced edition of our AI Translation plugin for Polylang, offering advanced AI engine support, customizable workflows, and premium features. Instantly translate full pages using Google, Yandex, or Chrome AI for fast, accurate results.</p>\n        `;\n        const wrap = document.getElementById('wpbody-content');\n        if (wrap && !document.getElementById('my-timeline-notice')) {\n            notice.id = 'my-timeline-notice';\n            wrap.prepend(notice);\n        }\n    });\n    </script>\n    <?php\n});"
+    },
+    {
+      "step": "writeFile",
+      "path": "/wordpress/wp-content/mu-plugins/force-translation-redirect.php",
+      "data": "<?php\nadd_action('admin_init', function () {\n    if (!is_user_logged_in() || !current_user_can('edit_pages')) return;\n    if (!is_admin()) return;\n    if (defined('DOING_AJAX') && DOING_AJAX) return;\n\n    if (isset($_COOKIE['translation_redirect_done'])) return;\n\n  $post_id = 2623;\n    $post = get_post($post_id);\n    if (!$post) return;\n\n \n    $nonce = wp_create_nonce('new-post-translation');\n    $url = admin_url('post-new.php?post_type=page&from_post=' . $post->ID . '&new_lang=fr&_wpnonce=' . $nonce);\n\n  \n    setcookie('translation_redirect_done', '1', time() + 3600, '/');\n\n   wp_safe_redirect($url);\n    exit;\n});"
+    }
+  ]
+}
