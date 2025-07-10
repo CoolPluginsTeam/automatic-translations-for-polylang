@@ -4,7 +4,7 @@ Tags: Polylang, AI Translation, Content Translation, Translate
 Requires at least: 5.0
 Tested up to: 6.8.1
 Requires PHP: 5.6
-Stable tag: 1.4.2
+Stable tag: 1.4.3
 Author URI: https://coolplugins.net/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -40,13 +40,14 @@ Whether you're using **Elementor** or **Gutenberg**, this addon makes the transl
 **Free License**
 
 * ✅ **Yandex Translate Widget Support:** Available
-* ✅ **Unlimited Free Translations:** Available (Only via Yandex)
-* ✅ **API Key Required:** Not Required (Yandex Widget Support)
+* ✅ **Chrome Built-in AI Translation Support:** Available
+* ✅ **API Key Required:** Not Required (Yandex Widget & Chrome Built-in AI)
 * ✅ **Gutenberg Block Compatibility**
 * ✅ **Elementor Page Translation**
 * ✅ **Inline Translation**
+* ✅ **Custom Block Translation:** Available
 * ❌ **Classic Editor Translation:** Not Available
-* ❌ **Custom Block Translation:** Not Available
+* ❌ **Unlimited Free Translations:** Not Available (500k characters only)
 * ❌ **Google Translate Widget Support:** Not Available
 * ❌ **OpenAI Translation Support:** Not Available
 * ❌ **Gemini Translation Support:** Not Available
@@ -211,13 +212,20 @@ You can update the plugin through the WordPress dashboard like any other plugin.
 The plugin is optimized for performance, but the speed impact may vary depending on your hosting environment and the size of your content. The automatic translation process occurs in the background to minimize any potential impact on site performance.
 
 = Does this plugin support the Classic Editor? =
-Currently, this plugin does not support automatic translations for content created with the Classic Editor. It is designed to work with Elementor and Gutenberg blocks only.
+Yes, this plugin supports automatic translations for content created with the Classic Editor only in the pro version.
 
 = How can I report security bugs? =
 You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities.[Report a security vulnerability](https://patchstack.com/database/wordpress/plugin/automatic-translations-for-polylang/vdp)
 
 == Changelog ==
+
+= Version 1.4.3 | 10 July 2025 =
+
+* **Added:** Enhanced user opt-in options for better customization.
+* **Improved:** Update screenshots.
+
 = Version 1.4.2 | 03 July 2025 =
+
 * **Tweaks:**  Rebranded  from  **AI Translation for Polylang**  to   **AutoPoly - AI Translation For Polylang**.
 * **Fixed:** Content format issue after translation.
 * **Added:** Bulk Translation Pro button & pro version AI providers buttons.
@@ -226,6 +234,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 * **Improved:** Text domain same as plugin name.
 * **Tested up to:** WordPress 6.8.1.
 * **Tested up to:** Elementor 3.30.1 & Elementor Pro 3.30.0.
+
 = Version 1.4.1 | 09 June 2025 =
 
 * **Fixed:** Fixed inline translation issue with browser latest version.
