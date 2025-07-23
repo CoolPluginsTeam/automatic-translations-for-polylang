@@ -98,7 +98,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 
 			if ( false !== $post_id ) {
 				$post_data = get_post( esc_html( $post_id ) );
-                $locale = isset($_POST['local']) ? sanitize_text_field($_POST['local']) : 'en';
+            	$locale = isset($_POST['local']) ? sanitize_text_field($_POST['local']) : 'en';
                 $current_locale = isset($_POST['current_local']) ? sanitize_text_field($_POST['current_local']) : 'en';
 				
 

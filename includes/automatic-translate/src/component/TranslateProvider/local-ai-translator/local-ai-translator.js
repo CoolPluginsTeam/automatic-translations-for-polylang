@@ -54,10 +54,10 @@ class ChromeAiTranslator {
      * @returns {Promise<boolean|jQuery>} - Returns true if the languages are supported, or a jQuery message if not.
      */
     static languageSupportedStatus = async (sourceLanguage, targetLanguage, targetLanguageLabel, sourceLanguageLabel) => {
-        const supportedLanguages = ['en', 'es', 'ja', 'ar', 'de', 'bn', 'fr', 'hi', 'it', 'ko', 'nl', 'pl', 'pt', 'ru', 'th', 'tr', 'vi', 'zh', 'zh-hant', 'bg', 'cs', 'da', 'el', 'fi', 'hr', 'hu', 'id', 'iw', 'lt', 'no', 'ro', 'sk', 'sl', 'sv', 'uk','kn','ta','te','mr' ].map(lang => lang.toLowerCase());
+        const supportedLanguages = ['en', 'es', 'ja', 'ar', 'de', 'bn', 'fr', 'hi', 'it', 'ko', 'nl', 'pl', 'pt', 'ru', 'th', 'tr', 'vi', 'zh', 'zh-hant', 'bg', 'cs', 'da', 'el', 'fi', 'hr', 'hu', 'id', 'iw', 'lt', 'no', 'ro', 'sk', 'sl', 'sv', 'uk', 'kn', 'ta', 'te', 'mr'].map(lang => lang.toLowerCase());
 
         const safeBrowser = window.location.protocol === 'https:';
-        const browserContentSecure=window?.isSecureContext;
+        const browserContentSecure = window?.isSecureContext;
 
         // Browser check
         if (!window.hasOwnProperty('chrome') || !navigator.userAgent.includes('Chrome') || navigator.userAgent.includes('Edg')) {
@@ -72,7 +72,7 @@ class ChromeAiTranslator {
             return message;
         }
 
-        if (!('translation' in self && 'createTranslator' in self.translation) && !('ai' in self && 'translator' in self.ai ) && !("Translator" in self && "create" in self.Translator) && !safeBrowser && !browserContentSecure) {
+        if (!('translation' in self && 'createTranslator' in self.translation) && !('ai' in self && 'translator' in self.ai) && !("Translator" in self && "create" in self.Translator) && !safeBrowser && !browserContentSecure) {
             const message = jQuery(`<span style="color: #ff4646; display: inline-block;">
                 <strong>Important Notice:</strong>
                 <ol>
@@ -92,7 +92,7 @@ class ChromeAiTranslator {
         }
 
         // Check if the translation API is available
-        if (!('translation' in self && 'createTranslator' in self.translation) && !('ai' in self && 'translator' in self.ai ) && !("Translator" in self && "create" in self.Translator)) {
+        if (!('translation' in self && 'createTranslator' in self.translation) && !('ai' in self && 'translator' in self.ai) && !("Translator" in self && "create" in self.Translator)) {
             const message = jQuery(`<span style="color: #ff4646; display: inline-block;">
                 <h4>Steps to Enable the Translator AI Modal:</h4>
                 <ol>
@@ -223,21 +223,33 @@ class ChromeAiTranslator {
         return true;
     }
 
-    static languagePairAvality=async (source, target)=>{
+    static languagePairAvality = async (source, target) => {
+        try {
+            const translator = await self.Translator.create({
+                sourceLanguage: source,
+                targetLanguage: target,
+                monitor(m) {
+                    m.addEventListener('downloadprogress', (e) => {
+                        console.log(`Downloaded ${e.loaded * 100}%`);
+                    });
+                },
+            });
 
-        if(('translation' in self && 'createTranslator' in self.translation)){
+        } catch (err) { console.log('err', err) }
+
+        if (('translation' in self && 'createTranslator' in self.translation)) {
             const status = await self.translation.canTranslate({
                 sourceLanguage: source,
                 targetLanguage: target,
             });
 
             return status;
-        }else if(('ai' in self && 'translator' in self.ai )){
+        } else if (('ai' in self && 'translator' in self.ai)) {
             const translatorCapabilities = await self.ai.translator.capabilities();
             const status = await translatorCapabilities.languagePairAvailable(source, target);
 
             return status;
-        }else if("Translator" in self && "create" in self.Translator){
+        } else if ("Translator" in self && "create" in self.Translator) {
             const status = await self.Translator.availability({
                 sourceLanguage: source,
                 targetLanguage: target,
@@ -249,22 +261,22 @@ class ChromeAiTranslator {
         return false;
     }
 
-    AITranslator=async (targetLanguage)=>{
-        if(('translation' in self && 'createTranslator' in self.translation)){
-            const translator=await self.translation.createTranslator({
+    AITranslator = async (targetLanguage) => {
+        if (('translation' in self && 'createTranslator' in self.translation)) {
+            const translator = await self.translation.createTranslator({
                 sourceLanguage: this.sourceLanguage,
                 targetLanguage,
             });
 
             return translator;
-        }else if(('ai' in self && 'translator' in self.ai )){
+        } else if (('ai' in self && 'translator' in self.ai)) {
             const translator = await self.ai.translator.create({
                 sourceLanguage: this.sourceLanguage,
                 targetLanguage,
-              });
+            });
 
             return translator;
-        }else if("Translator" in self && "create" in self.Translator){
+        } else if ("Translator" in self && "create" in self.Translator) {
             const translator = await self.Translator.create({
                 sourceLanguage: this.sourceLanguage,
                 targetLanguage,
@@ -460,10 +472,10 @@ class ChromeAiTranslator {
         this.startTranslationProcess(this.completedTranslateIndex + 1); // Start translation process
     }
 
-    
-    static svgIcons=(iconName)=>{
-        const Icons={
-            'copy':`<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="16px" width="16px" xmlns="http://www.w3.org/2000/svg" fill="#2271b1"><path d="M433.941 65.941l-51.882-51.882A48 48 0 0 0 348.118 0H176c-26.51 0-48 21.49-48 48v48H48c-26.51 0-48 21.49-48 48v320c0 26.51 21.49 48 48 48h224c26.51 0 48-21.49 48-48v-48h80c26.51 0 48-21.49 48-48V99.882a48 48 0 0 0-14.059-33.941zM266 464H54a6 6 0 0 1-6-6V150a6 6 0 0 1 6-6h74v224c0 26.51 21.49 48 48 48h96v42a6 6 0 0 1-6 6zm128-96H182a6 6 0 0 1-6-6V54a6 6 0 0 1 6-6h106v88c0 13.255 10.745 24 24 24h88v202a6 6 0 0 1-6 6zm6-256h-64V48h9.632c1.591 0 3.117.632 4.243 1.757l48.368 48.368a6 6 0 0 1 1.757 4.243V112z"></path></svg>`
+
+    static svgIcons = (iconName) => {
+        const Icons = {
+            'copy': `<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="16px" width="16px" xmlns="http://www.w3.org/2000/svg" fill="#2271b1"><path d="M433.941 65.941l-51.882-51.882A48 48 0 0 0 348.118 0H176c-26.51 0-48 21.49-48 48v48H48c-26.51 0-48 21.49-48 48v320c0 26.51 21.49 48 48 48h224c26.51 0 48-21.49 48-48v-48h80c26.51 0 48-21.49 48-48V99.882a48 48 0 0 0-14.059-33.941zM266 464H54a6 6 0 0 1-6-6V150a6 6 0 0 1 6-6h74v224c0 26.51 21.49 48 48 48h96v42a6 6 0 0 1-6 6zm128-96H182a6 6 0 0 1-6-6V54a6 6 0 0 1 6-6h106v88c0 13.255 10.745 24 24 24h88v202a6 6 0 0 1-6 6zm6-256h-64V48h9.632c1.591 0 3.117.632 4.243 1.757l48.368 48.368a6 6 0 0 1 1.757 4.243V112z"></path></svg>`
         }
 
         return Icons[iconName] || '';

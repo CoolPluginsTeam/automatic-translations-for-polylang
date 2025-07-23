@@ -107,6 +107,21 @@ class Translator {
   }
 
   private languagePairAvality = async (source: string, target: string) => {
+
+      try {
+        // @ts-ignore
+        const translator = await window.self.Translator.create({
+            sourceLanguage: source,
+            targetLanguage: target,
+            monitor(m) {
+                m.addEventListener('downloadprogress', (e) => {
+                    console.log(`Downloaded ${e.loaded * 100}%`);
+                });
+            },
+        });
+
+    } catch (err) { console.log('err', err) }
+
     // @ts-ignore
     if (window?.self?.translation) {
       // @ts-ignore
