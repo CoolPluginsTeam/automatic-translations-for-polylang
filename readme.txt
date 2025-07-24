@@ -219,7 +219,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 == Changelog ==
 
-= Version 1.4.4 | 23 July 2025 =
+= Version 1.4.4 | 24 July 2025 =
 
 * **Fixed:** Fixed Chrome Local AI translation not working.
 
