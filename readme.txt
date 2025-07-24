@@ -1,6 +1,4 @@
-﻿# AutoPoly - AI Translation For Polylang
-
-=== AutoPoly - AI Translation For Polylang ===
+﻿=== AutoPoly - AI Translation For Polylang ===
 Contributors: narinder-singh,satindersingh,coolplugins
 Tags: Polylang, AI Translation, Content Translation, Translate
 Requires at least: 5.0
