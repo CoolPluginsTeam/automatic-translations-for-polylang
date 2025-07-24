@@ -1,4 +1,6 @@
-﻿=== AutoPoly - AI Translation For Polylang ===
+﻿# AutoPoly - AI Translation For Polylang
+
+=== AutoPoly - AI Translation For Polylang ===
 Contributors: narinder-singh,satindersingh,coolplugins
 Tags: Polylang, AI Translation, Content Translation, Translate
 Requires at least: 5.0
@@ -13,7 +15,7 @@ AI Translation For Polylang simplifies your translation process by automatically
 == Description ==
 **Translate Your WordPress Website 10X Faster – Powered by AI, Built for Polylang**.
 
-https://www.youtube.com/watch?v=QGOueushC8U
+[https://youtu.be/QGOueushC8U?si=Q-fpZ98sv4hcC9o-](https://youtu.be/QGOueushC8U?si=Q-fpZ98sv4hcC9o-)
 
 [**AutoPoly - AI Translation For Polylang**](https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=top_description) reduces your translation **workload by 90%**. With this powerful addon, you can translate your **Gutenberg** and **Elementor pages**, sections, and widgets within a few clicks.
 
@@ -56,17 +58,17 @@ Whether you're using **Elementor** or **Gutenberg**, this addon makes the transl
 
 **Premium License**
 
-* ✅ **Bulk Translation:** Translate multiple posts, pages, or products at once to save time.
-* ✅ **Elementor Page Translation:** Automatically translate entire Elementor pages, sections, and widgets.
-* ✅ **Classic Editor Translation:** Easily translate all content created with the Classic WordPress Editor.
-* ✅ **Inline Translation:** Translate specific text blocks or widgets directly on the front end.
-* ✅ **Gutenberg Block Compatibility:** Fully compatible with Gutenberg, this plugin allow you to translate block-based layouts.
+* **✅ Bulk Translation:** Translate multiple posts, pages, or products at once to save time.
+* **✅  Elementor Page Translation:** Automatically translate entire Elementor pages, sections, and widgets.
+* **✅ Classic Editor Translation:** Easily translate all content created with the Classic WordPress Editor.
+* **✅ Inline Translation:** Translate specific text blocks or widgets directly on the front end.
+* ✅  **Gutenberg Block Compatibility:** Fully compatible with Gutenberg, this plugin allow you to translate block-based layouts.
 * ✅ **Chrome Built-in AI Translation Support:** Instantly translate content directly inside browser using Chrome’s built-in AI translator.
 * ✅ **Gemini Translation Support:** Use Gemini AI to generate high-quality, context-aware translations.
 * ✅ **Google Translate Widget Support:** Automate the translation process using the Google Translate Widget.
 * ✅ **OpenAI Translation Support:** Access OpenAI’s advanced language models for more natural translations.
 * ✅ **Unlimited Free Translations:** Translate unlimited content without any usage restrictions or extra fees.
-* ✅ **Premium Support:** [Quick Support](https://coolplugins.net/support?utm_source=atlt_plugin&utm_medium=readme&utm_campaign=support&utm_content=premium_support)
+* ✅ **Premium Support:** [Quick Support](https://coolplugins.net/support/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=support&utm_content=premium_support)
   (**Support time:- 24-48 hours**)
 
 &#x20;[**Upgrade to Pro!**](https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=get_pro)
@@ -81,8 +83,8 @@ https://www.youtube.com/watch?v=M-3Miv_JTY4
 
 #### Check out our advanced Automatic Translate Addon for Loco Translate
 
-* [**Automatic Translate Addon for Loco Translate**](https://locoaddon.com/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=atlt_check_out) is an addon that enhances the functionality of the **Loco Translate** plugin by enabling the **automatic translation of WordPress themes and plugins**. This addon connects with sources like Google, Yandex, DeepL, or AI-powered sources like **ChatGPT,** **Gemini AI** and **Chrome AI** to provide instant and automated translations.  [**Check it**](https://locoaddon.com/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=atlt_check_out)
-* [**AI Translation for TranslatePress**](https://coolplugins.net/product/automatic-translate-addon-for-translatepress-pro/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=tpa_check_out) is a powerful addon that enhances the functionality of the TranslatePress plugin. This addon uses advanced translation services, like Google Translate, Yandex, and Chrome AI translator, to provide accurate and instant translations for your web pages automatically [**Check It**](https://coolplugins.net/product/automatic-translate-addon-for-translatepress-pro/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=tpa_check_out)
+* [**Automatic Translate Addon for Loco Translate**](https://locoaddon.com/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=atlt_check_out) is an addon that enhances the functionality of the **Loco Translate** plugin by enabling the **automatic translation of WordPress themes and plugins**. This addon connects with sources like Google, Yandex, DeepL, or AI-powered sources like **ChatGPT,** **Gemini AI** and **Chrome AI** to provide instant and automated translations.
+* [**AI Translation for TranslatePress**](https://coolplugins.net/product/automatic-translate-addon-for-translatepress-pro/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=tpa_check_out) is a powerful addon that enhances the functionality of the TranslatePress plugin. This addon uses advanced translation services, like Google Translate, Yandex, and Chrome AI translator, to provide accurate and instant translations for your web pages automatically.
 
 > **Important Notice:** This plugin serves as an AI translation extension for the official [**Polylang**](https://wordpress.org/plugins/polylang/) plugin.
 
@@ -165,7 +167,7 @@ This plugin provides automatic translation services for Polylang using the Yande
 
 == Frequently Asked Questions ==
 
-= What does the AutoPoly - AI Translation For Polylang plugin do? =
+= What does the "**AutoPoly - AI Translation For Polylang**" plugin do? =
 This plugin automatically copies and translates your posts, including titles, content, images, galleries, and meta fields, from one language to another using Chrome AI. It works with Elementor and Gutenberg blocks, replicating the original content and styles across different languages.
 
 = Is this plugin officially developed by Polylang? =
@@ -193,7 +195,7 @@ The translated content is managed within the WordPress editor, just like your or
 = Can I undo the automatic translations if needed? =
 Yes, you can manually edit or remove the translated content in the WordPress editor after it has been automatically translated.
 
-= Which editors and page builders are supported? =
+**=** Which editors and page builders are supported? =
 
 AutoPoly fully supports Gutenberg blocks, Elementor pages, and several popular third-party block libraries such as Spectra, Kadence Blocks, Otter Blocks, Stackable, and Essential Blocks.
 The pro version of this addon supports the Classic Editor, allowing translation of standard content created without blocks.
