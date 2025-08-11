@@ -56,7 +56,7 @@ if ( ! class_exists( 'ATFP_Elementor_Translate' ) ) {
 	
 					if($parent_editor === 'builder' || !empty($parent_elementor_data)){
 						// Delete this old post meta data
-						delete_post_meta( $parent_post_id, 'atfpp_elementor_translated' );
+						delete_post_meta( $parent_post_id, 'atfp_elementor_translated' );
 						delete_post_meta( $parent_post_id, 'atfp_parent_post_language_slug' );
 						delete_post_meta( $current_post_id, 'atfpp_elementor_translated' );
 						delete_post_meta( $current_post_id, 'atfp_parent_post_language_slug' );
