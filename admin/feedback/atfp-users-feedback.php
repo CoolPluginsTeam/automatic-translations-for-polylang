@@ -124,10 +124,16 @@ class AtfpUsersFeedback {
 
 
 	function submit_deactivation_response() {
-		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( $_POST['_wpnonce'], '_cool-plugins_deactivate_feedback_nonce' ) ) {
+
+		if(!current_user_can('manage_options')){
+			wp_send_json_error( __( 'Unauthorized', 'autopoly-ai-translation-for-polylang' ), 403 );
+			wp_die( '0', 403 );
+		}
+
+		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ), '_cool-plugins_deactivate_feedback_nonce' ) ) {
 			wp_send_json_error();
 		} else {
-			$reason             = sanitize_text_field( $_POST['reason'] );
+			$reason             = sanitize_text_field( wp_unslash( $_POST['reason'] ) );
 			$deactivate_reasons = array(
 				'didnt_work_as_expected'         => array(
 					'title'             => esc_html( __( 'The plugin didn\'t work as expected', 'autopoly-ai-translation-for-polylang' ) ),
