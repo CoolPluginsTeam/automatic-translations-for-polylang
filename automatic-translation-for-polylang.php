@@ -376,8 +376,8 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 				
 				<div class="tab-content">
 					<?php
-					require_once ATFP_DIR_PATH . $file_prefix . $tab . '.php';
-					if($tab !== 'support-blocks'){
+					require_once ATFP_DIR_PATH . $file_prefix . $current_tab . '.php';
+					if($current_tab !== 'support-blocks'){
 						require_once ATFP_DIR_PATH . $file_prefix . 'sidebar.php';
 					}
 					
