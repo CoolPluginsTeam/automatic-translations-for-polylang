@@ -85,15 +85,20 @@ if (! class_exists('ATFP_Helper')) {
 
 		public function get_block_parse_rules()
 		{
-			$response = wp_remote_get(ATFP_URL . 'includes/block-translation-rules/block-rules.json', array(
-				'timeout'     => 15,
-				'sslverify'   => false, // Disable SSL verification to avoid cURL error 60
-			));
-
-			if (is_wp_error($response)) {
-				$block_rules = '';
+			$response = wp_remote_get( ATFP_URL . 'includes/block-translation-rules/block-rules.json', array(
+				'timeout' => 15,
+			) );
+			
+			if ( is_wp_error( $response ) || 200 !== (int) wp_remote_retrieve_response_code( $response ) ) {
+				$local_path = ATFP_DIR_PATH . 'includes/block-translation-rules/block-rules.json';
+				// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+				$block_rules = is_readable( $local_path ) ? file_get_contents( $local_path ) : '';
 			} else {
-				$block_rules = wp_remote_retrieve_body($response);
+				$block_rules = wp_remote_retrieve_body( $response );
+			}
+
+			if(empty($block_rules)){
+				return array();
 			}
 
 			$block_translation_rules = json_decode($block_rules, true);
