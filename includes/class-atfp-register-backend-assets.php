@@ -175,8 +175,12 @@ class ATFP_Register_Backend_Assets
         
         $post_language_slug = pll_get_post_language(get_the_ID(), 'slug');
         $current_post_id = get_the_ID(); // Get the current post ID
-        $elementor_data = get_post_meta($current_post_id, '_elementor_data', true);
-        $elementor_data = is_serialized($elementor_data) ? unserialize($elementor_data) : (is_string($elementor_data) ? json_decode($elementor_data) : $elementor_data);
+        
+        if(!class_exists('\Elementor\Plugin') || !property_exists('\Elementor\Plugin', 'instance') ){
+            return;
+        }
+
+        $elementor_data = \Elementor\Plugin::$instance->documents->get( $current_post_id )->get_elements_data();
 
         if($parent_post_language_slug === $post_language_slug){
             return;
