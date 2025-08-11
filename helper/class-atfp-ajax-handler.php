@@ -74,6 +74,11 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				exit();
 			}
 
+			if(!current_user_can('manage_options')){
+				wp_send_json_error( __( 'Unauthorized', 'autopoly-ai-translation-for-polylang' ), 403 );
+				wp_die( '0', 403 );
+			}
+
 			$block_parse_rules = ATFP_Helper::get_instance()->get_block_parse_rules();
 
 			$data = array(
@@ -94,11 +99,17 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				exit();
 			}
 
-			$post_id = isset( $_POST['postId'] ) ? (int) filter_var( $_POST['postId'], FILTER_SANITIZE_NUMBER_INT ) : false;
+			$post_id = absint(isset( $_POST['postId'] ) ? (int) filter_var( $_POST['postId'], FILTER_SANITIZE_NUMBER_INT ) : false);
+			
+			if(!current_user_can('edit_posts', $post_id)){
+				wp_send_json_error( __( 'Unauthorized', 'autopoly-ai-translation-for-polylang' ), 403 );
+				wp_die( '0', 403 );
+			}
+
 
 			if ( false !== $post_id ) {
-				$post_data = get_post( esc_html( $post_id ) );
-            	$locale = isset($_POST['local']) ? sanitize_text_field($_POST['local']) : 'en';
+				$post_data = get_post( absint($post_id) );
+                $locale = isset($_POST['local']) ? sanitize_text_field($_POST['local']) : 'en';
                 $current_locale = isset($_POST['current_local']) ? sanitize_text_field($_POST['current_local']) : 'en';
 				
 
@@ -130,6 +141,11 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				exit();
 			}
 
+			if(!current_user_can('manage_options')){
+				wp_send_json_error( __( 'Unauthorized', 'autopoly-ai-translation-for-polylang' ), 403 );
+				wp_die( '0', 403 );
+			}
+
 			$custom_content = get_option( 'atfp_custom_block_data', false ) ? get_option( 'atfp_custom_block_data', false ) : false;
 
 			if ( $custom_content && is_string( $custom_content ) && ! empty( trim( $custom_content ) ) ) {
@@ -146,6 +162,12 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				wp_die( '0', 400 );
 				exit();
 			}
+
+			if(!current_user_can('manage_options')){
+				wp_send_json_error( __( 'Unauthorized', 'autopoly-ai-translation-for-polylang' ), 403 );
+				wp_die( '0', 403 );
+			}
+
 			$updated_blocks_data = isset( $_POST['save_block_data'] ) ? json_decode( wp_unslash( $_POST['save_block_data'] ) ) : false;
 
 			if ( $updated_blocks_data ) {
@@ -217,19 +239,33 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				exit();
 			}
 
+			$post_id = isset($_POST['post_id']) ? absint($_POST['post_id']) : 0;
+
+			// Require capability based on context
+			if ( $post_id > 0 ) {
+				if ( ! current_user_can('edit_post', $post_id) ) {
+					wp_send_json_error( __( 'Unauthorized', 'autopoly-ai-translation-for-polylang' ), 403 );
+					wp_die( '0', 403 );
+				}
+			} else {
+				if ( ! current_user_can('manage_options') ) {
+					wp_send_json_error( __( 'Unauthorized', 'autopoly-ai-translation-for-polylang' ), 403 );
+					wp_die( '0', 403 );
+				}
+			}
+
 			$provider = isset($_POST['provider']) ? sanitize_text_field($_POST['provider']) : '';
 			$total_string_count = isset($_POST['totalStringCount']) ? absint($_POST['totalStringCount']) : 0;
 			$total_word_count = isset($_POST['totalWordCount']) ? absint($_POST['totalWordCount']) : 0;
 			$total_char_count = isset($_POST['totalCharacterCount']) ? absint($_POST['totalCharacterCount']) : 0;
 			$editor_type = isset($_POST['editorType']) ? sanitize_text_field($_POST['editorType']) : '';
 			$date = isset($_POST['date']) ? date('Y-m-d H:i:s', strtotime(sanitize_text_field($_POST['date']))) : '';
-			$source_string_count = isset($_POST['sourceStringCount']) ? absint($_POST['sourceStringCount']) : 0;	
+			$source_string_count = isset($_POST['sourceStringCount']) ? absint($_POST['sourceStringCount']) : 0;
 			$source_word_count = isset($_POST['sourceWordCount']) ? absint($_POST['sourceWordCount']) : 0;
 			$source_char_count = isset($_POST['sourceCharacterCount']) ? absint($_POST['sourceCharacterCount']) : 0;
 			$source_lang = isset($_POST['sourceLang']) ? sanitize_text_field($_POST['sourceLang']) : '';
 			$target_lang = isset($_POST['targetLang']) ? sanitize_text_field($_POST['targetLang']) : '';
 			$time_taken = isset($_POST['timeTaken']) ? absint($_POST['timeTaken']) : 0;
-			$post_id = isset($_POST['post_id']) ? absint($_POST['post_id']) : 0;
 
 			if (class_exists('Atfp_Dashboard')) {
 				$translation_data = array(
@@ -276,18 +312,20 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				wp_die( '0', 400 );
 				exit();
 			}
-
-			if(!class_exists("Atfp_Dashboard")){
-				wp_send_json_error( __( 'Translation Data class not found.', 'autopoly-ai-translation-for-polylang' ) );
-				wp_die( '0', 400 );
-				exit();
+			$post_id = isset($_POST['post_id']) ? absint($_POST['post_id']) : 0;
+			if ( ! $post_id || ! current_user_can('edit_post', $post_id) ) {
+				wp_send_json_error( __( 'Unauthorized', 'autopoly-ai-translation-for-polylang' ), 403 );
+				wp_die( '0', 403 );
 			}
-
-			if(!method_exists("Atfp_Dashboard", "get_translation_data")){
-				wp_send_json_error( __( 'Get Translation Data method not found.', 'autopoly-ai-translation-for-polylang' ) );
-				wp_die( '0', 400 );
-				exit();
-			}	
+			
+			// Optional hardening: enforce valid JSON if not using Elementor Document API
+			if ( isset($_POST['elementor_data']) && is_string($_POST['elementor_data']) ) {
+				$decoded = json_decode( stripslashes( $_POST['elementor_data'] ), true );
+				if ( json_last_error() !== JSON_ERROR_NONE ) {
+					wp_send_json_error( __( 'Invalid data.', 'autopoly-ai-translation-for-polylang' ), 400 );
+					wp_die( '0', 400 );
+				}
+			}
 
 			$translation_data = Atfp_Dashboard::get_translation_data('atfp');
 
@@ -296,7 +334,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				wp_die( '0', 400 );
 				exit();
 			}
-
+			
 			$total_character_count = $translation_data['total_character_count'];
 			
 			if($total_character_count > 500000){
@@ -304,37 +342,26 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				wp_die( '0', 400 );
 				exit();
 			}
-
-            if ( isset( $_POST['post_id'] ) && isset( $_POST['elementor_data'] ) ) {
-                $post_id = intval( $_POST['post_id'] );
-
-				$elementor_data = $_POST['elementor_data'];
+			
+            $elementor_data = $_POST['elementor_data'];
 		
-				// Check if the current post has Elementor data
-				if($elementor_data && '' !== $elementor_data){
-					if(class_exists('Elementor\Plugin')){
-						$plugin=\Elementor\Plugin::$instance;
-						$document=$plugin->documents->get($post_id);
+			// Check if the current post has Elementor data
+			if($elementor_data && '' !== $elementor_data){
+				if(class_exists('Elementor\Plugin')){
+					$plugin=\Elementor\Plugin::$instance;
+					$document=$plugin->documents->get($post_id);
 						
-						$document->save( [
-							'elements' => json_decode( stripslashes( $elementor_data ), true ),
-						] );
+					$document->save( [
+						'elements' => json_decode( stripslashes( $elementor_data ), true ),
+					] );
 
-						$plugin->files_manager->clear_cache();
-					}else{
-						// $elementor_data = sanitize_textarea_field( wp_unslash( $post_data['meta_fields']['_elementor_data']));
-						$elementor_data=preg_replace('#(?<!\\\\)/#', '\\/', $elementor_data);
-						update_post_meta($post_id, '_elementor_data', $elementor_data);
-					}
+					$plugin->files_manager->clear_cache();
+					update_post_meta($post_id, '_atfp_elementor_translated', 'true');
 				}
+			}
 				
-				update_post_meta($post_id, '_atfp_elementor_translated', 'true');
-                wp_send_json_success( 'Elementor data updated.' );
-				exit;
-            } else {
-                wp_send_json_error( 'Invalid data.' );
-				exit;
-            }
+            wp_send_json_success( 'Elementor data updated.' );
+			exit;
         }
 	}
 }
