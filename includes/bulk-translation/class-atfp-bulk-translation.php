@@ -35,8 +35,10 @@ if(!class_exists('ATFP_Bulk_Translation')):
             if(!isset($screen->id)){
                 return;
             }
-            
-            if((isset($_GET['post_status']) && 'trash' === $_GET['post_status'])){
+
+            $post_status=isset($_GET['post_status']) ? sanitize_text_field(wp_unslash($_GET['post_status'])) : '';
+
+            if('trash' === $post_status){
                 return;
             }
             

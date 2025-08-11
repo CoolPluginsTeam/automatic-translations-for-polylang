@@ -324,7 +324,7 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 	
 			// Get current tab with fallback
 	
-			$tab 			= isset($_GET['tab']) ? sanitize_key($_GET['tab']) : 'dashboard';
+			$tab 			= isset($_GET['tab']) ? sanitize_key(wp_unslash($_GET['tab'])) : 'dashboard';
 			$current_tab 	= array_key_exists($tab, $valid_tabs) ? $tab : 'dashboard';
 			
 			// Action buttons configuration

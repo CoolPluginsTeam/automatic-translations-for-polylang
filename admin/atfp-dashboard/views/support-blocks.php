@@ -46,7 +46,9 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 		 */
 		private function __construct() {
 			// wp:phpcs:ignore Wordpress.security Nonce verification is not required here
-			if(isset($_GET['tab']) && $_GET['page'] == 'polylang-atfp-dashboard' && $_GET['tab'] == 'support-blocks'){
+			$tab=isset($_GET['tab']) ? sanitize_text_field(wp_unslash($_GET['tab'])) : '';
+			$page=isset($_GET['page']) ? sanitize_text_field(wp_unslash($_GET['page'])) : '';
+			if('support-blocks' === $tab && 'polylang-atfp-dashboard' === $page){
 				$this->atfp_render_support_blocks_page();
 				$this->enqueue_editor_assets();
 			}
