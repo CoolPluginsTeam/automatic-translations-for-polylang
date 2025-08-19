@@ -358,7 +358,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 					$elementor_data=json_decode(wp_unslash($_POST['elementor_data']), true);
 						
 					$document->save( [
-						'elements' => json_decode( wp_unslash( $elementor_data ), true ),
+						'elements' => $elementor_data,
 					] );
 
 					$plugin->files_manager->clear_cache();
