@@ -85,14 +85,27 @@ if (! class_exists('ATFP_Helper')) {
 
 		public function get_block_parse_rules()
 		{
-			$response = wp_remote_get( ATFP_URL . 'includes/block-translation-rules/block-rules.json', array(
+			$response = wp_remote_get( esc_url_raw( ATFP_URL . 'includes/block-translation-rules/block-rules.json' ), array(
 				'timeout' => 15,
 			) );
 			
 			if ( is_wp_error( $response ) || 200 !== (int) wp_remote_retrieve_response_code( $response ) ) {
+				global $wp_filesystem;
+
+				// Initialize the WordPress filesystem
+				if ( ! function_exists( 'WP_Filesystem' ) ) {
+					require_once ABSPATH . 'wp-admin/includes/file.php';
+				}
+				
+				WP_Filesystem();
+
 				$local_path = ATFP_DIR_PATH . 'includes/block-translation-rules/block-rules.json';
-				// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
-				$block_rules = is_readable( $local_path ) ? file_get_contents( $local_path ) : '';
+				if($wp_filesystem->exists($local_path) && $wp_filesystem->is_readable( $local_path )){
+					$block_rules = $wp_filesystem->get_contents( $local_path );
+				}else{
+					$block_rules = array();
+				}
+				
 			} else {
 				$block_rules = wp_remote_retrieve_body( $response );
 			}

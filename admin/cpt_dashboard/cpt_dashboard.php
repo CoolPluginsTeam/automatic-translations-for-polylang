@@ -274,7 +274,7 @@ if(!class_exists('Atfp_Dashboard')){
                 }
                 $html .= '<div class="cpt-review-notice-content"><p>'.wp_kses_post($message).'</p><div class="atfp-review-notice-dismiss" data-prefix="'.esc_attr($prefix).'" data-nonce="'.wp_create_nonce('atfp_hide_review_notice').'"><a href="'.esc_url($url).'" target="_blank" class="button button-primary">Rate Now! ★★★★★</a><button class="button cpt-not-interested">'.esc_html__('Not Interested', 'cp-notice').'</button><button class="button cpt-already-reviewed">'.esc_html__('Already Reviewed', 'cp-notice').'</button></div></div></div>';
                 
-                echo $html;
+                echo wp_kses_post($html);   
             });
 
             add_action('atfp_display_admin_notices', function() use ($message, $prefix, $url, $icon, $plugin_name){
@@ -284,7 +284,7 @@ if(!class_exists('Atfp_Dashboard')){
                 }
                 $html .= '<div class="cpt-review-notice-content"><p>'.wp_kses_post($message).'</p><div class="atfp-review-notice-dismiss" data-prefix="'.esc_attr($prefix).'" data-nonce="'.wp_create_nonce('atfp_hide_review_notice').'"><a href="'.esc_url($url).'" target="_blank" class="button button-primary">Rate Now! ★★★★★</a><button class="button cpt-not-interested">'.esc_html__('Not Interested', 'cp-notice').'</button><button class="button cpt-already-reviewed">'.esc_html__('Already Reviewed', 'cp-notice').'</button></div></div></div>';
                 
-                echo $html;
+                echo wp_kses_post($html);
             });
         }
 

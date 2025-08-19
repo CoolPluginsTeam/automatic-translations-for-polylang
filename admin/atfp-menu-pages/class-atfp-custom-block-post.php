@@ -56,8 +56,13 @@ if ( ! class_exists( 'ATFP_Custom_Block_Post' ) ) {
 		 * @param bool         $update Whether this is an existing post being updated.
 		 */
 		public function on_save_post( $post_id, $post, $update ) {
+
+			if(!current_user_can('edit_post', $post_id)){
+				return;
+			}
+
 			if ( isset( $post->post_type ) && 'atfp_add_blocks' === $post->post_type ) {
-				if (preg_match('/Make This Content Available for Translation/i', $post->post_content)) {
+				if (strpos($post->post_content, 'Make This Content Available for Translation') !== false) {
 					update_option( 'atfp_custom_block_data', $post->post_content );
 					update_option( 'atfp_custom_block_status', 'true' );
 				}else{

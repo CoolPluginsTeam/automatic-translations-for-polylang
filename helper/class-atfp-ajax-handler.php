@@ -101,17 +101,15 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 
 			$post_id = absint(isset( $_POST['postId'] ) ? (int) filter_var( $_POST['postId'], FILTER_SANITIZE_NUMBER_INT ) : false);
 			
-			if(!current_user_can('edit_posts', $post_id)){
+			if(!current_user_can('edit_post', $post_id)){
 				wp_send_json_error( __( 'Unauthorized', 'autopoly-ai-translation-for-polylang' ), 403 );
 				wp_die( '0', 403 );
 			}
-
 
 			if ( false !== $post_id ) {
 				$post_data = get_post( absint($post_id) );
                 $locale = isset($_POST['local']) ? sanitize_text_field($_POST['local']) : 'en';
                 $current_locale = isset($_POST['current_local']) ? sanitize_text_field($_POST['current_local']) : 'en';
-				
 
 				$content = $post_data->post_content;
 				$content = ATFP_Helper::replace_links_with_translations($content, $locale, $current_locale);
@@ -168,7 +166,13 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				wp_die( '0', 403 );
 			}
 
-			$updated_blocks_data = isset( $_POST['save_block_data'] ) ? json_decode( wp_unslash( $_POST['save_block_data'] ) ) : false;
+			$json = isset($_POST['save_block_data']) ? wp_unslash($_POST['save_block_data']) : false;
+			$updated_blocks_data = json_decode($json, true);
+			if(json_last_error() !== JSON_ERROR_NONE){ 
+				wp_send_json_error( __( 'Invalid JSON', 'autopoly-ai-translation-for-polylang' ) );
+				wp_die( '0', 400 );
+				exit();
+			}
 
 			if ( $updated_blocks_data ) {
 				$block_parse_rules = ATFP_Helper::get_instance()->get_block_parse_rules();
@@ -343,16 +347,18 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				exit();
 			}
 			
-            $elementor_data = $_POST['elementor_data'];
+            $elementor_data = isset($_POST['elementor_data']) ? sanitize_text_field(wp_unslash($_POST['elementor_data'])) : '';
 		
 			// Check if the current post has Elementor data
 			if($elementor_data && '' !== $elementor_data){
 				if(class_exists('Elementor\Plugin')){
 					$plugin=\Elementor\Plugin::$instance;
 					$document=$plugin->documents->get($post_id);
+					
+					$elementor_data=json_decode(wp_unslash($_POST['elementor_data']), true);
 						
 					$document->save( [
-						'elements' => json_decode( stripslashes( $elementor_data ), true ),
+						'elements' => json_decode( wp_unslash( $elementor_data ), true ),
 					] );
 
 					$plugin->files_manager->clear_cache();

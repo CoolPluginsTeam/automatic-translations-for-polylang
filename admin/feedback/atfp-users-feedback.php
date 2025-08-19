@@ -159,8 +159,7 @@ class AtfpUsersFeedback {
 
 			$deativation_reason = array_key_exists( $reason, $deactivate_reasons ) ? $reason : 'other';
 
-			$sanitized_message = sanitize_text_field( $_POST['message'] ) == '' ? 'N/A' : sanitize_text_field( $_POST['message'] );
-			$admin_email       = sanitize_email( get_option( 'admin_email' ) );
+			$sanitized_message = !empty($_POST['message']) ? sanitize_text_field($_POST['message']) : 'N/A';			$admin_email       = sanitize_email( get_option( 'admin_email' ) );
 			$site_url          = esc_url( site_url() );
 			$install_date      = get_option('atfp-install-date');
 			$plugin_initial =  get_option( 'atfp_initial_save_version' );
@@ -188,7 +187,7 @@ class AtfpUsersFeedback {
 				)
 			);
 
-			die( json_encode( array( 'response' => $response ) ) );
+			die( wp_json_success( array( 'response' => $response ) ) );
 		}
 
 	}
