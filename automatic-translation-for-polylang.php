@@ -4,7 +4,7 @@ Plugin Name: AutoPoly - AI Translation For Polylang
 Plugin URI: https://coolplugins.net/
 Version: 1.4.4
 Author: Cool Plugins
-Author URI: https://coolplugins.net/
+Author URI: https://coolplugins.net/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=author_page&utm_content=plugin_list
 Description: AutoPoly - AI Translation For Polylang simplifies your translation process by automatically translating all pages/posts content from one language to another.
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html

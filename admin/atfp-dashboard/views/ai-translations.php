@@ -22,7 +22,7 @@
                 'title' => esc_html__('AI Translations', $text_domain),
                 'description' => esc_html__('Leverage GeminiAI for seamless and context-aware translations.', $text_domain),
                 'icon' => 'gemini-translate.png',
-                'url' => 'https://docs.coolplugins.net/doc/translate-via-gemini-ai-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard'
+                'url' => 'https://docs.coolplugins.net/doc/translate-via-gemini-ai-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=ai_translations_gemini'
             ],
             [
                 'logo' => 'openai-translate-logo.png',
@@ -30,7 +30,7 @@
                 'title' => esc_html__('AI Translations', $text_domain),
                 'description' => esc_html__('Leverage OpenAI for seamless and context-aware translations.', $text_domain),
                 'icon' => 'open-ai-translate.png',
-                'url' => 'https://docs.coolplugins.net/doc/translate-via-open-ai-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard'
+                'url' => 'https://docs.coolplugins.net/doc/translate-via-open-ai-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=ai_translations_openai'
             ],
             [
                 'logo' => 'chrome-built-in-ai-logo.png',
@@ -38,7 +38,7 @@
                 'title' => esc_html__('Chrome Built-in AI', $text_domain),
                 'description' => esc_html__('Utilize Chrome\'s built-in AI for seamless translation experience.', $text_domain),
                 'icon' => 'chrome-ai-translate.png',
-                'url' => 'https://docs.coolplugins.net/doc/chrome-ai-translation-polylang/?utm_source=atfpp_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=dashboard'
+                'url' => 'https://docs.coolplugins.net/doc/chrome-ai-translation-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=ai_translations_chrome'
             ]
         ];
 

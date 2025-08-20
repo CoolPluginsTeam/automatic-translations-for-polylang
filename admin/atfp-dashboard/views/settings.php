@@ -66,12 +66,12 @@ if(!current_user_can('manage_options')){
             $api_settings = [
                 'gemini' => [
                     'name' => 'Gemini',
-                    'doc_url' => 'https://docs.coolplugins.net/doc/generate-gemini-api-key/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=api_key&utm_content=dashboard',
+                    'doc_url' => 'https://docs.coolplugins.net/doc/generate-gemini-api-key/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=settings_gemini',
                     'placeholder' => 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
                 ],
                 'openai' => [
                     'name' => 'OpenAI',
-                    'doc_url' => 'https://docs.coolplugins.net/doc/generate-open-ai-api-key/?utm_source=atfpp_plugin&utm_medium=inside&utm_campaign=api_key&utm_content=dashboard',
+                    'doc_url' => 'https://docs.coolplugins.net/doc/generate-open-ai-api-key/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=settings_openai',
                     'placeholder' => 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
                 ]
             ];
