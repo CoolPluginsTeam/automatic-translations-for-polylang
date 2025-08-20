@@ -13,7 +13,7 @@
     <p><?php esc_html_e('Your license key provides access to pro version updates and support.', $text_domain); ?></p>
     
     <p>
-        <?php esc_html_e('You\'re using <strong>AutoPoly - AI Translation For Polylang (free)</strong> - no license needed. Enjoy! 😊', $text_domain); ?>
+        <?php echo sprintf(esc_html__('You\'re using %s - no license needed. Enjoy! 😊', $text_domain), '<strong>'.esc_html__('AutoPoly - AI Translation For Polylang (free)', $text_domain).'</strong>'); ?>
     </p>
 
     <div class="atfp-dashboard-upgrade-box">
