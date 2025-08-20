@@ -356,6 +356,11 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 					$document=$plugin->documents->get($post_id);
 					
 					$elementor_data=json_decode(wp_unslash($_POST['elementor_data']), true);
+
+					if (json_last_error() !== JSON_ERROR_NONE) {
+						wp_send_json_error( __( 'Invalid Elementor data.', 'autopoly-ai-translation-for-polylang' ), 400 );
+						wp_die( '0', 400 );
+					}
 						
 					$document->save( [
 						'elements' => $elementor_data,
