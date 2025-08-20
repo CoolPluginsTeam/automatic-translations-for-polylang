@@ -132,7 +132,7 @@ if(!current_user_can('manage_options')){
                         <a href="#" class="atfp-see-terms">[See terms]</a>
                     </div>
                     <div id="termsBox" style="display: none;padding-left: 20px; margin-top: 10px; font-size: 12px; color: #999;">
-                            <p><?php echo esc_html__("Opt in to receive email updates about security improvements, new features, helpful tutorials, and occasional special offers. We'll collect:", $text_domain); ?></p>
+                            <p><?php echo esc_html__("Opt in to receive email updates about security improvements, new features, helpful tutorials, and occasional special offers. We'll collect:", $text_domain); ?> <a href="https://my.coolplugins.net/terms/usage-tracking/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=terms&utm_content=dashboard" target="_blank"><?php echo esc_html__('Click Here', $text_domain); ?></a></p>
                             <ul style="list-style-type:auto;">
                                 <li><?php esc_html_e('Your website home URL and WordPress admin email.', $text_domain); ?></li>
                                 <li><?php esc_html_e('To check plugin compatibility, we will collect the following: list of active plugins and themes, server type, MySQL version, WordPress version, memory limit, site language and database prefix.', $text_domain); ?></li>

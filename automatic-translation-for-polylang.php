@@ -515,7 +515,7 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 				if(class_exists('Atfp_Dashboard') && !defined('ATFPP_V')) {
 					Atfp_Dashboard::review_notice(
 						'atfp', // Required
-						'AutoPoly - AI Translation For Polylang (Pro)', // Required
+						'AutoPoly - AI Translation For Polylang', // Required
 						'https://wordpress.org/support/plugin/automatic-translations-for-polylang/reviews/#new-post', // Required
 						ATFP_URL .'assets/images/ai-translation-for-Polylang.svg' // Required
 					);

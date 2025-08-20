@@ -109,7 +109,7 @@ class AtfpUsersFeedback {
 							<?php endif; ?>
 						</div>
 					<?php endforeach; ?>
-					<input class="cool-plugins-GDPR-data-notice" id="cool-plugins-GDPR-data-notice-<?php echo esc_attr( $this->plugin_domain ); ?>" type="checkbox"><label for="cool-plugins-GDPR-data-notice"><?php echo esc_html( __( 'I agree to share anonymous usage data and basic site details (such as server, PHP, and WordPress versions) to support AI Translation Addon for Polylang improvement efforts. Additionally, I allow Cool Plugins to store all information provided through this form and to respond to my inquiry.', 'autopoly-ai-translation-for-polylang' ) ); ?></label>
+					<input class="cool-plugins-GDPR-data-notice" id="cool-plugins-GDPR-data-notice-<?php echo esc_attr( $this->plugin_domain ); ?>" type="checkbox"><label for="cool-plugins-GDPR-data-notice"><?php echo esc_html( __( 'I agree to share anonymous usage data and basic site details (such as server, PHP, and WordPress versions) to support AutoPoly - AI Translation For Polylang improvement efforts. Additionally, I allow Cool Plugins to store all information provided through this form and to respond to my inquiry.', 'autopoly-ai-translation-for-polylang' ) ); ?></label>
 				</div>
 				<div class="cool-plugin-popup-button-wrapper">
 					<a class="cool-plugins-button button-deactivate" id="cool-plugin-submitNdeactivate">Submit and Deactivate</a>
@@ -187,7 +187,7 @@ class AtfpUsersFeedback {
 				)
 			);
 
-			die( wp_json_success( array( 'response' => $response ) ) );
+			die( wp_send_json_success( array( 'response' => $response ) ) );
 		}
 
 	}
