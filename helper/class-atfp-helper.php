@@ -85,15 +85,33 @@ if (! class_exists('ATFP_Helper')) {
 
 		public function get_block_parse_rules()
 		{
-			$response = wp_remote_get(ATFP_URL . 'includes/block-translation-rules/block-rules.json', array(
-				'timeout'     => 15,
-				'sslverify'   => false, // Disable SSL verification to avoid cURL error 60
-			));
+			$response = wp_remote_get( esc_url_raw( ATFP_URL . 'includes/block-translation-rules/block-rules.json' ), array(
+				'timeout' => 15,
+			) );
+			
+			if ( is_wp_error( $response ) || 200 !== (int) wp_remote_retrieve_response_code( $response ) ) {
+				global $wp_filesystem;
 
-			if (is_wp_error($response)) {
-				$block_rules = '';
+				// Initialize the WordPress filesystem
+				if ( ! function_exists( 'WP_Filesystem' ) ) {
+					require_once ABSPATH . 'wp-admin/includes/file.php';
+				}
+				
+				WP_Filesystem();
+
+				$local_path = ATFP_DIR_PATH . 'includes/block-translation-rules/block-rules.json';
+				if($wp_filesystem->exists($local_path) && $wp_filesystem->is_readable( $local_path )){
+					$block_rules = $wp_filesystem->get_contents( $local_path );
+				}else{
+					$block_rules = array();
+				}
+				
 			} else {
-				$block_rules = wp_remote_retrieve_body($response);
+				$block_rules = wp_remote_retrieve_body( $response );
+			}
+
+			if(empty($block_rules)){
+				return array();
 			}
 
 			$block_translation_rules = json_decode($block_rules, true);

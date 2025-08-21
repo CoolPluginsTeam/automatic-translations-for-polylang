@@ -270,21 +270,21 @@ if(!class_exists('Atfp_Dashboard')){
             add_action('admin_notices', function() use ($message, $prefix, $url, $icon, $plugin_name){
                 $html= '<div class="notice notice-info cpt-review-notice">';
                 if($icon){
-                    $html .= '<img class="cpt-review-notice-icon" src="'.$icon.'" alt="'.$plugin_name.'">';
+                    $html .= '<img class="cpt-review-notice-icon" src="'.esc_url($icon).'" alt="'.esc_attr($plugin_name).'">';
                 }
-                $html .= '<div class="cpt-review-notice-content"><p>'.$message.'</p><div class="atfp-review-notice-dismiss" data-prefix="'.$prefix.'" data-nonce="'.wp_create_nonce('atfp_hide_review_notice').'"><a href="'. $url .'" target="_blank" class="button button-primary">Rate Now! ★★★★★</a><button class="button cpt-not-interested">'.__('Not Interested', 'cp-notice').'</button><button class="button cpt-already-reviewed">'.__('Already Reviewed', 'cp-notice').'</button></div></div></div>';
+                $html .= '<div class="cpt-review-notice-content"><p>'.wp_kses_post($message).'</p><div class="atfp-review-notice-dismiss" data-prefix="'.esc_attr($prefix).'" data-nonce="'.wp_create_nonce('atfp_hide_review_notice').'"><a href="'.esc_url($url).'" target="_blank" class="button button-primary">Rate Now! ★★★★★</a><button class="button cpt-not-interested">'.esc_html__('Not Interested', 'cp-notice').'</button><button class="button cpt-already-reviewed">'.esc_html__('Already Reviewed', 'cp-notice').'</button></div></div></div>';
                 
-                echo $html;
+                echo wp_kses_post($html);   
             });
 
             add_action('atfp_display_admin_notices', function() use ($message, $prefix, $url, $icon, $plugin_name){
                 $html= '<div class="notice notice-info cpt-review-notice">';
                 if($icon){
-                    $html .= '<img class="cpt-review-notice-icon" src="'.$icon.'" alt="'.$plugin_name.'">';
+                    $html .= '<img class="cpt-review-notice-icon" src="'.esc_url($icon).'" alt="'.esc_attr($plugin_name).'">';
                 }
-                $html .= '<div class="cpt-review-notice-content"><p>'.$message.'</p><div class="atfp-review-notice-dismiss" data-prefix="'.$prefix.'" data-nonce="'.wp_create_nonce('atfp_hide_review_notice').'"><a href="'. $url .'" target="_blank" class="button button-primary">Rate Now! ★★★★★</a><button class="button cpt-not-interested">'.__('Not Interested', 'cp-notice').'</button><button class="button cpt-already-reviewed">'.__('Already Reviewed', 'cp-notice').'</button></div></div></div>';
+                $html .= '<div class="cpt-review-notice-content"><p>'.wp_kses_post($message).'</p><div class="atfp-review-notice-dismiss" data-prefix="'.esc_attr($prefix).'" data-nonce="'.wp_create_nonce('atfp_hide_review_notice').'"><a href="'.esc_url($url).'" target="_blank" class="button button-primary">Rate Now! ★★★★★</a><button class="button cpt-not-interested">'.esc_html__('Not Interested', 'cp-notice').'</button><button class="button cpt-already-reviewed">'.esc_html__('Already Reviewed', 'cp-notice').'</button></div></div></div>';
                 
-                echo $html;
+                echo wp_kses_post($html);
             });
         }
 
@@ -294,8 +294,13 @@ if(!class_exists('Atfp_Dashboard')){
         }
 
         public function atfp_hide_review_notice(){
-            if(wp_verify_nonce($_POST['nonce'], 'atfp_hide_review_notice')){
-                $prefix = sanitize_key($_POST['prefix']);
+            if(!current_user_can('manage_options')){
+                wp_send_json_error( __( 'Unauthorized', 'autopoly-ai-translation-for-polylang' ), 403 );
+                wp_die( '0', 403 );
+            }
+
+            if(wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'atfp_hide_review_notice')){
+                $prefix = sanitize_key(wp_unslash($_POST['prefix']));
                 $review_notice_dismissed = get_option('cpt_review_notice_dismissed', array());
                 $review_notice_dismissed[$prefix] = true;
                 update_option('cpt_review_notice_dismissed', $review_notice_dismissed);

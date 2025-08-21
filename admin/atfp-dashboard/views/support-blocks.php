@@ -46,7 +46,9 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 		 */
 		private function __construct() {
 			// wp:phpcs:ignore Wordpress.security Nonce verification is not required here
-			if(isset($_GET['tab']) && $_GET['page'] == 'polylang-atfp-dashboard' && $_GET['tab'] == 'support-blocks'){
+			$tab=isset($_GET['tab']) ? sanitize_text_field(wp_unslash($_GET['tab'])) : '';
+			$page=isset($_GET['page']) ? sanitize_text_field(wp_unslash($_GET['page'])) : '';
+			if('support-blocks' === $tab && 'polylang-atfp-dashboard' === $page){
 				$this->atfp_render_support_blocks_page();
 				$this->enqueue_editor_assets();
 			}
@@ -171,11 +173,11 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 					$modify_link = '<a href="' . esc_url( admin_url( 'post.php?post=' . esc_attr( $atfp_post_id ) . '&action=edit&atfp_new_block=' ) . esc_attr( $block_name ) ) . '">' . $modify_text . '</a>'; // Modify link
 
 					echo '<tr data-block-name="' . esc_attr( strtolower( $block_name ) ) . '" data-block-status="' . esc_attr( strtolower( $status ) ) . '" >';
-					echo '<td>' . $s_no++ . '</td>';
-					echo '<td>' . $block_name . '</td>';
-					echo '<td>' . $block_title . '</td>';
-					echo '<td>' . $status . '</td>';
-					echo '<td>' . $modify_link . '</td>';
+					echo '<td>' . esc_html($s_no++) . '</td>';
+					echo '<td>' . esc_html($block_name) . '</td>';
+					echo '<td>' . esc_html($block_title) . '</td>';
+					echo '<td>' . esc_html($status) . '</td>';
+					echo '<td>' . wp_kses($modify_link, array('a' => array('href' => array(), 'target' => array(), 'rel' => array()))) . '</td>';
 					echo '</tr>';
 				}
 			}

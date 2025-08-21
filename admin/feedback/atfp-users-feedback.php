@@ -109,7 +109,7 @@ class AtfpUsersFeedback {
 							<?php endif; ?>
 						</div>
 					<?php endforeach; ?>
-					<input class="cool-plugins-GDPR-data-notice" id="cool-plugins-GDPR-data-notice-<?php echo esc_attr( $this->plugin_domain ); ?>" type="checkbox"><label for="cool-plugins-GDPR-data-notice"><?php echo esc_html( __( 'I agree to share anonymous usage data and basic site details (such as server, PHP, and WordPress versions) to support AI Translation Addon for Polylang improvement efforts. Additionally, I allow Cool Plugins to store all information provided through this form and to respond to my inquiry.', 'autopoly-ai-translation-for-polylang' ) ); ?></label>
+					<input class="cool-plugins-GDPR-data-notice" id="cool-plugins-GDPR-data-notice-<?php echo esc_attr( $this->plugin_domain ); ?>" type="checkbox"><label for="cool-plugins-GDPR-data-notice"><?php echo esc_html( __( 'I agree to share anonymous usage data and basic site details (such as server, PHP, and WordPress versions) to support AutoPoly - AI Translation For Polylang improvement efforts. Additionally, I allow Cool Plugins to store all information provided through this form and to respond to my inquiry.', 'autopoly-ai-translation-for-polylang' ) ); ?></label>
 				</div>
 				<div class="cool-plugin-popup-button-wrapper">
 					<a class="cool-plugins-button button-deactivate" id="cool-plugin-submitNdeactivate">Submit and Deactivate</a>
@@ -124,10 +124,16 @@ class AtfpUsersFeedback {
 
 
 	function submit_deactivation_response() {
-		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( $_POST['_wpnonce'], '_cool-plugins_deactivate_feedback_nonce' ) ) {
+
+		if(!current_user_can('manage_options')){
+			wp_send_json_error( __( 'Unauthorized', 'autopoly-ai-translation-for-polylang' ), 403 );
+			wp_die( '0', 403 );
+		}
+
+		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ), '_cool-plugins_deactivate_feedback_nonce' ) ) {
 			wp_send_json_error();
 		} else {
-			$reason             = sanitize_text_field( $_POST['reason'] );
+			$reason             = sanitize_text_field( wp_unslash( $_POST['reason'] ) );
 			$deactivate_reasons = array(
 				'didnt_work_as_expected'         => array(
 					'title'             => esc_html( __( 'The plugin didn\'t work as expected', 'autopoly-ai-translation-for-polylang' ) ),
@@ -153,8 +159,7 @@ class AtfpUsersFeedback {
 
 			$deativation_reason = array_key_exists( $reason, $deactivate_reasons ) ? $reason : 'other';
 
-			$sanitized_message = sanitize_text_field( $_POST['message'] ) == '' ? 'N/A' : sanitize_text_field( $_POST['message'] );
-			$admin_email       = sanitize_email( get_option( 'admin_email' ) );
+			$sanitized_message = !empty($_POST['message']) ? sanitize_text_field($_POST['message']) : 'N/A';			$admin_email       = sanitize_email( get_option( 'admin_email' ) );
 			$site_url          = esc_url( site_url() );
 			$install_date      = get_option('atfp-install-date');
 			$plugin_initial =  get_option( 'atfp_initial_save_version' );
@@ -182,7 +187,7 @@ class AtfpUsersFeedback {
 				)
 			);
 
-			die( json_encode( array( 'response' => $response ) ) );
+			die( wp_send_json_success( array( 'response' => $response ) ) );
 		}
 
 	}

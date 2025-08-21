@@ -105,7 +105,7 @@ if (!class_exists('ATFP_cronjob')) {
             ));
 
             if (is_wp_error($response)) {
-                error_log('ATFP Feedback Send Failed: ' . $response->get_error_message());
+                defined('WP_DEBUG') && WP_DEBUG && error_log('ATFP Feedback Send Failed: ' . sanitize_text_field($response->get_error_message()));
                 return;
             }
             

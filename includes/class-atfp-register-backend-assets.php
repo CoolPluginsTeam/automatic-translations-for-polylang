@@ -175,8 +175,12 @@ class ATFP_Register_Backend_Assets
         
         $post_language_slug = pll_get_post_language(get_the_ID(), 'slug');
         $current_post_id = get_the_ID(); // Get the current post ID
-        $elementor_data = get_post_meta($current_post_id, '_elementor_data', true);
-        $elementor_data = is_serialized($elementor_data) ? unserialize($elementor_data) : (is_string($elementor_data) ? json_decode($elementor_data) : $elementor_data);
+        
+        if(!class_exists('\Elementor\Plugin') || !property_exists('\Elementor\Plugin', 'instance') ){
+            return;
+        }
+
+        $elementor_data = \Elementor\Plugin::$instance->documents->get( $current_post_id )->get_elements_data();
 
         if($parent_post_language_slug === $post_language_slug){
             return;
@@ -206,7 +210,6 @@ class ATFP_Register_Backend_Assets
 
         $editor_script_asset = include ATFP_DIR_PATH . 'assets/automatic-translate/index.asset.php';
         wp_register_script('atfp-automatic-translate', ATFP_URL . 'assets/automatic-translate/index.js', $editor_script_asset['dependencies'], $editor_script_asset['version'], true);
-        wp_register_style('atfp-automatic-translate', ATFP_URL . 'assets/automatic-translate/index.css', array(), $editor_script_asset['version']);
 
         $post_type = get_post_type();
 
@@ -218,7 +221,6 @@ class ATFP_Register_Backend_Assets
         }
 
         wp_enqueue_style('atfp-automatic-translate-custom');
-        wp_enqueue_style('atfp-automatic-translate');
         wp_enqueue_script('atfp-automatic-translate');
 
         $post_id = get_the_ID();

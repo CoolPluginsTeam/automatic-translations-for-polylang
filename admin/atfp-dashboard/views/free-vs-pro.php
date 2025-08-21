@@ -1,12 +1,12 @@
 <div class="atfp-dashboard-free-vs-pro">
     <div class="atfp-dashboard-free-vs-pro-container">
     <div class="header">
-        <h1><?php _e('Free VS Pro', $text_domain); ?></h1>
+        <h1><?php esc_html_e('Free VS Pro', $text_domain); ?></h1>
         <div class="atfp-dashboard-status">
-            <span class="status"><?php _e('Inactive', $text_domain); ?></span>
+            <span class="status"><?php esc_html_e('Inactive', $text_domain); ?></span>
             <a href="<?php echo esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=freevspro'); ?>" class='atfp-dashboard-btn' target="_blank">
-              <img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/upgrade-now.svg'); ?>" alt="<?php echo esc_attr(__('Upgrade Now', $text_domain)); ?>">
-                <?php echo esc_html(__('Upgrade Now', $text_domain)); ?>
+              <img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/upgrade-now.svg'); ?>" alt="<?php echo esc_attr_e('Upgrade Now', $text_domain); ?>">
+                <?php echo esc_html_e('Upgrade Now', $text_domain); ?>
             </a>
         </div>
     </div>
