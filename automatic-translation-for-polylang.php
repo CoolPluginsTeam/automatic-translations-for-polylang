@@ -2,7 +2,7 @@
 /*
 Plugin Name: AutoPoly - AI Translation For Polylang
 Plugin URI: https://coolplugins.net/
-Version: 1.4.4
+Version: 1.4.5
 Author: Cool Plugins
 Author URI: https://coolplugins.net/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=author_page&utm_content=plugin_list
 Description: AutoPoly - AI Translation For Polylang simplifies your translation process by automatically translating all pages/posts content from one language to another.
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 if ( ! defined( 'ATFP_V' ) ) {
-	define( 'ATFP_V', '1.4.4' );
+	define( 'ATFP_V', '1.4.5' );
 }
 if ( ! defined( 'ATFP_DIR_PATH' ) ) {
 	define( 'ATFP_DIR_PATH', plugin_dir_path( __FILE__ ) );

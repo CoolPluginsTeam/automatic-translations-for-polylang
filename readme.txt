@@ -4,7 +4,7 @@ Tags: Polylang, AI Translation, Content Translation, Translate
 Requires at least: 5.0
 Tested up to: 6.8.1
 Requires PHP: 5.6
-Stable tag: 1.4.4
+Stable tag: 1.4.5
 Author URI: https://coolplugins.net/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -218,6 +218,9 @@ Yes, this plugin supports automatic translations for content created with the Cl
 You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities.[Report a security vulnerability](https://patchstack.com/database/wordpress/plugin/automatic-translations-for-polylang/vdp)
 
 == Changelog ==
+
+= Version 1.4.5 | 21 August 2025 =
+* **Fixed:** Addressed security vulnerabilities.
 
 = Version 1.4.4 | 24 July 2025 =
 
