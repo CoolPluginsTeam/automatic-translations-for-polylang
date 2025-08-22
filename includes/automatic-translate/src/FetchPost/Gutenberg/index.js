@@ -22,7 +22,20 @@ const GutenbergPostFetch = async (props) => {
             const allowedTypes = ['text', 'textarea', 'wysiwyg'];
             acf.getFields().forEach(field => {
                 if(field.data && allowedTypes.includes(field.data.type)){
-                    updateAllowedMetaFields({id: field.data.key, type: field.data.type});
+
+                    const fieldData=JSON.parse(JSON.stringify({key: field.data.key, type: field.data.type}));
+
+                    if(field.$el && field.$el.closest('.acf-field.acf-field-repeater') && field.$el.closest('.acf-field.acf-field-repeater').length > 0){
+                        const rowId=field.$el.closest('.acf-row').data('id');
+
+                        if(rowId && '' !== rowId){
+                            const index=rowId.replace('row-', '');
+                        
+                            fieldData.key=fieldData.key+'_'+index;
+                        }
+                    }
+
+                    updateAllowedMetaFields({id: fieldData.key, type: fieldData.type});
                 }
             });
         }

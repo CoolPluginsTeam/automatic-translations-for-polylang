@@ -66,21 +66,39 @@ const translatePost = (props) => {
         
         if (window.acf) {
             acf.getFields().forEach(field => {
-               if(field.data && field.data.key && Object.keys(AllowedMetaFields).includes(field.data.key)){
-                   const acfFieldObj = acf.getField(field.data.key);
-                   const fieldKey = field.data.key;
-                   const fieldName = field.data.name;
-                   const inputType = acfFieldObj.data.type;
 
-                   const sourceValue = metaFieldsData[fieldName]? metaFieldsData[fieldName][0] : acf.getField(fieldKey)?.val();
+                const fieldData=JSON.parse(JSON.stringify({key: field.data.key, type: field.data.type, name: field.data.name}));
+                let repeaterField = false;
+                // Update repeater fields
+                if(field.$el && field.$el.closest('.acf-field.acf-field-repeater') && field.$el.closest('.acf-field.acf-field-repeater').length > 0){
+                    const rowId=field.$el.closest('.acf-row').data('id');
+                    const repeaterItemName=field.$el.closest('.acf-field.acf-field-repeater').data('name');
+
+                    if(rowId && '' !== rowId){
+                        const index=rowId.replace('row-', '');
+                    
+                        fieldData.key=fieldData.key+'_'+index;
+
+                        fieldData.name=repeaterItemName+'_'+index+'_'+fieldData.name;
+                        repeaterField = true;
+                    }
+
+                }
+
+               if(field.data && field.data.key && Object.keys(AllowedMetaFields).includes(fieldData.key)){
+                   const fieldKey = fieldData.key;
+                   const fieldName = field.data.name;
+                   const inputType = field.data.type;
+
+                   const sourceValue = metaFieldsData[fieldName]? metaFieldsData[fieldName][0] : field?.val();
 
                     const translatedMetaFields = select('block-atfp/translate').getTranslatedString('metaFields', sourceValue, fieldKey, service);
 
                     if('wysiwyg' === inputType && tinymce){
-                        const editorId = acfFieldObj.data.id;
+                        const editorId = field.data.id;
                         tinymce.get(editorId)?.setContent(translatedMetaFields);
                     }else{
-                        acf.getField(fieldKey)?.val(translatedMetaFields);
+                        field.val(translatedMetaFields);
                     }
                }
             });
