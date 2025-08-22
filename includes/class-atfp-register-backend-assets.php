@@ -103,10 +103,10 @@ class ATFP_Register_Backend_Assets
                 }
 
                 $editor = '';
-                if ('builder' === get_post_meta($from_post_id, '_elementor_edit_mode', true)) {
+                if ('builder' === get_post_meta($from_post_id, '_elementor_edit_mode', true) && defined('ELEMENTOR_VERSION') ) {
                     $editor = 'Elementor';
                 }
-                if ('on' === get_post_meta($from_post_id, '_et_pb_use_builder', true)) {
+                if ('on' === get_post_meta($from_post_id, '_et_pb_use_builder', true) && defined('ET_CORE') ) {
                     $editor = 'Divi';
                 }
 
