@@ -129,7 +129,7 @@ Yes, all styles, formats, and layouts from the original post are retained in tra
 
 ## Support
 
-- **Documentation**: [Plugin Docs](https://coolplugins.net/docs/)
+- **Documentation**: [Plugin Docs](https://docs.coolplugins.net/plugin/ai-translation-for-polylang/)
 - **Support**: [WordPress.org Support](https://wordpress.org/support/plugin/automatic-translations-for-polylang/)
 - **Pro Support**: Available with Pro version
 
@@ -138,7 +138,7 @@ Yes, all styles, formats, and layouts from the original post are retained in tra
 - **Plugin Homepage**: [Cool Plugins](https://coolplugins.net/product/automatic-translations-for-polylang/)
 - **WordPress.org**: [Plugin Page](https://wordpress.org/plugins/automatic-translations-for-polylang/)
 - **Pro Version**: [Get Pro](https://coolplugins.net/product/automatic-translations-for-polylang/)
-- **Documentation**: [Docs](https://coolplugins.net/docs/)
+- **Documentation**: [Docs](https://docs.coolplugins.net/plugin/ai-translation-for-polylang/)
 - **Support**: [Support Forum](https://wordpress.org/support/plugin/automatic-translations-for-polylang/)
 
 ---
