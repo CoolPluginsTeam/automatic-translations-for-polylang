@@ -54,11 +54,11 @@ module.exports = (env, argv) => {
     let dirDist, dirEntry;
 
     if(argv.env.BT){
-      const dirSrc = path.resolve(__dirname, "block-inline-translation");
+      const dirSrc = path.resolve(__dirname, "src/block-inline-translation");
       dirDist = path.resolve(__dirname, "../assets/block-translator");
-      dirEntry = `${dirSrc}/editorAssets/index.ts`;
+      dirEntry = `${dirSrc}/editor-assets/index.ts`;
     }else if(argv.env.ET){
-      const dirSrc = path.resolve(__dirname, "elementor-inline-translation");
+      const dirSrc = path.resolve(__dirname, "src/elementor-inline-translation");
       dirDist = path.resolve(__dirname, "../assets/elementor-widget-translator");
       dirEntry = `${dirSrc}/index.js`;
     }

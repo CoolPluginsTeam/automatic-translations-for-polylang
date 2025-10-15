@@ -4,8 +4,8 @@
   "description": "You can easily create translated post using Automatic Translation For Polylang plugin & translate blocks",
   "main": "index.js",
   "scripts": {
-    "build:at": "wp-scripts build automatic-translate/src/index.js --output-path=../assets/automatic-translate/",
-    "start:at": "wp-scripts start automatic-translate/src/index.js --output-path=../assets/automatic-translate/",
+    "build:at": "wp-scripts build src/automatic-translate/index.js --output-path=../assets/automatic-translate/",
+    "start:at": "wp-scripts start src/automatic-translate/index.js --output-path=../assets/automatic-translate/",
     "build:et": "webpack --mode production --env ET=true",
     "start:et": "webpack --mode development --env ET=true --watch",
     "build:bt": "webpack --mode production --env BT=true",
