@@ -13,12 +13,31 @@ import ModalStyle from './modal-style';
 import ButtonGroup from './button-group';
 import { svgIcons } from './svgIcons';
 import ErrorModalBox from '../error-modal';
+import DOMPurify from 'dompurify';
 
 import {
   Modal,
   Button,
   SelectControl,
 } from "@wordpress/components";
+
+
+import { createElement } from "@wordpress/element";
+
+export const ModalCompat = (props: any) =>
+  createElement(Modal as any, props);
+
+export const ButtonCompat = (props: any) =>
+  createElement(Button as any, props);
+
+export const SkeletonCompat = (props: any) =>
+  createElement(Skeleton as any, props);
+
+export const ButtonGroupCompat = (props: any) =>
+  createElement(ButtonGroup as any, props);
+
+export const ErrorModalBoxCompat = (props: any) =>
+  createElement(ErrorModalBox as any, props);
 
 interface TranslateModalProps {
   value: string;
@@ -35,6 +54,7 @@ interface ButtonProps {
 }
 
 const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLanguage, onModalClose, modalOpen}) => {
+  console.log(modalOpen);
   let activeSourceLang = 'hi';
   let activeTargetLang = 'es';
   let notSupportedLang = {};
@@ -68,7 +88,7 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
   const [errorBtns, setErrorBtns] = useState<ButtonProps[]>([]);
   const [isErrorModalOpen, setIsErrorModalOpen] = useState<boolean>(false);
   const safeBrowser = window.location.protocol === 'https:';
-  const clipBoard=window?.navigator?.clipboard;
+  const browserContentSecure=window?.isSecureContext;
 
   useEffect(() => {
     setLangError("");
@@ -92,7 +112,7 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
       return;
     }
 
-    if (!isTranslatorApiAvailable() && !safeBrowser && !clipBoard) {
+    if (!isTranslatorApiAvailable() && !safeBrowser && !browserContentSecure) {
       setLangError(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">
                 <strong>Important Notice:</strong>
                 <ol>
@@ -126,7 +146,7 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
       return;
     } 
 
-    if(!isLanguageDetectorPaiAvailable() && !safeBrowser && !clipBoard){
+    if(!isLanguageDetectorPaiAvailable() && !safeBrowser && !browserContentSecure){
       setLangError(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">
           <h4>Important Notice:</h4>
           <ol>
@@ -370,13 +390,12 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
     setIsModalOpen(false);
   }
 
-  return (isErrorModalOpen ? <ErrorModalBox message={langError} onClose={() => {setIsErrorModalOpen(false); setIsModalOpen(true)}} Title={__("Chrome built-in translator AI", 'autopoly-ai-translation-for-polylang')}>
-    {errorBtns.length > 0 && <ButtonGroup className={styles.errorBtnGroup} buttons={errorBtns} />}
-  </ErrorModalBox> : isModalOpen ? (
+  return (isErrorModalOpen ? <ErrorModalBoxCompat message={langError} onClose={() => {setIsErrorModalOpen(false); setIsModalOpen(true)}} Title={__("Chrome built-in translator AI", 'autopoly-ai-translation-for-polylang')}>
+    {errorBtns.length > 0 && <ButtonGroupCompat className={styles.errorBtnGroup} buttons={errorBtns} />}
+  </ErrorModalBoxCompat> : isModalOpen ? (
     isModalOpen ? (
       <>
-      <ModalStyle modalContainer={styles.modalContainer} />
-      <Modal
+      <ModalCompat
         title="Chrome built-in translator AI"
         onRequestClose={HandlerCloseModal}
         className={styles.modalContainer}
@@ -384,9 +403,10 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
         isDismissible={false}
         bodyOpenClassName={'body-class'}
       >
+        <ModalStyle modalContainer={styles.modalContainer} />
         <div className={styles.modalCloseButton} onClick={HandlerCloseModal}>&times;</div>
         {apiError && apiError !== "" ? (
-          <div className={styles.error}><p dangerouslySetInnerHTML={{ __html: apiError }} />{errorBtns.length > 0 && <ButtonGroup className={styles.errorBtnGroup} buttons={errorBtns} />}</div>
+          <div className={styles.error}><p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(apiError) }} />{errorBtns.length > 0 && <ButtonGroup className={styles.errorBtnGroup} buttons={errorBtns} />}</div>
         ) : (
           <div className={styles.modal}>
   
@@ -424,9 +444,9 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
                 </div>
               )}
               {shortLangError && shortLangError !== "" && (
-                <div className={styles.error}><p dangerouslySetInnerHTML={{ __html: shortLangError }} /></div>
+                <div className={styles.error}><p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(shortLangError) }} /></div>
               )}
-              {isLoading && !langError && <Skeleton 
+              {isLoading && !langError && <SkeletonCompat 
                 count={1}
                 height='70px'
                 width="100%"
@@ -436,34 +456,36 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
                 <>
                   <div className={styles.translatedContent}><label>Translated Text</label><p>{translatedContent}</p></div>
                   <div className={styles.translatedButtonWrp}>
-                    <Button
+                    <ButtonCompat
                       className={styles.replaceBtn + " " + styles.btnStyle}
                       onClick={HandlerReplaceText}
                     >
                       Replace
-                    </Button>
-                    <Button
+                    </ButtonCompat>
+                    <ButtonCompat
                       className={styles.copyBtn + " " + styles.btnStyle}
                       onClick={HandlerCopyText}
                     >
                       {copyStatus}
-                    </Button>
-                    <Button
+                    </ButtonCompat>
+                    <ButtonCompat
                       className={styles.closeBtn + " " + styles.btnStyle}
                       onClick={HandlerCloseModal}
                     >
                       Close
-                    </Button>
+                    </ButtonCompat>
                   </div>
                 </>
               }
             </div>
           </div>
         )}
-      </Modal>
+      </ModalCompat>
       </>
     ) : null
   ) : null);
 }
 
-export default TranslatorModal;
+// @ts-ignore
+// eslint-disable-next-line no-undef
+window?.atfpInlineTranslation?.TranslatorModal=TranslatorModal;

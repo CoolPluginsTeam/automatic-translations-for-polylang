@@ -8,10 +8,28 @@ import {
 import { useState, useEffect } from "@wordpress/element";
 import styles from "./paragraph-transaltor.module.css";
 import isTranslatorApiAvailable from "../../../inline-translate-modal/is-translator-api-available";
-import TranslatorModal from "../../../inline-translate-modal/modal";
+import { createElement } from "@wordpress/element";
+
+export const ToolbarButtonCompat = (props: any) =>
+  createElement(ToolbarButton as any, props);
+
+export const RiTranslateAi2Compat = (props: any) =>
+  createElement(RiTranslateAi2 as any, props);
+
+export const TranslatorModalCompat = (props: any) =>{
+  // @ts-ignore
+  // eslint-disable-next-line no-undef
+  const TranslatorModal = window?.atfpInlineTranslation?.TranslatorModal;
+  
+  if (!TranslatorModal) {
+    return null;
+  }
+
+  return createElement(TranslatorModal as any, props);
+}
 
 const ParagraphRewriter = ({ value, onChange }) => {
-  const activePageLanguage = (window as any).atfpBlockInlineTranslation?.pageLanguage || 'en';
+  const activePageLanguage = (window as any).atfpInlineTranslation?.pageLanguage || 'en';
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedText, setSelectedText] = useState<string>("");
@@ -61,9 +79,9 @@ const ParagraphRewriter = ({ value, onChange }) => {
     <>
       <BlockControls>
         <ToolbarGroup>
-          <ToolbarButton
+          <ToolbarButtonCompat
             icon={() => (
-              <RiTranslateAi2 size={20} />
+              <RiTranslateAi2Compat size={20} />
             )}
             title="AI Paragraph Translate"
             className={!toolbarActive ? styles.disabledToolbarIcon : ""}
@@ -72,7 +90,7 @@ const ParagraphRewriter = ({ value, onChange }) => {
         </ToolbarGroup>
       </BlockControls>
       {isModalOpen && (
-        <TranslatorModal 
+        <TranslatorModalCompat 
           value={selectedText && '' !== selectedText ? selectedText : value.text.slice(value.start, value.end)} 
           onUpdate={HandlerReplaceText} 
           pageLanguage={activePageLanguage}
@@ -85,6 +103,7 @@ const ParagraphRewriter = ({ value, onChange }) => {
 };
 
 registerFormatType("atfp/paragraph-rewriter", {
+  object: false,
   title: "AI Paragraph Rewriter",
   name: "atfp/paragraph-rewriter",
   interactive: true,

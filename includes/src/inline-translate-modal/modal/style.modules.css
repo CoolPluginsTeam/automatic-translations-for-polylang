@@ -21,7 +21,7 @@
   color: black;
   background: white;
   padding: 1.5rem;
-  border-radius: 1rem;
+  border-radius: 8px;
   position: relative;
   max-height: 70%;
   margin: auto;
@@ -32,8 +32,8 @@
 
 .modalOverlay .modalContainer .modalCloseButton {
   position: absolute;
-  top: calc(1.5rem - 11px);
-  right: 1.5rem;
+  top: -4px;
+  right: -5px;
   cursor: pointer;
   font-size: 2.5rem;
   z-index: 99;
@@ -118,6 +118,8 @@
   height: calc(100% - 26px);
   margin-bottom: 1rem;
   overflow: auto;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .modalOverlay .modalContainer .modal .translatedContent label {
@@ -158,6 +160,7 @@
   transition: all 0.3s ease;
   color: white;
   opacity: 0.8;
+  cursor: pointer;
 }
 
 .modalOverlay .modalContainer .modal .btnStyle:hover {
@@ -363,10 +366,6 @@
 .ErrorModalContainer .errorModalBoxBody p a {
   color: #2271b1 !important;
   text-decoration: underline;
-}
-
-.ErrorModalContainer .errorModalBoxBody p strong {
-  font-weight: 600;
 }
 
 .ErrorModalContainer .errorModalBoxBody button.errorReloadBtn {

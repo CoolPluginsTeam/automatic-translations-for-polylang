@@ -3,7 +3,7 @@ const languages={
     'es': 'Spanish',
     'ja': 'Japanese',
     'ar': 'Arabic',
-    'de': 'Dutch',
+    'de': 'German',
     'bn': 'Bengali',
     'fr': 'French',
     'hi': 'Hindi',

@@ -26,9 +26,9 @@
     "downlevelIteration": true,
     "skipLibCheck": true,
     "typeRoots": [
-      "node_modules/@types",
-      "block-translator/@types"
-    ]
+      "node_modules/@types"
+    ],
+    "types": []
   },
   "include": [
     "./**/*.tsx",

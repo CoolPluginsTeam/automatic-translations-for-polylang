@@ -3,6 +3,11 @@ import { useEffect, FC } from 'react';
 import styles from '../modal/style.modules.css';
 import { Modal } from '@wordpress/components';
 import ModalStyle from "./modal-style";
+import DOMPurify from 'dompurify';
+import { createElement } from "@wordpress/element";
+
+export const ModalCompat = (props: any) =>
+  createElement(Modal as any, props);
 
 interface ErrorModalBoxProps {
     message: string;
@@ -72,8 +77,7 @@ const ErrorModalBox: FC<ErrorModalBoxProps> = ({ message, onClose, Title, childr
 
     return (
         <>
-        <ModalStyle modalContainer={styles.ErrorModalContainer} />
-        <Modal
+        <ModalCompat
           title={Title}
           onRequestClose={onClose}
           className={styles.errorModalBox}
@@ -81,13 +85,14 @@ const ErrorModalBox: FC<ErrorModalBoxProps> = ({ message, onClose, Title, childr
           isDismissible={true}
           bodyOpenClassName={'body-class'}
           >
-            <div className={styles.errorModalBoxBody}><p dangerouslySetInnerHTML={{ __html: stringifiedMessage }} />
+            <ModalStyle modalContainer={styles.ErrorModalContainer} />
+            <div className={styles.errorModalBoxBody}><p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(stringifiedMessage) }} />
             {children}
             </div>
             <div className={styles.errorModalBoxFooter}>
             <button className={styles.errorModalBoxClose} onClick={onClose}>Close</button>
             </div>
-        </Modal>
+        </ModalCompat>
         </>
     );
 };

@@ -107,10 +107,38 @@ class Translator {
   }
 
   private languagePairAvality = async (source: string, target: string) => {
+    let status = "unavailable";
 
+    // @ts-ignore
+    if (window?.self?.translation) {
+      // @ts-ignore
+      status = await window?.self?.translation?.canTranslate({
+        sourceLanguage: source,
+        targetLanguage: target,
+      });
+    }
+
+    // @ts-ignore
+    if (window?.self?.ai?.translator) {
+      // @ts-ignore
+      const translatorCapabilities = await window?.self?.ai?.translator?.capabilities();
+      status = await translatorCapabilities.languagePairAvailable(source, target);
+    }
+
+    // @ts-ignore
+    if (window?.self?.Translator) {
+      // @ts-ignore
+      status = await window?.self?.Translator?.availability({
+        sourceLanguage: source,
+        targetLanguage: target,
+      });
+    }
+
+    // @ts-ignore
+    if(['unavailable', 'downloading', 'after-download', 'downloadable'].includes(status) && window?.self?.Translator){
       try {
         // @ts-ignore
-        const translator = await window.self.Translator.create({
+        const translator = await window?.self?.Translator?.create({
             sourceLanguage: source,
             targetLanguage: target,
             monitor(m) {
@@ -120,40 +148,15 @@ class Translator {
             },
         });
 
-    } catch (err) { console.log('err', err) }
-
-    // @ts-ignore
-    if (window?.self?.translation) {
-      // @ts-ignore
-      const status = await window?.self?.translation?.canTranslate({
-        sourceLanguage: source,
-        targetLanguage: target,
-      });
-
-      return status;
+        // @ts-ignore
+        status = await window?.self?.Translator?.availability({
+          sourceLanguage: source,
+          targetLanguage: target,
+        });
+      } catch (err) { console.log('err', err) }
     }
 
-    // @ts-ignore
-    if (window?.self?.ai?.translator) {
-      // @ts-ignore
-      const translatorCapabilities = await window?.self?.ai?.translator?.capabilities();
-      const status = await translatorCapabilities.languagePairAvailable(source, target);
-
-      return status;
-    }
-
-    // @ts-ignore
-    if (window?.self?.Translator) {
-      // @ts-ignore
-      const status = await window?.self?.Translator?.availability({
-        sourceLanguage: source,
-        targetLanguage: target,
-      });
-
-      return status;
-    }
-
-    return false;
+    return status;
   }
 
   private AITranslator = async () => {

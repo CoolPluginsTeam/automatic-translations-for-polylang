@@ -1,5 +1,6 @@
 const ModalStyle = (props) => {
     const wrapperClass = props.modalContainer;
+
     return <>
         <style>
             {`

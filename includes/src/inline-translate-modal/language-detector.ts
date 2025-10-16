@@ -26,7 +26,7 @@ class LanguageDetector {
         
         if(languageDetectorApi){
            // @ts-ignore
-            const status=window.self.ai.languageDetector ? await languageDetectorApi.capabilities() : await languageDetectorApi.availability();
+            const status=window?.self?.ai?.languageDetector ? await languageDetectorApi.capabilities() : await languageDetectorApi.availability();
 
             if(status?.available === 'readily' || status === 'available'){
                 return true;

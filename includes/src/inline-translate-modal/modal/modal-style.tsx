@@ -8,6 +8,12 @@ const ModalStyle = (props) => {
             padding: 0px !important;
             position: relative;   
         }
+        .${wrapperClass} .components-modal__header .components-modal__header-heading{
+            font-size: 1.2rem;
+            font-weight: 600;
+            line-height: 1;
+            margin: 0;
+        }
         .${wrapperClass} .components-modal__content>div:nth-child(2){
             height: calc(100% - 2.5rem) !important;
             margin-top: 1.5rem;
@@ -19,6 +25,7 @@ const ModalStyle = (props) => {
             overflow: unset;
             padding: 0px;
             margin-top: 0px;
+            position: relative;
         }
       `}
         </style>

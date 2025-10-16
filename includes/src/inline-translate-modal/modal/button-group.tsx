@@ -1,4 +1,8 @@
 import Button from './button';
+import { createElement } from "@wordpress/element";
+
+export const ButtonCompat = (props: any) =>
+    createElement(Button as any, props);
 
 interface ButtonProps {
     label: string;
@@ -15,7 +19,7 @@ const ButtonGroup: React.FC<ButtonGroupProps> = ({ buttons, className }) => {
     return (
         <div className={className}>
             {buttons.map((button) => (
-                <Button key={button.label} {...button} />
+                <ButtonCompat key={button.label} {...button} />
             ))}
         </div>
     );
