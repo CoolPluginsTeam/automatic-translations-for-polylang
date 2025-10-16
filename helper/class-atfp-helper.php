@@ -312,5 +312,36 @@ if (! class_exists('ATFP_Helper')) {
 				update_option('atfp_translation_string_migration', true);
 			}
 		}
+
+		public static function is_translated_post_type($current_screen){
+			global $polylang;
+        
+			if(!$polylang || !property_exists($polylang, 'model')){
+				return false;
+			}
+
+			$translated_post_types = $polylang->model->get_translated_post_types();
+			$translated_taxonomies = $polylang->model->get_translated_taxonomies();
+	
+			$translated_post_types = array_values($translated_post_types);
+			$translated_taxonomies = array_values($translated_taxonomies);
+				
+			$translated_post_types=array_filter($translated_post_types, function($post_type){
+				return is_string($post_type);
+			});
+	
+			$translated_taxonomies=array_filter($translated_taxonomies, function($taxonomy){
+				return is_string($taxonomy);
+			});
+	
+			$valid_post_type=(isset($current_screen->post_type) && !empty($current_screen->post_type)) && in_array($current_screen->post_type, $translated_post_types) && $current_screen->post_type !== 'attachment' ? $current_screen->post_type : false;
+			$valid_taxonomy=(isset($current_screen->taxonomy) && !empty($current_screen->taxonomy)) && in_array($current_screen->taxonomy, $translated_taxonomies) ? $current_screen->taxonomy : false;
+	
+			if((!$valid_post_type && !$valid_taxonomy) || ((!$valid_post_type || empty($valid_post_type)) && !isset($valid_taxonomy)) || (isset($current_screen->taxonomy) && !empty($current_screen->taxonomy) && !$valid_taxonomy)){
+				return false;
+			}
+
+			return true;
+		}
 	}
 }
