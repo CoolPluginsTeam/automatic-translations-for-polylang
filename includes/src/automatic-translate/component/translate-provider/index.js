@@ -58,7 +58,6 @@ export default (props) => {
             ButtonDisabled: true,
             ErrorMessage: <a className={`atfp-provider-error button button-primary`} href={(window.atfp_global_object.pro_version_url || '') + '?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=popup_openai'} target="_blank">{__('Buy Pro', 'autopoly-ai-translation-for-polylang')}</a>,
             Logo: 'openai.png',
-            filterHtmlContent: true
         },
         google_ai: {
             title: "Gemini Model",
@@ -70,8 +69,18 @@ export default (props) => {
             ButtonDisabled: true,
             ErrorMessage: <a className={`atfp-provider-error button button-primary`} href={(window.atfp_global_object.pro_version_url || '') + '?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=popup_gemini'} target="_blank">{__('Buy Pro', 'autopoly-ai-translation-for-polylang')}</a>,
             Logo: 'gemini.png',
-            filterHtmlContent: true
         },
+        deepl_ai: {
+            title: "DeepL Model",
+            SettingBtnText: "Translate",
+            serviceLabel: "DeepL",
+            heading: sprintf(__("Translate Using %s Model", 'autopoly-ai-translation-for-polylang'), "DeepL"),
+            Docs: "https://docs.coolplugins.net/doc/translate-via-deepl-ai-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=popup_deepl",
+            BetaEnabled: true,
+            ButtonDisabled: true,
+            ErrorMessage: <a className={`atfp-provider-error button button-primary`} href={(window.atfp_global_object.pro_version_url || '') + '?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=popup_deepl'} target="_blank">{__('Buy Pro', 'autopoly-ai-translation-for-polylang')}</a>,
+            Logo: 'deepl.png',
+        }
     };
 
     if (!Service) {

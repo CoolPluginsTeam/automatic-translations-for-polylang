@@ -127,3 +127,7 @@ export const getTranslationInfo = (state) => {
 export const getAllowedMetaFields = (state) => {
     return state.allowedMetaFields || {};
 }
+
+export const contentFetchStatus = (state) => {
+    return state.contentFetchStatus;
+}

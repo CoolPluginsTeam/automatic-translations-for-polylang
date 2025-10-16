@@ -68,10 +68,10 @@ const StringPopUpBody = (props) => {
                                                                 <td>{index + 1}</td>
                                                                 <td data-source="source_text">{data.source}</td>
                                                                 {!props.translatePendingStatus ?
-                                                                    <td className="translate" data-translate-status="translated" data-key={data.id}data-string-type={data.type}>{data.translatedData[props.service]}</td> :
-                                                                    <td className="translate" translate="yes" data-key={data.id} data-string-type={data.type}>
-                                                                        <FilterTargetContent service={props.service} content={data.source} contentKey={data.id} />
-                                                                    </td>
+                                                                        <td className="translate" data-translate-status="translated" data-key={data.id} data-string-type={data.type}>{data.translatedData[props.service]}</td> :
+                                                                        <td className="translate" translate="yes" data-key={data.id} data-string-type={data.type}>
+                                                                            <FilterTargetContent service={props.service} content={data.source} contentKey={data.id} />
+                                                                        </td>
                                                                 }
                                                             </tr>
                                                         </>

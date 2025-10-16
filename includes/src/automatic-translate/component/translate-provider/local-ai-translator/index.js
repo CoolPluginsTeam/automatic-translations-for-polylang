@@ -2,7 +2,7 @@ import ChromeAiTranslator from "./local-ai-translator";
 import { __ } from "@wordpress/i18n";
 import { select, dispatch } from "@wordpress/data";
 import SaveTranslation from "../../store-translated-string";
-import StoreTimeTaken from "../../store-time-taken";
+import StoreTimeTaken from "../../../component/store-time-taken";
 
 const localAiTranslator = async (props) => {
     const targetLangName = atfp_global_object.languageObject[props.targetLang]['name'];

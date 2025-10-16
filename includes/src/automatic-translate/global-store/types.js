@@ -38,6 +38,9 @@ const AtfpActionTypes = {
 
     // Action type for saving the allowed meta fields
     allowedMetaFields: 'ALLOWED_META_FIELDS',
+
+    // Action type for saving the content fetch status
+    contentFetchStatus: 'CONTENT_FETCH_STATUS',
 };
 
 export default AtfpActionTypes;

@@ -14,7 +14,6 @@ import ElementorUpdatePage from './create-translated-post/elementor';
 
 import ReactDOM from "react-dom/client";
 
-
 const editorType = window.atfp_global_object.editor_type;
 
 const init = () => {
@@ -39,7 +38,7 @@ const StringModalBodyNotice = () => {
 
     if (postMetaSync) {
       notices.push({
-        className: 'atfp-notice atfp-notice-warning', message: <p>
+        className: 'atfp-notice atfp-notice-error', message: <p>
           {__('For accurate custom field translations, please disable the Custom Fields synchronization in ', 'autopoly-ai-translation-for-polylang')}
           <a
             href={`${atfp_global_object.admin_url}admin.php?page=mlang_settings`}
@@ -194,18 +193,25 @@ const appendElementorTranslateBtn = () => {
   if (translateButtonGroup.length > 0 && buttonElement.length === 0) {
     const buttonHtml = '<button class="elementor-button atfp-translate-button" name="atfp_meta_box_translate">Translate</button>';
     const buttonElement = jQuery(buttonHtml);
+    let confirmBox = false;
+    const postId = window.atfp_global_object.current_post_id;
+    const targetLang = window.atfp_global_object.target_lang;
+    const oldData = localStorage.getItem('atfpElementorConfirmBox');
+    if (oldData && 'string' === typeof oldData && '' !== oldData) {
+      confirmBox = JSON.parse(oldData);
+    }
 
     translateButtonGroup.prepend(buttonElement);
     $e.internal('document/save/set-is-modified', { status: true });
 
-    if(!window.atfp_global_object.translation_data || (!window.atfp_global_object.translation_data.total_string_count && 0 !== window.atfp_global_object.translation_data.total_string_count)  ){
+    if (!window.atfp_global_object.translation_data || (!window.atfp_global_object.translation_data.total_string_count && 0 !== window.atfp_global_object.translation_data.total_string_count)) {
       buttonElement.attr('disabled', 'disabled');
       buttonElement.attr('title', 'Translation data not found.');
       return;
     }
 
     const characterCount = parseInt(window.atfp_global_object.translation_data.total_character_count);
-    if(characterCount > 500000){
+    if (characterCount > 500000) {
       const elementorProNotice = document.createElement('div');
       elementorProNotice.id = 'atfp-pro-notice';
       document.body.appendChild(elementorProNotice);
@@ -214,17 +220,42 @@ const appendElementorTranslateBtn = () => {
       return;
     }
 
-    if ('' === window.atfp_global_object.elementorData || window.atfp_global_object.elementorData.length < 1 || elementor.elements.length < 1) {
+    if (!window.atfp_global_object.elementorData || '' === window.atfp_global_object.elementorData || window.atfp_global_object.elementorData.length < 1 || elementor.elements.length < 1) {
+
+      if (confirmBox && confirmBox[postId + '_' + targetLang]) {
+        delete confirmBox[postId + '_' + targetLang];
+        if (Object.keys(confirmBox).length === 0) {
+          localStorage.removeItem('atfpElementorConfirmBox');
+        }
+        else {
+          localStorage.setItem('atfpElementorConfirmBox', JSON.stringify(confirmBox));
+        }
+      }
+
       buttonElement.attr('disabled', 'disabled');
       buttonElement.attr('title', 'Translation is not available because there is no Elementor data.');
       return;
     }
-    
     // Append app root wrapper in body
     init();
 
     const root = ReactDOM.createRoot(document.getElementById('atfp-setting-modal'));
     root.render(<App />);
+
+    if (confirmBox && confirmBox[postId + '_' + targetLang]) {
+      setTimeout(() => {
+        buttonElement.click();
+
+        delete confirmBox[postId + '_' + targetLang];
+
+        if (Object.keys(confirmBox).length === 0) {
+          localStorage.removeItem('atfpElementorConfirmBox');
+        }
+        else {
+          localStorage.setItem('atfpElementorConfirmBox', JSON.stringify(confirmBox));
+        }
+      }, 100);
+    }
   }
 
 }
@@ -232,20 +263,20 @@ const appendElementorTranslateBtn = () => {
 if (editorType === 'gutenberg') {
   // Render App
   window.addEventListener('load', () => {
-    
+
     // Append app root wrapper in body
     init();
 
     const buttonElement = jQuery('input#atfp-translate-button[name="atfp_meta_box_translate"]');
 
-    if(!window.atfp_global_object.translation_data || (!window.atfp_global_object.translation_data.total_string_count && 0 !== window.atfp_global_object.translation_data.total_string_count) ){
+    if (!window.atfp_global_object.translation_data || (!window.atfp_global_object.translation_data.total_string_count && 0 !== window.atfp_global_object.translation_data.total_string_count)) {
       buttonElement.attr('disabled', 'disabled');
       buttonElement.attr('title', 'Translation data not found.');
       return;
     }
 
     const characterCount = parseInt(window.atfp_global_object.translation_data.total_character_count);
-    if(characterCount > 500000){
+    if (characterCount > 500000) {
       const elementorProNotice = document.createElement('div');
       elementorProNotice.id = 'atfp-pro-notice';
       document.body.appendChild(elementorProNotice);

@@ -57,7 +57,7 @@ const filterTranslateAttr = (block, blockParseRules, service) => {
             newIdArr.forEach(key => {
                 childIdArr.push(key);
                 uniqueId += `atfp${key}`;
-                dynamicBlockAttr = dynamicBlockAttr[key];
+                dynamicBlockAttr = dynamicBlockAttr ? dynamicBlockAttr[key] : dynamicBlockAttr;
             });
 
             let blockAttrContent = dynamicBlockAttr;
@@ -66,7 +66,7 @@ const filterTranslateAttr = (block, blockParseRules, service) => {
                 blockAttrContent = blockAttrContent.originalHTML;
             }
 
-            if (undefined !== blockAttrContent && blockAttrContent.trim() !== '') {
+            if (undefined !== blockAttrContent && typeof blockAttrContent === 'string' && blockAttrContent.trim() !== '') {
                 let filterKey = uniqueId.replace(/[^\p{L}\p{N}]/gu, '');
                 let translateContent = '';
 

@@ -160,3 +160,15 @@ export const allowedMetaFields = ({id, type}) => {
         inputType: type
     }
 }
+
+/**
+ * Action creator for saving the content fetch status.
+ * @param {boolean} status - The content fetch status to be saved.
+ * @returns {Object} The action object containing the type and status.
+ */
+export const contentFetchStatus = (status) => {
+    return {
+        type: AtfpActionTypes.contentFetchStatus,
+        status: status
+    }
+}

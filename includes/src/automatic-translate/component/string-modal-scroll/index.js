@@ -66,7 +66,7 @@ const ScrollAnimation = (props) => {
 const updateTranslatedContent = ({provider, startTime, endTime}) => {
     const container = document.getElementById("atfp_strings_model");
     const stringContainer = container.querySelector('.atfp_string_container');
-    const translatedData = stringContainer.querySelectorAll('td.translate[data-string-type]:not([data-translate-status="translated"])');
+    const translatedData = stringContainer.querySelectorAll('td.translate[data-string-type]:not([data-translate-status="translated"]):not(.notranslate):not([translate="no"])');
     const totalTranslatedData = translatedData.length;
     const AllowedMetaFields = select('block-atfp/translate').getAllowedMetaFields();
 

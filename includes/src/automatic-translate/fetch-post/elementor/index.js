@@ -1,5 +1,5 @@
 import { dispatch } from "@wordpress/data";
-import AllowedMetaFields from "../../AllowedMetafileds";
+import AllowedMetaFields from "../../allowed-meta-fields";
 import ElementorSaveSource from "../../store-source-string/elementor";
 
 // Update allowed meta fields
@@ -8,16 +8,17 @@ const updateAllowedMetaFields = (data) => {
 }
 
 const fetchPostContent = async (props) => {
-
     const elementorPostData = atfp_global_object.elementorData && typeof atfp_global_object.elementorData === 'string' ? JSON.parse(atfp_global_object.elementorData) : atfp_global_object.elementorData;
-    const metaFields=atfp_global_object?.metaFields;
 
     const content={
         widgetsContent:elementorPostData,
-        metaFields:metaFields
+        metaFields:atfp_global_object?.metaFields || {}
     }
 
-    
+    if(atfp_global_object.parent_post_title && '' !== atfp_global_object.parent_post_title){
+        content.title=atfp_global_object.parent_post_title;
+    }
+
     // Update allowed meta fields
     Object.keys(AllowedMetaFields).forEach(key => {
         updateAllowedMetaFields({id: key, type: AllowedMetaFields[key].type});

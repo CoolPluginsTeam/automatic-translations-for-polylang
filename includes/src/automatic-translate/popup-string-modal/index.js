@@ -17,6 +17,7 @@ const popStringModal = (props) => {
     const [translatePending, setTranslatePending] = useState(true);
     const [characterCount, setCharacterCount] = useState(translateData?.targetCharacterCount || 0);
     const [onDestroy, setOnDestroy] = useState([]);
+    const [translateButtonStatus, setTranslateButtonStatus] = useState(false);
 
     const updateDestroyHandler = (callback) => {
         setOnDestroy(prev => [...prev, callback]);
@@ -43,7 +44,7 @@ const popStringModal = (props) => {
 
         if (serviceProvider === 'localAiTranslator') {
             return 'Chrome AI Translator';
-        }else{
+        } else{
             return serviceProvider.replace(/^\w/, c => c.toUpperCase()) + ' Translate';
         }
     }
@@ -53,7 +54,7 @@ const popStringModal = (props) => {
      */
     useEffect(() => {
         if (!props.postDataFetchStatus) {
-                props.fetchPostData({ postId: props.postId, sourceLang: props.sourceLang, targetLang: props.targetLang, updatePostDataFetch: props.updatePostDataFetch, refPostData: data => setRefPostData(data), updateDestroyHandler: updateDestroyHandler });
+                props.fetchPostData({ postId: props.postId, sourceLang: props.sourceLang, targetLang: props.targetLang, updatePostDataFetch: props.updatePostDataFetch, refPostData: data => setRefPostData((prev) => ({ ...prev, ...data })), updateDestroyHandler: updateDestroyHandler });
         }
     }, [props.postDataFetchStatus, props.modalRender])
 
@@ -88,9 +89,16 @@ const popStringModal = (props) => {
     }
 
     const updatePostDataHandler = () => {
+
+        if(translateButtonStatus){
+            return;
+        }
+
         const postContent = refPostData;
-        const modalClose = () => setPopupVisibility(false);
+        const modalClose = () => {setPopupVisibility(false); setPopupVisibilityHandler(false)};
         let service=props.service;
+
+        setTranslateButtonStatus(true);
 
         props.translatePost({ postContent: postContent, modalClose: modalClose, service: service });
         props.pageTranslate(true);
@@ -127,6 +135,7 @@ const popStringModal = (props) => {
                         serviceLabel={serviceLabel()}
                         updatePostData={updatePostDataHandler}
                         characterCount={characterCount}
+                        translateButtonStatus={translateButtonStatus}
                     />
                     <StringPopUpBody {...props}
                         updatePostContent={updatePostContentHandler}
@@ -152,6 +161,7 @@ const popStringModal = (props) => {
                         serviceLabel={serviceLabel()}
                         updatePostData={updatePostDataHandler}
                         characterCount={characterCount}
+                        translateButtonStatus={translateButtonStatus}
                     />
                 </div>
             </div>

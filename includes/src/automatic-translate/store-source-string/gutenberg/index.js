@@ -30,7 +30,7 @@ const filterTranslateAttr = (blockId, blockAttr, filterAttr) => {
             newIdArr.forEach(key => {
                 childIdArr.push(key);
                 uniqueId += `atfp${key}`;
-                dynamicBlockAttr = dynamicBlockAttr[key];
+                dynamicBlockAttr = dynamicBlockAttr ? dynamicBlockAttr[key] : dynamicBlockAttr;
             });
 
             let blockAttrContent = dynamicBlockAttr;
@@ -38,9 +38,10 @@ const filterTranslateAttr = (blockId, blockAttr, filterAttr) => {
             if(blockAttrContent instanceof wp.richText.RichTextData) {
                 blockAttrContent=blockAttrContent.originalHTML;
             }
+
           
-            if (undefined !== blockAttrContent && blockAttrContent.trim() !== '') {
-                
+            if (undefined !== blockAttrContent && typeof blockAttrContent === 'string' && blockAttrContent.trim() !== '') {
+
                 let filterKey = uniqueId.replace(/[^\p{L}\p{N}]/gu, '');
 
                 if (!/[\p{L}\p{N}]/gu.test(blockAttrContent)) {
@@ -149,7 +150,7 @@ const GutenbergBlockSaveSource = (block, blockRules) => {
                     }
                 });
             }
-        } else if(['title', 'excerpt'].includes(key)){
+        }else if(['title', 'excerpt'].includes(key)){
             if(block[key] && block[key].trim() !== ''){
                 const action = `${key}SaveSource`;
                 dispatch('block-atfp/translate')[action](block[key]);
