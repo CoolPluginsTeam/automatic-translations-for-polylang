@@ -224,41 +224,45 @@ class ChromeAiTranslator {
     }
 
     static languagePairAvality = async (source, target) => {
-        try {
-            const translator = await self.Translator.create({
-                sourceLanguage: source,
-                targetLanguage: target,
-                monitor(m) {
-                    m.addEventListener('downloadprogress', (e) => {
-                        console.log(`Downloaded ${e.loaded * 100}%`);
-                    });
-                },
-            });
-
-        } catch (err) { console.log('err', err) }
+        let status = false;
 
         if (('translation' in self && 'createTranslator' in self.translation)) {
-            const status = await self.translation.canTranslate({
+            status = await self.translation.canTranslate({
                 sourceLanguage: source,
                 targetLanguage: target,
             });
-
-            return status;
         } else if (('ai' in self && 'translator' in self.ai)) {
             const translatorCapabilities = await self.ai.translator.capabilities();
-            const status = await translatorCapabilities.languagePairAvailable(source, target);
-
-            return status;
+            status = await translatorCapabilities.languagePairAvailable(source, target);
         } else if ("Translator" in self && "create" in self.Translator) {
-            const status = await self.Translator.availability({
+            status = await self.Translator.availability({
                 sourceLanguage: source,
                 targetLanguage: target,
             });
-
-            return status;
         }
 
-        return false;
+        if(( !status || ['unavailable', 'downloading', 'after-download', 'downloadable'].includes(status)) && window?.self?.Translator){
+            try {
+                await self.Translator.create({
+                    sourceLanguage: source,
+                    targetLanguage: target,
+                    monitor(m) {
+                        m.addEventListener('downloadprogress', (e) => {
+                            console.log(`Downloaded ${e.loaded * 100}%`);
+                        });
+                    },
+                });
+
+                  // @ts-ignore
+                status = await window?.self?.Translator?.availability({
+                    sourceLanguage: source,
+                    targetLanguage: target,
+                });
+    
+            } catch (err) { console.log('err', err) }
+        }
+
+        return status;
     }
 
     AITranslator = async (targetLanguage) => {
