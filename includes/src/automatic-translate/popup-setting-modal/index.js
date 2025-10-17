@@ -1,7 +1,6 @@
 import ReactDOM from "react-dom/client";
 import { useEffect, useState } from "@wordpress/element";
 import PopStringModal from "../popup-string-modal";
-import yandexLanguage from "../component/translate-provider/yandex/yandex-language";
 import ChromeLocalAiTranslator from "../component/translate-provider/local-ai-translator/local-ai-translator";
 import SettingModalHeader from "./header";
 import SettingModalBody from "./body";
@@ -18,7 +17,6 @@ const SettingModal = (props) => {
     const sourceLangName = atfp_global_object.languageObject[sourceLang]['name'];
     const targetLangName = atfp_global_object.languageObject[targetLang]['name'];
     const imgFolder = atfp_global_object.atfp_url + 'assets/images/';
-    const yandexSupport = yandexLanguage().includes(targetLang);
     const [serviceModalErrors, setServiceModalErrors] = useState({});
     const [errorModalVisibility, setErrorModalVisibility] = useState(false);
     const [chromeAiBtnDisabled, setChromeAiBtnDisabled] = useState(false);
@@ -81,20 +79,8 @@ const SettingModal = (props) => {
                 setServiceModalErrors(prev => ({ ...prev, localAiTranslator: {message: localAiTranslatorSupport, Title: __("Chrome AI Translator", 'autopoly-ai-translation-for-polylang')} }));
             }
         };
-        if(settingVisibility){
-            if(!yandexSupport){
-                setServiceModalErrors(prev => ({
-                    ...prev,
-                    yandex: {
-                        message: "<p style={{ fontSize: '1rem', color: '#ff4646' }}>"+sprintf(
-                            __("Yandex Translate does not support the target language: %s.", 'autopoly-ai-translation-for-polylang'),
-                            "<strong>"+targetLangName + " ("+targetLang+")</strong>"
-                        )+"</p>",
-                        Title: __("Yandex Translate", 'autopoly-ai-translation-for-polylang')
-                    }
-                }));
-            };
 
+        if(settingVisibility){
             languageSupportedStatus();
         }
     }, [settingVisibility]);
@@ -182,7 +168,6 @@ const SettingModal = (props) => {
                             targetLangName={targetLangName}
                         />
                         <SettingModalBody
-                            yandexDisabled={!yandexSupport}
                             fetchContent={fetchContent}
                             imgFolder={imgFolder}
                             targetLangName={targetLangName}

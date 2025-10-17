@@ -12,15 +12,9 @@ const StringPopUpBody = (props) => {
     const StringModalBodyNotice = props.stringModalBodyNotice;
 
     useEffect(() => {
-
-        if (['yandex'].includes(props.service)) {
-            document.documentElement.setAttribute('translate', 'no');
-            document.body.classList.add('notranslate');
-        }
-
         /**
          * Calls the translate service provider based on the service type.
-         * For example, it can call services like yandex Translate.
+         * For example, it can call services like local AI Translator.
         */
         const service = props.service;
         const id = `atfp_${service}_translate_element`;

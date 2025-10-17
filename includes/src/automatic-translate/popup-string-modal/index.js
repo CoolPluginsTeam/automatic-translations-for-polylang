@@ -1,5 +1,4 @@
 import { useEffect, useState } from "@wordpress/element";
-import { updateTranslateData } from "../helper";
 import { select } from "@wordpress/data";
 import StringPopUpHeader from "./header";
 import StringPopUpBody from "./body";
@@ -71,11 +70,6 @@ const popStringModal = (props) => {
      * @param {boolean} state - The state to update the fetch with.
      */
     const setPopupVisibilityHandler = (state) => {
-
-        if (props.service === 'yandex') {
-            document.querySelector('#atfp_yandex_translate_element #yt-widget .yt-button__icon.yt-button__icon_type_right')?.click();
-        }
-
         setTranslatePending(true);
         setPopupVisibility(false);
     }
@@ -102,7 +96,6 @@ const popStringModal = (props) => {
 
         props.translatePost({ postContent: postContent, modalClose: modalClose, service: service });
         props.pageTranslate(true);
-        updateTranslateData({ provider: service, sourceLang: props.sourceLang, targetLang: props.targetLang, postId: props.currentPostId });
     }
 
     useEffect(() => {

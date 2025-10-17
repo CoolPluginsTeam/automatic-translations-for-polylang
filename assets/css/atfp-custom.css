@@ -1032,7 +1032,7 @@ body>div.skiptranslate iframe.skiptranslate[frameborder][src][style="visibility:
       }
 }
 
-:where(#atfp-localAiTranslator-strings-modal, #atfp-yandex-strings-modal) .translator-widget {
+#atfp-localAiTranslator-strings-modal .translator-widget {
     justify-content: space-between;
     align-items: center;
 }
@@ -1044,10 +1044,6 @@ body>div.skiptranslate iframe.skiptranslate[frameborder][src][style="visibility:
 #atfp_strings_model .atfp_string_container {
     max-height: calc(100vh - 270px - var(--atfp-notice-wrapper-height, 0px));
     box-shadow: 0 -1px 4px #0000005e inset;
-}
-
-#atfp_strings_model #atfp-yandex-strings-modal .atfp_string_container {
-    max-height: calc(100vh - 300px - var(--atfp-notice-wrapper-height, 0px));
 }
 
 #atfp_strings_model .react-loading-skeleton-atfp {
