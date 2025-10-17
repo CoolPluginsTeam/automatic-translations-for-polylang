@@ -186,12 +186,6 @@ class ATFP_Register_Backend_Assets
 
     public function enqueue_automatic_translate_assets($source_lang, $target_lang, $editor_type, $extra_data = array())
     {
-        if(!ATFP_Helper::get_translation_data()){
-            return;
-        }
-
-        $translation_data = ATFP_Helper::get_translation_data();
-
         wp_register_style('atfp-automatic-translate-custom', ATFP_URL . 'assets/css/atfp-custom.min.css', array(), ATFP_V);
 
         $editor_script_asset = include ATFP_DIR_PATH . 'assets/automatic-translate/index.asset.php';
@@ -237,7 +231,6 @@ class ATFP_Register_Backend_Assets
             'post_type'          => $post_type,
             'editor_type'        => $editor_type,
             'current_post_id'    => $post_id,
-            'translation_data'   => is_array($translation_data) ? (function() use (&$translation_data) { unset($translation_data['data']); return $translation_data; })() : array(),
             'pro_version_url'=>esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/'),
         ), $extra_data);
 
