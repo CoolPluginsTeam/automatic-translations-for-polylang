@@ -3,7 +3,6 @@ import './global-store';
 import { useEffect, useState } from 'react';
 import GutenbergPostFetch from './fetch-post/gutenberg';
 import UpdateGutenbergPage from './create-translated-post/gutenberg';
-import ProVersionNotice from './component/pro-version-notice';
 import Notice from './component/notice';
 import { select } from '@wordpress/data';
 import { sprintf, __ } from '@wordpress/i18n';
@@ -204,22 +203,6 @@ const appendElementorTranslateBtn = () => {
     translateButtonGroup.prepend(buttonElement);
     $e.internal('document/save/set-is-modified', { status: true });
 
-    if (!window.atfp_global_object.translation_data || (!window.atfp_global_object.translation_data.total_string_count && 0 !== window.atfp_global_object.translation_data.total_string_count)) {
-      buttonElement.attr('disabled', 'disabled');
-      buttonElement.attr('title', 'Translation data not found.');
-      return;
-    }
-
-    const characterCount = parseInt(window.atfp_global_object.translation_data.total_character_count);
-    if (characterCount > 500000) {
-      const elementorProNotice = document.createElement('div');
-      elementorProNotice.id = 'atfp-pro-notice';
-      document.body.appendChild(elementorProNotice);
-      const root = ReactDOM.createRoot(document.getElementById('atfp-pro-notice'));
-      root.render(<ProVersionNotice characterCount={characterCount} url={window.atfp_global_object.pro_version_url || ''} />);
-      return;
-    }
-
     if (!window.atfp_global_object.elementorData || '' === window.atfp_global_object.elementorData || window.atfp_global_object.elementorData.length < 1 || elementor.elements.length < 1) {
 
       if (confirmBox && confirmBox[postId + '_' + targetLang]) {
@@ -266,24 +249,6 @@ if (editorType === 'gutenberg') {
 
     // Append app root wrapper in body
     init();
-
-    const buttonElement = jQuery('input#atfp-translate-button[name="atfp_meta_box_translate"]');
-
-    if (!window.atfp_global_object.translation_data || (!window.atfp_global_object.translation_data.total_string_count && 0 !== window.atfp_global_object.translation_data.total_string_count)) {
-      buttonElement.attr('disabled', 'disabled');
-      buttonElement.attr('title', 'Translation data not found.');
-      return;
-    }
-
-    const characterCount = parseInt(window.atfp_global_object.translation_data.total_character_count);
-    if (characterCount > 500000) {
-      const elementorProNotice = document.createElement('div');
-      elementorProNotice.id = 'atfp-pro-notice';
-      document.body.appendChild(elementorProNotice);
-      const root = ReactDOM.createRoot(document.getElementById('atfp-pro-notice'));
-      root.render(<ProVersionNotice characterCount={characterCount} url={window.atfp_global_object.pro_version_url || ''} />);
-      return;
-    }
 
     const sourceLang = window.atfp_global_object.source_lang
 
