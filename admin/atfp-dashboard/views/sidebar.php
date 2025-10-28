@@ -95,8 +95,8 @@ function atfp_get_plugin_display_name($plugin_slug, $text_domain) {
         'automatic-translator-addon-for-loco-translate' => [
             'free' => 'automatic-translator-addon-for-loco-translate/automatic-translator-addon-for-loco-translate.php',
             'pro'  => 'loco-automatic-translate-addon-pro/loco-automatic-translate-addon-pro.php',
-            'free_name' => esc_html__('Automatic Translate Addon For Loco Translate', $text_domain),
-            'pro_name'  => esc_html__('Loco Automatic Translate Addon PRO', $text_domain),
+            'free_name' => esc_html__('LocoAI – Auto Translate For Loco Translate', $text_domain),
+            'pro_name'  => esc_html__('LocoAI – Auto Translate for Loco Translate (Pro)', $text_domain),
         ],
     ];
 
