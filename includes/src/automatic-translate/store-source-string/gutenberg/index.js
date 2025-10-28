@@ -136,18 +136,27 @@ const GutenbergBlockSaveSource = (block, blockRules) => {
             // Store ACF fields
             if(window.acf){
                 acf.getFields().forEach(field => {
-                    if(field.data && AllowedMetaFields[field.data.key]){
-                        const name = field.data.name;
-                        const currentValue=acf.getField(field.data.key)?.val();
-
-                        if(block[key] && block[key][name]){
-                            if('' !== block[key][name] && undefined !== block[key][name]){
-                                dispatch('block-atfp/translate').metaFieldsSaveSource(field.data.key, block[key][name][0]);
-                            }
-                        }else if(currentValue && '' !== currentValue && undefined !== currentValue){
-                            dispatch('block-atfp/translate').metaFieldsSaveSource(field.data.key, currentValue);
+                    const fieldData=JSON.parse(JSON.stringify({key: field.data.key, type: field.data.type, name: field.data.name}));
+                    let repeaterField = false;
+                    // Update repeater fields
+                    if(field.$el && field.$el.closest('.acf-field.acf-field-repeater') && field.$el.closest('.acf-field.acf-field-repeater').length > 0){
+                        const rowId=field.$el.closest('.acf-row').data('id');
+                        const repeaterItemName=field.$el.closest('.acf-field.acf-field-repeater').data('name');
+    
+                        if(rowId && '' !== rowId){
+                            const index=rowId.replace('row-', '');
+                        
+                            fieldData.name=repeaterItemName+'_'+index+'_'+fieldData.name;
+                            repeaterField = true;
                         }
                     }
+    
+                   if(field.data && field.data.key && Object.keys(AllowedMetaFields).includes(fieldData.name)){
+                       const fieldName = field.data.name;
+                        const value = field?.val();
+    
+                       dispatch('block-atfp/translate').metaFieldsSaveSource(fieldName, value);
+                   }
                 });
             }
         }else if(['title', 'excerpt'].includes(key)){

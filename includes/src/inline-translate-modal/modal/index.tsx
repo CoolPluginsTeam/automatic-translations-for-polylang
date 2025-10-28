@@ -54,7 +54,6 @@ interface ButtonProps {
 }
 
 const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLanguage, onModalClose, modalOpen}) => {
-  console.log(modalOpen);
   let activeSourceLang = 'hi';
   let activeTargetLang = 'es';
   let notSupportedLang = {};

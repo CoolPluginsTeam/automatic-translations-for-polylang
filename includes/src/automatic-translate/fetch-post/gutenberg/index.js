@@ -31,9 +31,28 @@ const GutenbergPostFetch = async (props) => {
         if(window.acf && !postMetaSync){
             const allowedTypes = ['text', 'textarea', 'wysiwyg'];
             acf.getFields().forEach(field => {
-                if(field.data && allowedTypes.includes(field.data.type)){
-                    updateAllowedMetaFields({id: field.data.key, type: field.data.type});
-        }
+                const fieldData=JSON.parse(JSON.stringify({key: field.data.key, type: field.data.type, name: field.data.name}));
+                let repeaterField = false;
+                // Update repeater fields
+                if(field.$el && field.$el.closest('.acf-field.acf-field-repeater') && field.$el.closest('.acf-field.acf-field-repeater').length > 0){
+                    const rowId=field.$el.closest('.acf-row').data('id');
+                    const repeaterItemName=field.$el.closest('.acf-field.acf-field-repeater').data('name');
+
+                    if(rowId && '' !== rowId){
+                        const index=rowId.replace('row-', '');
+                    
+                        fieldData.name=repeaterItemName+'_'+index+'_'+fieldData.name;
+                        repeaterField = true;
+                    }
+
+                }
+
+               if(field.data && field.data.key && allowedTypes.includes(field.data.type)){
+                   const fieldName = field.data.name;
+                   const inputType = field.data.type;
+
+                   updateAllowedMetaFields({id: fieldName, type: inputType});
+               }
             });
         }
     }

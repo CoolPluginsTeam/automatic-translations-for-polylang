@@ -93,11 +93,8 @@ const translatePost = (props) => {
 
                    const sourceValue = metaFieldsData[fieldName] && metaFieldsData[fieldName][0] ? metaFieldsData[fieldName][0] : field?.val();
 
-                   const translatedMetaFields = select('block-catfp/translate').getTranslatedString('metaFields', sourceValue, fieldData.name, service);
+                   const translatedMetaFields = select('block-atfp/translate').getTranslatedString('metaFields', sourceValue, fieldData.name, service);
 
-                   console.log(sourceValue);
-                   console.log(metaFieldsData);
-                   console.log(translatedMetaFields);
                    if(!translatedMetaFields || '' === translatedMetaFields){
                        return;
                    }

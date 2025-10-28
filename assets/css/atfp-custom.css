@@ -186,7 +186,7 @@
     text-decoration: underline;
 }
 
-button.atfpp-error-reload-btn{
+button.atfp-error-reload-btn{
     background: #0073aa;
     color: #fff !important;
     border: none;
@@ -195,7 +195,7 @@ button.atfpp-error-reload-btn{
     cursor: pointer;
 }
 
-button.atfpp-error-reload-btn:hover{
+button.atfp-error-reload-btn:hover{
     background: #005682;
 }
 
