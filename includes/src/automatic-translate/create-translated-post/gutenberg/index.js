@@ -67,7 +67,6 @@ const translatePost = (props) => {
     const postAcfFieldsUpdate = () => {
         const AllowedMetaFields = select('block-atfp/translate').getAllowedMetaFields();
         const metaFieldsData = postContent.metaFields;
-
         
         if (window.acf) {
             acf.getFields().forEach(field => {
@@ -92,16 +91,23 @@ const translatePost = (props) => {
                    const fieldName = field.data.name;
                    const inputType = field.data.type;
 
-                   const sourceValue = metaFieldsData[fieldName]? metaFieldsData[fieldName] : field?.val();
+                   const sourceValue = metaFieldsData[fieldName] && metaFieldsData[fieldName][0] ? metaFieldsData[fieldName][0] : field?.val();
 
-                    const translatedMetaFields = select('block-atfp/translate').getTranslatedString('metaFields', sourceValue, fieldData.name, service);
+                   const translatedMetaFields = select('block-catfp/translate').getTranslatedString('metaFields', sourceValue, fieldData.name, service);
 
-                    if('wysiwyg' === inputType && tinymce){
-                        const editorId = field.data.id;
-                        tinymce.get(editorId)?.setContent(translatedMetaFields);
-                    }else{
-                        field.val(translatedMetaFields);
-                    }
+                   console.log(sourceValue);
+                   console.log(metaFieldsData);
+                   console.log(translatedMetaFields);
+                   if(!translatedMetaFields || '' === translatedMetaFields){
+                       return;
+                   }
+
+                   if('wysiwyg' === inputType && window.tinymce){
+                       const editorId = field.data.id;
+                       tinymce.get(editorId)?.setContent(translatedMetaFields);
+                   }else{
+                       field.val(translatedMetaFields);
+                   }
                }
             });
         }
