@@ -75,7 +75,7 @@ export default (props) => {
             SettingBtnText: "Translate",
             serviceLabel: "DeepL",
             heading: sprintf(__("Translate Using %s Model", 'autopoly-ai-translation-for-polylang'), "DeepL"),
-            Docs: "https://docs.coolplugins.net/doc/translate-via-deepl-ai-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=popup_deepl",
+            Docs: "https://docs.coolplugins.net/doc/translate-via-deepl-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=popup_deepl",
             BetaEnabled: true,
             ButtonDisabled: true,
             ErrorMessage: <a className={`atfp-provider-error button button-primary`} href={(window.atfp_global_object.pro_version_url || '') + '?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=popup_deepl'} target="_blank">{__('Buy Pro', 'autopoly-ai-translation-for-polylang')}</a>,
