@@ -30,10 +30,13 @@ class BlockFilterSorter {
           this.atfpDataTableObj.empty();
         }
 
+        const length = e.dt.page.info().length;
+        const page = e.dt.page.info().page;
+
         rows.each(function(index,row){
           const emptyCell=row.querySelector('td.dt-empty');
           if(!emptyCell){
-            row.children[0].textContent=index+1;
+            row.children[0].textContent = (page * length) + index + 1;
           }
         });
       });
