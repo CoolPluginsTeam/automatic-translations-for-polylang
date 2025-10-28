@@ -44,12 +44,11 @@ const GutenbergPostFetch = async (props) => {
                         fieldData.name=repeaterItemName+'_'+index+'_'+fieldData.name;
                         repeaterField = true;
                     }
-
                 }
 
-               if(field.data && field.data.key && allowedTypes.includes(field.data.type)){
-                   const fieldName = field.data.name;
-                   const inputType = field.data.type;
+               if(fieldData && fieldData.key && allowedTypes.includes(fieldData.type)){
+                   const fieldName = fieldData.name;
+                   const inputType = fieldData.type;
 
                    updateAllowedMetaFields({id: fieldName, type: inputType});
                }

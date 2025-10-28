@@ -149,10 +149,11 @@ const GutenbergBlockSaveSource = (block, blockRules) => {
                             fieldData.name=repeaterItemName+'_'+index+'_'+fieldData.name;
                             repeaterField = true;
                         }
+
                     }
     
-                   if(field.data && field.data.key && Object.keys(AllowedMetaFields).includes(fieldData.name)){
-                       const fieldName = field.data.name;
+                   if(fieldData && fieldData.key && Object.keys(AllowedMetaFields).includes(fieldData.name)){
+                       const fieldName = fieldData.name;
                         const value = field?.val();
     
                        dispatch('block-atfp/translate').metaFieldsSaveSource(fieldName, value);

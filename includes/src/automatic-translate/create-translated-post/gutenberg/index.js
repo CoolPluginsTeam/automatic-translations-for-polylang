@@ -87,9 +87,9 @@ const translatePost = (props) => {
 
                 }
 
-               if(field.data && field.data.key && Object.keys(AllowedMetaFields).includes(fieldData.name)){
-                   const fieldName = field.data.name;
-                   const inputType = field.data.type;
+               if(fieldData && fieldData.key && Object.keys(AllowedMetaFields).includes(fieldData.name)){
+                   const fieldName = fieldData.name;
+                   const inputType = fieldData.type;
 
                    const sourceValue = metaFieldsData[fieldName] && metaFieldsData[fieldName][0] ? metaFieldsData[fieldName][0] : field?.val();
 
