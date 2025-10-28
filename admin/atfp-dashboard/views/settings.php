@@ -73,6 +73,11 @@ if(!current_user_can('manage_options')){
                     'name' => 'OpenAI',
                     'doc_url' => 'https://docs.coolplugins.net/doc/generate-open-ai-api-key/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=settings_openai',
                     'placeholder' => 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+                ],
+                'deepl' => [
+                    'name' => 'DeepL',
+                    'doc_url' => 'https://docs.coolplugins.net/doc/generate-deepl-api-key/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=settings_deepl',
+                    'placeholder' => 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
                 ]
             ];
 
@@ -111,7 +116,7 @@ if(!current_user_can('manage_options')){
                                 
             <!-- Add bulk translate post status -->
             <label for="bulk-translate-post-status">
-                <?php echo esc_html__('Bulk Translate Post Status', $text_domain); ?>
+                <?php echo esc_html__('Bulk Translation default Post Status', $text_domain); ?>
             </label>
             <div class="atfp-bulk-translation-post-status-options">
                 <input type="radio" name="publish" id="publish" value="publish" disabled>
@@ -119,7 +124,47 @@ if(!current_user_can('manage_options')){
                 <input type="radio" name="draft" id="draft" value="draft" checked disabled>
                 <label for="draft"><?php echo esc_html__('Draft', $text_domain); ?></label>
             </div>
+            <!-- Add slug translation -->
+            <label for="slug-translation-settings">
+                <?php echo esc_html__('Slug Translation Settings', $text_domain); ?>
+            </label>
+            <div class="atfp-bulk-translation-post-status-options">
+                <input type="radio" name="title_translate" id="title_translate" value="title_translate" disabled>
+                <label for="title_translate"><?php echo esc_html__('Use Translated Title', $text_domain); ?></label>
+                <input type="radio" name="slug_translate" id="slug_translate" value="slug_translate" checked disabled>
+                <label for="slug_translate"><?php echo esc_html__('Translate Original Slug', $text_domain); ?></label>
+                <input type="radio" name="slug_keep" id="slug_keep" value="slug_keep" checked disabled>
+                <label for="slug_keep"><?php echo esc_html__('Keep Original Slug', $text_domain); ?></label>
             </div>
+
+            <hr style="margin: 2rem 0px;">
+            <div class="atfp-dashboard-ai-request-container">
+                <h2><?php echo __('AI Request Performance', $text_domain); ?></h2>
+                <p><?php echo __('Adjust these settings to optimize the performance of your AI requests.', $text_domain); ?></p>
+                <div class="atfp-dashboard-ai-token-container">
+                    <label for="atfp_ai_request_token_per_request-input" class="api-settings-label"><?php echo __('Token Limit', $text_domain); ?></label>
+                    <div class="atfp-dashboard-ai-token-container-input">
+                        <input type="number" min="100" max="10000" step="100" name="atfp_ai_request_token_per_request" id="atfp_ai_request_token_per_request-input" value="500" disabled>
+                        <p><?php echo sprintf(__('%sRecommended%s 500 tokens per request If model or network is slow, decrease this value', $text_domain), '<span>', '</span>'); ?></p>
+                    </div>
+                </div>
+                <div class="atfp-dashboard-ai-batch-size-container">
+                    <label for="atfp_ai_request_batch_size-input" class="api-settings-label"><?php echo __('Batch Size', $text_domain); ?></label>
+                    <div class="atfp-dashboard-ai-batch-container-input">
+                        <input type="number" min="1" max="10" name="atfp_ai_request_batch_size" id="atfp_ai_request_batch_size-input" value="5" disabled>
+                        <p><?php echo sprintf(__('%sRecommended%s 5 posts per batch Larger batch can take longer to process If model or network is slow, decrease this value', $text_domain), '<span>', '</span>'); ?></p>
+                    </div>
+                </div>
+                <div class="atfp-dashboard-ai-timeout-container">
+                    <label for="atfp-dashboard-ai-token-container-input" class="api-settings-label"><?php echo __('Timeout Duration', $text_domain); ?></label>
+                    <div class="atfp-dashboard-ai-timeout-container-input">
+                        <input type="number" min="10" max="1200" step="10" name="atfp_ai_request_timeout" id="atfp_ai_request_timeout-input" value="120" disabled>
+                        <p><?php echo sprintf(__('%sRecommended%s 120 seconds minimum timeout can cause timeouts If model or network is slow, increase this value', $text_domain), '<span>', '</span>'); ?></p>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <hr style="margin: 2rem 0px 20px;">
 
             <?php if (get_option('cpfm_opt_in_choice_cool_translations')) : ?>
                 <div class="atfp-dashboard-feedback-container">
