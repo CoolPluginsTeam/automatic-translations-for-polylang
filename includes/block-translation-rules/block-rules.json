@@ -55,6 +55,24 @@
                             ]
                         }
                     ]
+                ],
+                "head": [
+                    {
+                        "cells": [
+                            {
+                                "content": true
+                            }
+                        ]
+                    }
+                ],
+                "foot": [
+                    {
+                        "cells": [
+                            {
+                                "content": true
+                            }
+                        ]
+                    }
                 ]
             }
         },
@@ -95,11 +113,6 @@
             }
         },
         "core/read-more": {
-            "attributes": {
-                "content": true
-            }
-        },
-        "core/code": {
             "attributes": {
                 "content": true
             }
@@ -1313,6 +1326,11 @@
                         "itemTitle": true
                     }
                 ]
+            }
+        },
+        "rank-math/toc-block":{
+            "attributes":{
+                "title": true
             }
         }
     }
