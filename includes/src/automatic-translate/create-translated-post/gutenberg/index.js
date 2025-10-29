@@ -72,7 +72,6 @@ const translatePost = (props) => {
             acf.getFields().forEach(field => {
 
                 const fieldData=JSON.parse(JSON.stringify({key: field.data.key, type: field.data.type, name: field.data.name}));
-                let repeaterField = false;
                 // Update repeater fields
                 if(field.$el && field.$el.closest('.acf-field.acf-field-repeater') && field.$el.closest('.acf-field.acf-field-repeater').length > 0){
                     const rowId=field.$el.closest('.acf-row').data('id');
@@ -82,18 +81,16 @@ const translatePost = (props) => {
                         const index=rowId.replace('row-', '');
                     
                         fieldData.name=repeaterItemName+'_'+index+'_'+fieldData.name;
-                        repeaterField = true;
                     }
-
                 }
 
                if(fieldData && fieldData.key && Object.keys(AllowedMetaFields).includes(fieldData.name)){
                    const fieldName = fieldData.name;
                    const inputType = fieldData.type;
 
-                   const sourceValue = metaFieldsData[fieldName] && metaFieldsData[fieldName][0] ? metaFieldsData[fieldName][0] : field?.val();
+                   let sourceValue = metaFieldsData[fieldName] && metaFieldsData[fieldName][0] ? metaFieldsData[fieldName][0] : field?.val();
 
-                   const translatedMetaFields = select('block-atfp/translate').getTranslatedString('metaFields', sourceValue, fieldData.name, service);
+                   let translatedMetaFields = select('block-atfp/translate').getTranslatedString('metaFields', sourceValue, fieldData.name, service);
 
                    if(!translatedMetaFields || '' === translatedMetaFields){
                        return;
@@ -101,6 +98,8 @@ const translatePost = (props) => {
 
                    if('wysiwyg' === inputType && window.tinymce){
                        const editorId = field.data.id;
+                       translatedMetaFields = translatedMetaFields.replace(/(\r\n\r\n)/g, '</p><p>');
+                       
                        tinymce.get(editorId)?.setContent(translatedMetaFields);
                    }else{
                        field.val(translatedMetaFields);

@@ -137,7 +137,6 @@ const GutenbergBlockSaveSource = (block, blockRules) => {
             if(window.acf){
                 acf.getFields().forEach(field => {
                     const fieldData=JSON.parse(JSON.stringify({key: field.data.key, type: field.data.type, name: field.data.name}));
-                    let repeaterField = false;
                     // Update repeater fields
                     if(field.$el && field.$el.closest('.acf-field.acf-field-repeater') && field.$el.closest('.acf-field.acf-field-repeater').length > 0){
                         const rowId=field.$el.closest('.acf-row').data('id');
@@ -147,14 +146,16 @@ const GutenbergBlockSaveSource = (block, blockRules) => {
                             const index=rowId.replace('row-', '');
                         
                             fieldData.name=repeaterItemName+'_'+index+'_'+fieldData.name;
-                            repeaterField = true;
                         }
-
                     }
     
                    if(fieldData && fieldData.key && Object.keys(AllowedMetaFields).includes(fieldData.name)){
-                       const fieldName = fieldData.name;
-                        const value = field?.val();
+                        const fieldName = fieldData.name;
+                        let value = field?.val();
+
+                        if('wysiwyg' === fieldData.type && block[key] && block[key][fieldName] && block[key][fieldName][0] && '' !== block[key][fieldName][0]){
+                            value = block[key][fieldName][0];
+                        }
     
                        dispatch('block-atfp/translate').metaFieldsSaveSource(fieldName, value);
                    }

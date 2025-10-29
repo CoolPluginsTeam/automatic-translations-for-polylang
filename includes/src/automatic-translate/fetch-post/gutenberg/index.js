@@ -32,7 +32,6 @@ const GutenbergPostFetch = async (props) => {
             const allowedTypes = ['text', 'textarea', 'wysiwyg'];
             acf.getFields().forEach(field => {
                 const fieldData=JSON.parse(JSON.stringify({key: field.data.key, type: field.data.type, name: field.data.name}));
-                let repeaterField = false;
                 // Update repeater fields
                 if(field.$el && field.$el.closest('.acf-field.acf-field-repeater') && field.$el.closest('.acf-field.acf-field-repeater').length > 0){
                     const rowId=field.$el.closest('.acf-row').data('id');
@@ -42,7 +41,6 @@ const GutenbergPostFetch = async (props) => {
                         const index=rowId.replace('row-', '');
                     
                         fieldData.name=repeaterItemName+'_'+index+'_'+fieldData.name;
-                        repeaterField = true;
                     }
                 }
 
