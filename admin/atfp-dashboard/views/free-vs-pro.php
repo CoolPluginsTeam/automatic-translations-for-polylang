@@ -29,7 +29,10 @@
                     'No API Key Required' => [true, true],
                     'Unlimited Translations' => [false, true],
                     'Google Translate Widget Support' => [false, true],
-                    'AI Translator (Gemini/OpenAI) Support' => [false, true],
+                    'AI Translator (Gemini/OpenAI/DeepL) Support' => [false, true],
+                    'Custom Fields Translation' => [false, true],
+                    'Bulk Translation' => [false, true],
+                    'Classic Editor Translation' => [false, true],
                     'Premium Support' => [false, true],
                 ];
              foreach ($features as $feature => $availability): ?>

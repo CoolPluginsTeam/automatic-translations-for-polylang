@@ -39,6 +39,14 @@
                 'description' => esc_html__('Utilize Chrome\'s built-in AI for seamless translation experience.', $text_domain),
                 'icon' => 'chrome-ai-translate.png',
                 'url' => 'https://docs.coolplugins.net/doc/chrome-ai-translation-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=ai_translations_chrome'
+            ],
+            [
+                'logo' => 'deepl-logo.png',
+                'alt' => 'DeepL',
+                'title' => esc_html__('DeepL', $text_domain),
+                'description' => esc_html__('Harness DeepL\'s advanced AI for high-quality translations.', $text_domain),
+                'icon' => 'deepl.png',
+                'url' => 'https://docs.coolplugins.net/doc/translate-via-deepl-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=ai_translations_deepl'
             ]
         ];
 
