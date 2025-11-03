@@ -1,0 +1,387 @@
+.modalOverlay {
+    background-color: rgba(0, 0, 0, 0.79) !important;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 9999999999;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .modalContainer {
+        color: black;
+        background: white;
+        padding: 1.5rem;
+        border-radius: 8px;
+        position: relative;
+        max-height: 70%;
+        margin: auto;
+        display: flex;
+
+        .modalCloseButton {
+            position: absolute;
+            top: -4px;
+            right: -5px;
+            cursor: pointer;
+            font-size: 2.5rem;
+            z-index: 99;
+        }
+
+        .languageErrorButtonWrapper{
+            text-align: center;
+        }
+
+        .languageErrorButton {
+            display: inline-block;
+            line-height: 1.4;
+            min-height: 30px;
+            margin: 0;
+            padding: 0 10px;
+            cursor: pointer;
+            border-width: 1px;
+            border-style: solid;
+            white-space: wrap;
+            box-sizing: border-box;
+            background: #ff2d2d;
+            border-radius: 5px;
+            font-family: inherit;
+            font-size: 13px;
+            border-color: red;
+            color: #fff;
+            text-decoration: none;
+            text-shadow: none;
+            margin-top: 8px;
+            transition: background .3s ease;
+
+            &:hover{
+                background: red;
+            }
+        }
+
+        .error {
+            padding: .5rem;
+            border: 1px solid #ff4646;
+            border-radius: 0.5em;
+            max-width: 400px;
+            font-size: 1rem;
+            line-height: 1.4;
+        }
+
+        .modal {
+            width: 400px;
+            height: 100%;
+
+            .controls {
+                height: 100%;
+            }
+
+
+            .langWrapper {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 0.5em;
+            }
+
+            .translatedButtonWrp {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 1rem;
+            }
+
+            .translatedContent {
+                height: calc(100% - 118px);
+            }
+
+            .translatedContent p {
+                border: 1px solid #d1d5db;
+                padding: .5rem;
+                border-radius: 5px;
+                margin-top: .5rem;
+                height: calc(100% - 26px);
+                margin-bottom: 1rem;
+                overflow: auto;
+                box-sizing: border-box;
+            }
+
+            .translatedContent label {
+                font-size: 13px;
+                font-weight: 500;
+                line-height: 1.4;
+                text-transform: uppercase;
+                box-sizing: border-box;
+                display: block;
+                padding-top: 0px;
+                padding-bottom: 0px;
+                max-width: 100%;
+                z-index: 1;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                color: rgb(30, 30, 30);
+                margin: 0px;
+                text-wrap: pretty;
+            }
+
+            .btnStyle {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: .5rem;
+                border-radius: 5px;
+                margin-top: .5rem;
+                font-weight: 600;
+                transition: all 0.3s ease;
+                color: white;
+                opacity: 0.8;
+                cursor: pointer;
+            }
+
+            .btnStyle:hover {
+                opacity: 1;
+                color: white !important;
+            }
+
+            .replaceBtn {
+                background: transparent;
+                border: 1px solid #007cba;
+                background: #007cba;
+            }
+
+            .copyBtn {
+                background: transparent;
+                border: 1px solid black;
+                background: black;
+            }
+
+            .closeBtn {
+                background: transparent;
+                border: 1px solid #da1c4b;
+                background: #da1c4b;
+            }
+        }
+    }
+
+}
+
+.errorBtnGroup {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5em;
+    margin-top: 1rem;
+
+    .btnCloseStyle {
+        border: 1px solid #ff4646;
+        background: #ff4646;
+        color: white;
+        transition: all 0.3s ease;
+        opacity: 0.8;
+        padding: .2rem .3rem;
+        font-size: .9rem;
+        border-radius: .2rem;
+        cursor: pointer;
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    .btnContinueStyle {
+        background: transparent;
+        border: 1px solid #007cba;
+        background : #007cba;
+        color: white;
+        transition: all 0.3s ease;
+        opacity: 0.8;
+        padding: .2rem .3rem;
+        font-size: .9rem;
+        border-radius: .2rem;
+        cursor: pointer;
+        &:hover {
+            opacity: 1;
+        }
+    }
+}
+
+/* Setting Modal CSS Start */
+.ErrorModalContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    z-index: 99999;
+    max-width: 100% !important;
+
+    .errorReloadBtn {
+        background: #0073aa;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 8px 20px;
+    }
+
+    .tooltipElement {
+        position: relative;
+        overflow: visible;
+        cursor: pointer;
+        white-space: nowrap;
+
+        .tooltip {
+            display: block;
+            font-size: 12.8px;
+            position: absolute;
+            background: #5cb85c;
+            color: #fff !important;
+            padding: 3.2px 8px;
+            border-radius: 4px;
+            top: 0;
+            left: 20px;
+            right: 20px;
+            margin: auto;
+            opacity: 0;
+            width: 121px;
+            white-space: nowrap;
+
+            &:after {
+                content: "";
+                position: absolute;
+                top: 98%;
+                left: 50%;
+                margin-left: -8px;
+                width: 0;
+                height: 0;
+                border-top: 8px solid #5cb85c;
+                border-right: 8px solid transparent;
+                border-left: 8px solid transparent;
+            }
+        }
+
+        .tooltip.tooltipActive {
+            -webkit-animation: slide-up 0.15s cubic-bezier(0.51, 0.92, 0.265, 1.55) both;
+            animation: slide-up 0.15s cubic-bezier(0.51, 0.92, 0.265, 1.55) both;
+        }
+    }
+
+    .errorModalBox {
+        background-color: #fefefe;
+        width: clamp(200px, 500px, 80%);
+        height: auto;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        border-radius: 0 !important;
+    }
+
+    .errorModalBoxBody {
+        min-height: 0px;
+        max-height: 100%;
+        height: auto;
+        padding: 22px;
+        overflow: auto;
+        padding-top: 11px;
+
+        h4 {
+            margin: 0;
+            margin-top: 0;
+            margin-bottom: 24px;
+            display: block;
+            font-weight: 600;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        ol {
+            margin-top: 16px;
+            margin-bottom: 0px;
+            list-style-type: decimal;
+            margin-left: 32px;
+            box-sizing: border-box;
+            padding: 0;
+
+            li {
+                margin-bottom: 6px;
+                list-style: decimal;
+            }
+        }
+
+        p {
+            margin: 0;
+            padding: 0;
+
+            * {
+                color: red !important;
+                font-size: 16px;
+                box-shadow: unset;
+                outline: unset;
+                border: unset;
+                line-height: 1.5;
+            }
+
+            a {
+                color: #2271b1 !important;
+                text-decoration: underline;
+            }
+        }
+
+        button.errorReloadBtn {
+            background: #0073aa;
+            color: #fff !important;
+            border: none;
+            border-radius: 4px;
+            padding: 4px 9px;
+            cursor: pointer;
+
+            &:hover {
+                background: #005682;
+            }
+        }
+    }
+
+    .errorModalBoxFooter {
+        background: 0 0;
+        border: none;
+        border-top: 1px solid #dcdcde;
+        margin-top: 0;
+        padding-inline: 16px;
+        padding-block: 10px;
+        text-align: end;
+        margin-right: 6.4px;
+
+        .errorModalBoxClose {
+            display: inline-block;
+            text-decoration: none;
+            font-size: 13px;
+            line-height: 2;
+            height: 28px;
+            margin: 12px 0;
+            padding: 0 10px 1px;
+            cursor: pointer;
+            border-width: 1px;
+            border-style: solid;
+            border-radius: 3px;
+            white-space: nowrap;
+            box-sizing: border-box;
+            color: #50575e;
+            border-color: #c3c4c7;
+            background: #f6f7f7;
+            box-shadow: 0 1px 0 #c3c4c7;
+            vertical-align: top;
+        }
+    }
+
+    @keyframes slide-up {
+        0% {
+            transform: translateY(0) scale(0.8);
+            opacity: 0;
+        }
+
+        100% {
+            transform: translateY(-35px) scale(1);
+            opacity: 1;
+        }
+    }
+}

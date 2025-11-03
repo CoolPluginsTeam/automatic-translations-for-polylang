@@ -1,6 +1,12 @@
 const { parse } = wp.blocks;
+const { select, subscribe } = wp.data;
+
 class blockDataReterive {
     constructor() {
+        if(document.querySelector('.atfp-overlay')) {
+            return;
+        }
+        
         this.blockLists = [];
         this.customBlockTranslateData = {};
         this.customBlocksData = [];
@@ -10,13 +16,15 @@ class blockDataReterive {
 
     init = () => {
         this.fetchCustomBlocks();
-        const modalContainer=document.querySelector('#atfp-modal-open-warning-wrapper .modal-container .modal-content');
-        if(modalContainer){
-            this.loaderContainer = document.createElement('div');
-            this.loaderContainer.className = 'atfp-loader-container';
-            this.loaderContainer.innerHTML = '<div class="atfp-loader-skeleton"><span class="atfp-loader-shimmer"></span></div>';
-            modalContainer.appendChild(this.loaderContainer);
-        }
+
+        // Create full-page overlay and append to <body>
+        this.loaderContainer = document.createElement('div');
+        this.loaderContainer.className = 'atfp-overlay';
+        this.loaderContainer.setAttribute('role', 'status');
+        this.loaderContainer.setAttribute('aria-live', 'polite');
+        this.loaderContainer.innerHTML = this.getOverlayTemplate(); // see section 2
+        document.body.appendChild(this.loaderContainer);
+        document.body.classList.add('atfp-overlay-open');
     }
 
     getBlocks = (blocks) => {
@@ -61,11 +69,11 @@ class blockDataReterive {
         })
             .then(response => response.json())
             .then(data => {
-                if(data.message === 'No custom blocks found.'){
+                if (data.message === 'No custom blocks found.') {
                     this.loaderContainer && this.loaderContainer.remove();
                     return;
                 }
-
+                
                 const customBlocks = parse(data.data.block_data);
 
                 this.getBlocks(customBlocks);
@@ -79,17 +87,17 @@ class blockDataReterive {
             });
     }
 
-    saveBlockData=()=>{
-        if(Object.keys(this.customBlockTranslateData).length < 1){
+    saveBlockData = () => {
+        if (Object.keys(this.customBlockTranslateData).length < 1) {
             this.loaderContainer && this.loaderContainer.remove();
             return;
         }
 
 
-         /**
-         * Prepare data to send in API request & update latest translate block data.
-        */
-         const apiSendData = {
+        /**
+        * Prepare data to send in API request & update latest translate block data.
+       */
+        const apiSendData = {
             atfp_nonce: atfp_block_update_object.ajax_nonce,
             action: atfp_block_update_object.action_update_content,
             save_block_data: JSON.stringify(this.customBlockTranslateData)
@@ -106,13 +114,15 @@ class blockDataReterive {
         })
             .then(response => response.json())
             .then(data => {
-                this.loaderContainer && this.loaderContainer.remove();
-                if(data.success && data.data.message){
+                this.setOverlayState('success');
+                this.teardownOverlay();
+                if (data.success && data.data.message) {
                     console.log(data.data.message);
                 }
             })
             .catch(error => {
-                this.loaderContainer && this.loaderContainer.remove();
+                this.setOverlayState('error');
+                this.teardownOverlay();
                 console.error('Error fetching block rules:', error);
             });
     }
@@ -177,7 +187,7 @@ class blockDataReterive {
             this.filterBlockObjectAttr(idsArray, value);
         } else if (typeof value === 'string' && /Make This Content Available for Translation/i.test(value)) {
             this.nestedAttrValue(idsArray, value);
-        }else if(value instanceof wp.richText.RichTextData && /Make This Content Available for Translation/i.test(value.originalHTML)){
+        } else if (value instanceof wp.richText.RichTextData && /Make This Content Available for Translation/i.test(value.originalHTML)) {
             this.nestedAttrValue(idsArray, value.originalHTML);
         }
     }
@@ -196,8 +206,8 @@ class blockDataReterive {
         Object.keys(blockData).forEach(key => {
             const newIdArr = new Array(...idsArr);
             const value = blockData[key];
-            if(value !== null && value !== undefined){
-                if ( (typeof value === 'string' && /Make This Content Available for Translation/i.test(value)) || [Array.prototype, Object.prototype].includes(Object.getPrototypeOf(value))) {
+            if (value !== null && value !== undefined) {
+                if ((typeof value === 'string' && /Make This Content Available for Translation/i.test(value)) || [Array.prototype, Object.prototype].includes(Object.getPrototypeOf(value))) {
                     newIdArr.push(key);
                     this.filterAttr(newIdArr, blockData[key]);
                 };
@@ -231,19 +241,97 @@ class blockDataReterive {
                 blockAttributes[block.clientId][block.name] = block.attributes;
             }
         });
-        
-        
+
         if (Object.values(blockAttributes).length > 0) {
             this.filterBlockAttribute(blockAttributes);
         }
     }
+
+    setOverlayState = (state /* 'loading' | 'success' | 'error' */) => {
+        if (!this.loaderContainer) return;
+        const panel = this.loaderContainer.querySelector('.atfp-overlay .atfp-box');
+        if (panel) panel.setAttribute('data-state', state);
+    };
+    
+    teardownOverlay = (delayMs = 3000) => {
+        if (!this.loaderContainer) return;
+        setTimeout(() => {
+            this.loaderContainer.classList.add('atfp-overlay--closing');
+            setTimeout(() => {
+                this.loaderContainer.remove();
+                this.loaderContainer = null;
+                document.body.classList.remove('atfp-overlay-open');
+            }, 300);
+        }, delayMs);
+    };
+
+    getOverlayTemplate = () => {
+        return `
+    <div class="atfp-overlay" role="status" aria-live="polite">
+    <div class="atfp-backdrop"></div>
+    <div class="atfp-box" data-state="loading">
+      <div class="atfp-row">
+        <span class="atfp-spinner" aria-hidden="true"></span>
+        <span class="atfp-icon atfp-icon--ok" aria-hidden="true">✓</span>
+        <span class="atfp-icon atfp-icon--err" aria-hidden="true">!</span>
+
+        <div class="atfp-text">
+          <div class="atfp-title" data-label="loading">Saving block content</div>
+          <div class="atfp-title" data-label="success">Supported block content has been updated</div>
+          <div class="atfp-title" data-label="error">Update failed</div>
+
+          <div class="atfp-desc" data-label="loading">
+            Please don’t close or refresh this window until the update is complete.
+          </div>
+          <div class="atfp-desc" data-label="success">
+            Supported block content has been updated. You may continue.
+          </div>
+          <div class="atfp-desc" data-label="error">
+            Something went wrong. You can retry without closing this window.
+          </div>
+        </div>
+      </div>
+
+      <div class="atfp-bar"><span></span></div>
+    </div>
+  </div>
+    `;
+    }
+
 }
 
+const debounce = (func, delay) => {
+    let timeoutId;
+    return function (...args) {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => func.apply(this, args), delay);
+    };
+};
 
+let isBlockContentUpdating = false;
+const saveBlockContent = debounce(() => {
+    new blockDataReterive();
+    isBlockContentUpdating = false;
+}, 500);
 
-window.addEventListener('load', () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.has('post_type') && urlParams.has('from_post') && urlParams.has('new_lang')) {
-        new blockDataReterive();
-    }
-});
+if (select && select('core/editor') && subscribe) {
+    subscribe(() => {
+        const {
+            isCurrentPostPublished,
+            isSavingPost,
+            isPublishingPost,
+            isAutosavingPost,
+        } = select('core/editor');
+
+        const isAutoSaving = isAutosavingPost();
+        const isPublishing = isPublishingPost();
+        const isSaving = isSavingPost();
+        const postPublished = isCurrentPostPublished();
+
+        if ((isPublishing || (postPublished && isSaving)) && !isAutoSaving && !isBlockContentUpdating) {
+            isBlockContentUpdating = true;
+            saveBlockContent();
+        }
+
+    })
+}

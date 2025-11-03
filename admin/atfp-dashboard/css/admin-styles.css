@@ -777,6 +777,28 @@ ul.atfp-dashboard-sts-btm li span:first-child {
     text-decoration: none;
 }
 
+
+.atfp-dashboard-ai-request-container>div[class^="atfp-dashboard-ai-"] {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.atfp-dashboard-ai-request-container label{
+    margin: 0;
+    white-space: nowrap;
+    min-width: 150px;
+}
+
+.atfp-dashboard-ai-request-container h2{
+    margin: 0px 0 10px;
+}
+
+.atfp-dashboard-ai-request-container p{
+    padding: 0;
+    margin: 3px 0 0;
+}
+
 .atfp-bulk-translation-post-status-options{
     display: flex;
     align-items: center;

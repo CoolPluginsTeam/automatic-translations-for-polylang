@@ -158,10 +158,9 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 			if ( ! check_ajax_referer( 'atfp_block_update_nonce', 'atfp_nonce', false ) ) {
 				wp_send_json_error( __( 'Invalid security token sent.', 'autopoly-ai-translation-for-polylang' ) );
 				wp_die( '0', 400 );
-				exit();
 			}
 
-			if(!current_user_can('manage_options')){
+			if(!current_user_can('edit_posts')){
 				wp_send_json_error( __( 'Unauthorized', 'autopoly-ai-translation-for-polylang' ), 403 );
 				wp_die( '0', 403 );
 			}
@@ -171,7 +170,6 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 			if(json_last_error() !== JSON_ERROR_NONE){ 
 				wp_send_json_error( __( 'Invalid JSON', 'autopoly-ai-translation-for-polylang' ) );
 				wp_die( '0', 400 );
-				exit();
 			}
 
 			if ( $updated_blocks_data ) {
@@ -192,7 +190,6 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 					}
 
 					delete_option( 'atfp_custom_block_data' );
-					update_option( 'atfp_custom_block_status', 'false' );
 
 				}
 			}

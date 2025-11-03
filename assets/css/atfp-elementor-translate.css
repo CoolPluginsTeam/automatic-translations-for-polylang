@@ -1,58 +1,58 @@
-    button.elementor-button.atfp-translate-button:enabled {
-        border-radius: 0px;
-        color: rgb(12, 13, 14);
-        background-color: #F0ABFC
-    }
+button.elementor-button.atfp-translate-button:enabled {
+    border-radius: 0px;
+    color: rgb(12, 13, 14);
+    background-color: #F0ABFC
+}
 
-    button.elementor-button.atfp-translate-button:enabled:hover {
-        background-color: rgb(235, 142, 251);
-    }
+button.elementor-button.atfp-translate-button:enabled:hover {
+    background-color: rgb(235, 142, 251);
+}
 
-    button.elementor-button.atfp-translate-button:disabled {
-        cursor: default;
-        border-radius: 0px;
-        color: rgb(12, 13, 14);
-    }
+button.elementor-button.atfp-translate-button:disabled {
+    cursor: default;
+    border-radius: 0px;
+    color: rgb(12, 13, 14);
+}
 
-    /* Footer Close Button */
-    button.atfp-setting-close {
-        margin-top: 14.4px;
-        font-size: 16px;
-        padding: 1.6px 6.4px;
-        cursor: pointer;
-        opacity: .7;
-    }
+/* Footer Close Button */
+button.atfp-setting-close {
+    margin-top: .9rem;
+    font-size: 1rem;
+    padding: .1rem .4rem;
+    cursor: pointer;
+    opacity: .7;
+}
 
-    button.atfp-setting-close:hover {
-        opacity: 1;
-    }
+button.atfp-setting-close:hover {
+    opacity: 1;
+}
 
-    /* ******Popup***** */
+/* ******Popup***** */
 
-    .save_it.button-primary[disabled] {
-        color: #a7aaad !important;
-        background: #f6f7f7 !important;
-        border-color: #dcdcde !important;
-        box-shadow: none !important;
-        text-shadow: none !important;
-        cursor: default;
-        padding: 8px 12px;
-        border: none;
-        border-radius: 2px;
-    }
+.save_it.button-primary[disabled] {
+    color: #a7aaad !important;
+    background: #f6f7f7 !important;
+    border-color: #dcdcde !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    cursor: default;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 2px;
+}
 
-    .save_it.button-primary {
-        background: #2271b1;
-        border-color: #2271b1;
-        color: #fff;
-        text-decoration: none;
-        text-shadow: none;
-        padding: 8px 12px;
-        border: none;
-        border-radius: 2px;
-        cursor: pointer;
-    }
+.save_it.button-primary {
+    background: #2271b1;
+    border-color: #2271b1;
+    color: #fff;
+    text-decoration: none;
+    text-shadow: none;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+}
 
-    #atfp_strings_model .save_btn_cont button:not([disabled])::before {
-        line-height: 14px !important;
-    }
+#atfp_strings_model .save_btn_cont button:not([disabled])::before {
+    line-height: 14px !important;
+}

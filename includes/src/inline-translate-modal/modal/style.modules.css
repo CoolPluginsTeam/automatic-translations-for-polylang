@@ -1,0 +1,443 @@
+.modalOverlay {
+  background-color: rgba(0, 0, 0, 0.79) !important;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 9999999999;
+  top: 0px;
+  left: 0px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.modalOverlay .modalContainer {
+  color: black;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  position: relative;
+  max-height: 70%;
+  margin: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.modalOverlay .modalContainer .modalCloseButton {
+  position: absolute;
+  top: -4px;
+  right: -5px;
+  cursor: pointer;
+  font-size: 2.5rem;
+  z-index: 99;
+}
+
+.modalOverlay .modalContainer .languageErrorButtonWrapper {
+  text-align: center;
+}
+
+.modalOverlay .modalContainer .languageErrorButton {
+  display: inline-block;
+  line-height: 1.4;
+  min-height: 30px;
+  margin: 0;
+  padding: 0 10px;
+  cursor: pointer;
+  border-width: 1px;
+  border-style: solid;
+  white-space: wrap;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  background: #ff2d2d;
+  border-radius: 5px;
+  font-family: inherit;
+  font-size: 13px;
+  border-color: red;
+  color: #fff;
+  text-decoration: none;
+  text-shadow: none;
+  margin-top: 8px;
+  -webkit-transition: background .3s ease;
+  transition: background .3s ease;
+}
+
+.modalOverlay .modalContainer .languageErrorButton:hover {
+  background: red;
+}
+
+.modalOverlay .modalContainer .error {
+  padding: .5rem;
+  border: 1px solid #ff4646;
+  border-radius: 0.5em;
+  max-width: 400px;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.modalOverlay .modalContainer .modal {
+  width: 400px;
+  height: 100%;
+}
+
+.modalOverlay .modalContainer .modal .controls {
+  height: 100%;
+}
+
+.modalOverlay .modalContainer .modal .langWrapper {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
+  gap: 0.5em;
+}
+
+.modalOverlay .modalContainer .modal .translatedButtonWrp {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+}
+
+.modalOverlay .modalContainer .modal .translatedContent {
+  height: calc(100% - 118px);
+}
+
+.modalOverlay .modalContainer .modal .translatedContent p {
+  border: 1px solid #d1d5db;
+  padding: .5rem;
+  border-radius: 5px;
+  margin-top: .5rem;
+  height: calc(100% - 26px);
+  margin-bottom: 1rem;
+  overflow: auto;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.modalOverlay .modalContainer .modal .translatedContent label {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+  text-transform: uppercase;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  display: block;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  max-width: 100%;
+  z-index: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #1e1e1e;
+  margin: 0px;
+  text-wrap: pretty;
+}
+
+.modalOverlay .modalContainer .modal .btnStyle {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: .5rem;
+  border-radius: 5px;
+  margin-top: .5rem;
+  font-weight: 600;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  color: white;
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.modalOverlay .modalContainer .modal .btnStyle:hover {
+  opacity: 1;
+  color: white !important;
+}
+
+.modalOverlay .modalContainer .modal .replaceBtn {
+  background: transparent;
+  border: 1px solid #007cba;
+  background: #007cba;
+}
+
+.modalOverlay .modalContainer .modal .copyBtn {
+  background: transparent;
+  border: 1px solid black;
+  background: black;
+}
+
+.modalOverlay .modalContainer .modal .closeBtn {
+  background: transparent;
+  border: 1px solid #da1c4b;
+  background: #da1c4b;
+}
+
+.errorBtnGroup {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  gap: 0.5em;
+  margin-top: 1rem;
+}
+
+.errorBtnGroup .btnCloseStyle {
+  border: 1px solid #ff4646;
+  background: #ff4646;
+  color: white;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  opacity: 0.8;
+  padding: .2rem .3rem;
+  font-size: .9rem;
+  border-radius: .2rem;
+  cursor: pointer;
+}
+
+.errorBtnGroup .btnCloseStyle:hover {
+  opacity: 1;
+}
+
+.errorBtnGroup .btnContinueStyle {
+  background: transparent;
+  border: 1px solid #007cba;
+  background: #007cba;
+  color: white;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  opacity: 0.8;
+  padding: .2rem .3rem;
+  font-size: .9rem;
+  border-radius: .2rem;
+  cursor: pointer;
+}
+
+.errorBtnGroup .btnContinueStyle:hover {
+  opacity: 1;
+}
+
+/* Setting Modal CSS Start */
+.ErrorModalContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  z-index: 99999;
+  max-width: 100% !important;
+}
+
+.ErrorModalContainer .errorReloadBtn {
+  background: #0073aa;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 20px;
+}
+
+.ErrorModalContainer .tooltipElement {
+  position: relative;
+  overflow: visible;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.ErrorModalContainer .tooltipElement .tooltip {
+  display: block;
+  font-size: 12.8px;
+  position: absolute;
+  background: #5cb85c;
+  color: #fff !important;
+  padding: 3.2px 8px;
+  border-radius: 4px;
+  top: 0;
+  left: 20px;
+  right: 20px;
+  margin: auto;
+  opacity: 0;
+  width: 121px;
+  white-space: nowrap;
+}
+
+.ErrorModalContainer .tooltipElement .tooltip:after {
+  content: "";
+  position: absolute;
+  top: 98%;
+  left: 50%;
+  margin-left: -8px;
+  width: 0;
+  height: 0;
+  border-top: 8px solid #5cb85c;
+  border-right: 8px solid transparent;
+  border-left: 8px solid transparent;
+}
+
+.ErrorModalContainer .tooltipElement .tooltip.tooltipActive {
+  -webkit-animation: slide-up 0.15s cubic-bezier(0.51, 0.92, 0.265, 1.55) both;
+  animation: slide-up 0.15s cubic-bezier(0.51, 0.92, 0.265, 1.55) both;
+}
+
+.ErrorModalContainer .errorModalBox {
+  background-color: #fefefe;
+  width: clamp(200px, 500px, 80%);
+  height: auto;
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 0 !important;
+}
+
+.ErrorModalContainer .errorModalBoxBody {
+  min-height: 0px;
+  max-height: 100%;
+  height: auto;
+  padding: 22px;
+  overflow: auto;
+  padding-top: 11px;
+}
+
+.ErrorModalContainer .errorModalBoxBody h4 {
+  margin: 0;
+  margin-top: 0;
+  margin-bottom: 24px;
+  display: block;
+  font-weight: 600;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.ErrorModalContainer .errorModalBoxBody ol {
+  margin-top: 16px;
+  margin-bottom: 0px;
+  list-style-type: decimal;
+  margin-left: 32px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 0;
+}
+
+.ErrorModalContainer .errorModalBoxBody ol li {
+  margin-bottom: 6px;
+  list-style: decimal;
+}
+
+.ErrorModalContainer .errorModalBoxBody p {
+  margin: 0;
+  padding: 0;
+}
+
+.ErrorModalContainer .errorModalBoxBody p * {
+  color: red !important;
+  font-size: 16px;
+  -webkit-box-shadow: unset;
+          box-shadow: unset;
+  outline: unset;
+  border: unset;
+  line-height: 1.5;
+}
+
+.ErrorModalContainer .errorModalBoxBody p a {
+  color: #2271b1 !important;
+  text-decoration: underline;
+}
+
+.ErrorModalContainer .errorModalBoxBody button.errorReloadBtn {
+  background: #0073aa;
+  color: #fff !important;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 9px;
+  cursor: pointer;
+}
+
+.ErrorModalContainer .errorModalBoxBody button.errorReloadBtn:hover {
+  background: #005682;
+}
+
+.ErrorModalContainer .errorModalBoxFooter {
+  background: 0 0;
+  border: none;
+  border-top: 1px solid #dcdcde;
+  margin-top: 0;
+  padding-inline: 16px;
+  padding-block: 10px;
+  text-align: end;
+  margin-right: 6.4px;
+}
+
+.ErrorModalContainer .errorModalBoxFooter .errorModalBoxClose {
+  display: inline-block;
+  text-decoration: none;
+  font-size: 13px;
+  line-height: 2;
+  height: 28px;
+  margin: 12px 0;
+  padding: 0 10px 1px;
+  cursor: pointer;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 3px;
+  white-space: nowrap;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  color: #50575e;
+  border-color: #c3c4c7;
+  background: #f6f7f7;
+  -webkit-box-shadow: 0 1px 0 #c3c4c7;
+          box-shadow: 0 1px 0 #c3c4c7;
+  vertical-align: top;
+}
+
+@-webkit-keyframes slide-up {
+  0% {
+    -webkit-transform: translateY(0) scale(0.8);
+            transform: translateY(0) scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(-35px) scale(1);
+            transform: translateY(-35px) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  0% {
+    -webkit-transform: translateY(0) scale(0.8);
+            transform: translateY(0) scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(-35px) scale(1);
+            transform: translateY(-35px) scale(1);
+    opacity: 1;
+  }
+}
+/*# sourceMappingURL=style.modules.css.map */
