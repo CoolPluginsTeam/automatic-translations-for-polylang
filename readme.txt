@@ -221,16 +221,16 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 = Version 1.4.6 | 03 November 2025 =
 
-* **Added:** Rank math seo table block translation support & core table block header & footer translation support.
-* **Added:** Elementor translation confirm box in other editor but page is built with Elementor.
-* **Fixed:** Elementor HTML tag render issue after translation before render page.
-* **Fixed:** Fixed ACF repeater translation in Gutenberg.
-* **Fixed:** Elementor testimonial widget missing fields translation.
-* **Fixed:** Fixed JS error in gutenberg content update process.
-* **Fixed:** wysiwyg content line break formatting issue.
-* **Improved:** Added update content button animation during long updates.
-* **Improved:** Improved inline translation and optimized file size.
-* **Improved:** Supported block content update process.
+* **Added:** Support for translating Rank Math SEO table blocks and core table headers and footers.
+* **Added:** Confirmation box when translating in a different editor but the page is made with Elementor.
+* **Fixed:** Issue with Elementor HTML tags not rendering correctly after translation.
+* **Fixed:** Translation now works for ACF repeater fields in Gutenberg.
+* **Fixed:** Missing translations for some fields in Elementor testimonial widget.
+* **Fixed:** JavaScript error when updating Gutenberg content.
+* **Fixed:** Fixed line break formatting in WYSIWYG content.
+* **Improved:** Added animation to the update button for long updates.
+* **Improved:** Optimized performance of inline translation and smaller file size.
+* **Improved:** Improved the block content update process.
 
 = Version 1.4.5 | 21 August 2025 =
 
