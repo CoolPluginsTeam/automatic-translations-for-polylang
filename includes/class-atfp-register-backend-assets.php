@@ -1,4 +1,7 @@
 <?php
+if(!defined('ABSPATH')){
+    exit;
+}
 
 class ATFP_Register_Backend_Assets
 {

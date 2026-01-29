@@ -45,8 +45,11 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 		 * Constructor for the ATFP_Supported_Blocks class.
 		 */
 		private function __construct() {
-			// wp:phpcs:ignore Wordpress.security Nonce verification is not required here
+			// nonce verification is not required here because we are not using the nonce here.
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$tab=isset($_GET['tab']) ? sanitize_text_field(wp_unslash($_GET['tab'])) : '';
+			// nonce verification is not required here because we are not using the nonce here.
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$page=isset($_GET['page']) ? sanitize_text_field(wp_unslash($_GET['page'])) : '';
 			if('support-blocks' === $tab && 'polylang-atfp-dashboard' === $page){
 				$this->atfp_render_support_blocks_page();
@@ -71,22 +74,24 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 		public function atfp_render_support_blocks_page() {
 			?>
 		<div class="atfp-supported-blocks-wrapper">
-		<h3><?php printf( esc_html__( 'Supported Blocks for %s', 'autopoly-ai-translation-for-polylang' ), 'AutoPoly - AI Translation For Polylang' ); ?></h3>
+		<h3><?php
+		// translators: 1: AutoPoly - AI Translation For Polylang plugin name
+		printf( esc_html__( 'Supported Blocks for %s', 'automatic-translations-for-polylang' ), 'AutoPoly - AI Translation For Polylang' ); ?></h3>
 		<div class="atfp-supported-blocks-filters">
 				<div class="atfp-category-tab">
-					<label for="atfp-blocks-category"><?php esc_html_e( 'Block Type Category:', 'autopoly-ai-translation-for-polylang' ); ?></label>
+					<label for="atfp-blocks-category"><?php esc_html_e( 'Block Type Category:', 'automatic-translations-for-polylang' ); ?></label>
 					<select id="atfp-blocks-category" name="atfp_blocks_category">
-						<option value="all"><?php esc_html_e( 'All', 'autopoly-ai-translation-for-polylang' ); ?></option>
+						<option value="all"><?php esc_html_e( 'All', 'automatic-translations-for-polylang' ); ?></option>
 						<option value="core">Core</option>
 						<?php $this->atfp_get_blocks_category(); ?>
 					</select>
 				</div>
 				<div class="atfp-filter-tab">
-					<label for="atfp-blocks-filter"><?php esc_html_e( 'Show Blocks:', 'autopoly-ai-translation-for-polylang' ); ?></label>
+					<label for="atfp-blocks-filter"><?php esc_html_e( 'Show Blocks:', 'automatic-translations-for-polylang' ); ?></label>
 					<select id="atfp-blocks-filter" name="atfp_blocks_filter">
-						<option value="all"><?php esc_html_e( 'All', 'autopoly-ai-translation-for-polylang' ); ?></option>
-						<option value="supported"><?php esc_html_e( 'Supported Blocks', 'autopoly-ai-translation-for-polylang' ); ?></option>
-						<option value="unsupported"><?php esc_html_e( 'Unsupported Blocks', 'autopoly-ai-translation-for-polylang' ); ?></option>
+						<option value="all"><?php esc_html_e( 'All', 'automatic-translations-for-polylang' ); ?></option>
+						<option value="supported"><?php esc_html_e( 'Supported Blocks', 'automatic-translations-for-polylang' ); ?></option>
+						<option value="unsupported"><?php esc_html_e( 'Unsupported Blocks', 'automatic-translations-for-polylang' ); ?></option>
 					</select>
 				</div>
 			</div>
@@ -95,11 +100,11 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 					<table class="atfp-supported-blocks-table" id="atfp-supported-blocks-table">
 						<thead>
 							<tr>
-								<th><?php esc_html_e( 'Sr.No', 'autopoly-ai-translation-for-polylang' ); ?></th>
-								<th><?php esc_html_e( 'Block Name', 'autopoly-ai-translation-for-polylang' ); ?></th>
-								<th><?php esc_html_e( 'Block Title', 'autopoly-ai-translation-for-polylang' ); ?></th>
-								<th><?php esc_html_e( 'Status', 'autopoly-ai-translation-for-polylang' ); ?></th>
-								<th><?php esc_html_e( 'Modify', 'autopoly-ai-translation-for-polylang' ); ?></th>
+								<th><?php esc_html_e( 'Sr.No', 'automatic-translations-for-polylang' ); ?></th>
+								<th><?php esc_html_e( 'Block Name', 'automatic-translations-for-polylang' ); ?></th>
+								<th><?php esc_html_e( 'Block Title', 'automatic-translations-for-polylang' ); ?></th>
+								<th><?php esc_html_e( 'Status', 'automatic-translations-for-polylang' ); ?></th>
+								<th><?php esc_html_e( 'Modify', 'automatic-translations-for-polylang' ); ?></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -168,7 +173,7 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 					$block_name  = esc_html( $block->name );
 					$block_title = esc_html( $block->title );
 					$status      = ! in_array( $block_name, $atfp_supported_blocks_names ) ? 'Unsupported' : 'Supported'; // You can modify this logic based on your requirements
-					$modify_text = ! in_array( $block_name, $atfp_supported_blocks_names ) ? esc_html__( 'Add', 'autopoly-ai-translation-for-polylang' ) : esc_html__( 'Edit', 'autopoly-ai-translation-for-polylang' );
+					$modify_text = ! in_array( $block_name, $atfp_supported_blocks_names ) ? esc_html__( 'Add', 'automatic-translations-for-polylang' ) : esc_html__( 'Edit', 'automatic-translations-for-polylang' );
 					$modify_link = '<a href="' . esc_url( admin_url( 'post.php?post=' . esc_attr( $atfp_post_id ) . '&action=edit&atfp_new_block=' ) . esc_attr( $block_name ) ) . '">' . $modify_text . '</a>'; // Modify link
 					$modify_link = '<a href="' . esc_url( admin_url( 'post.php?post=' . esc_attr( $atfp_post_id ) . '&action=edit&atfp_new_block=' ) . esc_attr( $block_name ) ) . '">' . $modify_text . '</a>'; // Modify link
 

@@ -50,6 +50,8 @@ class CPFM_Feedback_Notice {
          *     'pages' => ['dashboard', 'cpfm_'],
          * ]);
          */
+        // cpfm is our unuque prefix for this plugin
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
         do_action('cpfm_register_notice');
     }
 
@@ -63,7 +65,9 @@ class CPFM_Feedback_Notice {
 
  
         $screen         = get_current_screen();
-        $current_page   = isset($_GET['page'])? sanitize_key($_GET['page']):'';
+        // nonce verification is not required here because we are not using the nonce here.
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $current_page   = isset($_GET['page'])? sanitize_key(wp_unslash($_GET['page'])):'';
     
         // Gather all unique pages from registered notices
         $allowed_pages = [];
@@ -78,7 +82,7 @@ class CPFM_Feedback_Notice {
         if (!in_array($current_page, array_unique($allowed_pages))) {
             return;
         }
-        wp_enqueue_style('cpfm-common-review-style', ATFP_URL . 'admin/cpfm-feedback/css/cpfm-admin-feedback.css');
+        wp_enqueue_style('cpfm-common-review-style', ATFP_URL . 'admin/cpfm-feedback/css/cpfm-admin-feedback.css', null, ATFP_V, 'all');
         wp_enqueue_script(
             'cpfm-common-review-script', 
             ATFP_URL . 'admin/cpfm-feedback/js/cpfm-admin-feedback.js', 
@@ -134,8 +138,9 @@ class CPFM_Feedback_Notice {
                     $plugin_name = isset($notice['plugin_name'])?sanitize_key($notice['plugin_name']):'';
 
                     if($plugin_name){
-
-                        do_action('cpfm_after_opt_in_' . $plugin_name, $category);
+                        // cpfm is our unuque prefix for this plugin
+                        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+                        do_action('cpfm_after_opt_in_' . $atfp_plugin_name, $category);
                     }
               
             }
@@ -152,7 +157,9 @@ class CPFM_Feedback_Notice {
         }
 
         $screen         = get_current_screen();
-        $current_page   = isset($_GET['page']) ? sanitize_key($_GET['page']) : '';
+        // nonce verification is not required here because we are not using the nonce here.
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $current_page   = isset($_GET['page']) ? sanitize_key(wp_unslash($_GET['page'])) : ''; 
 
        
         $unread_count   = 0;
@@ -168,7 +175,7 @@ class CPFM_Feedback_Notice {
     
         $output = '';
         $output .= '<div id="cpfNoticePanel" class="notice-panel"' . ($auto_show ? ' data-auto-show="true"' : '') . '>';
-        $output .= '<div class="notice-panel-header">' . esc_html__('Help Improve Plugins', 'ccpw') . ' <span class="dashicons dashicons-no" id="cpfm_remove_notice"></span></div>';
+        $output .= '<div class="notice-panel-header">' . esc_html__('Help Improve Plugins', 'automatic-translations-for-polylang') . ' <span class="dashicons dashicons-no" id="cpfm_remove_notice"></span></div>';
         $output .= '<div class="notice-panel-content">';
     
         foreach (self::$registered_notices as $key => $notice) {
@@ -194,21 +201,21 @@ class CPFM_Feedback_Notice {
             $output .= '<strong>' . esc_html($notice['title']) . '</strong>';
             
             $output .= '<div class="notice-message-with-toggle">';
-            $output .= '<p>' . esc_html($notice['message']) . '<a href="#" class="cpf-toggle-extra">' . esc_html__(' More info', 'ccpw') . '</a></p>';
+            $output .= '<p>' . esc_html($notice['message']) . '<a href="#" class="cpf-toggle-extra">' . esc_html__(' More info', 'automatic-translations-for-polylang') . '</a></p>';
             $output .= '</div>';
             
             $output .= '<div class="cpf-extra-info">';
-            $output .= '<p>' . esc_html__('Opt in to receive email updates about security improvements, new features, helpful tutorials, and occasional special offers. We\'ll collect:', 'ccpw') . '</p>';
+            $output .= '<p>' . esc_html__('Opt in to receive email updates about security improvements, new features, helpful tutorials, and occasional special offers. We\'ll collect:', 'automatic-translations-for-polylang') . '</p>';
             $output .= '<ul>';
-            $output .= '<li>' . esc_html__('Your website home URL and WordPress admin email.', 'ccpw') . '</li>';
-            $output .= '<li>' . esc_html__('To check plugin compatibility, we will collect the following: list of active plugins and themes, server type, MySQL version, WordPress version, memory limit, site language and database prefix.', 'ccpw') . '</li>';
+            $output .= '<li>' . esc_html__('Your website home URL and WordPress admin email.', 'automatic-translations-for-polylang') . '</li>';
+            $output .= '<li>' . esc_html__('To check plugin compatibility, we will collect the following: list of active plugins and themes, server type, MySQL version, WordPress version, memory limit, site language and database prefix.', 'automatic-translations-for-polylang') . '</li>';
             $output .= '</ul>';
             
             $output .= '</div>';
             
             $output .= '<div class="notice-actions">';
-            $output .= '<button class="button button-primary opt-in-yes" data-category="' . esc_attr($key) . '" id="yes-share-data" value="yes">' . esc_html__("Yes, I Agree", 'ccpw') . '</button>';
-            $output .= '<button class="button opt-in-no" data-category="' . esc_attr($key) . '" id="no-share-data" value="no">' . esc_html__('No, Thanks', 'ccpw') . '</button>';
+            $output .= '<button class="button button-primary opt-in-yes" data-category="' . esc_attr($key) . '" id="yes-share-data" value="yes">' . esc_html__("Yes, I Agree", 'automatic-translations-for-polylang') . '</button>';
+            $output .= '<button class="button opt-in-no" data-category="' . esc_attr($key) . '" id="no-share-data" value="no">' . esc_html__('No, Thanks', 'automatic-translations-for-polylang') . '</button>';
             $output .= '</div>';
             
             $output .= '</div>';
@@ -218,7 +225,7 @@ class CPFM_Feedback_Notice {
         $output .= '</div>'; 
      
         if ($unread_count > 0) {
-            echo $output;
+            echo wp_kses_post($output);
         }
     }
 }

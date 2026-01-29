@@ -8,7 +8,7 @@ Author URI: https://coolplugins.net/?utm_source=atfp_plugin&utm_medium=inside&ut
 Description: AutoPoly - AI Translation For Polylang simplifies your translation process by automatically translating all pages/posts content from one language to another.
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: autopoly-ai-translation-for-polylang
+Text Domain: automatic-translations-for-polylang
 */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -64,7 +64,6 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 			add_action( 'plugins_loaded', array( $this, 'atfp_init' ) );
 			register_activation_hook( ATFP_FILE, array( $this, 'atfp_activate' ) );
 			register_deactivation_hook( ATFP_FILE, array( $this, 'atfp_deactivate' ) );
-			add_action('init', array($this, 'load_plugin_textdomain'));
 			add_action( 'admin_menu', array( $this, 'atfp_add_submenu_page' ), 11 );
 			add_action( 'admin_enqueue_scripts', array( $this, 'atfp_set_dashboard_style' ) );
 			add_action('init', array($this, 'atfp_translation_string_migration'));
@@ -77,6 +76,8 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 			$this->init_feedback_notice();
 			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'atfp_plugin_action_links' ) );
 
+			// nonce verification is not required here because we are not using the nonce here.
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$page=isset($_GET['page']) ? sanitize_text_field(wp_unslash($_GET['page'])) : '';
 
 			// Add the action to hide unrelated notices
@@ -88,7 +89,7 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 		}
 
 		public function atfp_plugin_action_links($links) {
-			$links[] = '<a href="https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=plugin_list" target="_blank">' . __( 'Buy Pro', 'autopoly-ai-translation-for-polylang' ) . '</a>';
+			$links[] = '<a href="https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=plugin_list" target="_blank">' . __( 'Buy Pro', 'automatic-translations-for-polylang' ) . '</a>';
 			return $links;
 		}
 
@@ -102,8 +103,11 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 			}
 
 			if ( $plugin == plugin_basename( __FILE__ ) ) {
-				exit( wp_redirect( admin_url( 'admin.php?page=polylang-atfp-dashboard&tab=dashboard' ) ) );
-			}	
+				wp_safe_redirect(
+					esc_url( admin_url( 'admin.php?page=polylang-atfp-dashboard&tab=dashboard' ) )
+				);
+				exit;
+			}
 		}
 
 		public static function atfp_translation_string_migration(){
@@ -120,6 +124,8 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 		 * Enqueue editor CSS for the supported blocks page.
 		 */
 		public function atfp_set_dashboard_style( $hook ) {
+			// nonce verification is not required here
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$page=isset($_GET['page']) ? sanitize_text_field(wp_unslash($_GET['page'])) : '';
 			if($page == 'polylang-atfp-dashboard') {
 				wp_enqueue_style( 'atfp-dashboard-style', ATFP_URL . 'admin/atfp-dashboard/css/admin-styles.css',null, ATFP_V, 'all' );
@@ -156,16 +162,20 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 					}
 					
 					$notice = [
-						'title' => __('AutoPoly - AI Translation For Polylang', 'ATFP'),
-						'message' => __('Help us make this plugin more compatible with your site by sharing non-sensitive site data.', 'ATFP'),
+						'title' => __('AutoPoly - AI Translation For Polylang', 'automatic-translations-for-polylang'),
+						'message' => __('Help us make this plugin more compatible with your site by sharing non-sensitive site data.', 'automatic-translations-for-polylang'),
 						'pages' => ['polylang-atfp-dashboard'],
 						'always_show_on' => ['polylang-atfp-dashboard'], // This enables auto-show
 						'plugin_name'=>'atfp'
 					];
 					CPFM_Feedback_Notice::cpfm_register_notice('cool_translations', $notice);
 						if (!isset($GLOBALS['cool_plugins_feedback'])) {
+							// cool_plugins is our company name
+							// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 							$GLOBALS['cool_plugins_feedback'] = [];
 						}
+						// cool_plugins is our company name
+						// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 						$GLOBALS['cool_plugins_feedback']['cool_translations'][] = $notice;
 				});
 	
@@ -190,6 +200,8 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 			{ // phpcs:ignore Generic.Metrics.CyclomaticComplexity.MaxExceeded, Generic.Metrics.NestingLevel.MaxExceeded
 				$cfkef_pages = false;
 
+				// nonce verification is not required here because we are not using the nonce here.
+				// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				$page=isset($_GET['page']) ? sanitize_text_field(wp_unslash($_GET['page'])) : '';
 
 				if($page == 'polylang-atfp-dashboard'){
@@ -257,7 +269,10 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 		public static function atfp_get_user_info() {
 			global $wpdb;
 			$server_info = [
-			'server_software'        => sanitize_text_field($_SERVER['SERVER_SOFTWARE'] ?? 'N/A'),
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			'server_software'        => sanitize_text_field(wp_unslash($_SERVER['SERVER_SOFTWARE'] ?? 'N/A')),
+			// no cache needed for this query it will run only once in 30 days and it is a valid query for getting mysql version.
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching 
 			'mysql_version'          => sanitize_text_field($wpdb->get_var("SELECT VERSION()")),
 			'php_version'            => sanitize_text_field(phpversion()),
 			'wp_version'             => sanitize_text_field(get_bloginfo('version')),
@@ -306,8 +321,8 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 
 			add_submenu_page(
 				'mlang', // Parent slug
-				__( 'AutoPoly - AI Translation For Polylang', 'autopoly-ai-translation-for-polylang' ), // Page title
-				__( 'AutoPoly', 'autopoly-ai-translation-for-polylang' ), // Menu title
+				__( 'AutoPoly - AI Translation For Polylang', 'automatic-translations-for-polylang' ), // Page title
+				__( 'AutoPoly', 'automatic-translations-for-polylang' ), // Menu title
 				'manage_options', // Capability
 				'polylang-atfp-dashboard', // Menu slug
 				array( $this, 'atfp_render_dashboard_page' ) // Callback function
@@ -315,20 +330,21 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 		}
 
 		public function atfp_render_dashboard_page() {
-			$text_domain = 'autopoly-ai-translation-for-polylang';
 			$file_prefix = 'admin/atfp-dashboard/views/';
 			
 			$valid_tabs = [
-				'dashboard'       => __('Dashboard', $text_domain),
-				'ai-translations' => __('AI Translations', $text_domain),
-				'settings'        => __('Settings', $text_domain),
-				'license'         => __('License', $text_domain),
-				'free-vs-pro'     => __('Free vs Pro', $text_domain),
-				'support-blocks'  => __('Supported Blocks', $text_domain)
+				'dashboard'       => __('Dashboard', 'automatic-translations-for-polylang'),
+				'ai-translations' => __('AI Translations', 'automatic-translations-for-polylang'),
+				'settings'        => __('Settings', 'automatic-translations-for-polylang'),
+				'license'         => __('License', 'automatic-translations-for-polylang'),
+				'free-vs-pro'     => __('Free vs Pro', 'automatic-translations-for-polylang'),
+				'support-blocks'  => __('Supported Blocks', 'automatic-translations-for-polylang')
 			];
 	
 			// Get current tab with fallback
 	
+			// nonce verification is not required here because we are not using the nonce here.
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$tab 			= isset($_GET['tab']) ? sanitize_key(wp_unslash($_GET['tab'])) : 'dashboard';
 			$current_tab 	= array_key_exists($tab, $valid_tabs) ? $tab : 'dashboard';
 			
@@ -337,7 +353,7 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 				[
 					'url' => 'https://coolplugins.net/support/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=support&utm_content=dashboard_header',
 					'img' => 'contact.svg',
-					'alt' => __('contact', $text_domain)
+					'alt' => __('contact', 'automatic-translations-for-polylang')
 				]
 			];
 	
@@ -347,7 +363,7 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 				<div class="atfp-dashboard-header">
 					<div class="atfp-dashboard-header-left">
 						<a href="?page=polylang-atfp-dashboard&tab=dashboard" class="atfp-dashboard-logo-link">
-							<img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/polylang-addon-logo.svg'); ?>" alt="<?php esc_attr_e('Polylang Addon Logo', $text_domain); ?>">
+							<img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/polylang-addon-logo.svg'); ?>" alt="<?php esc_attr_e('Polylang Addon Logo', 'automatic-translations-for-polylang'); ?>">
 						</a>
 						<div class="atfp-dashboard-tab-title">
 							<span>↳</span> <?php echo esc_html($valid_tabs[$current_tab]); ?>
@@ -370,7 +386,7 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 					</div>
 				</div>
 				
-				<nav class="nav-tab-wrapper" aria-label="<?php esc_attr_e('Dashboard navigation', $text_domain); ?>">
+				<nav class="nav-tab-wrapper" aria-label="<?php esc_attr_e('Dashboard navigation', 'automatic-translations-for-polylang'); ?>">
 					<?php foreach ($valid_tabs as $tab_key => $tab_title): ?>
 						<a href="?page=polylang-atfp-dashboard&tab=<?php echo esc_attr($tab_key); ?>" 
 						class="nav-tab <?php echo esc_attr($tab === $tab_key ? 'nav-tab-active' : ''); ?>">
@@ -427,6 +443,8 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 			$pll_active_languages=pll_current_language();
 			
 			$post_type=isset($current_screen->post_type) ? $current_screen->post_type : '';
+			// nonce verification is not required here because we are not using the nonce here.
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$post_status=(isset($_GET['post_status']) && 'trash' === sanitize_text_field(wp_unslash($_GET['post_status']))) ? 'trash' : 'publish';
 			$all_translated_post_count=0;
 			$list_html='';
@@ -530,14 +548,6 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 		}
 
 		/**
-		 * Load plugin textdomain.
-		 */
-		public function load_plugin_textdomain() {
-			load_plugin_textdomain( 'autopoly-ai-translation-for-polylang', false, basename( dirname( __FILE__ ) ) . '/languages/' );
-		}
-
-
-		/**
 		 * Display admin notice for required plugin activation.
 		 *
 		 * @return void
@@ -552,7 +562,7 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 					// translators: 1: Plugin Name, 2: Plugin URL
 					esc_html__(
 						'In order to use %1$s plugin, please install and activate the latest version  of %2$s',
-						'autopoly-ai-translation-for-polylang'
+						'automatic-translations-for-polylang'
 					),
 					wp_kses( '<strong>' . esc_html( $plugin_info['Name'] ) . '</strong>', 'strong' ),
 					wp_kses( '<a href="' . esc_url( $url ) . '" class="thickbox" title="' . esc_attr( $title ) . '">' . esc_html( $title ) . '</a>', 'a' )
@@ -614,7 +624,7 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 						if ( ! function_exists( 'PLL' ) || ! PLL()->model->is_translated_post_type( $post->post_type ) ) {
 							return;
 						}
-						add_meta_box( 'atfp-meta-box', __( 'Automatic Translate', 'autopoly-ai-translation-for-polylang' ), array( $this, 'atfp_shortcode_text' ), null, 'side', 'high' );
+						add_meta_box( 'atfp-meta-box', __( 'Automatic Translate', 'automatic-translations-for-polylang' ), array( $this, 'atfp_shortcode_text' ), null, 'side', 'high' );
 					}
 				}
 			}
@@ -627,7 +637,7 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 			if ( isset( $_GET['_wpnonce'] ) &&
 				 wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'new-post-translation' ) ) {
 				$target_language = '';
-				$source_language = pll_get_post_language(absint( $_GET['from_post'] ), 'name');
+				$source_language = isset($_GET['from_post']) ? pll_get_post_language(absint( $_GET['from_post'] ), 'name') : '';
 				if ( function_exists( 'PLL' ) ) {
 					$target_code = isset( $_GET['new_lang'] ) ? sanitize_key( $_GET['new_lang'] ) : '';
 					$languages   = PLL()->model->get_languages_list();
@@ -638,16 +648,18 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 					}
 				}
 				?>
-				<input type="button" class="button button-primary" name="atfp_meta_box_translate" id="atfp-translate-button" value="<?php echo esc_attr__( 'Translate Page', 'autopoly-ai-translation-for-polylang' ); ?>" readonly/><br><br>
-				<p style="margin-bottom: .5rem;"><?php echo esc_html( sprintf( __( 'Translate or duplicate content from %s to %s', 'autopoly-ai-translation-for-polylang' ), $source_language, $target_language ) ); ?></p>
+				<input type="button" class="button button-primary" name="atfp_meta_box_translate" id="atfp-translate-button" value="<?php echo esc_attr__( 'Translate Page', 'automatic-translations-for-polylang' ); ?>" readonly/><br><br>
+				<p style="margin-bottom: .5rem;"><?php
+				// translators: 1: Source language, 2: Target language
+				echo esc_html( sprintf( __( 'Translate or duplicate content from %1$s to %2$s', 'automatic-translations-for-polylang' ), $source_language, $target_language ) ); ?></p>
 				<?php
 				if(class_exists('Atfp_Dashboard') && !Atfp_Dashboard::atfp_hide_review_notice_status('atfp')){
 					?>
 					<hr>
 					<div class="atfp-review-meta-box">
-					<p><?php echo esc_html__( 'We hope you find our plugin helpful for your translation needs. Your feedback is valuable to us!', 'autopoly-ai-translation-for-polylang' ); ?>
+					<p><?php echo esc_html__( 'We hope you find our plugin helpful for your translation needs. Your feedback is valuable to us!', 'automatic-translations-for-polylang' ); ?>
 					<br>
-					<a href="<?php echo esc_url( 'https://wordpress.org/support/plugin/automatic-translations-for-polylang/reviews/#new-post' ); ?>" class="components-button is-primary is-small" target="_blank"><?php echo esc_html__( 'Rate Us', 'autopoly-ai-translation-for-polylang' ); ?><span> ★★★★★</span></a>
+					<a href="<?php echo esc_url( 'https://wordpress.org/support/plugin/automatic-translations-for-polylang/reviews/#new-post' ); ?>" class="components-button is-primary is-small" target="_blank"><?php echo esc_html__( 'Rate Us', 'automatic-translations-for-polylang' ); ?><span> ★★★★★</span></a>
 					</p>
 					</div>
 					<?php
@@ -695,8 +707,12 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 
 }
 
+// AutoPoly is our plugin name and it is used to call the plugin instance
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 function AutoPoly() {
 	return AutoPoly::get_instance();
 }
 
-$AutoPoly = AutoPoly();
+// AutoPoly is our plugin name and it is used to call the plugin instance
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+$AutoPoly = AutoPoly(); 

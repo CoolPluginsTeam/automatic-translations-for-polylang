@@ -89,19 +89,19 @@ if ( ! class_exists( 'ATFP_Custom_Block_Post' ) ) {
 		 */
 		public function register_custom_post_type() {
 			$labels = array(
-				'name'               => _x( 'Automatic Translations', 'post type general name' ),
-				'singular_name'      => _x( 'Automatic Translation', 'post type singular name' ),
-				'menu_name'          => _x( 'Automatic Translations', 'admin menu' ),
-				'name_admin_bar'     => _x( 'Automatic Translation', 'add new on admin bar' ),
-				'add_new'            => _x( 'Add New', 'Automatic Translation' ),
-				'add_new_item'       => __( 'Add New Automatic Translation' ),
-				'new_item'           => __( 'New Automatic Translation' ),
-				'edit_item'          => __( 'Edit Automatic Translation' ),
-				'view_item'          => __( 'View Automatic Translation' ),
-				'all_items'          => __( 'Automatic Translations' ),
-				'search_items'       => __( 'Search Automatic Translations' ),
-				'not_found'          => __( 'No Automatic Translations found.' ),
-				'not_found_in_trash' => __( 'No Automatic Translations found in Trash.' ),
+				'name'               => _x( 'Automatic Translations', 'post type general name', 'automatic-translations-for-polylang' ),
+				'singular_name'      => _x( 'Automatic Translation', 'post type singular name', 'automatic-translations-for-polylang' ),
+				'menu_name'          => _x( 'Automatic Translations', 'admin menu', 'automatic-translations-for-polylang' ),
+				'name_admin_bar'     => _x( 'Automatic Translation', 'add new on admin bar', 'automatic-translations-for-polylang' ),
+				'add_new'            => _x( 'Add New', 'Automatic Translation', 'automatic-translations-for-polylang' ),
+				'add_new_item'       => __( 'Add New Automatic Translation', 'automatic-translations-for-polylang' ),
+				'new_item'           => __( 'New Automatic Translation', 'automatic-translations-for-polylang' ),
+				'edit_item'          => __( 'Edit Automatic Translation', 'automatic-translations-for-polylang' ),
+				'view_item'          => __( 'View Automatic Translation', 'automatic-translations-for-polylang' ),
+				'all_items'          => __( 'Automatic Translations', 'automatic-translations-for-polylang' ),
+				'search_items'       => __( 'Search Automatic Translations', 'automatic-translations-for-polylang' ),
+				'not_found'          => __( 'No Automatic Translations found.', 'automatic-translations-for-polylang' ),
+				'not_found_in_trash' => __( 'No Automatic Translations found in Trash.', 'automatic-translations-for-polylang' ),
 			);
 
 			$args = array(

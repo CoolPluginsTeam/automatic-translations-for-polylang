@@ -36,6 +36,8 @@ if(!class_exists('ATFP_Bulk_Translation')):
                 return;
             }
 
+            // nonce verification is not required here because we are not using the nonce here.
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended
             $post_status=isset($_GET['post_status']) ? sanitize_text_field(wp_unslash($_GET['post_status'])) : '';
 
             if('trash' === $post_status){

@@ -35,7 +35,7 @@ if (!class_exists('ATFP_cronjob')) {
 
                 $schedules['every_30_days'] = array(
                     'interval' => 30 * 24 * 60 * 60, // 2,592,000 seconds
-                    'display'  => __('Once every 30 days'),
+                    'display'  => __('Once every 30 days', 'automatic-translations-for-polylang'),
                 );
             }
 
@@ -105,6 +105,8 @@ if (!class_exists('ATFP_cronjob')) {
             ));
 
             if (is_wp_error($response)) {
+                // this message only show once in 30 days after reload the page log was removed.
+                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
                 defined('WP_DEBUG') && WP_DEBUG && error_log('ATFP Feedback Send Failed: ' . sanitize_text_field($response->get_error_message()));
                 return;
             }

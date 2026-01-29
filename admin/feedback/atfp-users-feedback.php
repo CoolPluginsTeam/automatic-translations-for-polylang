@@ -35,7 +35,7 @@ class AtfpUsersFeedback {
 	function enqueue_feedback_scripts() {
 		$screen = get_current_screen();
 		if ( isset( $screen ) && $screen->id == 'plugins' ) {
-			wp_enqueue_script( __NAMESPACE__ . 'feedback-script', $this->plugin_url . 'admin/feedback/js/admin-feedback.js', array( 'jquery' ), $this->plugin_version );
+			wp_enqueue_script( __NAMESPACE__ . 'feedback-script', $this->plugin_url . 'admin/feedback/js/admin-feedback.js', array( 'jquery' ), $this->plugin_version, false);
 			wp_enqueue_style( 'cool-plugins-feedback-style', $this->plugin_url . 'admin/feedback/css/admin-feedback.css', null, $this->plugin_version );
 		}
 	}
@@ -52,24 +52,24 @@ class AtfpUsersFeedback {
 		}
 		$deactivate_reasons = array(
 			'didnt_work_as_expected'         => array(
-				'title'             => esc_html( __( 'The plugin didn\'t work as expected', 'autopoly-ai-translation-for-polylang' ) ),
+				'title'             => esc_html( __( 'The plugin didn\'t work as expected', 'automatic-translations-for-polylang' ) ),
 				'input_placeholder' => 'What did you expect?',
 			),
 			'found_a_better_plugin'          => array(
-				'title'             => esc_html( __( 'I found a better plugin', 'autopoly-ai-translation-for-polylang' ) ),
-				'input_placeholder' => esc_html( __( 'Please share which plugin', 'autopoly-ai-translation-for-polylang' ) ),
+				'title'             => esc_html( __( 'I found a better plugin', 'automatic-translations-for-polylang' ) ),
+				'input_placeholder' => esc_html( __( 'Please share which plugin', 'automatic-translations-for-polylang' ) ),
 			),
 			'couldnt_get_the_plugin_to_work' => array(
-				'title'             => esc_html( __( 'The plugin is not working', 'autopoly-ai-translation-for-polylang' ) ),
+				'title'             => esc_html( __( 'The plugin is not working', 'automatic-translations-for-polylang' ) ),
 				'input_placeholder' => 'Please share your issue. So we can fix that for other users.',
 			),
 			'temporary_deactivation'         => array(
-				'title'             => esc_html( __( 'It\'s a temporary deactivation', 'autopoly-ai-translation-for-polylang' ) ),
+				'title'             => esc_html( __( 'It\'s a temporary deactivation', 'automatic-translations-for-polylang' ) ),
 				'input_placeholder' => '',
 			),
 			'other'                          => array(
-				'title'             => esc_html( __( 'Other', 'autopoly-ai-translation-for-polylang' ) ),
-				'input_placeholder' => esc_html( __( 'Please share the reason', 'autopoly-ai-translation-for-polylang' ) ),
+				'title'             => esc_html( __( 'Other', 'automatic-translations-for-polylang' ) ),
+				'input_placeholder' => esc_html( __( 'Please share the reason', 'automatic-translations-for-polylang' ) ),
 			),
 		);
 
@@ -78,7 +78,7 @@ class AtfpUsersFeedback {
 						
 			<div class="cool-plugins-deactivation-response">
 			<div id="cool-plugins-deactivate-feedback-dialog-header">
-				<span id="cool-plugins-feedback-form-title"><?php echo esc_html( __( 'Quick Feedback', 'autopoly-ai-translation-for-polylang' ) ); ?></span>
+				<span id="cool-plugins-feedback-form-title"><?php echo esc_html( __( 'Quick Feedback', 'automatic-translations-for-polylang' ) ); ?></span>
 			</div>
 			<div id="cool-plugins-loader-wrapper">
 				<div class="cool-plugins-loader-container">
@@ -91,7 +91,7 @@ class AtfpUsersFeedback {
 				wp_nonce_field( '_cool-plugins_deactivate_feedback_nonce', "$this->plugin_slug-wpnonce" );
 				?>
 				<input type="hidden" name="action" value="cool-plugins_deactivate_feedback" />
-				<div id="cool-plugins-deactivate-feedback-dialog-form-caption"><?php echo esc_html( __( 'If you have a moment, please share why you are deactivating this plugin.', 'autopoly-ai-translation-for-polylang' ) ); ?></div>
+				<div id="cool-plugins-deactivate-feedback-dialog-form-caption"><?php echo esc_html( __( 'If you have a moment, please share why you are deactivating this plugin.', 'automatic-translations-for-polylang' ) ); ?></div>
 				<div id="cool-plugins-deactivate-feedback-dialog-form-body">
 					<?php
 					foreach ( $deactivate_reasons as $reason_key => $reason ) :
@@ -109,7 +109,7 @@ class AtfpUsersFeedback {
 							<?php endif; ?>
 						</div>
 					<?php endforeach; ?>
-					<input class="cool-plugins-GDPR-data-notice" id="cool-plugins-GDPR-data-notice-<?php echo esc_attr( $this->plugin_domain ); ?>" type="checkbox"><label for="cool-plugins-GDPR-data-notice"><?php echo esc_html( __( 'I agree to share anonymous usage data and basic site details (such as server, PHP, and WordPress versions) to support AutoPoly - AI Translation For Polylang improvement efforts. Additionally, I allow Cool Plugins to store all information provided through this form and to respond to my inquiry.', 'autopoly-ai-translation-for-polylang' ) ); ?></label>
+					<input class="cool-plugins-GDPR-data-notice" id="cool-plugins-GDPR-data-notice-<?php echo esc_attr( $this->plugin_domain ); ?>" type="checkbox"><label for="cool-plugins-GDPR-data-notice"><?php echo esc_html( __( 'I agree to share anonymous usage data and basic site details (such as server, PHP, and WordPress versions) to support AutoPoly - AI Translation For Polylang improvement efforts. Additionally, I allow Cool Plugins to store all information provided through this form and to respond to my inquiry.', 'automatic-translations-for-polylang' ) ); ?></label>
 				</div>
 				<div class="cool-plugin-popup-button-wrapper">
 					<a class="cool-plugins-button button-deactivate" id="cool-plugin-submitNdeactivate">Submit and Deactivate</a>
@@ -126,40 +126,41 @@ class AtfpUsersFeedback {
 	function submit_deactivation_response() {
 
 		if(!current_user_can('manage_options')){
-			wp_send_json_error( __( 'Unauthorized', 'autopoly-ai-translation-for-polylang' ), 403 );
+			wp_send_json_error( __( 'Unauthorized', 'automatic-translations-for-polylang' ), 403 );
 			wp_die( '0', 403 );
 		}
 
 		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ), '_cool-plugins_deactivate_feedback_nonce' ) ) {
 			wp_send_json_error();
 		} else {
-			$reason             = sanitize_text_field( wp_unslash( $_POST['reason'] ) );
+			$reason             = isset($_POST['reason']) ? sanitize_text_field( wp_unslash( $_POST['reason'] ) ) : '';
 			$deactivate_reasons = array(
 				'didnt_work_as_expected'         => array(
-					'title'             => esc_html( __( 'The plugin didn\'t work as expected', 'autopoly-ai-translation-for-polylang' ) ),
+					'title'             => esc_html( __( 'The plugin didn\'t work as expected', 'automatic-translations-for-polylang' ) ),
 					'input_placeholder' => 'What did you expect?',
 				),
 				'found_a_better_plugin'          => array(
-					'title'             => esc_html( __( 'I found a better plugin', 'autopoly-ai-translation-for-polylang' ) ),
-					'input_placeholder' => esc_html( __( 'Please share which plugin', 'autopoly-ai-translation-for-polylang' ) ),
+					'title'             => esc_html( __( 'I found a better plugin', 'automatic-translations-for-polylang' ) ),
+					'input_placeholder' => esc_html( __( 'Please share which plugin', 'automatic-translations-for-polylang' ) ),
 				),
 				'couldnt_get_the_plugin_to_work' => array(
-					'title'             => esc_html( __( 'The plugin is not working', 'autopoly-ai-translation-for-polylang' ) ),
+					'title'             => esc_html( __( 'The plugin is not working', 'automatic-translations-for-polylang' ) ),
 					'input_placeholder' => 'Please share your issue. So we can fix that for other users.',
 				),
 				'temporary_deactivation'         => array(
-					'title'             => esc_html( __( 'It\'s a temporary deactivation', 'autopoly-ai-translation-for-polylang' ) ),
+					'title'             => esc_html( __( 'It\'s a temporary deactivation', 'automatic-translations-for-polylang' ) ),
 					'input_placeholder' => '',
 				),
 				'other'                          => array(
-					'title'             => esc_html( __( 'Other', 'autopoly-ai-translation-for-polylang' ) ),
-					'input_placeholder' => esc_html( __( 'Please share the reason', 'autopoly-ai-translation-for-polylang' ) ),
+					'title'             => esc_html( __( 'Other', 'automatic-translations-for-polylang' ) ),
+					'input_placeholder' => esc_html( __( 'Please share the reason', 'automatic-translations-for-polylang' ) ),
 				),
 			);
 
 			$deativation_reason = array_key_exists( $reason, $deactivate_reasons ) ? $reason : 'other';
 
-			$sanitized_message = !empty($_POST['message']) ? sanitize_text_field($_POST['message']) : 'N/A';			$admin_email       = sanitize_email( get_option( 'admin_email' ) );
+			$sanitized_message = !empty($_POST['message']) ? sanitize_text_field(wp_unslash($_POST['message'])) : 'N/A';
+			$admin_email       = sanitize_email( get_option( 'admin_email' ) );
 			$site_url          = esc_url( site_url() );
 			$install_date      = get_option('atfp-install-date');
 			$plugin_initial =  get_option( 'atfp_initial_save_version' );
@@ -187,7 +188,7 @@ class AtfpUsersFeedback {
 				)
 			);
 
-			die( wp_send_json_success( array( 'response' => $response ) ) );
+			die( wp_send_json_success( array( 'response' => $response) ) );
 		}
 
 	}

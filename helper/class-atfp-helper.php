@@ -66,7 +66,7 @@ if (! class_exists('ATFP_Helper')) {
 			$existing_post = $query->posts ? $query->posts[0] : null;
 
 			if (! $existing_post) {
-				$post_title    = esc_html__('Add More Gutenberg Blocks', 'automatic-translation-for-polylang');
+				$post_title    = esc_html__('Add More Gutenberg Blocks', 'automatic-translations-for-polylang');
 				$first_post_id = wp_insert_post(
 					array(
 						'post_title'   => $post_title,
