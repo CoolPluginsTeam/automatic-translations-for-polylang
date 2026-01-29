@@ -188,7 +188,9 @@ class AtfpUsersFeedback {
 				)
 			);
 
-			die( wp_send_json_success( array( 'response' => $response) ) );
+			// no need to escape output we are sending true boolean value.
+			wp_send_json_success( array( 'response' => true ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			exit;
 		}
 
 	}

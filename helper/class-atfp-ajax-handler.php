@@ -165,6 +165,8 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				wp_die( '0', 403 );
 			}
 
+			// no need to sanitize here because we are using sanitize according to data type where have using this data.
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			$json = isset($_POST['save_block_data']) ? wp_unslash($_POST['save_block_data']) : false;
 			$updated_blocks_data = json_decode($json, true);
 			if(json_last_error() !== JSON_ERROR_NONE){ 
@@ -225,14 +227,55 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 			$current_array = &$this->custom_block_data_array;
 
 			foreach ( $id_keys as $index => $id ) {
-				if ( ! isset( $current_array[ $id ] ) ) {
-					$current_array[ $id ] = array();
-				}
 				$index_id=gettype($id) === 'integer' ? intval($id) : sanitize_text_field($id);
-				$current_array = &$current_array[ sanitize_text_field($index_id) ];
+
+				if ( ! isset( $current_array[ $id ] ) ) {
+					$current_array[ $index_id ] = array();
+				}
+
+				$current_array = &$current_array[ $index_id ];
 			}
 
-			$current_array = $value;
+			$current_array = $this->sanitize_block_data($value);
+		}
+
+		private function sanitize_block_data($data){
+			 // Handle arrays.
+			 if ( is_array( $data ) ) {
+				foreach ( $data as $key => $value ) {
+					$data[ sanitize_text_field($key) ] = $this->sanitize_block_data( $value );
+				}
+				return $data;
+			}
+		
+			// Handle objects.
+			if ( is_object( $data ) ) {
+				foreach ( $data as $key => $value ) {
+					$key = sanitize_text_field($key);
+					$data->$key = $this->sanitize_block_data( $value );
+				}
+				return $data;
+			}
+		
+			// Handle scalar values.
+			if ( is_string( $data ) ) {
+				return sanitize_text_field( wp_unslash( $data ) );
+			}
+		
+			if ( is_int( $data ) ) {
+				return absint( $data );
+			}
+		
+			if ( is_float( $data ) ) {
+				return floatval( $data );
+			}
+		
+			if ( is_bool( $data ) ) {
+				return (bool) $data;
+			}
+		
+			// Null or unknown type.
+			return $data;
 		}
 
 		public function atfp_update_translate_data() {

@@ -708,11 +708,11 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 }
 
 // AutoPoly is our plugin name and it is used to call the plugin instance
-// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
-function AutoPoly() {
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
+function ATFP_AutoPoly() {
 	return AutoPoly::get_instance();
 }
 
 // AutoPoly is our plugin name and it is used to call the plugin instance
 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
-$AutoPoly = AutoPoly(); 
+$ATFP_AutoPoly = ATFP_AutoPoly(); 
