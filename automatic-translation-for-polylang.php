@@ -33,6 +33,7 @@ if ( ! defined( 'ATFP_FEEDBACK_API' ) ) {
 }
 
 if ( ! class_exists( 'AutoPoly' ) ) {
+	// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound -- AutoPoly is our plugin name.
 	final class AutoPoly {
 
 		/**
