@@ -82,7 +82,7 @@ class CPFM_Feedback_Notice {
         if (!in_array($current_page, array_unique($allowed_pages))) {
             return;
         }
-        wp_enqueue_style('cpfm-common-review-style', ATFP_URL . 'admin/cpfm-feedback/css/cpfm-admin-feedback.css', null, ATFP_V, 'all');
+        wp_enqueue_style('cpfm-common-review-style', ATFP_URL . 'admin/cpfm-feedback/css/cpfm-admin-feedback.css', [], ATFP_V, 'all');
         wp_enqueue_script(
             'cpfm-common-review-script', 
             ATFP_URL . 'admin/cpfm-feedback/js/cpfm-admin-feedback.js', 
