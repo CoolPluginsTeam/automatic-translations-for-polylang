@@ -2,6 +2,7 @@
 if(!defined('ABSPATH')){
     exit;
 }
+
 ?>
 <div class="atfp-dashboard-ai-translations">
     <div class="atfp-dashboard-ai-translations-container">
@@ -9,7 +10,7 @@ if(!defined('ABSPATH')){
         <h1><?php esc_html_e('AI Translations', 'automatic-translations-for-polylang'); ?></h1>
         <div class="atfp-dashboard-status">
             <span><?php esc_html_e('Inactive', 'automatic-translations-for-polylang'); ?></span>
-            <a href="<?php echo esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=ai_translations'); ?>" class='atfp-dashboard-btn' target="_blank">
+            <a href="<?php echo esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?ref='.sanitize_text_field($atfp_refrence_text).'&utm_source=atfp_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=ai_translations'); ?>" class='atfp-dashboard-btn' target="_blank">
                 <img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/upgrade-now.svg'); ?>" alt="<?php esc_html_e('Upgrade Now', 'automatic-translations-for-polylang'); ?>">
                 <?php esc_html_e('Upgrade Now', 'automatic-translations-for-polylang'); ?>
             </a>
@@ -27,7 +28,7 @@ if(!defined('ABSPATH')){
                 'title' => esc_html__('AI Translations', 'automatic-translations-for-polylang'),
                 'description' => esc_html__('Leverage GeminiAI for seamless and context-aware translations.', 'automatic-translations-for-polylang'),
                 'icon' => 'gemini-translate.png',
-                'url' => 'https://docs.coolplugins.net/doc/translate-via-gemini-ai-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=ai_translations_gemini'
+                'url' => 'https://docs.coolplugins.net/doc/translate-via-gemini-ai-polylang/?ref='.sanitize_text_field($atfp_refrence_text).'&utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=ai_translations_gemini'
             ],
             [
                 'logo' => 'openai-translate-logo.png',
@@ -35,7 +36,7 @@ if(!defined('ABSPATH')){
                 'title' => esc_html__('AI Translations', 'automatic-translations-for-polylang'),
                 'description' => esc_html__('Leverage OpenAI for seamless and context-aware translations.', 'automatic-translations-for-polylang'),
                 'icon' => 'open-ai-translate.png',
-                'url' => 'https://docs.coolplugins.net/doc/translate-via-open-ai-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=ai_translations_openai'
+                'url' => 'https://docs.coolplugins.net/doc/translate-via-open-ai-polylang/?ref='.sanitize_text_field($atfp_refrence_text).'&utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=ai_translations_openai'
             ],
             [
                 'logo' => 'chrome-built-in-ai-logo.png',
@@ -43,7 +44,7 @@ if(!defined('ABSPATH')){
                 'title' => esc_html__('Chrome Built-in AI', 'automatic-translations-for-polylang'),
                 'description' => esc_html__('Utilize Chrome\'s built-in AI for seamless translation experience.', 'automatic-translations-for-polylang'),
                 'icon' => 'chrome-ai-translate.png',
-                'url' => 'https://docs.coolplugins.net/doc/chrome-ai-translation-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=ai_translations_chrome'
+                'url' => 'https://docs.coolplugins.net/doc/chrome-ai-translation-polylang/?ref='.sanitize_text_field($atfp_refrence_text).'&utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=ai_translations_chrome'
             ],
             [
                 'logo' => 'deepl-logo.png',
@@ -51,7 +52,7 @@ if(!defined('ABSPATH')){
                 'title' => esc_html__('DeepL', 'automatic-translations-for-polylang'),
                 'description' => esc_html__('Harness DeepL\'s advanced AI for high-quality translations.', 'automatic-translations-for-polylang'),
                 'icon' => 'deepl.png',
-                'url' => 'https://docs.coolplugins.net/doc/translate-via-deepl-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=ai_translations_deepl'
+                'url' => 'https://docs.coolplugins.net/doc/translate-via-deepl-polylang/?ref='.sanitize_text_field($atfp_refrence_text).'&utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=ai_translations_deepl'
             ]
         ];
 

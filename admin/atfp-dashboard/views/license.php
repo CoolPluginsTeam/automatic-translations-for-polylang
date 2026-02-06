@@ -9,7 +9,7 @@ if(!defined('ABSPATH')){
         <h1><?php esc_html_e('License Key', 'automatic-translations-for-polylang'); ?></h1>
         <div class="atfp-dashboard-status">
             <span><?php esc_html_e('Free', 'automatic-translations-for-polylang'); ?></span>
-            <a href="https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=license" class='atfp-dashboard-btn' target="_blank">
+            <a href="<?php echo esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?ref='.sanitize_text_field($atfp_refrence_text).'&utm_source=atfp_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=license'); ?>" class='atfp-dashboard-btn' target="_blank">
               <img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/upgrade-now.svg'); ?>" alt="<?php esc_html_e('Upgrade Now', 'automatic-translations-for-polylang'); ?>">
                 <?php esc_html_e('Upgrade Now', 'automatic-translations-for-polylang'); ?>
             </a>
@@ -26,7 +26,7 @@ if(!defined('ABSPATH')){
     <div class="atfp-dashboard-upgrade-box">
         <p>
             <?php esc_html_e('To unlock more features, consider', 'automatic-translations-for-polylang'); ?>
-            <a href="https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=license" target="_blank"><?php esc_html_e('upgrading to Pro', 'automatic-translations-for-polylang'); ?></a>.
+            <a href="<?php echo esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?ref='.sanitize_text_field($atfp_refrence_text).'&utm_source=atfp_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=license'); ?>" target="_blank"><?php esc_html_e('upgrading to Pro', 'automatic-translations-for-polylang'); ?></a>.
         </p>
         <em><?php esc_html_e('As a valued user, you automatically receive an exclusive discount on the Annual License and an even greater discount on the POPULAR Lifetime License at checkout!', 'automatic-translations-for-polylang'); ?></em>
     </div>

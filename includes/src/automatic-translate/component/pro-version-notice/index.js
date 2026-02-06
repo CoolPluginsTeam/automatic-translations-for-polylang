@@ -4,9 +4,10 @@ import FormatNumberCount from '../format-number-count';
 const ProVersionNotice = ({ characterCount = 0, url = '' }) => {
     const [showNotice, setShowNotice] = useState(false);
     const [activeClass, setActiveClass] = useState(false);
+    const refrenceText = window.atfp_global_object.refrence_text;
 
     if(url !== ''){
-        url = url+'?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=popup';
+        url = url+'?ref='+refrenceText+'&utm_source=atfp_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=popup';
     }
 
     useEffect(() => {

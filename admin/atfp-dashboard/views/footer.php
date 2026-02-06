@@ -8,13 +8,13 @@ if(!defined('ABSPATH')){
         <p>
             <?php esc_html_e('Made with ❤️ by', 'automatic-translations-for-polylang'); ?>
             <span class="logo">
-                <a href="https://coolplugins.net/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=author_page&utm_content=dashboard_footer" target="_blank">
+                <a href="<?php echo esc_url('https://coolplugins.net/?ref='.sanitize_text_field($atfp_refrence_text).'&utm_source=atfp_plugin&utm_medium=inside&utm_campaign=author_page&utm_content=dashboard_footer'); ?>" target="_blank">
                     <img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/cool-plugins-logo-black.svg'); ?>" alt="<?php esc_attr_e('Cool Plugins Logo', 'automatic-translations-for-polylang'); ?>">
                 </a>
             </span>
         </p>
-        <a href="https://coolplugins.net/support/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=support&utm_content=dashboard_footer" target="_blank"><?php esc_html_e('Support', 'automatic-translations-for-polylang'); ?></a> |
-        <a href="https://docs.coolplugins.net/docs/ai-translation-for-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_footer" target="_blank"><?php esc_html_e('Docs', 'automatic-translations-for-polylang'); ?></a>
+        <a href="<?php echo esc_url('https://coolplugins.net/support/?ref='.sanitize_text_field($atfp_refrence_text).'&utm_source=atfp_plugin&utm_medium=inside&utm_campaign=support&utm_content=dashboard_footer'); ?>" target="_blank"><?php esc_html_e('Support', 'automatic-translations-for-polylang'); ?></a> |
+        <a href="<?php echo esc_url('https://docs.coolplugins.net/docs/ai-translation-for-polylang/?ref='.sanitize_text_field($atfp_refrence_text).'&utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_footer'); ?>" target="_blank"><?php esc_html_e('Docs', 'automatic-translations-for-polylang'); ?></a>
         <div class="atfp-dashboard-social-icons">
             <?php
             $atfp_social_links = [

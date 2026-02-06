@@ -343,5 +343,28 @@ if (! class_exists('ATFP_Helper')) {
 
 			return true;
 		}
+
+		public static function utl_refrence_text(){
+			
+			if(defined('ATFP_REDIRECT_REFRENCE_TEXT')){
+				return ATFP_REDIRECT_REFRENCE_TEXT;
+			}
+			
+			if(function_exists('get_option') ){
+				$refrence_text=get_option('cpel_autopoly_installed', 'atfp');
+
+				if($refrence_text === 'installed_by_cpel'){
+					$refrence_text='creame';
+				}
+				
+				if(!defined('ATFP_REDIRECT_REFRENCE_TEXT')){
+					define('ATFP_REDIRECT_REFRENCE_TEXT', sanitize_text_field($refrence_text));
+				}
+
+				return sanitize_text_field($refrence_text);
+			}
+
+			return 'atfp';
+		}
 	}
 }

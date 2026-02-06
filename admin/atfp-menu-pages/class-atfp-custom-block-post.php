@@ -42,8 +42,14 @@ if ( ! class_exists( 'ATFP_Custom_Block_Post' ) ) {
 				wp_enqueue_script( 'atfp-add-new-block', ATFP_URL . 'assets/js/atfp-add-new-block.min.js', array( 'jquery','wp-data', 'wp-element' ), ATFP_V, true );
 				wp_enqueue_style( 'atfp-supported-blocks', ATFP_URL . 'assets/css/atfp-supported-blocks.min.css', array(), ATFP_V, 'all' );
 
+				$atfp_refrence_text='atfp';
+
+				if(class_exists('ATFP_Helper')){
+					$atfp_refrence_text=ATFP_Helper::utl_refrence_text();
+				}
+
 				wp_localize_script( 'atfp-add-new-block', 'atfpAddBlockVars', array(
-					'atfp_demo_page_url' => esc_url('https://coolplugins.net/product/automatic-translations-for-polylang/?utm_source=atfp_plugin&utm_medium=page&utm_campaign=get_pro&utm_content=buy_pro'),
+					'atfp_demo_page_url' => esc_url('https://coolplugins.net/product/automatic-translations-for-polylang/?ref='.sanitize_text_field($atfp_refrence_text).'&utm_source=atfp_plugin&utm_medium=page&utm_campaign=get_pro&utm_content=buy_pro'),
 				) );
 			}
 		}
