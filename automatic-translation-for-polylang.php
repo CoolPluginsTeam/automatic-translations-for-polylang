@@ -67,6 +67,7 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 			register_deactivation_hook( ATFP_FILE, array( $this, 'atfp_deactivate' ) );
 			add_action( 'admin_menu', array( $this, 'atfp_add_submenu_page' ), 11 );
 			add_action( 'admin_enqueue_scripts', array( $this, 'atfp_set_dashboard_style' ) );
+			add_action('admin_init', array($this, 'atfp_admin_notice'));
 			add_action('init', array($this, 'atfp_translation_string_migration'));
 			add_action( 'activated_plugin', array( $this, 'atfp_plugin_redirection' ) );
 			
@@ -522,6 +523,12 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 		 * @return void
 		 */
 		function atfp_init() {
+			if ( is_admin() ) {
+				require_once ATFP_DIR_PATH . 'admin/feedback/atfp-users-feedback.php';
+			}
+		}
+
+		public function atfp_admin_notice(){
 			// Check Polylang plugin is installed and active
 			global $polylang;
 			$atfp_polylang = $polylang;
@@ -550,13 +557,8 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 						'https://wordpress.org/support/plugin/automatic-translations-for-polylang/reviews/#new-post', // Required
 					);
 				}
-
 			} else {
 				add_action( 'admin_notices', array( self::$instance, 'atfp_plugin_required_admin_notice' ) );
-			}
-
-			if ( is_admin() ) {
-				require_once ATFP_DIR_PATH . 'admin/feedback/atfp-users-feedback.php';
 			}
 		}
 
