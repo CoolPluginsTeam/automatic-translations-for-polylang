@@ -151,7 +151,6 @@ class CPFM_Feedback_Notice {
     }
 
     public function cpfm_render_notice_panel() {
-        
         if (!current_user_can('manage_options') || !function_exists('get_current_screen')) { 
             return;
         }
@@ -208,7 +207,9 @@ class CPFM_Feedback_Notice {
             $output .= '<p>' . esc_html__('Opt in to receive email updates about security improvements, new features, helpful tutorials, and occasional special offers. We\'ll collect:', 'automatic-translations-for-polylang') . '</p>';
             $output .= '<ul>';
             $output .= '<li>' . esc_html__('Your website home URL and WordPress admin email.', 'automatic-translations-for-polylang') . '</li>';
-            $output .= '<li>' . esc_html__('To check plugin compatibility, we will collect the following: list of active plugins and themes, server type, MySQL version, WordPress version, memory limit, site language and database prefix.', 'automatic-translations-for-polylang') . '</li>';
+            $output .= '<li>' . esc_html__('To check plugin compatibility, we will collect the following: list of active plugins and themes, server type, MySQL version, WordPress version, memory limit, site language and database prefix', 'automatic-translations-for-polylang');
+            $output .= '<a href="' . esc_url('https://my.coolplugins.net/terms/usage-tracking/') . '" target="_blank">' . esc_html__('Click Here', 'automatic-translations-for-polylang') . '.</a> ';
+            $output .= '</li>';
             $output .= '</ul>';
             
             $output .= '</div>';
@@ -225,7 +226,17 @@ class CPFM_Feedback_Notice {
         $output .= '</div>'; 
      
         if ($unread_count > 0) {
-            echo wp_kses_post($output);
+            $allowed = array(
+                'div' => array('id' => array(), 'class' => array(), 'data-auto-show' => array(), 'data-notice-id' => array()),
+                'span' => array('id' => array()),
+                'strong' => array(),
+                'p' => array(),
+                'a' => array('href' => array(), 'class' => array(), 'target' => array()),
+                'button' => array('class' => array(), 'data-category' => array(), 'id' => array(), 'value' => array()),
+                'ul' => array(),
+                'li' => array(), 'br' => array()
+            );
+            echo wp_kses($output, $allowed);
         }
     }
 }
