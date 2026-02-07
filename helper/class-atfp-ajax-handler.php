@@ -368,7 +368,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 			if ( isset($_POST['elementor_data']) && is_string($_POST['elementor_data']) ) {
 				// no need to sanitize we are not using this data this is only for json_decode content type checking.
 				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-				$decoded = json_decode( stripslashes( $_POST['elementor_data'] ), true );
+				$decoded = json_decode( wp_unslash($_POST['elementor_data'] ), true );
 				if ( json_last_error() !== JSON_ERROR_NONE ) {
 					wp_send_json_error( __( 'Invalid data.', 'automatic-translations-for-polylang' ), 400 );
 					wp_die( '0', 400 );
