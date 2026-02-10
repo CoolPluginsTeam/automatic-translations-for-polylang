@@ -53,13 +53,13 @@ if(!class_exists('ATFP_Bulk_Translation')):
 
         public function atfp_bulk_translate_button($views)
         {
-            $atfp_refrence_text='atfp';
+            $atfp_utm_parameters='utm_source=atfp_plugin';
 
 			if(class_exists('ATFP_Helper')){
-				$atfp_refrence_text=ATFP_Helper::utl_refrence_text();
+				$atfp_utm_parameters=ATFP_Helper::utm_source_text();
 			}
 
-            echo wp_kses("<a class='button atfp-bulk-translate-btn' style='display:none;' title='Bulk Translate option is avialable in pro version only' href='https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?ref=".sanitize_text_field($atfp_refrence_text)."&utm_source=atfp_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=bulk_translate' target='_blank'>Bulk Translate (Pro)</a>",
+            echo wp_kses("<a class='button atfp-bulk-translate-btn' style='display:none;' title='Bulk Translate option is avialable in pro version only' href='https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?".sanitize_text_field($atfp_utm_parameters)."&utm_medium=inside&utm_campaign=get_pro&utm_content=bulk_translate' target='_blank'>Bulk Translate (Pro)</a>",
                 array('a' => array('class' => array(), 'style' => array(), 'title' => array(), 'href' => array(), 'target' => array(), 'rel' => array()))
             );
 

@@ -7,7 +7,7 @@ const ProVersionNotice = ({ characterCount = 0, url = '' }) => {
     const refrenceText = window.atfp_global_object.refrence_text;
 
     if(url !== ''){
-        url = url+'?ref='+refrenceText+'&utm_source=atfp_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=popup';
+        url = url+'?'+refrenceText+'&utm_medium=inside&utm_campaign=get_pro&utm_content=popup';
     }
 
     useEffect(() => {

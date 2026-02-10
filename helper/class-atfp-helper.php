@@ -344,27 +344,31 @@ if (! class_exists('ATFP_Helper')) {
 			return true;
 		}
 
-		public static function utl_refrence_text(){
+		public static function utm_source_text(){
 			
 			if(defined('ATFP_REDIRECT_REFRENCE_TEXT')){
-				return ATFP_REDIRECT_REFRENCE_TEXT;
+				return self::get_utm_parameter(sanitize_text_field(ATFP_REDIRECT_REFRENCE_TEXT));
 			}
 			
 			if(function_exists('get_option') ){
 				$refrence_text=get_option('cpel_autopoly_installed', 'atfp');
-
-				if($refrence_text === 'installed_by_cpel'){
-					$refrence_text='creame';
-				}
 				
 				if(!defined('ATFP_REDIRECT_REFRENCE_TEXT')){
 					define('ATFP_REDIRECT_REFRENCE_TEXT', sanitize_text_field($refrence_text));
 				}
 
-				return sanitize_text_field($refrence_text);
+				return self::get_utm_parameter(sanitize_text_field($refrence_text));
 			}
 
-			return 'atfp';
+			return self::get_utm_parameter('atfp');
+		}
+
+		private static function get_utm_parameter($prefix){
+			if($prefix === 'cpel'){
+				return 'ref=creame&utm_source='.$prefix.'_plugin';
+			}else{
+				return 'utm_source='.$prefix.'_plugin';
+			}
 		}
 	}
 }

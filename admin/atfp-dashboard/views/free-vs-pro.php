@@ -9,7 +9,7 @@ if(!defined('ABSPATH')){
         <h1><?php esc_html_e('Free VS Pro', 'automatic-translations-for-polylang'); ?></h1>
         <div class="atfp-dashboard-status">
             <span class="status"><?php esc_html_e('Inactive', 'automatic-translations-for-polylang'); ?></span>
-            <a href="<?php echo esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?ref='.sanitize_text_field($atfp_refrence_text).'&utm_source=atfp_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=freevspro'); ?>" class='atfp-dashboard-btn' target="_blank">
+            <a href="<?php echo esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?'.sanitize_text_field($atfp_utm_parameters).'&utm_medium=inside&utm_campaign=get_pro&utm_content=freevspro'); ?>" class='atfp-dashboard-btn' target="_blank">
               <img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/upgrade-now.svg'); ?>" alt="<?php echo esc_attr_e('Upgrade Now', 'automatic-translations-for-polylang'); ?>">
                 <?php echo esc_html_e('Upgrade Now', 'automatic-translations-for-polylang'); ?>
             </a>

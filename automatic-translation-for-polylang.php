@@ -91,13 +91,13 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 		}
 
 		public function atfp_plugin_action_links($links) {
-			$atfp_refrence_text='atfp';
+			$atfp_utm_parameters='utm_source=atfp_plugin';
 
 			if(class_exists('ATFP_Helper')){
-				$atfp_refrence_text=ATFP_Helper::utl_refrence_text();
+				$atfp_utm_parameters=ATFP_Helper::utm_source_text();
 			}
 
-			$links[] = '<a href="https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?ref='.sanitize_text_field($atfp_refrence_text).'&utm_source=atfp_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=plugin_list" target="_blank">' . __( 'Buy Pro', 'automatic-translations-for-polylang' ) . '</a>';
+			$links[] = '<a href="https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?'.sanitize_text_field($atfp_utm_parameters).'&utm_medium=inside&utm_campaign=get_pro&utm_content=plugin_list" target="_blank">' . __( 'Buy Pro', 'automatic-translations-for-polylang' ) . '</a>';
 			return $links;
 		}
 
@@ -356,16 +356,16 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 			$tab 			= isset($_GET['tab']) ? sanitize_key(wp_unslash($_GET['tab'])) : 'dashboard';
 			$current_tab 	= array_key_exists($tab, $valid_tabs) ? $tab : 'dashboard';
 			
-			$atfp_refrence_text='atfp';
+			$atfp_utm_parameters='utm_source=atfp_plugin';
 
 			if(class_exists('ATFP_Helper')){
-				$atfp_refrence_text=ATFP_Helper::utl_refrence_text();
+				$atfp_utm_parameters=ATFP_Helper::utm_source_text();
 			}
 
 			// Action buttons configuration
 			$buttons = [
 				[
-					'url' => 'https://coolplugins.net/support/?ref='.sanitize_text_field($atfp_refrence_text).'&utm_source=atfp_plugin&utm_medium=inside&utm_campaign=support&utm_content=dashboard_header',
+					'url' => 'https://coolplugins.net/support/?'.sanitize_text_field($atfp_utm_parameters).'&utm_medium=inside&utm_campaign=support&utm_content=dashboard_header',
 					'img' => 'contact.svg',
 					'alt' => __('contact', 'automatic-translations-for-polylang')
 				]

@@ -44,7 +44,7 @@ if(!current_user_can('manage_options')){
         <h1><?php echo esc_html__('Polylang Addon Settings', 'automatic-translations-for-polylang'); ?></h1>
         <div class="atfp-dashboard-status">
             <span><?php echo esc_html__('Inactive', 'automatic-translations-for-polylang'); ?></span>
-            <a href="<?php echo esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?ref='.sanitize_text_field($atfp_refrence_text).'&utm_source=atfp_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=settings'); ?>" class='atfp-dashboard-btn' target="_blank">
+            <a href="<?php echo esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?'.sanitize_text_field($atfp_utm_parameters).'&utm_medium=inside&utm_campaign=get_pro&utm_content=settings'); ?>" class='atfp-dashboard-btn' target="_blank">
                 <img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/upgrade-now.svg'); ?>" alt="<?php esc_attr_e('Upgrade Now', 'automatic-translations-for-polylang'); ?>">
                 <?php echo esc_html__('Upgrade Now', 'automatic-translations-for-polylang'); ?>
             </a>
@@ -66,17 +66,17 @@ if(!current_user_can('manage_options')){
             $atfp_api_settings = [
                 'gemini' => [
                     'name' => 'Gemini',
-                    'doc_url' => 'https://docs.coolplugins.net/doc/generate-gemini-api-key/?ref='.sanitize_text_field($atfp_refrence_text).'&utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=settings_gemini',
+                    'doc_url' => 'https://docs.coolplugins.net/doc/generate-gemini-api-key/?'.sanitize_text_field($atfp_utm_parameters).'&utm_medium=inside&utm_campaign=docs&utm_content=settings_gemini',
                     'placeholder' => 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
                 ],
                 'openai' => [
                     'name' => 'OpenAI',
-                    'doc_url' => 'https://docs.coolplugins.net/doc/generate-open-ai-api-key/?ref='.sanitize_text_field($atfp_refrence_text).'&utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=settings_openai',
+                    'doc_url' => 'https://docs.coolplugins.net/doc/generate-open-ai-api-key/?'.sanitize_text_field($atfp_utm_parameters).'&utm_medium=inside&utm_campaign=docs&utm_content=settings_openai',
                     'placeholder' => 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
                 ],
                 'deepl' => [
                     'name' => 'DeepL',
-                    'doc_url' => 'https://docs.coolplugins.net/doc/generate-deepl-api-key/?ref='.sanitize_text_field($atfp_refrence_text).'&utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=settings_deepl',
+                    'doc_url' => 'https://docs.coolplugins.net/doc/generate-deepl-api-key/?'.sanitize_text_field($atfp_utm_parameters).'&utm_medium=inside&utm_campaign=docs&utm_content=settings_deepl',
                     'placeholder' => 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
                 ]
             ];
@@ -189,7 +189,7 @@ if(!current_user_can('manage_options')){
                         <a href="#" class="atfp-see-terms">[See terms]</a>
                     </div>
                     <div id="termsBox" style="display: none;padding-left: 20px; margin-top: 10px; font-size: 12px; color: #999;">
-                            <p><?php echo esc_html__("Opt in to receive email updates about security improvements, new features, helpful tutorials, and occasional special offers. We'll collect:", 'automatic-translations-for-polylang'); ?> <a href="<?php echo esc_url('https://my.coolplugins.net/terms/usage-tracking/?ref='.sanitize_text_field($atfp_refrence_text).'&utm_source=atfp_plugin&utm_medium=inside&utm_campaign=terms&utm_content=dashboard'); ?>" target="_blank"><?php echo esc_html__('Click Here', 'automatic-translations-for-polylang'); ?></a></p>
+                            <p><?php echo esc_html__("Opt in to receive email updates about security improvements, new features, helpful tutorials, and occasional special offers. We'll collect:", 'automatic-translations-for-polylang'); ?> <a href="<?php echo esc_url('https://my.coolplugins.net/terms/usage-tracking/?'.sanitize_text_field($atfp_utm_parameters).'&utm_medium=inside&utm_campaign=terms&utm_content=dashboard'); ?>" target="_blank"><?php echo esc_html__('Click Here', 'automatic-translations-for-polylang'); ?></a></p>
                             <ul style="list-style-type:auto;">
                                 <li><?php esc_html_e('Your website home URL and WordPress admin email.', 'automatic-translations-for-polylang'); ?></li>
                                 <li><?php esc_html_e('To check plugin compatibility, we will collect the following: list of active plugins and themes, server type, MySQL version, WordPress version, memory limit, site language and database prefix.', 'automatic-translations-for-polylang'); ?></li>
