@@ -221,6 +221,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 = Version 1.4.8 | 10 February 2026 =
 * **Fixed:** Fixed issues reported by "Plugin Check" plugin.
+* **Fixed:** Text domain loading issue in notice.
 * **Minor:** textual changes in links.
 
 = Version 1.4.7 | 03 December 2025 =
