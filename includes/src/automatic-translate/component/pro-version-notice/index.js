@@ -1,13 +1,16 @@
 import { useState, useEffect } from 'react';
 import FormatNumberCount from '../format-number-count';
+import { __ } from '@wordpress/i18n';
 
 const ProVersionNotice = ({ characterCount = 0, url = '' }) => {
     const [showNotice, setShowNotice] = useState(false);
     const [activeClass, setActiveClass] = useState(false);
     const refrenceText = window.atfp_global_object.refrence_text;
+    const atfpUrl = window.atfp_global_object.atfp_url;
+    const magincWandUrl = atfpUrl + 'assets/images/magic-wand.svg';
 
-    if(url !== ''){
-        url = url+'?'+refrenceText+'&utm_medium=inside&utm_campaign=get_pro&utm_content=popup';
+    if (url !== '') {
+        url = url + '?' + refrenceText + '&utm_medium=inside&utm_campaign=get_pro&utm_content=popup';
     }
 
     useEffect(() => {
@@ -29,17 +32,34 @@ const ProVersionNotice = ({ characterCount = 0, url = '' }) => {
 
     return (
         showNotice ? (
-            <div id="atfp-pro-notice-wrapper" className={`${activeClass ? 'atfp-active' : ''}`}>
-                <div className="atfp-pro-notice">
-                    <div className="atfp-notice-header">
-                        <h2>AutoPoly - AI Translation For Polylang</h2>
-                        <span className="atfp-close-button" onClick={() => setShowNotice(false)} aria-label="Close Notice">×</span>
-                    </div>
-                    <div className="atfp-notice-content">
-                        <p>You have reached the character limit of <strong><FormatNumberCount number={characterCount} /></strong> for your translations. To continue translating beyond this limit, please consider upgrading to <strong>AutoPoly - AI Translation For Polylang Pro</strong>.</p>
-                    </div>
-                    <div className="atfp-notice-footer">
-                        <a href={url} target="_blank" rel="noopener noreferrer" className="atfp-upgrade-button">Upgrade to Pro</a>
+            <div id="atfp-pro-notice-wrapper">
+                <div className="modal-container">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <div className="atfp-modal-header-left">
+                                <img src={magincWandUrl} style={{ width: '20px', height: '20px', marginRight: '5px', filter: 'brightness(0) invert(0)' }} alt="AI" />
+                                <h3>{__("AI Translation", "autopoly-ai-translation-for-polylang")}</h3>
+                            </div>
+                            <span className="atfp-modal-close dashicons dashicons-no-alt" onClick={() => setShowNotice(false)} aria-label="Close Notice"></span>
+                        </div>
+
+                        <div className="atfp-modal-body">
+                            <div className="atfp-main-section">
+                                <p>You have already translated <strong><FormatNumberCount number={characterCount} /></strong> strings, and your free translation limit is used up. Upgrade to the Pro version to continue translating more content.</p>
+                            </div>
+                            <div className="atfp-marketing-card">
+                                <h4>{__("Want Unlimited or Bulk Translation?", "autopoly-ai-translation-for-polylang")}</h4>
+                                <div className="atfp-marketing-buttons">
+                                    <a href={url} target="_blank" className="atfp-marketing-btn atfp-primary-btn">
+                                        <img src={magincWandUrl} style={{ width: '20px', height: '20px', marginRight: '5px', filter: 'brightness(0) invert(1)' }} alt="AI" /><span className="atfp-btn-text">{__("Upgrade Pro", "autopoly-ai-translation-for-polylang")}</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="modal-footer-notice">
+                            <span className="dashicons dashicons-warning"></span>
+                            <p><em>{__("Note: close this popup if you do not want AI translation.", "autopoly-ai-translation-for-polylang")}</em></p>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -9,24 +9,35 @@ const atfpElementorConfirmBox = {
     },
 
     createConfirmBox: function() {
-        const sourceLangName=window.atfpElementorConfirmBoxData.sourceLangName;
-        const targetLangName=window.atfpElementorConfirmBoxData.targetLangName;
         const confirmBox = jQuery(`<div class="atfp-elementor-translate-confirm-box modal-container" style="display:flex">
             <div class="modal-content">
-            <p>
-                ${sprintf(
-                __("The original page in %s was built with Elementor. Its content has already been copied into this new %s version. You can now translate it with Elementor to keep the same design, or edit it with the Gutenberg editor.", "autopoly-ai-translation-for-polylang-pro"),
-                sourceLangName,
-                targetLangName
-                )}
-            </p>
-            <div>
-                <button data-value="yes">
-                ${__("Translate with Elementor", "autopoly-ai-translation-for-polylang-pro")}
-                </button>
-                <button data-value="no">
-                ${__("Edit with Gutenberg", "autopoly-ai-translation-for-polylang-pro")}
-                </button>
+            <div class="modal-header">
+                    <div class="atfp-modal-header-left">
+                        <img src="${window.atfpElementorConfirmBoxData.maginc_wand_url}" style="width: 20px; height: 20px; margin-right: 5px; filter: brightness(0) invert(0);" alt="${__("AI")}">
+                        <h3>${__("AI Translation", "autopoly-ai-translation-for-polylang-pro")}</h3>
+                    </div>
+                    <span class="atfp-modal-close dashicons dashicons-no-alt"></span>
+            </div>
+            <div class="atfp-modal-body">
+                <div class="atfp-main-section">
+                    <p>${__("Use AI to translate this page inside Elementor while keeping the same layout and design.", "autopoly-ai-translation-for-polylang-pro")}</p>
+                    <button type="button" class="atfp-translate-button button" data-value="yes" id="atfp-translate-button">
+                        <img src="${window.atfpElementorConfirmBoxData.maginc_wand_url}" style="width: 20px; height: 20px; margin-right: 5px; filter: brightness(0) invert(1);" alt="${__("AI")}">
+                        ${__("Translate Now", "autopoly-ai-translation-for-polylang-pro")}
+                    </button>
+                </div>
+                <div class="atfp-marketing-card">
+                    <h4>Want Unlimited or Bulk Translation?</h4>                        
+                    <div class="atfp-marketing-buttons">
+                        <a href="${window.atfpElementorConfirmBoxData.buy_pro_url}" target="_blank" class="atfp-marketing-btn atfp-primary-btn">
+                            <img src="${window.atfpElementorConfirmBoxData.maginc_wand_url}" style="width: 20px; height: 20px; margin-right: 5px; filter: brightness(0) invert(1);" alt="${__("AI")}"><span class="atfp-btn-text">Upgrade Pro</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer-notice">
+            <span class="dashicons dashicons-warning"></span>
+            <p><em>${__("Note: close this popup if you do not want AI translation.", "autopoly-ai-translation-for-polylang-pro")}</em></p>
             </div>
             </div>
         </div>
@@ -34,8 +45,8 @@ const atfpElementorConfirmBox = {
 
         confirmBox.appendTo(jQuery('body'));
 
-        confirmBox.find('button[data-value="yes"]').on('click', (e)=>{this.confirmTranslation(e)});
-        confirmBox.find('button[data-value="no"]').on('click', (e)=>{e.preventDefault();this.closeConfirmBox();});
+        confirmBox.find('button.atfp-translate-button').on('click', (e)=>{this.confirmTranslation(e)});
+        confirmBox.find('span.atfp-modal-close').on('click', (e)=>{e.preventDefault();this.closeConfirmBox();});
     },
 
     closeConfirmBox: function() {
@@ -64,14 +75,32 @@ const atfpElementorConfirmBox = {
             const elementorButton=document.getElementById('elementor-editor-button');
             const elementorEditModeButton=document.getElementById('elementor-edit-mode-button');
 
+            const translateButton=document.querySelector('button.atfp-translate-button');
+
+            if(translateButton){
+                this.loadingText(translateButton);
+            }
+
+
             if(elementorEditModeButton) {
                 elementorEditModeButton.click();
             }else if(elementorButton) {
                 elementorButton.click();
             }
-
-            this.closeConfirmBox();
         }
+    },
+
+    loadingText: function(ele){
+        if(!ele){
+            return;
+        }
+
+        ele.disabled = true;
+
+        ele.classList.add('loading');
+
+        const loadinText=__("Loading", 'autopoly-ai-translation-for-polylang-pro');
+        ele.innerHTML = `${loadinText}<span class="dot" style="--i: 0"></span><span class="dot" style="--i: 1"></span><span class ="dot" style="--i: 2"></span>`;
     },
 
     setPageTitle: function() {

@@ -50,7 +50,7 @@ const SettingModal = (props) => {
      * Triggers the setSettingVisibility only when user click on meta field Button.
     */
     useEffect(() => {
-        const firstRenderBtns = document.querySelectorAll('#atfp-modal-open-warning-wrapper .modal-content div[data-value]');
+        const firstRenderBtns = document.querySelectorAll('#atfp-modal-open-warning-wrapper .modal-content button.atfp-translate-button[data-value="yes"]');
         const metaFieldBtn = document.querySelector(props.translateWrpSelector);
 
         if (metaFieldBtn) {
