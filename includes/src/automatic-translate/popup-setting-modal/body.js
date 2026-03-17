@@ -7,26 +7,15 @@ const SettingModalBody = (props) => {
 
     return (
         <div className="atfp-setting-modal-body">
-            <div className="atfp-setting-modal-notice-wrapper">
+            <div className="atfp-provider-cards">
+                {Object.keys(ServiceProviders).map((provider) => (
+                    <Providers
+                        key={provider}
+                        {...props}
+                        Service={provider}
+                    />
+                ))}
             </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Translate</th>
-                        <th>Docs</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {Object.keys(ServiceProviders).map((provider) => (
-                        <Providers
-                            key={provider}
-                            {...props}
-                            Service={provider}
-                        />
-                    ))}
-                </tbody>
-            </table>
         </div>
     );
 }

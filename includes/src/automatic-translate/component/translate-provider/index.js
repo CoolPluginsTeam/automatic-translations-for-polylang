@@ -23,7 +23,7 @@ export default (props) => {
             heading: __("Choose Language", 'autopoly-ai-translation-for-polylang'),
             BetaEnabled: false,
             ButtonDisabled: props.yandexButtonDisabled,
-            ErrorMessage: props.yandexButtonDisabled ? <div className="atfp-provider-error button button-primary" onClick={() => openErrorModalHandler("yandex")}><img src={errorIcon} alt="error" /> {__('View Error', 'autopoly-ai-translation-for-polylang')}</div> : <></>,
+            ErrorMessage: props.yandexButtonDisabled ? <div className="atfp-provider-error" onClick={() => openErrorModalHandler("yandex")}>{__('View Error', 'autopoly-ai-translation-for-polylang')}</div> : <></>,
             Logo: 'yandex.png'
         },
         localAiTranslator: {
@@ -35,7 +35,7 @@ export default (props) => {
             Docs: "https://docs.coolplugins.net/doc/chrome-ai-translation-polylang/?"+refrenceText+"&utm_medium=inside&utm_campaign=docs&utm_content=popup_chrome",
             BetaEnabled: true,
             ButtonDisabled: props.localAiTranslatorButtonDisabled,
-            ErrorMessage: props.localAiTranslatorButtonDisabled ? <div className="atfp-provider-error button button-primary" onClick={() => openErrorModalHandler("localAiTranslator")}><img src={errorIcon} alt="error" /> {__('View Error', 'autopoly-ai-translation-for-polylang')}</div> : <></>,
+            ErrorMessage: props.localAiTranslatorButtonDisabled ? <div className="atfp-provider-error" onClick={() => openErrorModalHandler("localAiTranslator")}>{__('View Error', 'autopoly-ai-translation-for-polylang')}</div> : <></>,
             Logo: 'chrome.png'
         },
         google: {
@@ -46,7 +46,7 @@ export default (props) => {
             heading: __("Choose Language", 'autopoly-ai-translation-for-polylang'),
             BetaEnabled: false,
             ButtonDisabled: true,
-            ErrorMessage: <a className="atfp-provider-error button button-primary" href={`${window.atfp_global_object.pro_version_url}?${refrenceText}&utm_medium=inside&utm_campaign=get_pro&utm_content=popup_google`} target="_blank">{__('Buy Pro', 'autopoly-ai-translation-for-polylang')}</a>,
+            ErrorMessage: <a className="atfp-provider-error" href={`${window.atfp_global_object.pro_version_url}?${refrenceText}&utm_medium=inside&utm_campaign=get_pro&utm_content=popup_google`} target="_blank">{__('Buy Pro', 'autopoly-ai-translation-for-polylang')}</a>,
             Logo: 'google.png'
         },
         openai_ai: {
@@ -57,7 +57,7 @@ export default (props) => {
             Docs: "https://docs.coolplugins.net/doc/translate-via-open-ai-polylang/?"+refrenceText+"&utm_medium=inside&utm_campaign=docs&utm_content=popup_openai",
             BetaEnabled: true,
             ButtonDisabled: true,
-            ErrorMessage: <a className={`atfp-provider-error button button-primary`} href={`${window.atfp_global_object.pro_version_url}?${refrenceText}&utm_medium=inside&utm_campaign=get_pro&utm_content=popup_openai`} target="_blank">{__('Buy Pro', 'autopoly-ai-translation-for-polylang')}</a>,
+            ErrorMessage: <a className='atfp-provider-error' href={`${window.atfp_global_object.pro_version_url}?${refrenceText}&utm_medium=inside&utm_campaign=get_pro&utm_content=popup_openai`} target="_blank">{__('Buy Pro', 'autopoly-ai-translation-for-polylang')}</a>,
             Logo: 'openai.png',
         },
         google_ai: {
@@ -68,7 +68,7 @@ export default (props) => {
             Docs: "https://docs.coolplugins.net/doc/translate-via-gemini-ai-polylang/?"+refrenceText+"&utm_medium=inside&utm_campaign=docs&utm_content=popup_gemini",
             BetaEnabled: true,
             ButtonDisabled: true,
-            ErrorMessage: <a className={`atfp-provider-error button button-primary`} href={`${window.atfp_global_object.pro_version_url}?${refrenceText}&utm_medium=inside&utm_campaign=get_pro&utm_content=popup_gemini`} target="_blank">{__('Buy Pro', 'autopoly-ai-translation-for-polylang')}</a>,
+            ErrorMessage: <a className='atfp-provider-error' href={`${window.atfp_global_object.pro_version_url}?${refrenceText}&utm_medium=inside&utm_campaign=get_pro&utm_content=popup_gemini`} target="_blank">{__('Buy Pro', 'autopoly-ai-translation-for-polylang')}</a>,
             Logo: 'gemini.png',
         },
         deepl_ai: {
@@ -79,7 +79,7 @@ export default (props) => {
             Docs: "https://docs.coolplugins.net/doc/translate-via-deepl-polylang/?"+refrenceText+"&utm_medium=inside&utm_campaign=docs&utm_content=popup_deepl",
             BetaEnabled: true,
             ButtonDisabled: true,
-            ErrorMessage: <a className={`atfp-provider-error button button-primary`} href={`${window.atfp_global_object.pro_version_url}?${refrenceText}&utm_medium=inside&utm_campaign=get_pro&utm_content=popup_deepl`} target="_blank">{__('Buy Pro', 'autopoly-ai-translation-for-polylang')}</a>,
+            ErrorMessage: <a className='atfp-provider-error' href={`${window.atfp_global_object.pro_version_url}?${refrenceText}&utm_medium=inside&utm_campaign=get_pro&utm_content=popup_deepl`} target="_blank">{__('Buy Pro', 'autopoly-ai-translation-for-polylang')}</a>,
             Logo: 'deepl.png',
         }
     };

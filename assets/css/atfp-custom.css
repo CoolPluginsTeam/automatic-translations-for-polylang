@@ -313,246 +313,244 @@ button.atfp-error-reload-btn:hover{
 
 
 #atfp-setting-modal .modal-content {
-    width: clamp(200px,520px,100vw);
+    max-width: 100vw;
+    width: unset;
     padding: 0px;
 }
 
-#atfp-setting-modal .atfp-error-message {
-    margin: 0!important;
-    padding: 0 0 10px;
-    font-weight: 500;
-    font-size: 13px;
-    line-height: 1.2;
-    color: red;
-    text-align: start;
+#atfp-setting-modal .modal-header {
+    align-items: flex-start;
+    border-bottom: 2px solid #00000012;
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+    padding: 10px 24px 8px;
 }
 
-#atfp-setting-modal .atfp-provider-error {
-    background: #ee4237;
-    border-color: #dd362b;
-    color: #fff;
-    padding: 2px 11px;
-    display: inline-flex;
-    align-items: center;
-}
-    
-#atfp-setting-modal .atfp-provider-error:hover{
-    background: #dd382e;
-    border-color: #c72a20;
-}
-
-#atfp-setting-modal .atfp-provider-error img {
-    display: inline-flex;
-    margin-bottom: 0px !important;
-    margin-top: 0px !important;
-    filter: invert(1) brightness(2);
-    height: 22px !important;
-    margin-right: 3px;
+#atfp-setting-modal .modal-header .step-label {
+    color: #3737e7;
+    font-size: 10px;
+    font-weight: 600;
 }
 
 #atfp-setting-modal .modal-header h2 {
-    height: unset;
-    padding: 8px 36px 8px 25px;
-    border: none;
     background: 0 0;
-    border-bottom: 1px solid #dcdcde;
+    border: none;
     font-size: 18px;
     font-weight: 600;
+    height: unset;
     line-height: 2;
     margin: 0;
 }
 
-#atfp-setting-modal .modal-header span.close {
-    right: 15px;
-    top: 13px;
-    border-radius: 0 !important;
-    height: 30px !important;
-    width: 20px !important;
-    position: absolute;
-    font-size: 32px;
-    font-weight: bold;
-    color: #646970;
-    cursor: pointer;
-}
-
-
-.atfp-setting-modal-body{
-    max-width: 100vw;
-    overflow-x: auto;
-}
-    
-.atfp-setting-modal-body table{
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.atfp-setting-modal-body thead{
-        background: #f3f3f3;
-}
-.atfp-setting-modal-body thead th{
-    text-align: left;
+#atfp-setting-modal .modal-header .modal-desc {
+    color: #888;
+    font-size: 12px!important;
     font-weight: 500;
-    font-size: 14px;
-    color: #555;
-    padding-block: 1rem;
+    margin: 0 0 4px;
 }
 
-.atfp-setting-modal-body thead th:nth-child(1){
-    padding-left: 28px;
-}
-
-.atfp-setting-modal-body thead th:nth-child(2){
-    padding-left: 90px;
-}
-
-.atfp-setting-modal-body thead th:nth-child(3){
-    padding-right: 25px;
-    text-align: center;
-}
-
-.atfp-setting-modal-body tbody tr{
-    border-top: 1px solid #eee;
-    height: 64px;
-}
-
-.atfp-setting-modal-body tbody td.atfp-provider-name{
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-    font-weight: 600;
-    margin-block: .5rem;
-}
-
-.atfp-setting-modal-body tbody td img{
-    width: 45px;
-    margin-right: 15px;
-}
-
-.atfp-setting-modal-body tbody td:nth-child(1){
-    padding-left: 25px;
-}
-
-.atfp-setting-modal-body tbody td:nth-child(2){
-    padding-left: 90px;
-    padding-right: 20px;
-}
-
-.atfp-setting-modal-body tbody td:nth-child(3){
-    padding-right: 25px;
-    text-align: center;
-}
-
-.atfp-setting-modal-body tbody .button{
-    width: 123px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    line-height: 1.3;
-    min-height: 30px;
-    margin: 0;
+#atfp-setting-modal .modal-header .modal-close {
+    background: none;
+    border: none;
     cursor: pointer;
-    border-width: 1px;
-    border-style: solid;
-    -webkit-appearance: none;
-    border-radius: 3px;
-    box-sizing: border-box;
-    font-family: inherit;
-    font-weight: inherit;
-    vertical-align: top;
-    text-decoration: none;
-    text-shadow: none;
-    text-align: center;
-}
-.atfp-setting-modal-body tbody .button.atfp-service-btn{
-    padding: 2px 11px;
-    white-space: nowrap;
-    background: #3db63d;
-    border-color: #33a133;
-    color: #fff;
-}
-.atfp-setting-modal-body tbody .button.atfp-service-btn:hover{
-    background: #37a737;
-    border-color: #238b23;
+    font-size: 24px;
+    height: 24px;
+    margin: 0;
+    padding: 0;
+    width: 24px;
 }
 
-.atfp-setting-modal-body tbody .button.atfp-provider-error{
-    background: #ee4237;
-    border-color: #dd362b;
-    color: #fff;
-    padding: 2px 11px;
+#atfp-setting-modal .atfp-setting-modal-body .atfp-provider-cards {
+    display: -ms-grid;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    padding: 16px 24px;
+    max-width: 560px;
+    min-width: 500px;
+  }
+  
+  #atfp-setting-modal .atfp-setting-modal-body .atfp-provider-card {
+    position: relative;
+    padding: 12px;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    background: #fff;
+    -webkit-transition: border-color 0.2s, -webkit-box-shadow 0.2s;
+    transition: border-color 0.2s, -webkit-box-shadow 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s, -webkit-box-shadow 0.2s;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+    text-align: left;
+    cursor: pointer;
+  }
+  
+  #atfp-setting-modal .atfp-setting-modal-body .atfp-provider-card-body {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    width: 100%;
+    gap: 10px;
+  }
+  
+  #atfp-setting-modal .atfp-setting-modal-body .atfp-provider-card:hover {
+    border-color: #cbd5e1;
+    -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+  
+  #atfp-setting-modal .atfp-setting-modal-body .atfp-provider-card-disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+  
+  #atfp-setting-modal .atfp-setting-modal-body .atfp-provider-card-disabled .atfp-provider-error {
+    color: #64748b;
     display: inline-flex;
-    align-items: center;
+    cursor: pointer;
+  }
+  
+  #atfp-setting-modal .atfp-setting-modal-body .atfp-provider-card-disabled .atfp-provider-error:hover {
+    color: var(--wp-admin-theme-color, #2271b1);
 }
-
-.atfp-setting-modal-body tbody .button.atfp-provider-error img{
+  
+  #atfp-setting-modal .atfp-setting-modal-body .atfp-provider-card-selected {
+    border-color: var(--wp-admin-theme-color, #2271b1) !important;
+    -webkit-box-shadow: 0 0 0 1px var(--wp-admin-theme-color, #2271b1);
+            box-shadow: 0 0 0 1px var(--wp-admin-theme-color, #2271b1);
+    background: #eff6ff;
+  }
+  
+  #atfp-setting-modal .atfp-setting-modal-body .atfp-provider-card-selected .atfp-provider-card-check {
+    border-color: var(--wp-admin-theme-color, #2271b1);
+    background: var(--wp-admin-theme-color, #2271b1);
+  }
+  
+  #atfp-setting-modal .atfp-setting-modal-body .atfp-provider-card-selected .atfp-provider-card-check::after {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 1px;
+    width: 6px;
+    height: 11px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
+  }
+  
+  #atfp-setting-modal .atfp-setting-modal-body .atfp-provider-card-icon {
+    width: 25px;
+    height: 25px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  
+  #atfp-setting-modal .atfp-setting-modal-body .atfp-provider-card-icon img {
+    width: 24px;
+    height: 24px;
+    -o-object-fit: contain;
+       object-fit: contain;
+  }
+  
+  #atfp-setting-modal .atfp-setting-modal-body .atfp-provider-card-name {
+    font-weight: 700;
+    font-size: 14px;
+    color: #0f172a;
+    display: block;
+  }
+  
+  #atfp-setting-modal .atfp-setting-modal-body .atfp-provider-card-desc {
+    font-size: 0.8125rem;
+    color: #64748b;
+    line-height: 1.45;
+    display: block;
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+  }
+  
+  #atfp-setting-modal .atfp-setting-modal-body .atfp-provider-card-actions {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    margin-top: 7px;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    width: 100%;
+  }
+  
+  #atfp-setting-modal .atfp-setting-modal-body .atfp-provider-card-docs {
+    color: #64748b;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
     display: inline-flex;
-    margin-bottom: 0px;
-    margin-top: 0px;
-    filter: invert(1) brightness(2);
+    margin-right: auto;
+  }
+  
+  #atfp-setting-modal .atfp-setting-modal-body .atfp-provider-card-docs:hover {
+    color: var(--wp-admin-theme-color, #2271b1);
+  }
+  
+  #atfp-setting-modal .atfp-setting-modal-body .atfp-provider-card-check {
+    position: relative;
+    display: block;
+    width: 22px;
     height: 22px;
-    margin-right: 3px;
-    width: unset !important;
-}
+    border: 2px solid #cbd5e1;
+    border-radius: 50%;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    margin-left: auto;
+  }
+  
+  #atfp-setting-modal .atfp-setting-modal-body .atfp-provider-card-error {
+    font-size: 0.8125rem;
+  }
 
-.atfp-setting-modal-body tbody .button.atfp-provider-error:hover{
-    background: #dd382e;
-    border-color: #c72a20;
-}
-
-.atfp-setting-modal-body tbody .atfp-doc-icon {
-    display: inline-flex;
-    width: 20px;
-    height: 26px;
-}
-
-.atfp-setting-modal-body tbody .atfp-doc-icon:focus{
-    outline: none;
-    box-shadow: unset;
-}
-
-.atfp-setting-modal-body tbody .atfp-doc-icon svg{
-    width: 20px;
-    height: 28px;
-}
-
-#atfp-setting-modal .atfp-translator-row .atfp-translator-footer .atfp-localai-disabled-message:hover {
-    background: red;
-}
-
-#atfp-setting-modal .modal-footer {
+  #atfp-setting-modal .setting-modal-footer {
+    display: flex;
+    justify-content: space-between;
     background: 0 0;
     border: none;
     border-top: 1px solid #dcdcde;
     margin-top: 0;
-    padding: 16px 22.4px;
-    text-align: end;
-}
-
-#atfp-setting-modal .modal-footer .atfp-setting-close {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1rem;
-    line-height: 1.3;
-    min-height: 30px;
-    margin: 0;
-    padding: .1rem .4rem;
-    white-space: nowrap;
-    border-radius: 3px;
-    cursor: pointer;
-    opacity: .7;
-    background: #f6f7f7;
-    border: 1px solid #c3c4c7;
-    color: #50575e;
-    padding: 5px;
-    border-radius: 3px;
-}
-
-#atfp-setting-modal .modal-footer .atfp-setting-close:hover {
-    background-color: #e1e1e1;
-    border-color: #c9c9c9;
-}
+    padding: 16px 22.4px 16px;
+  }
+  
+  #atfp-setting-modal .setting-modal-footer .setting-close {
+   background-color: #ffffff;
+   border: none;
+   color: #000000;
+  }
+  
+  #atfp-setting-modal .setting-modal-footer .setting-close:hover {
+    background-color: #fff;
+    border-color: #fff;
+  }
 
 /* Setting Modal CSS End */
 
