@@ -77,7 +77,7 @@ const SettingModal = (props) => {
             if (localAiTranslatorSupport !== true && typeof localAiTranslatorSupport === 'object') {
                 setChromeAiBtnDisabled(true);
     
-                setServiceModalErrors(prev => ({ ...prev, localAiTranslator: {message: localAiTranslatorSupport, Title: __("Chrome AI Translator", 'autopoly-ai-translation-for-polylang')} }));
+                setServiceModalErrors(prev => ({ ...prev, localAiTranslator: {message: localAiTranslatorSupport} }));
             }
         };
         if(settingVisibility){
