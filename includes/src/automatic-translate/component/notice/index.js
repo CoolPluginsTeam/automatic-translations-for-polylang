@@ -1,6 +1,15 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-const Notice = (props) => {
+const Notice = ({className, children, isDismissible=false, lastNotice=false, type=""}) => {
+
+    const [showNotice, setShowNotice] = useState(true);
+
+    const updateNoticeStatus = () => {
+        if(showNotice){
+            setShowNotice(false);
+            updateNoticeWrapperHeight();
+        }
+    }
 
     const updateNoticeWrapperHeight = () => {
         const parentNoticeWrapper = document.querySelector('.atfp-body-notice-wrapper');
@@ -13,7 +22,7 @@ const Notice = (props) => {
 
     useEffect(() => {
 
-        if(props.lastNotice){
+        if(lastNotice){
             updateNoticeWrapperHeight();
             window.addEventListener('resize', updateNoticeWrapperHeight);
         }
@@ -22,10 +31,15 @@ const Notice = (props) => {
             window.removeEventListener('resize', updateNoticeWrapperHeight);
         }
 
-    }, [props.lastNotice]);
+    }, [lastNotice]);
+
 
     return (
-        <div className={props.className}>{props.children}</div>
+        showNotice ? <div className={className}>
+            {type === "alert" && <div className="atfp-notice-alert-icon">i</div>}
+            <div className="atfp-notice-body">{children}</div>
+            {isDismissible && <div className="atfp-notice-close" onClick={updateNoticeStatus}></div>}
+        </div> : null
     );
 };
 

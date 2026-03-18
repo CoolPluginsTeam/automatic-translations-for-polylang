@@ -94,6 +94,7 @@ const StringPopUpBody = (props) => {
                             <div className="atfp-skeleton-loader-mini"></div>
                             <div className="atfp-skeleton-loader-mini"></div>
                         </div>
+                        <div className="atfp_string_container">
                         <table>
                             <thead>
                                 <tr>
@@ -114,6 +115,7 @@ const StringPopUpBody = (props) => {
                                 })}
                             </tbody>
                         </table>
+                        </div>
                     </div>
             }
         </div>

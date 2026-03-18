@@ -11,7 +11,7 @@ const AddProgressBar = (provider) => {
         const progressBar = jQuery(`
             <div id="atfp-${provider}-progress-bar" class="atfp-translate-progress-bar">
                 <div class="${provider}-translator_progress_bar" style="background-color: #f3f3f3;border-radius: 10px;overflow: hidden;margin: 1.5rem auto; width: 50%;">
-                <div class="${provider}-translator_progress" style="overflow: hidden;transition: width .2s ease-in-out; border-radius: 10px;text-align: center;width: 0%;height: 20px;box-sizing: border-box;background-color: #4caf50; color: #fff; font-weight: 600;"></div>
+                <div class="${provider}-translator_progress" style="overflow: hidden;transition: width .2s ease-in-out; border-radius: 10px;text-align: center;width: 0%;height: 20px;box-sizing: border-box;background-color: var(--wp-admin-theme-color, #2271b1); color: #fff; font-weight: 600;"></div>
                 </div>
                 <div style="display:none; color: white;" class="${provider}-translator-strings-count hidden">
                     Wahooo! You have saved your valuable time via auto translating 

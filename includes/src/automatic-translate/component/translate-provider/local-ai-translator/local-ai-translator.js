@@ -448,7 +448,7 @@ class ChromeAiTranslator {
         if (!document.querySelector("#chrome-ai-translator-modal .chrome-ai-translator_progress_bar")) {
             const progressBar = jQuery(`
                 <div class="chrome-ai-translator_progress_bar" style="background-color: #f3f3f3;border-radius: 10px;overflow: hidden;margin: 1.5rem auto; width: 50%;">
-                <div class="chrome-ai-translator_progress" style="overflow: hidden;transition: width .5s ease-in-out; border-radius: 10px;text-align: center;width: 0%;height: 20px;box-sizing: border-box;background-color: #4caf50; color: #fff; font-weight: 600;"></div>
+                <div class="chrome-ai-translator_progress" style="overflow: hidden;transition: width .5s ease-in-out; border-radius: 10px;text-align: center;width: 0%;height: 20px;box-sizing: border-box;background-color: var(--wp-admin-theme-color, #2271b1); color: #fff; font-weight: 600;"></div>
                 </div>
                 <div style="display:none; color: white;" class="chrome-ai-translator-strings-count hidden">
                     Wahooo! You have saved your valuable time via auto translating 

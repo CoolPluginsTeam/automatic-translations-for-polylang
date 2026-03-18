@@ -193,7 +193,6 @@ const SettingModal = (props) => {
                             activeProvider={activeProvider.service}
                             />
                         <SettingModalFooter
-                            setSettingVisibility={handleSettingVisibility}
                             selectedProvider={activeProvider.service}
                             onStartTranslation={fetchContent}
                         />

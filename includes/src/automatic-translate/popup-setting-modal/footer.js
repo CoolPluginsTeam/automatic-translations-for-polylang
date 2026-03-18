@@ -2,11 +2,10 @@ import { __, sprintf } from "@wordpress/i18n";
 
 const SettingModalFooter = (props) => {
 
-    const { selectedProvider, onStartTranslation, setSettingVisibility } = props;
+    const { selectedProvider, onStartTranslation } = props;
 
     return (
         <div className='setting-modal-footer'>
-            <button type="button" className='setting-close button' onClick={() => setSettingVisibility(false)}>{__("Back", 'wpml-translation-check')}</button>
             <button
                 type="button"
                 className='setting-start-translation button button-primary'

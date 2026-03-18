@@ -38,8 +38,8 @@ const StringModalBodyNotice = () => {
 
     if (postMetaSync) {
       notices.push({
-        className: 'atfp-notice atfp-notice-error', message: <p>
-          {__('For accurate custom field translations, please disable the Custom Fields synchronization in ', 'autopoly-ai-translation-for-polylang')}
+        className: 'atfp-notice atfp-notice-warning',isDismissible: true, message: <div>
+          {__('⚠️ For accurate custom field translations, please disable the Custom Fields synchronization in ', 'autopoly-ai-translation-for-polylang')}
           <a
             href={`${atfp_global_object.admin_url}admin.php?page=mlang_settings`}
             target="_blank"
@@ -48,14 +48,14 @@ const StringModalBodyNotice = () => {
             {__('Polylang settings', 'autopoly-ai-translation-for-polylang')}
           </a>
           {__('. This may affect linked posts or pages.', 'autopoly-ai-translation-for-polylang')}
-        </p>
+        </div>
       });
     }
 
     const blockRules = select('block-atfp/translate').getBlockRules();
 
     if (!blockRules.AtfpBlockParseRules || Object.keys(blockRules.AtfpBlockParseRules).length === 0) {
-      notices.push({ className: 'atfp-notice atfp-notice-error', message: <p>{__('No block rules were found. It appears that the block-rules.JSON file could not be fetched, possibly because it is blocked by your server settings. Please check your server configuration to resolve this issue.', 'autopoly-ai-translation-for-polylang')}</p> });
+      notices.push({ className: 'atfp-notice atfp-notice-error', message: <div>{__('No block rules were found. It appears that the block-rules.JSON file could not be fetched, possibly because it is blocked by your server settings. Please check your server configuration to resolve this issue.', 'autopoly-ai-translation-for-polylang')}</div> });
     }
   }
 
