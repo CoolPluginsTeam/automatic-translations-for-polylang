@@ -5,7 +5,7 @@ const SettingModalHeader = ({ setSettingVisibility }) => {
         <div className='modal-header'>
          <div className='modal-header-inner'>
           <span className='step-label'>
-            {__("STEP 1 OF 2", "automlp-ai-translation-for-wpml")}
+            {__("STEP 1 OF 2", "automatic-translations-for-polylang")}
           </span>
           <h2>{__("Select Translation Engine", 'automatic-translations-for-polylang')}</h2>
           <p className='modal-desc'>{__("Select an AI provider to automatically translate your content.", 'automatic-translations-for-polylang')}</p>
