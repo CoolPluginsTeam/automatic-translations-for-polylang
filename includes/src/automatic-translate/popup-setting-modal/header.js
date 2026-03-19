@@ -7,10 +7,10 @@ const SettingModalHeader = ({ setSettingVisibility }) => {
           <span className='step-label'>
             {__("STEP 1 OF 2", "automlp-ai-translation-for-wpml")}
           </span>
-          <h2>{__("Select Translation Engine", 'wpml-translation-check')}</h2>
-          <p className='modal-desc'>{__("Select an AI provider to automatically translate your content.", 'wpml-translation-check')}</p>
+          <h2>{__("Select Translation Engine", 'automatic-translations-for-polylang')}</h2>
+          <p className='modal-desc'>{__("Select an AI provider to automatically translate your content.", 'automatic-translations-for-polylang')}</p>
          </div>
-            <button type="button" aria-label={__('Close', 'wpml-translation-check')} className='modal-close' onClick={() => setSettingVisibility(false)}>&times;</button>
+            <button type="button" aria-label={__('Close', 'automatic-translations-for-polylang')} className='modal-close' onClick={() => setSettingVisibility(false)}>&times;</button>
         </div>
     );
 }

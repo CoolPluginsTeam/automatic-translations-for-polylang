@@ -38,7 +38,7 @@ const ProVersionNotice = ({ characterCount = 0, url = '' }) => {
                         <div className="modal-header">
                             <div className="atfp-modal-header-left">
                                 <img src={magincWandUrl} style={{ width: '20px', height: '20px', marginRight: '5px', filter: 'brightness(0) invert(0)' }} alt="AI" />
-                                <h3>{__("AI Translation", "autopoly-ai-translation-for-polylang")}</h3>
+                                <h3>{__("AI Translation", "automatic-translations-for-polylang")}</h3>
                             </div>
                             <span className="atfp-modal-close dashicons dashicons-no-alt" onClick={() => setShowNotice(false)} aria-label="Close Notice"></span>
                         </div>
@@ -48,17 +48,17 @@ const ProVersionNotice = ({ characterCount = 0, url = '' }) => {
                                 <p>You have already translated <strong><FormatNumberCount number={characterCount} /></strong> strings, and your free translation limit is used up. Upgrade to the Pro version to continue translating more content.</p>
                             </div>
                             <div className="atfp-marketing-card">
-                                <h4>{__("Want Unlimited or Bulk Translation?", "autopoly-ai-translation-for-polylang")}</h4>
+                                <h4>{__("Want Unlimited or Bulk Translation?", "automatic-translations-for-polylang")}</h4>
                                 <div className="atfp-marketing-buttons">
                                     <a href={url} target="_blank" className="atfp-marketing-btn atfp-primary-btn">
-                                        <img src={magincWandUrl} style={{ width: '20px', height: '20px', marginRight: '5px', filter: 'brightness(0) invert(1)' }} alt="AI" /><span className="atfp-btn-text">{__("Upgrade Pro", "autopoly-ai-translation-for-polylang")}</span>
+                                        <img src={magincWandUrl} style={{ width: '20px', height: '20px', marginRight: '5px', filter: 'brightness(0) invert(1)' }} alt="AI" /><span className="atfp-btn-text">{__("Upgrade Pro", "automatic-translations-for-polylang")}</span>
                                     </a>
                                 </div>
                             </div>
                         </div>
                         <div className="modal-footer-notice">
                             <span className="dashicons dashicons-warning"></span>
-                            <p><em>{__("Note: close this popup if you do not want AI translation.", "autopoly-ai-translation-for-polylang")}</em></p>
+                            <p><em>{__("Note: close this popup if you do not want AI translation.", "automatic-translations-for-polylang")}</em></p>
                         </div>
                     </div>
                 </div>

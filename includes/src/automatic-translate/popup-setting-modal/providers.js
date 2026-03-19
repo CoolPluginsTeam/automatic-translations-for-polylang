@@ -35,7 +35,7 @@ const Providers = (props) => {
             </div>
             <div className='atfp-provider-card-actions'>
                 <a href={ActiveService.Docs} target="_blank" rel="noopener noreferrer" className='atfp-provider-card-docs' title={ActiveService.Docs} onClick={(e) => e.stopPropagation()}>
-                    {__('Docs', 'wpml-translation-check')}
+                    {__('Docs', 'automatic-translations-for-polylang')}
                 </a>
                 {isDisabled && (
                     <div className='atfp-provider-card-error'>{ActiveService.ErrorMessage}</div>

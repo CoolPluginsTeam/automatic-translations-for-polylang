@@ -14,9 +14,9 @@ const StringPopUpHeader = (props) => {
          <span className='step-label'>
            {__("STEP 2 OF 2", "automlp-ai-translation-for-wpml")}
          </span>
-         <h2>{__("Start Automatic Translation Process", 'autopoly-ai-translation-for-polylang')}</h2>
+         <h2>{__("Start Automatic Translation Process", 'automatic-translations-for-polylang')}</h2>
         </div>
-           <button type="button" aria-label={__('Close', 'wpml-translation-check')} className='modal-close' onClick={closeModal}>&times;</button>
+           <button type="button" aria-label={__('Close', 'automatic-translations-for-polylang')} className='modal-close' onClick={closeModal}>&times;</button>
        </div>
     );
 }

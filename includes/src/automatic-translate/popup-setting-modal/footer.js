@@ -14,7 +14,7 @@ const SettingModalFooter = (props) => {
                     if (selectedProvider && onStartTranslation) onStartTranslation();
                 }}
             >
-                {__("Start Translation", 'wpml-translation-check')} <span className='next-arrow'>&#8594;</span>
+                {__("Start Translation", 'automatic-translations-for-polylang')} <span className='next-arrow'>&#8594;</span>
             </button>
         </div>
     );
