@@ -91,7 +91,7 @@
 :is(#atfp-modal-open-warning-wrapper, #atfp-pro-notice-wrapper)
   .atfp-modal-body
   p {
-  font-size: 14px;
+  font-size: 15px;
   color: #646970;
   margin: 0 0 24px 0;
   line-height: 1.5;
@@ -266,7 +266,7 @@
   display: block;
   font-size: 12.8px;
   position: absolute;
-  background: #5cb85c;
+  background: #0073aa;
   color: #fff !important;
   padding: 3.2px 8px;
   border-radius: 4px;
@@ -289,7 +289,7 @@
   margin-left: -8px;
   width: 0;
   height: 0;
-  border-top: 8px solid #5cb85c;
+  border-top: 8px solid #0073aa;
   border-right: 8px solid transparent;
   border-left: 8px solid transparent;
 }
@@ -297,8 +297,8 @@
 #atfp-setting-modal .atfp-error-modal-box
   .atfp-tooltip-element
   .atfp-tooltip.atfp-tooltip-active {
-  -webkit-animation: slide-up 0.15s cubic-bezier(0.51, 0.92, 0.265, 1.55) both;
-  animation: slide-up 0.15s cubic-bezier(0.51, 0.92, 0.265, 1.55) both;
+  -webkit-animation: atfp-slide-up 0.15s cubic-bezier(0.51, 0.92, 0.265, 1.55) both;
+  animation: atfp-slide-up 0.15s cubic-bezier(0.51, 0.92, 0.265, 1.55) both;
 }
 
 #atfp-setting-modal .atfp-error-modal-box
@@ -642,7 +642,7 @@
   .atfp-setting-modal-body
   .atfp-provider-card-disabled
   .atfp-provider-error {
-  color: #64748b;
+    color: var(--wp-admin-theme-color, #2271b1);
   display: inline-flex;
   cursor: pointer;
 }
@@ -651,8 +651,8 @@
   .atfp-setting-modal-body
   .atfp-provider-card-disabled
   .atfp-provider-error:hover {
-  color: var(--wp-admin-theme-color, #2271b1);
-}
+    color: var(--wp-admin-theme-color-darker-20, #1c5788);
+  }
 
 #atfp-setting-modal .atfp-setting-modal-body .atfp-provider-card-selected {
   border-color: var(--wp-admin-theme-color, #2271b1) !important;
@@ -737,7 +737,7 @@
 }
 
 #atfp-setting-modal .atfp-setting-modal-body .atfp-provider-card-docs {
-  color: #64748b;
+  color: var(--wp-admin-theme-color, #2271b1);
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
@@ -745,7 +745,7 @@
 }
 
 #atfp-setting-modal .atfp-setting-modal-body .atfp-provider-card-docs:hover {
-  color: var(--wp-admin-theme-color, #2271b1);
+  color: var(--wp-admin-theme-color-darker-20, #1c5788);
 }
 
 #atfp-setting-modal .atfp-setting-modal-body .atfp-provider-card-check {
@@ -1138,17 +1138,17 @@ button.atfp-setting-close:hover {
   z-index: 9;
   box-sizing: border-box;
   padding: 32px 32px 40px;
-  background: rgba(15, 23, 42, 0.55);
+  background: rgba(15,23,42,.55);
   backdrop-filter: blur(4px);
   color: #fff;
   font-size: 14px;
   line-height: 1.6;
   font-weight: 700;
   text-align: center;
-  top: 96px;
+  top: 76px;
   left: 1px;
   width: calc(100% - 2px);
-  height: calc(100% - 191px);
+  height: calc(100% - 156px);
   flex-direction: column;
   justify-content: center;
 }
