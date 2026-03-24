@@ -449,7 +449,9 @@
   .atfp-error-modal-box-close {
   background-color: #ffffff;
   border: none;
-  color: #000000;
+  color: var(--wp-admin-theme-color,#2271b1);
+  font-size: 14px;
+  font-weight: 600;
 }
 
 #atfp-setting-modal .atfp-error-modal-box
@@ -457,6 +459,7 @@
   .atfp-error-modal-box-close:hover {
   background-color: #fff;
   border-color: #fff;
+  color: var(--wp-admin-theme-color-darker-20, #1c5788);
 }
 
 #atfp-setting-modal .atfp-error-modal-box
