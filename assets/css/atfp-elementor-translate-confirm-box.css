@@ -1,87 +1,196 @@
 .atfp-elementor-translate-confirm-box{
-    display: none;
     position: fixed;
-    z-index: 99999;
     top: 0;
+    left: 0;
     width: 100%;
-    height: 100vh;
-    overflow: hidden;
-    background-color: rgba(0,0,0,.75);
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+    z-index: 100000;
     justify-content: center;
     align-items: center;
-    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+    transition: all 0.3s ease;
+    display: flex !important;
+    opacity: 1;
+    visibility: visible;
 }
 
 .atfp-elementor-translate-confirm-box .modal-content{
-    padding: 16px;
-    text-align: center;
-    position: relative;
-    background-color: #fefefe;
-    width: clamp(200px,400px,80%);
-    height: auto;
-    overflow: hidden;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,.2),0 6px 20px 0 rgba(0,0,0,.19);
-    -webkit-animation-name: animatetopsetting;
-    -webkit-animation-duration: .6s;
-    -webkit-animation-fill-mode: forwards;
-    animation-name: animatetopsetting;
-    animation-duration: .6s;
-    animation-fill-mode: forwards;
-    padding-block: 16px;
-    color: #000;
+    background: #ffffff;
+    width: 500px;
+    max-width: 90%;
     border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    transform: scale(1);
 }
 
-.atfp-elementor-translate-confirm-box .modal-content p{
+.atfp-elementor-translate-confirm-box .modal-header{
+    background: #ffffff;
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #f0f0f1;
+}
+
+.atfp-elementor-translate-confirm-box .modal-header .atfp-modal-header-left{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.atfp-elementor-translate-confirm-box .modal-header .atfp-modal-header-left .dashicons{
+    color: #0073aa;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+}
+
+.atfp-elementor-translate-confirm-box .modal-header .atfp-modal-header-left h3{
+    margin: 0;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #1d2327;
+}
+
+.atfp-elementor-translate-confirm-box .modal-header .atfp-modal-close{
+    font-size: 20px;
+    color: #a7aaad;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.atfp-elementor-translate-confirm-box .atfp-modal-body{
+    padding: 30px 40px;
+    text-align: center;
+}
+
+.atfp-elementor-translate-confirm-box .atfp-modal-body p{
+    font-size: 15px;
+    color: #646970;
+    margin: 0 0 24px 0;
+    line-height: 1.5;
+}
+
+.atfp-elementor-translate-confirm-box .atfp-modal-body .atfp-translate-button{
+    width: 100%;
+    padding: 10px 20px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    background: #0073aa !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 6px !important;
+    cursor: pointer;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background 0.2s ease !important;
+    height: auto !important;
+    margin-bottom: 24px !important;
+}
+
+.atfp-elementor-translate-confirm-box .atfp-modal-body .atfp-translate-button:disabled{
+    color: #a7aaad !important;
+    background: #f6f7f7 !important;
+}
+
+.atfp-elementor-translate-confirm-box .atfp-modal-body .atfp-translate-button.loading{
+    gap: 0px !important;
+}
+
+.atfp-elementor-translate-confirm-box .atfp-modal-body .atfp-translate-button.loading .dot{
+    width: 4px;
+    height: 4px;
+    border-radius: 999px;
+    background: #a7aaad;
+    margin-left: 1px;
+    margin-top: 6px;
+    opacity: 0.25;
+    animation: atfp-loadingBlink 1.05s infinite ease-in-out;
+    animation-delay: calc(var(--i) * 0.18s - 1.05s);
+    will-change: opacity, transform;
+}
+
+.atfp-elementor-translate-confirm-box .atfp-modal-body .atfp-translate-button .dashicons{
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    color: #fff;
+}
+
+.atfp-elementor-translate-confirm-box .atfp-modal-body .atfp-marketing-card{
+    background: #f0f6fc;
+    border: 1px solid #c5d9e2;
+    border-radius: 8px;
+    padding: 24px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.atfp-elementor-translate-confirm-box .atfp-modal-body .atfp-marketing-card h4{
+    margin: 0 0 8px 0;
     font-size: 16px;
+    font-weight: 700;
+    color: #0073aa;
 }
 
-.atfp-elementor-translate-confirm-box .modal-content button[data-value]{
+.atfp-elementor-translate-confirm-box .atfp-modal-body .atfp-marketing-card .atfp-marketing-buttons{
+    text-align: center;
+}
+
+.atfp-elementor-translate-confirm-box .atfp-modal-body .atfp-marketing-card .atfp-marketing-buttons .atfp-marketing-btn{
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    padding: 10px 15px;
+    border-radius: 6px;
     font-size: 13px;
-    line-height: 1.3;
-    min-height: 30px;
-    margin: 0 0.3rem;
-    cursor: pointer;
-    border-width: 1px;
-    border-style: solid;
-    -webkit-appearance: none;
-    border-radius: 3px;
-    box-sizing: border-box;
-    font-family: inherit;
-    font-weight: inherit;
-    vertical-align: top;
+    font-weight: 600;
     text-decoration: none;
-    text-shadow: none;
-    text-align: center;
-}
-
-.atfp-elementor-translate-confirm-box .modal-content button[data-value="yes"]{
-    padding: 2px 11px;
+    transition: all 0.2s ease;
+    gap: 6px;
+    flex: 1;
     white-space: nowrap;
-    background: #3db63d;
-    border-color: #33a133;
-    color: #fff;
 }
 
-.atfp-elementor-translate-confirm-box .modal-content button[data-value="no"]{
-    background: #ee4237;
-    border-color: #dd362b;
-    color: #fff;
-    padding: 2px 11px;
-    display: inline-flex;
-    align-items: center;
+.atfp-primary-btn {
+    background: #0073aa;
+    color: #fff !important;
+    border: 1px solid #0073aa;
 }
 
-.atfp-elementor-translate-confirm-box .modal-content button[data-value="yes"]:hover{
-    background: #37a737;
-    border-color: #238b23;
+.atfp-elementor-translate-confirm-box .modal-footer-notice{
+    background: #ffffff;
+    border-top: 1px solid #f0f0f1;
+    padding: 16px 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
 }
 
-.atfp-elementor-translate-confirm-box .modal-content button[data-value="no"]:hover{
-    background: #dd382e;
-    border-color: #c72a20;
+.atfp-elementor-translate-confirm-box .modal-footer-notice .dashicons{
+    color: #dba617;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    margin-top: 1px;
+}
+
+.atfp-elementor-translate-confirm-box .modal-footer-notice p{
+    margin: 0;
+    font-size: 13px;
+    color: #646970;
+    font-style: italic;
+    line-height: 1.5;
+    text-align: left;
 }

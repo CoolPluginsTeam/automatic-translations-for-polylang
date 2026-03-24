@@ -38,24 +38,24 @@ const StringModalBodyNotice = () => {
 
     if (postMetaSync) {
       notices.push({
-        className: 'atfp-notice atfp-notice-error', message: <p>
-          {__('For accurate custom field translations, please disable the Custom Fields synchronization in ', 'autopoly-ai-translation-for-polylang')}
+        className: 'atfp-notice atfp-notice-warning',isDismissible: true, message: <div>
+          {__('⚠️ For accurate custom field translations, please disable the Custom Fields synchronization in ', 'automatic-translations-for-polylang')}
           <a
             href={`${atfp_global_object.admin_url}admin.php?page=mlang_settings`}
             target="_blank"
             rel="noopener noreferrer"
           >
-            {__('Polylang settings', 'autopoly-ai-translation-for-polylang')}
+            {__('Polylang settings', 'automatic-translations-for-polylang')}
           </a>
-          {__('. This may affect linked posts or pages.', 'autopoly-ai-translation-for-polylang')}
-        </p>
+          {__('. This may affect linked posts or pages.', 'automatic-translations-for-polylang')}
+        </div>
       });
     }
 
     const blockRules = select('block-atfp/translate').getBlockRules();
 
     if (!blockRules.AtfpBlockParseRules || Object.keys(blockRules.AtfpBlockParseRules).length === 0) {
-      notices.push({ className: 'atfp-notice atfp-notice-error', message: <p>{__('No block rules were found. It appears that the block-rules.JSON file could not be fetched, possibly because it is blocked by your server settings. Please check your server configuration to resolve this issue.', 'autopoly-ai-translation-for-polylang')}</p> });
+      notices.push({ className: 'atfp-notice atfp-notice-error', message: <div>{__('No block rules were found. It appears that the block-rules.JSON file could not be fetched, possibly because it is blocked by your server settings. Please check your server configuration to resolve this issue.', 'automatic-translations-for-polylang')}</div> });
     }
   }
 
@@ -130,7 +130,7 @@ const App = () => {
       const metaFieldBtn = document.querySelector(translateWrpSelector);
       if (metaFieldBtn) {
         metaFieldBtn.disabled = true;
-        metaFieldBtn.value = __("Already Translated", 'autopoly-ai-translation-for-polylang');
+        metaFieldBtn.value = __("Already Translated", 'automatic-translations-for-polylang');
       }
     }
   }, [pageTranslate]);
@@ -159,19 +159,50 @@ const createMessagePopup = () => {
   const postType = window.atfp_global_object.post_type;
   const targetLang = window.atfp_global_object.target_lang;
   const targetLangName = atfp_global_object.languageObject[targetLang]['name'];
+  const atfpUrl=window.atfp_global_object.atfp_url;
+  const magincWandUrl=atfpUrl + 'assets/images/magic-wand.svg';
 
   const messagePopup = document.createElement('div');
   messagePopup.id = 'atfp-modal-open-warning-wrapper';
   messagePopup.innerHTML = `
     <div class="modal-container" style="display: flex">
       <div class="modal-content">
-        <p>${sprintf(__("Would you like to duplicate your original %s content and have it automatically translated into %s?", 'autopoly-ai-translation-for-polylang'), postType, targetLangName)}</p>
-        <div>
-          <div data-value="yes">${__("Yes", 'autopoly-ai-translation-for-polylang')}</div>
-          <div data-value="no">${__("No", 'autopoly-ai-translation-for-polylang')}</div>
+        <div class="modal-header">
+            <div class="atfp-modal-header-left">
+                <img src="${magincWandUrl}" style="width: 20px; height: 20px; margin-right: 5px; filter: brightness(0) invert(0);" alt="${__("AI", "automatic-translations-for-polylang")}">
+                <h3>${__("AI Translation", "automatic-translations-for-polylang")}</h3>
+            </div>
+            <span class="atfp-modal-close dashicons dashicons-no-alt" data-value="no"></span>
+        </div>
+        <div class="atfp-modal-body">
+          <div class="atfp-main-section">
+              <p>${sprintf(__("Would you like to duplicate your original %s content and have it automatically translated into %s?", 'automatic-translations-for-polylang'), postType, targetLangName)}</p>
+              <button type="button" class="atfp-translate-button button" data-value="yes" id="atfp-translate-button" data-value="yes">
+                  <img src="${magincWandUrl}" style="width: 20px; height: 20px; margin-right: 5px; filter: brightness(0) invert(1);" alt="AI">
+                  Translate Now
+              </button>
+          </div>
+          <div class="atfp-marketing-card">
+              <h4>Want Unlimited or Bulk Translation?</h4>                        
+              <div class="atfp-marketing-buttons">
+                  <a href="${window.atfp_global_object.pro_version_url}" target="_blank" class="atfp-marketing-btn atfp-primary-btn">
+                      <img src="${magincWandUrl}" style="width: 20px; height: 20px; margin-right: 5px; filter: brightness(0) invert(1);" alt="AI"><span class="atfp-btn-text">Upgrade Pro</span>
+                  </a>
+              </div>
+          </div>
+        </div>
+        <div class="modal-footer-notice">
+          <span class="dashicons dashicons-warning"></span>
+          <p><em>${__("Note: close this popup if you do not want AI translation.", "automatic-translations-for-polylang")}</em></p>
         </div>
       </div>
     </div>`;
+
+  messagePopup.querySelector('.atfp-modal-close').addEventListener('click', (e) => {
+    e.preventDefault();
+    messagePopup.remove();
+  });
+
   return messagePopup;
 };
 

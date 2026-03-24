@@ -10,7 +10,7 @@ import { __ , sprintf } from "@wordpress/i18n";
 import ErrorModalBox from "../component/error-modal-box";
 
 const SettingModal = (props) => {
-    const [targetBtn, setTargetBtn] = useState({});
+    const [activeProvider, setActiveProvider] = useState({});
     const [modalRender, setModalRender] = useState(0);
     const [settingVisibility, setSettingVisibility] = useState(false);
     const sourceLang = atfp_global_object.source_lang;
@@ -50,7 +50,7 @@ const SettingModal = (props) => {
      * Triggers the setSettingVisibility only when user click on meta field Button.
     */
     useEffect(() => {
-        const firstRenderBtns = document.querySelectorAll('#atfp-modal-open-warning-wrapper .modal-content div[data-value]');
+        const firstRenderBtns = document.querySelectorAll('#atfp-modal-open-warning-wrapper .modal-content button.atfp-translate-button[data-value="yes"]');
         const metaFieldBtn = document.querySelector(props.translateWrpSelector);
 
         if (metaFieldBtn) {
@@ -73,12 +73,11 @@ const SettingModal = (props) => {
     useEffect(() => {
         const languageSupportedStatus = async () => {
             const localAiTranslatorSupport = await ChromeLocalAiTranslator.languageSupportedStatus(sourceLang, targetLang, targetLangName, sourceLangName);
-            const translateBtn = document.querySelector('.atfp-service-btn#atfp-local-ai-translator-btn');
 
-            if (localAiTranslatorSupport !== true && typeof localAiTranslatorSupport === 'object' && translateBtn) {
+            if (localAiTranslatorSupport !== true && typeof localAiTranslatorSupport === 'object') {
                 setChromeAiBtnDisabled(true);
     
-                setServiceModalErrors(prev => ({ ...prev, localAiTranslator: {message: localAiTranslatorSupport, Title: __("Chrome AI Translator", 'autopoly-ai-translation-for-polylang')} }));
+                setServiceModalErrors(prev => ({ ...prev, localAiTranslator: {message: localAiTranslatorSupport} }));
             }
         };
         if(settingVisibility){
@@ -87,10 +86,10 @@ const SettingModal = (props) => {
                     ...prev,
                     yandex: {
                         message: "<p style={{ fontSize: '1rem', color: '#ff4646' }}>"+sprintf(
-                            __("Yandex Translate does not support the target language: %s.", 'autopoly-ai-translation-for-polylang'),
+                            __("Yandex Translate does not support the target language: %s.", 'automatic-translations-for-polylang'),
                             "<strong>"+targetLangName + " ("+targetLang+")</strong>"
                         )+"</p>",
-                        Title: __("Yandex Translate", 'autopoly-ai-translation-for-polylang')
+                        Title: __("Yandex Translate", 'automatic-translations-for-polylang')
                     }
                 }));
             };
@@ -103,9 +102,8 @@ const SettingModal = (props) => {
      * useEffect hook to handle displaying the modal and rendering the PopStringModal component.
      */
     useEffect(() => {
-        const btn = targetBtn;
-        const service = btn.dataset && btn.dataset.service;
-        const serviceLabel = btn.dataset && btn.dataset.serviceLabel;
+        const service = activeProvider.service;
+        const serviceLabel = activeProvider.serviceLabel;
         const postId = props.postId;
 
         const parentWrp = document.getElementById("atfp_strings_model");
@@ -142,26 +140,28 @@ const SettingModal = (props) => {
      * Sets the target button and updates the fetch status to true.
      * @param {Event} e - The event object representing the button click.
      */
-    const fetchContent = async (e) => {
-        let targetElement = !e.target.classList.contains('atfp-service-btn') ? e.target.closest('.atfp-service-btn') : e.target;
+    const updateActiveProviderHandler = async (service, serviceLabel) => {
 
-        if (!targetElement) {
-            return;
-        }
-
-        const dataService = targetElement.dataset && targetElement.dataset.service;
-        setSettingVisibility(false);
-
-        if (dataService === 'localAiTranslator') {
+        if (service === 'localAiTranslator') {
             const localAiTranslatorSupport = await ChromeLocalAiTranslator.languageSupportedStatus(sourceLang, targetLang, targetLangName);
             if (localAiTranslatorSupport !== true && typeof localAiTranslatorSupport === 'object') {
                 return;
             }
         }
-        
-        setModalRender(prev => prev + 1);
-        setTargetBtn(targetElement);
+
+        setActiveProvider({ service, serviceLabel });
     };
+    
+    const fetchContent = async () => {
+        const activeService = activeProvider.service;
+        
+        if(!activeService){
+            return;
+        }
+        
+        setSettingVisibility(false);
+        setModalRender(prev => prev + 1);
+    }
 
     const handleSettingVisibility = (visibility) => {
         setSettingVisibility(visibility);
@@ -183,19 +183,18 @@ const SettingModal = (props) => {
                         />
                         <SettingModalBody
                             yandexDisabled={!yandexSupport}
-                            fetchContent={fetchContent}
                             imgFolder={imgFolder}
                             targetLangName={targetLangName}
                             postType={props.postType}
                             sourceLangName={sourceLangName}
                             localAiTranslatorDisabled={chromeAiBtnDisabled}
                             openErrorModalHandler={openErrorModalHandler}
-                        />
+                            onSelectProvider={updateActiveProviderHandler}
+                            activeProvider={activeProvider.service}
+                            />
                         <SettingModalFooter
-                            targetLangName={targetLangName}
-                            postType={props.postType}
-                            sourceLangName={sourceLangName}
-                            setSettingVisibility={handleSettingVisibility}
+                            selectedProvider={activeProvider.service}
+                            onStartTranslation={fetchContent}
                         />
                     </div>
                 </div>

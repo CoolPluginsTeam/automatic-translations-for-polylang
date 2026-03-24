@@ -1,3 +1,7 @@
+:where(#atfp-setting-modal,#atfp_strings_model){
+    color: #3c434a;
+}
+
 button.elementor-button.atfp-translate-button:enabled {
     border-radius: 0px;
     color: rgb(12, 13, 14);
@@ -41,7 +45,7 @@ button.atfp-setting-close:hover {
     border-radius: 2px;
 }
 
-.save_it.button-primary {
+.save_it.button-primary,.setting-start-translation.button-primary {
     background: #2271b1;
     border-color: #2271b1;
     color: #fff;

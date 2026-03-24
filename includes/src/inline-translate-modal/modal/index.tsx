@@ -389,7 +389,7 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
     setIsModalOpen(false);
   }
 
-  return (isErrorModalOpen ? <ErrorModalBoxCompat message={langError} onClose={() => {setIsErrorModalOpen(false); setIsModalOpen(true)}} Title={__("Chrome built-in translator AI", 'autopoly-ai-translation-for-polylang')}>
+  return (isErrorModalOpen ? <ErrorModalBoxCompat message={langError} onClose={() => {setIsErrorModalOpen(false); setIsModalOpen(true)}} Title={__("Chrome built-in translator AI", 'automatic-translations-for-polylang')}>
     {errorBtns.length > 0 && <ButtonGroupCompat className={styles.errorBtnGroup} buttons={errorBtns} />}
   </ErrorModalBoxCompat> : isModalOpen ? (
     isModalOpen ? (
@@ -438,7 +438,7 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
               {langError && langError !== "" && (
                 <div className={styles.languageErrorButtonWrapper}>
                   <button className={styles.languageErrorButton} onClick={HandlerLanguageError}>
-                    {__("Language Error Details", 'autopoly-ai-translation-for-polylang')}
+                    {__("Language Error Details", 'automatic-translations-for-polylang')}
                   </button>
                 </div>
               )}

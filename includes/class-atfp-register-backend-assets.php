@@ -288,14 +288,16 @@ class ATFP_Register_Backend_Assets
 
         $source_lang_name=PLL()->model->get_language($source_lang_name);
         $target_lang_name=PLL()->model->get_language($target_lang_name);
+        $maginc_wand_url=ATFP_URL . 'assets/images/magic-wand.svg';
+        $buy_pro_url=esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/');
 
-        wp_enqueue_script('atfp-elementor-confirm-box', ATFP_URL . 'assets/js/atfp-elementor-translate-confirm-box.js', array('jquery', 'wp-i18n'), ATFP_V, true);
+        wp_enqueue_script('atfp-elementor-confirm-box', ATFP_URL . 'assets/js/atfp-elementor-translate-confirm-box.min.js', array('jquery', 'wp-i18n'), ATFP_V, true);
 
         wp_localize_script('atfp-elementor-confirm-box', 'atfpElementorConfirmBoxData',
-            array('postId' => $post_id, 'parentPostId' => $parent_post_id, 'sourceLangSlug' => $source_lang_name->slug, 'targetLangSlug' => $target_lang_name->slug, 'sourceLangName' => $source_lang_name->name, 'targetLangName' => $target_lang_name->name, 'editorType' => $editor_type)
+            array('postId' => $post_id, 'targetLangSlug' => $target_lang_name->slug, 'editorType' => $editor_type, 'maginc_wand_url' => $maginc_wand_url, 'buy_pro_url' => $buy_pro_url)
         );
 
-        wp_enqueue_style('atfp-elementor-confirm-box', ATFP_URL . 'assets/css/atfp-elementor-translate-confirm-box.css', array(), ATFP_V);
+        wp_enqueue_style('atfp-elementor-confirm-box', ATFP_URL . 'assets/css/atfp-elementor-translate-confirm-box.min.css', array(), ATFP_V);
     }
 
     private function enqueue_inline_translation_assets( $type = 'block', $extra_dependencies = array() ) {

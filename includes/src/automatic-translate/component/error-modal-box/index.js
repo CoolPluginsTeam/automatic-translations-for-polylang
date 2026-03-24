@@ -1,8 +1,9 @@
 import CopyClipboard from "../copy-clipboard";
 import { useEffect } from "@wordpress/element";
 import DOMPurify from 'dompurify';
+import { __ } from "@wordpress/i18n";
 
-const ErrorModalBox = ({ message, onClose, Title }) => {
+const ErrorModalBox = ({ message, onClose, Title= 'AutoPoly - AI Translation For Polylang' }) => {
 
     let dummyElement = jQuery('<div>').append(message);
     const stringifiedMessage = dummyElement.html();
@@ -51,15 +52,15 @@ const ErrorModalBox = ({ message, onClose, Title }) => {
     return (
         <div className="atfp-error-modal-box-container">
             <div className="atfp-error-modal-box">
-                <div className="atfp-error-modal-box-header">
-                    <span className="atfp-error-modal-box-close" onClick={onClose}>×</span>
+            <div className="atfp-error-modal-box-header">
                     {Title && <h3>{Title}</h3>}
+                    <button type="button" aria-label={__('Close', 'automatic-translations-for-polylang')} className="atfp-error-modal-box-close" onClick={onClose}>&times;</button>
                 </div>
                 <div className="atfp-error-modal-box-body">
                     <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(stringifiedMessage) }} />
                 </div>
                 <div className="atfp-error-modal-box-footer">
-                    <button className="atfp-error-modal-box-close button button-primary" onClick={onClose}>Close</button>
+                    <button className="atfp-error-modal-box-close button button-primary" onClick={onClose}>&#8592; {__('Back', 'automatic-translations-for-polylang')}</button>
                 </div>
             </div>
         </div>
