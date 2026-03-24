@@ -58,7 +58,7 @@
   .atfp-modal-header-left {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 1px;
 }
 
 :is(#atfp-modal-open-warning-wrapper, #atfp-pro-notice-wrapper)
@@ -110,7 +110,7 @@
   display: flex !important;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 1px;
   transition: background 0.2s ease !important;
   height: auto !important;
   margin-bottom: 24px !important;
@@ -159,7 +159,7 @@
   font-weight: 600;
   text-decoration: none;
   transition: all 0.2s ease;
-  gap: 6px;
+  gap: 1px;
   flex: 1;
   white-space: nowrap;
 }
