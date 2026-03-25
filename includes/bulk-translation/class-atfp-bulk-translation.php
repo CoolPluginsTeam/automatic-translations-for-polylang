@@ -18,7 +18,6 @@ if(!class_exists('ATFP_Bulk_Translation')):
         public function __construct()
         {
             add_action('current_screen', array($this, 'bulk_translate_btn'));
-            add_action('admin_head', array($this, 'bulk_translate_btn_style'));
         }
 
         public function bulk_translate_btn($screen)
@@ -59,35 +58,11 @@ if(!class_exists('ATFP_Bulk_Translation')):
 				$atfp_utm_parameters=ATFP_Helper::utm_source_text();
 			}
 
-            echo wp_kses("<a class='button atfp-bulk-translate-btn' style='display:none;' title='Bulk Translate option is avialable in pro version only' href='https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?".sanitize_text_field($atfp_utm_parameters)."&utm_medium=inside&utm_campaign=get_pro&utm_content=bulk_translate' target='_blank'>Bulk Translate (Pro)</a>",
+            echo wp_kses("<a class='button button-primary atfp-bulk-translate-btn' style='display:none;' title='Bulk Translate option is avialable in pro version only' href='https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?".sanitize_text_field($atfp_utm_parameters)."&utm_medium=inside&utm_campaign=get_pro&utm_content=bulk_translate' target='_blank'>Bulk Translate</a>",
                 array('a' => array('class' => array(), 'style' => array(), 'title' => array(), 'href' => array(), 'target' => array(), 'rel' => array()))
             );
 
             return $views;
-        }
-
-        public function bulk_translate_btn_style()
-        {
-            if(!function_exists('get_current_screen') || !is_admin()){
-                return;
-            }
-
-            $screen = get_current_screen();
-
-            if(!$screen || !isset($screen->post_type)){
-                return;
-            }
-
-            global $polylang;
-
-            $translated_post_types = $polylang->model->get_translated_post_types();
-            $translated_post_types = array_keys($translated_post_types);
-
-            if(!in_array($screen->post_type, $translated_post_types)){
-                return;
-            }
-
-            echo wp_kses("<style>.atfp-bulk-translate-btn{background:#f6f7f7!important;border-color:#c3c4c7!important;color:#50575e!important;transition:all .3s ease-in-out}.atfp-bulk-translate-btn:hover{background:#e1e1e1!important;border-color:#c9c9c9!important;}</style>",array('style'=>array()));
         }
     }
 endif;
