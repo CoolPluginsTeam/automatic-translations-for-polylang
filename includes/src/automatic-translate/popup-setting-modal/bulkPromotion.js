@@ -28,14 +28,14 @@ const BulkPromotionModal = ({ onClick, characterCount }) => {
                                 rel="noopener noreferrer"
                                 className="button button-primary"
                             >
-                                Try Bulk Translation
+                                {__("Try Bulk Translation", "automatic-translations-for-polylang")}
                             </a>
                             <button
                                 type="button"
                                 className="button button-secondary"
                                 onClick={onClick}
                             >
-                                Continue Manually
+                                {__("Continue Translation", "automatic-translations-for-polylang")}
                             </button>
                         </div>
                     </div>
