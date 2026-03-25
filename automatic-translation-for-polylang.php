@@ -668,17 +668,6 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 				// translators: 1: Source language, 2: Target language
 				echo esc_html( sprintf( __( 'Translate or duplicate content from %1$s to %2$s', 'automatic-translations-for-polylang' ), $source_language, $target_language ) ); ?></p>
 				<?php
-				if(class_exists('Atfp_Dashboard') && !Atfp_Dashboard::atfp_hide_review_notice_status('atfp')){
-					?>
-					<hr>
-					<div class="atfp-review-meta-box">
-					<p><?php echo esc_html__( 'We hope you find our plugin helpful for your translation needs. Your feedback is valuable to us!', 'automatic-translations-for-polylang' ); ?>
-					<br>
-					<a href="<?php echo esc_url( 'https://wordpress.org/support/plugin/automatic-translations-for-polylang/reviews/#new-post' ); ?>" class="components-button is-primary is-small" target="_blank"><?php echo esc_html__( 'Rate Us', 'automatic-translations-for-polylang' ); ?><span> ★★★★★</span></a>
-					</p>
-					</div>
-					<?php
-				}
 			}
 		}
 

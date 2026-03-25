@@ -8,6 +8,7 @@ import SettingModalBody from "./body";
 import SettingModalFooter from "./footer";
 import { __ , sprintf } from "@wordpress/i18n";
 import ErrorModalBox from "../component/error-modal-box";
+import BulkPromotionModal from "./bulkPromotion";
 
 const SettingModal = (props) => {
     const [activeProvider, setActiveProvider] = useState({});
@@ -22,6 +23,8 @@ const SettingModal = (props) => {
     const [serviceModalErrors, setServiceModalErrors] = useState({});
     const [errorModalVisibility, setErrorModalVisibility] = useState(false);
     const [chromeAiBtnDisabled, setChromeAiBtnDisabled] = useState(false);
+    const [showBulkPromotionModal, setShowBulkPromotionModal] = useState(false);
+    const characterCount = parseInt(window.atfp_global_object.translation_data.total_character_count);
 
     const openModalOnLoadHandler = (e) => {
         e.preventDefault();
@@ -29,7 +32,11 @@ const SettingModal = (props) => {
         const visibility = btnElement.dataset.value;
 
         if (visibility === 'yes') {
-            setSettingVisibility(true);
+            if(characterCount > 100000){
+                setShowBulkPromotionModal(true);
+            }else{
+                setSettingVisibility(true);
+            }
         }
 
         btnElement.closest('#atfp-modal-open-warning-wrapper').remove();
@@ -56,7 +63,11 @@ const SettingModal = (props) => {
         if (metaFieldBtn) {
             metaFieldBtn.addEventListener('click', (e) => {
                 e.preventDefault();
-                setSettingVisibility(prev => !prev);
+                if(characterCount > 100000){
+                    setShowBulkPromotionModal(true);
+                }else{
+                    setSettingVisibility(prev => !prev);
+                }
             });
         }
 
@@ -167,8 +178,14 @@ const SettingModal = (props) => {
         setSettingVisibility(visibility);
     }
 
+    const handleBulkPromotionModal = () => {
+        setShowBulkPromotionModal(false);
+        setSettingVisibility(true);
+    }
+
     return (
         <>
+        {characterCount > 100000 && showBulkPromotionModal && <BulkPromotionModal onClick={handleBulkPromotionModal} characterCount={characterCount} />}
             {errorModalVisibility && serviceModalErrors[errorModalVisibility] &&
                 <ErrorModalBox onClose={closeErrorModal} {...serviceModalErrors[errorModalVisibility]}/>
             }

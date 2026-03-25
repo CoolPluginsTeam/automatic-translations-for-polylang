@@ -1,6 +1,6 @@
 :is(
     #atfp-modal-open-warning-wrapper,
-    #atfp-pro-notice-wrapper,
+    #atfp-limit-notice-wrapper,
     #atfp-setting-modal,
     #atfp_strings_model
   )
@@ -24,7 +24,7 @@
 
 :is(
     #atfp-modal-open-warning-wrapper,
-    #atfp-pro-notice-wrapper,
+    #atfp-limit-notice-wrapper,
     #atfp-setting-modal
   )
   .modal-content {
@@ -44,7 +44,36 @@
   transform: scale(1);
 }
 
-:is(#atfp-modal-open-warning-wrapper, #atfp-pro-notice-wrapper) .modal-header {
+#atfp-limit-notice-wrapper .modal-content {
+  width: 600px !important;
+  max-width: 95% !important;
+}
+
+#atfp-limit-notice-wrapper .bulk-notice-buttons{
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+#atfp-limit-notice-wrapper .bulk-notice-buttons a{
+  padding: 10px 20px!important;
+  font-size: 16px!important;
+  font-weight: 600!important;
+  background: #0073aa!important;
+  color: #fff!important;
+  border: none!important;
+  border-radius: 6px!important;
+  cursor: pointer;
+  display: flex!important;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  transition: background .2s ease!important;
+  height: auto!important;
+  line-height: 1.4em;
+}
+
+:is(#atfp-modal-open-warning-wrapper, #atfp-limit-notice-wrapper) .modal-header {
   background: #ffffff;
   padding: 20px 24px;
   display: flex;
@@ -53,7 +82,7 @@
   border-bottom: 1px solid #f0f0f1;
 }
 
-:is(#atfp-modal-open-warning-wrapper, #atfp-pro-notice-wrapper)
+:is(#atfp-modal-open-warning-wrapper, #atfp-limit-notice-wrapper)
   .modal-header
   .atfp-modal-header-left {
   display: flex;
@@ -61,7 +90,7 @@
   gap: 1px;
 }
 
-:is(#atfp-modal-open-warning-wrapper, #atfp-pro-notice-wrapper)
+:is(#atfp-modal-open-warning-wrapper, #atfp-limit-notice-wrapper)
   .modal-header
   .atfp-modal-header-left
   h3 {
@@ -73,7 +102,7 @@
   color: #1d2327;
 }
 
-:is(#atfp-modal-open-warning-wrapper, #atfp-pro-notice-wrapper)
+:is(#atfp-modal-open-warning-wrapper, #atfp-limit-notice-wrapper)
   .modal-header
   .atfp-modal-close {
   font-size: 20px;
@@ -82,13 +111,13 @@
   transition: color 0.2s;
 }
 
-:is(#atfp-modal-open-warning-wrapper, #atfp-pro-notice-wrapper)
+:is(#atfp-modal-open-warning-wrapper, #atfp-limit-notice-wrapper)
   .atfp-modal-body {
-  padding: 30px 40px;
+  padding: 20px 24px;
   text-align: center;
 }
 
-:is(#atfp-modal-open-warning-wrapper, #atfp-pro-notice-wrapper)
+:is(#atfp-modal-open-warning-wrapper, #atfp-limit-notice-wrapper)
   .atfp-modal-body
   p {
   font-size: 15px;
@@ -117,8 +146,8 @@
   line-height: 1.4em;
 }
 
-:is(#atfp-modal-open-warning-wrapper, #atfp-pro-notice-wrapper)
-  .atfp-modal-body
+#atfp-modal-open-warning-wrapper
+.atfp-modal-body
   .atfp-marketing-card {
   background: #f0f6fc;
   border: 1px solid #c5d9e2;
@@ -128,7 +157,7 @@
   margin-top: 20px;
 }
 
-:is(#atfp-modal-open-warning-wrapper, #atfp-pro-notice-wrapper)
+#atfp-modal-open-warning-wrapper
   .atfp-modal-body
   .atfp-marketing-card
   h4 {
@@ -138,14 +167,14 @@
   color: #0073aa;
 }
 
-:is(#atfp-modal-open-warning-wrapper, #atfp-pro-notice-wrapper)
+#atfp-modal-open-warning-wrapper
   .atfp-modal-body
   .atfp-marketing-card
   .atfp-marketing-buttons {
   text-align: center;
 }
 
-:is(#atfp-modal-open-warning-wrapper, #atfp-pro-notice-wrapper)
+#atfp-modal-open-warning-wrapper
   .atfp-modal-body
   .atfp-marketing-card
   .atfp-marketing-buttons
@@ -170,7 +199,7 @@
   border: 1px solid #0073aa;
 }
 
-:is(#atfp-modal-open-warning-wrapper, #atfp-pro-notice-wrapper)
+:is(#atfp-modal-open-warning-wrapper, #atfp-limit-notice-wrapper)
   .modal-footer-notice {
   background: #ffffff;
   border-top: 1px solid #f0f0f1;
@@ -180,7 +209,7 @@
   gap: 12px;
 }
 
-:is(#atfp-modal-open-warning-wrapper, #atfp-pro-notice-wrapper)
+:is(#atfp-modal-open-warning-wrapper, #atfp-limit-notice-wrapper)
   .modal-footer-notice
   .dashicons {
   color: #dba617;
@@ -190,7 +219,7 @@
   margin-top: 1px;
 }
 
-:is(#atfp-modal-open-warning-wrapper, #atfp-pro-notice-wrapper)
+:is(#atfp-modal-open-warning-wrapper, #atfp-limit-notice-wrapper)
   .modal-footer-notice
   p {
   margin: 0;
