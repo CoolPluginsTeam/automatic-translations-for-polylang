@@ -32,11 +32,7 @@ const SettingModal = (props) => {
         const visibility = btnElement.dataset.value;
 
         if (visibility === 'yes') {
-            if(characterCount > 100000){
-                setShowBulkPromotionModal(true);
-            }else{
-                setSettingVisibility(true);
-            }
+            setSettingVisibility(true);
         }
 
         btnElement.closest('#atfp-modal-open-warning-wrapper').remove();
@@ -57,6 +53,12 @@ const SettingModal = (props) => {
      * Triggers the setSettingVisibility only when user click on meta field Button.
     */
     useEffect(() => {
+        const atfpModalOpenWarningContainer = document.querySelector('#atfp-modal-open-warning-wrapper .modal-container');
+        
+        if(atfpModalOpenWarningContainer){
+            atfpModalOpenWarningContainer.style.display = 'flex';
+        }
+
         const firstRenderBtns = document.querySelectorAll('#atfp-modal-open-warning-wrapper .modal-content button.atfp-translate-button[data-value="yes"]');
         const metaFieldBtn = document.querySelector(props.translateWrpSelector);
 
@@ -178,9 +180,11 @@ const SettingModal = (props) => {
         setSettingVisibility(visibility);
     }
 
-    const handleBulkPromotionModal = () => {
+    const handleBulkPromotionModal = (statue) => {
         setShowBulkPromotionModal(false);
-        setSettingVisibility(true);
+        if(statue === true){
+            setSettingVisibility(true);
+        }
     }
 
     return (

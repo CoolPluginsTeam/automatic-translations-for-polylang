@@ -44,6 +44,11 @@
   transform: scale(1);
 }
 
+#atfp-limit-notice-wrapper .modal-close,
+#atfp-modal-open-warning-wrapper .modal-close{
+  margin-top: -18px;
+}
+
 #atfp-limit-notice-wrapper .modal-content {
   width: 600px !important;
   max-width: 95% !important;
@@ -103,15 +108,6 @@
 }
 
 :is(#atfp-modal-open-warning-wrapper, #atfp-limit-notice-wrapper)
-  .modal-header
-  .atfp-modal-close {
-  font-size: 20px;
-  color: #a7aaad;
-  cursor: pointer;
-  transition: color 0.2s;
-}
-
-:is(#atfp-modal-open-warning-wrapper, #atfp-limit-notice-wrapper)
   .atfp-modal-body {
   padding: 20px 24px;
   text-align: center;
@@ -161,7 +157,7 @@
   .atfp-modal-body
   .atfp-marketing-card
   h4 {
-  margin: 0 0 8px 0;
+  margin: 0 0 15px 0;
   font-size: 16px;
   font-weight: 700;
   color: #0073aa;
@@ -572,7 +568,7 @@
 }
 
 :where(#atfp-setting-modal, #atfp_strings_model) .modal-header .step-label {
-  color: #3737e7;
+  color: var(--wp-admin-theme-color,#2271b1);
   font-size: 10px;
   font-weight: 600;
 }
@@ -594,7 +590,7 @@
   margin: 0 0 4px;
 }
 
-:where(#atfp-setting-modal, #atfp_strings_model) .modal-header .modal-close {
+:where(#atfp-modal-open-warning-wrapper, #atfp-setting-modal, #atfp_strings_model) .modal-header .modal-close {
   background: none;
   border: none;
   cursor: pointer;
@@ -603,6 +599,7 @@
   margin: 0;
   padding: 0;
   width: 24px;
+  color: #000;
 }
 
 #atfp-setting-modal .atfp-setting-modal-body .atfp-provider-cards {
@@ -1097,7 +1094,7 @@ button.atfp-setting-close:hover {
 #atfp_strings_model h3 {
   width: 100%;
   display: inline-block;
-  font-size: 22px;
+  font-size: 18px;
   padding: 0;
   margin: 20px 0 10px;
   color: var(--wp-admin-theme-color, #2271b1);
@@ -1356,7 +1353,7 @@ body
 }
 
 #atfp_strings_model #atfp-localAiTranslator-strings-modal h3 {
-  margin: 20px 0px;
+  margin: 0px;
 }
 
 #atfp_strings_model .atfp_string_container {

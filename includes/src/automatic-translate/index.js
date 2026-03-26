@@ -6,6 +6,7 @@ import UpdateGutenbergPage from './create-translated-post/gutenberg';
 import Notice from './component/notice';
 import { select } from '@wordpress/data';
 import { sprintf, __ } from '@wordpress/i18n';
+import FormatNumberCount from './component/format-number-count';
 
 // Elementor post fetch and update page
 import ElementorPostFetch from './fetch-post/elementor';
@@ -160,18 +161,19 @@ const createMessagePopup = () => {
   const targetLangName = atfp_global_object.languageObject[targetLang]['name'];
   const atfpUrl=window.atfp_global_object.atfp_url;
   const magincWandUrl=atfpUrl + 'assets/images/magic-wand.svg';
+  const characterCount = parseInt(window.atfp_global_object.translation_data.total_character_count);
 
   const messagePopup = document.createElement('div');
   messagePopup.id = 'atfp-modal-open-warning-wrapper';
   messagePopup.innerHTML = `
-    <div class="modal-container" style="display: flex">
+    <div class="modal-container" style="display: none !important">
       <div class="modal-content">
         <div class="modal-header">
             <div class="atfp-modal-header-left">
                 <img src="${magincWandUrl}" style="width: 20px; height: 20px; margin-right: 5px; filter: brightness(0) invert(0);" alt="${__("AI", "automatic-translations-for-polylang")}">
                 <h3>${__("AI Translation", "automatic-translations-for-polylang")}</h3>
             </div>
-            <span class="atfp-modal-close dashicons dashicons-no-alt" data-value="no"></span>
+            <button type="button" class="atfp-modal-close modal-close" data-value="no">&times;</span>
         </div>
         <div class="atfp-modal-body">
           <div class="atfp-main-section">
@@ -182,10 +184,20 @@ const createMessagePopup = () => {
               </button>
           </div>
           <div class="atfp-marketing-card">
-              <h4>Want Unlimited or Bulk Translation?</h4>                        
+              <h4>Translate Multiple Pages & Posts</h4>  
+              ${characterCount > 100000
+                ? `<p style="margin: 0 0 20px">
+                    ${__("You’ve already translated", "automatic-translations-for-polylang")} 
+                    <strong>${FormatNumberCount({number: characterCount})}+</strong> 
+                    ${__("characters manually.", "automatic-translations-for-polylang")}
+                    <br />
+                    ${__("Save time by translating multiple posts and pages in multiple languages on one click with", "automatic-translations-for-polylang")} 
+                    <strong>${__("Bulk Translation", "automatic-translations-for-polylang")}</strong>.
+                  </p>`
+                : ""}
               <div class="atfp-marketing-buttons">
                   <a href="${window.atfp_global_object.pro_version_url}" target="_blank" class="atfp-marketing-btn atfp-primary-btn">
-                      <img src="${magincWandUrl}" style="width: 20px; height: 20px; margin-right: 5px; filter: brightness(0) invert(1);" alt="AI"><span class="atfp-btn-text">Upgrade Pro</span>
+                      <img src="${magincWandUrl}" style="width: 20px; height: 20px; margin-right: 5px; filter: brightness(0) invert(1);" alt="AI"><span class="atfp-btn-text">Get Pro for Bulk Translation</span>
                   </a>
               </div>
           </div>

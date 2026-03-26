@@ -2,14 +2,18 @@ import FormatNumberCount from '../component/format-number-count';
 import { __ } from '@wordpress/i18n';
 
 const BulkPromotionModal = ({ onClick, characterCount }) => {
+    const atfpUrl=window.atfp_global_object.atfp_url;
+    const magincWandUrl=atfpUrl + 'assets/images/magic-wand.svg';
     return (
         <div id="atfp-limit-notice-wrapper">
             <div className="modal-container" style={{ display: 'flex' }}>
                 <div className="modal-content">
                     <div className="modal-header">
                         <div className="atfp-modal-header-left">
-                            <h3>{__("Upgrade Your Translation Workflow", "automatic-translations-for-polylang")}</h3>
+                        <img src={magincWandUrl} style={{width: '20px', height: '20px', marginRight: '5px', filter: 'brightness(0) invert(0)'}} alt={`${__("AI", "automatic-translations-for-polylang")}`}/>
+                        <h3>{__("AI Translation", "automatic-translations-for-polylang")}</h3>
                         </div>
+                        <button type="button" aria-label={__('Close', 'automatic-translations-for-polylang')} className='modal-close' onClick={() => onClick(false)}>&times;</button>
                     </div>
 
                     <div className="atfp-modal-body">
@@ -28,12 +32,12 @@ const BulkPromotionModal = ({ onClick, characterCount }) => {
                                 rel="noopener noreferrer"
                                 className="button button-primary"
                             >
-                                {__("Try Bulk Translation", "automatic-translations-for-polylang")}
+                                {__("Bulk Translation", "automatic-translations-for-polylang")}
                             </a>
                             <button
                                 type="button"
                                 className="button button-secondary"
-                                onClick={onClick}
+                                onClick={() => onClick(true)}
                             >
                                 {__("Continue Translation", "automatic-translations-for-polylang")}
                             </button>
