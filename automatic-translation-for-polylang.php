@@ -135,9 +135,21 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 			// nonce verification is not required here
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$page=isset($_GET['page']) ? sanitize_text_field(wp_unslash($_GET['page'])) : '';
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$active_tab=isset($_GET['tab']) ? sanitize_text_field(wp_unslash($_GET['tab'])) : '';
+			$utm_parameters='utm_source=atfp_plugin';
+			if(class_exists('ATFP_Helper')){
+				$utm_parameters=ATFP_Helper::utm_source_text();
+			}
+			$buy_pro_url=esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?' . sanitize_text_field($utm_parameters));
+			
 			if($page == 'polylang-atfp-dashboard') {
 				wp_enqueue_style( 'atfp-dashboard-style', ATFP_URL . 'admin/atfp-dashboard/css/admin-styles.css',null, ATFP_V, 'all' );
 				wp_enqueue_script( 'atfp-dashboard-script', ATFP_URL . 'admin/atfp-dashboard/js/atfp-data-share-setting.js', array('jquery'), ATFP_V, true );
+
+				if(empty($active_tab) || $active_tab === 'dashboard'){
+					wp_localize_script('atfp-dashboard-script', 'atfpSettingsScriptData', array('ajax_url' => admin_url('admin-ajax.php'), 'nonce' => wp_create_nonce('atfp_update_enabled_providers'), 'buy_pro_url' => $buy_pro_url));
+				}
 			}
 		}
 
@@ -342,7 +354,6 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 			
 			$valid_tabs = [
 				'dashboard'       => __('Dashboard', 'automatic-translations-for-polylang'),
-				'ai-translations' => __('AI Translations', 'automatic-translations-for-polylang'),
 				'settings'        => __('Settings', 'automatic-translations-for-polylang'),
 				'license'         => __('License', 'automatic-translations-for-polylang'),
 				'free-vs-pro'     => __('Free vs Pro', 'automatic-translations-for-polylang'),
@@ -365,9 +376,10 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 			// Action buttons configuration
 			$buttons = [
 				[
-					'url' => 'https://coolplugins.net/support/?'.sanitize_text_field($atfp_utm_parameters).'&utm_medium=inside&utm_campaign=support&utm_content=dashboard_header',
-					'img' => 'contact.svg',
-					'alt' => __('contact', 'automatic-translations-for-polylang')
+					'url' => 'https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?'.sanitize_text_field($atfp_utm_parameters).'&utm_medium=inside&utm_campaign=get_pro&utm_content=dashboard_header_upgrade_now',
+					'img' => 'upgrade-now.svg',
+					'alt' => __('Unlock Pro Features', 'automatic-translations-for-polylang'),
+					'text' => __('Unlock Pro Features', 'automatic-translations-for-polylang')
 				]
 			];
 	
@@ -415,11 +427,8 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 					if($current_tab !== 'support-blocks'){
 						require_once ATFP_DIR_PATH . $file_prefix . 'sidebar.php';
 					}
-					
 					?>
 				</div>
-				
-				<?php require_once ATFP_DIR_PATH . $file_prefix . 'footer.php'; ?>
 			</div>
 			<?php
 			//Append view languages link in page
