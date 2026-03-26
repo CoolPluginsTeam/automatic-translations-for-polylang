@@ -180,11 +180,11 @@ const createMessagePopup = () => {
               <p>${sprintf(__("Would you like to duplicate your original %s content and have it automatically translated into %s?", 'automatic-translations-for-polylang'), postType, targetLangName)}</p>
               <button type="button" class="atfp-translate-button button" data-value="yes" id="atfp-translate-button" data-value="yes">
                   <img src="${magincWandUrl}" style="width: 20px; height: 20px; margin-right: 5px; filter: brightness(0) invert(1);" alt="AI">
-                  Translate Now
+                  ${__("Translate Now", "automatic-translations-for-polylang")}
               </button>
           </div>
           <div class="atfp-marketing-card">
-              <h4>Translate Multiple Pages & Posts</h4>  
+              <h4>${__("Translate Multiple Pages & Posts", "automatic-translations-for-polylang")}</h4>  
               ${characterCount > 100000
                 ? `<p style="margin: 0 0 20px">
                     ${__("You’ve already translated", "automatic-translations-for-polylang")} 
@@ -197,7 +197,7 @@ const createMessagePopup = () => {
                 : ""}
               <div class="atfp-marketing-buttons">
                   <a href="${window.atfp_global_object.pro_version_url}" target="_blank" class="atfp-marketing-btn atfp-primary-btn">
-                      <img src="${magincWandUrl}" style="width: 20px; height: 20px; margin-right: 5px; filter: brightness(0) invert(1);" alt="AI"><span class="atfp-btn-text">Get Pro for Bulk Translation</span>
+                      <img src="${magincWandUrl}" style="width: 20px; height: 20px; margin-right: 5px; filter: brightness(0) invert(1);" alt="AI"><span class="atfp-btn-text">${__("Get Pro for Bulk Translation", "automatic-translations-for-polylang")}</span>
                   </a>
               </div>
           </div>
