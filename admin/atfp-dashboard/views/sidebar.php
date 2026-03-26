@@ -5,7 +5,7 @@ if(!defined('ABSPATH')){
 ?>
 <!-- Right Sidebar -->
 <div class="atfp-dashboard-sidebar">
-    <div class="atfp-dashboard-status">
+    <div class="atfp-dashboard-status atfp-dashboard-card">
         <h3><?php esc_html_e('Auto Translation Status', 'automatic-translations-for-polylang'); ?></h3>
         <div class="atfp-dashboard-sts-top">
             <?php
@@ -18,19 +18,27 @@ if(!defined('ABSPATH')){
 
             }
 
-            $totals = array_reduce($atfp_all_translation_data['atfp'] ?? [], function($carry, $translation) {
-                // Ensure $translation['string_count'] is numeric
-                // Ensure all values are properly handled
-                $carry['string_count'] += intval($translation['string_count'] ?? 0);
-                $carry['character_count'] += intval($translation['character_count'] ?? 0);
-                $carry['time_taken'] += intval($translation['time_taken'] ?? 0);
-                
-                // Count total translations instead of unique post IDs
-                if (!empty($translation['post_id'])) {
-                    $carry['translation_count']++;
+            $atfp_provider_character_count = array();
+
+            $totals = array(
+                'string_count'      => 0,
+                'character_count'   => 0,
+                'time_taken'        => 0,
+                'translation_count' => 0
+            );
+
+            if ( ! empty( $atfp_all_translation_data['atfp'] ) && is_array( $atfp_all_translation_data['atfp'] ) ) {
+                foreach ( $atfp_all_translation_data['atfp'] as $translation ) {
+                    $totals['string_count']    += intval( isset( $translation['string_count'] ) ? $translation['string_count'] : 0 );
+                    $totals['character_count'] += intval( isset( $translation['character_count'] ) ? $translation['character_count'] : 0 );
+                    $totals['time_taken']      += intval( isset( $translation['time_taken'] ) ? $translation['time_taken'] : 0 );
+
+                    // Count total translations instead of unique post IDs.
+                    if ( ! empty( $translation['post_id'] ) ) {
+                        $totals['translation_count']++;
+                    }
                 }
-                return $carry;
-            }, ['string_count' => 0, 'character_count' => 0, 'time_taken' => 0, 'translation_count' => 0]);
+            }
             // Update the time taken string using the new function
             $atfp_time_taken_str = atfp_format_time_taken($totals['time_taken']);
             ?>
@@ -42,8 +50,24 @@ if(!defined('ABSPATH')){
             <li><span><?php esc_html_e('Total Pages / Posts', 'automatic-translations-for-polylang'); ?></span> <span><?php echo esc_html($totals['translation_count']); ?></span></li>
             <li><span><?php esc_html_e('Time Taken', 'automatic-translations-for-polylang'); ?></span> <span><?php echo esc_html($atfp_time_taken_str); ?></span></li>
         </ul>
+        <?php
+            if($totals['character_count'] > 100000){ ?>
+                <div class="atfp-bulk-translation-suggestion">
+                    <p>
+                        <?php printf(
+                            esc_html__(
+                                'Translated %s characters page by page. Save time — install %s and use Bulk Translation to translate multiple pages in one click.',
+                                'automatic-translations-for-polylang'
+                            ),
+                            '<strong>' . atfp_format_number( $totals['character_count'] ) . '</strong>',
+                            '<strong>AutoPoly (Pro)</strong>'
+                        ); ?>
+                    </p>
+                    <a href="<?php echo esc_url('https://wordpress.org/plugins/bulk-translation-pro/'); ?>" class="atfp-dashboard-btn primary" target="_blank"><?php esc_html_e('Install Bulk Translation Pro', 'automatic-translations-for-polylang'); ?></a>
+                </div>
+            <?php } ?>
     </div>
-    <div class="atfp-dashboard-translate-full">
+    <div class="atfp-dashboard-translate-full atfp-dashboard-card">
         <h3><?php esc_html_e('Automatically Translate Plugins & Themes', 'automatic-translations-for-polylang'); ?></h3>
         <div class="atfp-dashboard-addon first">
             <div class="atfp-dashboard-addon-l">
@@ -56,14 +80,19 @@ if(!defined('ABSPATH')){
                 <?php endif; ?>
             </div>
             <div class="atfp-dashboard-addon-r">
-                <img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/atlt-logo.png'); ?>" alt="<?php esc_html_e('TranslatePress Addon', 'automatic-translations-for-polylang'); ?>">
+                <img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/atlt-logo.png'); ?>" alt="<?php esc_html_e('Loco Translate Addon', 'automatic-translations-for-polylang'); ?>">
             </div>
         </div>
     </div>
-    <div class="atfp-dashboard-rate-us">
-        <h3><?php esc_html_e('Rate Us ⭐⭐⭐⭐⭐', 'automatic-translations-for-polylang'); ?></h3>
+    <div class="atfp-dashboard-translate-support atfp-dashboard-card">
+        <h3><?php esc_html_e('Need Help? 🤝', 'automatic-translations-for-polylang'); ?></h3>
+        <p><?php esc_html_e('Facing any issue with AI translation? Create a support thread and our team will assist you.', 'automatic-translations-for-polylang'); ?></p>
+        <a href="<?php echo esc_url('https://wordpress.org/support/plugin/automatic-translations-for-polylang/'); ?>" class="atfp-dashboard-btn primary" target="_blank"><?php esc_html_e('Get Support →', 'automatic-translations-for-polylang'); ?></a>
+    </div>
+    <div class="atfp-dashboard-rate-us atfp-dashboard-card">
+        <h3><?php esc_html_e('Happy with AutoPoly? ✨', 'automatic-translations-for-polylang'); ?></h3>
         <p><?php esc_html_e('We\'d love your feedback! Hope this addon made auto-translations easier for you.', 'automatic-translations-for-polylang'); ?></p>
-        <a href="https://wordpress.org/support/plugin/automatic-translations-for-polylang/reviews/#new-post" class="review-link" target="_blank"><?php esc_html_e('Submit a Review →', 'automatic-translations-for-polylang'); ?></a>
+        <a href="https://wordpress.org/support/plugin/automatic-translations-for-polylang/reviews/#new-post" class="atfp-dashboard-btn" target="_blank"><?php esc_html_e('Leave a Review ★★★★★', 'automatic-translations-for-polylang'); ?></a>
     </div>
 </div>
 
