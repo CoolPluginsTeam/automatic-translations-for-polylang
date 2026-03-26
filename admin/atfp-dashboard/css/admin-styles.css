@@ -16,11 +16,50 @@ Polylang Addon Dashboard - Admin Panel Styles
     --line-height-base: 1.5;
 }
 
+.atfp-dashboard-card{
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
+    flex-direction: column;
+}
+
+.atfp-dashboard-btn{
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 13px;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+    border: 1px solid #c6ced0;
+    background: var(--background-color);
+    color: var(--text-color);
+    box-shadow: inset 1px 1px 2px #00000010;
+    cursor: pointer;
+    line-height: 1.4em;
+}
+
+.atfp-dashboard-btn:has(img){
+    line-height: 1;
+}
+
+.atfp-dashboard-btn:hover{
+    background: var(--primary-light-color);
+    color: var(--primary-color);
+    border-color: var(--secondary-color);
+}
+
 /* General Wrapper */
 .atfp-dashboard-wrapper {
-    margin: 0 auto;
-    padding: 0 20px 0 0;
-    max-width: 1240px;
+    margin: 0 0 0 -20px;
+    padding: 0;
+    width: calc(100% + 20px);
     box-sizing: border-box;
 }
 
@@ -77,9 +116,6 @@ Polylang Addon Dashboard - Admin Panel Styles
     border-color: var(--border-color);
 }
 
-/*
-
-
 /* ================================================
    Header Section
 ================================================ */
@@ -130,6 +166,15 @@ Polylang Addon Dashboard - Admin Panel Styles
     gap: 15px;
 }
 
+.atfp-dashboard-wrapper .nav-tab-wrapper a:first-child{
+    margin-left: 30px;
+}
+
+.atfp-dashboard-wrapper .nav-tab-wrapper a{
+    padding: 10px 12px;
+    border-radius: 6px 6px 0 0;
+}
+
 
 /* ================================================
    Dashboard Layout
@@ -152,7 +197,7 @@ Polylang Addon Dashboard - Admin Panel Styles
 .atfp-dashboard-left-section {
     width: auto;
     flex: 2;
-    margin-top: 25px;
+    margin-top: 30px;
 }
 
 
@@ -179,31 +224,30 @@ Polylang Addon Dashboard - Admin Panel Styles
 }
 
 .atfp-dashboard-get-started-grid{
+    display: flex;
+    justify-content: center;
     background: white;
-    border: 1px solid var(--border-color);
     border-radius: 14px;
-    padding: 13px 15px 15px 15px;
+    margin-top: 20px;
 }
 
-/* .atfp-dashboard-get-started-grid span{
-    background: var(--primary-color);
-    color: #fff;
-    border-color: var(--secondary-color);
-    padding: .3rem .8rem;
-    border-radius: 2rem;
-} */
-
-.atfp-dashboard-get-started-grid div{
-    max-width: 100%;
+.atfp-dashboard-get-started-grid .atfp-dashboard-get-started-grid-content{
+    width: 50%;
+    padding: 0 0 0 15px;
 }
 
 .atfp-dashboard-get-started-grid div ul{
     list-style: disc;
-    padding-left: 30px;
+    padding-block: 0;
+    margin-block: 0;
+    padding-right: 20px;
 }
 
 .atfp-dashboard-get-started-grid div:nth-child(2){
-   display: flex;
+    display: flex;
+    border: 1px solid var(--border-color);
+    padding: 15px;
+    border-radius: 8px;
 }
 
 .atfp-dashboard-get-started-grid iframe{
@@ -275,13 +319,114 @@ a.atfp-dashboard-docs:hover {
     color: var(--primary-color);
 }
 
+/* Provider Toggle Switch */
+.atfp-provider-switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+    margin: 0;
+}
+
+.atfp-provider-switch .atfp-provider-toggle {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.atfp-switch-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.3s;
+    border-radius: 24px;
+}
+
+.atfp-switch-slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.3s;
+    border-radius: 50%;
+}
+
+.atfp-provider-toggle:checked + .atfp-switch-slider {
+    background-color: var(--primary-color);
+}
+
+.atfp-provider-toggle:checked + .atfp-switch-slider:before {
+    transform: translateX(20px);
+}
+
+.atfp-provider-toggle:disabled + .atfp-switch-slider {
+    background-color: #e0e0e0;
+    opacity: 0.6;
+}
+
+.atfp-provider-toggle:disabled:checked + .atfp-switch-slider {
+    background-color: #e0e0e0;
+}
+
+.atfp-provider-toggle:focus + .atfp-switch-slider {
+    box-shadow: 0 0 1px var(--primary-color);
+}
+
+/* Pro Tag on Hover */
+.atfp-pro-provider {
+    position: relative;
+}
+
+.atfp-pro-provider:hover::after {
+    content: "Pro";
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary-color);
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    z-index: 10;
+    white-space: nowrap;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    pointer-events: none;
+}
+
+.atfp-pro-provider:hover::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: var(--primary-color);
+    z-index: 10;
+    pointer-events: none;
+}
+
+.atfp-dashboard-provider-buttons {
+    display: flex;
+    gap: 10px;
+    font-size: 11px;
+}
+
 
 /* ================================================
    Translation Providers
 ================================================ */
 .atfp-dashboard-providers-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 20px;
 }
 
@@ -327,25 +472,15 @@ a.atfp-dashboard-docs:hover {
    Sidebar
 ================================================ */
 .atfp-dashboard-sidebar {
-    width: 548px;
+    width: 450px;
+    max-width: 450px;
     display: flex;
     flex-direction: column;
     gap: 20px;
-    margin-top: 25px;
+    margin-top: 30px;
     flex: 1;
 }
 
-/* Translation Status */
-.atfp-dashboard-sidebar .atfp-dashboard-status {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px 20px 10px;
-    background: #fff;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow);
-    flex-direction: column;
-}
 
 .atfp-dashboard-sts-top {
     display: flex;
@@ -378,22 +513,41 @@ ul.atfp-dashboard-sts-btm li {
 ul.atfp-dashboard-sts-btm li span:first-child {
     font-weight: 600;
 }
+ul.atfp-dashboard-sts-btm li:last-child {
+    margin-bottom: 0px;
+}
 
+.atfp-dashboard-bulk-translation-pro-suggestion{
+    background: #f3fcf3;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    border-left: 4px solid #30b230;
+}
+
+.atfp-bulk-translation-suggestion{
+    background: #f0f6fc;
+    border: 1px solid #c5d9e2;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.atfp-bulk-translation-suggestion p{
+    margin-top: 0;
+}
 
 /* Full Website Translate */
+.atfp-dashboard-translate-full .atfp-dashboard-addon{
+    flex-direction: row;
+}
+
 .atfp-dashboard-translate-full .atfp-dashboard-addon {
-    border-bottom: 1px solid #c3c4c7;
-    margin-bottom: 15px;
-    padding-bottom: 15px;
     display: flex;
     gap: 15px;
     justify-content: space-between;
     align-items: center;
-}
-
-.atfp-dashboard-addon.first {
-    border-top: 1px solid #c3c4c7;
-    padding-top: 15px;
 }
 
 .atfp-dashboard-addon-l {
@@ -422,19 +576,28 @@ ul.atfp-dashboard-sts-btm li span:first-child {
 }
 
 /* ================================================
-   Rate Us Section
+   Need Help Section
 ================================================ */
-.atfp-dashboard-rate-us {
-    background: #fff;
-    padding: 15px;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow);
-}
-.atfp-dashboard-rate-us h3{
-    line-height: 25px;
+.atfp-dashboard-translate-support{
+    align-items: flex-start;
 }
 
+.atfp-dashboard-translate-support h3{
+    margin-bottom: 0;
+}
+.atfp-dashboard-translate-support .atfp-dashboard-support-link {
+    margin-right: auto;
+}
+/* ================================================
+   Rate Us Section
+================================================ */
+.atfp-dashboard-rate-us{
+    align-items: flex-start;
+}
+
+.atfp-dashboard-rate-us h3{
+    margin-bottom: 0px;
+}
 .atfp-dashboard-rate-us .review-link {
     display: inline-block;
     margin-top: 10px;
@@ -456,11 +619,12 @@ ul.atfp-dashboard-sts-btm li span:first-child {
 ================================================ */
 .atfp-dashboard-wrapper .tab-content{
     display: flex;
-    gap: 25px;
+    gap: 30px !important;
+    padding: 0 30px;
 }
 
+.atfp-dashboard-get-started .header,
 .atfp-dashboard-free-vs-pro .header,
-.atfp-dashboard-ai-translations .header,
 .atfp-dashboard-license .header ,
 .atfp-dashboard-settings .header {
     display: flex;
@@ -469,13 +633,14 @@ ul.atfp-dashboard-sts-btm li span:first-child {
     margin-bottom: 10px;
 }
 
-:where(.atfp-dashboard-free-vs-pro,.atfp-dashboard-ai-translations ,.atfp-dashboard-license,.atfp-dashboard-settings) .atfp-dashboard-status {
+:where(.atfp-dashboard-get-started,.atfp-dashboard-free-vs-pro ,.atfp-dashboard-license,.atfp-dashboard-settings) .atfp-dashboard-status {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-:where(.atfp-dashboard-free-vs-pro,.atfp-dashboard-ai-translations ,.atfp-dashboard-license,.atfp-dashboard-settings) .atfp-dashboard-status span{
+
+:where(.atfp-dashboard-get-started,.atfp-dashboard-free-vs-pro ,.atfp-dashboard-license,.atfp-dashboard-settings) .atfp-dashboard-status span{
     font-size: 15px;
     font-weight: 600;
 }
@@ -543,94 +708,6 @@ ul.atfp-dashboard-sts-btm li span:first-child {
 }
 
 /* ================================================
-   AI Translations
-================================================ */
-.atfp-dashboard-ai-translations {
-    width: auto;
-    flex: 2;
-    margin-top: 25px;
-}
-
-.atfp-dashboard-ai-translations-container{
-    background: white;
-    padding: 24px;
-    border-radius: 10px;
-    border: 1px solid var(--border-color);
-}
-
-.atfp-dashboard-ai-translations .description {
-    font-size: 14px;
-    color: #666;
-    margin: 10px 0;
-}
-
-.atfp-dashboard-ai-translations .atfp-dashboard-translations {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.atfp-dashboard-ai-translations .atfp-dashboard-translation-card {
-    margin-top: 35px;
-    position: relative;
-    background: white;
-    border: 1px solid var(--border-color);
-    border-radius: 14px;
-    padding: 13px 15px 15px 15px;
-    text-align: start;
-    width: 31.5%;
-}
-
-.atfp-dashboard-ai-translations .atfp-dashboard-translation-card h3{
-    margin-top: 12px;
-	font-size: 1.0rem;
-    margin-bottom: 10px;
-}
-.atfp-dashboard-ai-translations .atfp-dashboard-translation-card p {
-    padding-right: 4px;
-}
-
-.atfp-dashboard-ai-translations .atfp-dashboard-translation-card .logo{
-	background-color: white;
-    left: 20px;
-    position: absolute;
-    top: -14px;
-    border: 1px solid var(--border-color);
-    border-radius: 30px;
-    padding: 4px 10px;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.atfp-dashboard-ai-translations .atfp-dashboard-translation-card .logo img{
-    width: 100%;
-    height: 20px;
-}
-
-
-
-.atfp-dashboard-ai-translations .atfp-dashboard-translation-card .play-btn-container img {
- width: 100%;
- height: 100%;
-}
-.atfp-dashboard-ai-translations .atfp-dashboard-translation-card .play-btn-container a:focus {
-    box-shadow: none;
-   }
-
-
-.atfp-dashboard-ai-translations .atfp-dashboard-play-btn {
-    background: #00cc66;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 18px;
-}
-
-/* ================================================
    License
 ================================================ */
 .atfp-dashboard-license {
@@ -683,9 +760,6 @@ ul.atfp-dashboard-sts-btm li span:first-child {
     margin-top: 5px;
     font-size: 13px;
     color: #555;
-}
-.atfp-dashboard-ai-translations .atfp-dashboard-ai-translations-container .header h1 {
-    line-height: 25px;
 }
 
 /* ================================================
@@ -799,6 +873,7 @@ ul.atfp-dashboard-sts-btm li span:first-child {
     margin: 3px 0 0;
 }
 
+
 .atfp-bulk-translation-post-status-options{
     display: flex;
     align-items: center;
@@ -822,12 +897,8 @@ ul.atfp-dashboard-sts-btm li span:first-child {
 /* ================================================
    Info
 ================================================ */
-.atfp-dashboard-info {
-    margin-top: 70px;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.atfp-dashboard-info{
+    margin-top: 25px;
 }
 
 .atfp-dashboard-info-links {
@@ -854,29 +925,13 @@ ul.atfp-dashboard-sts-btm li span:first-child {
     color: #0073aa;
     text-decoration: none;
 }
-
-.atfp-dashboard-social-icons a:focus{
-     text-decoration: underline;
-}
-
-.atfp-dashboard-social-icons img{
-    margin-top: 10px;
-}
-.atfp-dashboard-social-icons svg {
-    width: 32px;  
-    height: 32px; 
-}
 @media (max-width: 488px) and  (min-width:100px){
-	.atfp-dashboard-ai-translations .atfp-dashboard-ai-translations-container .header,
 	.atfp-dashboard-free-vs-pro-container .header,
 	.atfp-dashboard-settings-container .header,
 	.atfp-dashboard-license-container .header{
     flex-direction: column;
     align-items: start;
 	padding-bottom: 10px;
-}
-	.atfp-dashboard-ai-translations .atfp-dashboard-translations {
-    flex-direction: column;
 }
 }
 @media (max-width: 767px) {
@@ -910,16 +965,12 @@ ul.atfp-dashboard-sts-btm li span:first-child {
     .atfp-dashboard-header-right {
         gap: 6px;
     }
-    .atfp-dashboard-ai-translations .atfp-dashboard-ai-translations-container .header,
     .atfp-dashboard-free-vs-pro-container .header,
     .atfp-dashboard-settings-container .header,
     .atfp-dashboard-license-container .header {
         flex-direction: column;
         align-items: start;
         padding-bottom: 10px;
-    }
-    .atfp-dashboard-ai-translations .atfp-dashboard-translations {
-        flex-direction: column;
     }
 }
 @media (max-width: 766px) and  (min-width:601px){
@@ -951,8 +1002,5 @@ ul.atfp-dashboard-sts-btm li span:first-child {
 }
 	.atfp-dashboard-header-right {
     gap: 13px;
-}
-	.atfp-dashboard-ai-translations .atfp-dashboard-translations {
-    gap: 7px;
 }
 }
