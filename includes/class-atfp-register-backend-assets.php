@@ -203,6 +203,14 @@ class ATFP_Register_Backend_Assets
         $post_type = get_post_type();
 
         $languages = PLL()->model->get_languages_list();
+        $active_providers = get_option('atfp_enabled_providers', array('chrome-built-in-ai', 'yandex-translate'));
+
+        $valid_providers = array('chrome-built-in-ai', 'yandex-translate');
+
+        $active_providers = array_filter($active_providers, function($provider_name) use ($valid_providers) {
+            return in_array($provider_name, $valid_providers);
+        });
+
         $lang_object = array();
         foreach ($languages as $lang) {
             $lang_object[$lang->slug] = array('name' => $lang->name, 'flag' => $lang->flag_url, 'locale' => $lang->locale);
@@ -211,7 +219,7 @@ class ATFP_Register_Backend_Assets
         wp_enqueue_style('atfp-automatic-translate-custom');
         
         wp_enqueue_script('atfp-automatic-translate');
-        wp_set_script_translations('atfp-automatic-translate', 'autopoly-ai-translation-for-polylang-pro', ATFP_DIR_PATH . 'languages');
+        wp_set_script_translations('atfp-automatic-translate', 'automatic-translations-for-polylang', ATFP_DIR_PATH . 'languages');
 
 
         $post_id = get_the_ID();
@@ -249,6 +257,7 @@ class ATFP_Register_Backend_Assets
             'translation_data'   => is_array($translation_data) ? (function() use (&$translation_data) { unset($translation_data['data']); return $translation_data; })() : array(),
             'pro_version_url'=>esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/'),
             'refrence_text'=>sanitize_text_field($atfp_utm_parameters),
+            'active_providers' => $active_providers,
         ), $extra_data);
 
         if(!isset(PLL()->options['sync']) || (isset(PLL()->options['sync']) && !in_array('post_meta', PLL()->options['sync']))){
@@ -284,17 +293,29 @@ class ATFP_Register_Backend_Assets
 
     public function enqueue_elementor_confirm_box_assets($parent_post_id, $target_lang_name, $source_lang_name, $editor_type='gutenberg')
     {
+        if(!class_exists('ATFP_Helper') || !ATFP_Helper::get_translation_data()){
+            return;
+        }
+
         $post_id = get_the_ID();
 
         $source_lang_name=PLL()->model->get_language($source_lang_name);
         $target_lang_name=PLL()->model->get_language($target_lang_name);
         $maginc_wand_url=ATFP_URL . 'assets/images/magic-wand.svg';
         $buy_pro_url=esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/');
+        $translation_data=ATFP_Helper::get_translation_data();
+        $translation_data=is_array($translation_data) ? (function() use (&$translation_data) { unset($translation_data['data']); return $translation_data; })() : array();
 
         wp_enqueue_script('atfp-elementor-confirm-box', ATFP_URL . 'assets/js/atfp-elementor-translate-confirm-box.min.js', array('jquery', 'wp-i18n'), ATFP_V, true);
 
         wp_localize_script('atfp-elementor-confirm-box', 'atfpElementorConfirmBoxData',
-            array('postId' => $post_id, 'targetLangSlug' => $target_lang_name->slug, 'editorType' => $editor_type, 'maginc_wand_url' => $maginc_wand_url, 'buy_pro_url' => $buy_pro_url)
+            array('postId' => $post_id,
+            'targetLangSlug' => $target_lang_name->slug,
+            'editorType' => $editor_type,
+            'maginc_wand_url' => $maginc_wand_url,
+            'buy_pro_url' => $buy_pro_url,
+            'translated_character'   => isset($translation_data['total_character_count']) ? $translation_data['total_character_count'] : 0,
+            )
         );
 
         wp_enqueue_style('atfp-elementor-confirm-box', ATFP_URL . 'assets/css/atfp-elementor-translate-confirm-box.min.css', array(), ATFP_V);
