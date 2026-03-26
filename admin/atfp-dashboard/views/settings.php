@@ -204,4 +204,5 @@ if(!current_user_can('manage_options')){
         </div>
     </div>
     </div>
+    <?php require_once ATFP_DIR_PATH . $file_prefix . 'footer.php'; ?>
 </div>

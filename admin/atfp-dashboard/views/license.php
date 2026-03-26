@@ -31,4 +31,5 @@ if(!defined('ABSPATH')){
         <em><?php esc_html_e('As a valued user, you automatically receive an exclusive discount on the Annual License and an even greater discount on the POPULAR Lifetime License at checkout!', 'automatic-translations-for-polylang'); ?></em>
     </div>
     </div>
+    <?php require_once ATFP_DIR_PATH . $file_prefix . 'footer.php'; ?>
 </div>
