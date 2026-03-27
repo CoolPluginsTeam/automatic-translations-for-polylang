@@ -79,11 +79,14 @@
             // Ensure button exists and is not duplicated
             if ($("#atfp-retranslate-button").length === 0) {
                 // You might need to select a container to append the button. This example tries body.
-                const buttonHtml = '<button class="atfp-retranslate-button button" id="atfp-retranslate-button" name="atfp_meta_box_retranslate">' + __('Re-Translate', 'automatic-translations-for-polylang') + '</button>';
+                const buttonHtml = '<a href="#" class="atfp-retranslate-button button" id="atfp-retranslate-button" name="atfp_meta_box_retranslate">' + __('Re-Translate', 'automatic-translations-for-polylang') + '</a>';
                 $("body").prepend(buttonHtml);
             }
 
-            $("#atfp-retranslate-button").off('click.atfp-retranslate').on('click.atfp-retranslate', this.appendModal);
+            $("#atfp-retranslate-button").off('click.atfp-retranslate').on('click.atfp-retranslate', (e)=>{
+                e.preventDefault();
+                this.appendModal();
+            });
         }
     }
 

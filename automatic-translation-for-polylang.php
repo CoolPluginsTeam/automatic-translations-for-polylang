@@ -740,7 +740,7 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 		
 		public function atfp_retranslation_text($desc=true) {
 			?>
-			<input type="button" class="button button-primary" name="atfp_meta_box_translate" id="atfp-retranslate-button" value="<?php echo esc_attr__( 'Re-Translate Page', 'automatic-translations-for-polylang' ); ?>" readonly/>
+			<a href="#" class="button button-primary" name="atfp_meta_box_translate" id="atfp-retranslate-button" value="<?php echo esc_attr__( 'Re-Translate Page', 'automatic-translations-for-polylang' ); ?>" readonly><?php echo esc_html__( 'Re-Translate Page', 'automatic-translations-for-polylang' ); ?></a>
 			<?php if($desc){ ?>
 			<br><br>
 			<p style="margin-bottom: .5rem;"><?php echo esc_html__( 'Re-Translate the page content for updating changes.', 'automatic-translations-for-polylang' ); ?></p>
@@ -766,7 +766,7 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 					}
 				}
 				?>
-				<input type="button" class="button button-primary" name="atfp_meta_box_translate" id="atfp-translate-button" value="<?php echo esc_attr__( 'Translate Page', 'automatic-translations-for-polylang' ); ?>" readonly/>
+				<a href="#" class="button button-primary" name="atfp_meta_box_translate" id="atfp-translate-button"><?php echo esc_html__( 'Translate Page', 'automatic-translations-for-polylang' ); ?></a>
 				<?php if($desc){ ?>
 					<br><br>
 					<p style="margin-bottom: .5rem;"><?php
