@@ -21,21 +21,31 @@ $active_providers = get_option('atfp_enabled_providers', array('chrome-built-in-
                 </div>
                 <div class="atfp-dashboard-get-started-grid">
                 <div class="atfp-dashboard-get-started-grid-content">
-                        <ul>
-                            <li><?php
-                            // translators: 1: strong tag, 2: strong tag
-                            echo sprintf(esc_html__('Go to %1$sPages > All Pages%2$s in your WordPress dashboard. Find the page you want to translate and click to open it.', 'automatic-translations-for-polylang'), '<strong>', '</strong>'); ?></li>
-                            <li><?php
-                            // translators: 1: strong tag, 2: strong tag
-                            echo sprintf(esc_html__('From the languages section, click the %1$s“+”%2$s icon next to the language you want page to translate into.', 'automatic-translations-for-polylang'), '<strong>', '</strong>'); ?></li>
-                            <li><?php echo esc_html__('Next, select your preferred translation provider.', 'automatic-translations-for-polylang'); ?></li>
-                            <li><?php
-                            // translators: 1: strong tag, 2: strong tag
-                            echo sprintf(esc_html__('Click the %1$sTranslate%2$s button. The plugin will automatically generate the translation.', 'automatic-translations-for-polylang'), '<strong>', '</strong>'); ?></li>
-                            <li><?php
-                            // translators: 1: strong tag, 2: strong tag
-                            echo sprintf(esc_html__('Review the content, make any edits if needed, then click %1$sUpdate%2$s to save the translated page.', 'automatic-translations-for-polylang'), '<strong>', '</strong>'); ?></li>
-                        </ul>
+                    <h2><?php echo esc_html__('Welcome to AutoPoly - AI Translation For Polylang', 'automatic-translations-for-polylang'); ?></h2>
+                    <p>
+                    <?php
+                    echo wp_kses_post(
+                        sprintf(
+                            // translators: 1: Opening strong tag, 2: Closing strong tag, 3: Opening strong tag, 4: Closing strong tag, 5: Opening strong tag, 6: Closing strong tag
+                            __(
+                                'Go to Pages or Posts and open the item you want to translate. In the languages section, click the %1$s“+”%2$s icon for the target language. Choose your preferred translation provider, then click %3$sTranslate%4$s. Your content will be translated automatically. Review and click %5$sUpdate%6$s to save changes.',
+                                'automatic-translations-for-polylang'
+                            ),
+                            '<strong>',
+                            '</strong>',
+                            '<strong>',
+                            '</strong>',
+                            '<strong>',
+                            '</strong>'
+                        )
+                    );
+                    ?>
+                    </p>
+                    <div class="atfp-dashboard-btns-row">
+                        <a href="<?php echo esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?'.sanitize_text_field($atfp_utm_parameters).'&utm_medium=inside&utm_campaign=get_pro&utm_content=dashboard_website_languages'); ?>" target="_blank" class="atfp-dashboard-btn primary">Bulk Translation</a>
+                        <a href="<?php echo esc_url(admin_url('edit.php?post_type=page')); ?>" target="_blank" class="atfp-dashboard-btn">Page Translation</a>
+                    </div>
+                    <a class="atfp-dashboard-docs" href="<?php echo esc_url('https://docs.coolplugins.net/plugin/ai-translation-for-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_docs'); ?>" target="_blank"><img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/document.svg'); ?>" alt="document"> <span><?php echo esc_html__('Read Plugin Docs', 'automatic-translations-for-polylang'); ?></span></a>
                     </div>
                     <div class="atfp-dashboard-get-started-grid-content">
                         <iframe title="Automate the Translation Process with AutoPoly - AI Translation For Polylang"
