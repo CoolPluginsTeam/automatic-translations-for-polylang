@@ -375,22 +375,6 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 					wp_die( '0', 400 );
 				}
 			}
-
-			$translation_data = Atfp_Dashboard::get_translation_data('atfp');
-
-			if(!isset($translation_data['total_character_count'])){
-				wp_send_json_error( __( 'Character count not found.', 'automatic-translations-for-polylang' ) );
-				wp_die( '0', 400 );
-				exit();
-			}
-			
-			$total_character_count = $translation_data['total_character_count'];
-			
-			if($total_character_count > 500000){
-				wp_send_json_error( __( 'Character count limit reached.', 'automatic-translations-for-polylang' ) );
-				wp_die( '0', 400 );
-				exit();
-			}
 			
             $elementor_data = isset($_POST['elementor_data']) ? sanitize_text_field(wp_unslash($_POST['elementor_data'])) : '';
 		
