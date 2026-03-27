@@ -522,6 +522,7 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 
 			require_once ATFP_DIR_PATH . '/helper/class-atfp-helper.php';
 			require_once ATFP_DIR_PATH . 'admin/atfp-menu-pages/class-atfp-custom-block-post.php';
+			require_once ATFP_DIR_PATH . 'includes/re-translate/class-atfp-re-translation.php';
 			require_once ATFP_DIR_PATH . 'includes/class-atfp-register-backend-assets.php';
 			require_once ATFP_DIR_PATH . '/includes/bulk-translation/class-atfp-bulk-translation.php';
 			require_once ATFP_DIR_PATH . 'includes/elementor-translate/class-atfp-elementor-translate.php';
@@ -651,13 +652,31 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 						add_meta_box( 'atfp-meta-box', __( 'Automatic Translate', 'automatic-translations-for-polylang' ), array( $this, 'atfp_shortcode_text' ), null, 'side', 'high' );
 					}
 				}
+			}else{
+				global $post;
+
+				if(!$post instanceof WP_Post || !isset($post->ID)){
+					return;
+				}
+
+				if(!class_exists('ATFP_Re_Translation') || !ATFP_Re_Translation::retranslation_status($post->ID)){
+					return;
+				}
+				add_meta_box( 'atfp-meta-box', __( 'Automatic Translate', 'automatic-translations-for-polylang' ), array( $this, 'atfp_retranslation_text' ), null, 'side', 'high' );
 			}
+		}
+		
+		public function atfp_retranslation_text() {
+			?>
+			<input type="button" class="button button-primary" name="atfp_meta_box_translate" id="atfp-retranslate-button" value="<?php echo esc_attr__( 'Re-Translate Page', 'automatic-translations-for-polylang' ); ?>" readonly/><br><br>
+			<p style="margin-bottom: .5rem;"><?php echo esc_html__( 'Re-Translate the page content for updating changes.', 'automatic-translations-for-polylang' ); ?></p>
+			<?php
 		}
 
 		/**
 		 * Display the automatic translation metabox button.
 		 */
-		function atfp_shortcode_text() {
+		public function atfp_shortcode_text() {
 			if ( isset( $_GET['_wpnonce'] ) &&
 				 wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'new-post-translation' ) ) {
 				$target_language = '';
