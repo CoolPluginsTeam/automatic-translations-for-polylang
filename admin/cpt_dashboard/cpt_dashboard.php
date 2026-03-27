@@ -130,8 +130,11 @@ if(!class_exists('Atfp_Dashboard')){
                 $prefix = sanitize_key($prefix);
                 $all_data = get_option('cpt_dashboard_data', array());
                 
+                $data_update = false;
+                $cache_key  = sanitize_text_field($prefix) .'_translation_data_post_ids';
+                $cache_group = sanitize_text_field($prefix) .'_translation_info';
                 if(isset($all_data[$prefix])){
-                    $data_update = false;
+            
                     foreach($all_data[$prefix] as $key => $translate_data){
                         if(!empty($unique_key) && isset($translate_data[$unique_key]) && 
                         sanitize_text_field($translate_data[$unique_key]) === sanitize_text_field($data[$unique_key]) && 
@@ -152,12 +155,34 @@ if(!class_exists('Atfp_Dashboard')){
                             $data_update = true;
                         }
                     }
-
-                    if(!$data_update){
-                        $all_data[$prefix][] = array_map('sanitize_text_field', $data);
-                    }
                 }else{
-                    $all_data[$prefix][] = array_map('sanitize_text_field', $data);
+                    $sanitized_data = array();
+                    foreach($data as $raw_key => $raw_value){
+                        $sanitized_key = sanitize_key($raw_key);
+                        $sanitized_value = sanitize_text_field($raw_value);
+                        $sanitized_data[$sanitized_key] = $sanitized_value;
+                    }
+                    $all_data[$prefix][] = $sanitized_data;
+                }
+
+                if(!$data_update){
+                    wp_cache_delete($cache_key, $cache_group);
+                    delete_transient($cache_key);
+                    
+                    $sanitized_data = array();
+                    foreach($data as $raw_key => $raw_value){
+                        $sanitized_key = sanitize_key($raw_key);
+                        $sanitized_value = sanitize_text_field($raw_value);
+                        $sanitized_data[$sanitized_key] = $sanitized_value;
+                    }
+                    $all_data[$prefix][] = $sanitized_data;
+                    
+                    $post_ids = array_column( $all_data[$prefix], 'post_id' );
+
+                    $unique_post_ids = array_keys( array_flip( $post_ids ) );
+
+                    wp_cache_set( $cache_key, array_values($unique_post_ids), $cache_group, DAY_IN_SECONDS );
+                    set_transient($cache_key, array_values($unique_post_ids), DAY_IN_SECONDS);
                 }
 
                 update_option('cpt_dashboard_data', $all_data);
