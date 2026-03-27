@@ -48,7 +48,7 @@ jQuery(function($) {
         });
     });
 
-    $('.atfp-provider-switch-container[data-provider]').on('click', function() {
+    $('.atfp-provider-switch-container[data-provider]').on('click', function(e) {
         const provider = $(this).data('provider');
         const utm_link=atfpSettingsScriptData.buy_pro_url + '&utm_content=' + provider+'&utm_medium=inside&utm_campaign=get_pro';
         window.open(utm_link, '_blank');

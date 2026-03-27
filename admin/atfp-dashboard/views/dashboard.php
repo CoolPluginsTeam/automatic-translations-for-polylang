@@ -66,7 +66,7 @@ $active_providers = get_option('atfp_enabled_providers', array('chrome-built-in-
 				<!-- Chrome Built-in AI Provider Card -->
 				<div class="atfp-dashboard-provider-card">
 					<div class="atfp-dashboard-provider-header">
-						<a href="<?php echo esc_url('https://docs.coolplugins.net/docs/automatic-translate-addon-for-translatepress-pro/how-to-translate-your-website-content-automatically-via-chrome-ai/?utm_source=atfp_plugin&amp;utm_medium=inside&amp;utm_campaign=docs&amp;utm_content=dashboard_chrome'); ?>" target="_blank" rel="noopener noreferrer">
+						<a href="<?php echo esc_url('https://docs.coolplugins.net/doc/chrome-ai-translation-polylang/?utm_source=atfp_plugin&amp;utm_medium=inside&amp;utm_campaign=docs&amp;utm_content=dashboard_chrome'); ?>" target="_blank" rel="noopener noreferrer">
 							<img src="<?php echo esc_url(ATFP_URL . 'assets/images/chrome-built-in-ai-logo.png'); ?>" alt="<?php echo esc_attr__('Chrome Built-in AI', 'automatic-translations-for-polylang'); ?>">
 						</a>
 						<div class="atfp-provider-switch-container">
@@ -83,14 +83,14 @@ $active_providers = get_option('atfp_enabled_providers', array('chrome-built-in-
 						<li>✅ <?php echo esc_html__('Bulk Translation (Pro)', 'automatic-translations-for-polylang'); ?></li>
 					</ul>
 					<div class="atfp-dashboard-provider-buttons">
-						<a href="<?php echo esc_url('https://docs.coolplugins.net/docs/automatic-translate-addon-for-translatepress-pro/how-to-translate-your-website-content-automatically-via-chrome-ai/?utm_source=atfp_plugin&amp;utm_medium=inside&amp;utm_campaign=docs&amp;utm_content=dashboard_chrome'); ?>" class="atfp-dashboard-btn" target="_blank" rel="noopener noreferrer"><?php esc_html_e('Docs', 'automatic-translations-for-polylang'); ?></a>
+						<a href="<?php echo esc_url('https://docs.coolplugins.net/doc/chrome-ai-translation-polylang/?utm_source=atfp_plugin&amp;utm_medium=inside&amp;utm_campaign=docs&amp;utm_content=dashboard_chrome'); ?>" class="atfp-dashboard-btn" target="_blank" rel="noopener noreferrer"><?php esc_html_e('Docs', 'automatic-translations-for-polylang'); ?></a>
 					</div>
 				</div>
 
                 <!-- Yandex Translate Provider Card -->
 				<div class="atfp-dashboard-provider-card">
 					<div class="atfp-dashboard-provider-header">
-						<a href="<?php echo esc_url('https://docs.coolplugins.net/docs/automatic-translate-addon-for-translatepress-pro/how-to-translate-your-website-content-automatically-via-yandex/?utm_source=atfp_plugin&amp;utm_medium=inside&amp;utm_campaign=docs&amp;utm_content=dashboard_yandex'); ?>" target="_blank" rel="noopener noreferrer">
+						<a href="<?php echo esc_url('https://docs.coolplugins.net/doc/yandex-translate-for-polylang/?utm_source=atfp_plugin&amp;utm_medium=inside&amp;utm_campaign=docs&amp;utm_content=dashboard_yandex'); ?>" target="_blank" rel="noopener noreferrer">
 							<img src="<?php echo esc_url(ATFP_URL . 'assets/images/yandex-translate-logo.png'); ?>" alt="<?php echo esc_attr__('Yandex Translate', 'automatic-translations-for-polylang'); ?>">
 						</a>
 						<div class="atfp-provider-switch-container">
@@ -106,14 +106,14 @@ $active_providers = get_option('atfp_enabled_providers', array('chrome-built-in-
 						<li>✅ <?php echo esc_html__('No API & No Extra Cost', 'automatic-translations-for-polylang'); ?></li>
 					</ul>
 					<div class="atfp-dashboard-provider-buttons">
-						<a href="<?php echo esc_url('https://docs.coolplugins.net/docs/automatic-translate-addon-for-translatepress-pro/how-to-translate-your-website-content-automatically-via-yandex/?utm_source=atfp_plugin&amp;utm_medium=inside&amp;utm_campaign=docs&amp;utm_content=dashboard_yandex'); ?>" class="atfp-dashboard-btn" target="_blank" rel="noopener noreferrer"><?php esc_html_e('Docs', 'automatic-translations-for-polylang'); ?></a>
+						<a href="<?php echo esc_url('https://docs.coolplugins.net/doc/yandex-translate-for-polylang/?utm_source=atfp_plugin&amp;utm_medium=inside&amp;utm_campaign=docs&amp;utm_content=dashboard_yandex'); ?>" class="atfp-dashboard-btn" target="_blank" rel="noopener noreferrer"><?php esc_html_e('Docs', 'automatic-translations-for-polylang'); ?></a>
 					</div>
 				</div>
 
 				<!-- Google Translate Provider Card -->
 				<div class="atfp-dashboard-provider-card">
 					<div class="atfp-dashboard-provider-header">
-						<a href="<?php echo esc_url('https://docs.coolplugins.net/docs/automatic-translate-addon-for-translatepress-pro/how-to-translate-your-website-content-automatically-via-google/?utm_source=atfp_plugin&amp;utm_medium=inside&amp;utm_campaign=docs&amp;utm_content=dashboard_google'); ?>" target="_blank" rel="noopener noreferrer">
+						<a href="<?php echo esc_url('https://docs.coolplugins.net/doc/google-translate-for-polylang/?utm_source=atfp_plugin&amp;utm_medium=inside&amp;utm_campaign=docs&amp;utm_content=dashboard_google'); ?>" target="_blank" rel="noopener noreferrer">
 							<img src="<?php echo esc_url(ATFP_URL . 'assets/images/google-translate-logo.png'); ?>" alt="<?php echo esc_attr__('Google Translate', 'automatic-translations-for-polylang'); ?>">
 						</a>
 						<div class="atfp-provider-switch-container" data-provider="google">
@@ -130,61 +130,14 @@ $active_providers = get_option('atfp_enabled_providers', array('chrome-built-in-
                         <li>✅ <?php echo esc_html__('Bulk Translation (Pro)', 'automatic-translations-for-polylang'); ?></li>
 					</ul>
 					<div class="atfp-dashboard-provider-buttons">
-						<a href="<?php echo esc_url('https://docs.coolplugins.net/docs/automatic-translate-addon-for-translatepress-pro/how-to-translate-your-website-content-automatically-via-google/?utm_source=atfp_plugin&amp;utm_medium=inside&amp;utm_campaign=docs&amp;utm_content=dashboard_google'); ?>" class="atfp-dashboard-btn" target="_blank" rel="noopener noreferrer"><?php esc_html_e('Docs', 'automatic-translations-for-polylang'); ?></a>
-					</div>
-				</div>
-
-				<!-- DeepL Provider Card -->
-				<div class="atfp-dashboard-provider-card">
-					<div class="atfp-dashboard-provider-header">
-						<a href="<?php echo esc_url('https://docs.coolplugins.net/doc/generate-deepl-api-key-translatepress/?utm_source=atfp_plugin&amp;utm_medium=inside&amp;utm_campaign=docs&amp;utm_content=dashboard_deepl'); ?>" target="_blank" rel="noopener noreferrer">
-							<img src="<?php echo esc_url(ATFP_URL . 'assets/images/deepl-logo.png'); ?>" alt="<?php echo esc_attr__('DeepL', 'automatic-translations-for-polylang'); ?>">
-						</a>
-						<div class="atfp-provider-switch-container" data-provider="deepl">
-							<label class="atfp-provider-switch atfp-pro-provider">
-								<input type="checkbox" class="atfp-provider-toggle" disabled="disabled" />
-								<span class="atfp-switch-slider"></span>
-							</label>
-						</div>
-					</div>
-					<h4><?php echo esc_html__('DeepL', 'automatic-translations-for-polylang'); ?></h4>
-					<ul>
-						<li>✅ <?php echo esc_html__('Unlimited Free Translations', 'automatic-translations-for-polylang'); ?></li>
-						<li>✅ <?php echo esc_html__('Bulk Translation', 'automatic-translations-for-polylang'); ?></li>
-					</ul>
-					<div class="atfp-dashboard-provider-buttons">
-						<a href="<?php echo esc_url('https://docs.coolplugins.net/doc/generate-deepl-api-key-translatepress/?utm_source=atfp_plugin&amp;utm_medium=inside&amp;utm_campaign=docs&amp;utm_content=dashboard_deepl'); ?>" class="atfp-dashboard-btn" target="_blank" rel="noopener noreferrer"><?php esc_html_e('Docs', 'automatic-translations-for-polylang'); ?></a>
-					</div>
-				</div>
-
-				<!-- Gemini Provider Card -->
-				<div class="atfp-dashboard-provider-card">
-					<div class="atfp-dashboard-provider-header">
-						<a href="<?php echo esc_url('https://docs.coolplugins.net/doc/generate-google-gemini-ai-api-key-translatepress/?utm_source=atfp_plugin&amp;utm_medium=inside&amp;utm_campaign=docs&amp;utm_content=dashboard_gemini'); ?>" target="_blank" rel="noopener noreferrer">
-							<img src="<?php echo esc_url(ATFP_URL . 'assets/images/powered-by-google-gemini.png'); ?>" alt="<?php echo esc_attr__('Gemini', 'automatic-translations-for-polylang'); ?>">
-						</a>
-						<div class="atfp-provider-switch-container" data-provider="gemini">
-							<label class="atfp-provider-switch atfp-pro-provider">
-								<input type="checkbox" class="atfp-provider-toggle" disabled="disabled" />
-								<span class="atfp-switch-slider"></span>
-							</label>
-						</div>
-					</div>
-					<h4><?php echo esc_html__('Gemini', 'automatic-translations-for-polylang'); ?></h4>
-					<ul>
-						<li>✅ <?php echo esc_html__('Unlimited Free Translations', 'automatic-translations-for-polylang'); ?></li>
-						<li>✅ <?php echo esc_html__('Use Translation Modals', 'automatic-translations-for-polylang'); ?></li>
-						<li>✅ <?php echo esc_html__('Bulk Translation', 'automatic-translations-for-polylang'); ?></li>
-					</ul>
-					<div class="atfp-dashboard-provider-buttons">
-						<a href="<?php echo esc_url('https://docs.coolplugins.net/doc/generate-google-gemini-ai-api-key-translatepress/?utm_source=atfp_plugin&amp;utm_medium=inside&amp;utm_campaign=docs&amp;utm_content=dashboard_gemini'); ?>" class="atfp-dashboard-btn" target="_blank" rel="noopener noreferrer"><?php esc_html_e('Docs', 'automatic-translations-for-polylang'); ?></a>
+						<a href="<?php echo esc_url('https://docs.coolplugins.net/doc/google-translate-for-polylang/?utm_source=atfp_plugin&amp;utm_medium=inside&amp;utm_campaign=docs&amp;utm_content=dashboard_google'); ?>" class="atfp-dashboard-btn" target="_blank" rel="noopener noreferrer"><?php esc_html_e('Docs', 'automatic-translations-for-polylang'); ?></a>
 					</div>
 				</div>
 
 				<!-- OpenAI Provider Card -->
 				<div class="atfp-dashboard-provider-card">
 					<div class="atfp-dashboard-provider-header">
-						<a href="<?php echo esc_url('https://docs.coolplugins.net/doc/generate-open-ai-api-key-translatepress/?utm_source=atfp_plugin&amp;utm_medium=inside&amp;utm_campaign=docs&amp;utm_content=dashboard_openai'); ?>" target="_blank" rel="noopener noreferrer">
+						<a href="<?php echo esc_url('https://docs.coolplugins.net/doc/translate-via-open-ai-polylang/?utm_source=atfp_plugin&amp;utm_medium=inside&amp;utm_campaign=docs&amp;utm_content=dashboard_openai'); ?>" target="_blank" rel="noopener noreferrer">
 							<img src="<?php echo esc_url(ATFP_URL . 'assets/images/openai-translate-logo.png'); ?>" alt="<?php echo esc_attr__('OpenAI', 'automatic-translations-for-polylang'); ?>">
 						</a>
 						<div class="atfp-provider-switch-container" data-provider="openai">
@@ -201,7 +154,54 @@ $active_providers = get_option('atfp_enabled_providers', array('chrome-built-in-
 						<li>✅ <?php echo esc_html__('Bulk Translation', 'automatic-translations-for-polylang'); ?></li>
 					</ul>
 					<div class="atfp-dashboard-provider-buttons">
-						<a href="<?php echo esc_url('https://docs.coolplugins.net/doc/generate-open-ai-api-key-translatepress/?utm_source=atfp_plugin&amp;utm_medium=inside&amp;utm_campaign=docs&amp;utm_content=dashboard_openai'); ?>" class="atfp-dashboard-btn" target="_blank" rel="noopener noreferrer"><?php esc_html_e('Docs', 'automatic-translations-for-polylang'); ?></a>
+						<a href="<?php echo esc_url('https://docs.coolplugins.net/doc/translate-via-open-ai-polylang/?utm_source=atfp_plugin&amp;utm_medium=inside&amp;utm_campaign=docs&amp;utm_content=dashboard_openai'); ?>" class="atfp-dashboard-btn" target="_blank" rel="noopener noreferrer"><?php esc_html_e('Docs', 'automatic-translations-for-polylang'); ?></a>
+					</div>
+				</div>
+
+				<!-- Gemini Provider Card -->
+				<div class="atfp-dashboard-provider-card">
+					<div class="atfp-dashboard-provider-header">
+						<a href="<?php echo esc_url('https://docs.coolplugins.net/doc/translate-via-gemini-ai-polylang/?utm_source=atfp_plugin&amp;utm_medium=inside&amp;utm_campaign=docs&amp;utm_content=dashboard_gemini'); ?>" target="_blank" rel="noopener noreferrer">
+							<img src="<?php echo esc_url(ATFP_URL . 'assets/images/powered-by-google-gemini.png'); ?>" alt="<?php echo esc_attr__('Gemini', 'automatic-translations-for-polylang'); ?>">
+						</a>
+						<div class="atfp-provider-switch-container" data-provider="gemini">
+							<label class="atfp-provider-switch atfp-pro-provider">
+								<input type="checkbox" class="atfp-provider-toggle" disabled="disabled" />
+								<span class="atfp-switch-slider"></span>
+							</label>
+						</div>
+					</div>
+					<h4><?php echo esc_html__('Gemini', 'automatic-translations-for-polylang'); ?></h4>
+					<ul>
+						<li>✅ <?php echo esc_html__('Unlimited Free Translations', 'automatic-translations-for-polylang'); ?></li>
+						<li>✅ <?php echo esc_html__('Use Translation Modals', 'automatic-translations-for-polylang'); ?></li>
+						<li>✅ <?php echo esc_html__('Bulk Translation', 'automatic-translations-for-polylang'); ?></li>
+					</ul>
+					<div class="atfp-dashboard-provider-buttons">
+						<a href="<?php echo esc_url('https://docs.coolplugins.net/doc/translate-via-gemini-ai-polylang/?utm_source=atfp_plugin&amp;utm_medium=inside&amp;utm_campaign=docs&amp;utm_content=dashboard_gemini'); ?>" class="atfp-dashboard-btn" target="_blank" rel="noopener noreferrer"><?php esc_html_e('Docs', 'automatic-translations-for-polylang'); ?></a>
+					</div>
+				</div>
+
+				<!-- DeepL Provider Card -->
+				<div class="atfp-dashboard-provider-card">
+					<div class="atfp-dashboard-provider-header">
+						<a href="<?php echo esc_url('https://docs.coolplugins.net/doc/translate-via-deepl-polylang/?utm_source=atfp_plugin&amp;utm_medium=inside&amp;utm_campaign=docs&amp;utm_content=dashboard_deepl'); ?>" target="_blank" rel="noopener noreferrer">
+							<img src="<?php echo esc_url(ATFP_URL . 'assets/images/deepl-logo.png'); ?>" alt="<?php echo esc_attr__('DeepL', 'automatic-translations-for-polylang'); ?>">
+						</a>
+						<div class="atfp-provider-switch-container" data-provider="deepl">
+							<label class="atfp-provider-switch atfp-pro-provider">
+								<input type="checkbox" class="atfp-provider-toggle" disabled="disabled" />
+								<span class="atfp-switch-slider"></span>
+							</label>
+						</div>
+					</div>
+					<h4><?php echo esc_html__('DeepL', 'automatic-translations-for-polylang'); ?></h4>
+					<ul>
+						<li>✅ <?php echo esc_html__('Unlimited Free Translations', 'automatic-translations-for-polylang'); ?></li>
+						<li>✅ <?php echo esc_html__('Bulk Translation', 'automatic-translations-for-polylang'); ?></li>
+					</ul>
+					<div class="atfp-dashboard-provider-buttons">
+						<a href="<?php echo esc_url('https://docs.coolplugins.net/doc/translate-via-deepl-polylang/?utm_source=atfp_plugin&amp;utm_medium=inside&amp;utm_campaign=docs&amp;utm_content=dashboard_deepl'); ?>" class="atfp-dashboard-btn" target="_blank" rel="noopener noreferrer"><?php esc_html_e('Docs', 'automatic-translations-for-polylang'); ?></a>
 					</div>
 				</div>
 
