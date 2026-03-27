@@ -36,6 +36,7 @@ class ATFP_Register_Backend_Assets
         add_action('enqueue_block_assets', array($this, 'block_inline_translation_assets'));
         add_action('elementor/editor/before_enqueue_scripts', array($this, 'enqueue_elementor_translate_assets'));
         add_action('admin_enqueue_scripts', array($this, 'atfp_enqueue_admin_assets'));
+        add_action('admin_enqueue_scripts', array($this, 'enqueue_classic_translate_assets'));
     }
 
     public function atfp_enqueue_admin_assets(){
@@ -196,6 +197,38 @@ class ATFP_Register_Backend_Assets
 
         wp_enqueue_style('atfp-elementor-translate', ATFP_URL . 'assets/css/atfp-elementor-translate.min.css', array(), ATFP_V);
         $this->enqueue_automatic_translate_assets($parent_post_language_slug, $post_language_slug, 'elementor', $data);
+    }
+
+    public function enqueue_classic_translate_assets()
+    {
+        global $post;
+        $current_screen = get_current_screen();
+
+        if(isset($current_screen) && isset($current_screen->id) && $current_screen->id === 'edit-page'){
+            return;
+        }
+
+        if (method_exists($current_screen, 'is_block_editor') && !$current_screen->is_block_editor() && isset($post) && isset($post->ID)) {
+            
+            if (
+                isset($_GET['from_post'], $_GET['new_lang'], $_GET['_wpnonce']) &&
+                wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['_wpnonce'])), 'new-post-translation')
+            ) {
+                wp_enqueue_script('atfp-classic-translate', ATFP_URL . 'assets/js/atfp-classic-translate.min.js', array('jquery'), ATFP_V, true);
+                wp_enqueue_style('atfp-classic-translate', ATFP_URL . 'assets/css/atfp-classic-translate.min.css', array(), ATFP_V);
+
+                wp_localize_script('atfp-classic-translate', 'atfpClassicTranslateData', array(
+                    'atfp_url' => esc_url(ATFP_URL),
+                    'pro_version_url' => esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/'),
+                ));
+            }
+        }else{                
+            if (!isset($post) || !isset($post->ID)) {
+                return;
+            }
+
+            $this->enqueue_re_translation_assets('classic', $post->ID);
+        }
     }
 
     public function enqueue_automatic_translate_assets($source_lang, $target_lang, $editor_type, $extra_data = array())

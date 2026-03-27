@@ -1,20 +1,4 @@
-button.elementor-button.atfp-retranslate-button:enabled {
-    border-radius: 0px;
-    color: rgb(12, 13, 14);
-    background-color: #F0ABFC
-}
-
-button.elementor-button.atfp-retranslate-button:enabled:hover {
-    background-color: rgb(235, 142, 251);
-}
-
-button.elementor-button.atfp-retranslate-button:disabled {
-    cursor: default;
-    border-radius: 0px;
-    color: rgb(12, 13, 14);
-}
-
-#atfp-retranslate-modal {
+#atfp-classic-pro-modal .atfp-classic-modal-container{
     position: fixed;
     top: 0;
     left: 0;
@@ -26,13 +10,12 @@ button.elementor-button.atfp-retranslate-button:disabled {
     justify-content: center;
     align-items: center;
     transition: all .3s ease;
-    display: none;
     opacity: 1;
     visibility: visible;
     flex-direction: column;
-}
+}  
 
-#atfp-retranslate-modal .atfp-retranslate-modal-content {
+.atfp-classic-modal-container .modal-content{
     background: #fff;
     width: 500px;
     max-width: 90%;
@@ -47,7 +30,7 @@ button.elementor-button.atfp-retranslate-button:disabled {
     transform: scale(1);
 }
 
-#atfp-retranslate-modal .atfp-retranslate-modal-content .atfp-modal-header {
+.atfp-classic-modal-container .modal-content .modal-header{
     background: #fff;
     padding: 20px 24px;
     display: flex;
@@ -56,13 +39,13 @@ button.elementor-button.atfp-retranslate-button:disabled {
     border-bottom: 1px solid #f0f0f1;
 }
 
-#atfp-retranslate-modal .atfp-retranslate-modal-content .atfp-modal-header .atfp-modal-header-left {
+.atfp-classic-modal-container .modal-content .modal-header .atfp-modal-header-left{
     display: flex;
     align-items: center;
     gap: 1px;
-}   
+}
 
-#atfp-retranslate-modal .atfp-retranslate-modal-content .atfp-modal-header .atfp-modal-header-left h2 {
+.atfp-classic-modal-container .modal-content .modal-header .atfp-modal-header-left h3{
     margin: 0;
     font-size: 13px;
     font-weight: 700;
@@ -71,7 +54,7 @@ button.elementor-button.atfp-retranslate-button:disabled {
     color: #1d2327;
 }
 
-#atfp-retranslate-modal .atfp-retranslate-modal-content .atfp-modal-header .atfp-modal-close {
+.atfp-classic-modal-container .modal-content .modal-header .atfp-modal-close{
     background: 0 0;
     border: none;
     cursor: pointer;
@@ -81,23 +64,24 @@ button.elementor-button.atfp-retranslate-button:disabled {
     padding: 0;
     width: 24px;
     color: #000;
-    font-family: Arial, Helvetica, sans-serif;
-    margin-top: -5px;
+    line-height: 24px;
+    margin-top: -8px;
 }
 
-#atfp-retranslate-modal .atfp-retranslate-modal-content .atfp-modal-body {
+
+.atfp-classic-modal-container .modal-content .modal-body{
     padding: 20px 24px;
     text-align: center;
 }
 
-#atfp-retranslate-modal .atfp-retranslate-modal-content .atfp-modal-body p {
+.atfp-classic-modal-container .modal-content .modal-body p{
     font-size: 15px;
     color: #646970;
     margin: 0 0 20px 0;
     line-height: 1.5;
 }
 
-#atfp-retranslate-modal .atfp-retranslate-modal-content .atfp-modal-body .atfp-marketing-btn{
+.atfp-classic-modal-container .modal-content .modal-body .atfp-marketing-btn{
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -115,11 +99,11 @@ button.elementor-button.atfp-retranslate-button:disabled {
     border: 1px solid #0073aa;
 }
 
-#atfp-retranslate-modal .atfp-retranslate-modal-content .atfp-modal-body .atfp-marketing-btn span{
+.atfp-classic-modal-container .modal-content .modal-body .atfp-marketing-btn span{
     line-height: 28px;
 }
 
-#atfp-retranslate-modal  .atfp-retranslate-modal-content .modal-footer-notice{
+.atfp-classic-modal-container .modal-content .modal-footer-notice{
     background: #fff;
     border-top: 1px solid #f0f0f1;
     padding: 16px 24px;
@@ -128,7 +112,7 @@ button.elementor-button.atfp-retranslate-button:disabled {
     gap: 12px;
 }
 
-#atfp-retranslate-modal  .atfp-retranslate-modal-content .modal-footer-notice .dashicons{
+.atfp-classic-modal-container .modal-content .modal-footer-notice .dashicons{
     color: #dba617;
     font-size: 20px;
     width: 20px;
@@ -136,7 +120,7 @@ button.elementor-button.atfp-retranslate-button:disabled {
     margin-top: 1px;
 }
 
-#atfp-retranslate-modal  .atfp-retranslate-modal-content .modal-footer-notice p{
+.atfp-classic-modal-container .modal-content .modal-footer-notice p{
     margin: 0;
     font-size: 13px;
     color: #646970;

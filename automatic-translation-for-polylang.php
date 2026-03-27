@@ -660,6 +660,10 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 					$editor = 'Divi';
 				}
 
+				if(!function_exists('get_current_screen')){
+					return;
+				}
+
 				$current_screen = get_current_screen();
 				if ( method_exists( $current_screen, 'is_block_editor' ) && $current_screen->is_block_editor() && ! in_array( $editor, array( 'Elementor', 'Divi' ), true ) ) {
 					if ( 'post-new.php' === $GLOBALS['pagenow'] && isset( $_GET['from_post'], $_GET['new_lang'] ) ) {
@@ -685,35 +689,51 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 				if(!class_exists('ATFP_Re_Translation') || !ATFP_Re_Translation::retranslation_status($post->ID)){
 					return;
 				}
-				add_meta_box( 'atfp-meta-box', __( 'Automatic Translate', 'automatic-translations-for-polylang' ), array( $this, 'atfp_retranslation_text' ), null, 'side', 'high' );
+
+				if(!function_exists('get_current_screen')){
+					return;
+				}
+
+				$editor = '';
+				if ( 'builder' === get_post_meta( $post->ID, '_elementor_edit_mode', true ) ) {
+					$editor = 'Elementor';
+				}
+				if ( 'on' === get_post_meta( $post->ID, '_et_pb_use_builder', true ) ) {
+					$editor = 'Divi';
+				}
+
+				$current_screen = get_current_screen();
+				if ( method_exists( $current_screen, 'is_block_editor' ) && $current_screen->is_block_editor() && ! in_array( $editor, array( 'Elementor', 'Divi' ), true ) ) {
+					add_meta_box( 'atfp-meta-box', __( 'Automatic Translate', 'automatic-translations-for-polylang' ), array( $this, 'atfp_retranslation_text' ), null, 'side', 'high' );
+				}
 			}
 		}
 
 		public function atfp_classic_editor_button() {
 			global $post;
+
+			if (!isset($post) || !isset($post->ID)) {
+				return;
+			}
+
 			$current_screen = get_current_screen();
 
 			if(isset($current_screen) && isset($current_screen->id) && $current_screen->id === 'edit-page'){
 				return;
 			}
 
-			if (method_exists($current_screen, 'is_block_editor') && !$current_screen->is_block_editor() && isset($post) && isset($post->ID)) {
-				
+			if(method_exists($current_screen, 'is_block_editor') && !$current_screen->is_block_editor()){
 				if (
 					isset($_GET['from_post'], $_GET['new_lang'], $_GET['_wpnonce']) &&
 					wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['_wpnonce'])), 'new-post-translation')
 				) {
 					$this->atfp_shortcode_text(false);
-				}
-			}else{                
-				if (!isset($post) || !isset($post->ID)) {
-					return;
-				}
-
-				$re_translation_status=ATFP_Re_Translation::retranslation_status($post->ID);
-
-				if($re_translation_status){
-					$this->atfp_retranslation_text(false);
+				}else{
+					$re_translation_status=ATFP_Re_Translation::retranslation_status($post->ID);
+	
+					if($re_translation_status){
+						$this->atfp_retranslation_text(false);
+					}
 				}
 			}
 		}

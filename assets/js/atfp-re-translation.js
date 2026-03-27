@@ -39,21 +39,23 @@
                             <div class="atfp-modal-header-left">
                                 <img src="${this.magicWandUrl}" style="width: 20px; height: 20px; margin-right: 8px; filter: brightness(0) invert(0);" alt="AI" />
                                 <h2>
-                                    ${__("Automatic AI Re-Translation", "automatic-translations-for-polylang")}
+                                    ${__("AI Translation", "automatic-translations-for-polylang")}
                                 </h2>
                             </div>
                             <button type="button" class="atfp-modal-close modal-close" title="Close" aria-label="Close" onclick="document.getElementById('atfp-retranslate-modal').style.display='none'; console.log(document.getElementById('atfp-retranslate-modal'), document.getElementById('atfp-retranslate-modal').style.display);">&times;</button>
                         </div>
                         <div class="atfp-modal-body">
                             <p>
-                                ${__("Need to refresh your translations or boost accuracy with the latest AI improvements?", "automatic-translations-for-polylang")}
-                                <br />
-                                <strong>${__("Pro tip: AI-powered re-translation delivers better and more natural results with one click!", "automatic-translations-for-polylang")}</strong>
+                                ${__("Want to update your translated content to match the latest changes on your page? Try our Pro version to easily re-translate and unlock all advanced features.", "automatic-translations-for-polylang")}
                             </p>
                             <a href="${this.proUrl}" target="_blank" class="atfp-marketing-btn button">
                                 <img src="${this.magicWandUrl}" style="width: 20px; height: 20px; margin-right: 8px; filter: brightness(0) invert(1);" alt="AI" />
-                                <span>${__("Upgrade to Pro for AI Re-Translation", "automatic-translations-for-polylang")}</span>
+                                <span>${__("Get Pro for Re-Translation", "automatic-translations-for-polylang")}</span>
                             </a>
+                        </div>
+                        <div class="modal-footer-notice">
+                            <span class="dashicons dashicons-warning"></span>
+                            <p><em>Note: close this popup if you do not want to upgrade.</em></p>
                         </div>
                     </div>
                 </div>
@@ -64,8 +66,6 @@
         appendElementorButton() {
             const translateButtonGroup = jQuery('.MuiButtonGroup-root.MuiButtonGroup-contained').parent();
             let buttonElement = jQuery(translateButtonGroup).find('.elementor-button.atfp-retranslate-button');
-            console.log(translateButtonGroup);
-            console.log(buttonElement);
             if (translateButtonGroup.length > 0 && buttonElement.length === 0) {
                 const buttonHtml = '<button class="elementor-button atfp-retranslate-button" id="atfp-retranslate-button" name="atfp_meta_box_retranslate">' + __('Re-Translate', 'automatic-translations-for-polylang') + '</button>';
                 buttonElement = jQuery(buttonHtml);
