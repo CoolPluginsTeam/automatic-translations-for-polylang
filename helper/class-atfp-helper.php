@@ -370,5 +370,25 @@ if (! class_exists('ATFP_Helper')) {
 				return 'utm_source='.$prefix.'_plugin';
 			}
 		}
+
+		public static function get_polylang_default_language(){
+			if(function_exists('pll_default_language')){
+				return pll_default_language();
+			}
+			return '';
+		}
+
+		public static function get_polylang_supported_languages(){
+			if(function_exists('PLL') && property_exists(PLL(), 'model')){
+				$atfp_polylang_languages = PLL()->model->get_languages_list();
+				$atfp_polylang_languages_object = array();
+				foreach ($atfp_polylang_languages as $lang) {
+					$atfp_polylang_languages_object[$lang->slug] = array('name' => $lang->name);
+				}
+
+				return $atfp_polylang_languages_object;
+			}
+			return array();
+		}
 	}
 }
