@@ -94,9 +94,6 @@
 
     // Bind modal opening to the classic editor translate button
     $(document).ready(function(){
-        createClassicProModal();
-        $('#atfp-classic-pro-modal').css({'display': 'flex'});
-
         $(document).on('click', '#atfp-translate-button', function(e){
             e.preventDefault();
             openClassicProModal();
