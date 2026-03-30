@@ -141,17 +141,30 @@ Polylang Addon Dashboard - Admin Panel Styles
 .atfp-dashboard-header-left {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 10px;
 }
 .atfp-dashboard-logo-link:focus,
 .atfp-dashboard-logo-link:hover {
     box-shadow: none;
 }
+
 .atfp-dashboard-header-left img{
-	max-width: 170px;
+    width: 42px;
+    max-width: 42px;
+    margin: 0;
+    display: block;
 }
 .atfp-dashboard-header-left svg {
     height: 50px;
+}
+
+.atfp-dashboard-logo-text{
+    font-size: 18px;
+    font-weight: 700;
+    color: #000;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
 }
 
 .atfp-dashboard-tab-title {

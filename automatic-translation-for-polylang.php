@@ -440,8 +440,9 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 				<div class="atfp-dashboard-header">
 					<div class="atfp-dashboard-header-left">
 						<a href="?page=polylang-atfp-dashboard&tab=dashboard" class="atfp-dashboard-logo-link">
-							<img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/polylang-addon-logo.svg'); ?>" alt="<?php esc_attr_e('Polylang Addon Logo', 'automatic-translations-for-polylang'); ?>">
+							<img src="<?php echo esc_url(ATFP_URL . 'assets/images/ai-translation-for-Polylang.svg'); ?>" alt="<?php esc_attr_e('Polylang Addon Logo', 'automatic-translations-for-polylang'); ?>">
 						</a>
+						<h2 class="atfp-dashboard-logo-text">AutoPoly</h2>
 						<div class="atfp-dashboard-tab-title">
 							<span>↳</span> <?php echo esc_html($valid_tabs[$current_tab]); ?>
 						</div>

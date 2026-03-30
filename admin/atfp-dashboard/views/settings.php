@@ -60,7 +60,7 @@ if(!current_user_can('manage_options')){
             <h2 class="atfp-section-title atfp-section-title-with-icon">
                 <span class="atfp-section-icon atfp-icon-sparkle" aria-hidden="true">
                     <img
-                        src="<?php echo esc_url( ATFP_URL . 'assets/images/chrome-logo.svg' ); ?>"
+                        src="<?php echo esc_url( ATFP_URL . 'assets/images/chrome.png' ); ?>"
                         alt=""
                         width="20"
                         height="20"
