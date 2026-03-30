@@ -47,7 +47,6 @@ Whether you're using **Elementor** or **Gutenberg**, this addon makes the transl
 * ✅ **Inline Translation**
 * ✅ **Custom Block Translation:** Available
 * ❌ **Classic Editor Translation:** Not Available
-* ❌ **Unlimited Free Translations:** Not Available (500k characters only)
 * ❌ **Google Translate Widget Support:** Not Available
 * ❌ **OpenAI Translation Support:** Not Available
 * ❌ **Gemini Translation Support:** Not Available
@@ -65,7 +64,6 @@ Whether you're using **Elementor** or **Gutenberg**, this addon makes the transl
 * ✅ **Gemini Translation Support:** Use Gemini AI to generate high-quality, context-aware translations.
 * ✅ **Google Translate Widget Support:** Automate the translation process using the Google Translate Widget.
 * ✅ **OpenAI Translation Support:** Access OpenAI’s advanced language models for more natural translations.
-* ✅ **Unlimited Free Translations:** Translate unlimited content without any usage restrictions or extra fees.
 * ✅ **Premium Support:** [Quick Support](https://coolplugins.net/support/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=support&utm_content=premium_support)
   (**Support time:- 24-48 hours**)
 
