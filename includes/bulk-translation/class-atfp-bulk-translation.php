@@ -22,28 +22,11 @@ if(!class_exists('ATFP_Bulk_Translation')):
 
         public function bulk_translate_btn($screen)
         {
-            global $polylang;
-        
-            if(!$polylang || !property_exists($polylang, 'model')){
-                return;
-            }
-            
-            $translated_post_types = $polylang->model->get_translated_post_types();
-            $translated_post_types = array_keys($translated_post_types);
-
-            if(!isset($screen->id)){
+            if(!isset($screen) || !is_object($screen)){
                 return;
             }
 
-            // nonce verification is not required here because we are not using the nonce here.
-            // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-            $post_status=isset($_GET['post_status']) ? sanitize_text_field(wp_unslash($_GET['post_status'])) : '';
-
-            if('trash' === $post_status){
-                return;
-            }
-            
-            if(!in_array($screen->post_type, $translated_post_types)){
+            if(!class_exists('ATFP_Helper') || !ATFP_Helper::bulk_translation_render($screen)){
                 return;
             }
 

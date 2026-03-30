@@ -37,6 +37,27 @@ class ATFP_Register_Backend_Assets
         add_action('elementor/editor/before_enqueue_scripts', array($this, 'enqueue_elementor_translate_assets'));
         add_action('admin_enqueue_scripts', array($this, 'atfp_enqueue_admin_assets'));
         add_action('admin_enqueue_scripts', array($this, 'enqueue_classic_translate_assets'));
+        add_action('admin_enqueue_scripts', array($this, 'enqueue_bulk_translation_assets'));
+    }
+
+    public function enqueue_bulk_translation_assets(){
+        if(!function_exists('get_current_screen') || !class_exists('ATFP_Helper') || !ATFP_Helper::bulk_translation_render(get_current_screen())){
+            return;
+        }
+
+        $atfp_utm_parameters='utm_source=atfp_plugin';
+        if(class_exists('ATFP_Helper')){
+            $atfp_utm_parameters=ATFP_Helper::utm_source_text();
+        }
+
+        $atfp_bulk_data=array(
+            'atfp_utm_parameters' => sanitize_text_field($atfp_utm_parameters),
+            'pro_version_url' => esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/'),
+            'bulk_doc_url' => esc_url('https://docs.coolplugins.net/doc/ai-translation-polylang-bulk-translation/'),
+        );
+
+        wp_enqueue_script('atfp-bulk-translation', ATFP_URL . 'assets/js/atfp-bulk-translate.min.js', array('jquery'), ATFP_V, true);
+        wp_localize_script('atfp-bulk-translation', 'atfpBulkTranslationData', $atfp_bulk_data);
     }
 
     public function atfp_enqueue_admin_assets(){
