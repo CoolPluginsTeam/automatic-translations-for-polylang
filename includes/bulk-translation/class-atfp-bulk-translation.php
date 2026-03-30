@@ -53,14 +53,19 @@ if(!class_exists('ATFP_Bulk_Translation')):
         public function atfp_bulk_translate_button($views)
         {
             $atfp_utm_parameters='utm_source=atfp_plugin';
+            $atfp_magic_wand_url=ATFP_URL . 'assets/images/magic-wand.svg';
 
 			if(class_exists('ATFP_Helper')){
 				$atfp_utm_parameters=ATFP_Helper::utm_source_text();
 			}
 
-            echo wp_kses("<a class='button button-secondary atfp-bulk-translate-btn' style='display:none;' title='Bulk Translate option is avialable in pro version only' href='https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?".sanitize_text_field($atfp_utm_parameters)."&utm_medium=inside&utm_campaign=get_pro&utm_content=bulk_translate' target='_blank'>Bulk Translate</a>",
-                array('a' => array('class' => array(), 'style' => array(), 'title' => array(), 'href' => array(), 'target' => array(), 'rel' => array()))
-            );
+            echo sprintf(wp_kses("<a class='button button-primary atfp-bulk-translate-btn' style='display:none; align-items: center;' title='Bulk Translate option is avialable in pro version only' href='https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?".sanitize_text_field($atfp_utm_parameters)."&utm_medium=inside&utm_campaign=get_pro&utm_content=bulk_translate' target='_blank'><img src='{$atfp_magic_wand_url}' style='width: 18px; height: 18px; margin-right: 5px; filter: %s' alt='Bulk Translate'>Bulk Translate</a>",
+                array('a' => array('class' => array(), 'style' => array(), 'title' => array(), 'href' => array(), 'target' => array(), 'rel' => array(), 'align-items' => array()), 'img' => array('src' => array(), 'style' => array(
+                    'width' => array(), 'height' => array(), 'margin-right' => array(), 'filter' => array(
+                        'brightness(0) invert(1)'
+                    )
+                ), 'alt' => array()))
+            ), sanitize_text_field('brightness(0) invert(1)'));
 
             return $views;
         }

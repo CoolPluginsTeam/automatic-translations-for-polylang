@@ -18,7 +18,7 @@ jQuery(document).ready(function(){
             $defaultFilter.each(function(){
                 const clone=atfpBulkTranslateBtn.clone(true);
                 jQuery(this).after(clone);
-                clone.show();
+                clone.css('display', 'inline-flex');
             });
 
             atfpBulkTranslateBtn.remove();
