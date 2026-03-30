@@ -622,11 +622,20 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 
 				// Review Notice
 				if(class_exists('Atfp_Dashboard') && !defined('ATFPP_V')) {
-					Atfp_Dashboard::review_notice(
-						'atfp', // Required
-						'AutoPoly - AI Translation For Polylang', // Required
-						'https://wordpress.org/support/plugin/automatic-translations-for-polylang/reviews/#new-post', // Required
-					);
+					$atfp_installation_date =gmdate( 'Y-m-d h:i:s', strtotime(get_option( 'atfp-installDate' )) );
+					$atfp_display_date = gmdate( 'Y-m-d h:i:s' );
+					$install_date= new DateTime( $atfp_installation_date );
+					$current_date = new DateTime( $atfp_display_date );
+					$difference = $install_date->diff($current_date);
+					$atfp_diff_days= $difference->days;
+
+					if($atfp_diff_days > 2){
+						Atfp_Dashboard::review_notice(
+							'atfp', // Required
+							'AutoPoly - AI Translation For Polylang', // Required
+							'https://wordpress.org/support/plugin/automatic-translations-for-polylang/reviews/#new-post', // Required
+						);
+					}
 				}
 			}
 		}
