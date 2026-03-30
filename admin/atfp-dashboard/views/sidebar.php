@@ -11,6 +11,12 @@ if(!defined('ABSPATH')){
             <?php
 
             $atfp_all_translation_data = get_option('cpt_dashboard_data', array());
+            $atfp_utm_parameters='utm_source=atfp_plugin';
+            if(class_exists('ATFP_Helper')){
+                $atfp_utm_parameters=ATFP_Helper::utm_source_text();
+            }
+
+            $atfp_buy_pro_url=esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?'.sanitize_text_field($atfp_utm_parameters).'&utm_medium=inside&utm_campaign=get_pro&utm_content=bulk_translation_pro');
 
             if (!is_array($atfp_all_translation_data) || !isset($atfp_all_translation_data['atfp'])) {
 
@@ -63,7 +69,7 @@ if(!defined('ABSPATH')){
                             '<strong>AutoPoly (Pro)</strong>'
                         ); ?>
                     </p>
-                    <a href="<?php echo esc_url('https://wordpress.org/plugins/bulk-translation-pro/'); ?>" class="atfp-dashboard-btn primary" target="_blank"><?php esc_html_e('Install Bulk Translation Pro', 'automatic-translations-for-polylang'); ?></a>
+                    <a href="<?php echo esc_url($atfp_buy_pro_url); ?>" class="atfp-dashboard-btn primary" target="_blank"><?php esc_html_e('Install Bulk Translation Pro', 'automatic-translations-for-polylang'); ?></a>
                 </div>
             <?php } ?>
     </div>
