@@ -163,8 +163,44 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 				wp_enqueue_script( 'atfp-dashboard-script', ATFP_URL . 'admin/atfp-dashboard/js/atfp-data-share-setting.js', array('jquery'), ATFP_V, true );
 
 				if(empty($active_tab) || $active_tab === 'dashboard'){
-					wp_localize_script('atfp-dashboard-script', 'atfpSettingsScriptData', array('ajax_url' => admin_url('admin-ajax.php'), 'nonce' => wp_create_nonce('atfp_update_enabled_providers'), 'buy_pro_url' => $buy_pro_url));
+					$dashboard_data=array(
+						'ajax_url' => admin_url('admin-ajax.php'),
+						'nonce' => wp_create_nonce('atfp_update_enabled_providers'),
+						'buy_pro_url' => $buy_pro_url,
+						'dashboard_url' => admin_url('admin.php?page=polylang-atfp-dashboard&tab=dashboard')
+					);
+					
+					wp_localize_script('atfp-dashboard-script', 'atfpSettingsScriptData', $dashboard_data);
 				}
+			}
+
+			if($page == 'polylang-atfp-dashboard' && in_array($active_tab, array('settings', 'dashboard'))){
+				wp_enqueue_script( 'atfp-dashboard-settings-script', ATFP_URL . 'admin/atfp-dashboard/js/atfp-chrome-ai-notice.min.js', array('jquery'), ATFP_V, true );
+				
+				$atfp_langugages=array(
+					'source_language' => 'en',
+					'source_language_label' => 'English',
+					'target_language_label' => 'Hindi',
+					'all_languages' => array(),
+					'chrome_ai_bypass_api_check' => false,
+					'chrome_ai_bypass_language_check' => false,
+					'chrome_ai_bypass_browser_check' => false
+				);
+
+				$atfp_supported_langugages=ATFP_Helper::get_polylang_supported_languages();
+				$source_language=ATFP_Helper::get_polylang_default_language();
+
+				if(!empty($source_language) && !empty($atfp_supported_langugages)){
+					$atfp_langugages['all_languages']=$atfp_supported_langugages;
+
+					$atfp_langugages['source_language']=$source_language;
+					if(isset($atfp_supported_langugages[$source_language])){
+						$atfp_langugages['source_language_label']=$atfp_supported_langugages[$source_language]['name'];
+					}
+				}
+
+
+				wp_localize_script('atfp-dashboard-settings-script', 'atfpChromeAiNoticeData', $atfp_langugages);
 			}
 		}
 

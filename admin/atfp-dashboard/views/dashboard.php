@@ -64,7 +64,7 @@ $active_providers = get_option('atfp_enabled_providers', array('chrome-built-in-
 			<h3><?php echo esc_html__('AI Translation Providers', 'automatic-translations-for-polylang'); ?></h3>
 			<div class="atfp-dashboard-providers-grid">
 				<!-- Chrome Built-in AI Provider Card -->
-				<div class="atfp-dashboard-provider-card">
+				<div class="atfp-dashboard-provider-card atfp-chrome-ai-card">
 					<div class="atfp-dashboard-provider-header">
 						<a href="<?php echo esc_url('https://docs.coolplugins.net/doc/chrome-ai-translation-polylang/?utm_source=atfp_plugin&amp;utm_medium=inside&amp;utm_campaign=docs&amp;utm_content=dashboard_chrome'); ?>" target="_blank" rel="noopener noreferrer">
 							<img src="<?php echo esc_url(ATFP_URL . 'assets/images/chrome-built-in-ai-logo.png'); ?>" alt="<?php echo esc_attr__('Chrome Built-in AI', 'automatic-translations-for-polylang'); ?>">
@@ -84,6 +84,7 @@ $active_providers = get_option('atfp_enabled_providers', array('chrome-built-in-
 					</ul>
 					<div class="atfp-dashboard-provider-buttons">
 						<a href="<?php echo esc_url('https://docs.coolplugins.net/doc/chrome-ai-translation-polylang/?utm_source=atfp_plugin&amp;utm_medium=inside&amp;utm_campaign=docs&amp;utm_content=dashboard_chrome'); ?>" class="atfp-dashboard-btn" target="_blank" rel="noopener noreferrer"><?php esc_html_e('Docs', 'automatic-translations-for-polylang'); ?></a>
+						<a class="tpa-chrome-configure-button atfp-dashboard-btn primary" href="<?php echo admin_url('admin.php?page=polylang-atfp-dashboard&tab=settings'); ?>" style="display: none;"><?php esc_html_e('Configure', 'automatic-translations-for-polylang'); ?></a>
 					</div>
 				</div>
 

@@ -434,6 +434,11 @@ a.atfp-dashboard-docs:hover {
     font-size: 11px;
 }
 
+#chrome-local-ai-error-message{
+    margin-bottom: 10px;
+    font-size: 12px;
+    color: #dc2626;
+}
 
 /* ================================================
    Translation Providers
@@ -798,6 +803,292 @@ ul.atfp-dashboard-sts-btm li:last-child {
 	line-height: 25px;
 }
 
+.atfp-section-title-with-icon {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 10px 0;
+}
+
+.atfp-section-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-color);
+    flex-shrink: 0;
+}
+
+.atfp-section-icon svg,
+.atfp-section-icon img {
+    display: block;
+}
+
+.atfp-section-description {
+    font-size: 14px;
+    color: var(--text-color-light);
+    margin: 0 0 16px 0;
+    line-height: 1.5;
+}
+
+/* Chrome Local AI Notice */
+#atfp-chrome-local-ai-notice {
+    display: none;
+    background: var(--atfp-ald-bg, #f8f9fa);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-top: 12px;
+}
+
+.atfp-chrome-local-ai-notice-content {
+    color: #dc2626;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.atfp-chrome-notice-heading {
+    font-weight: 600;
+    margin: 0 0 12px 0;
+    font-size: 16px;
+}
+
+/* Test translation section (inside notice) - spacing when notice content is above */
+#atfp-chrome-test-translation {
+    margin-top: 20px;
+}
+
+.atfp-chrome-test-translation-heading {
+    font-weight: 600;
+    margin: 0 0 16px 0;
+    font-size: 16px;
+}
+
+.atfp-chrome-test-translation-description {
+    margin-bottom: 16px;
+    color: #666;
+    font-size: 14px;
+}
+
+.atfp-chrome-test-translation-language-pair {
+    margin-bottom: 16px;
+}
+
+.atfp-chrome-test-translation-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.atfp-chrome-test-translation-source,
+.atfp-chrome-test-translation-target {
+    padding: 8px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.atfp-chrome-test-translation-source {
+    margin-right: 8px;
+    width: 10rem;
+}
+
+.atfp-chrome-test-translation-target {
+    width: 10rem;
+}
+
+.atfp-chrome-test-translation-text {
+    width: 349px;
+    max-width: 80%;
+    margin-bottom: 16px;
+}
+
+.atfp-chrome-test-translation-btn {
+    margin-bottom: 16px;
+    cursor: pointer;
+}
+
+.atfp-chrome-test-translation-result {
+    display: none;
+    margin-top: 16px;
+    padding: 12px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.atfp-chrome-test-translation-error {
+    display: none;
+    margin-top: 16px;
+    padding: 12px;
+    background: #fee;
+    border: 1px solid #fcc;
+    border-radius: 4px;
+    color: #c33;
+    font-size: 14px;
+}
+
+/* Chrome AI notice - success result state */
+.atfp-chrome-test-translation-result.atfp-success {
+    background: #f0f9ff;
+    border: 1px solid #bae6fd;
+    color: #0c4a6e;
+}
+
+#atfp-chrome-local-ai-notice.atfp-chrome-notice-combined .atfp-chrome-local-ai-notice-content {
+    color: inherit;
+}
+
+#atfp-chrome-local-ai-notice .atfp-chrome-no-languages-content {
+    color: rgb(159 18 57);
+    font-size: 14px;
+    line-height: 1.5;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+#atfp-chrome-local-ai-notice .atfp-chrome-no-languages-content svg {
+    fill: rgb(159 18 57);
+    vertical-align: middle;
+}
+
+/* Chrome notice message content - lists, paragraphs, links */
+.atfp-chrome-notice-message ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    margin-top: 8px;
+}
+
+.atfp-chrome-notice-message ol {
+    list-style-type: none;
+}
+
+.atfp-chrome-notice-message p {
+    margin-top: 8px;
+    margin-bottom: 12px;
+}
+
+.atfp-chrome-notice-message p:last-child {
+    margin-bottom: 0;
+}
+
+.atfp-chrome-notice-message a {
+    text-decoration: none;
+    color: #2563eb;
+}
+
+/* Chrome copyable URL link */
+.chrome-url-link.chrome-ai-translator-flags {
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+}
+
+.chrome-url-link.chrome-ai-translator-flags a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+/* Unsupported languages notice */
+.atfp-chrome-unsupported-heading {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: rgb(159 18 57);
+}
+
+.atfp-chrome-unsupported-heading svg {
+    fill: rgb(159 18 57);
+    vertical-align: middle;
+}
+
+.atfp-chrome-unsupported-box p {
+    margin-bottom: 12px;
+    color: rgba(190 18 60);
+}
+
+.atfp-chrome-unsupported-box .atfp-unsupported-list {
+    color: rgb(159 18 57);
+}
+
+/* Language pack notice */
+.atfp-chrome-language-pack-heading {
+    color: rgb(217 119 6);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.atfp-chrome-language-pack-heading svg {
+    fill: rgb(217 119 6);
+    vertical-align: middle;
+}
+
+.atfp-chrome-language-pack-box {
+    margin-top: 12px;
+}
+
+.atfp-chrome-language-pack-box p {
+    margin-bottom: 12px;
+    color: rgba(71 85 105);
+}
+
+.atfp-chrome-language-pack-inner .atfp-required-lang {
+    color: rgb(225 29 72);
+}
+
+.atfp-chrome-language-pack-inner strong.atfp-required-label {
+    color: rgb(161 98 7);
+}
+
+/* Chrome steps list (numbered circles) */
+.atfp-chrome-steps-list {
+    margin: 0 0 12px 0;
+    padding-left: 0;
+    list-style: none;
+}
+
+.atfp-chrome-steps-list li {
+    margin-bottom: 8px;
+    position: relative;
+    padding-left: 35px;
+    color: #DC2626;
+}
+
+.atfp-chrome-step-number {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    border: 1px solid rgb(254 243 199);
+    background-color: rgb(255, 255, 255);
+    color: #111827;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 1;
+}
+
+/* Combined notice sections */
+.atfp-chrome-language-pack-box,
+.atfp-chrome-unsupported-box {
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.atfp-chrome-combined-section h4,
+.atfp-chrome-combined-heading {
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
 .atfp-dashboard-feedback-container {
     margin: 25px 0px 18px 0px;
 }
@@ -1017,4 +1308,53 @@ ul.atfp-dashboard-sts-btm li:last-child {
 	.atfp-dashboard-header-right {
     gap: 13px;
 }
+}
+
+/* ================================================
+   Tooltip & Clipboard
+================================================ */
+
+/* Tooltip container */
+.atfp-tooltip-element {
+    position: relative;
+    display: inline-block;
+}
+
+/* Tooltip text */
+.atfp-tooltip {
+    visibility: hidden;
+    width: 120px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1000;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 12px;
+    line-height: 1.4;
+    pointer-events: none;
+}
+
+/* Tooltip arrow */
+.atfp-tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
+}
+
+/* Show the tooltip when active */
+.atfp-tooltip.atfp-tooltip-active {
+    visibility: visible;
+    opacity: 1;
 }

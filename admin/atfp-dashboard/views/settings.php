@@ -41,7 +41,7 @@ if(!current_user_can('manage_options')){
 <div class="atfp-dashboard-settings">
     <div class="atfp-dashboard-settings-container">
     <div class="header">
-        <h1><?php echo esc_html__('Polylang Addon Settings', 'automatic-translations-for-polylang'); ?></h1>
+        <h1><?php echo esc_html__('Settings', 'automatic-translations-for-polylang'); ?></h1>
         <div class="atfp-dashboard-status">
             <span><?php echo esc_html__('Inactive', 'automatic-translations-for-polylang'); ?></span>
             <a href="<?php echo esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?'.sanitize_text_field($atfp_utm_parameters).'&utm_medium=inside&utm_campaign=get_pro&utm_content=settings'); ?>" class='atfp-dashboard-btn' target="_blank">
@@ -50,6 +50,73 @@ if(!current_user_can('manage_options')){
             </a>
         </div>
     </div>
+
+    <?php
+        $atfp_enabled_providers = get_option('atfp_enabled_providers', array('chrome-built-in-ai', 'yandex-translate'));
+        $atfp_polylang_default_lang=ATFP_Helper::get_polylang_default_language();
+        $atfp_polylang_supported_languages=ATFP_Helper::get_polylang_supported_languages();
+
+        if(is_array($atfp_enabled_providers) && in_array('chrome-built-in-ai', $atfp_enabled_providers)){ ?>
+            <h2 class="atfp-section-title atfp-section-title-with-icon">
+                <span class="atfp-section-icon atfp-icon-sparkle" aria-hidden="true">
+                    <img
+                        src="<?php echo esc_url( ATFP_URL . 'assets/images/chrome-logo.svg' ); ?>"
+                        alt=""
+                        width="20"
+                        height="20"
+                        loading="lazy"
+                        decoding="async"
+                    />
+                </span>
+                <?php esc_html_e('Chrome AI Configuration', 'automatic-translations-for-polylang'); ?>
+            </h2>
+            <p class="atfp-section-description">
+                <?php esc_html_e('Use Chrome’s built-in AI to translate strings. Configure and test it here.', 'automatic-translations-for-polylang'); ?>
+            </p>
+            <div class="atfp-dashboard-chrome-ai-settings">
+                <!-- Chrome Local AI Notice -->
+                <div id="atfp-chrome-local-ai-notice" class="atfp-chrome-local-ai-notice">
+                <?php if(empty($atfp_polylang_supported_languages)){ ?>
+                    <span class="atfp-chrome-no-languages-content"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" id="error"><g><rect fill="none"/></g><g><path d="M12 7c.55 0 1 .45 1 1v4c0 .55-.45 1-1 1s-1-.45-1-1V8c0-.55.45-1 1-1zm-.01-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm1-3h-2v-2h2v2z"></path></g></svg><?php
+                        printf(
+                            wp_kses_post(
+                                // translators: %s is a link to the Polylang languages page.
+                                __( 'Add at least %s to use the Chrome AI translation test', 'automatic-translations-for-polylang' )
+                            ),
+                            '<a href="' . esc_url( admin_url( 'admin.php?page=mlang' ) ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'one language in Polylang', 'automatic-translations-for-polylang' ) . '</a>'
+                        );
+                ?></span>
+                <?php }else{ ?>
+                    <div class="atfp-chrome-local-ai-notice-content">
+                        <h3 id="atfp-chrome-notice-heading" class="atfp-chrome-notice-heading"></h3>
+                        <div id="atfp-chrome-notice-message" class="atfp-chrome-notice-message"></div>
+                    </div>
+
+                    <!-- Test Translation Section -->
+                    <div id="atfp-chrome-test-translation" class="atfp-chrome-test-translation">
+                        <h3 class="atfp-chrome-test-translation-heading"><?php esc_html_e('Chrome AI Translation Test', 'automatic-translations-for-polylang'); ?></h3>
+                        <p class="atfp-chrome-test-translation-description"><?php esc_html_e('Check whether Chrome AI Translation is properly configured by translating a sample text.', 'automatic-translations-for-polylang'); ?></p>
+
+                        <div class="atfp-chrome-test-translation-language-pair">
+                            <label class="atfp-chrome-test-translation-label"><?php esc_html_e('Language Pair:', 'automatic-translations-for-polylang'); ?></label>
+                            <select id="atfp-test-translation-source" class="atfp-chrome-test-translation-source"></select>
+                            <span class="atfp-chrome-test-translation-arrow">→</span>
+                            <select id="atfp-test-translation-target" class="atfp-chrome-test-translation-target"></select>
+                        </div>
+                        
+                        <input type="text" id="atfp-test-translation-text" class="atfp-chrome-test-translation-text" placeholder="<?php esc_attr_e('Enter text to translate', 'automatic-translations-for-polylang'); ?>" value="Hello, this is a test translation."><br>
+                        <button id="atfp-test-translation-btn" class="atfp-dashboard-btn primary atfp-chrome-test-translation-btn">
+                            <?php esc_html_e('Test Translation', 'automatic-translations-for-polylang'); ?>
+                        </button>
+
+                        <div id="atfp-test-translation-result" class="atfp-chrome-test-translation-result"></div>
+                        <div id="atfp-test-translation-error" class="atfp-chrome-test-translation-error"></div>
+                    </div>
+                <?php } ?>
+                </div>
+            </div>
+        <?php }
+    ?>
     
     <!-- Add the description here -->
     <p class="description">
