@@ -107,6 +107,11 @@
     line-height: 1.4em;
 }
 
+.atfp-elementor-translate-confirm-box .atfp-modal-body .atfp-translate-button:hover{
+  background: #135e96 !important;
+  border-color: #135e96 !important;
+}
+
 .atfp-elementor-translate-confirm-box .atfp-modal-body .atfp-translate-button:disabled{
     color: #a7aaad !important;
     background: #f6f7f7 !important;
@@ -175,6 +180,11 @@
     background: #0073aa;
     color: #fff !important;
     border: 1px solid #0073aa;
+}
+
+.atfp-primary-btn:hover{
+  background: #135e96;
+  border-color: #135e96;
 }
 
 .atfp-elementor-translate-confirm-box .modal-footer-notice{

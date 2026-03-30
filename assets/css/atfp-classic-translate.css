@@ -99,6 +99,11 @@
     border: 1px solid #0073aa;
 }
 
+.atfp-classic-modal-container .modal-content .modal-body .atfp-marketing-btn:hover{
+  background: #135e96;
+  border-color: #135e96;
+}
+
 .atfp-classic-modal-container .modal-content .modal-body .atfp-marketing-btn span{
     line-height: 28px;
 }

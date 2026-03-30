@@ -115,6 +115,11 @@ button.elementor-button.atfp-retranslate-button:disabled {
     border: 1px solid #0073aa;
 }
 
+#atfp-retranslate-modal .atfp-retranslate-modal-content .atfp-modal-body .atfp-marketing-btn:hover{
+  background: #135e96;
+  border-color: #135e96;
+}
+
 #atfp-retranslate-modal .atfp-retranslate-modal-content .atfp-modal-body .atfp-marketing-btn span{
     line-height: 28px;
 }

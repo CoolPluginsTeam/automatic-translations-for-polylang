@@ -84,7 +84,7 @@ const App = () => {
     translatePost = ElementorUpdatePage;
     fetchPost = ElementorPostFetch;
   } else if (editorType === 'gutenberg') {
-    translateWrpSelector = 'input#atfp-translate-button[name="atfp_meta_box_translate"]';
+    translateWrpSelector = 'a#atfp-translate-button';
     translatePost = UpdateGutenbergPage;
     fetchPost = GutenbergPostFetch;
   }
@@ -129,8 +129,7 @@ const App = () => {
     if (pageTranslate) {
       const metaFieldBtn = document.querySelector(translateWrpSelector);
       if (metaFieldBtn) {
-        metaFieldBtn.disabled = true;
-        metaFieldBtn.value = __("Already Translated", 'automatic-translations-for-polylang');
+        metaFieldBtn.value = __("Re-translate", 'automatic-translations-for-polylang');
       }
     }
   }, [pageTranslate]);

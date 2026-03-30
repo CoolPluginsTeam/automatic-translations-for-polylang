@@ -32,6 +32,7 @@ const BulkPromotionModal = ({ onClick, characterCount }) => {
                                 rel="noopener noreferrer"
                                 className="button button-primary"
                             >
+                                <img src={magincWandUrl} style={{width: '20px', height: '20px', marginRight: '5px', filter: 'brightness(0) invert(1)'}} alt={`${__("AI", "automatic-translations-for-polylang")}`}/>
                                 {__("Bulk Translation", "automatic-translations-for-polylang")}
                             </a>
                             <button

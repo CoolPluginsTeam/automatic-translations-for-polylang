@@ -78,6 +78,11 @@
   line-height: 1.4em;
 }
 
+#atfp-limit-notice-wrapper .bulk-notice-buttons a:hover{
+  background: #135e96 !important;
+  border-color: #135e96 !important;
+}
+
 :is(#atfp-modal-open-warning-wrapper, #atfp-limit-notice-wrapper) .modal-header {
   background: #ffffff;
   padding: 20px 24px;
@@ -142,6 +147,11 @@
   line-height: 1.4em;
 }
 
+#atfp-modal-open-warning-wrapper .atfp-modal-body .atfp-translate-button:hover{
+  background: #135e96 !important;
+  border-color: #135e96 !important;
+}
+
 #atfp-modal-open-warning-wrapper
 .atfp-modal-body
   .atfp-marketing-card {
@@ -193,6 +203,12 @@
   background: #0073aa;
   color: #fff !important;
   border: 1px solid #0073aa;
+}
+
+.atfp-marketing-btn:hover{
+  background: #135e96;
+  border-color: #135e96;
+  color: #fff;
 }
 
 :is(#atfp-modal-open-warning-wrapper, #atfp-limit-notice-wrapper)
