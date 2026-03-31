@@ -48,7 +48,7 @@ if(!class_exists('ATFP_Bulk_Translation')):
                         'brightness(0) invert(1)'
                     )
                 ), 'alt' => array()))
-            ), sanitize_text_field('brightness(0) invert(1)'));
+            ), esc_attr('brightness(0) invert(1)'));
 
             return $views;
         }

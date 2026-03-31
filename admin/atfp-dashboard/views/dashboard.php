@@ -3,7 +3,7 @@ if(!defined('ABSPATH')){
     exit;
 }
 
-$active_providers = get_option('atfp_enabled_providers', array('chrome-built-in-ai', 'yandex-translate'));
+$atfp_active_providers = get_option('atfp_enabled_providers', array('chrome-built-in-ai', 'yandex-translate'));
 ?>
 <div class="atfp-dashboard-left-section">
 
@@ -71,7 +71,7 @@ $active_providers = get_option('atfp_enabled_providers', array('chrome-built-in-
 						</a>
 						<div class="atfp-provider-switch-container">
 							<label class="atfp-provider-switch">
-								<input type="checkbox" class="atfp-provider-toggle" data-provider="chrome-built-in-ai" <?php checked(in_array('chrome-built-in-ai', $active_providers), true); ?>/>
+								<input type="checkbox" class="atfp-provider-toggle" data-provider="chrome-built-in-ai" <?php checked(in_array('chrome-built-in-ai', $atfp_active_providers), true); ?>/>
 								<span class="atfp-switch-slider"></span>
 							</label>
 						</div>
@@ -84,7 +84,7 @@ $active_providers = get_option('atfp_enabled_providers', array('chrome-built-in-
 					</ul>
 					<div class="atfp-dashboard-provider-buttons">
 						<a href="<?php echo esc_url('https://docs.coolplugins.net/doc/chrome-ai-translation-polylang/?utm_source=atfp_plugin&amp;utm_medium=inside&amp;utm_campaign=docs&amp;utm_content=dashboard_chrome'); ?>" class="atfp-dashboard-btn" target="_blank" rel="noopener noreferrer"><?php esc_html_e('Docs', 'automatic-translations-for-polylang'); ?></a>
-						<a class="tpa-chrome-configure-button atfp-dashboard-btn primary" href="<?php echo admin_url('admin.php?page=polylang-atfp-dashboard&tab=settings'); ?>" style="display: none;"><?php esc_html_e('Configure', 'automatic-translations-for-polylang'); ?></a>
+						<a class="tpa-chrome-configure-button atfp-dashboard-btn primary" href="<?php echo esc_url(admin_url('admin.php?page=polylang-atfp-dashboard&tab=settings')); ?>" style="display: none;"><?php esc_html_e('Configure', 'automatic-translations-for-polylang'); ?></a>
 					</div>
 				</div>
 
@@ -96,7 +96,7 @@ $active_providers = get_option('atfp_enabled_providers', array('chrome-built-in-
 						</a>
 						<div class="atfp-provider-switch-container">
 							<label class="atfp-provider-switch">
-								<input type="checkbox" class="atfp-provider-toggle" data-provider="yandex-translate" <?php checked(in_array('yandex-translate', $active_providers), true); ?>/>
+								<input type="checkbox" class="atfp-provider-toggle" data-provider="yandex-translate" <?php checked(in_array('yandex-translate', $atfp_active_providers), true); ?>/>
 								<span class="atfp-switch-slider"></span>
 							</label>
 						</div>

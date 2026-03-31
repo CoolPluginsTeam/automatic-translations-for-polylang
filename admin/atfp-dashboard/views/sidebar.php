@@ -34,13 +34,13 @@ if(!defined('ABSPATH')){
             );
 
             if ( ! empty( $atfp_all_translation_data['atfp'] ) && is_array( $atfp_all_translation_data['atfp'] ) ) {
-                foreach ( $atfp_all_translation_data['atfp'] as $translation ) {
-                    $totals['string_count']    += intval( isset( $translation['string_count'] ) ? $translation['string_count'] : 0 );
-                    $totals['character_count'] += intval( isset( $translation['character_count'] ) ? $translation['character_count'] : 0 );
-                    $totals['time_taken']      += intval( isset( $translation['time_taken'] ) ? $translation['time_taken'] : 0 );
+                foreach ( $atfp_all_translation_data['atfp'] as $atfp_translation ) {
+                    $totals['string_count']    += intval( isset( $atfp_translation['string_count'] ) ? $atfp_translation['string_count'] : 0 );
+                    $totals['character_count'] += intval( isset( $atfp_translation['character_count'] ) ? $atfp_translation['character_count'] : 0 );
+                    $totals['time_taken']      += intval( isset( $atfp_translation['time_taken'] ) ? $atfp_translation['time_taken'] : 0 );
 
                     // Count total translations instead of unique post IDs.
-                    if ( ! empty( $translation['post_id'] ) ) {
+                    if ( ! empty( $atfp_translation['post_id'] ) ) {
                         $totals['translation_count']++;
                     }
                 }
@@ -61,11 +61,12 @@ if(!defined('ABSPATH')){
                 <div class="atfp-bulk-translation-suggestion">
                     <p>
                         <?php printf(
+                            // translators: 1: number of characters translated, 2: plugin name
                             esc_html__(
-                                'Translated %s characters page by page. Save time — install %s and use Bulk Translation to translate multiple pages in one click.',
+                                'Translated %1$s characters page by page. Save time — install %2$s and use Bulk Translation to translate multiple pages in one click.',
                                 'automatic-translations-for-polylang'
                             ),
-                            '<strong>' . atfp_format_number( $totals['character_count'] ) . '</strong>',
+                            '<strong>' . esc_html(atfp_format_number( $totals['character_count'] )) . '</strong>',
                             '<strong>AutoPoly (Pro)</strong>'
                         ); ?>
                     </p>
