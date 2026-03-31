@@ -16,7 +16,7 @@ if(!defined('ABSPATH')){
                 $atfp_utm_parameters=ATFP_Helper::utm_source_text();
             }
 
-            $atfp_buy_pro_url=esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?'.sanitize_text_field($atfp_utm_parameters).'&utm_medium=inside&utm_campaign=get_pro&utm_content=bulk_translation_pro');
+            $atfp_buy_pro_url=esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?'.sanitize_text_field($atfp_utm_parameters).'&utm_medium=inside&utm_campaign=get_pro&utm_content=dashboard_translation_limit');
 
             if (!is_array($atfp_all_translation_data) || !isset($atfp_all_translation_data['atfp'])) {
 
