@@ -6,6 +6,7 @@ Polylang Addon Dashboard - Admin Panel Styles
 
 :root {
     --primary-color: #30b230;
+    --primary-light-color: #efffef;
     --secondary-color: #239d23;
     --background-color: #f8f9fa;
     --border-color: #ddd;
@@ -111,9 +112,18 @@ Polylang Addon Dashboard - Admin Panel Styles
 }
 
 .atfp-dashboard-btn:hover {
-    background: #efffef;
+    background: var(--primary-light-color);
     color: var(--primary-color);
     border-color: var(--border-color);
+}
+
+.atfp-dashboard-btn:focus{
+    box-shadow: none;
+    border-radius: 6px;
+    background: var(--primary-light-color);
+    color: var(--primary-color);
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0px 3px var(--primary-light-color);
 }
 
 /* ================================================
