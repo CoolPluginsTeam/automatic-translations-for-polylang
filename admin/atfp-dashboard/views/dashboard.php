@@ -76,7 +76,6 @@ $atfp_active_providers = get_option('atfp_enabled_providers', array('chrome-buil
 							</label>
 						</div>
 					</div>
-					<h4><?php echo esc_html__('Chrome Built-in AI', 'automatic-translations-for-polylang'); ?></h4>
 					<ul>
 						<li>✅ <?php echo esc_html__('Fast AI Translations in Browser', 'automatic-translations-for-polylang'); ?></li>
 						<li>✅ <?php echo esc_html__('Unlimited Free Translations', 'automatic-translations-for-polylang'); ?></li>
@@ -101,7 +100,6 @@ $atfp_active_providers = get_option('atfp_enabled_providers', array('chrome-buil
 							</label>
 						</div>
 					</div>
-					<h4><?php echo esc_html__('Yandex Translate', 'automatic-translations-for-polylang'); ?></h4>
 					<ul>
 						<li>✅ <?php echo esc_html__('Unlimited Free Translations', 'automatic-translations-for-polylang'); ?></li>
 						<li>✅ <?php echo esc_html__('No API & No Extra Cost', 'automatic-translations-for-polylang'); ?></li>
@@ -124,7 +122,6 @@ $atfp_active_providers = get_option('atfp_enabled_providers', array('chrome-buil
 							</label>
 						</div>
 					</div>
-					<h4><?php echo esc_html__('Google Translate', 'automatic-translations-for-polylang'); ?></h4>
 					<ul>
 						<li>✅ <?php echo esc_html__('Unlimited Free Translations', 'automatic-translations-for-polylang'); ?></li>
 						<li>✅ <?php echo esc_html__('Fast & No API Key Required', 'automatic-translations-for-polylang'); ?></li>
@@ -148,7 +145,6 @@ $atfp_active_providers = get_option('atfp_enabled_providers', array('chrome-buil
 							</label>
 						</div>
 					</div>
-					<h4><?php echo esc_html__('OpenAI', 'automatic-translations-for-polylang'); ?></h4>
 					<ul>
 						<li>✅ <?php echo esc_html__('Unlimited Free Translations', 'automatic-translations-for-polylang'); ?></li>
 						<li>✅ <?php echo esc_html__('Use Translation Modals', 'automatic-translations-for-polylang'); ?></li>
@@ -172,7 +168,6 @@ $atfp_active_providers = get_option('atfp_enabled_providers', array('chrome-buil
 							</label>
 						</div>
 					</div>
-					<h4><?php echo esc_html__('Gemini', 'automatic-translations-for-polylang'); ?></h4>
 					<ul>
 						<li>✅ <?php echo esc_html__('Unlimited Free Translations', 'automatic-translations-for-polylang'); ?></li>
 						<li>✅ <?php echo esc_html__('Use Translation Modals', 'automatic-translations-for-polylang'); ?></li>
@@ -196,7 +191,6 @@ $atfp_active_providers = get_option('atfp_enabled_providers', array('chrome-buil
 							</label>
 						</div>
 					</div>
-					<h4><?php echo esc_html__('DeepL', 'automatic-translations-for-polylang'); ?></h4>
 					<ul>
 						<li>✅ <?php echo esc_html__('Unlimited Free Translations', 'automatic-translations-for-polylang'); ?></li>
 						<li>✅ <?php echo esc_html__('Bulk Translation', 'automatic-translations-for-polylang'); ?></li>
