@@ -4,6 +4,16 @@ import { __ } from '@wordpress/i18n';
 const BulkPromotionModal = ({ onClick, characterCount }) => {
     const atfpUrl=window.atfp_global_object.atfp_url;
     const magincWandUrl=atfpUrl + 'assets/images/magic-wand.svg';
+    const refrenceText=atfp_global_object.refrence_text;
+    let proUrl=window.atfp_global_object.pro_version_url+'?'+refrenceText +'&utm_medium=inside&utm_campaign=get_pro&utm_content=';
+    let utmContent='popup_translation_limit';
+
+    if(window.atfp_global_object.editor_type && window.atfp_global_object.editor_type === 'elementor') {
+        utmContent='popup_elementor_translation_limit';
+    }
+
+    proUrl=proUrl+utmContent;
+
     return (
         <div id="atfp-limit-notice-wrapper">
             <div className="modal-container" style={{ display: 'flex' }}>
@@ -27,7 +37,7 @@ const BulkPromotionModal = ({ onClick, characterCount }) => {
                         </p>
                         <div className="bulk-notice-buttons">
                             <a
-                                href={window.atfp_global_object.pro_version_url}
+                                href={proUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="button button-primary"

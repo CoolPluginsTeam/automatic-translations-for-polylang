@@ -13,7 +13,7 @@ $atfp_active_providers = get_option('atfp_enabled_providers', array('chrome-buil
                     <h1><?php echo esc_html__('Automate the Translation Process', 'automatic-translations-for-polylang'); ?></h1>
                     <div class="atfp-dashboard-status">
                         <span><?php echo esc_html__('Free', 'automatic-translations-for-polylang'); ?></span>
-                        <a href="<?php echo esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?'.sanitize_text_field($atfp_utm_parameters).'&utm_medium=inside&utm_campaign=get_pro&utm_content=settings'); ?>" class='atfp-dashboard-btn' target="_blank">
+                        <a href="<?php echo esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?'.sanitize_text_field($atfp_utm_parameters).'&utm_medium=inside&utm_campaign=get_pro&utm_content=dashboard'); ?>" class='atfp-dashboard-btn' target="_blank">
                             <img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/upgrade-now.svg'); ?>" alt="<?php esc_attr_e('Upgrade Now', 'automatic-translations-for-polylang'); ?>">
                             <?php echo esc_html__('Upgrade Now', 'automatic-translations-for-polylang'); ?>
                         </a>
@@ -42,10 +42,10 @@ $atfp_active_providers = get_option('atfp_enabled_providers', array('chrome-buil
                     ?>
                     </p>
                     <div class="atfp-dashboard-btns-row">
-                        <a href="<?php echo esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?'.sanitize_text_field($atfp_utm_parameters).'&utm_medium=inside&utm_campaign=get_pro&utm_content=dashboard_website_languages'); ?>" target="_blank" class="atfp-dashboard-btn primary">Bulk Translation</a>
+                        <a href="<?php echo esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?'.sanitize_text_field($atfp_utm_parameters).'&utm_medium=inside&utm_campaign=get_pro&utm_content=dashboard_bulk_translate'); ?>" target="_blank" class="atfp-dashboard-btn primary">Bulk Translation</a>
                         <a href="<?php echo esc_url(admin_url('edit.php?post_type=page')); ?>" target="_blank" class="atfp-dashboard-btn">Page Translation</a>
                     </div>
-                    <a class="atfp-dashboard-docs" href="<?php echo esc_url('https://docs.coolplugins.net/plugin/ai-translation-for-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_docs'); ?>" target="_blank"><img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/document.svg'); ?>" alt="document"> <span><?php echo esc_html__('Read Plugin Docs', 'automatic-translations-for-polylang'); ?></span></a>
+                    <a class="atfp-dashboard-docs" href="<?php echo esc_url('https://docs.coolplugins.net/plugin/ai-translation-for-polylang/?'.sanitize_text_field($atfp_utm_parameters).'&utm_medium=inside&utm_campaign=docs&utm_content=dashboard'); ?>" target="_blank"><img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/document.svg'); ?>" alt="document"> <span><?php echo esc_html__('Read Plugin Docs', 'automatic-translations-for-polylang'); ?></span></a>
                     </div>
                     <div class="atfp-dashboard-get-started-grid-content">
                         <iframe title="Automate the Translation Process with AutoPoly - AI Translation For Polylang"

@@ -13,9 +13,7 @@
         // Prepare URLs and strings
         var atfpUrl = window.atfpClassicTranslateData && window.atfpClassicTranslateData.atfp_url ? window.atfpClassicTranslateData.atfp_url : '';
         var magicWandUrl = atfpUrl + 'assets/images/magic-wand.svg';
-        let refrenceText = window.atfpClassicTranslateData && window.atfpClassicTranslateData.refrence_text ? window.atfpClassicTranslateData.refrence_text : 'atfp_plugin';
-        refrenceText =`?utm_source=${refrenceText}&utm_medium=atfp_plugin&utm_campaign=atfp_plugin`;
-        var proUrl = window.atfpClassicTranslateData && window.atfpClassicTranslateData.pro_version_url ? window.atfpClassicTranslateData.pro_version_url+refrenceText : '#';
+        var proUrl =  window.atfpClassicTranslateData.pro_version_url
 
         // Compose modal HTML with display:none (initially hidden), show later with display:flex
         var modalHtml = `

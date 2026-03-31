@@ -161,6 +161,8 @@ const createMessagePopup = () => {
   const atfpUrl=window.atfp_global_object.atfp_url;
   const magincWandUrl=atfpUrl + 'assets/images/magic-wand.svg';
   const characterCount = parseInt(window.atfp_global_object.translation_data.total_character_count);
+  const refrenceText=atfp_global_object.refrence_text;
+  const proUrl=window.atfp_global_object.pro_version_url+'?'+refrenceText +'&utm_medium=inside&utm_campaign=get_pro&utm_content=popup_bulk_translate';
 
   const messagePopup = document.createElement('div');
   messagePopup.id = 'atfp-modal-open-warning-wrapper';
@@ -195,7 +197,7 @@ const createMessagePopup = () => {
                   </p>`
                 : ""}
               <div class="atfp-marketing-buttons">
-                  <a href="${window.atfp_global_object.pro_version_url}" target="_blank" class="atfp-marketing-btn atfp-primary-btn">
+                  <a href="${proUrl}" target="_blank" class="atfp-marketing-btn atfp-primary-btn">
                       <img src="${magincWandUrl}" style="width: 20px; height: 20px; margin-right: 5px; filter: brightness(0) invert(1);" alt="AI"><span class="atfp-btn-text">${__("Get Pro for Bulk Translation", "automatic-translations-for-polylang")}</span>
                   </a>
               </div>

@@ -4,7 +4,7 @@ Plugin Name: AutoPoly - AI Translation For Polylang
 Plugin URI: https://coolplugins.net/
 Version: 1.4.8
 Author: Cool Plugins
-Author URI: https://coolplugins.net/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=author_page&utm_content=plugin_list
+Author URI: https://coolplugins.net/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=author_page&utm_content=plugins_list
 Description: AutoPoly - AI Translation For Polylang simplifies your translation process by automatically translating all pages/posts content from one language to another.
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -99,7 +99,7 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 				$atfp_utm_parameters=ATFP_Helper::utm_source_text();
 			}
 
-			$links[] = '<a href="https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?'.sanitize_text_field($atfp_utm_parameters).'&utm_medium=inside&utm_campaign=get_pro&utm_content=plugin_list" target="_blank" style="font-weight:bold; color:#852636;">' . __( 'Get Pro', 'automatic-translations-for-polylang' ) . '</a>';
+			$links[] = '<a href="https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?'.sanitize_text_field($atfp_utm_parameters).'&utm_medium=inside&utm_campaign=get_pro&utm_content=plugins_list" target="_blank" style="font-weight:bold; color:#852636;">' . __( 'Get Pro', 'automatic-translations-for-polylang' ) . '</a>';
 			return $links;
 		}
 
@@ -110,8 +110,8 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 				if(class_exists('ATFP_Helper')){
 					$atfp_utm_parameters=ATFP_Helper::utm_source_text();
 				}
-				
-				$plugin_meta[] = '<a href="'.esc_url('https://docs.coolplugins.net/doc/ai-translation-polylang-bulk-translation/?'.sanitize_text_field($atfp_utm_parameters).'&utm_medium=inside&utm_campaign=docs&utm_content=plugin_list').'" target="_blank" style="font-weight:bold;">' . __( 'Bulk Translation', 'automatic-translations-for-polylang' ) . '</a>';
+
+				$plugin_meta[] = '<a href="'.esc_url('https://docs.coolplugins.net/doc/ai-translation-polylang-bulk-translation/?'.sanitize_text_field($atfp_utm_parameters).'&utm_medium=inside&utm_campaign=docs&utm_content=plugins_list').'" target="_blank" style="font-weight:bold;">' . __( 'Bulk Translation', 'automatic-translations-for-polylang' ) . '</a>';
 			}
 			return $plugin_meta;
 		}
@@ -427,7 +427,7 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 			// Action buttons configuration
 			$buttons = [
 				[
-					'url' => 'https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?'.sanitize_text_field($atfp_utm_parameters).'&utm_medium=inside&utm_campaign=get_pro&utm_content=dashboard_header_upgrade_now',
+					'url' => 'https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?'.sanitize_text_field($atfp_utm_parameters).'&utm_medium=inside&utm_campaign=get_pro&utm_content=dashboard_header',
 					'img' => 'upgrade-now.svg',
 					'alt' => __('Unlock Pro Features', 'automatic-translations-for-polylang'),
 					'text' => __('Unlock Pro Features', 'automatic-translations-for-polylang')

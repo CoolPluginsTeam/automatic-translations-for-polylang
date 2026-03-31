@@ -235,12 +235,19 @@ class ATFP_Register_Backend_Assets
                 isset($_GET['from_post'], $_GET['new_lang'], $_GET['_wpnonce']) &&
                 wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['_wpnonce'])), 'new-post-translation')
             ) {
+                $atfp_utm_parameters='utm_source=atfp_plugin';
+                if(class_exists('ATFP_Helper')){
+                    $atfp_utm_parameters=ATFP_Helper::utm_source_text();
+                }
+                $buy_pro_url=esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/');
+                $buy_pro_url=$buy_pro_url . '?' . sanitize_text_field($atfp_utm_parameters) . '&utm_medium=inside&utm_campaign=get_pro&utm_content=popup_classic_editor_translation';
+
                 wp_enqueue_script('atfp-classic-translate', ATFP_URL . 'assets/js/atfp-classic-translate.min.js', array('jquery'), ATFP_V, true);
                 wp_enqueue_style('atfp-classic-translate', ATFP_URL . 'assets/css/atfp-classic-translate.min.css', array(), ATFP_V);
 
                 wp_localize_script('atfp-classic-translate', 'atfpClassicTranslateData', array(
                     'atfp_url' => esc_url(ATFP_URL),
-                    'pro_version_url' => esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/'),
+                    'pro_version_url' => esc_url($buy_pro_url),
                 ));
             }
         }else{                
@@ -369,6 +376,10 @@ class ATFP_Register_Backend_Assets
         $maginc_wand_url=ATFP_URL . 'assets/images/magic-wand.svg';
         $buy_pro_url=esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/');
         $translation_data=ATFP_Helper::get_translation_data();
+        $atfp_utm_parameters='utm_source=atfp_plugin';
+        if(class_exists('ATFP_Helper')){
+            $atfp_utm_parameters=ATFP_Helper::utm_source_text();
+        }
         $translation_data=is_array($translation_data) ? (function() use (&$translation_data) { unset($translation_data['data']); return $translation_data; })() : array();
 
         wp_enqueue_script('atfp-elementor-confirm-box', ATFP_URL . 'assets/js/atfp-elementor-translate-confirm-box.min.js', array('jquery', 'wp-i18n'), ATFP_V, true);
@@ -378,7 +389,7 @@ class ATFP_Register_Backend_Assets
             'targetLangSlug' => $target_lang_name->slug,
             'editorType' => $editor_type,
             'maginc_wand_url' => $maginc_wand_url,
-            'buy_pro_url' => $buy_pro_url,
+            'buy_pro_url' =>esc_url($buy_pro_url . '?' . $atfp_utm_parameters . '&utm_medium=inside&utm_campaign=get_pro&utm_content=popup_elementor_translation'),
             'translated_character'   => isset($translation_data['total_character_count']) ? $translation_data['total_character_count'] : 0,
             )
         );

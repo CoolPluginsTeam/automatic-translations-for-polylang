@@ -50,7 +50,7 @@ jQuery(function($) {
 
     $('.atfp-provider-switch-container[data-provider]').on('click', function(e) {
         const provider = $(this).data('provider');
-        const utm_link=atfpSettingsScriptData.buy_pro_url + '&utm_content=' + provider+'&utm_medium=inside&utm_campaign=get_pro';
+        const utm_link=atfpSettingsScriptData.buy_pro_url + '&utm_campaign=get_pro&utm_content=dashboard_'+provider;
         window.open(utm_link, '_blank');
         e.preventDefault();
     });

@@ -5,7 +5,7 @@ Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 5.6
 Stable tag: 1.4.8
-Author URI: https://coolplugins.net/
+Author URI: https://coolplugins.net/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=author_page&utm_content=plugins_list
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 AI Translation For Polylang simplifies your translation process by automatically translating all pages/posts content from one language to another.
