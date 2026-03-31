@@ -847,8 +847,16 @@ ul.atfp-dashboard-sts-btm li:last-child {
 }
 
 /* Chrome Local AI Notice */
-#atfp-chrome-local-ai-notice {
+
+.atfp-dashboard-chrome-ai-settings{
+    margin-bottom: 30px;
+}
+
+#atfp-chrome-local-ai-notice{
     display: none;
+}
+
+.atfp-dashboard-settings-card {
     background: var(--atfp-ald-bg, #f8f9fa);
     border: 1px solid var(--border-color);
     border-radius: 8px;
@@ -1103,55 +1111,54 @@ ul.atfp-dashboard-sts-btm li:last-child {
     margin-bottom: 12px;
 }
 
-.atfp-dashboard-feedback-container {
-    margin: 25px 0px 18px 0px;
+.atfp-dashboard-api-settings-container{
+    opacity: 0.6;
+    pointer-events: none;
+    cursor: not-allowed;
 }
 
-.atfp-dashboard-api-settings-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+.atfp-dashboard-api-settings{
+    margin-bottom: 28px;
 }
-
-.atfp-dashboard-api-settings {
-    width: 100%;
-}
-
-.atfp-dashboard-api-settings label {
+.atfp-dashboard-api-settings label,
+.atfp-dashboard-translation-settings label{
+    margin: 0 0 20px;
+    padding: 0;
+    font-size: 1.3em;
+    font-weight: 600;
     display: block;
-    font-weight: bold;
-    margin: 30px 0px 10px 0px;
 }
 
-.atfp-dashboard-api-settings .input-group {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 60%;
-}
-
-.atfp-dashboard-api-settings .input-group input {
-    width: calc(100% - 70px);
-    padding: 8px 12px;
-    border: 1px solid var(--border-color);
-    border-radius: 5px;
-    margin: 0;
-}
-
-.atfp-dashboard-api-settings input[type="text"] {
+.atfp-dashboard-api-settings .input-group input{
     width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    max-width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: var(--font-size-base);
+    transition: border-color 0.2s ease;
 }
 
-.atfp-dashboard-feedback-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+.api-settings-description{
+    color: var(--text-color-light);
+    font-size: 13px;
+    margin-top: 8px;
+    margin-bottom: 20px;
 }
 
-.atfp-dashboard-api-settings textarea {
+.atfp-dashboard-translation-settings{
+    margin-bottom: 28px;
+}
+
+.atfp-dashboard-translation-settings :where(label[for="bulk-translate-post-status"], label[for="slug-translation-settings"]){
+    margin-bottom: 15px !important;
+}
+
+.atfp-dashboard-translation-settings label[for="bulk-translate-post-status"] + .atfp-bulk-translation-post-status-options{
+    margin-bottom: 25px !important;
+}
+
+.atfp-dashboard-translation-settings textarea{
     width: 100%;
     min-height: 100px;
     padding: 8px 12px;
@@ -1162,36 +1169,44 @@ ul.atfp-dashboard-sts-btm li:last-child {
     resize: vertical;
 }
 
-.atfp-dashboard-api-settings a {
-    margin: 10px 0px 10px 0px;
-    display: inline-block;
-    font-size: 14px;
-    color: #0073aa;
-    text-decoration: none;
+.atfp-dashboard-ai-request-container{
+    margin-bottom: 20px;
 }
 
+.atfp-dashboard-feedback-container {
+    margin: 20px 0px 18px 0px;
+}
 
-.atfp-dashboard-ai-request-container>div[class^="atfp-dashboard-ai-"] {
+.atfp-dashboard-feedback-row{
     display: flex;
-    gap: 1rem;
-    margin-top: 1.5rem;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.atfp-dashboard-feedback-container input{
+    margin-top: 3px;
+}
+
+.atfp-dashboard-feedback-container p{
+    margin: 0;
+    font-size: 14px;
+    color: var(--text-color);
+    margin: 0;
 }
 
 .atfp-dashboard-ai-request-container label{
-    margin: 0;
     white-space: nowrap;
     min-width: 150px;
-}
-
-.atfp-dashboard-ai-request-container h2{
-    margin: 0px 0 10px;
-}
-
-.atfp-dashboard-ai-request-container p{
+    margin: 0 0 15px;
     padding: 0;
-    margin: 3px 0 0;
+    font-size: 1.3em;
+    font-weight: 600;
+    display: block;
 }
 
+.atfp-dashboard-ai-timeout-container p{
+    margin-bottom: 0px;
+}
 
 .atfp-bulk-translation-post-status-options{
     display: flex;
@@ -1207,10 +1222,7 @@ ul.atfp-dashboard-sts-btm li:last-child {
 .atfp-bulk-translation-post-status-options label{
     margin-right: 10px;
     margin-block: 0px;
-}
-
-.atfp-dashboard-api-settings .atfp-dashboard-save-btn-container{
-    margin-top: 20px;
+    font-size: 13px;
 }
 
 /* ================================================
