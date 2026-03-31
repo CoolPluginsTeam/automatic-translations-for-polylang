@@ -74,6 +74,7 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 		public function atfp_render_support_blocks_page() {
 			?>
 		<div class="atfp-supported-blocks-wrapper">
+		<div class="atfp-supported-blocks-container">
 		<h3><?php
 		// translators: 1: AutoPoly - AI Translation For Polylang plugin name
 		printf( esc_html__( 'Supported Blocks for %s', 'automatic-translations-for-polylang' ), 'AutoPoly - AI Translation For Polylang' ); ?></h3>
@@ -115,6 +116,16 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 					</table>
 				</div>
 			</div>
+			</div>
+			<?php
+			$file_prefix = 'admin/atfp-dashboard/views/';
+			$atfp_utm_parameters='utm_source=atfp_plugin';
+
+			if(class_exists('ATFP_Helper')){
+				$atfp_utm_parameters=ATFP_Helper::utm_source_text();
+			}
+			
+			require_once ATFP_DIR_PATH . $file_prefix . 'footer.php'; ?>
 		</div>
 			<?php
 		}
