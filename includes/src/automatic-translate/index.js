@@ -3,10 +3,10 @@ import './global-store';
 import { useEffect, useState } from 'react';
 import GutenbergPostFetch from './fetch-post/gutenberg';
 import UpdateGutenbergPage from './create-translated-post/gutenberg';
-import ProVersionNotice from './component/pro-version-notice';
 import Notice from './component/notice';
 import { select } from '@wordpress/data';
 import { sprintf, __ } from '@wordpress/i18n';
+import FormatNumberCount from './component/format-number-count';
 
 // Elementor post fetch and update page
 import ElementorPostFetch from './fetch-post/elementor';
@@ -84,7 +84,7 @@ const App = () => {
     translatePost = ElementorUpdatePage;
     fetchPost = ElementorPostFetch;
   } else if (editorType === 'gutenberg') {
-    translateWrpSelector = 'input#atfp-translate-button[name="atfp_meta_box_translate"]';
+    translateWrpSelector = 'a#atfp-translate-button';
     translatePost = UpdateGutenbergPage;
     fetchPost = GutenbergPostFetch;
   }
@@ -129,8 +129,7 @@ const App = () => {
     if (pageTranslate) {
       const metaFieldBtn = document.querySelector(translateWrpSelector);
       if (metaFieldBtn) {
-        metaFieldBtn.disabled = true;
-        metaFieldBtn.value = __("Already Translated", 'automatic-translations-for-polylang');
+        metaFieldBtn.value = __("Re-translate", 'automatic-translations-for-polylang');
       }
     }
   }, [pageTranslate]);
@@ -161,32 +160,45 @@ const createMessagePopup = () => {
   const targetLangName = atfp_global_object.languageObject[targetLang]['name'];
   const atfpUrl=window.atfp_global_object.atfp_url;
   const magincWandUrl=atfpUrl + 'assets/images/magic-wand.svg';
+  const characterCount = parseInt(window.atfp_global_object.translation_data.total_character_count);
+  const refrenceText=atfp_global_object.refrence_text;
+  const proUrl=window.atfp_global_object.pro_version_url+'?'+refrenceText +'&utm_medium=inside&utm_campaign=get_pro&utm_content=popup_bulk_translate';
 
   const messagePopup = document.createElement('div');
   messagePopup.id = 'atfp-modal-open-warning-wrapper';
   messagePopup.innerHTML = `
-    <div class="modal-container" style="display: flex">
+    <div class="modal-container" style="display: none !important">
       <div class="modal-content">
         <div class="modal-header">
             <div class="atfp-modal-header-left">
                 <img src="${magincWandUrl}" style="width: 20px; height: 20px; margin-right: 5px; filter: brightness(0) invert(0);" alt="${__("AI", "automatic-translations-for-polylang")}">
                 <h3>${__("AI Translation", "automatic-translations-for-polylang")}</h3>
             </div>
-            <span class="atfp-modal-close dashicons dashicons-no-alt" data-value="no"></span>
+            <button type="button" class="atfp-modal-close modal-close" data-value="no">&times;</span>
         </div>
         <div class="atfp-modal-body">
           <div class="atfp-main-section">
               <p>${sprintf(__("Would you like to duplicate your original %s content and have it automatically translated into %s?", 'automatic-translations-for-polylang'), postType, targetLangName)}</p>
               <button type="button" class="atfp-translate-button button" data-value="yes" id="atfp-translate-button" data-value="yes">
                   <img src="${magincWandUrl}" style="width: 20px; height: 20px; margin-right: 5px; filter: brightness(0) invert(1);" alt="AI">
-                  Translate Now
+                  ${__("Translate Now", "automatic-translations-for-polylang")}
               </button>
           </div>
           <div class="atfp-marketing-card">
-              <h4>Want Unlimited or Bulk Translation?</h4>                        
+              <h4>${__("Translate Multiple Pages & Posts", "automatic-translations-for-polylang")}</h4>  
+              ${characterCount > 100000
+                ? `<p style="margin: 0 0 20px">
+                    ${__("You’ve already translated", "automatic-translations-for-polylang")} 
+                    <strong>${FormatNumberCount({number: characterCount})}+</strong> 
+                    ${__("characters manually.", "automatic-translations-for-polylang")}
+                    <br />
+                    ${__("Save time by translating multiple posts and pages in multiple languages on one click with", "automatic-translations-for-polylang")} 
+                    <strong>${__("Bulk Translation", "automatic-translations-for-polylang")}</strong>.
+                  </p>`
+                : ""}
               <div class="atfp-marketing-buttons">
-                  <a href="${window.atfp_global_object.pro_version_url}" target="_blank" class="atfp-marketing-btn atfp-primary-btn">
-                      <img src="${magincWandUrl}" style="width: 20px; height: 20px; margin-right: 5px; filter: brightness(0) invert(1);" alt="AI"><span class="atfp-btn-text">Upgrade Pro</span>
+                  <a href="${proUrl}" target="_blank" class="atfp-marketing-btn atfp-primary-btn">
+                      <img src="${magincWandUrl}" style="width: 20px; height: 20px; margin-right: 5px; filter: brightness(0) invert(1);" alt="AI"><span class="atfp-btn-text">${__("Get Pro for Bulk Translation", "automatic-translations-for-polylang")}</span>
                   </a>
               </div>
           </div>
@@ -238,16 +250,6 @@ const appendElementorTranslateBtn = () => {
     if (!window.atfp_global_object.translation_data || (!window.atfp_global_object.translation_data.total_string_count && 0 !== window.atfp_global_object.translation_data.total_string_count)) {
       buttonElement.attr('disabled', 'disabled');
       buttonElement.attr('title', 'Translation data not found.');
-      return;
-    }
-
-    const characterCount = parseInt(window.atfp_global_object.translation_data.total_character_count);
-    if (characterCount > 500000) {
-      const elementorProNotice = document.createElement('div');
-      elementorProNotice.id = 'atfp-pro-notice';
-      document.body.appendChild(elementorProNotice);
-      const root = ReactDOM.createRoot(document.getElementById('atfp-pro-notice'));
-      root.render(<ProVersionNotice characterCount={characterCount} url={window.atfp_global_object.pro_version_url || ''} />);
       return;
     }
 
@@ -303,16 +305,6 @@ if (editorType === 'gutenberg') {
     if (!window.atfp_global_object.translation_data || (!window.atfp_global_object.translation_data.total_string_count && 0 !== window.atfp_global_object.translation_data.total_string_count)) {
       buttonElement.attr('disabled', 'disabled');
       buttonElement.attr('title', 'Translation data not found.');
-      return;
-    }
-
-    const characterCount = parseInt(window.atfp_global_object.translation_data.total_character_count);
-    if (characterCount > 500000) {
-      const elementorProNotice = document.createElement('div');
-      elementorProNotice.id = 'atfp-pro-notice';
-      document.body.appendChild(elementorProNotice);
-      const root = ReactDOM.createRoot(document.getElementById('atfp-pro-notice'));
-      root.render(<ProVersionNotice characterCount={characterCount} url={window.atfp_global_object.pro_version_url || ''} />);
       return;
     }
 

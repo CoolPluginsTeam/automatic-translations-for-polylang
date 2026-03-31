@@ -59,6 +59,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				add_action( 'wp_ajax_atfp_update_custom_blocks_content', array( $this, 'update_custom_blocks_content' ) );
 				add_action('wp_ajax_atfp_update_translate_data', array($this, 'atfp_update_translate_data'));
 				add_action( 'wp_ajax_atfp_update_elementor_data', array( $this, 'update_elementor_data' ) );
+				add_action( 'wp_ajax_atfp_update_enabled_providers', array( $this, 'update_enabled_providers' ) );
 			}
 		}
 
@@ -374,22 +375,6 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 					wp_die( '0', 400 );
 				}
 			}
-
-			$translation_data = Atfp_Dashboard::get_translation_data('atfp');
-
-			if(!isset($translation_data['total_character_count'])){
-				wp_send_json_error( __( 'Character count not found.', 'automatic-translations-for-polylang' ) );
-				wp_die( '0', 400 );
-				exit();
-			}
-			
-			$total_character_count = $translation_data['total_character_count'];
-			
-			if($total_character_count > 500000){
-				wp_send_json_error( __( 'Character count limit reached.', 'automatic-translations-for-polylang' ) );
-				wp_die( '0', 400 );
-				exit();
-			}
 			
             $elementor_data = isset($_POST['elementor_data']) ? sanitize_text_field(wp_unslash($_POST['elementor_data'])) : '';
 		
@@ -418,6 +403,41 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 			}
 				
             wp_send_json_success( 'Elementor data updated.' );
+			exit;
+        }
+
+        public function update_enabled_providers() {
+            if ( ! check_ajax_referer( 'atfp_update_enabled_providers', 'update_providers_key', false ) ) {
+                wp_send_json_error( __( 'Invalid security token sent.', 'automatic-translations-for-polylang' ) );
+                wp_die( '0', 400 );
+                exit();
+            }
+
+			$enabled_providers = isset($_POST['enabled_providers']) ? sanitize_text_field(wp_unslash($_POST['enabled_providers'])) : '';
+			if(json_last_error() !== JSON_ERROR_NONE){
+				wp_send_json_error( __( 'Invalid JSON.', 'automatic-translations-for-polylang' ) );
+				wp_die( '0', 400 );
+				exit();
+			}
+			$enabled_providers = json_decode($enabled_providers, true);
+			if(!is_array($enabled_providers)){
+				wp_send_json_error( __( 'Invalid enabled providers.', 'automatic-translations-for-polylang' ) );
+				wp_die( '0', 400 );
+				exit();
+			}
+			
+			$valid_providers = array('chrome-built-in-ai', 'yandex-translate');
+
+			$updated_providers = array();
+
+			foreach($enabled_providers as $provider_key => $status){
+				if(in_array($provider_key, $valid_providers) && $status === true){
+					$updated_providers[] = sanitize_text_field($provider_key);
+				}
+			}
+
+			update_option('atfp_enabled_providers', $updated_providers);
+			wp_send_json_success( array( 'providers' => $updated_providers, 'message' => __( 'Enabled providers updated successfully.', 'automatic-translations-for-polylang' ) ) );
 			exit;
         }
 	}

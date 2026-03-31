@@ -1,6 +1,6 @@
 :is(
     #atfp-modal-open-warning-wrapper,
-    #atfp-pro-notice-wrapper,
+    #atfp-limit-notice-wrapper,
     #atfp-setting-modal,
     #atfp_strings_model
   )
@@ -24,7 +24,7 @@
 
 :is(
     #atfp-modal-open-warning-wrapper,
-    #atfp-pro-notice-wrapper,
+    #atfp-limit-notice-wrapper,
     #atfp-setting-modal
   )
   .modal-content {
@@ -44,7 +44,46 @@
   transform: scale(1);
 }
 
-:is(#atfp-modal-open-warning-wrapper, #atfp-pro-notice-wrapper) .modal-header {
+#atfp-limit-notice-wrapper .modal-close,
+#atfp-modal-open-warning-wrapper .modal-close{
+  margin-top: -18px;
+}
+
+#atfp-limit-notice-wrapper .modal-content {
+  width: 600px !important;
+  max-width: 95% !important;
+}
+
+#atfp-limit-notice-wrapper .bulk-notice-buttons{
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+#atfp-limit-notice-wrapper .bulk-notice-buttons a{
+  padding: 10px 20px!important;
+  font-size: 16px!important;
+  font-weight: 600!important;
+  background: #0073aa!important;
+  color: #fff!important;
+  border: none!important;
+  border-radius: 6px!important;
+  cursor: pointer;
+  display: flex!important;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  transition: background .2s ease!important;
+  height: auto!important;
+  line-height: 1.4em;
+}
+
+#atfp-limit-notice-wrapper .bulk-notice-buttons a:hover{
+  background: #135e96 !important;
+  border-color: #135e96 !important;
+}
+
+:is(#atfp-modal-open-warning-wrapper, #atfp-limit-notice-wrapper) .modal-header {
   background: #ffffff;
   padding: 20px 24px;
   display: flex;
@@ -53,7 +92,7 @@
   border-bottom: 1px solid #f0f0f1;
 }
 
-:is(#atfp-modal-open-warning-wrapper, #atfp-pro-notice-wrapper)
+:is(#atfp-modal-open-warning-wrapper, #atfp-limit-notice-wrapper)
   .modal-header
   .atfp-modal-header-left {
   display: flex;
@@ -61,7 +100,7 @@
   gap: 1px;
 }
 
-:is(#atfp-modal-open-warning-wrapper, #atfp-pro-notice-wrapper)
+:is(#atfp-modal-open-warning-wrapper, #atfp-limit-notice-wrapper)
   .modal-header
   .atfp-modal-header-left
   h3 {
@@ -73,22 +112,13 @@
   color: #1d2327;
 }
 
-:is(#atfp-modal-open-warning-wrapper, #atfp-pro-notice-wrapper)
-  .modal-header
-  .atfp-modal-close {
-  font-size: 20px;
-  color: #a7aaad;
-  cursor: pointer;
-  transition: color 0.2s;
-}
-
-:is(#atfp-modal-open-warning-wrapper, #atfp-pro-notice-wrapper)
+:is(#atfp-modal-open-warning-wrapper, #atfp-limit-notice-wrapper)
   .atfp-modal-body {
-  padding: 30px 40px;
+  padding: 20px 24px;
   text-align: center;
 }
 
-:is(#atfp-modal-open-warning-wrapper, #atfp-pro-notice-wrapper)
+:is(#atfp-modal-open-warning-wrapper, #atfp-limit-notice-wrapper)
   .atfp-modal-body
   p {
   font-size: 15px;
@@ -117,8 +147,13 @@
   line-height: 1.4em;
 }
 
-:is(#atfp-modal-open-warning-wrapper, #atfp-pro-notice-wrapper)
-  .atfp-modal-body
+#atfp-modal-open-warning-wrapper .atfp-modal-body .atfp-translate-button:hover{
+  background: #135e96 !important;
+  border-color: #135e96 !important;
+}
+
+#atfp-modal-open-warning-wrapper
+.atfp-modal-body
   .atfp-marketing-card {
   background: #f0f6fc;
   border: 1px solid #c5d9e2;
@@ -128,24 +163,24 @@
   margin-top: 20px;
 }
 
-:is(#atfp-modal-open-warning-wrapper, #atfp-pro-notice-wrapper)
+#atfp-modal-open-warning-wrapper
   .atfp-modal-body
   .atfp-marketing-card
   h4 {
-  margin: 0 0 8px 0;
+  margin: 0 0 15px 0;
   font-size: 16px;
   font-weight: 700;
   color: #0073aa;
 }
 
-:is(#atfp-modal-open-warning-wrapper, #atfp-pro-notice-wrapper)
+#atfp-modal-open-warning-wrapper
   .atfp-modal-body
   .atfp-marketing-card
   .atfp-marketing-buttons {
   text-align: center;
 }
 
-:is(#atfp-modal-open-warning-wrapper, #atfp-pro-notice-wrapper)
+#atfp-modal-open-warning-wrapper
   .atfp-modal-body
   .atfp-marketing-card
   .atfp-marketing-buttons
@@ -170,7 +205,13 @@
   border: 1px solid #0073aa;
 }
 
-:is(#atfp-modal-open-warning-wrapper, #atfp-pro-notice-wrapper)
+.atfp-marketing-btn:hover{
+  background: #135e96;
+  border-color: #135e96;
+  color: #fff;
+}
+
+:is(#atfp-modal-open-warning-wrapper, #atfp-limit-notice-wrapper)
   .modal-footer-notice {
   background: #ffffff;
   border-top: 1px solid #f0f0f1;
@@ -180,7 +221,7 @@
   gap: 12px;
 }
 
-:is(#atfp-modal-open-warning-wrapper, #atfp-pro-notice-wrapper)
+:is(#atfp-modal-open-warning-wrapper, #atfp-limit-notice-wrapper)
   .modal-footer-notice
   .dashicons {
   color: #dba617;
@@ -190,7 +231,7 @@
   margin-top: 1px;
 }
 
-:is(#atfp-modal-open-warning-wrapper, #atfp-pro-notice-wrapper)
+:is(#atfp-modal-open-warning-wrapper, #atfp-limit-notice-wrapper)
   .modal-footer-notice
   p {
   margin: 0;
@@ -543,7 +584,7 @@
 }
 
 :where(#atfp-setting-modal, #atfp_strings_model) .modal-header .step-label {
-  color: #3737e7;
+  color: var(--wp-admin-theme-color,#2271b1);
   font-size: 10px;
   font-weight: 600;
 }
@@ -565,7 +606,7 @@
   margin: 0 0 4px;
 }
 
-:where(#atfp-setting-modal, #atfp_strings_model) .modal-header .modal-close {
+:where(#atfp-modal-open-warning-wrapper, #atfp-setting-modal, #atfp_strings_model) .modal-header .modal-close {
   background: none;
   border: none;
   cursor: pointer;
@@ -574,6 +615,7 @@
   margin: 0;
   padding: 0;
   width: 24px;
+  color: #000;
 }
 
 #atfp-setting-modal .atfp-setting-modal-body .atfp-provider-cards {
@@ -1068,7 +1110,7 @@ button.atfp-setting-close:hover {
 #atfp_strings_model h3 {
   width: 100%;
   display: inline-block;
-  font-size: 22px;
+  font-size: 18px;
   padding: 0;
   margin: 20px 0 10px;
   color: var(--wp-admin-theme-color, #2271b1);
@@ -1327,7 +1369,7 @@ body
 }
 
 #atfp_strings_model #atfp-localAiTranslator-strings-modal h3 {
-  margin: 20px 0px;
+  margin: 0px;
 }
 
 #atfp_strings_model .atfp_string_container {

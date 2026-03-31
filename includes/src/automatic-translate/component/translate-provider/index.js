@@ -8,10 +8,13 @@ import { sprintf, __ } from "@wordpress/i18n";
 export default (props) => {
     props=props || {};
     const { Service = false, openErrorModalHandler=()=>{} } = props;
-    const adminUrl = window.atfp_global_object.admin_url;
-    const assetsUrl = window.atfp_global_object.atfp_url+'assets/images/';
     const refrenceText = window.atfp_global_object.refrence_text;
-    const errorIcon = assetsUrl + 'error-icon.svg';
+    const activeProviders = window.atfp_global_object.active_providers;
+
+    const freeProviders=Object.freeze({
+        yandex: 'yandex-translate',
+        localAiTranslator: 'chrome-built-in-ai',
+    });
 
     const Services = {
         yandex: {
@@ -84,8 +87,15 @@ export default (props) => {
         }
     };
 
+    Object.keys(freeProviders).forEach(provider => {
+        if(!activeProviders.includes(freeProviders[provider])){
+            delete Services[provider];
+        }
+    });
+
     if (!Service) {
         return Services;
     }
+    
     return Services[Service];
 };

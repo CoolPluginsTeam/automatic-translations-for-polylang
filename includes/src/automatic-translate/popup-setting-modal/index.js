@@ -8,6 +8,7 @@ import SettingModalBody from "./body";
 import SettingModalFooter from "./footer";
 import { __ , sprintf } from "@wordpress/i18n";
 import ErrorModalBox from "../component/error-modal-box";
+import BulkPromotionModal from "./bulkPromotion";
 
 const SettingModal = (props) => {
     const [activeProvider, setActiveProvider] = useState({});
@@ -22,6 +23,8 @@ const SettingModal = (props) => {
     const [serviceModalErrors, setServiceModalErrors] = useState({});
     const [errorModalVisibility, setErrorModalVisibility] = useState(false);
     const [chromeAiBtnDisabled, setChromeAiBtnDisabled] = useState(false);
+    const [showBulkPromotionModal, setShowBulkPromotionModal] = useState(false);
+    const characterCount = parseInt(window.atfp_global_object.translation_data.total_character_count);
 
     const openModalOnLoadHandler = (e) => {
         e.preventDefault();
@@ -50,13 +53,23 @@ const SettingModal = (props) => {
      * Triggers the setSettingVisibility only when user click on meta field Button.
     */
     useEffect(() => {
+        const atfpModalOpenWarningContainer = document.querySelector('#atfp-modal-open-warning-wrapper .modal-container');
+        
+        if(atfpModalOpenWarningContainer){
+            atfpModalOpenWarningContainer.style.display = 'flex';
+        }
+
         const firstRenderBtns = document.querySelectorAll('#atfp-modal-open-warning-wrapper .modal-content button.atfp-translate-button[data-value="yes"]');
         const metaFieldBtn = document.querySelector(props.translateWrpSelector);
 
         if (metaFieldBtn) {
             metaFieldBtn.addEventListener('click', (e) => {
                 e.preventDefault();
-                setSettingVisibility(prev => !prev);
+                if(characterCount > 100000){
+                    setShowBulkPromotionModal(true);
+                }else{
+                    setSettingVisibility(prev => !prev);
+                }
             });
         }
 
@@ -167,8 +180,16 @@ const SettingModal = (props) => {
         setSettingVisibility(visibility);
     }
 
+    const handleBulkPromotionModal = (statue) => {
+        setShowBulkPromotionModal(false);
+        if(statue === true){
+            setSettingVisibility(true);
+        }
+    }
+
     return (
         <>
+        {characterCount > 100000 && showBulkPromotionModal && <BulkPromotionModal onClick={handleBulkPromotionModal} characterCount={characterCount} />}
             {errorModalVisibility && serviceModalErrors[errorModalVisibility] &&
                 <ErrorModalBox onClose={closeErrorModal} {...serviceModalErrors[errorModalVisibility]}/>
             }

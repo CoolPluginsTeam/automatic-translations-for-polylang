@@ -32,12 +32,15 @@ if(!defined('ABSPATH')){
                     'Yandex Translate Widget Support' => [true, true],
                     'Chrome Built-in AI Support' => [true, true],
                     'No API Key Required' => [true, true],
-                    'Unlimited Translations' => [false, true],
+                    'Unlimited Translations' => [true, true],
                     'Google Translate Widget Support' => [false, true],
                     'AI Translator (Gemini/OpenAI/DeepL) Support' => [false, true],
                     'Custom Fields Translation' => [false, true],
+                    'Taxonomy Translation' => [false, true],
                     'Bulk Translation' => [false, true],
+                    'Re Translation' => [false, true],
                     'Classic Editor Translation' => [false, true],
+                    'Divi 5 Translation' => [false, true],
                     'Premium Support' => [false, true],
                 ];
              foreach ($atfp_features as $atfp_feature => $atfp_availability): ?>
@@ -54,4 +57,5 @@ if(!defined('ABSPATH')){
         </tbody>
     </table>
     </div>
+    <?php require_once ATFP_DIR_PATH . $file_prefix . 'footer.php'; ?>
 </div>
