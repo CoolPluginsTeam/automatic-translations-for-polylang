@@ -42,7 +42,7 @@
                                     ${__("AI Translation", "automatic-translations-for-polylang")}
                                 </h2>
                             </div>
-                            <button type="button" class="atfp-modal-close modal-close" title="Close" aria-label="Close" onclick="document.getElementById('atfp-retranslate-modal').style.display='none'; console.log(document.getElementById('atfp-retranslate-modal'), document.getElementById('atfp-retranslate-modal').style.display);">&times;</button>
+                            <button type="button" class="atfp-modal-close modal-close" title="Close" aria-label="Close" onclick="document.getElementById('atfp-retranslate-modal').style.display='none'; document.getElementById('atfp-retranslate-modal').style.display);">&times;</button>
                         </div>
                         <div class="atfp-modal-body">
                             <p>
