@@ -128,8 +128,18 @@ const App = () => {
   useEffect(() => {
     if (pageTranslate) {
       const metaFieldBtn = document.querySelector(translateWrpSelector);
+
       if (metaFieldBtn) {
         metaFieldBtn.value = __("Re-translate", 'automatic-translations-for-polylang');
+        if(metaFieldBtn.nodeName !== 'INPUT') {
+          metaFieldBtn.innerText = __("Re-translate", 'automatic-translations-for-polylang');
+        }
+        metaFieldBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const refrenceText=atfp_global_object.refrence_text;
+          const proUrl='https://docs.coolplugins.net/doc/retranslate-wordpress-pages/'+'?'+refrenceText +'&utm_medium=inside&utm_campaign=get_pro&utm_content=retranslate';
+          window.open(proUrl, '_blank');
+        });
       }
     }
   }, [pageTranslate]);
