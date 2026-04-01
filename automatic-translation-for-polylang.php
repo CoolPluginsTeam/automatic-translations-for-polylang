@@ -595,7 +595,7 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 			global $polylang;
 			$atfp_polylang = $polylang;
 			if ( !isset( $atfp_polylang ) && is_admin() ) {
-				add_action( 'admin_notices', array( self::$instance, 'atfp_plugin_required_admin_notice' ) );
+				$this->atfp_plugin_required_admin_notice();
 			}
 		}
 
