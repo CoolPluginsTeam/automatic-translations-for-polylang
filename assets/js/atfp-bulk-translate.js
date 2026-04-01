@@ -3,8 +3,8 @@
         const bulkTranslateBtn=document.querySelector('.atfp-bulk-translate-btn');
         if(bulkTranslateBtn){
         const atfpUtmParameters=window.atfpBulkTranslationData ? window.atfpBulkTranslationData.atfp_utm_parameters : 'utm_source=atfp_plugin';
-        const proVersionUrl=window.atfpBulkTranslationData ? window.atfpBulkTranslationData.pro_version_url+atfpUtmParameters+'&utm_medium=inside&utm_campaign=get_pro&utm_content=bulk_translate' : '#';
-        const bulkDocUrl=window.atfpBulkTranslationData ? window.atfpBulkTranslationData.bulk_doc_url+atfpUtmParameters+'&utm_medium=inside&utm_campaign=docs&utm_content=bulk_translate' : '#';
+        const proVersionUrl=window.atfpBulkTranslationData ? window.atfpBulkTranslationData.pro_version_url+'?'+atfpUtmParameters+'&utm_medium=inside&utm_campaign=get_pro&utm_content=bulk_translate' : '#';
+        const bulkDocUrl=window.atfpBulkTranslationData ? window.atfpBulkTranslationData.bulk_doc_url+'?'+atfpUtmParameters+'&utm_medium=inside&utm_campaign=docs&utm_content=bulk_translate' : '#';
     
             let redirectUrl=proVersionUrl;
 
