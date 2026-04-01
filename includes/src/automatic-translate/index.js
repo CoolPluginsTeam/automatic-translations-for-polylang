@@ -134,11 +134,18 @@ const App = () => {
         if(metaFieldBtn.nodeName !== 'INPUT') {
           metaFieldBtn.innerText = __("Re-translate", 'automatic-translations-for-polylang');
         }
+
+        const refrenceText=atfp_global_object.refrence_text;
+
+        let docsink=`https://docs.coolplugins.net/doc/retranslate-wordpress-pages/?${refrenceText}&utm_medium=inside&utm_campaign=docs`;
+        if(editorType === 'elementor') {
+          docsink+='&utm_content=popup_elementor_retranslation';
+        }else{
+          docsink+='&utm_content=popup_retranslation';
+        }
         metaFieldBtn.addEventListener('click', (e) => {
           e.preventDefault();
-          const refrenceText=atfp_global_object.refrence_text;
-          const proUrl='https://docs.coolplugins.net/doc/retranslate-wordpress-pages/'+'?'+refrenceText +'&utm_medium=inside&utm_campaign=get_pro&utm_content=retranslate';
-          window.open(proUrl, '_blank');
+          window.open(docsink, '_blank');
         });
       }
     }
