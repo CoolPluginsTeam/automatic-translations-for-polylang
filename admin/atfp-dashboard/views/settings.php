@@ -53,7 +53,6 @@ if(!current_user_can('manage_options')){
 
     <?php
         $atfp_enabled_providers = get_option('atfp_enabled_providers', array('chrome-built-in-ai', 'yandex-translate'));
-        $atfp_polylang_default_lang=ATFP_Helper::get_polylang_default_language();
         $atfp_polylang_supported_languages=ATFP_Helper::get_polylang_supported_languages();
 
         if(is_array($atfp_enabled_providers) && in_array('chrome-built-in-ai', $atfp_enabled_providers)){ ?>
