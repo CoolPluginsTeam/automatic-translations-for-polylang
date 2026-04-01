@@ -70,7 +70,7 @@ if(!defined('ABSPATH')){
                             '<strong>AutoPoly (Pro)</strong>'
                         ); ?>
                     </p>
-                    <a href="<?php echo esc_url($atfp_buy_pro_url); ?>" class="atfp-dashboard-btn primary" target="_blank"><?php esc_html_e('Install Bulk Translation Pro', 'automatic-translations-for-polylang'); ?></a>
+                    <a href="<?php echo esc_url($atfp_buy_pro_url); ?>" class="atfp-dashboard-btn primary" target="_blank"><?php esc_html_e('Get Pro for Bulk translation', 'automatic-translations-for-polylang'); ?></a>
                 </div>
             <?php } ?>
     </div>
