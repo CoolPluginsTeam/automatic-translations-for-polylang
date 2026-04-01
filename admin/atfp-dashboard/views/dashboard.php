@@ -83,7 +83,7 @@ $atfp_active_providers = get_option('atfp_enabled_providers', array('chrome-buil
 					</ul>
 					<div class="atfp-dashboard-provider-buttons">
 						<a href="<?php echo esc_url('https://docs.coolplugins.net/doc/chrome-ai-translation-polylang/?utm_source=atfp_plugin&amp;utm_medium=inside&amp;utm_campaign=docs&amp;utm_content=dashboard_chrome'); ?>" class="atfp-dashboard-btn" target="_blank" rel="noopener noreferrer"><?php esc_html_e('Docs', 'automatic-translations-for-polylang'); ?></a>
-						<a class="tpa-chrome-configure-button atfp-dashboard-btn primary" href="<?php echo esc_url(admin_url('admin.php?page=polylang-atfp-dashboard&tab=settings')); ?>" style="display: none;"><?php esc_html_e('Configure', 'automatic-translations-for-polylang'); ?></a>
+						<a class="atfp-chrome-configure-button atfp-dashboard-btn primary" href="<?php echo esc_url(admin_url('admin.php?page=polylang-atfp-dashboard&tab=settings')); ?>" style="display: none;"><?php esc_html_e('Configure', 'automatic-translations-for-polylang'); ?></a>
 					</div>
 				</div>
 

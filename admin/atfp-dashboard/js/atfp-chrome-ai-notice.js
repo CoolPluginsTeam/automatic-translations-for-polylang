@@ -936,9 +936,9 @@ jQuery(function ($) {
     }
 
     const showConfigurationNotice = async () =>{
-        if($('.atfp-chrome-ai-card .atfp-chrome-local-ai-notice').length > 0) {
-            $('.atfp-chrome-ai-card .atfp-chrome-local-ai-notice').show();
-            $('.tpa-chrome-configure-button').show();
+        if($('.atfp-chrome-ai-card .atfp-chrome-configure-notice').length > 0) {
+            $('.atfp-chrome-ai-card .atfp-chrome-configure-notice').show();
+            $('.atfp-chrome-configure-button').show();
             return;
         }
 
@@ -988,13 +988,13 @@ jQuery(function ($) {
                 noticeMessage = 'Language pack is required. Please configure Chrome settings.';
             }
             
-            const notice = $('<div class="tpa-chrome-configure-notice" style="margin-top: 10px; font-size: 12px; color: #dc2626;">' + noticeMessage + '</div>');
+            const notice = $('<div class="atfp-chrome-configure-notice" style="margin-top: 10px; font-size: 12px; color: #dc2626;">' + noticeMessage + '</div>');
             
             $('.atfp-chrome-ai-card').append(notice);
-            $('.tpa-chrome-configure-button').show();
+            $('.atfp-chrome-configure-button').show();
         }else{
-            $('.atfp-chrome-ai-card .atfp-chrome-local-ai-notice').hide();
-            $('.tpa-chrome-configure-button').hide();
+            $('.atfp-chrome-ai-card .atfp-chrome-configure-notice').hide();
+            $('.atfp-chrome-configure-button').hide();
         }
     }
 
@@ -1012,8 +1012,8 @@ jQuery(function ($) {
             if(chrome_ai_enabled) {
                 showConfigurationNotice();
             } else {
-                $('.atfp-chrome-ai-card .atfp-chrome-local-ai-notice').hide();
-                $('.tpa-chrome-configure-button').hide();
+                $('.atfp-chrome-ai-card .atfp-chrome-configure-notice').hide();
+                $('.atfp-chrome-configure-button').hide();
             }
         });
     }
