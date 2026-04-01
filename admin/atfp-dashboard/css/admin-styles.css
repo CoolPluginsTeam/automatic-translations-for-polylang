@@ -357,6 +357,12 @@ a.atfp-dashboard-docs:hover {
     color: var(--primary-color);
 }
 
+a.atfp-dashboard-docs:focus{
+    border: none;
+    box-shadow: none;
+    outline: none;
+}
+
 /* Provider Toggle Switch */
 .atfp-provider-switch {
     position: relative;

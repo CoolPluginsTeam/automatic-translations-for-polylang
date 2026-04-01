@@ -287,10 +287,10 @@ if(!current_user_can('manage_options')){
             </div>
             </div>
 
-            <h3 class="atfp-section-title">
-                <?php esc_html_e('Usage Data Sharing', 'automatic-translations-for-polylang'); ?>
-            </h3>
             <?php if (get_option('cpfm_opt_in_choice_cool_translations')) : ?>
+                <h3 class="atfp-section-title">
+                    <?php esc_html_e('Usage Data Sharing', 'automatic-translations-for-polylang'); ?>
+                </h3>
                 <div class="atfp-dashboard-feedback-container">
                     <div class="atfp-dashboard-feedback-row">
                         <input type="checkbox" 
