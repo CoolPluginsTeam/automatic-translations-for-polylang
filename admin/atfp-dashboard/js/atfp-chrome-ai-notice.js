@@ -943,7 +943,7 @@ jQuery(function ($) {
         }
 
         let hasError = false;
-        let type = '';
+        let errorType = '';
         
         const bypassBrowser = typeof atfpChromeAiNoticeData !== 'undefined' && atfpChromeAiNoticeData.chrome_ai_bypass_browser_check === '1';
         const bypassSecure = typeof atfpChromeAiNoticeData !== 'undefined' && atfpChromeAiNoticeData.chrome_ai_bypass_secure_check === '1';
@@ -956,13 +956,13 @@ jQuery(function ($) {
         // Browser check (must be Chrome, not Edge or others)
         if (!browserCompatible) {
             hasError = true;
-            type = 'browser';
+            errorType = 'browser';
         } else if (!apiAvailable && !secureConnection) {
             hasError = true;
-            type = 'secure';
+            errorType = 'secure';
         } else if (!apiAvailable) {
             hasError = true;
-            type = 'api';
+            errorType = 'api';
         }
         
         // If browser/API/secure checks pass, check language pack availability
