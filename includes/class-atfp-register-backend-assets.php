@@ -230,7 +230,6 @@ class ATFP_Register_Backend_Assets
         }
 
         if (method_exists($current_screen, 'is_block_editor') && !$current_screen->is_block_editor() && isset($post) && isset($post->ID)) {
-            
             if (
                 isset($_GET['from_post'], $_GET['new_lang'], $_GET['_wpnonce']) &&
                 wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['_wpnonce'])), 'new-post-translation')
@@ -249,13 +248,13 @@ class ATFP_Register_Backend_Assets
                     'atfp_url' => esc_url(ATFP_URL),
                     'pro_version_url' => esc_url($buy_pro_url),
                 ));
+            }else{                
+                if (!isset($post) || !isset($post->ID)) {
+                    return;
+                }
+    
+                $this->enqueue_re_translation_assets('classic', $post->ID);
             }
-        }else{                
-            if (!isset($post) || !isset($post->ID)) {
-                return;
-            }
-
-            $this->enqueue_re_translation_assets('classic', $post->ID);
         }
     }
 
@@ -471,6 +470,8 @@ class ATFP_Register_Backend_Assets
         if(class_exists('ATFP_Helper')){
             $atfp_utm_parameters=ATFP_Helper::utm_source_text();
         }
+
+        $pro_version_url=esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/');
 
         $pro_version_url=$pro_version_url.'?'.$atfp_utm_parameters.'&utm_medium=inside&utm_campaign=get_pro&utm_content=';
 
