@@ -135,9 +135,9 @@ class CPFM_Feedback_Notice {
             
              foreach (self::$registered_notices[$category] as $notice) {
 
-                    $plugin_name = isset($notice['plugin_name'])?sanitize_key($notice['plugin_name']):'';
+                    $atfp_plugin_name = isset($notice['plugin_name'])?sanitize_key($notice['plugin_name']):'';
 
-                    if($plugin_name){
+                    if($atfp_plugin_name){
                         // cpfm is our unuque prefix for this plugin
                         // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
                         do_action('cpfm_after_opt_in_' . $atfp_plugin_name, $category);
