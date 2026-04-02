@@ -36,44 +36,6 @@ jQuery(function ($) {
         }
 
         /**
-         * Get the target language from settings, falling back to the first supported language from all_languages that is not the source/default language.
-         * @param {string|undefined} configuredTarget - The configured target language code (e.g. from wp_localize_script).
-         * @param {string} sourceLanguage - The source/default language code to exclude.
-         * @param {Array} allLanguages - Array of {code, label} objects from settings.
-         * @param {string} fallback - Final fallback if nothing else works (default: 'hi').
-         * @returns {{code: string, label: string}}
-         */
-        static getTargetLanguage = (configuredTarget, sourceLanguage, allLanguages, fallback = 'hi') => {
-            const supportedLanguages = ChromeAiTranslator.getSupportedLanguages();
-            const sourceLang = sourceLanguage.toLowerCase();
-            const configured = (configuredTarget || fallback).toLowerCase();
-
-            // If configured target is supported and not the source language, use it
-            if (supportedLanguages.includes(configured) && Object.keys(allLanguages).includes(configured) && configured !== sourceLang) {
-                // Find the label from allLanguages if available
-                let label = configured;
-                if (allLanguages && Object.keys(allLanguages).length > 0) {
-                    const match = Object.keys(allLanguages).find(l => l.toLowerCase() === configured);
-                    if (match) label = allLanguages[match].name;
-                }
-                return { code: configured, label: label };
-            }
-
-            // Otherwise loop through all_languages and return the first supported language that is not the source/default
-            if (allLanguages && Object.keys(allLanguages).length > 0) {
-                for (const lang of Object.keys(allLanguages)) {
-                    const code = lang.toLowerCase();
-                    if (supportedLanguages.includes(code) && code !== sourceLang) {
-                        return { code, label: allLanguages[lang].name };
-                    }
-                }
-            }
-
-            // Final fallback: return the fallback itself
-            return { code: fallback, label: fallback };
-        }
-
-        /**
          * Check if browser is Chrome (not Edge or other browsers)
          * @returns {boolean} True if browser is Chrome, false otherwise
          */
@@ -377,13 +339,6 @@ jQuery(function ($) {
             allLanguages = atfpChromeAiNoticeData.all_languages || [];
         }
 
-        // Get target language using centralized method
-        const configuredTarget = (atfpChromeAiNoticeData && atfpChromeAiNoticeData.target_language) || 'hi';
-        const configuredTargetLabel = (atfpChromeAiNoticeData && atfpChromeAiNoticeData.target_language_label) || 'Hindi';
-        const targetObj = ChromeAiTranslator.getTargetLanguage(configuredTarget, sourceLanguage, allLanguages, 'hi');
-        let targetLanguage = targetObj.code;
-        let targetLanguageLabel = targetObj.code === 'hi' ? configuredTargetLabel : targetObj.label;
-
         // Check all languages for unsupported ones
         const unsupportedLanguages = [];
         const supportedLanguagePairs = []; // Store supported language pairs for pack checking
@@ -394,16 +349,14 @@ jQuery(function ($) {
                 if (!supportedLanguages.includes(lang.code.toLowerCase())) {
                     unsupportedLanguages.push({
                         code: lang.code.toUpperCase(),
-                        label: lang.label,
-                        isDefault: lang.code === sourceLanguage
+                        label: lang.label
                     });
                 } else {
                     // Store supported languages for pack checking
                     supportedLanguagePairs.push({
                         code: lang.code.toLowerCase(),
                         fullCode: lang.code,
-                        label: lang.label,
-                        isDefault: lang.code === targetLanguage
+                        label: lang.label
                     });
                 }
             });
@@ -421,20 +374,6 @@ jQuery(function ($) {
                     fullCode: sourceLanguage,
                     label: sourceLanguageLabel,
                     isDefault: true
-                });
-            }
-            if (!supportedLanguages.includes(targetLanguage.toLowerCase())) {
-                unsupportedLanguages.push({
-                    code: targetLanguage.toUpperCase(),
-                    label: targetLanguageLabel,
-                    isDefault: false
-                });
-            } else {
-                supportedLanguagePairs.push({
-                    code: targetLanguage.toLowerCase(),
-                    fullCode: targetLanguage,
-                    label: targetLanguageLabel,
-                    isDefault: false
                 });
             }
         }
@@ -697,6 +636,36 @@ jQuery(function ($) {
                 return supportedLangs;
             }
 
+            const callBackLoop=async(sourceCode, allLanguage, callback, index)=>{
+                if(index >= allLanguage.length){
+                    return false;
+                }
+
+                const targetCode = allLanguage[index].code.toLowerCase();
+
+                if(targetCode === sourceCode){
+                    return callBackLoop(sourceCode, allLanguage, callback, index+1);
+                }
+
+                const status = await callback(sourceCode, targetCode);
+
+                if(status === 'available'){
+                    return status;
+                }
+
+                return callBackLoop(sourceCode, allLanguage, callback, index+1);
+            }
+
+            const callbackAsync = async (sourceCode, targetCode) => {
+                const status = await checkLanguagePairAvailability(sourceCode, targetCode);
+                if (status === 'readily' || status === 'available' || status === true) {
+                    return status;
+                } else if (status === 'downloadable') {
+                    return status;
+                }
+                return status;
+            }
+
             // Check language pack availability for each language
             // We'll check each language against the default source to see if packs are available
             for (let i = 0; i < supportedLangs.length; i++) {
@@ -713,11 +682,12 @@ jQuery(function ($) {
                                 const status = await checkLanguagePairAvailability(langCode, targetLang.code.toLowerCase());
                                 if (status === 'readily' || status === 'available' || status === true) {
                                     isAvailable = true;
-                                    break;
                                 } else if (status === 'downloadable') {
-                                    isAvailable = true;
-                                    lang.label = lang.label + ' (Downloadable)';
-                                    break;
+                                    const status = await callBackLoop(langCode, supportedLangs, callbackAsync, 0);
+                                    isAvailable = true
+                                    if(status !== 'available'){
+                                        lang.label = lang.label + ' (Downloadable)';
+                                    }
                                 }
                             } catch (error) {
                                 // Continue checking other pairs
@@ -730,6 +700,9 @@ jQuery(function ($) {
                         const status = await checkLanguagePairAvailability(defaultSourceCode, langCode);
                         if (status === 'readily' || status === 'available' || status === true) {
                             isAvailable = true;
+                        }else if (status === 'downloadable') {
+                            isAvailable = true;
+                            lang.label = lang.label + ' (Downloadable)';
                         }
                     } catch (error) {
                         // Language pack not available for this pair
@@ -740,6 +713,8 @@ jQuery(function ($) {
                     availableLanguages.push(lang);
                 }
             }
+
+            console.log(availableLanguages);
 
             return availableLanguages;
         }
@@ -765,12 +740,6 @@ jQuery(function ($) {
             sourceLanguage = atfpChromeAiNoticeData.source_language || 'en';
         }
 
-        // Get target language using centralized method
-        const allLanguages2 = (atfpChromeAiNoticeData && atfpChromeAiNoticeData.all_languages) || [];
-        const configuredTarget2 = (atfpChromeAiNoticeData && atfpChromeAiNoticeData.target_language) || 'hi';
-        const targetObj2 = ChromeAiTranslator.getTargetLanguage(configuredTarget2, sourceLanguage, allLanguages2, 'hi');
-        let targetLanguage = targetObj2.code;
-
         availableLanguages.forEach(function (lang) {
             const option = $('<option></option>')
                 .attr('value', lang.code)
@@ -782,21 +751,23 @@ jQuery(function ($) {
             }
         });
 
+        let targetSelected=false;
         // Populate target language dropdown (exclude source language, only available languages)
         availableLanguages.forEach(function (lang) {
             const option = $('<option></option>')
                 .attr('value', lang.code)
                 .text(lang.label);
-            $targetSelect.append(option);
-
-            if (lang.code === targetLanguage) {
-                $targetSelect.val(lang.code);
+            if(!targetSelected && lang.code !== sourceLanguage){
+                option.attr('selected', 'selected');
+                targetSelected=true;
             }
+            $targetSelect.append(option);
         });
 
         // Handle test translation button click
         $testBtn.on('click', async function () {
             const textToTranslate = $('#atfp-test-translation-text').val();
+            const testWrap=$("#atfp-test-translation-result");
             const sourceLang = $sourceSelect.val();
             const targetLang = $targetSelect.val();
 
@@ -804,8 +775,8 @@ jQuery(function ($) {
                 if (self && self.Translator && self.Translator.create) {
                     try {
                         await self.Translator.create({
-                            sourceLanguage: source,
-                            targetLanguage: target,
+                            sourceLanguage: sourceLang,
+                            targetLanguage: targetLang,
                             monitor(m) {
                                 m.addEventListener('downloadprogress', (e) => {
                                     console.log(`Downloaded ${e.loaded * 100}%`);
@@ -816,8 +787,8 @@ jQuery(function ($) {
                         if (self.Translator.availability) {
                             // @ts-ignore
                             const status = await window.self.Translator.availability({
-                                sourceLanguage: source,
-                                targetLanguage: target,
+                                sourceLanguage: sourceLang,
+                                targetLanguage: targetLang,
                             });
 
                             if (status !== 'available') {
@@ -829,10 +800,12 @@ jQuery(function ($) {
                             }
                         }
                     }catch(error){
+                        testWrap.hide();
                         $errorDiv.html('Language pack is not available. Please select another language.').show();
                         return;
                     }
                 } else {
+                    testWrap.hide();
                     $errorDiv.html('Language pack is not available. Please select another language.').show();
                     return;
                 }
@@ -840,7 +813,7 @@ jQuery(function ($) {
 
             if (textToTranslate === '') {
                 $errorDiv.html('Please enter text to translate.').show();
-                $("#atfp-test-translation-result").hide();
+                testWrap.hide();
                 return;
             }
 
@@ -945,13 +918,6 @@ jQuery(function ($) {
             sourceLanguage = localStorage.getItem('page_lang') || 'en';
         }
 
-        // Get target language using centralized method
-        const configuredTarget3 = (typeof atfpChromeAiNoticeData !== 'undefined' && atfpChromeAiNoticeData)
-            ? (atfpChromeAiNoticeData.target_language || 'hi')
-            : (localStorage.getItem('language_code') || 'hi');
-        const targetObj3 = ChromeAiTranslator.getTargetLanguage(configuredTarget3, sourceLanguage, allLanguages, 'hi');
-        let targetLanguage = targetObj3.code;
-
         // Check supported languages list (use centralized method)
         const supportedLanguages = ChromeAiTranslator.getSupportedLanguages();
 
@@ -966,8 +932,6 @@ jQuery(function ($) {
                     targetLangs.push(lang.toLowerCase());
                 }
             });
-        } else if (supportedLanguages.includes(targetLanguage.toLowerCase())) {
-            targetLangs.push(targetLanguage.toLowerCase());
         }
 
 
