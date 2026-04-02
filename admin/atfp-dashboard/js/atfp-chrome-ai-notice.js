@@ -800,7 +800,7 @@ jQuery(function ($) {
             const sourceLang = $sourceSelect.val();
             const targetLang = $targetSelect.val();
 
-            if (availableLanguages[targetLang].label.includes('Downloadable')) {
+            if (availableLanguages[targetLang].name.includes('Downloadable')) {
                 if (self && self.Translator && self.Translator.create) {
                     try {
                         await self.Translator.create({
@@ -824,7 +824,7 @@ jQuery(function ($) {
                                 $errorDiv.html('Language pack is downloding. Please select another language or wait for it to finish downloading.').show();
                                 return;
                             }else{
-                                $targetSelect.find('option[value="' + target + '"]').text(availableLanguages[targetLang].label.replace(' (Downloadable)', ''));
+                                $targetSelect.find('option[value="' + target + '"]').text(availableLanguages[targetLang].name.replace(' (Downloadable)', ''));
                             }
                         }
                     }catch(error){
