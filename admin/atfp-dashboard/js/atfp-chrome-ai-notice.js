@@ -823,6 +823,7 @@ jQuery(function ($) {
 
             if(textToTranslate===''){
                 $errorDiv.html('Please enter text to translate.').show();
+                $("#atfp-test-translation-result").hide();
                 return;
             }
 
