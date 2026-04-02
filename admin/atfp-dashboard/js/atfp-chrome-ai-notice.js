@@ -817,9 +817,14 @@ jQuery(function ($) {
 
         // Handle test translation button click
         $testBtn.on('click', async function () {
-            const textToTranslate = $('#atfp-test-translation-text').val() || 'Hello, this is a test translation.';
+            const textToTranslate = $('#atfp-test-translation-text').val();
             const sourceLang = $sourceSelect.val();
             const targetLang = $targetSelect.val();
+
+            if(textToTranslate===''){
+                $errorDiv.html('Please enter text to translate.').show();
+                return;
+            }
 
             // Hide previous results
             $resultDiv.hide();
