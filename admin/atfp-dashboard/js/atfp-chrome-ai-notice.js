@@ -23,6 +23,8 @@ jQuery(function ($) {
 
                 if(( ['unavailable', 'downloading', 'after-download', 'downloadable'].includes(status)) && window && window.self && window.self.Translator){
                     try {
+                        await new Promise(resolve => setTimeout(resolve, 500));
+
                         await self.Translator.create({
                             sourceLanguage: source,
                             targetLanguage: target,
@@ -33,6 +35,8 @@ jQuery(function ($) {
                             },
                         });
         
+                        await new Promise(resolve => setTimeout(resolve, 500));
+
                           // @ts-ignore
                         status = await window.self.Translator.availability({
                             sourceLanguage: source,
@@ -70,22 +74,22 @@ jQuery(function ($) {
             const configured = (configuredTarget || fallback).toLowerCase();
 
             // If configured target is supported and not the source language, use it
-            if (supportedLanguages.includes(configured) && configured !== sourceLang) {
+            if (supportedLanguages.includes(configured) && Object.keys(allLanguages).includes(configured) && configured !== sourceLang) {
                 // Find the label from allLanguages if available
                 let label = configured;
-                if (allLanguages && allLanguages.length > 0) {
-                    const match = allLanguages.find(l => l.code.toLowerCase() === configured);
-                    if (match) label = match.label;
+                if (allLanguages && Object.keys(allLanguages).length > 0) {
+                    const match = Object.keys(allLanguages).find(l => l.toLowerCase() === configured);
+                    if (match) label = allLanguages[match].name;
                 }
-                return { code: configured, label };
+                return { code: configured, label: label };
             }
 
             // Otherwise loop through all_languages and return the first supported language that is not the source/default
-            if (allLanguages && allLanguages.length > 0) {
-                for (const lang of allLanguages) {
-                    const code = lang.code.toLowerCase();
+            if (allLanguages && Object.keys(allLanguages).length > 0) {
+                for (const lang of Object.keys(allLanguages)) {
+                    const code = lang.toLowerCase();
                     if (supportedLanguages.includes(code) && code !== sourceLang) {
-                        return { code, label: lang.label };
+                        return { code, label: allLanguages[lang].name };
                     }
                 }
             }
