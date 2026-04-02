@@ -21,31 +21,6 @@ jQuery(function ($) {
                     targetLanguage: target,
                 });
 
-                if(( ['unavailable', 'downloading', 'after-download', 'downloadable'].includes(status)) && window && window.self && window.self.Translator){
-                    try {
-                        await new Promise(resolve => setTimeout(resolve, 500));
-
-                        await self.Translator.create({
-                            sourceLanguage: source,
-                            targetLanguage: target,
-                            monitor(m) {
-                                m.addEventListener('downloadprogress', (e) => {
-                                    console.log(`Downloaded ${e.loaded * 100}%`);
-                                });
-                            },
-                        });
-        
-                        await new Promise(resolve => setTimeout(resolve, 500));
-
-                          // @ts-ignore
-                        status = await window.self.Translator.availability({
-                            sourceLanguage: source,
-                            targetLanguage: target,
-                        });
-            
-                    } catch (err) {}
-                }
-
                 return status;
             }
 
@@ -739,6 +714,10 @@ jQuery(function ($) {
                                 if (status === 'readily' || status === 'available' || status === true) {
                                     isAvailable = true;
                                     break;
+                                } else if (status === 'downloadable') {
+                                    isAvailable = true;
+                                    lang.label = lang.label + ' (Downloadable)';
+                                    break;
                                 }
                             } catch (error) {
                                 // Continue checking other pairs
@@ -821,7 +800,44 @@ jQuery(function ($) {
             const sourceLang = $sourceSelect.val();
             const targetLang = $targetSelect.val();
 
-            if(textToTranslate===''){
+            if (availableLanguages[targetLang].label.includes('Downloadable')) {
+                if (self && self.Translator && self.Translator.create) {
+                    try {
+                        await self.Translator.create({
+                            sourceLanguage: source,
+                            targetLanguage: target,
+                            monitor(m) {
+                                m.addEventListener('downloadprogress', (e) => {
+                                    console.log(`Downloaded ${e.loaded * 100}%`);
+                                });
+                            },
+                        });
+
+                        if (self.Translator.availability) {
+                            // @ts-ignore
+                            const status = await window.self.Translator.availability({
+                                sourceLanguage: source,
+                                targetLanguage: target,
+                            });
+
+                            if (status !== 'available') {
+                                $errorDiv.html('Language pack is downloding. Please select another language or wait for it to finish downloading.').show();
+                                return;
+                            }else{
+                                $targetSelect.find('option[value="' + target + '"]').text(availableLanguages[targetLang].label.replace(' (Downloadable)', ''));
+                            }
+                        }
+                    }catch(error){
+                        $errorDiv.html('Language pack is not available. Please select another language.').show();
+                        return;
+                    }
+                } else {
+                    $errorDiv.html('Language pack is not available. Please select another language.').show();
+                    return;
+                }
+            }
+
+            if (textToTranslate === '') {
                 $errorDiv.html('Please enter text to translate.').show();
                 $("#atfp-test-translation-result").hide();
                 return;
@@ -908,7 +924,7 @@ jQuery(function ($) {
         if (typeof ChromeAiTranslator === 'undefined') {
             return { hasError: false }; // Can't check if ChromeAiTranslator not loaded
         }
-        
+
         // Helper function to check language pair availability (use centralized method)
         async function checkLanguagePairAvailability(source, target) {
             if (typeof ChromeAiTranslator !== 'undefined' && ChromeAiTranslator.languagePairAvality) {
@@ -916,7 +932,7 @@ jQuery(function ($) {
             }
             return false;
         }
-        
+
         // Get languages from TRP settings
         let sourceLanguage = 'en';
         let allLanguages = [];
@@ -934,17 +950,17 @@ jQuery(function ($) {
             : (localStorage.getItem('language_code') || 'hi');
         const targetObj3 = ChromeAiTranslator.getTargetLanguage(configuredTarget3, sourceLanguage, allLanguages, 'hi');
         let targetLanguage = targetObj3.code;
-        
+
         // Check supported languages list (use centralized method)
         const supportedLanguages = ChromeAiTranslator.getSupportedLanguages();
-        
+
         // Get source language
         const sourceLang = sourceLanguage.toLowerCase();
         const targetLangs = [];
-        
+
         if (allLanguages && Object.keys(allLanguages).length > 0) {
             // Get all supported target languages
-            Object.keys(allLanguages).forEach(function(lang) {
+            Object.keys(allLanguages).forEach(function (lang) {
                 if (supportedLanguages.includes(lang.toLowerCase()) && lang.toLowerCase() !== sourceLang) {
                     targetLangs.push(lang.toLowerCase());
                 }
@@ -953,18 +969,18 @@ jQuery(function ($) {
             targetLangs.push(targetLanguage.toLowerCase());
         }
 
-        
+
         // Check language pack status for each target language
         if (targetLangs.length > 0 && supportedLanguages.includes(sourceLang)) {
             for (let i = 0; i < targetLangs.length; i++) {
                 try {
                     const status = await checkLanguagePairAvailability(sourceLang, targetLangs[i]);
-                    
+
                     // If status indicates pack is required or downloading, return error
                     if (status === "after-download" || status === "downloadable" || status === "unavailable" || status === "downloading") {
                         return { hasError: true, type: 'language-pack' };
                     }
-                    
+
                     // If status is not 'readily' or 'available', pack might be required
                     if (status !== 'readily' && status !== 'available' && status !== false) {
                         return { hasError: true, type: 'language-pack' };
@@ -975,7 +991,7 @@ jQuery(function ($) {
                 }
             }
         }
-        
+
         return { hasError: false };
     }
 
@@ -1015,8 +1031,8 @@ jQuery(function ($) {
         }
     }
 
-    const showConfigurationNotice = async () =>{
-        if($('.atfp-chrome-ai-card .atfp-chrome-configure-notice').length > 0) {
+    const showConfigurationNotice = async () => {
+        if ($('.atfp-chrome-ai-card .atfp-chrome-configure-notice').length > 0) {
             $('.atfp-chrome-ai-card .atfp-chrome-configure-notice').show();
             $('.atfp-chrome-configure-button').show();
             return;
@@ -1024,7 +1040,7 @@ jQuery(function ($) {
 
         let hasError = false;
         let errorType = '';
-        
+
         const bypassBrowser = typeof atfpChromeAiNoticeData !== 'undefined' && atfpChromeAiNoticeData.chrome_ai_bypass_browser_check === '1';
         const bypassSecure = typeof atfpChromeAiNoticeData !== 'undefined' && atfpChromeAiNoticeData.chrome_ai_bypass_secure_check === '1';
         const bypassApi = typeof atfpChromeAiNoticeData !== 'undefined' && atfpChromeAiNoticeData.chrome_ai_bypass_api_check === '1';
@@ -1032,7 +1048,7 @@ jQuery(function ($) {
         const browserCompatible = ChromeAiTranslator.checkBrowserCompatibility() || bypassBrowser;
         const secureConnection = ChromeAiTranslator.checkSecureConnection() || window && window.isSecureContext || bypassSecure;
         const apiAvailable = ChromeAiTranslator.checkApiAvailability() || bypassApi;
-        
+
         // Browser check (must be Chrome, not Edge or others)
         if (!browserCompatible) {
             hasError = true;
@@ -1044,7 +1060,7 @@ jQuery(function ($) {
             hasError = true;
             errorType = 'api';
         }
-        
+
         // If browser/API/secure checks pass, check language pack availability
         if (!hasError) {
             const packCheck = await checkLanguagePackAvailability();
@@ -1054,10 +1070,10 @@ jQuery(function ($) {
             }
         }
 
-        if (hasError) {            
+        if (hasError) {
             // Create notice with specific message based on error type
             let noticeMessage = 'Please configure the Chrome settings to use Chrome AI Translator.';
-            
+
             if (errorType === 'browser') {
                 noticeMessage = 'Chrome browser is required. Please configure Chrome settings.';
             } else if (errorType === 'secure') {
@@ -1067,29 +1083,29 @@ jQuery(function ($) {
             } else if (errorType === 'language-pack') {
                 noticeMessage = 'Language pack is required. Please configure Chrome settings.';
             }
-            
+
             const notice = $('<div class="atfp-chrome-configure-notice" style="margin-top: 10px; font-size: 12px; color: #dc2626;">' + noticeMessage + '</div>');
-            
+
             $('.atfp-chrome-ai-card').append(notice);
             $('.atfp-chrome-configure-button').show();
-        }else{
+        } else {
             $('.atfp-chrome-ai-card .atfp-chrome-configure-notice').hide();
             $('.atfp-chrome-configure-button').hide();
         }
     }
 
-    
-    if($('.atfp-chrome-ai-card').length > 0) {
+
+    if ($('.atfp-chrome-ai-card').length > 0) {
         const ctfp_chrome_ai_toogle = $('.atfp-chrome-ai-card .atfp-provider-toggle');
         const chrome_ai_enabled = ctfp_chrome_ai_toogle.is(':checked');
 
-        if(chrome_ai_enabled) {
+        if (chrome_ai_enabled) {
             showConfigurationNotice();
         }
 
-        ctfp_chrome_ai_toogle.on('change', function() {
+        ctfp_chrome_ai_toogle.on('change', function () {
             const chrome_ai_enabled = ctfp_chrome_ai_toogle.is(':checked');
-            if(chrome_ai_enabled) {
+            if (chrome_ai_enabled) {
                 showConfigurationNotice();
             } else {
                 $('.atfp-chrome-ai-card .atfp-chrome-configure-notice').hide();
