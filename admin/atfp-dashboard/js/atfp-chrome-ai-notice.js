@@ -16,10 +16,31 @@ jQuery(function ($) {
 
                 return status;
             } else if ("Translator" in self && "create" in self.Translator) {
-                const status = await self.Translator.availability({
+                let status = await self.Translator.availability({
                     sourceLanguage: source,
                     targetLanguage: target,
                 });
+
+                if(( ['unavailable', 'downloading', 'after-download', 'downloadable'].includes(status)) && window && window.self && window.self.Translator){
+                    try {
+                        await self.Translator.create({
+                            sourceLanguage: source,
+                            targetLanguage: target,
+                            monitor(m) {
+                                m.addEventListener('downloadprogress', (e) => {
+                                    console.log(`Downloaded ${e.loaded * 100}%`);
+                                });
+                            },
+                        });
+        
+                          // @ts-ignore
+                        status = await window.self.Translator.availability({
+                            sourceLanguage: source,
+                            targetLanguage: target,
+                        });
+            
+                    } catch (err) { console.log('err', err) }
+                }
 
                 return status;
             }
@@ -33,6 +54,44 @@ jQuery(function ($) {
          */
         static getSupportedLanguages = () => {
             return ['en', 'es', 'ja', 'ar', 'de', 'bn', 'fr', 'hi', 'it', 'ko', 'nl', 'pl', 'pt', 'ru', 'th', 'tr', 'vi', 'zh', 'zh-hant', 'bg', 'cs', 'da', 'el', 'fi', 'hr', 'hu', 'id', 'iw', 'lt', 'no', 'ro', 'sk', 'sl', 'sv', 'uk', 'kn', 'ta', 'te', 'mr'].map(lang => lang.toLowerCase());
+        }
+
+        /**
+         * Get the target language from settings, falling back to the first supported language from all_languages that is not the source/default language.
+         * @param {string|undefined} configuredTarget - The configured target language code (e.g. from wp_localize_script).
+         * @param {string} sourceLanguage - The source/default language code to exclude.
+         * @param {Array} allLanguages - Array of {code, label} objects from settings.
+         * @param {string} fallback - Final fallback if nothing else works (default: 'hi').
+         * @returns {{code: string, label: string}}
+         */
+        static getTargetLanguage = (configuredTarget, sourceLanguage, allLanguages, fallback = 'hi') => {
+            const supportedLanguages = ChromeAiTranslator.getSupportedLanguages();
+            const sourceLang = sourceLanguage.toLowerCase();
+            const configured = (configuredTarget || fallback).toLowerCase();
+
+            // If configured target is supported and not the source language, use it
+            if (supportedLanguages.includes(configured) && configured !== sourceLang) {
+                // Find the label from allLanguages if available
+                let label = configured;
+                if (allLanguages && allLanguages.length > 0) {
+                    const match = allLanguages.find(l => l.code.toLowerCase() === configured);
+                    if (match) label = match.label;
+                }
+                return { code: configured, label };
+            }
+
+            // Otherwise loop through all_languages and return the first supported language that is not the source/default
+            if (allLanguages && allLanguages.length > 0) {
+                for (const lang of allLanguages) {
+                    const code = lang.code.toLowerCase();
+                    if (supportedLanguages.includes(code) && code !== sourceLang) {
+                        return { code, label: lang.label };
+                    }
+                }
+            }
+
+            // Final fallback: return the fallback itself
+            return { code: fallback, label: fallback };
         }
 
         /**
@@ -329,19 +388,22 @@ jQuery(function ($) {
 
         // Get languages from TRP settings (passed via wp_localize_script)
         let sourceLanguage = 'en';
-        let targetLanguage = 'hi';
         let sourceLanguageLabel = 'English';
-        let targetLanguageLabel = 'Hindi';
         let allLanguages = [];
 
         if (typeof atfpChromeAiNoticeData !== 'undefined' && atfpChromeAiNoticeData) {
             // Use TRP settings from PHP
             sourceLanguage = atfpChromeAiNoticeData.source_language || 'en';
-            targetLanguage = atfpChromeAiNoticeData.target_language || 'hi';
             sourceLanguageLabel = atfpChromeAiNoticeData.source_language_label || 'English';
-            targetLanguageLabel = atfpChromeAiNoticeData.target_language_label || 'Hindi';
             allLanguages = atfpChromeAiNoticeData.all_languages || [];
         }
+
+        // Get target language using centralized method
+        const configuredTarget = (atfpChromeAiNoticeData && atfpChromeAiNoticeData.target_language) || 'hi';
+        const configuredTargetLabel = (atfpChromeAiNoticeData && atfpChromeAiNoticeData.target_language_label) || 'Hindi';
+        const targetObj = ChromeAiTranslator.getTargetLanguage(configuredTarget, sourceLanguage, allLanguages, 'hi');
+        let targetLanguage = targetObj.code;
+        let targetLanguageLabel = targetObj.code === 'hi' ? configuredTargetLabel : targetObj.label;
 
         // Check all languages for unsupported ones
         const unsupportedLanguages = [];
@@ -714,13 +776,17 @@ jQuery(function ($) {
 
         // Get languages from TRP settings (passed via wp_localize_script)
         let sourceLanguage = 'en';
-        let targetLanguage = 'hi';
-        
+
         if (typeof atfpChromeAiNoticeData !== 'undefined' && atfpChromeAiNoticeData) {
             // Use TRP settings from PHP
             sourceLanguage = atfpChromeAiNoticeData.source_language || 'en';
-            targetLanguage = atfpChromeAiNoticeData.target_language || 'hi';
         }
+
+        // Get target language using centralized method
+        const allLanguages2 = (atfpChromeAiNoticeData && atfpChromeAiNoticeData.all_languages) || [];
+        const configuredTarget2 = (atfpChromeAiNoticeData && atfpChromeAiNoticeData.target_language) || 'hi';
+        const targetObj2 = ChromeAiTranslator.getTargetLanguage(configuredTarget2, sourceLanguage, allLanguages2, 'hi');
+        let targetLanguage = targetObj2.code;
 
         availableLanguages.forEach(function (lang) {
             const option = $('<option></option>')
@@ -843,17 +909,21 @@ jQuery(function ($) {
         
         // Get languages from TRP settings
         let sourceLanguage = 'en';
-        let targetLanguage = 'hi';
         let allLanguages = [];
-        
+
         if (typeof atfpChromeAiNoticeData !== 'undefined' && atfpChromeAiNoticeData) {
             sourceLanguage = atfpChromeAiNoticeData.source_language || 'en';
-            targetLanguage = atfpChromeAiNoticeData.target_language || 'hi';
             allLanguages = atfpChromeAiNoticeData.all_languages || [];
         } else if (typeof localStorage !== 'undefined') {
             sourceLanguage = localStorage.getItem('page_lang') || 'en';
-            targetLanguage = localStorage.getItem('language_code') || 'hi';
         }
+
+        // Get target language using centralized method
+        const configuredTarget3 = (typeof atfpChromeAiNoticeData !== 'undefined' && atfpChromeAiNoticeData)
+            ? (atfpChromeAiNoticeData.target_language || 'hi')
+            : (localStorage.getItem('language_code') || 'hi');
+        const targetObj3 = ChromeAiTranslator.getTargetLanguage(configuredTarget3, sourceLanguage, allLanguages, 'hi');
+        let targetLanguage = targetObj3.code;
         
         // Check supported languages list (use centralized method)
         const supportedLanguages = ChromeAiTranslator.getSupportedLanguages();
