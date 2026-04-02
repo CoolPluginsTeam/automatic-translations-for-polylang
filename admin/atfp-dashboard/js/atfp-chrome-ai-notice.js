@@ -714,8 +714,6 @@ jQuery(function ($) {
                 }
             }
 
-            console.log(availableLanguages);
-
             return availableLanguages;
         }
 
