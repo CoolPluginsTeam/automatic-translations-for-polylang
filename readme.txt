@@ -4,7 +4,7 @@ Tags: Polylang, AI Translation, Content Translation, Translate
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 5.6
-Stable tag: 1.4.8
+Stable tag: 1.4.9
 Author URI: https://coolplugins.net/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=author_page&utm_content=plugins_list
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -43,21 +43,28 @@ Whether you're using **Elementor** or **Gutenberg**, this addon makes the transl
 * ✅ **Chrome Built-in AI Translation Support:** Available
 * ✅ **API Key Required:** Not Required (Yandex Widget & Chrome Built-in AI)
 * ✅ **Gutenberg Block Compatibility**
-* ✅ **Elementor Page Translation**
+* ✅ **Classic Editor Page Translation**
+* ✅ **Divi 5 Page Translation**
+* ✅ **Re Translation:** Available
+* ✅ **Bulk Translation:** Available
+* ✅ **Taxonomy Translation:** Available
 * ✅ **Inline Translation**
-* ✅ **Custom Block Translation:** Available
 * ❌ **Classic Editor Translation:** Not Available
 * ❌ **Google Translate Widget Support:** Not Available
 * ❌ **OpenAI Translation Support:** Not Available
 * ❌ **Gemini Translation Support:** Not Available
+* ❌ **DeepL Translation Support:** Not Available
 * ❌ **Bulk Translation:** Not Available
+* ❌ **Re Translation:** Not Available
 * ❌ **Premium Support:** Not Available
 
 **Premium License**
 
 * **✅ Bulk Translation:** Translate multiple posts, pages, or products at once to save time.
-* **✅  Elementor Page Translation:** Automatically translate entire Elementor pages, sections, and widgets.
 * **✅ Classic Editor Translation:** Easily translate all content created with the Classic WordPress Editor.
+* **✅ Divi 5 Page Translation:** Easily translate all content created with the Divi 5 WordPress Editor.
+* **✅ Re Translation:** Re translate or Update the translated content for applied latest changes.
+* **✅ Taxonomy Translation:** Easily translate all taxonomies and custom taxonomies.
 * **✅ Inline Translation:** Translate specific text blocks or widgets directly on the front end.
 * ✅  **Gutenberg Block Compatibility:** Fully compatible with Gutenberg, this plugin allow you to translate block-based layouts.
 * ✅ **Chrome Built-in AI Translation Support:** Instantly translate content directly inside browser using Chrome’s built-in AI translator.
@@ -165,7 +172,7 @@ This plugin provides automatic translation services for Polylang using the Yande
 
 == Frequently Asked Questions ==
 
-= What does the "**AutoPoly - AI Translation For Polylang**" plugin do? =
+= What does the **AutoPoly - AI Translation For Polylang** plugin do? =
 This plugin automatically copies and translates your posts, including titles, content, images, galleries, and meta fields, from one language to another using Chrome AI. It works with Elementor and Gutenberg blocks, replicating the original content and styles across different languages.
 
 = Is this plugin officially developed by Polylang? =
@@ -218,6 +225,11 @@ Yes, this plugin supports automatic translations for content created with the Cl
 You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities.[Report a security vulnerability](https://patchstack.com/database/wordpress/plugin/automatic-translations-for-polylang/vdp)
 
 == Changelog ==
+
+= Version 1.4.9 | 03 April 2026 =
+* **Added:** Chrome Local AI configuration notice and setup guide in AutoPoly settings dashboard.
+* **Added:** Provider visibility toggle in AutoPoly dashboard for hide unused providers during translation.
+* **Improved:** Dashboard and Translation modal overall design.
 
 = Version 1.4.8 | 10 February 2026 =
 * **Fixed:** Fixed issues reported by "Plugin Check" plugin.
