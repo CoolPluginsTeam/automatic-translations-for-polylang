@@ -845,6 +845,11 @@
   line-height: 1.5;
 }
 
+#atfp_strings_model .atfp-notice p{
+  margin: 0;
+  padding: 0;
+}
+
 #atfp_strings_model .atfp-notice a{
   color: var(--wp-admin-theme-color, #2271b1);
   text-decoration: none;
