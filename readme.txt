@@ -43,13 +43,10 @@ Whether you're using **Elementor** or **Gutenberg**, this addon makes the transl
 * ✅ **Chrome Built-in AI Translation Support:** Available
 * ✅ **API Key Required:** Not Required (Yandex Widget & Chrome Built-in AI)
 * ✅ **Gutenberg Block Compatibility**
-* ✅ **Classic Editor Page Translation**
-* ✅ **Divi 5 Page Translation**
-* ✅ **Re Translation:** Available
-* ✅ **Bulk Translation:** Available
-* ✅ **Taxonomy Translation:** Available
 * ✅ **Inline Translation**
+* ❌ **Taxonomy Translation:** Not Available
 * ❌ **Classic Editor Translation:** Not Available
+* ❌ **Divi 5 Page Translation:** Not Available
 * ❌ **Google Translate Widget Support:** Not Available
 * ❌ **OpenAI Translation Support:** Not Available
 * ❌ **Gemini Translation Support:** Not Available
