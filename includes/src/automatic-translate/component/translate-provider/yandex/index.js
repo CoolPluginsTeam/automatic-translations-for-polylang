@@ -1,6 +1,6 @@
 import ModalStringScroll from "../../string-modal-scroll";
 
-const yandexWidget = ($, win, doc,  params, namespace, translateStatus, translateStatusHandler, modalRenderId) => {
+const yandexWidget = ($, win, doc, targetLang, params, namespace, translateStatus, translateStatusHandler, modalRenderId) => {
     'use strict';
 
     if(translateStatus && true === translateStatus){
@@ -94,7 +94,7 @@ const yandexWidget = ($, win, doc,  params, namespace, translateStatus, translat
             } catch (e) { }
 
             function getStoredTargetLang() {
-                var code = win.localStorage.getItem('lang');
+                var code = targetLang;
                 if (code) return code;
                 try {
                     var fromYt = win.JSON.parse(win.localStorage['yt-widget'] || '{}') || {};
@@ -150,7 +150,7 @@ const yandexWidget = ($, win, doc,  params, namespace, translateStatus, translat
 
 const YandexTranslater = (props) => {
     const globalObj = window;
-    yandexWidget(jQuery, globalObj, globalObj.document, { "pageLang": props.sourceLang, "autoMode": "false", "widgetId": "atfp_yandex_translate_notice_wrapper", "widgetTheme": "light" }, globalObj.yt = globalObj.yt || {}, props.translateStatus,  props.translateStatusHandler, props.modalRenderId);
+    yandexWidget(jQuery, globalObj, globalObj.document, props.targetLang, { "pageLang": props.sourceLang, "autoMode": "false", "widgetId": "atfp_yandex_translate_notice_wrapper", "widgetTheme": "light" }, globalObj.yt = globalObj.yt || {}, props.translateStatus,  props.translateStatusHandler, props.modalRenderId);
 }
 
 export default YandexTranslater;
