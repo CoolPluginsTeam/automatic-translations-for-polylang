@@ -43,13 +43,10 @@ const yandexWidget = ($, win, doc,  params, namespace, translateStatus, translat
             
             function getConfiguredMaxPortionLength() {
                 var rawValue = null;
-                try {
-                    if (win.atltYandexConfig && win.atltYandexConfig.maxPortionLength !== undefined) {
-                        rawValue = win.atltYandexConfig.maxPortionLength;
-                    } else if (wrapper && wrapper.getAttribute) {
-                        rawValue = wrapper.getAttribute('data-max-portion-length');
-                    }
-                } catch (e) { }
+
+                if (wrapper && wrapper.getAttribute) {
+                    rawValue = wrapper.getAttribute('data-max-portion-length');
+                }
 
                 var parsed = parseInt(rawValue, 10);
                 if (isNaN(parsed)) {
@@ -66,7 +63,7 @@ const yandexWidget = ($, win, doc,  params, namespace, translateStatus, translat
             });
 
             // Prevent multiple translation runs from stacking
-            var atltTranslating = false;
+            var atfpTranslating = false;
             var progressTickTimer = null;
             var translationUnlockTimer = null;
 
@@ -82,7 +79,7 @@ const yandexWidget = ($, win, doc,  params, namespace, translateStatus, translat
                     win.clearTimeout(translationUnlockTimer);
                 }
                 translationUnlockTimer = win.setTimeout(function () {
-                    atltTranslating = false;
+                    atfpTranslating = false;
                     clearProgressTick();
                 }, delayMs);
             }
@@ -90,7 +87,7 @@ const yandexWidget = ($, win, doc,  params, namespace, translateStatus, translat
             // Hook progress/errors (best-effort; depends on PageTranslator implementation)
             try {
                 translator.on('error', function () {
-                    atltTranslating = false;
+                    atfpTranslating = false;
                     clearProgressTick();
                     wrapper.insertAdjacentHTML('afterbegin', '<div class="notice inline notice-warning">Yandex translation failed. Please retry or check network blocking.</div>');
                 });
@@ -106,17 +103,17 @@ const yandexWidget = ($, win, doc,  params, namespace, translateStatus, translat
                 return '';
             }
 
-            function startAtltTranslation() {
+            function startAtfpTranslation() {
                 var targetLang = getStoredTargetLang();
                 if (!targetLang) return;
-                if (atltTranslating) return;
+                if (atfpTranslating) return;
 
                 // Only start when strings are rendered + modal is visible
                 var $container = $('#atfp-yandex-strings-modal');
                 if (!$container.length || $container.css('display') === 'none') return;
                 if (!$container.find('.atfp_string_container tbody tr').length) return;
 
-                atltTranslating = true;
+                atfpTranslating = true;
 
                 // Persist for subsequent opens
                 try {
@@ -140,10 +137,7 @@ const yandexWidget = ($, win, doc,  params, namespace, translateStatus, translat
             }
 
             // Auto-start translation when popup opens + strings are loaded (no button needed)
-            startAtltTranslation();
-
-            // Expose for direct calling if needed
-            win.atltStartYandexTranslation = startAtltTranslation;
+            startAtfpTranslation();
         });
     };
 
