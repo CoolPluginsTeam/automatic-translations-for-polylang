@@ -683,6 +683,16 @@
   cursor: not-allowed;
 }
 
+#atfp-setting-modal .atfp-setting-modal-body .atfp-provider-card-disabled#atfp-provider-card-localAiTranslator {
+  opacity: 1;
+  cursor: pointer;
+  border-color: rgb(255 71 71);
+}
+
+#atfp-setting-modal .atfp-setting-modal-body .atfp-provider-card-disabled#atfp-provider-card-localAiTranslator:hover {
+  box-shadow: 0 2px 8px rgb(255 71 71 / 22%);
+}
+
 #atfp-setting-modal
   .atfp-setting-modal-body
   .atfp-provider-card-disabled
