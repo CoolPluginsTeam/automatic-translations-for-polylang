@@ -38,14 +38,19 @@ const StringPopUpBody = (props) => {
             {translateContent.length > 0 && props.postDataFetchStatus ?
                 <>
                     {StringModalBodyNotice && <div className="atfp-body-notice-wrapper"><StringModalBodyNotice /></div>}
+                    {props.service === 'yandex' && <div id="atfp_yandex_translate_notice_wrapper"></div>}
                     <div className="atfp_translate_progress" key={props.modalRender}>{__("Automatic translation is in progress....", 'automatic-translations-for-polylang')}<br />{__("It will take few minutes, enjoy ☕ coffee in this time!", 'automatic-translations-for-polylang')}<br /><br />{__("Please do not leave this window or browser tab while translation is in progress...", 'automatic-translations-for-polylang')}</div>
-                    <div className={`translator-widget ${service}`} style={{ display: 'flex' }}>
-                        <h3 className="choose-lang">{TranslateService({ Service: props.service }).heading} <span className="dashicons-before dashicons-translation"></span></h3>
+                    {
+                        props.service !== 'yandex' && (
+                            <div className={`translator-widget ${service}`} style={{ display: 'flex' }}>
+                                <h3 className="choose-lang">{TranslateService({ Service: props.service }).heading} <span className="dashicons-before dashicons-translation"></span></h3>
 
-                        <div className={`atfp_translate_element_wrapper ${props.translateStatus ? 'translate-completed' : ''}`}>
-                            <div id={`atfp_${props.service}_translate_element`}></div>
-                        </div>
-                    </div>
+                                <div className={`atfp_translate_element_wrapper ${props.translateStatus ? 'translate-completed' : ''}`}>
+                                    <div id={`atfp_${props.service}_translate_element`}></div>
+                                </div>
+                            </div>
+                        )
+                    }
 
                     <div className="atfp_string_container">
                         <table className="scrolldown" id="stringTemplate">

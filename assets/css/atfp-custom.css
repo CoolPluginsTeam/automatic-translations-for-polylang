@@ -693,6 +693,10 @@
   box-shadow: 0 2px 8px rgb(255 71 71 / 22%);
 }
 
+#atfp_yandex_translate_notice_wrapper{
+  display: none;
+}
+
 #atfp-setting-modal
   .atfp-setting-modal-body
   .atfp-provider-card-disabled
@@ -1392,7 +1396,9 @@ body
 }
 
 #atfp_strings_model #atfp-yandex-strings-modal .atfp_string_container {
+  margin-top: 15px;
   max-height: calc(100vh - 300px - var(--atfp-notice-wrapper-height, 0px));
+  margin-bottom: 15px;
 }
 
 #atfp_strings_model .react-loading-skeleton-atfp {
