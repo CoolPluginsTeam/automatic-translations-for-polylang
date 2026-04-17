@@ -32,13 +32,13 @@ Polylang Addon Dashboard - Admin Panel Styles
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    padding: 8px 16px;
+    padding: 7px 16px;
     border-radius: 6px;
-    font-weight: 600;
+    font-weight: 500;
     font-size: 13px;
     text-decoration: none;
     transition: all 0.3s ease-in-out;
-    border: 1px solid #c6ced0;
+    border: 1px solid var(--border-color);
     background: var(--background-color);
     color: var(--text-color);
     box-shadow: inset 1px 1px 2px #00000010;
@@ -53,7 +53,7 @@ Polylang Addon Dashboard - Admin Panel Styles
 .atfp-dashboard-btn:hover{
     background: var(--primary-light-color);
     color: var(--primary-color);
-    border-color: var(--secondary-color);
+    border-color: var(--border-color);
 }
 
 /* General Wrapper */
@@ -72,6 +72,8 @@ Polylang Addon Dashboard - Admin Panel Styles
 .atfp-dashboard-wrapper h3 {
     margin: 0 0 20px;
     padding: 0;
+    font-size: 19px;
+    line-height: 1.5em;
 }
 
 :is(.toplevel_page_loco-addon,.languages_page_polylang-atfp-dashboard) #wpbody #wpbody-content {
@@ -87,20 +89,6 @@ Polylang Addon Dashboard - Admin Panel Styles
     gap: 10px;
 }
 
-.atfp-dashboard-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    padding: 8px 16px;
-    border-radius: 6px;
-    font-weight: 500;
-    text-decoration: none;
-    transition: all 0.3s ease-in-out;
-    border: 1px solid var(--border-color);
-    background: var(--background-color);
-    color: var(--text-color);
-}
-
 .atfp-dashboard-btn:focus {
    box-shadow: none;
 }
@@ -109,12 +97,6 @@ Polylang Addon Dashboard - Admin Panel Styles
     background: var(--primary-color);
     color: #fff;
     border-color: var(--secondary-color);
-}
-
-.atfp-dashboard-btn:hover {
-    background: var(--primary-light-color);
-    color: var(--primary-color);
-    border-color: var(--border-color);
 }
 
 .atfp-dashboard-btn:focus{
@@ -228,17 +210,6 @@ Polylang Addon Dashboard - Admin Panel Styles
 /* ================================================
    Welcome Section
 ================================================ */
-.atfp-dashboard-welcome {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    background: #fff;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow);
-	gap: 5px;
-}
-
 .atfp-dashboard-get-started{
     padding: 20px;
     background: #fff;
@@ -266,6 +237,7 @@ Polylang Addon Dashboard - Admin Panel Styles
     font-weight: bold;
     margin: 10px 0;
     line-height: 25px;
+    margin-top: 0;
 }
 
 .atfp-dashboard-get-started-grid-content p{
@@ -301,47 +273,6 @@ Polylang Addon Dashboard - Admin Panel Styles
 .atfp-dashboard-translation-providers{
     margin-top: 24px;
 }
-
-.atfp-dashboard-welcome-text {
-    width: calc(100% - 45px);
-    flex-direction: column;
-}
-
-.atfp-dashboard-welcome-text h2 {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin: 10px 0;
-	line-height: 25px;
-}
-
-.atfp-dashboard-welcome p {
-    font-size: 0.875rem;
-    color: var(--text-color-light);
-    margin: 10px 0 20px;
-}
-
-.atfp-dashboard-welcome-video {
-    width: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-}
-
-.atfp-dashboard-welcome-video .play-icon {
-    width: 54px;
-    height: 54px;
-    position: absolute;
-    left: calc(50% - 27px);
-    top: calc(50% - 27px);
-    animation: play-icon 1s ease-in-out infinite;
-}
-
-.atfp-dashboard-welcome-video img.loco-video {
-    width: 100%;
-    height: auto;
-}
-
 a.atfp-dashboard-docs {
     display: flex;
     align-items: center;
@@ -481,10 +412,23 @@ a.atfp-dashboard-docs:focus{
 
 .atfp-dashboard-provider-card {
     background: #fff;
-    padding: 15px;
+    padding: 21px;
     border-radius: 8px;
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow);
+}
+
+.atfp-dashboard-provider-card li{
+    margin: 0;
+    padding-block: 13px;
+    border-bottom: 1px solid #e9e9e9b0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.atfp-dashboard-provider-card li:last-child{
+    border-bottom: none;
 }
 
 .atfp-dashboard-provider-header {
@@ -534,7 +478,6 @@ a.atfp-dashboard-docs:focus{
 .atfp-dashboard-sts-top {
     display: flex;
     flex-direction: column;
-    margin: 15px 0;
     padding-bottom: 15px;
     border-bottom: 1px solid #c3c4c7;
     gap: 12px;
@@ -555,8 +498,9 @@ ul.atfp-dashboard-sts-btm li {
     display: flex;
     justify-content: space-between;
     gap: 10px;
-    margin-bottom: 10px;
-    padding: 0;
+    margin: 0;
+    padding-block: 10px;
+    border-bottom: 1px solid #e9e9e9b0;
 }
 
 ul.atfp-dashboard-sts-btm li span:first-child {
@@ -564,6 +508,7 @@ ul.atfp-dashboard-sts-btm li span:first-child {
 }
 ul.atfp-dashboard-sts-btm li:last-child {
     margin-bottom: 0px;
+    border-bottom: none;
 }
 
 .atfp-dashboard-bulk-translation-pro-suggestion{
@@ -680,6 +625,10 @@ ul.atfp-dashboard-sts-btm li:last-child {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
+}
+
+:where(.atfp-dashboard-get-started,.atfp-dashboard-free-vs-pro ,.atfp-dashboard-license,.atfp-dashboard-settings) h1{
+    margin-top: 8px;
 }
 
 :where(.atfp-dashboard-get-started,.atfp-dashboard-free-vs-pro ,.atfp-dashboard-license,.atfp-dashboard-settings) .atfp-dashboard-status {
@@ -1127,10 +1076,17 @@ ul.atfp-dashboard-sts-btm li:last-child {
     margin-bottom: 12px;
 }
 
+.atfp-dashboard-settings-pro-features{
+    border: 1px solid var(--primary-color);
+    border-radius: 12px;
+    padding: 21px;
+}
+
 .atfp-dashboard-api-settings-container{
     opacity: 0.6;
     pointer-events: none;
     cursor: not-allowed;
+    margin-top: 25px;
 }
 
 .atfp-dashboard-api-settings{
@@ -1259,8 +1215,8 @@ ul.atfp-dashboard-sts-btm li:last-child {
 }
 
 .atfp-dashboard-info .logo {
-    width: 150px;
-    height: 16px;
+    width: 109px;
+    height: 7px;
     margin-bottom: 10px;
 }
 
@@ -1296,15 +1252,6 @@ ul.atfp-dashboard-sts-btm li:last-child {
         flex-direction: column;
         gap: 15px;
         top: 0;
-    }
-    .atfp-dashboard-welcome {
-        flex-direction: column;
-    }
-    .atfp-dashboard-welcome-text {
-        width: 100%;
-    }
-    .atfp-dashboard-welcome-video {
-        width: 100%;
     }
     .atfp-dashboard-wrapper {
         padding: 60px 12px 0px 0px;
@@ -1345,7 +1292,7 @@ ul.atfp-dashboard-sts-btm li:last-child {
 	max-width: 125px;
 }
 	.atfp-dashboard-btn {
-    padding: 8px 6px;
+    padding: 7px 6px;
 }
 	.atfp-dashboard-header-right {
     gap: 13px;
