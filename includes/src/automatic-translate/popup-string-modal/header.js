@@ -16,7 +16,7 @@ const StringPopUpHeader = (props) => {
          </span>
          <h2>{__("Start Automatic Translation Process", 'automatic-translations-for-polylang')}</h2>
         </div>
-           <button type="button" aria-label={__('Close', 'automatic-translations-for-polylang')} className='modal-close' onClick={closeModal}>&times;</button>
+           <button type="button" aria-label={__('close', 'automatic-translations-for-polylang')} className='modal-close' onClick={closeModal}>&times;</button>
        </div>
     );
 }

@@ -10,7 +10,7 @@ const SettingModalHeader = ({ setSettingVisibility }) => {
           <h2>{__("Select Translation Engine", 'automatic-translations-for-polylang')}</h2>
           <p className='modal-desc'>{__("Select an AI provider to automatically translate your content.", 'automatic-translations-for-polylang')}</p>
          </div>
-            <button type="button" aria-label={__('Close', 'automatic-translations-for-polylang')} className='modal-close' onClick={() => setSettingVisibility(false)}>&times;</button>
+            <button type="button" aria-label={__('close', 'automatic-translations-for-polylang')} className='modal-close' onClick={() => setSettingVisibility(false)}>&times;</button>
         </div>
     );
 }
