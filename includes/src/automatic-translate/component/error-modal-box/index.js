@@ -67,7 +67,7 @@ const ErrorModalBox = ({ message, onClose, Title= 'AutoPoly - AI Translation For
             <div className="atfp-error-modal-box">
             <div className="atfp-error-modal-box-header">
                     {Title && <h3>{Title}</h3>}
-                    <button type="button" aria-label={__('Close', 'automatic-translations-for-polylang')} className="atfp-error-modal-box-close" onClick={onClose}>&times;</button>
+                    <button type="button" aria-label={__('close', 'automatic-translations-for-polylang')} className="atfp-error-modal-box-close" onClick={onClose}>&times;</button>
                 </div>
                 <div className="atfp-error-modal-box-body">
                     <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(stringifiedMessage) }} />
