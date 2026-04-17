@@ -23,7 +23,7 @@ const BulkPromotionModal = ({ onClick, characterCount }) => {
                         <img src={magincWandUrl} style={{width: '20px', height: '20px', marginRight: '5px', filter: 'brightness(0) invert(0)'}} alt={`${__("AI", "automatic-translations-for-polylang")}`}/>
                         <h3>{__("AI Translation", "automatic-translations-for-polylang")}</h3>
                         </div>
-                        <button type="button" aria-label={__('Close', 'automatic-translations-for-polylang')} className='modal-close' onClick={() => onClick(false)}>&times;</button>
+                        <button type="button" aria-label={__('close', 'automatic-translations-for-polylang')} className='modal-close' onClick={() => onClick(false)}>&times;</button>
                     </div>
 
                     <div className="atfp-modal-body">

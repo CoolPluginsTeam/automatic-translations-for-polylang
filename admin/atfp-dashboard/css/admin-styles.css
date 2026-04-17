@@ -1080,6 +1080,7 @@ ul.atfp-dashboard-sts-btm li:last-child {
     border: 1px solid var(--primary-color);
     border-radius: 12px;
     padding: 21px;
+    margin-bottom: 20px;
 }
 
 .atfp-dashboard-api-settings-container{
@@ -1139,10 +1140,6 @@ ul.atfp-dashboard-sts-btm li:last-child {
     margin: 0;
     font-family: inherit;
     resize: vertical;
-}
-
-.atfp-dashboard-ai-request-container{
-    margin-bottom: 20px;
 }
 
 .atfp-dashboard-feedback-container {
