@@ -80,10 +80,28 @@ if(!defined('ABSPATH')){
             <div class="atfp-dashboard-addon-l">
                 <strong><?php echo esc_html(atfp_get_plugin_display_name('automatic-translator-addon-for-loco-translate')); ?></strong>
                 <span class="addon-desc"><?php esc_html_e('Loco addon to translate plugins and themes.', 'automatic-translations-for-polylang'); ?></span>
-                <?php if (atfp_is_plugin_installed('automatic-translator-addon-for-loco-translate')): ?>
-                    <span class="installed"><?php esc_html_e('Installed', 'automatic-translations-for-polylang'); ?></span>
+                <?php 
+                $atfp_loco_plugin_file='automatic-translator-addon-for-loco-translate/automatic-translator-addon-for-loco-translate.php';
+                $atfp_loco_pro_plugin_file='loco-automatic-translate-addon-pro/loco-automatic-translate-addon-pro.php';
+                $atfp_loco_installed=atfp_is_plugin_installed('automatic-translator-addon-for-loco-translate');
+                $atfp_loco_active=false;
+
+                if ( function_exists( 'is_plugin_active' ) ) {
+                    $atfp_loco_active = is_plugin_active( $atfp_loco_plugin_file ) || is_plugin_active( $atfp_loco_pro_plugin_file );
+                }
+
+                if ($atfp_loco_installed && $atfp_loco_active): ?>
+                    <span class="installed"><?php esc_html_e('Activated', 'automatic-translations-for-polylang'); ?></span>
                 <?php else: ?>
-                    <a href="<?php echo esc_url(admin_url('plugin-install.php?s=Automatic+translate+addon+for+loco+translate+by+coolplugins&tab=search&type=term')); ?>" class="atfp-dashboard-btn" target="_blank"><?php esc_html_e('Install', 'automatic-translations-for-polylang'); ?></a>
+                    <button
+                        type="button"
+                        class="atfp-dashboard-btn atfp-install-plugin"
+                        data-slug="automatic-translator-addon-for-loco-translate"
+                        data-nonce="<?php echo esc_attr( wp_create_nonce( 'atfp_install_nonce' ) ); ?>"
+                    >
+                        <?php echo esc_html( $atfp_loco_installed ? __( 'Activate', 'automatic-translations-for-polylang' ) : __( 'Install', 'automatic-translations-for-polylang' ) ); ?>
+                    </button>
+                    <div class="atfp-install-message" aria-live="polite" style="margin-top:8px;"></div>
                 <?php endif; ?>
             </div>
             <div class="atfp-dashboard-addon-r">
@@ -122,16 +140,25 @@ function atfp_format_time_taken($time_taken) {
 }
 
 function atfp_is_plugin_installed($plugin_slug) {
-    $plugins = get_plugins();
-    
-    // Check if the plugin is installed
-    if ($plugin_slug === 'automatic-translator-addon-for-loco-translate') {
-        return isset($plugins['automatic-translator-addon-for-loco-translate/automatic-translator-addon-for-loco-translate.php']) || isset($plugins['loco-automatic-translate-addon-pro/loco-automatic-translate-addon-pro.php']);
+    if ( ! function_exists( 'get_plugins' ) ) {
+        require_once ABSPATH . 'wp-admin/includes/plugin.php';
     }
-    return false; // Return false if no match found
+
+    $plugins = get_plugins();
+
+    if ( 'automatic-translator-addon-for-loco-translate' === $plugin_slug ) {
+        return isset( $plugins['automatic-translator-addon-for-loco-translate/automatic-translator-addon-for-loco-translate.php'] )
+            || isset( $plugins['loco-automatic-translate-addon-pro/loco-automatic-translate-addon-pro.php'] );
+    }
+
+    return false;
 }
 
 function atfp_get_plugin_display_name($plugin_slug) {
+    if ( ! function_exists( 'is_plugin_active' ) ) {
+        require_once ABSPATH . 'wp-admin/includes/plugin.php';
+    }
+
     $plugins = get_plugins();
 
     // Define free and pro plugin paths
@@ -139,9 +166,9 @@ function atfp_get_plugin_display_name($plugin_slug) {
         'automatic-translator-addon-for-loco-translate' => [
             'free' => 'automatic-translator-addon-for-loco-translate/automatic-translator-addon-for-loco-translate.php',
             'pro'  => 'loco-automatic-translate-addon-pro/loco-automatic-translate-addon-pro.php',
-            'free_name' => esc_html__('LocoAI – Auto Translate For Loco Translate', 'automatic-translations-for-polylang'),
+            'free_name' => esc_html__('LocoAI – Auto Translate for Loco Translate', 'automatic-translations-for-polylang'),
             'pro_name'  => esc_html__('LocoAI – Auto Translate for Loco Translate (Pro)', 'automatic-translations-for-polylang'),
-        ],
+        ]
     ];
 
     // Check if the provided plugin slug exists
@@ -149,17 +176,26 @@ function atfp_get_plugin_display_name($plugin_slug) {
         return $plugin_slug['free_name'];
     }
 
-    $free_installed = isset($plugins[$plugin_paths[$plugin_slug]['free']]);
-    $pro_installed = isset($plugins[$plugin_paths[$plugin_slug]['pro']]);
+    $path_info = $plugin_paths[$plugin_slug];
 
-    // Determine which version is installed
-    if ($pro_installed) {
-        return $plugin_paths[$plugin_slug]['pro_name'];
-    } elseif ($free_installed) {
-        return $plugin_paths[$plugin_slug]['free_name'];
-    } else {
-        return $plugin_paths[$plugin_slug]['free_name'];
+    // 1. Check if Pro is active
+    if (isset($path_info['pro']) && is_plugin_active($path_info['pro'])) {
+        return $path_info['pro_name'];
     }
+
+    // 2. Check if Free is active
+    if (isset($path_info['free']) && is_plugin_active($path_info['free'])) {
+        return $path_info['free_name'];
+    }
+
+    // 3. Fallback to installed check if neither is active
+    $pro_installed = isset($path_info['pro']) && isset($plugins[$path_info['pro']]);
+    
+    if ($pro_installed) {
+        return $path_info['pro_name'];
+    }
+
+    return $path_info['free_name'] ?? $plugin_slug;
 }
 
 function atfp_format_number($number) {
