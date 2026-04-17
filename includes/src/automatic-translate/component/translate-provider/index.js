@@ -49,7 +49,7 @@ export default (props) => {
             heading: __("Choose Language", 'automatic-translations-for-polylang'),
             BetaEnabled: false,
             ButtonDisabled: true,
-            ErrorMessage: <a className="atfp-provider-error" href={`${window.atfp_global_object.pro_version_url}?${refrenceText}&utm_medium=inside&utm_campaign=get_pro&utm_content=popup_google`} target="_blank">{__('Buy Pro', 'automatic-translations-for-polylang')}</a>,
+            ErrorMessage: <a className="atfp-provider-btn-pro" href={`${window.atfp_global_object.pro_version_url}?${refrenceText}&utm_medium=inside&utm_campaign=get_pro&utm_content=popup_google`} target="_blank">{__('Buy Pro', 'automatic-translations-for-polylang')}</a>,
             Logo: 'google.png'
         },
         openai_ai: {
@@ -60,7 +60,7 @@ export default (props) => {
             Docs: "https://docs.coolplugins.net/doc/translate-via-open-ai-polylang/?"+refrenceText+"&utm_medium=inside&utm_campaign=docs&utm_content=popup_openai",
             BetaEnabled: false,
             ButtonDisabled: true,
-            ErrorMessage: <a className='atfp-provider-error' href={`${window.atfp_global_object.pro_version_url}?${refrenceText}&utm_medium=inside&utm_campaign=get_pro&utm_content=popup_openai`} target="_blank">{__('Buy Pro', 'automatic-translations-for-polylang')}</a>,
+            ErrorMessage: <a className='atfp-provider-btn-pro' href={`${window.atfp_global_object.pro_version_url}?${refrenceText}&utm_medium=inside&utm_campaign=get_pro&utm_content=popup_openai`} target="_blank">{__('Buy Pro', 'automatic-translations-for-polylang')}</a>,
             Logo: 'openai.png',
         },
         google_ai: {
@@ -71,7 +71,7 @@ export default (props) => {
             Docs: "https://docs.coolplugins.net/doc/translate-via-gemini-ai-polylang/?"+refrenceText+"&utm_medium=inside&utm_campaign=docs&utm_content=popup_gemini",
             BetaEnabled: false,
             ButtonDisabled: true,
-            ErrorMessage: <a className='atfp-provider-error' href={`${window.atfp_global_object.pro_version_url}?${refrenceText}&utm_medium=inside&utm_campaign=get_pro&utm_content=popup_gemini`} target="_blank">{__('Buy Pro', 'automatic-translations-for-polylang')}</a>,
+            ErrorMessage: <a className='atfp-provider-btn-pro' href={`${window.atfp_global_object.pro_version_url}?${refrenceText}&utm_medium=inside&utm_campaign=get_pro&utm_content=popup_gemini`} target="_blank">{__('Buy Pro', 'automatic-translations-for-polylang')}</a>,
             Logo: 'gemini.png',
         },
         deepl_ai: {
@@ -82,7 +82,7 @@ export default (props) => {
             Docs: "https://docs.coolplugins.net/doc/translate-via-deepl-polylang/?"+refrenceText+"&utm_medium=inside&utm_campaign=docs&utm_content=popup_deepl",
             BetaEnabled: false,
             ButtonDisabled: true,
-            ErrorMessage: <a className='atfp-provider-error' href={`${window.atfp_global_object.pro_version_url}?${refrenceText}&utm_medium=inside&utm_campaign=get_pro&utm_content=popup_deepl`} target="_blank">{__('Buy Pro', 'automatic-translations-for-polylang')}</a>,
+            ErrorMessage: <a className='atfp-provider-btn-pro' href={`${window.atfp_global_object.pro_version_url}?${refrenceText}&utm_medium=inside&utm_campaign=get_pro&utm_content=popup_deepl`} target="_blank">{__('Buy Pro', 'automatic-translations-for-polylang')}</a>,
             Logo: 'deepl.png',
         }
     };

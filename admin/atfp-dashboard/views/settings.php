@@ -117,6 +117,11 @@ if(!current_user_can('manage_options')){
         <?php }
     ?>
 
+    <div class="atfp-dashboard-settings-pro-features">
+    <a href="<?php echo esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?'.sanitize_text_field($atfp_utm_parameters).'&utm_medium=inside&utm_campaign=get_pro&utm_content=settings'); ?>" class='atfp-dashboard-btn' target="_blank">
+        <img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/upgrade-now.svg'); ?>" alt="<?php esc_attr_e('Upgrade Now', 'automatic-translations-for-polylang'); ?>">
+        <?php echo esc_html__('Unlock Pro Features', 'automatic-translations-for-polylang'); ?>
+    </a>
     <form method="post">
         <div class="atfp-dashboard-api-settings-container">
             <?php wp_nonce_field('atfp_save_optin_settings', 'atfp_optin_nonce'); ?>
@@ -313,6 +318,7 @@ if(!current_user_can('manage_options')){
                 <button <?php echo get_option('cpfm_opt_in_choice_cool_translations') ? '' : 'disabled'; ?> class="atfp-dashboard-btn primary"><?php echo esc_html__('Save Changes', 'automatic-translations-for-polylang'); ?></button>
             </div>
             </form>
+        </div>
     </div>
     <?php require_once ATFP_DIR_PATH . $file_prefix . 'footer.php'; ?>
 </div>

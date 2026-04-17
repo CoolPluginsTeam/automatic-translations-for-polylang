@@ -11,6 +11,10 @@ const Providers = (props) => {
   const isSelected = activeProvider === service;
   const isDisabled = ActiveService.ButtonDisabled || buttonDisable;
   const handleCardClick = () => {
+    if(isDisabled && 'localAiTranslator' === service) {
+      props.openErrorModalHandler("localAiTranslator");
+      return;
+    }
     if (!isDisabled && props.onSelectProvider) {
       props.onSelectProvider(service);
     }
@@ -18,13 +22,14 @@ const Providers = (props) => {
 
   return (
     <div
-            className={`atfp-provider-card ${isDisabled ? `atfp-provider-card-disabled` : ""} ${isSelected ? `atfp-provider-card-selected` : ""}`}
+            className={`atfp-provider-card ${isDisabled? `atfp-provider-card-disabled` : ""} ${isSelected ? `atfp-provider-card-selected` : ""}`}
             data-service={service}
             onClick={handleCardClick}
             onKeyDown={(e) => { if ((e.key === "Enter" || e.key === " ") && !isDisabled) { e.preventDefault(); handleCardClick(); } }}
             role="button"
-            tabIndex={isDisabled ? -1 : 0}
+            tabIndex={isDisabled && 'localAiTranslator' !== service ? -1 : 0}
             aria-pressed={isSelected}
+            id={`atfp-provider-card-${service}`}
         >
             <div className='atfp-provider-card-body'>
             <span className='atfp-provider-card-icon' aria-hidden="true">

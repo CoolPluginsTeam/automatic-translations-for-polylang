@@ -60,6 +60,8 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				add_action('wp_ajax_atfp_update_translate_data', array($this, 'atfp_update_translate_data'));
 				add_action( 'wp_ajax_atfp_update_elementor_data', array( $this, 'update_elementor_data' ) );
 				add_action( 'wp_ajax_atfp_update_enabled_providers', array( $this, 'update_enabled_providers' ) );
+				add_action( 'wp_ajax_atfp_install_plugin', array( $this, 'atfp_install_plugin' ) );
+
 			}
 		}
 
@@ -439,6 +441,180 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 			update_option('atfp_enabled_providers', $updated_providers);
 			wp_send_json_success( array( 'providers' => $updated_providers, 'message' => __( 'Enabled providers updated successfully.', 'automatic-translations-for-polylang' ) ) );
 			exit;
+        }
+
+		public function atfp_install_plugin()
+        {
+
+            if (! current_user_can('install_plugins')) {
+                wp_send_json_error([
+                    // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch
+                    'errorMessage' => __('Sorry, you are not allowed to install plugins on this site.', 'automatic-translations-for-polylang'),
+                ]);
+            }
+
+            check_ajax_referer('atfp_install_nonce', '_wpnonce', true);
+
+            if (empty($_POST['slug'])) {
+                wp_send_json_error([
+                    'slug'         => '',
+                    'errorCode'    => 'no_plugin_specified',
+                    // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch
+                    'errorMessage' => __('No plugin specified.', 'automatic-translations-for-polylang'),
+                ]);
+            }
+
+            $slug = sanitize_key(wp_unslash($_POST['slug']));
+
+            // Configuration for allowed plugins
+            // 'files': array of main plugin files to check/activate (prioritized)
+            // 'dependency': optional plugin that must be active
+            // 'dependency_msg': error message if dependency is missing
+            $plugins_config = [
+                'automatic-translator-addon-for-loco-translate' => [
+                    'files' => [
+                        'loco-automatic-translate-addon-pro/loco-automatic-translate-addon-pro.php',
+                        'automatic-translator-addon-for-loco-translate/automatic-translator-addon-for-loco-translate.php'
+                    ],
+                    'dependency'     => 'loco-translate/loco.php',
+                    'dependency_msg' => esc_html__( 'Please activate Loco Translate plugin first.', 'automatic-translations-for-polylang' ),
+                ]
+            ];
+
+            if (!isset($plugins_config[$slug])) {
+                wp_send_json_error([
+                    'errorMessage' => esc_html__('Invalid plugin slug.', 'automatic-translations-for-polylang'),
+                ]);
+            }
+
+            $config = $plugins_config[$slug];
+
+            if (! current_user_can('activate_plugins')) {
+                wp_send_json_error([ 'message' => esc_html__( 'Permission denied.', 'automatic-translations-for-polylang' ) ]);
+            }
+
+            // Get the action (install or activate)
+            $plugin_action = isset($_POST['plugin_action']) ? sanitize_text_field(wp_unslash($_POST['plugin_action'])) : 'install';
+            if (! in_array($plugin_action, ['install', 'activate'], true)) {
+                $plugin_action = 'install';
+            }
+
+            // 1. Check if any version is already installed
+            foreach ($config['files'] as $file) {
+                if (file_exists(WP_PLUGIN_DIR . '/' . $file)) {
+                    // Check dependency requirements before activation (always enforce).
+                    if (! empty($config['dependency']) && ! is_plugin_active($config['dependency'])) {
+                        if ($plugin_action === 'activate') {
+                            wp_send_json_error([ 'message' => $config['dependency_msg'] ]);
+                        }
+
+                        wp_send_json_success([ 'message' => $config['dependency_msg'], 'activated' => false ]);
+                        return;
+                    }
+
+                    // Activate
+                    $network_wide = is_multisite();
+                    $result = activate_plugin($file, '', $network_wide, true);
+                    if (is_wp_error($result)) {
+                        wp_send_json_error(['message' => $result->get_error_message()]);
+                    }
+                    wp_send_json_success([ 'message' => esc_html__( 'Plugin activated successfully.', 'automatic-translations-for-polylang' ), 'activated' => true ]);
+                    return;
+                }
+            }
+
+            // 2. Not installed, proceed to install from repository
+            $this->install_plugin_from_repo($slug, $config);
+        }
+
+        /**
+         * Helper to install plugin from WP Repository
+         *
+         * @param string $slug Plugin slug
+         * @param array $config Plugin configuration
+         */
+        private function install_plugin_from_repo($slug, $config)
+        {
+            require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
+            require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
+            require_once ABSPATH . 'wp-admin/includes/plugin.php';
+
+            $api = plugins_api('plugin_information', [
+                'slug'   => $slug,
+                'fields' => ['sections' => false],
+            ]);
+
+            if (is_wp_error($api)) {
+                wp_send_json_error(['message' => $api->get_error_message()]);
+            }
+
+            $skin     = new WP_Ajax_Upgrader_Skin();
+            $upgrader = new Plugin_Upgrader($skin);
+            $result   = $upgrader->install($api->download_link);
+
+            // Handle specific installation errors
+            if (is_wp_error($result)) {
+                wp_send_json_error(['message' => $result->get_error_message()]);
+            } elseif (is_wp_error($skin->result)) {
+                // Special handling for "Destination folder already exists"
+                if ($skin->result->get_error_message() === 'Destination folder already exists.') {
+                    $install_status = install_plugin_install_status($api);
+                    if (current_user_can('activate_plugin', $install_status['file'])) {
+                        // Check dependency
+                        if (!empty($config['dependency']) && !is_plugin_active($config['dependency'])) {
+                            wp_send_json_success(['message' => $config['dependency_msg'], 'activated' => false]);
+                            return;
+                        }
+
+                        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce already verified in atfp_install_plugin()
+                        $pagenow = isset($_POST['pagenow']) ? sanitize_key(wp_unslash($_POST['pagenow'])) : '';
+                        $network_wide = (is_multisite() && 'import' !== $pagenow);
+                        $activation_result = activate_plugin($install_status['file'], '', $network_wide, true);
+
+                        if (is_wp_error($activation_result)) {
+                            wp_send_json_error(['message' => $activation_result->get_error_message()]);
+                        } else {
+                            wp_send_json_success([ 'activated' => true, 'message' => esc_html__( 'Plugin activated successfully.', 'automatic-translations-for-polylang' ) ]);
+                        }
+                    } else {
+                        wp_send_json_error(['message' => $skin->result->get_error_message()]);
+                    }
+                } else {
+                    wp_send_json_error(['message' => $skin->result->get_error_message()]);
+                }
+            } elseif ($skin->get_errors()->has_errors()) {
+                wp_send_json_error(['message' => $skin->get_error_messages()]);
+            } elseif (is_null($result)) {
+                global $wp_filesystem;
+                // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch
+                $error_msg = __('Unable to connect to the filesystem. Please confirm your credentials.', 'automatic-translations-for-polylang');
+                if ($wp_filesystem instanceof WP_Filesystem_Base && is_wp_error($wp_filesystem->errors) && $wp_filesystem->errors->has_errors()) {
+                    $error_msg = esc_html($wp_filesystem->errors->get_error_message());
+                }
+                wp_send_json_error(['message' => $error_msg]);
+            }
+
+            // Auto-activate after successful install
+            $install_status = install_plugin_install_status($api);
+            if (current_user_can('activate_plugin', $install_status['file'])) {
+                // Dependency check before auto-activate
+                if (!empty($config['dependency']) && !is_plugin_active($config['dependency'])) {
+                    // Installed but can't activate due to dependency
+                    wp_send_json_success(['message' => $config['dependency_msg'], 'activated' => false]);
+                    return;
+                }
+
+                // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce already verified in atfp_install_plugin()
+                $pagenow = isset($_POST['pagenow']) ? sanitize_key(wp_unslash($_POST['pagenow'])) : '';
+                $network_wide = (is_multisite() && 'import' !== $pagenow);
+                $activation_result = activate_plugin($install_status['file'], '', $network_wide, true);
+                if (is_wp_error($activation_result)) {
+                    wp_send_json_error(['message' => $activation_result->get_error_message()]);
+                }
+                wp_send_json_success([ 'message' => esc_html__( 'Plugin installed and activated successfully.', 'automatic-translations-for-polylang' ), 'activated' => true ]);
+            } else {
+                wp_send_json_success([ 'message' => esc_html__( 'Plugin installed successfully.', 'automatic-translations-for-polylang' ), 'activated' => false ]);
+            }
         }
 	}
 }
