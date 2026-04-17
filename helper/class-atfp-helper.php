@@ -373,6 +373,13 @@ if (! class_exists('ATFP_Helper')) {
 
 		public static function bulk_translation_render($current_screen){
 			global $polylang;
+
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce verification is not required here
+			$post_status=isset($_GET['post_status']) ? sanitize_text_field(wp_unslash($_GET['post_status'])) : '';
+
+			if('trash' === $post_status){
+				return;
+			}
         
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- No need to verify nonce here.
 			if(!$polylang || !property_exists($polylang, 'model') || (isset($current_screen->action) && $current_screen->action === 'add') || (isset($_GET['post']) && isset($_GET['action']) && $_GET['action'] === 'edit')){
