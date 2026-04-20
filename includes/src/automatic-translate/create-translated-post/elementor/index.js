@@ -10,7 +10,32 @@ const atfpUpdateWidgetContent = (translations) => {
         const model = atfpFindModelById(elementor.elements.models, translation.ID);
         
         if (model) {
+            const isAtomic=translation?.isAtomic;
             const settings = model.get('settings');
+
+            if(isAtomic){
+                const settingKey=translation.key.split('_atfp_');
+                let totalKeys=settingKey.length - 1;
+
+                if(settingKey && settingKey.length > 0){
+                    const atomicAttributes=settings.get(settingKey[0]);
+                    if(atomicAttributes){
+                        let currentObject=atomicAttributes;
+                        const lastKey=settingKey[totalKeys];
+                        for(let i=1; i<totalKeys; i++){
+                            currentObject=currentObject[settingKey[i]];
+                        }
+
+                        if(currentObject && lastKey && currentObject[lastKey]){
+                            currentObject[lastKey]=translation.translatedContent;
+
+                            settings.set(settingKey[0], atomicAttributes);
+                            model?.renderRemoteServer();
+                        }
+                    }
+                }
+
+            }
 
             // Check for normal fields (title, text, editor, etc.)
             if (settings.get(translation.key)) {
@@ -122,8 +147,9 @@ const updateElementorPage = ({ postContent, modalClose, service }) => {
                 const translatedData = select('block-atfp/translate').getTranslatedString('content', element.value.content.value, ids.join('_atfp_') + '_atfp_value_atfp_content_atfp_value', service);
                 translations.push({
                     ID: widgetId,
-                    key: currentKey,
-                    translatedContent: translatedData
+                    key: `${currentKey}_atfp_value_atfp_content_atfp_value`,
+                    translatedContent: translatedData,
+                    isAtomic: true
                 })
             }
         }else if(element?.$$type === 'string'){
@@ -131,8 +157,9 @@ const updateElementorPage = ({ postContent, modalClose, service }) => {
                 const translatedData = select('block-atfp/translate').getTranslatedString('content', element.value, ids.join('_atfp_') + '_atfp_value', service);
                 translations.push({
                     ID: widgetId,
-                    key: currentKey,
-                    translatedContent: translatedData
+                    key: `${currentKey}_atfp_value`,
+                    translatedContent: translatedData,
+                    isAtomic: true
                 })
             }
         }
