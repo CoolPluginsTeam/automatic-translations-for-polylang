@@ -42,10 +42,6 @@
   padding: 20px;
 }
 
-.cpt-review-notice .cpt-review-notice-content{
-  max-width: calc(100% - 240px);
-}
-
 .cpt-dashboard .cpt-dashboard-tabs {
   display: -webkit-box;
   display: -ms-flexbox;
