@@ -4,6 +4,10 @@
   padding: 5px;
   display: flex;
   align-items: center;
+  border-radius: 5px;
+  max-width: 790px;
+  padding-left: 11px;
+  padding-bottom: 11px !important;
 }
 
 .cpt-review-notice .cpt-review-notice-icon{
