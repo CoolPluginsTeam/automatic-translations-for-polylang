@@ -62,15 +62,11 @@ const ElementorSaveSource = (content) => {
 
     const storeAtomicWidgetStrings = (element, ids=[]) => {
         const currentKey = ids[ids.length - 1];
-        const validAtomicKeys=['placholder', 'paragraph'];
+        const validAtomicKeys=['placeholder', 'paragraph'];
 
-        
         if(!subStringsToCheck(currentKey) && !validAtomicKeys.includes(currentKey)){
-            console.log('not found', element);
             return;
         }
-        
-        console.log('found', element);
 
         if(element?.$$type === 'html-v3' ){
             if(element.value && element.value.content && element.value.content?.$$type === 'string' && element.value.content.value && '' !== element.value.content.value){

@@ -111,7 +111,7 @@ const updateElementorPage = ({ postContent, modalClose, service }) => {
 
     const storeAtomicWidgetStrings = (element, ids=[], widgetId=null) => {
         const currentKey = ids[ids.length - 1];
-        const validAtomicKeys=['placholder', 'paragraph'];
+        const validAtomicKeys=['placeholder', 'paragraph'];
 
         if(!subStringsToCheck(currentKey) && !validAtomicKeys.includes(currentKey)){
             return;
