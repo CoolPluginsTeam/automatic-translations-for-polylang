@@ -124,16 +124,13 @@ const yandexWidget = ($, win, doc, targetLang, params, namespace, translateStatu
                     try { win.localStorage['yt-widget'] = win.JSON.stringify({ lang: targetLang }); } catch (e2) { }
                 }
 
-                // Start translating the page/popup content
-                win.setTimeout(function () {
-                    try {
-                        translator.translate(params.pageLang, targetLang);
-                        ModalStringScroll(translateStatusHandler,'yandex', modalRenderId);
-                    } finally {
-                        // Best-effort unlock fallback if provider callbacks are missed.
-                        scheduleUnlock(30000);
-                    }
-                }, 1000);
+                try {
+                    translator.translate(params.pageLang, targetLang);
+                    ModalStringScroll(translateStatusHandler,'yandex', modalRenderId);
+                } finally {
+                    // Best-effort unlock fallback if provider callbacks are missed.
+                    scheduleUnlock(30000);
+                }
             }
 
             // Auto-start translation when popup opens + strings are loaded (no button needed)
