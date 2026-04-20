@@ -223,7 +223,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 == Changelog ==
 
-= Version 1.4.10 | 17 April 2026 =
+= Version 1.4.10 | 20 April 2026 =
 * **Fixed:** Fixed yandex translation not working.
 * **Improved:** Improve Dashboard and Provider modal UI improvements.
 * **Tweaks:** Removed beta text from Chrome Local AI provider.
