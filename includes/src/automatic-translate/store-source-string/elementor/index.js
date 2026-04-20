@@ -4,6 +4,12 @@ const ElementorSaveSource = (content) => {
 
     const AllowedMetaFields = select('block-atfp/translate').getAllowedMetaFields();
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const urlRegex = /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/;
+    function isEmailOrUrl(value) {
+    return emailRegex.test(value) || urlRegex.test(value);
+    }
+
     const storeMetaFields = (metaFields) => {
         Object.keys(metaFields).forEach(metaKey => {
             if(Object.keys(AllowedMetaFields).includes(metaKey) && AllowedMetaFields[metaKey].inputType === 'string'){
@@ -26,6 +32,12 @@ const ElementorSaveSource = (content) => {
 
     const translateContent=(ids,value)=>{
         if(typeof value === 'string' && value.trim() !== '' && ids.length > 0){
+
+            // If only Url or email return return;
+            if(isEmailOrUrl(value)){
+                return;
+            }
+
             const uniqueKey = ids.join('_atfp_');
 
             if(value && '' !== value){  
@@ -48,6 +60,29 @@ const ElementorSaveSource = (content) => {
         'opacity', 'width', 'height', 'display', 'position', 'z_index', 'visibility', 'align', 'max_width', 'content_typography_typography', 'flex_justify_content', 'title_color', 'description_color', 'email_content'
     ];
 
+    const storeAtomicWidgetStrings = (element, ids=[]) => {
+        const currentKey = ids[ids.length - 1];
+        const validAtomicKeys=['placholder', 'paragraph'];
+
+        
+        if(!subStringsToCheck(currentKey) && !validAtomicKeys.includes(currentKey)){
+            console.log('not found', element);
+            return;
+        }
+        
+        console.log('found', element);
+
+        if(element?.$$type === 'html-v3' ){
+            if(element.value && element.value.content && element.value.content?.$$type === 'string' && element.value.content.value && '' !== element.value.content.value){
+                translateContent([...ids, 'value', 'content', 'value'], element.value.content.value);
+            }
+        }else if(element?.$$type === 'string'){
+            if(element.value && '' !== element.value){
+                translateContent([...ids, 'value'], element.value);
+            }
+        }
+    }
+
     const storeWidgetStrings = (element, index, ids=[]) => {
         const settings = element.settings;
         ids.push(index);
@@ -60,13 +95,13 @@ const ElementorSaveSource = (content) => {
                 if (cssProperties.some(substring => key.toLowerCase().includes(substring))) {
                     return; // Skip this property and continue to the next one
                 }
-
+  
                 if (subStringsToCheck(key) &&
-                    typeof settings[key] === 'string' && settings[key].trim() !== '') {
+                typeof settings[key] === 'string' && settings[key].trim() !== '') {
                     translateContent([...ids, 'settings', key],settings[key]);
-                }
-
-                if(Array.isArray(settings[key]) && settings[key].length > 0){
+                }else if(settings[key] && typeof settings[key] === 'object' && settings[key].hasOwnProperty('$$type') ){
+                    storeAtomicWidgetStrings(settings[key], [...ids, 'settings', key]);
+                }else if(Array.isArray(settings[key]) && settings[key].length > 0){
                     const settingsLoop=(item, index)=>{
                         if(typeof item === 'object' && item !== null){
                             const settingsItemsLoop= (repeaterKey)=>{
@@ -78,6 +113,8 @@ const ElementorSaveSource = (content) => {
                                 if(subStringsToCheck(repeaterKey) &&
                                     typeof item[repeaterKey] === 'string' && item[repeaterKey].trim() !== '') {
                                     translateContent([...ids, 'settings', key, index, repeaterKey],item[repeaterKey]);
+                                }else if(item[repeaterKey] && typeof item[repeaterKey] === 'object' && item[repeaterKey].hasOwnProperty('$$type') ){
+                                    storeAtomicWidgetStrings(item[repeaterKey], [...ids, 'settings', key, index, repeaterKey]);
                                 }
                             }
 

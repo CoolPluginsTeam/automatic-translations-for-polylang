@@ -8,9 +8,10 @@ const atfpUpdateWidgetContent = (translations) => {
     translations.forEach(translation => {
         // Find the model by ID using the atfpFindModelById function
         const model = atfpFindModelById(elementor.elements.models, translation.ID);
+        
         if (model) {
             const settings = model.get('settings');
-            
+
             // Check for normal fields (title, text, editor, etc.)
             if (settings.get(translation.key)) {
                 settings.set(translation.key, translation.translatedContent);  // Set the translated content
@@ -108,6 +109,35 @@ const updateElementorPage = ({ postContent, modalClose, service }) => {
         return dynamicSubStrings.some(substring => strings.toLowerCase().includes(substring)) || staticSubStrings.some(substring => strings === substring);
     }
 
+    const storeAtomicWidgetStrings = (element, ids=[], widgetId=null) => {
+        const currentKey = ids[ids.length - 1];
+        const validAtomicKeys=['placholder', 'paragraph'];
+
+        if(!subStringsToCheck(currentKey) && !validAtomicKeys.includes(currentKey)){
+            return;
+        }
+
+        if(element?.$$type === 'html-v3' ){
+            if(element.value && element.value.content && element.value.content?.$$type === 'string' && element.value.content.value && '' !== element.value.content.value){
+                const translatedData = select('block-atfp/translate').getTranslatedString('content', element.value.content.value, ids.join('_atfp_') + '_atfp_value_atfp_content_atfp_value', service);
+                translations.push({
+                    ID: widgetId,
+                    key: currentKey,
+                    translatedContent: translatedData
+                })
+            }
+        }else if(element?.$$type === 'string'){
+            if(element.value && '' !== element.value){
+                const translatedData = select('block-atfp/translate').getTranslatedString('content', element.value, ids.join('_atfp_') + '_atfp_value', service);
+                translations.push({
+                    ID: widgetId,
+                    key: currentKey,
+                    translatedContent: translatedData
+                })
+            }
+        }
+    }
+
     const storeSourceStrings = (element,index, ids=[]) => {
         const widgetId = element.id;
         const settings = element.settings;
@@ -136,10 +166,9 @@ const updateElementorPage = ({ postContent, modalClose, service }) => {
                         key: key,
                         translatedContent: translatedData
                     })
-                }
-
-                // Check for arrays (possible repeater fields) within settings
-                if (Array.isArray(settings[key])) {
+                }else if(settings[key] && typeof settings[key] === 'object' && settings[key].hasOwnProperty('$$type') ){
+                    storeAtomicWidgetStrings(settings[key], [...ids, 'settings', key], widgetId);
+                }else if (Array.isArray(settings[key])) {
                     settings[key].forEach((item, index) => {
                         if (typeof item === 'object' && item !== null) {
                             // Check for translatable content in repeater fields
