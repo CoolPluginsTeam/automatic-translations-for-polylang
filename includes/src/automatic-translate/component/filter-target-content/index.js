@@ -324,7 +324,7 @@ const FilterTargetContent = (props, storeUpdateContent) => {
             }
 
             // Improved: If URL contains "atfp_" or "[", add CloseSpanPlaceholder *before* this, else wrap URL in span as normal
-            const urlPattern = /(https?:\/\/|www\.)[^\s\[\]]+/gi;
+            const urlPattern = /(https?:\/\/|www\.)[^\s"'<>[\]]+/gi;
             string = string.replace(urlPattern, (match) => {        
                 let urlQuoteRemoved = false;
                 if ( match.endsWith( '"' ) ) {
