@@ -42,3 +42,4 @@ node_modules/           export-ignore
 *.zip                   export-ignore
 /src/                   export-ignore
 postcss.config.js       export-ignore
+.claude/                export-ignore
