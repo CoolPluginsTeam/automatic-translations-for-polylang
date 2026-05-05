@@ -1,5 +1,6 @@
 const FilterTargetContent = (props) => {
     const skipTags = props.skipTags || [];
+    const placeholderPrefix = '#atfp_';
     const OpenSpanPlaceholder = '#atfp_open_translate_span#';
     const CloseSpanPlaceholder = '#atfp_close_translate_span#';
     const OpenTempTagPlaceholder = '#atfp_temp_tag_open#';
@@ -32,7 +33,7 @@ const FilterTargetContent = (props) => {
     }
 
     const removeLineBreakPlaceholder = (content) => {
-        return content.replace(new RegExp(lineBreakNOpenPlaceholder+lineBreakNClosePlaceholder, 'g'), `${OpenSpanPlaceholder}\n${CloseSpanPlaceholder}`).replace(new RegExp(lineBreakROpenPlaceholder+lineBreakRClosePlaceholder, 'g'), `${OpenSpanPlaceholder}\r${CloseSpanPlaceholder}`);
+        return content.replace(new RegExp(lineBreakNOpenPlaceholder + lineBreakNClosePlaceholder, 'g'), `${OpenSpanPlaceholder}\n${CloseSpanPlaceholder}`).replace(new RegExp(lineBreakROpenPlaceholder + lineBreakRClosePlaceholder, 'g'), `${OpenSpanPlaceholder}\r${CloseSpanPlaceholder}`);
     }
 
     const fixHtmlTags = (content) => {
@@ -101,7 +102,7 @@ const FilterTargetContent = (props) => {
      */
     const wrapFirstAndMatchingClosingTag = (html) => {
         // Create a temporary element to parse the HTML string
-        const tempElement = document.createElement('div');
+        let tempElement = document.createElement('div');
         tempElement.innerHTML = html;
 
         // Get the first element
@@ -139,7 +140,7 @@ const FilterTargetContent = (props) => {
         // Get the opening tag of the first element
         // const firstElementOpeningTag = firstElement.outerHTML.match(/^<[^>]+>/)[0];
         let firstElementOpeningTag = firstElement.outerHTML.match(/^<[^>]+>/)[0];
-        
+
         const pattern = new RegExp(
             `${OpenSpanPlaceholder}|${CloseSpanPlaceholder}`,
             'g'
@@ -198,8 +199,10 @@ const FilterTargetContent = (props) => {
 
         firstElement.outerHTML = filterContent;
 
+        const output = tempElement.innerHTML;
+        tempElement = null;
         // Return the modified HTML
-        return tempElement.innerHTML;
+        return output;
     }
 
     /**
@@ -265,20 +268,20 @@ const FilterTargetContent = (props) => {
         str1 = str1.trim();
 
         // 1️⃣ Check if first string has any tr or td
-        if (!/<\/?(tr|td)\b[^>]*>/i.test(str1)) {
+        if (!/<\/?(tr|td|th)\b[^>]*>/i.test(str1)) {
             return str2; // no tr/td → skip
         }
 
         // 2️⃣ Skip if second string already contains tr or td
-        if (/<\/?(tr|td)\b[^>]*>/i.test(str2)) {
+        if (/<\/?(tr|td|th)\b[^>]*>/i.test(str2)) {
             return str2;
         }
 
         str2 = str2.trim();
 
         // 3️⃣ Extract tags (if present)
-        const startTagMatch = str1.match(/^<(tr|td)\b[^>]*>/i);     // opening tag at start
-        const endTagMatch = str1.match(/<\/(tr|td)>\s*$/i);        // closing tag at end
+        const startTagMatch = str1.match(/^<(tr|td|th)\b[^>]*>/i);     // opening tag at start
+        const endTagMatch = str1.match(/<\/(tr|td|th)>\s*$/i);        // closing tag at end
 
         // 4️⃣ Build new string using only what exists
         let newString = str2;
@@ -309,12 +312,39 @@ const FilterTargetContent = (props) => {
         // Replace line break with placeholder
         string = replaceLineBreakPlaceholder(string);
 
-        // Filter shortcode content
-        const shortcodePattern = /\[(.*?)\]/g;
-        const shortcodeMatches = typeof string === 'string' ? string.match(shortcodePattern) : false;
+        if (
+            typeof string === 'string'
+        ) {
+            // Filter shortcode content
+            const shortcodePattern = /\[(.*?)\]/g;
+            const shortcodeMatches = typeof string === 'string' ? string.match(shortcodePattern) : false;
 
-        if (shortcodeMatches) {
-            string = string.replace(shortcodePattern, (match) => `${OpenSpanPlaceholder}${removeInnerSpanPlaceholder(match)}${CloseSpanPlaceholder}`);
+            if (shortcodeMatches) {
+                string = string.replace(shortcodePattern, (match) => `${OpenSpanPlaceholder}${removeInnerSpanPlaceholder(match)}${CloseSpanPlaceholder}`);
+            }
+
+            // Improved: If URL contains "atfp_" or "[", add CloseSpanPlaceholder *before* this, else wrap URL in span as normal
+            const urlPattern = /(https?:\/\/|www\.)[^\s"'<>[\]]+/gi;
+            string = string.replace(urlPattern, (match) => {        
+                let urlQuoteRemoved = false;
+                if ( match.endsWith( '"' ) ) {
+                    urlQuoteRemoved = true;
+                    match = match.slice(0, -1);
+                }
+
+                if (match.includes("#atfp_")) {
+                    const filterUrl = match.split(placeholderPrefix);
+                    if (filterUrl.length > 1) {
+                        filterUrl[0] = OpenSpanPlaceholder + removeInnerSpanPlaceholder(filterUrl[0]) + CloseSpanPlaceholder;
+                    }
+
+                    const updatedUrl = filterUrl.join(placeholderPrefix);
+
+                    return `${updatedUrl}${urlQuoteRemoved ? '"' : ''}`;
+                }
+
+                return `${OpenSpanPlaceholder}${removeInnerSpanPlaceholder(match)}${CloseSpanPlaceholder}${urlQuoteRemoved ? '"' : ''}`;
+            });
         }
 
         function replaceInnerTextWithSpan(doc) {
@@ -382,27 +412,53 @@ const FilterTargetContent = (props) => {
         }
 
         let content = string;
-        
+
+        function escapeRegex(str) {
+            return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+
         if (isEmptyOrUnclosedTag(string)) {
-            content = string.replace(/<([a-z][a-z0-9]*)\b[^>]*>(\s*(?:<!--.*?-->\s*)*<\/\1>)?/gi, (match) => `${OpenSpanPlaceholder}${removeInnerSpanPlaceholder(match)}${CloseSpanPlaceholder}`);
+
+            const openPH = escapeRegex(OpenSpanPlaceholder);
+            const closePH = escapeRegex(CloseSpanPlaceholder);
+
+            const openingTagRegex = new RegExp(
+                `(?<!${openPH})<([a-z][a-z0-9]*)(\\b[^>]*)?>(?!${closePH})`,
+                'gi'
+            );
+
+            const closingTagRegex = new RegExp(
+                `(?<!${openPH})</([a-z][a-z0-9]*)>(?!${closePH})`,
+                'gi'
+            );
+
+            content = string
+                .replace(openingTagRegex, (match) => {
+                    return `${OpenSpanPlaceholder}${removeInnerSpanPlaceholder(match)}${CloseSpanPlaceholder}`;
+                })
+                .replace(closingTagRegex, (match) => {
+                    return `${OpenSpanPlaceholder}${removeInnerSpanPlaceholder(match)}${CloseSpanPlaceholder}`;
+                });
         } else {
-            const tempElement = document.createElement('div');
+            let tempElement = document.createElement('div');
             tempElement.innerHTML = fixHtmlTags(string);
             replaceInnerTextWithSpan(tempElement);
-            
+
             content = tempElement.innerText;
 
             content = content.replace(new RegExp(LessThanSymbol, 'g'), '<').replace(new RegExp(GreaterThanSymbol, 'g'), '>');
 
             content = syncTRTDFromFirstToSecond(string, content);
+
+            tempElement = null;
         }
-        
+
         // remoove all the ${OpenTempTagPlaceholder} and ${CloseTempTagPlaceholder}
         const tempTagPattern = new RegExp(
             `${OpenTempTagPlaceholder}([\\s\\S]*?)(${CloseTempTagPlaceholder})`,
             'g'
         );
-        
+
         content = content.replace(tempTagPattern, '');
 
         content = removeLineBreakPlaceholder(content);
@@ -411,12 +467,6 @@ const FilterTargetContent = (props) => {
 
         return splitContent(content);
     }
-
-    /**
-     * The content to be filtered based on the service type.
-     * If the service is 'yandex', 'localAiTranslator', the content is filtered using filterSourceData function, otherwise, the content remains unchanged.
-     */
-    const content = ['yandex', 'localAiTranslator'].includes(props.service) ? filterSourceData(props.content) : props.content;
 
     /**
      * Regular expression pattern to match the span elements that should not be translated.
@@ -439,18 +489,25 @@ const FilterTargetContent = (props) => {
         return updatedContent;
     }
 
+    /**
+     * The content to be filtered based on the service type.
+     * If the service is 'yandex', 'localAiTranslator' the content is filtered using filterSourceData function, otherwise, the content remains unchanged.
+     */
+    const content = ['yandex', 'localAiTranslator'].includes(props.service) ? filterSourceData(props.content) : props.content;
+
     return (
         <>
-            {['yandex', 'localAiTranslator', 'google'].includes(props.service) ?
-                content.map((data, index) => {
+            {
+                ['yandex', 'localAiTranslator'].includes(props.service) ? content.map((data, index) => {
                     const notTranslate = notTranslatePattern.test(data);
                     if (notTranslate) {
                         return <span key={index} className="notranslate atfp-notraslate-tag" translate="no">{filterContent(data)}</span>;
                     } else {
                         return data;
                     }
-                })
-                : content}
+                }) :
+                    content
+            }
         </>
     );
 }

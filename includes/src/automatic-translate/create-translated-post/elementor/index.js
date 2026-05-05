@@ -8,8 +8,35 @@ const atfpUpdateWidgetContent = (translations) => {
     translations.forEach(translation => {
         // Find the model by ID using the atfpFindModelById function
         const model = atfpFindModelById(elementor.elements.models, translation.ID);
+        
         if (model) {
+            const isAtomic=translation?.isAtomic;
             const settings = model.get('settings');
+
+            if(isAtomic){
+                const settingKey=translation.key.split('_atfp_');
+                let totalKeys=settingKey.length - 1;
+
+                if(settingKey && settingKey.length > 0){
+                    const atomicAttributes=settings.get(settingKey[0]);
+                    if(atomicAttributes){
+                        let currentObject=atomicAttributes;
+                        const lastKey=settingKey[totalKeys];
+                        for(let i=1; i<totalKeys; i++){
+                            currentObject=currentObject[settingKey[i]];
+                            if (!currentObject) break;
+                        }
+
+                        if(currentObject && lastKey && currentObject[lastKey]){
+                            currentObject[lastKey]=translation.translatedContent;
+
+                            settings.set(settingKey[0], atomicAttributes);
+                            model?.renderRemoteServer();
+                            return;
+                        }
+                    }
+                }
+            }
             
             // Check for normal fields (title, text, editor, etc.)
             if (settings.get(translation.key)) {
@@ -108,6 +135,37 @@ const updateElementorPage = ({ postContent, modalClose, service }) => {
         return dynamicSubStrings.some(substring => strings.toLowerCase().includes(substring)) || staticSubStrings.some(substring => strings === substring);
     }
 
+    const storeAtomicWidgetStrings = (element, ids=[], widgetId=null) => {
+        const currentKey = ids[ids.length - 1];
+        const validAtomicKeys=['placeholder', 'paragraph'];
+
+        if(!subStringsToCheck(currentKey) && !validAtomicKeys.includes(currentKey)){
+            return;
+        }
+
+        if(element?.$$type === 'html-v3' ){
+            if(element.value && element.value.content && element.value.content?.$$type === 'string' && element.value.content.value && '' !== element.value.content.value){
+                const translatedData = select('block-atfp/translate').getTranslatedString('content', element.value.content.value, ids.join('_atfp_') + '_atfp_value_atfp_content_atfp_value', service);
+                translations.push({
+                    ID: widgetId,
+                    key: `${currentKey}_atfp_value_atfp_content_atfp_value`,
+                    translatedContent: translatedData,
+                    isAtomic: true
+                })
+            }
+        }else if(element?.$$type === 'string'){
+            if(element.value && '' !== element.value){
+                const translatedData = select('block-atfp/translate').getTranslatedString('content', element.value, ids.join('_atfp_') + '_atfp_value', service);
+                translations.push({
+                    ID: widgetId,
+                    key: `${currentKey}_atfp_value`,
+                    translatedContent: translatedData,
+                    isAtomic: true
+                })
+            }
+        }
+    }
+
     const storeSourceStrings = (element,index, ids=[]) => {
         const widgetId = element.id;
         const settings = element.settings;
@@ -136,10 +194,9 @@ const updateElementorPage = ({ postContent, modalClose, service }) => {
                         key: key,
                         translatedContent: translatedData
                     })
-                }
-
-                // Check for arrays (possible repeater fields) within settings
-                if (Array.isArray(settings[key])) {
+                }else if(settings[key] && typeof settings[key] === 'object' && Object.hasOwn(settings[key], '$$type') ){
+                    storeAtomicWidgetStrings(settings[key], [...ids, 'settings', key], widgetId);
+                }else if (Array.isArray(settings[key])) {
                     settings[key].forEach((item, index) => {
                         if (typeof item === 'object' && item !== null) {
                             // Check for translatable content in repeater fields

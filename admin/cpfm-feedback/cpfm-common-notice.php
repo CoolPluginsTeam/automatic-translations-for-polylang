@@ -228,7 +228,7 @@ class CPFM_Feedback_Notice {
         if ($unread_count > 0) {
             $allowed = array(
                 'div' => array('id' => array(), 'class' => array(), 'data-auto-show' => array(), 'data-notice-id' => array()),
-                'span' => array('id' => array()),
+                'span' => array('id' => array(), 'class' => array()),
                 'strong' => array(),
                 'p' => array(),
                 'a' => array('href' => array(), 'class' => array(), 'target' => array()),
