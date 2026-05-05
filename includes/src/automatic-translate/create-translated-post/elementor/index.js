@@ -24,6 +24,7 @@ const atfpUpdateWidgetContent = (translations) => {
                         const lastKey=settingKey[totalKeys];
                         for(let i=1; i<totalKeys; i++){
                             currentObject=currentObject[settingKey[i]];
+                            if (!currentObject) break;
                         }
 
                         if(currentObject && lastKey && currentObject[lastKey]){
