@@ -7,7 +7,7 @@ const ElementorSaveSource = (content) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const urlRegex = /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/;
     function isEmailOrUrl(value) {
-    return emailRegex.test(value) || urlRegex.test(value);
+        return emailRegex.test(value) || urlRegex.test(value);
     }
 
     const storeMetaFields = (metaFields) => {
@@ -95,7 +95,7 @@ const ElementorSaveSource = (content) => {
                 if (subStringsToCheck(key) &&
                 typeof settings[key] === 'string' && settings[key].trim() !== '') {
                     translateContent([...ids, 'settings', key],settings[key]);
-                }else if(settings[key] && typeof settings[key] === 'object' && settings[key].hasOwnProperty('$$type') ){
+                }else if(settings[key] && typeof settings[key] === 'object' && Object.hasOwn(settings[key], '$$type') ){
                     storeAtomicWidgetStrings(settings[key], [...ids, 'settings', key]);
                 }else if(Array.isArray(settings[key]) && settings[key].length > 0){
                     const settingsLoop=(item, index)=>{
@@ -109,7 +109,7 @@ const ElementorSaveSource = (content) => {
                                 if(subStringsToCheck(repeaterKey) &&
                                     typeof item[repeaterKey] === 'string' && item[repeaterKey].trim() !== '') {
                                     translateContent([...ids, 'settings', key, index, repeaterKey],item[repeaterKey]);
-                                }else if(item[repeaterKey] && typeof item[repeaterKey] === 'object' && item[repeaterKey].hasOwnProperty('$$type') ){
+                                }else if(item[repeaterKey] && typeof item[repeaterKey] === 'object' && Object.hasOwn(item[repeaterKey], '$$type') ){
                                     storeAtomicWidgetStrings(item[repeaterKey], [...ids, 'settings', key, index, repeaterKey]);
                                 }
                             }

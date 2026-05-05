@@ -194,7 +194,7 @@ const updateElementorPage = ({ postContent, modalClose, service }) => {
                         key: key,
                         translatedContent: translatedData
                     })
-                }else if(settings[key] && typeof settings[key] === 'object' && settings[key].hasOwnProperty('$$type') ){
+                }else if(settings[key] && typeof settings[key] === 'object' && Object.hasOwn(settings[key], '$$type') ){
                     storeAtomicWidgetStrings(settings[key], [...ids, 'settings', key], widgetId);
                 }else if (Array.isArray(settings[key])) {
                     settings[key].forEach((item, index) => {

@@ -1,4 +1,4 @@
-const FilterTargetContent = (props, storeUpdateContent) => {
+const FilterTargetContent = (props) => {
     const skipTags = props.skipTags || [];
     const placeholderPrefix = '#atfp_';
     const OpenSpanPlaceholder = '#atfp_open_translate_span#';
