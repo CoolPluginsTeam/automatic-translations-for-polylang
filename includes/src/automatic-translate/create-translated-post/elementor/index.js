@@ -32,12 +32,12 @@ const atfpUpdateWidgetContent = (translations) => {
 
                             settings.set(settingKey[0], atomicAttributes);
                             model?.renderRemoteServer();
+                            return;
                         }
                     }
                 }
-
             }
-
+            
             // Check for normal fields (title, text, editor, etc.)
             if (settings.get(translation.key)) {
                 settings.set(translation.key, translation.translatedContent);  // Set the translated content
