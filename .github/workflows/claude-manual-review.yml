@@ -18,11 +18,13 @@ jobs:
       (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude')) ||
       (github.event_name == 'issues' && (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude')))
     runs-on: ubuntu-latest
+
     permissions:
       contents: write
       pull-requests: write
       issues: write
       id-token: write
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -35,4 +37,4 @@ jobs:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           settings: .claude/settings.json
           claude_args: |
-            --model claude-opus-4-6
+            --model ${{ secrets.CUSTOM_CLAUDE_MODEL }}
