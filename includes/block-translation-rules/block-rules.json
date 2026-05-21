@@ -103,7 +103,8 @@
         },
         "core/search": {
             "attributes": {
-                "label": true
+                "label": true,
+                "buttonText": true
             }
         },
         "core/post-terms": {
@@ -124,6 +125,16 @@
                         "children": true
                     }
                 ]
+            }
+        },
+        "core/accordion-heading": {
+            "attributes": {
+                "title": true
+            }
+        },
+        "core/file": {
+            "attributes": {
+                "downloadButtonText": true
             }
         },
         "tadv/classic-paragraph": {
