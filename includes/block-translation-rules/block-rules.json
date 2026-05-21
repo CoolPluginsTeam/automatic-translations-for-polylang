@@ -137,6 +137,11 @@
                 "downloadButtonText": true
             }
         },
+        "core/icon": {
+            "attributes": {
+                "ariaLabel": true
+            }
+        },
         "tadv/classic-paragraph": {
             "attributes": {
                 "content": true
