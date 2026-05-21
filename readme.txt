@@ -4,7 +4,7 @@ Tags: Polylang, AI Translation, Content Translation, Translate
 Requires at least: 5.0
 Tested up to: 7.0
 Requires PHP: 5.6
-Stable tag: 1.5.0
+Stable tag: 1.4.12
 Author URI: https://coolplugins.net/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=author_page&utm_content=plugins_list
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -223,7 +223,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 == Changelog ==
 
-= Version 1.5.0 | 21 May 2026 =
+= Version 1.4.12 | 21 May 2026 =
 * **Added:** Newly available core icon block arial label attribute translation support.
 * **Added:** Core accordion heading block translation support.
 * **Added:** Core file block download button text attribute translation support.
