@@ -2,9 +2,9 @@
 Contributors: narinder-singh,satindersingh,coolplugins
 Tags: Polylang, AI Translation, Content Translation, Translate
 Requires at least: 5.0
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 5.6
-Stable tag: 1.4.11
+Stable tag: 1.5.0
 Author URI: https://coolplugins.net/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=author_page&utm_content=plugins_list
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -222,6 +222,13 @@ Yes, this plugin supports automatic translations for content created with the Cl
 You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities.[Report a security vulnerability](https://patchstack.com/database/wordpress/plugin/automatic-translations-for-polylang/vdp)
 
 == Changelog ==
+
+= Version 1.5.0 | 21 May 2026 =
+* **Added:** Newly available core icon block arial label attribute translation support.
+* **Added:** Core accordion heading block translation support.
+* **Added:** Core file block download button text attribute translation support.
+* **Added:** Core search block button text attribute translation support.
+* **Tested up to:** WordPress 7.0.
 
 = Version 1.4.11 | 05 May 2026 =
 * **Added:** Elementor Atomic Widget translation support.
