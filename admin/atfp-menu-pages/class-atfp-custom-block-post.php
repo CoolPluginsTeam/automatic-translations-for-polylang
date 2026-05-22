@@ -112,14 +112,15 @@ if ( ! class_exists( 'ATFP_Custom_Block_Post' ) ) {
 
 			$args = array(
 				'labels'             => $labels,
-				'public'             => true,
-				'publicly_queryable' => true,
+				'public'             => false,
+				'publicly_queryable' => false,
+				'exclude_from_search' => true,
 				'show_ui'            => true,
 				'show_in_menu'       => false, // Ensure it shows in the menu
-				'query_var'          => true,
+				'query_var'          => false,
 				'rewrite'            => array( 'slug' => 'automatic-translation' ),
 				'capability_type'    => 'page',
-				'has_archive'        => true,
+				'has_archive'        => false,
 				'hierarchical'       => true,
 				'menu_position'      => 0,
 				'show_in_rest'       => true,
