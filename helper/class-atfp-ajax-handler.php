@@ -409,6 +409,12 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
         }
 
         public function update_enabled_providers() {
+
+			if(!current_user_can('manage_options')){
+				wp_send_json_error( __( 'Unauthorized', 'automatic-translations-for-polylang' ), 403 );
+				wp_die( '0', 403 );
+			}
+
             if ( ! check_ajax_referer( 'atfp_update_enabled_providers', 'update_providers_key', false ) ) {
                 wp_send_json_error( __( 'Invalid security token sent.', 'automatic-translations-for-polylang' ) );
                 wp_die( '0', 400 );
