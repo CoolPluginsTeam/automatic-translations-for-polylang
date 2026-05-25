@@ -71,7 +71,7 @@
 
         $('body').append(modalHtml);
 
-        $('#atfp-classic-pro-modal .modal-body').append(BulkTranslationLink);
+        $('#atfp-classic-pro-modal .atfp-modal-body').append(BulkTranslationLink);
 
         // Close on close button
         $('#atfp-classic-pro-modal .atfp-modal-close').on('click', function(e) {
