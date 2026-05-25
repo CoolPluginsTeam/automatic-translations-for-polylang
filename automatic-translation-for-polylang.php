@@ -85,7 +85,7 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 			$page=isset($_GET['page']) ? sanitize_text_field(wp_unslash($_GET['page'])) : '';
 
 			// Add the action to hide unrelated notices
-			if($page == 'polylang-atfp-dashboard'){
+			if('polylang-atfp-dashboard' === $page){
 				add_action('admin_print_scripts', array($this, 'atfp_hide_unrelated_notices'));
 			}
 
