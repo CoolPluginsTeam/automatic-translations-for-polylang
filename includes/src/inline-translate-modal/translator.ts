@@ -209,8 +209,18 @@ class Translator {
     text: string,
   ): Promise<string> => {
 
-    const translatedText = await this.translator.translate(text);
+    const preserveStartSpace=text.match(/^\s+/g);
+    const preserveEndSpace=text.match(/\s+$/g);
 
+    let translatedText = await this.translator.translate(text);
+
+    if(preserveStartSpace){
+      translatedText = preserveStartSpace + translatedText;
+    }
+    if(preserveEndSpace){
+      translatedText = translatedText + preserveEndSpace;
+    }
+    
     return translatedText;
   };
 }

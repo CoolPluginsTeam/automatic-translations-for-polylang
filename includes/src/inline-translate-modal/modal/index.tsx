@@ -14,6 +14,7 @@ import ButtonGroup from './button-group';
 import { svgIcons } from './svgIcons';
 import ErrorModalBox from '../error-modal';
 import DOMPurify from 'dompurify';
+import { atfpCollectHtmlVocabulary } from './text-to-tags-attr';
 
 import {
   Modal,
@@ -321,7 +322,8 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
     setIsLoading(true);
 
     let element: HTMLDivElement | null = document.createElement('div');
-    element.innerHTML=text;
+    
+    element.innerHTML=DOMPurify.sanitize(text, {...atfpCollectHtmlVocabulary(text)});
 
     const allNodes=element.childNodes;
 
