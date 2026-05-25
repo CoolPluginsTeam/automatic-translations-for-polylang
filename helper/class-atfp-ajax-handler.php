@@ -422,12 +422,14 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
             }
 
 			$enabled_providers = isset($_POST['enabled_providers']) ? sanitize_text_field(wp_unslash($_POST['enabled_providers'])) : '';
+			$enabled_providers = json_decode($enabled_providers, true);
+
 			if(json_last_error() !== JSON_ERROR_NONE){
 				wp_send_json_error( __( 'Invalid JSON.', 'automatic-translations-for-polylang' ) );
 				wp_die( '0', 400 );
 				exit();
 			}
-			$enabled_providers = json_decode($enabled_providers, true);
+
 			if(!is_array($enabled_providers)){
 				wp_send_json_error( __( 'Invalid enabled providers.', 'automatic-translations-for-polylang' ) );
 				wp_die( '0', 400 );
