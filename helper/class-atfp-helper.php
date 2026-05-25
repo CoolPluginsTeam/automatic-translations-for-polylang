@@ -195,7 +195,8 @@ if (! class_exists('ATFP_Helper')) {
 						}
 					} else {
 						$path = trim(str_replace(home_url(), '', $href), '/');
-						$category_slug = end(array_filter(explode('/', $path)));
+						$category_slug = array_filter(explode('/', $path));
+						$category_slug = end($category_slug);
 						$taxonomy_name=self::extract_taxonomy_name($path, $terms_data);
 						$taxonomy_name=$taxonomy_name ? $taxonomy_name : 'category';
 
