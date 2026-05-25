@@ -243,21 +243,24 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 		}
 
 		private function sanitize_block_data($data){
+			$sanitized_data='';
 			 // Handle arrays.
 			 if ( is_array( $data ) ) {
+				$sanitized_data = array();
 				foreach ( $data as $key => $value ) {
-					$data[ sanitize_text_field($key) ] = $this->sanitize_block_data( $value );
+					$sanitized_data[ sanitize_textarea_field($key) ] = $this->sanitize_block_data( $value );
 				}
-				return $data;
+				return $sanitized_data;
 			}
 		
 			// Handle objects.
 			if ( is_object( $data ) ) {
+				$sanitized_data = new stdClass();
 				foreach ( $data as $key => $value ) {
-					$key = sanitize_text_field($key);
-					$data->$key = $this->sanitize_block_data( $value );
+					$key = sanitize_textarea_field($key);
+					$sanitized_data->$key = $this->sanitize_block_data( $value );
 				}
-				return $data;
+				return $sanitized_data;
 			}
 		
 			// Handle scalar values.
@@ -278,7 +281,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 			}
 		
 			// Null or unknown type.
-			return $data;
+			return sanitize_text_field( $data );
 		}
 
 		public function atfp_update_translate_data() {
