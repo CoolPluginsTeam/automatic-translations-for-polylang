@@ -49,8 +49,16 @@ if ( ! class_exists( 'ATFP_Elementor_Translate' ) ) {
 				if ( function_exists( 'PLL' ) ) {
 					global $post;
 					$current_post_id = $post->ID;
-						
 					$parent_post_id = isset( $_GET['from_post'] ) ? absint( wp_unslash( $_GET['from_post'] ) ) : '';
+					
+					if(!current_user_can('edit_post', $current_post_id)){
+						return;
+					}
+
+					if(!current_user_can('edit_post', $parent_post_id)){
+						return;
+					}
+
 					$parent_editor=get_post_meta($parent_post_id, '_elementor_edit_mode', true);
 					$parent_elementor_data = get_post_meta( $parent_post_id, '_elementor_data', true );
 	
