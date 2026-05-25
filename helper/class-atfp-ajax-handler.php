@@ -385,14 +385,13 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
         }
 
         public function update_enabled_providers() {
+			if ( ! check_ajax_referer( 'atfp_update_enabled_providers', 'update_providers_key', false ) ) {
+				return wp_send_json_error( __( 'Invalid security token sent.', 'automatic-translations-for-polylang' ) );
+			}
 
 			if(!current_user_can('manage_options')){
 				return wp_send_json_error( __( 'Unauthorized', 'automatic-translations-for-polylang' ), 403 );
 			}
-
-            if ( ! check_ajax_referer( 'atfp_update_enabled_providers', 'update_providers_key', false ) ) {
-                return wp_send_json_error( __( 'Invalid security token sent.', 'automatic-translations-for-polylang' ) );
-            }
 
 			$enabled_providers = isset($_POST['enabled_providers']) ? sanitize_text_field(wp_unslash($_POST['enabled_providers'])) : '';
 			$enabled_providers = json_decode($enabled_providers, true);
