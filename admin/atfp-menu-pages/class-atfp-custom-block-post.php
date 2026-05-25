@@ -63,11 +63,16 @@ if ( ! class_exists( 'ATFP_Custom_Block_Post' ) ) {
 		 */
 		public function on_save_post( $post_id, $post, $update ) {
 
-			if(!current_user_can('edit_post', $post_id)){
+			if(!current_user_can('manage_options')){
 				return;
 			}
 
 			if ( isset( $post->post_type ) && 'atfp_add_blocks' === $post->post_type ) {
+				
+				if(wp_is_post_autosave($post_id) || wp_is_post_revision($post_id)){
+					return;
+				}
+
 				if (strpos($post->post_content, 'Make This Content Available for Translation') !== false) {
 					update_option( 'atfp_custom_block_data', $post->post_content );
 					update_option( 'atfp_custom_block_status', 'true' );
