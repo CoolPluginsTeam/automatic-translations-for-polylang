@@ -99,7 +99,7 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 				$atfp_utm_parameters=ATFP_Helper::utm_source_text();
 			}
 
-			$links[] = '<a href="https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?'.sanitize_text_field($atfp_utm_parameters).'&utm_medium=inside&utm_campaign=get_pro&utm_content=plugins_list" target="_blank" style="font-weight:bold; color:#852636;">' . __( 'Get Pro', 'automatic-translations-for-polylang' ) . '</a>';
+			$links[] = '<a href="'.esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?'.sanitize_text_field($atfp_utm_parameters).'&utm_medium=inside&utm_campaign=get_pro&utm_content=plugins_list').'" target="_blank" style="font-weight:bold; color:#852636;">' . __( 'Get Pro', 'automatic-translations-for-polylang' ) . '</a>';
 			return $links;
 		}
 
