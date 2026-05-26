@@ -45,6 +45,14 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 		 * Constructor for the ATFP_Supported_Blocks class.
 		 */
 		private function __construct() {
+			if(!function_exists('current_user_can')){
+				return;
+			}
+
+			if(!current_user_can('manage_options')){
+				return;
+			}
+
 			// nonce verification is not required here because we are not using the nonce here.
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$tab=isset($_GET['tab']) ? sanitize_text_field(wp_unslash($_GET['tab'])) : '';
