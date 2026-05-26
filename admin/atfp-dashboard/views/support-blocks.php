@@ -63,7 +63,6 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 		 */
 		public function enqueue_editor_assets( ) {
 			wp_enqueue_script( 'atfp-datatable-script', ATFP_URL . 'assets/js/dataTables.min.js', array(), ATFP_V, true );
-			wp_enqueue_script( 'atfp-datatable-style', ATFP_URL . 'assets/js/dataTables.min.js', array(), ATFP_V, true );
 			wp_enqueue_style( 'atfp-editor-supported-blocks', ATFP_URL . 'assets/css/atfp-supported-blocks.min.css', array(), ATFP_V );
 			wp_enqueue_script( 'atfp-editor-supported-blocks', ATFP_URL . 'assets/js/atfp-supported-block.min.js', array('atfp-datatable-script'), ATFP_V, true );
 		}
