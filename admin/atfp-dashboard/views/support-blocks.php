@@ -193,7 +193,6 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 					$status      = ! in_array( $block_name, $atfp_supported_blocks_names ) ? 'Unsupported' : 'Supported'; // You can modify this logic based on your requirements
 					$modify_text = ! in_array( $block_name, $atfp_supported_blocks_names ) ? esc_html__( 'Add', 'automatic-translations-for-polylang' ) : esc_html__( 'Edit', 'automatic-translations-for-polylang' );
 					$modify_link = '<a href="' . esc_url( admin_url( 'post.php?post=' . esc_attr( $atfp_post_id ) . '&action=edit&atfp_new_block=' ) . esc_attr( $block_name ) ) . '">' . $modify_text . '</a>'; // Modify link
-					$modify_link = '<a href="' . esc_url( admin_url( 'post.php?post=' . esc_attr( $atfp_post_id ) . '&action=edit&atfp_new_block=' ) . esc_attr( $block_name ) ) . '">' . $modify_text . '</a>'; // Modify link
 
 					echo '<tr data-block-name="' . esc_attr( strtolower( $block_name ) ) . '" data-block-status="' . esc_attr( strtolower( $status ) ) . '" >';
 					echo '<td>' . esc_html($s_no++) . '</td>';
