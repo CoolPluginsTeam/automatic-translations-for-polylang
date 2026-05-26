@@ -435,10 +435,11 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				}
 			}
 			
-            $elementor_data = isset($_POST['elementor_data']) ? sanitize_text_field(wp_unslash($_POST['elementor_data'])) : '';
-		
+            // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- We only need to check for existence and non-empty string, but should not sanitize JSON here.
+            $has_elementor_data = isset($_POST['elementor_data']) && trim(wp_unslash($_POST['elementor_data'])) !== '';
+	
 			// Check if the current post has Elementor data
-			if($elementor_data && '' !== $elementor_data){
+			if($has_elementor_data && '' !== $has_elementor_data){
 				if(class_exists('Elementor\Plugin')){
 					$plugin=\Elementor\Plugin::$instance;
 					$document=$plugin->documents->get($post_id);
