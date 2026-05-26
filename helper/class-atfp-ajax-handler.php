@@ -82,7 +82,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 			$block_parse_rules = ATFP_Helper::get_instance()->get_block_parse_rules();
 
 			$data = array(
-				'blockRules' => json_encode( $block_parse_rules ),
+				'blockRules' => wp_json_encode( $block_parse_rules ),
 			);
 
 			wp_send_json_success( $data );
