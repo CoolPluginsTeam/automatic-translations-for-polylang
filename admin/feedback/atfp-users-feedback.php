@@ -126,8 +126,7 @@ class AtfpUsersFeedback {
 	function submit_deactivation_response() {
 
 		if(!current_user_can('manage_options')){
-			wp_send_json_error( __( 'Unauthorized', 'automatic-translations-for-polylang' ), 403 );
-			wp_die( '0', 403 );
+			return wp_send_json_error( __( 'Unauthorized', 'automatic-translations-for-polylang' ), 403 );
 		}
 
 		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ), '_cool-plugins_deactivate_feedback_nonce' ) ) {

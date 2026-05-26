@@ -323,8 +323,7 @@ if(!class_exists('Atfp_Dashboard')){
 
         public function atfp_hide_review_notice(){
             if(!current_user_can('manage_options')){
-                wp_send_json_error( __( 'Unauthorized', 'automatic-translations-for-polylang' ), 403 );
-                wp_die( '0', 403 );
+                return wp_send_json_error( __( 'Unauthorized', 'automatic-translations-for-polylang' ), 403 );
             }
 
             if ( isset( $_POST['nonce'], $_POST['prefix'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'atfp_hide_review_notice' ) ) {
