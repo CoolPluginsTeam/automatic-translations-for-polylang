@@ -249,7 +249,8 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 					}
 
 					foreach ( $updated_blocks_data as $key => $block_data ) {
-						$this->verify_block_data( array( $key ), $block_data, $block_parse_rules['AtfpBlockParseRules'][ $key ] );
+						$block_rules = isset($block_parse_rules['AtfpBlockParseRules'][ $key ]) ? $block_parse_rules['AtfpBlockParseRules'][ $key ] : null;
+						$this->verify_block_data( array( $key ), $block_data, $block_rules );
 					}
 
 					if ( count( $this->custom_block_data_array ) > 0 ) {
