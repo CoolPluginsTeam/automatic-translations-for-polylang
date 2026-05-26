@@ -110,18 +110,96 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				$content = $post_data->post_content;
 				$content = ATFP_Helper::replace_links_with_translations($content, $locale, $current_locale);
 
-				$meta_fields=get_post_meta($post_id);
+				$atfp_meta_fields=array();
+
+				if(function_exists('acf_get_fields')){
+					$acf_fields_groups = get_field_objects( $post_id );
+
+					foreach($acf_fields_groups as $acf_key => $acf_values){
+						if($acf_key === 'custom_post_type_options' || !isset($acf_values['name'])){
+							continue;
+						}
+
+						$this->set_acf_fields_data($atfp_meta_fields, '', $acf_values);
+					}
+				}
+
+				$this->seo_fields_data($atfp_meta_fields, $post_id);
 
 				$data    = array(
 					'title'   => $post_data->post_title,
 					'excerpt' => $post_data->post_excerpt,
 					'content' => $content,
-					'metaFields' => $meta_fields
+					'metaFields' => $atfp_meta_fields
 				);
 
 				wp_send_json_success( $data );
 			} else {
 				wp_send_json_error( __( 'Invalid Post ID.', 'automatic-translations-for-polylang' ) );
+			}
+		}
+
+		private function set_acf_fields_data(&$meta_fields_arr, $acf_key, $acf_values){
+			if(!isset($acf_values['value']) || !isset($acf_values['type']) || !isset($acf_values['name'])){
+				return;
+			}
+
+			if($acf_values['type'] === 'repeater'){
+				if(!is_array($acf_values['value'])){
+					return;
+				}
+
+				foreach($acf_values['value'] as $repeater_item_index => $repeater_item_value){
+					if(!is_array($repeater_item_value)){
+						continue;
+					}
+
+					$acf_repeater_key=$acf_key . $acf_values['name'].'_'.$repeater_item_index.'_';
+
+					foreach($repeater_item_value as $repeater_item_value_key => $repeater_item_value_value){
+						$meta_fields_arr[$acf_repeater_key .$repeater_item_value_key][] = $repeater_item_value_value;
+					}
+				}
+
+				return;
+			}
+
+			$meta_fields_arr[$acf_key . $acf_values['name']][] = $acf_values['value'];
+		}
+
+		private function seo_fields_data(&$meta_fields_arr, $post_id){
+			$atfp_allowed_seo_fields=array(
+				'_yoast_wpseo_title',
+				'_yoast_wpseo_focuskw',
+				'_yoast_wpseo_metadesc',
+				'_yoast_wpseo_bctitle',
+				'_yoast_wpseo_opengraph-title',
+				'_yoast_wpseo_opengraph-description',
+				'_yoast_wpseo_twitter-title',
+				'_yoast_wpseo_twitter-description',
+				'rank_math_title',
+				'rank_math_description',
+				'rank_math_focus_keyword',
+				'rank_math_facebook_title',
+				'rank_math_facebook_description',
+				'rank_math_twitter_title',
+				'rank_math_twitter_description',
+				'rank_math_breadcrumb_title',
+				'_seopress_titles_title',
+				'_seopress_titles_desc',
+				'_seopress_social_fb_title',
+				'_seopress_social_fb_desc',
+				'_seopress_social_twitter_title',
+				'_seopress_social_twitter_desc',
+				'_seopress_analysis_target_kw'
+			);
+
+			$all_post_meta=get_post_meta($post_id);
+
+			foreach($all_post_meta as $meta_key => $meta_value){
+				if(in_array($meta_key, $atfp_allowed_seo_fields)){
+					$meta_fields_arr[$meta_key] = $meta_value;
+				}
 			}
 		}
 
