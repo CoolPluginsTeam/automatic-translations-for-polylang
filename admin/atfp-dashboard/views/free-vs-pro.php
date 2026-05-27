@@ -2,6 +2,13 @@
 if(!defined('ABSPATH')){
     exit;
 }
+
+if(!isset($atfp_utm_parameters)){
+	$atfp_utm_parameters='utm_source=atfp_plugin';
+	if(class_exists('ATFP_Helper')){
+		$atfp_utm_parameters=ATFP_Helper::utm_source_text();
+	}
+}
 ?>
 <div class="atfp-dashboard-free-vs-pro">
     <div class="atfp-dashboard-free-vs-pro-container">
