@@ -108,6 +108,11 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 
 			if ( false !== $post_id ) {
 				$post_data = get_post( absint($post_id) );
+
+				if ( ! $post_data instanceof WP_Post ) {
+					return wp_send_json_error( __( 'Post not found.', 'automatic-translations-for-polylang' ) );
+				}
+
                 $locale = isset($_POST['local']) ? sanitize_text_field(wp_unslash($_POST['local'])) : 'en';
                 $current_locale = isset($_POST['current_local']) ? sanitize_text_field(wp_unslash($_POST['current_local'])) : 'en';
 
@@ -128,7 +133,6 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 							$this->set_acf_fields_data($atfp_meta_fields, '', $acf_values);
 						}
 					}
-
 				}
 
 				$this->seo_fields_data($atfp_meta_fields, $post_id);
