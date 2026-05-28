@@ -212,6 +212,8 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				'_seopress_analysis_target_kw'
 			);
 
+			$atfp_allowed_seo_fields = apply_filters( 'atfp_translatable_seo_fields', $atfp_allowed_seo_fields );
+
 			$all_post_meta=get_post_meta($post_id);
 
 			foreach($all_post_meta as $meta_key => $meta_value){
