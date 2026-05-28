@@ -106,48 +106,44 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				return wp_send_json_error( __( 'Unauthorized', 'automatic-translations-for-polylang' ), 403 );
 			}
 
-			if ( false !== $post_id ) {
-				$post_data = get_post( absint($post_id) );
+			$post_data = get_post( absint($post_id) );
 
-				if ( ! $post_data instanceof WP_Post ) {
-					return wp_send_json_error( __( 'Post not found.', 'automatic-translations-for-polylang' ) );
-				}
+			if ( ! $post_data instanceof WP_Post ) {
+				return wp_send_json_error( __( 'Post not found.', 'automatic-translations-for-polylang' ) );
+			}
 
-                $locale = isset($_POST['local']) ? sanitize_text_field(wp_unslash($_POST['local'])) : 'en';
-                $current_locale = isset($_POST['current_local']) ? sanitize_text_field(wp_unslash($_POST['current_local'])) : 'en';
+            $locale = isset($_POST['local']) ? sanitize_text_field(wp_unslash($_POST['local'])) : 'en';
+            $current_locale = isset($_POST['current_local']) ? sanitize_text_field(wp_unslash($_POST['current_local'])) : 'en';
 
-				$content = $post_data->post_content;
-				$content = ATFP_Helper::replace_links_with_translations($content, $locale, $current_locale);
+			$content = $post_data->post_content;
+			$content = ATFP_Helper::replace_links_with_translations($content, $locale, $current_locale);
 
-				$atfp_meta_fields=array();
+			$atfp_meta_fields=array();
 
-				if(function_exists('acf_get_fields')){
-					$acf_fields_groups = get_field_objects( $post_id );
+			if(function_exists('acf_get_fields')){
+				$acf_fields_groups = get_field_objects( $post_id );
 
-					if(is_array($acf_fields_groups)){
-						foreach($acf_fields_groups as $acf_key => $acf_values){
-							if($acf_key === 'custom_post_type_options' || !isset($acf_values['name'])){
-								continue;
-							}
-	
-							$this->set_acf_fields_data($atfp_meta_fields, '', $acf_values);
+				if(is_array($acf_fields_groups)){
+					foreach($acf_fields_groups as $acf_key => $acf_values){
+						if($acf_key === 'custom_post_type_options' || !isset($acf_values['name'])){
+							continue;
 						}
+	
+						$this->set_acf_fields_data($atfp_meta_fields, '', $acf_values);
 					}
 				}
-
-				$this->seo_fields_data($atfp_meta_fields, $post_id);
-
-				$data    = array(
-					'title'   => $post_data->post_title,
-					'excerpt' => $post_data->post_excerpt,
-					'content' => $content,
-					'metaFields' => $atfp_meta_fields
-				);
-
-				wp_send_json_success( $data );
-			} else {
-				wp_send_json_error( __( 'Invalid Post ID.', 'automatic-translations-for-polylang' ) );
 			}
+
+			$this->seo_fields_data($atfp_meta_fields, $post_id);
+
+			$data    = array(
+				'title'   => $post_data->post_title,
+				'excerpt' => $post_data->post_excerpt,
+				'content' => $content,
+				'metaFields' => $atfp_meta_fields
+			);
+
+			wp_send_json_success( $data );
 		}
 
 		private function set_acf_fields_data(&$meta_fields_arr, $acf_key, $acf_values){
