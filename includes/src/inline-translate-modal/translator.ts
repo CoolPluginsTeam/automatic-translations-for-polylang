@@ -208,20 +208,23 @@ class Translator {
   public startTranslation = async (
     text: string,
   ): Promise<string> => {
+    // Capture all leading and trailing whitespace (multiple, single, or none)
+    const startWhitespace = text.match(/^\s*/)?.[0] ?? '';
+    const endWhitespace = text.match(/\s*$/)?.[0] ?? '';
 
-    const preserveStartSpace=text.match(/^\s+/g);
-    const preserveEndSpace=text.match(/\s+$/g);
+    // Get the main content with whitespace trimmed from both ends
+    const coreText = text.slice(startWhitespace.length, text.length - endWhitespace.length);
 
-    let translatedText = await this.translator.translate(text);
-
-    if(preserveStartSpace){
-      translatedText = preserveStartSpace + translatedText;
+    // If the entire string is whitespace, just return it (don't call the translator)
+    if (coreText === '') {
+      return text;
     }
-    if(preserveEndSpace){
-      translatedText = translatedText + preserveEndSpace;
-    }
-    
-    return translatedText;
+
+    // Translate only the core text
+    let translatedText = await this.translator.translate(coreText);
+
+    // Restore the original leading and trailing whitespace exactly
+    return `${startWhitespace}${translatedText}${endWhitespace}`;
   };
 }
 
