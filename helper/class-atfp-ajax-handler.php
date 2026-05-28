@@ -171,6 +171,17 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				return;
 			}
 
+			if(is_array($acf_values['value'])){
+				foreach($acf_values['value'] as $acf_value_key => $acf_value_value){
+					$meta_fields_arr[$acf_key . $acf_values['name'] . '_' . $acf_value_key][] = $acf_value_value;
+				}
+				return;
+			}
+
+			if(gettype($acf_values['value']) !== 'string'){
+				return;
+			}
+
 			$meta_fields_arr[$acf_key . $acf_values['name']][] = $acf_values['value'];
 		}
 
