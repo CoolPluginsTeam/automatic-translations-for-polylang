@@ -85,36 +85,46 @@ if (! class_exists('ATFP_Helper')) {
 
 		public function get_block_parse_rules()
 		{
-			$response = wp_remote_get( esc_url_raw( ATFP_URL . 'includes/block-translation-rules/block-rules.json' ), array(
-				'timeout' => 15,
-			) );
-			
-			if ( is_wp_error( $response ) || 200 !== (int) wp_remote_retrieve_response_code( $response ) ) {
-				global $wp_filesystem;
+			$block_rules = '';
+			$local_path  = ATFP_DIR_PATH . 'includes/block-translation-rules/block-rules.json';
 
-				// Initialize the WordPress filesystem
-				if ( ! function_exists( 'WP_Filesystem' ) ) {
-					require_once ABSPATH . 'wp-admin/includes/file.php';
-				}
-				
-				WP_Filesystem();
-
-				$local_path = ATFP_DIR_PATH . 'includes/block-translation-rules/block-rules.json';
-				if($wp_filesystem->exists($local_path) && $wp_filesystem->is_readable( $local_path )){
-					$block_rules = $wp_filesystem->get_contents( $local_path );
-				}else{
-					$block_rules = array();
-				}
-				
-			} else {
-				$block_rules = wp_remote_retrieve_body( $response );
+			// Prefer local file first (remote should be unnecessary in normal cases).
+			global $wp_filesystem;
+			if ( ! function_exists( 'WP_Filesystem' ) ) {
+				require_once ABSPATH . 'wp-admin/includes/file.php';
 			}
 
-			if(empty($block_rules)){
+			WP_Filesystem();
+
+			if ( $wp_filesystem && $wp_filesystem->exists( $local_path ) && $wp_filesystem->is_readable( $local_path ) ) {
+				$block_rules = (string) $wp_filesystem->get_contents( $local_path );
+			}
+
+			// Fallback to remote only if local rules are missing/empty.
+			if ( empty( $block_rules ) ) {
+				$response = wp_remote_get(
+					esc_url_raw( ATFP_URL . 'includes/block-translation-rules/block-rules.json' ),
+					array(
+						'timeout' => 15,
+					)
+				);
+
+				if ( ! is_wp_error( $response ) && 200 === (int) wp_remote_retrieve_response_code( $response ) ) {
+					$remote_body = wp_remote_retrieve_body( $response );
+					if ( ! empty( $remote_body ) ) {
+						$block_rules = (string) $remote_body;
+					}
+				}
+			}
+
+			if ( empty( $block_rules ) ) {
 				return array();
 			}
 
-			$block_translation_rules = json_decode($block_rules, true);
+			$block_translation_rules = json_decode( $block_rules, true );
+			if ( ! is_array( $block_translation_rules ) ) {
+				return array();
+			}
 
 			$this->custom_block_data_array = isset($block_translation_rules['AtfpBlockParseRules']) ? $block_translation_rules['AtfpBlockParseRules'] : null;
 
