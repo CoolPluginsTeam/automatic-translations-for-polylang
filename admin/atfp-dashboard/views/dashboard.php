@@ -3,13 +3,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if(!isset($atfp_utm_parameters)){
-	$atfp_utm_parameters='utm_source=atfp_plugin';
-	if(class_exists('ATFP_Helper')){
-		$atfp_utm_parameters=ATFP_Helper::utm_source_text();
-	}
-}
-
 $atfp_active_providers = get_option( 'atfp_enabled_providers', array( 'chrome-built-in-ai', 'yandex-translate' ) );
 
 function atfp_render_checked_icon() {

@@ -3,14 +3,6 @@
 if(!defined('ABSPATH')){
     exit;
 }
-
-if(!isset($atfp_utm_parameters)){
-	$atfp_utm_parameters='utm_source=atfp_plugin';
-	if(class_exists('ATFP_Helper')){
-		$atfp_utm_parameters=ATFP_Helper::utm_source_text();
-	}
-}
-
 if(!current_user_can('manage_options')){
     wp_die(esc_html__('You do not have sufficient permissions to access this page.', 'automatic-translations-for-polylang'));
 }
