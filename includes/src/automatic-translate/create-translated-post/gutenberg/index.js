@@ -38,7 +38,7 @@ const translatePost = (props) => {
     const postMetaFieldsUpdate = () => {
         const metaFieldsData = postContent.metaFields;
         
-        if(!metaFieldsData && Object.keys(metaFieldsData).length < 1){
+        if ( ! metaFieldsData || Object.keys( metaFieldsData ).length < 1 ) {
             return;
         }
         
