@@ -96,7 +96,11 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				return wp_send_json_error( __( 'Invalid security token sent.', 'automatic-translations-for-polylang' ) );
 			}
 
-			$post_id = absint(isset( $_POST['postId'] ) ? (int) filter_var( wp_unslash($_POST['postId']), FILTER_SANITIZE_NUMBER_INT ) : false);
+			$post_id = isset( $_POST['postId'] ) ? absint($_POST['postId']) : 0;
+
+			if(!$post_id){
+				return wp_send_json_error( __( 'Invalid Post ID.', 'automatic-translations-for-polylang' ) );
+			}
 			
 			if(!current_user_can('edit_post', $post_id)){
 				return wp_send_json_error( __( 'Unauthorized', 'automatic-translations-for-polylang' ), 403 );
@@ -442,7 +446,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
             $has_elementor_data = isset($_POST['elementor_data']) && trim(wp_unslash($_POST['elementor_data'])) !== '';
 	
 			// Check if the current post has Elementor data
-			if($has_elementor_data && '' !== $has_elementor_data){
+			if($has_elementor_data){
 				if(class_exists('Elementor\Plugin')){
 					$plugin=\Elementor\Plugin::$instance;
 					$document=$plugin->documents->get($post_id);
