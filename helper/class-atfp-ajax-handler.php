@@ -472,33 +472,37 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				return wp_send_json_error( __( 'Invalid security token sent.', 'automatic-translations-for-polylang' ) );
 			}
 
-			if(!current_user_can('manage_options')){
+			if ( ! current_user_can('manage_options') ) {
 				return wp_send_json_error( __( 'Unauthorized', 'automatic-translations-for-polylang' ), 403 );
 			}
 
-			$enabled_providers = isset($_POST['enabled_providers']) ? sanitize_text_field(wp_unslash($_POST['enabled_providers'])) : '';
+			// Get the JSON string directly, unslashing but not sanitizing as text
+			$enabled_providers = isset($_POST['enabled_providers']) ? wp_strip_all_tags(wp_unslash($_POST['enabled_providers'])) : '';
 			$enabled_providers = json_decode($enabled_providers, true);
 
-			if(json_last_error() !== JSON_ERROR_NONE){
+			if ( json_last_error() !== JSON_ERROR_NONE ) {
 				return wp_send_json_error( __( 'Invalid JSON.', 'automatic-translations-for-polylang' ) );
 			}
 
-			if(!is_array($enabled_providers)){
+			if ( ! is_array($enabled_providers) ) {
 				return wp_send_json_error( __( 'Invalid enabled providers.', 'automatic-translations-for-polylang' ) );
 			}
 			
-			$valid_providers = array('chrome-built-in-ai', 'yandex-translate');
+			$valid_providers = array( 'chrome-built-in-ai', 'yandex-translate' );
 
 			$updated_providers = array();
 
-			foreach($enabled_providers as $provider_key => $status){
-				if(in_array($provider_key, $valid_providers) && $status === true){
-					$updated_providers[] = sanitize_text_field($provider_key);
+			foreach ( $enabled_providers as $provider_key => $status ) {
+				if ( in_array( $provider_key, $valid_providers ) && $status === true ) {
+					$updated_providers[] = sanitize_text_field( $provider_key );
 				}
 			}
 
-			update_option('atfp_enabled_providers', $updated_providers);
-			wp_send_json_success( array( 'providers' => $updated_providers, 'message' => __( 'Enabled providers updated successfully.', 'automatic-translations-for-polylang' ) ) );
+			update_option( 'atfp_enabled_providers', $updated_providers );
+			wp_send_json_success( array(
+				'providers' => $updated_providers,
+				'message'   => __( 'Enabled providers updated successfully.', 'automatic-translations-for-polylang' ),
+			) );
         }
 
 		public function atfp_install_plugin()
