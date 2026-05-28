@@ -50,6 +50,10 @@ if ( ! class_exists( 'ATFP_Elementor_Translate' ) ) {
 					global $post;
 					$current_post_id = $post->ID;
 					$parent_post_id = isset( $_GET['from_post'] ) ? absint( wp_unslash( $_GET['from_post'] ) ) : '';
+
+					if(empty($parent_post_id)){
+						return;
+					}
 					
 					if(!current_user_can('edit_post', $current_post_id)){
 						return;
