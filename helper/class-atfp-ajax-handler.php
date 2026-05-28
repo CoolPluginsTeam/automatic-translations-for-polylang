@@ -115,13 +115,16 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				if(function_exists('acf_get_fields')){
 					$acf_fields_groups = get_field_objects( $post_id );
 
-					foreach($acf_fields_groups as $acf_key => $acf_values){
-						if($acf_key === 'custom_post_type_options' || !isset($acf_values['name'])){
-							continue;
+					if(is_array($acf_fields_groups)){
+						foreach($acf_fields_groups as $acf_key => $acf_values){
+							if($acf_key === 'custom_post_type_options' || !isset($acf_values['name'])){
+								continue;
+							}
+	
+							$this->set_acf_fields_data($atfp_meta_fields, '', $acf_values);
 						}
-
-						$this->set_acf_fields_data($atfp_meta_fields, '', $acf_values);
 					}
+
 				}
 
 				$this->seo_fields_data($atfp_meta_fields, $post_id);
