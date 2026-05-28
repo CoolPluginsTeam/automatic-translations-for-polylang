@@ -121,7 +121,7 @@ if ( ! class_exists( 'ATFP_Custom_Block_Post' ) ) {
 				'publicly_queryable' => false,
 				'exclude_from_search' => true,
 				'show_ui'            => true,
-				'show_in_menu'       => false, // Ensure it shows in the menu
+				'show_in_menu'       => false, // Ensure it does not show in the menu
 				'query_var'          => false,
 				'rewrite'            => array( 'slug' => 'automatic-translation' ),
 				'capability_type'    => 'page',
