@@ -63,12 +63,6 @@
         </div>
         `;
 
-        // Close on close button
-        $('#atfp-classic-pro-modal .atfp-modal-close').on('click', function(e) {
-            e.preventDefault();
-            closeClassicProModal();
-        });
-
         $('body').append(modalHtml);
 
         $('#atfp-classic-pro-modal .atfp-modal-body').append(BulkTranslationLink);
