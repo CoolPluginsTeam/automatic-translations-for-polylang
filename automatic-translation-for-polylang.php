@@ -2,7 +2,7 @@
 /*
 Plugin Name: AutoPoly - AI Translation For Polylang
 Plugin URI: https://coolplugins.net/
-Version: 1.4.12
+Version: 1.4.13
 Author: Cool Plugins
 Author URI: https://coolplugins.net/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=author_page&utm_content=plugins_list
 Description: AutoPoly - AI Translation For Polylang simplifies your translation process by automatically translating all pages/posts content from one language to another.
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 if ( ! defined( 'ATFP_V' ) ) {
-	define( 'ATFP_V', '1.4.12' );
+	define( 'ATFP_V', '1.4.13' );
 }
 if ( ! defined( 'ATFP_DIR_PATH' ) ) {
 	define( 'ATFP_DIR_PATH', plugin_dir_path( __FILE__ ) );
@@ -85,7 +85,7 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 			$page=isset($_GET['page']) ? sanitize_text_field(wp_unslash($_GET['page'])) : '';
 
 			// Add the action to hide unrelated notices
-			if($page == 'polylang-atfp-dashboard'){
+			if('polylang-atfp-dashboard' === $page){
 				add_action('admin_print_scripts', array($this, 'atfp_hide_unrelated_notices'));
 			}
 
@@ -99,7 +99,7 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 				$atfp_utm_parameters=ATFP_Helper::utm_source_text();
 			}
 
-			$links[] = '<a href="https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?'.sanitize_text_field($atfp_utm_parameters).'&utm_medium=inside&utm_campaign=get_pro&utm_content=plugins_list" target="_blank" style="font-weight:bold; color:#852636;">' . __( 'Get Pro', 'automatic-translations-for-polylang' ) . '</a>';
+			$links[] = '<a href="'.esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?'.sanitize_text_field($atfp_utm_parameters).'&utm_medium=inside&utm_campaign=get_pro&utm_content=plugins_list').'" target="_blank" style="font-weight:bold; color:#852636;">' . __( 'Get Pro', 'automatic-translations-for-polylang' ) . '</a>';
 			return $links;
 		}
 

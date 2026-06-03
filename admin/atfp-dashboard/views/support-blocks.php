@@ -45,6 +45,14 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 		 * Constructor for the ATFP_Supported_Blocks class.
 		 */
 		private function __construct() {
+			if(!function_exists('current_user_can')){
+				return;
+			}
+
+			if(!current_user_can('manage_options')){
+				return;
+			}
+
 			// nonce verification is not required here because we are not using the nonce here.
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$tab=isset($_GET['tab']) ? sanitize_text_field(wp_unslash($_GET['tab'])) : '';
@@ -63,7 +71,6 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 		 */
 		public function enqueue_editor_assets( ) {
 			wp_enqueue_script( 'atfp-datatable-script', ATFP_URL . 'assets/js/dataTables.min.js', array(), ATFP_V, true );
-			wp_enqueue_script( 'atfp-datatable-style', ATFP_URL . 'assets/js/dataTables.min.js', array(), ATFP_V, true );
 			wp_enqueue_style( 'atfp-editor-supported-blocks', ATFP_URL . 'assets/css/atfp-supported-blocks.min.css', array(), ATFP_V );
 			wp_enqueue_script( 'atfp-editor-supported-blocks', ATFP_URL . 'assets/js/atfp-supported-block.min.js', array('atfp-datatable-script'), ATFP_V, true );
 		}
@@ -185,7 +192,6 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 					$block_title = esc_html( $block->title );
 					$status      = ! in_array( $block_name, $atfp_supported_blocks_names ) ? 'Unsupported' : 'Supported'; // You can modify this logic based on your requirements
 					$modify_text = ! in_array( $block_name, $atfp_supported_blocks_names ) ? esc_html__( 'Add', 'automatic-translations-for-polylang' ) : esc_html__( 'Edit', 'automatic-translations-for-polylang' );
-					$modify_link = '<a href="' . esc_url( admin_url( 'post.php?post=' . esc_attr( $atfp_post_id ) . '&action=edit&atfp_new_block=' ) . esc_attr( $block_name ) ) . '">' . $modify_text . '</a>'; // Modify link
 					$modify_link = '<a href="' . esc_url( admin_url( 'post.php?post=' . esc_attr( $atfp_post_id ) . '&action=edit&atfp_new_block=' ) . esc_attr( $block_name ) ) . '">' . $modify_text . '</a>'; // Modify link
 
 					echo '<tr data-block-name="' . esc_attr( strtolower( $block_name ) ) . '" data-block-status="' . esc_attr( strtolower( $status ) ) . '" >';

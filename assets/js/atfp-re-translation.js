@@ -32,6 +32,26 @@
                 return;
             }
 
+            const BulkTranslationLink = document.createElement( 'a');
+            BulkTranslationLink.href = this.proUrl;
+            BulkTranslationLink.target = '_blank';
+            BulkTranslationLink.rel = 'noopener noreferrer';
+            BulkTranslationLink.classList.add('atfp-marketing-btn', 'button');
+
+            const AiIconImg = document.createElement('img');
+            AiIconImg.src = this.magicWandUrl;
+            AiIconImg.style.width = '20px';
+            AiIconImg.style.height = '20px';
+            AiIconImg.style.marginRight = '8px';
+            AiIconImg.style.filter = 'brightness(0) invert(1)';
+            AiIconImg.alt = 'AI';
+            
+            const BulkTranslationLinkText = document.createElement('span');
+            BulkTranslationLinkText.textContent = __('Get Pro for Re-Translation', 'automatic-translations-for-polylang');
+
+            BulkTranslationLink.append(AiIconImg);
+            BulkTranslationLink.append(BulkTranslationLinkText);
+
             const modal = `
                 <div id="atfp-retranslate-modal" style="display: flex;">
                     <div class="atfp-retranslate-modal-content">
@@ -48,10 +68,6 @@
                             <p>
                                 ${__("Want to update your translated content to match the latest changes on your page? Try our Pro version to easily re-translate and unlock all advanced features.", "automatic-translations-for-polylang")}
                             </p>
-                            <a href="${this.proUrl}" target="_blank" class="atfp-marketing-btn button">
-                                <img src="${this.magicWandUrl}" style="width: 20px; height: 20px; margin-right: 8px; filter: brightness(0) invert(1);" alt="AI" />
-                                <span>${__("Get Pro for Re-Translation", "automatic-translations-for-polylang")}</span>
-                            </a>
                         </div>
                         <div class="modal-footer-notice">
                             <span class="dashicons dashicons-warning"></span>
@@ -61,6 +77,7 @@
                 </div>
             `;
             document.body.insertAdjacentHTML('beforeend', modal);
+            $('#atfp-retranslate-modal .atfp-modal-body').append(BulkTranslationLink);
         }
 
         appendElementorButton() {

@@ -1,4 +1,16 @@
 jQuery(function ($) {
+    function escapeHtml(text) {
+        if (text === null || text === undefined) {
+            return '';
+        }
+        return String(text)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+
     class ChromeAiTranslator {
 
         static languagePairAvality = async (source, target) => {
@@ -383,7 +395,7 @@ jQuery(function ($) {
         if (unsupportedLanguages.length > 0) {
             let unsupportedList = '';
             unsupportedLanguages.forEach(function (lang) {
-                unsupportedList += '<strong>' + lang.label + ' (' + lang.code + ')</strong>, ';
+                unsupportedList += '<strong>' + escapeHtml(lang.label) + ' (' + escapeHtml(lang.code) + ')</strong>, ';
             });
             // Remove trailing comma
             unsupportedList = unsupportedList.replace(/, $/, '');

@@ -38,7 +38,7 @@ if ( ! class_exists( 'ATFP_Custom_Block_Post' ) ) {
 		 */
 		public function enqueue_scripts( $hook ) {
 			$current_screen = get_current_screen();
-			if ( 'atfp_add_blocks' === $current_screen->post_type && is_object( $current_screen ) && 'post.php' === $hook && $current_screen->is_block_editor ) {
+			if ( is_object( $current_screen ) && 'atfp_add_blocks' === $current_screen->post_type && 'post.php' === $hook && $current_screen->is_block_editor ) {
 				wp_enqueue_script( 'atfp-add-new-block', ATFP_URL . 'assets/js/atfp-add-new-block.min.js', array( 'jquery','wp-data', 'wp-element' ), ATFP_V, true );
 				wp_enqueue_style( 'atfp-supported-blocks', ATFP_URL . 'assets/css/atfp-supported-blocks.min.css', array(), ATFP_V, 'all' );
 
@@ -63,11 +63,16 @@ if ( ! class_exists( 'ATFP_Custom_Block_Post' ) ) {
 		 */
 		public function on_save_post( $post_id, $post, $update ) {
 
-			if(!current_user_can('edit_post', $post_id)){
+			if(!current_user_can('manage_options')){
 				return;
 			}
 
 			if ( isset( $post->post_type ) && 'atfp_add_blocks' === $post->post_type ) {
+				
+				if(wp_is_post_autosave($post_id) || wp_is_post_revision($post_id)){
+					return;
+				}
+
 				if (strpos($post->post_content, 'Make This Content Available for Translation') !== false) {
 					update_option( 'atfp_custom_block_data', $post->post_content );
 					update_option( 'atfp_custom_block_status', 'true' );
@@ -112,14 +117,15 @@ if ( ! class_exists( 'ATFP_Custom_Block_Post' ) ) {
 
 			$args = array(
 				'labels'             => $labels,
-				'public'             => true,
-				'publicly_queryable' => true,
+				'public'             => false,
+				'publicly_queryable' => false,
+				'exclude_from_search' => true,
 				'show_ui'            => true,
-				'show_in_menu'       => false, // Ensure it shows in the menu
-				'query_var'          => true,
+				'show_in_menu'       => false, // Ensure it does not show in the menu
+				'query_var'          => false,
 				'rewrite'            => array( 'slug' => 'automatic-translation' ),
 				'capability_type'    => 'page',
-				'has_archive'        => true,
+				'has_archive'        => false,
 				'hierarchical'       => true,
 				'menu_position'      => 0,
 				'show_in_rest'       => true,

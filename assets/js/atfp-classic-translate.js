@@ -15,6 +15,28 @@
         var magicWandUrl = atfpUrl + 'assets/images/magic-wand.svg';
         var proUrl =  window.atfpClassicTranslateData.pro_version_url
 
+        const BulkTranslationLink = document.createElement( 'a');
+        BulkTranslationLink.href = proUrl;
+        BulkTranslationLink.target = '_blank';
+        BulkTranslationLink.rel = 'noopener noreferrer';
+        BulkTranslationLink.classList.add('atfp-marketing-btn', 'button');
+
+        const AiIconImg = document.createElement('img');
+
+        AiIconImg.src = magicWandUrl;
+        AiIconImg.style.width = '20px';
+        AiIconImg.style.height = '20px';
+        AiIconImg.style.marginRight = '5px';
+        AiIconImg.style.filter = 'brightness(0) invert(1)';
+        AiIconImg.alt = 'AI';
+
+        const BulkTranslationLinkText = document.createElement('span');
+        BulkTranslationLinkText.classList.add('atfp-btn-text');
+        BulkTranslationLinkText.textContent = 'Get Pro for Classic Editor Translation';
+
+        BulkTranslationLink.append(AiIconImg);
+        BulkTranslationLink.append(BulkTranslationLinkText);
+
         // Compose modal HTML with display:none (initially hidden), show later with display:flex
         var modalHtml = `
         <div id="atfp-classic-pro-modal" tabindex="-1" aria-modal="true" role="dialog" style="display:none; align-items: center; justify-content: center;">
@@ -31,9 +53,6 @@
                         <p>
                             If you want to translate classic editor content, you can try our pro version to unlock all advanced features.
                         </p>
-                        <a href="${proUrl}" target="_blank" class="atfp-marketing-btn button">
-                            <img src="${magicWandUrl}" style="width: 20px; height: 20px; margin-right: 5px; filter: brightness(0) invert(1);" alt="AI"><span class="atfp-btn-text">Get Pro for Classic Editor Translation</span>
-                        </a>
                     </div>
                     <div class="modal-footer-notice">
                         <span class="dashicons dashicons-warning"></span>
@@ -44,13 +63,9 @@
         </div>
         `;
 
-        // Close on close button
-        $('#atfp-classic-pro-modal .atfp-modal-close').on('click', function(e) {
-            e.preventDefault();
-            closeClassicProModal();
-        });
-
         $('body').append(modalHtml);
+
+        $('#atfp-classic-pro-modal .atfp-modal-body').append(BulkTranslationLink);
 
         // Close on close button
         $('#atfp-classic-pro-modal .atfp-modal-close').on('click', function(e) {

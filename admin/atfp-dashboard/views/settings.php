@@ -3,7 +3,6 @@
 if(!defined('ABSPATH')){
     exit;
 }
-
 if(!current_user_can('manage_options')){
     wp_die(esc_html__('You do not have sufficient permissions to access this page.', 'automatic-translations-for-polylang'));
 }
@@ -13,11 +12,12 @@ if(!current_user_can('manage_options')){
 
             check_admin_referer( 'atfp_save_optin_settings', 'atfp_optin_nonce' );
 
-            // Handle feedback checkbox
-            if (get_option('cpfm_opt_in_choice_cool_translations')) {
-                $atfp_feedback_opt_in = isset($_POST['atfp-dashboard-feedback-checkbox']) ? 'yes' : 'no';
-                update_option('atfp_feedback_opt_in', $atfp_feedback_opt_in);
-            }
+        // Handle feedback checkbox
+        $atfp_feedback_opt_in = isset($_POST['atfp-dashboard-feedback-checkbox']) ? 'yes' : 'no';
+        
+        if (get_option('cpfm_opt_in_choice_cool_translations')) {
+            update_option('atfp_feedback_opt_in', $atfp_feedback_opt_in);
+        }
 
         // If user opted out, remove the cron job
         if ($atfp_feedback_opt_in === 'no' && wp_next_scheduled('atfp_extra_data_update') ){
