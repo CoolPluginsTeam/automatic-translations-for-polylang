@@ -68,8 +68,6 @@ class CPFM_Feedback_Notice {
 
         }
 
- 
-        $screen         = get_current_screen();
         // nonce verification is not required here because we are not using the nonce here.
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $current_page   = isset($_GET['page'])? sanitize_key(wp_unslash($_GET['page'])):'';
@@ -84,7 +82,7 @@ class CPFM_Feedback_Notice {
         }
     
         // Early return if not needed
-        if (!in_array($current_page, array_unique($allowed_pages))) {
+        if (!in_array($current_page, array_unique($allowed_pages), true)) {
             return;
         }
         wp_enqueue_style('cpfm-common-review-style', ATFP_URL . 'admin/cpfm-feedback/css/cpfm-admin-feedback.css', [], ATFP_V, 'all');
@@ -115,7 +113,7 @@ class CPFM_Feedback_Notice {
 
         if (!current_user_can('manage_options')) {
 
-            wp_send_json_error('Unauthorized access.');
+            wp_send_json_error(esc_html__('Unauthorized access.', 'automatic-translations-for-polylang'));
         }
 
         check_ajax_referer('dismiss_admin_notice', 'nonce');
@@ -126,11 +124,11 @@ class CPFM_Feedback_Notice {
 
         if (!$category || !isset(self::$registered_notices[$category])) {
 
-            wp_send_json_error('Invalid notice category.');
+            wp_send_json_error(esc_html__('Invalid notice category.', 'automatic-translations-for-polylang'));
         }
 
         if (!$category || !isset(self::$registered_notices[$category])) {
-            wp_send_json_error('Invalid notice category.');
+            wp_send_json_error(esc_html__('Invalid notice category.', 'automatic-translations-for-polylang'));
         }
 
         update_option("cpfm_opt_in_choice_{$category}", $opt_in);
@@ -158,16 +156,14 @@ class CPFM_Feedback_Notice {
     }
 
     public function cpfm_render_notice_panel() {
-        if (!current_user_can('manage_options') || !function_exists('get_current_screen')) { 
+        if (!current_user_can('manage_options')) { 
             return;
         }
 
-        $screen         = get_current_screen();
         // nonce verification is not required here because we are not using the nonce here.
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $current_page   = isset($_GET['page']) ? sanitize_key(wp_unslash($_GET['page'])) : ''; 
 
-       
         $unread_count   = 0;
         $auto_show      = false;
     
