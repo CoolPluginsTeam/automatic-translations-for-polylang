@@ -122,7 +122,7 @@ class CPFM_Feedback_Notice {
         $opt_in_raw         = isset($_POST['opt_in']) ? sanitize_text_field( wp_unslash( $_POST['opt_in'] ) ) : '';
         $opt_in             = ($opt_in_raw === 'yes') ? 'yes' : 'no';
 
-        if (!$category || !isset(self::$registered_notices[$category])) {
+        if (!$category || !isset(self::$registered_notices[$category]['plugins'])) {
             wp_send_json_error(esc_html__('Invalid notice category.', 'automatic-translations-for-polylang'));
         }
 
