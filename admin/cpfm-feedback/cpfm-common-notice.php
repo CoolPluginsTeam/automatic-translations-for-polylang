@@ -32,7 +32,7 @@ class CPFM_Feedback_Notice {
         }
 
         if(!isset(self::$registered_notices[$key]['plugins'])){
-            self::$registered_notices[$key]['plugins'] = array();
+            self::$registered_notices[$key]['plugins'] = [];
         }
         
         self::$registered_notices[$key]['plugins'][] = $args;
@@ -121,11 +121,6 @@ class CPFM_Feedback_Notice {
         $category           = isset($_POST['category']) ? sanitize_text_field( wp_unslash( $_POST['category'] ) ): '';
         $opt_in_raw         = isset($_POST['opt_in']) ? sanitize_text_field( wp_unslash( $_POST['opt_in'] ) ) : '';
         $opt_in             = ($opt_in_raw === 'yes') ? 'yes' : 'no';
-
-        if (!$category || !isset(self::$registered_notices[$category])) {
-
-            wp_send_json_error(esc_html__('Invalid notice category.', 'automatic-translations-for-polylang'));
-        }
 
         if (!$category || !isset(self::$registered_notices[$category])) {
             wp_send_json_error(esc_html__('Invalid notice category.', 'automatic-translations-for-polylang'));
