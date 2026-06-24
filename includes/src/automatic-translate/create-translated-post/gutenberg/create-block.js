@@ -146,6 +146,29 @@ const cretaeChildBlock = (block, blockRules, service) => {
 }
 
 /**
+ * Finds the core/post-content block clientId in block themes (FSE).
+ *
+ * @param {Array} blocks - Editor blocks to search.
+ * @returns {string|null} post-content block clientId.
+ */
+const getPostContentClientId = (blocks) => {
+    for (const block of blocks) {
+        if (block.name === 'core/post-content') {
+            return block.clientId;
+        }
+
+        if (block.innerBlocks?.length) {
+            const clientId = getPostContentClientId(block.innerBlocks);
+            if (clientId) {
+                return clientId;
+            }
+        }
+    }
+
+    return null;
+};
+
+/**
  * Creates the main blocks based on the provided block, translate handler, and block rules.
  * If the block name exists, it creates the main block along with its child blocks and inserts it into the block editor.
  * 
@@ -166,8 +189,14 @@ const createBlocks = (block, service) => {
             }
         })
         const parentBlock = createTranslatedBlock(block, childBlock, blockRules, service);
+        const postContentClientId = getPostContentClientId(select('core/block-editor').getBlocks());
 
-        dispatch('core/block-editor').insertBlock(parentBlock);
+        // Block themes wrap post body in core/post-content; insert at root hides content until "Show template".
+        if (postContentClientId) {
+            dispatch('core/block-editor').insertBlock(parentBlock, undefined, postContentClientId);
+        } else {
+            dispatch('core/block-editor').insertBlock(parentBlock);
+        }
 
     }
 }
