@@ -278,9 +278,9 @@ class ATFP_Register_Backend_Assets
 
         $valid_providers = array('chrome-built-in-ai', 'yandex-translate');
 
-        $active_providers = array_filter($active_providers, function($provider_name) use ($valid_providers) {
+        $active_providers = array_values(array_filter($active_providers, function($provider_name) use ($valid_providers) {
             return in_array($provider_name, $valid_providers);
-        });
+        }));
 
         $lang_object = array();
         foreach ($languages as $lang) {
