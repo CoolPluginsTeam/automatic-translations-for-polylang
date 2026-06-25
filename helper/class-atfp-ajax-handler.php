@@ -75,8 +75,10 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				return wp_send_json_error( __( 'Invalid security token sent.', 'automatic-translations-for-polylang' ) );
 			}
 
-			if(!current_user_can('manage_options')){
-				return wp_send_json_error( __( 'Unauthorized', 'automatic-translations-for-polylang' ), 403 );
+			$post_id = isset( $_POST['postId'] ) ? absint($_POST['postId']) : 0;
+
+			if(!$post_id){
+				return wp_send_json_error( __( 'Invalid Post ID.', 'automatic-translations-for-polylang' ) );
 			}
 
 			$block_parse_rules = ATFP_Helper::get_instance()->get_block_parse_rules();
