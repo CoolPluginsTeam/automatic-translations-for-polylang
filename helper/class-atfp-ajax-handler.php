@@ -81,6 +81,10 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				return wp_send_json_error( __( 'Invalid Post ID.', 'automatic-translations-for-polylang' ) );
 			}
 
+			if(!current_user_can('edit_post', $post_id)){
+				return wp_send_json_error( __( 'Unauthorized', 'automatic-translations-for-polylang' ), 403 );
+			}
+
 			$block_parse_rules = ATFP_Helper::get_instance()->get_block_parse_rules();
 
 			$data = array(
