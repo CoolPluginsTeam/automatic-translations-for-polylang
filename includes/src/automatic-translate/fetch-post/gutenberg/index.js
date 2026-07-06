@@ -70,7 +70,8 @@ const GutenbergPostFetch = async (props) => {
 
         const blockRulesApiSendData = {
             atfp_nonce: atfp_global_object.ajax_nonce,
-            action: atfp_global_object.action_block_rules
+            action: atfp_global_object.action_block_rules,
+            postId: parseInt(props.postId)
         };
 
 
