@@ -34,7 +34,7 @@ if ( ! class_exists( 'ATFP_Re_Translation' ) ) {
 				self::$current_post_id=$post_id;
 			}
 
-			$retranslation_post_ids=self::get_retranslation_post_ids();
+			$retranslation_post_ids=self::atfp_translated_post_ids_data();
 
 			if(!empty($retranslation_post_ids) && in_array($post_id, $retranslation_post_ids)){
 				return true;
@@ -43,7 +43,12 @@ if ( ! class_exists( 'ATFP_Re_Translation' ) ) {
 			return false;
 		}
 
-		private static function get_retranslation_post_ids() {
+		/**
+		 * Get the translation data
+		 *
+		 * @return array
+		*/
+		private static function atfp_translated_post_ids_data() {
 			if ( ! isset( self::$current_post_id ) || false === self::$current_post_id ) {
 				return array();
 			}
@@ -86,6 +91,36 @@ if ( ! class_exists( 'ATFP_Re_Translation' ) ) {
 			set_transient( $cache_key, array_values( $data ), DAY_IN_SECONDS );
 
 			return $data;
+		}
+
+		/**
+		 * Check if the post is an old untranslated post
+		 *
+		 * @param int $post_id
+		 * @return bool
+		 */
+		public static function is_old_untranslated_post($post_id){
+			self::$current_post_id=$post_id;
+			$default_language = pll_default_language();
+			$post_language_slug = pll_get_post_language($post_id, 'slug');
+
+			if($post_language_slug === $default_language){
+				return false;
+			}
+
+			$translated_post_ids=self::atfp_translated_post_ids_data();
+
+			if(in_array($post_id, $translated_post_ids)){
+				return false;
+			}
+
+			$parent_post_language_slug=PLL()->model->post->get_translation($post_id, $default_language);
+
+			if($parent_post_language_slug){
+				return absint($parent_post_language_slug);
+			}
+
+			return false;
 		}
 	}
 

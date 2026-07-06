@@ -167,11 +167,22 @@ class ATFP_Register_Backend_Assets
         }else{
             global $post;
                 
-            if (null === $post) {
+            if (null === $post || !isset($post->ID)) {
                 return;
             }
 
-            $this->enqueue_re_translation_assets('gutenberg', $post->ID);
+            $old_untranslated_post=ATFP_Re_Translation::is_old_untranslated_post($post->ID);
+            if($old_untranslated_post){
+                $data = array(
+                    'action_fetch'       => 'atfp_fetch_post_content',
+                    'action_block_rules' => 'atfp_block_parsing_rules',
+                    'parent_post_id'     => $old_untranslated_post,
+                    'old_post' => true,
+                );
+                $this->enqueue_automatic_translate_assets(pll_get_post_language($post->ID, 'slug'), pll_get_post_language($old_untranslated_post, 'slug'), 'gutenberg', $data);
+            }else{
+                $this->enqueue_re_translation_assets('gutenberg', $post->ID);
+            }
         }
     }
 
@@ -185,7 +196,26 @@ class ATFP_Register_Backend_Assets
 
         if ((!empty($page_translated) && $page_translated === 'true') || empty($parent_post_language_slug)) {
             if(function_exists('get_the_ID')){
-                $this->enqueue_re_translation_assets('elementor', get_the_ID());
+                $old_untranslated_post=ATFP_Re_Translation::is_old_untranslated_post(get_the_ID());
+                if($old_untranslated_post){
+                    $current_post_id=get_the_ID();
+                    $elementor_data = \Elementor\Plugin::$instance->documents->get( $old_untranslated_post )->get_elements_data();
+
+                    $meta_fields=get_post_meta($old_untranslated_post);
+
+                    $data = array(
+                        'update_elementor_data' => 'atfp_update_elementor_data',
+                        'elementorData' => $elementor_data,
+                        'metaFields' => $meta_fields,
+                        'parent_post_id' => $old_untranslated_post,
+                        'old_post' => true,
+                    );
+                    
+                    wp_enqueue_style('atfp-elementor-translate', ATFP_URL . 'assets/css/atfp-elementor-translate.min.css', array(), ATFP_V);
+                    $this->enqueue_automatic_translate_assets(pll_get_post_language(get_the_ID(), 'slug'), pll_get_post_language($old_untranslated_post, 'slug'), 'elementor', $data);
+                }else{
+                    $this->enqueue_re_translation_assets('elementor', get_the_ID());
+                }
             }
             return;
         }
