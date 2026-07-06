@@ -403,6 +403,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 			$source_lang = isset($_POST['sourceLang']) ? sanitize_text_field(wp_unslash($_POST['sourceLang'])) : '';
 			$target_lang = isset($_POST['targetLang']) ? sanitize_text_field(wp_unslash($_POST['targetLang'])) : '';
 			$time_taken = isset($_POST['timeTaken']) ? absint(wp_unslash($_POST['timeTaken'])) : 0;
+			$parent_post_id = isset($_POST['parent_post_id']) ? absint(wp_unslash($_POST['parent_post_id'])) : 0;
 
 			if (class_exists('Atfp_Dashboard')) {
 				$translation_data = array(
@@ -428,6 +429,18 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 					'update',
 					$translation_data
 				);
+
+				if($parent_post_id > 0){
+					global $polylang;
+					$parent_lang = pll_get_post_language($parent_post_id, 'slug');
+					$parent_post_id_by_lang = $polylang->model->post->get_translation( $post_id, $parent_lang );
+					if(!$parent_post_id_by_lang){
+						$translations = $polylang->model->post->get_translations( $parent_post_id );
+						$translations[$target_lang]=$post_id;
+
+						pll_save_post_translations($translations);
+					}
+				}
 
 				wp_send_json_success(array(
 					'message' => __('Translation data updated successfully', 'automatic-translations-for-polylang')

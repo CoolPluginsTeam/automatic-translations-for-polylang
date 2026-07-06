@@ -11,8 +11,9 @@ export const updateTranslateData = ({ provider, sourceLang, targetLang, postId }
     const sourceStringCount = translateData?.sourceStringCount || 0;
     const editorType = atfp_global_object.editor_type;
     const date = new Date().toISOString();
+    const parentPostId = window.atfp_global_object.parent_post_id;
 
-    const data = { provider, totalStringCount, totalWordCount, totalCharacterCount, editorType, date, sourceStringCount, sourceWordCount, sourceCharacterCount, sourceLang, targetLang, timeTaken, action: atfp_global_object.update_translate_data, atfp_nonce: atfp_global_object.ajax_nonce, post_id: postId };
+    const data = { provider, totalStringCount, totalWordCount, totalCharacterCount, editorType, date, sourceStringCount, sourceWordCount, sourceCharacterCount, sourceLang, targetLang, timeTaken, action: atfp_global_object.update_translate_data, atfp_nonce: atfp_global_object.ajax_nonce, post_id: postId, parent_post_id: parentPostId };
 
     fetch(atfp_global_object.ajax_url, {
         method: 'POST',

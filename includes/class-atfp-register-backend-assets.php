@@ -204,7 +204,11 @@ class ATFP_Register_Backend_Assets
             return;
         }
 
-        $parent_post_id=PLL()->model->post->get_translation($current_post_id, $parent_post_language_slug);
+        $parent_post_id = get_post_meta(get_the_ID(), '_atfp_parent_post_id', true);
+
+        if(!$parent_post_id){
+            $parent_post_id=PLL()->model->post->get_translation($current_post_id, $parent_post_language_slug);
+        }
 
         $meta_fields=get_post_meta($current_post_id);
 
