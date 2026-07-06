@@ -238,7 +238,7 @@ class ATFP_Register_Backend_Assets
                 if ('builder' === get_post_meta($from_post_id, '_elementor_edit_mode', true) && defined('ELEMENTOR_VERSION')) {
                     $lang = isset($_GET['new_lang']) ? sanitize_key($_GET['new_lang']) : '';
                     $source_lang_name = pll_get_post_language($from_post_id, 'slug');
-                    $this->enqueue_elementor_confirm_box_assets($from_post_id, $lang, $source_lang_name, 'gutenberg');
+                    $this->enqueue_elementor_confirm_box_assets($from_post_id, $lang, $source_lang_name, 'classic');
                     return;
                 }
 
