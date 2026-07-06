@@ -234,6 +234,14 @@ class ATFP_Register_Backend_Assets
                 isset($_GET['from_post'], $_GET['new_lang'], $_GET['_wpnonce']) &&
                 wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['_wpnonce'])), 'new-post-translation')
             ) {
+                $from_post_id = isset($_GET['from_post']) ? absint($_GET['from_post']) : 0;
+                if ('builder' === get_post_meta($from_post_id, '_elementor_edit_mode', true) && defined('ELEMENTOR_VERSION')) {
+                    $lang = isset($_GET['new_lang']) ? sanitize_key($_GET['new_lang']) : '';
+                    $source_lang_name = pll_get_post_language($from_post_id, 'slug');
+                    $this->enqueue_elementor_confirm_box_assets($from_post_id, $lang, $source_lang_name, 'gutenberg');
+                    return;
+                }
+
                 $atfp_utm_parameters='utm_source=atfp_plugin';
                 if(class_exists('ATFP_Helper')){
                     $atfp_utm_parameters=ATFP_Helper::utm_source_text();
