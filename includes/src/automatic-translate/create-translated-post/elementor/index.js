@@ -1,6 +1,7 @@
 import { select } from '@wordpress/data';
 import YoastSeoFields from '../../component/translate-seo-fields/yoast-seo-fields';
 import RankMathSeo from '../../component/translate-seo-fields/rank-math-seo';
+import updateOldPost from './old-post-update';
 
 // Update widget content with translations
 const atfpUpdateWidgetContent = (translations) => {
@@ -284,6 +285,10 @@ const updateElementorPage = ({ postContent, modalClose, service }) => {
 
     
     const elementorData = replaceSourceString();
+
+    if(atfp_global_object.old_post && atfp_global_object.old_post === "1"){
+        updateOldPost.createTree(elementorData);
+    }
 
     const requestBody={
         action: atfp_global_object.update_elementor_data,

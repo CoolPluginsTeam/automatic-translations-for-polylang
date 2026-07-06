@@ -270,7 +270,7 @@ const appendElementorTranslateBtn = () => {
       return;
     }
 
-    if (!window.atfp_global_object.elementorData || '' === window.atfp_global_object.elementorData || window.atfp_global_object.elementorData.length < 1 || elementor.elements.length < 1) {
+    if (!window.atfp_global_object.elementorData || '' === window.atfp_global_object.elementorData || window.atfp_global_object.elementorData.length < 1 || (elementor.elements.length < 1 && window.atfp_global_object.old_post !== '1')) {
 
       if (confirmBox && confirmBox[postId + '_' + targetLang]) {
         delete confirmBox[postId + '_' + targetLang];
@@ -327,7 +327,7 @@ if (editorType === 'gutenberg') {
 
     const sourceLang = window.atfp_global_object.source_lang
 
-    if (sourceLang && '' !== sourceLang) {
+    if (sourceLang && '' !== sourceLang && window.atfp_global_object.old_post !== '1') {
       insertMessagePopup();
     }
 
