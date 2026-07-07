@@ -130,9 +130,9 @@ const App = () => {
       const metaFieldBtn = document.querySelector(translateWrpSelector);
 
       if (metaFieldBtn) {
-        metaFieldBtn.value = __("Re-translate", 'automatic-translations-for-polylang');
+        metaFieldBtn.value = __("Re-Translate", 'automatic-translations-for-polylang');
         if(metaFieldBtn.nodeName !== 'INPUT') {
-          metaFieldBtn.innerText = __("Re-translate", 'automatic-translations-for-polylang');
+          metaFieldBtn.innerText = __("Re-Translate", 'automatic-translations-for-polylang');
         }
 
         const refrenceText=atfp_global_object.refrence_text;
