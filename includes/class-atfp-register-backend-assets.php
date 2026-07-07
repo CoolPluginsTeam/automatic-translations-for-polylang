@@ -179,7 +179,7 @@ class ATFP_Register_Backend_Assets
                     'parent_post_id'     => $old_untranslated_post,
                     'old_post' => true,
                 );
-                $this->enqueue_automatic_translate_assets(pll_get_post_language($post->ID, 'slug'), pll_get_post_language($old_untranslated_post, 'slug'), 'gutenberg', $data);
+                $this->enqueue_automatic_translate_assets(pll_get_post_language($old_untranslated_post, 'slug'), pll_get_post_language($post->ID, 'slug'), 'gutenberg', $data);
             }else{
                 $this->enqueue_re_translation_assets('gutenberg', $post->ID);
             }
@@ -212,7 +212,7 @@ class ATFP_Register_Backend_Assets
                     );
                     
                     wp_enqueue_style('atfp-elementor-translate', ATFP_URL . 'assets/css/atfp-elementor-translate.min.css', array(), ATFP_V);
-                    $this->enqueue_automatic_translate_assets(pll_get_post_language(get_the_ID(), 'slug'), pll_get_post_language($old_untranslated_post, 'slug'), 'elementor', $data);
+                    $this->enqueue_automatic_translate_assets(pll_get_post_language($old_untranslated_post, 'slug'), pll_get_post_language(get_the_ID(), 'slug'), 'elementor', $data);
                 }else{
                     $this->enqueue_re_translation_assets('elementor', get_the_ID());
                 }
