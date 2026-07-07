@@ -1,6 +1,24 @@
 import FilterBlockNestedAttr from "../../component/filter-nested-attr";
 
 /**
+ * Returns client IDs of editable post content blocks.
+ * In template-locked mode, only inner blocks of core/post-content are returned.
+ *
+ * @returns {string[]}
+ */
+export const getContentBlockClientIds = () => {
+    const { select } = wp.data;
+    const blockEditorSelect = select('core/block-editor');
+    const postContentClientId = getPostContentClientId(select('core/block-editor').getBlocks());
+
+    if (postContentClientId) {
+        return blockEditorSelect.getBlockOrder(postContentClientId);
+    }
+
+    return blockEditorSelect.getBlocks().map((block) => block.clientId);
+};
+
+/**
  * Filters and translates attributes of a block based on provided rules.
  * 
  * @param {Object} block - The block to filter and translate attributes for.
