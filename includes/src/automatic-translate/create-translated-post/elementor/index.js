@@ -103,7 +103,7 @@ const atfpUpdateTitle = (title, service) => {
 
 // Find Elementor model by ID
 const atfpFindModelById = (elements, id) => {
-    for (const model of elements) {
+    for (const model of elements) {   
         if (model.get('id') === id) {
             return model;
         }
@@ -114,6 +114,23 @@ const atfpFindModelById = (elements, id) => {
         }
     }
     return null;
+}
+
+const reRenderDynamicWidgets = (elements) => {
+    for (const model of elements) {
+        const widgetName = model.get('elType') === 'widget' ? model.get('widgetType') : model.get('name');
+        if(widgetName){
+            if(widgetName.includes('theme-post-')){
+                model.renderRemoteServer();
+                console.log(model.get('id'));
+            }
+        }
+
+        const nestedElements = model.get('elements').models;
+        if(nestedElements && Array.isArray(nestedElements)){
+            reRenderDynamicWidgets(nestedElements);
+        }
+    }
 }
 
 const updateElementorPage = ({ postContent, modalClose, service }) => {
@@ -308,6 +325,7 @@ const updateElementorPage = ({ postContent, modalClose, service }) => {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
+                reRenderDynamicWidgets(elementor.elements.models);
                 const translateButton = document.querySelector('.atfp-translate-button[name="atfp_meta_box_translate"]');
                 if(translateButton){
                     translateButton.setAttribute('title', 'Translation process completed successfully.');
