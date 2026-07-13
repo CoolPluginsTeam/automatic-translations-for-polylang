@@ -13,6 +13,7 @@ const atfpUpdateWidgetContent = (translations) => {
         if (model) {
             const isAtomic=translation?.isAtomic;
             const settings = model.get('settings');
+            const isUrlLink = translation?.isUrlLink;
 
             if(isAtomic){
                 const settingKey=translation.key.split('_atfp_');
@@ -37,6 +38,18 @@ const atfpUpdateWidgetContent = (translations) => {
                         }
                     }
                 }
+            }
+
+            if (isUrlLink) {
+                const linkKey = translation.key.split('_atfp_');
+                const linkValue = settings.get(linkKey[0]);
+
+                if (linkValue) {
+                    linkValue.url = translation.translatedContent;
+
+                    settings.set(linkKey[0], linkValue);
+                    model?.renderRemoteServer();
+                }   
             }
             
             // Check for normal fields (title, text, editor, etc.)
@@ -147,7 +160,7 @@ const updateElementorPage = ({ postContent, modalClose, service }) => {
     ];
 
     const subStringsToCheck=(strings)=>{
-        const dynamicSubStrings=['title', 'description', 'editor', 'text', 'content', 'label'];
+        const dynamicSubStrings=['title', 'description', 'editor', 'text', 'content', 'label', 'url'];
         const staticSubStrings=['caption','heading','sub_heading', 'testimonial_content', 'testimonial_job', 'testimonial_name', 'name'];
 
         return dynamicSubStrings.some(substring => strings.toLowerCase().includes(substring)) || staticSubStrings.some(substring => strings === substring);
@@ -241,6 +254,13 @@ const updateElementorPage = ({ postContent, modalClose, service }) => {
                             });
                         }
                     });
+                }else if(key === 'link' && settings[key].url && '' !== settings[key].url){
+                    translations.push({
+                        ID: widgetId,
+                        key: `${key}_atfp_url`,
+                        translatedContent: settings[key].url,
+                        isUrlLink: true
+                    })
                 }
             });
         }

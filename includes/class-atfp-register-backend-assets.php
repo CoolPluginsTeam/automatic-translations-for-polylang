@@ -200,6 +200,9 @@ class ATFP_Register_Backend_Assets
                 if($old_untranslated_post){
                     $current_post_id=get_the_ID();
                     $elementor_data = \Elementor\Plugin::$instance->documents->get( $old_untranslated_post )->get_elements_data();
+                    $post_language_slug = pll_get_post_language($old_untranslated_post, 'slug');
+
+                    $elementor_data=ATFP_Helper::replace_links_with_translations(json_encode($elementor_data), $post_language_slug, $parent_post_language_slug);
 
                     $meta_fields=get_post_meta($old_untranslated_post);
 
@@ -212,7 +215,7 @@ class ATFP_Register_Backend_Assets
                     );
                     
                     wp_enqueue_style('atfp-elementor-translate', ATFP_URL . 'assets/css/atfp-elementor-translate.min.css', array(), ATFP_V);
-                    $this->enqueue_automatic_translate_assets(pll_get_post_language($old_untranslated_post, 'slug'), pll_get_post_language(get_the_ID(), 'slug'), 'elementor', $data);
+                    $this->enqueue_automatic_translate_assets($post_language_slug, pll_get_post_language(get_the_ID(), 'slug'), 'elementor', $data);
                 }else{
                     $this->enqueue_re_translation_assets('elementor', get_the_ID());
                 }
@@ -229,11 +232,12 @@ class ATFP_Register_Backend_Assets
 
         $elementor_data = \Elementor\Plugin::$instance->documents->get( $current_post_id )->get_elements_data();
 
-
         if ($parent_post_language_slug === $post_language_slug) {
             return;
         }
-
+            
+        $elementor_data=ATFP_Helper::replace_links_with_translations(json_encode($elementor_data), $post_language_slug, $parent_post_language_slug);
+        
         $parent_post_id = get_post_meta(get_the_ID(), '_atfp_parent_post_id', true);
 
         if(!$parent_post_id){
