@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$atfp_active_providers = get_option( 'atfp_enabled_providers', array( 'chrome-built-in-ai', 'yandex-translate' ) );
+$atfp_active_providers = ATFP_Helper::get_active_providers();
 
 function atfp_render_checked_icon() {
 	return '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path d="M12 21a9 9 0 1 0-6.364-2.636"/><path d="m16 10l-3.598 4.318c-.655.786-.983 1.18-1.424 1.2s-.803-.343-1.527-1.067L8 13"/></g></svg>';

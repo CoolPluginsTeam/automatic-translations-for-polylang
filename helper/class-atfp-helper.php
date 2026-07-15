@@ -616,5 +616,34 @@ if (! class_exists('ATFP_Helper')) {
 			}
 			return array();
 		}
+
+		public static function get_active_providers(){
+			$active_providers = get_option('atfp_enabled_providers', array());
+			
+			$default_active_providers = array('chrome-built-in-ai'=>true, 'edge-built-in-ai'=>true, 'yandex-translate'=>true);
+
+			if($active_providers && !empty($active_providers)){
+				$active_providers_values=array_values($active_providers);
+
+				$first_value_type=gettype($active_providers_values[0]);
+
+				if($first_value_type !== 'boolean'){
+					$update_values=array_fill_keys($active_providers_values, true);
+					update_option('atfp_enabled_providers', $update_values);
+				}
+			}
+
+			$active_providers=array_merge($default_active_providers, $active_providers);
+	
+			$valid_providers = array('chrome-built-in-ai', 'edge-built-in-ai', 'yandex-translate');
+	
+			$active_providers = array_filter($active_providers, function($status) {
+				return $status === true;
+			});
+
+			$active_providers = array_intersect(array_keys($active_providers), $valid_providers);
+
+			return $active_providers;
+		}
 	}
 }

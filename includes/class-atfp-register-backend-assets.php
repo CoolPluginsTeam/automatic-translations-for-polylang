@@ -320,7 +320,7 @@ class ATFP_Register_Backend_Assets
         $post_type = get_post_type();
 
         $languages = PLL()->model->get_languages_list();
-        $active_providers = get_option('atfp_enabled_providers', array('chrome-built-in-ai', 'yandex-translate'));
+        $active_providers = ATFP_Helper::get_active_providers();
 
         $valid_providers = array('chrome-built-in-ai', 'yandex-translate');
 

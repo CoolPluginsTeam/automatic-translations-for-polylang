@@ -524,21 +524,25 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				return wp_send_json_error( __( 'Invalid enabled providers.', 'automatic-translations-for-polylang' ) );
 			}
 			
-			$valid_providers = array( 'chrome-built-in-ai', 'yandex-translate' );
+			$default_providers = array('chrome-built-in-ai'=>false, 'edge-built-in-ai'=>false, 'yandex-translate'=>false);
 
-			$updated_providers = array();
-
-			foreach ( $enabled_providers as $provider_key => $status ) {
-				if ( in_array( $provider_key, $valid_providers ) && $status === true ) {
-					$updated_providers[] = sanitize_text_field( $provider_key );
+			$updated_providers=array();
+			
+			foreach($enabled_providers as $provider_key => $status){
+				if(isset($default_providers[$provider_key]) && $status === true){
+					$updated_providers[sanitize_text_field($provider_key)] = true;
 				}
 			}
 
-			update_option( 'atfp_enabled_providers', $updated_providers );
-			wp_send_json_success( array(
-				'providers' => $updated_providers,
-				'message'   => __( 'Enabled providers updated successfully.', 'automatic-translations-for-polylang' ),
-			) );
+			$enabled_providers=array_merge($default_providers, $updated_providers);
+
+			update_option('atfp_enabled_providers', $enabled_providers);
+
+			$enabled_providers=array_filter($enabled_providers, function($status){
+				return $status === true;
+			});
+
+			wp_send_json_success( array( 'providers' => array_keys($enabled_providers), 'message' => __( 'Enabled providers updated successfully.', 'automatic-translations-for-polylang' ) ) );
         }
 
 		public function atfp_install_plugin()
