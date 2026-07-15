@@ -26,7 +26,8 @@ $atfp_render_icon_allowed_tags = array(
 );
 
 $atfp_providers = [
-	'chrome-built-in-ai' => ["Chrome Built-in AI", "chrome-built-in-ai-logo.png", "Free", ["Fast AI Translations in Browser", "Unlimited Free Translations", "Use Translation Modals"], esc_url('https://docs.coolplugins.net/doc/chrome-ai-translation-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_chrome_pro')],
+	'chrome-built-in-ai' => ["Chrome Built-in AI", "chrome-built-in-ai-logo.png", "Free", ["Fast AI Translations in Browser", "Unlimited Free Translations", "Bulk Translation (Pro)"], esc_url('https://docs.coolplugins.net/doc/chrome-ai-translation-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_chrome_pro')],
+	'edge-built-in-ai' => ["Edge Built-in AI", "edge-built-in-ai-logo.png", "Free", ["Fast AI Translations in Browser", "Unlimited Free Translations", "Bulk Translation (Pro)"], esc_url('https://docs.coolplugins.net/doc/edge-ai-translation-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_edge_pro')],
 	'yandex-translate' => ["Yandex Translate", "yandex-translate-logo.png", "Free", ["Unlimited Free Translations", "No API & No Extra Cost"], esc_url('https://docs.coolplugins.net/doc/yandex-translate-for-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_yandex_pro')],
 	'google-translate' => ["Google Translate", "google-translate-logo.png", "Pro", ["Unlimited Free Translations", "Fast & No API Key Required", "Bulk Translation (Pro)"], esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?utm_source=dupcap_plugin&utm_campaign=get_pro&utm_content=dashboard_google')],
 	'openai' => ["OpenAI", "openai-translate-logo.png", "Pro", ["Unlimited Translations", "Use Translation Modals", "Bulk Translation (Pro)"], esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?utm_source=dupcap_plugin&utm_campaign=get_pro&utm_content=dashboard_openai'), esc_url('admin.php?page=polylang-atfpp-dashboard&tab=settings')],
@@ -98,9 +99,9 @@ $atfp_providers = [
 							<a href="<?php echo esc_url( $provider_data[4][0] ); ?>" target="_blank" rel="noopener noreferrer">
 								<img src="<?php echo esc_url( ATFP_URL . 'assets/images/' . $provider_data[1] ); ?>" alt="<?php echo esc_attr__( $provider_data[0], 'automatic-translations-for-polylang' ); ?>">
 							</a>
-							<div class="atfp-provider-switch-container" data-provider="<?php echo esc_attr( $provider_key ); ?>">
-								<label class="atfp-provider-switch atfp-pro-provider">
-									<input type="checkbox" class="atfp-provider-toggle" <?php checked( in_array( $provider_key, $atfp_active_providers ), true ); ?>/>
+							<div class="atfp-provider-switch-container<?php echo esc_attr( $provider_data[2] === 'Pro' ? ' atfp-pro-provider' : '' ); ?>" data-provider="<?php echo esc_attr( $provider_key ); ?>">
+								<label class="atfp-provider-switch">
+									<input type="checkbox" class="atfp-provider-toggle" data-provider="<?php echo esc_attr( $provider_key ); ?>" <?php checked( in_array( $provider_key, $atfp_active_providers ), true ); ?>/>
 									<span class="atfp-switch-slider"></span>
 								</label>
 							</div>
