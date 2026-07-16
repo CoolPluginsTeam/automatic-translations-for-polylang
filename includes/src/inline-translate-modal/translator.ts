@@ -14,31 +14,55 @@ class Translator {
     this.sourceLangLabel = sourceLangLabel;
   }
 
+  static getBrowserType = () => {
+    let type = 'Other';
+    // @ts-ignore
+    if (window.navigator && window.navigator.userAgentData && window.navigator.userAgentData.brands) {
+      // @ts-ignore
+      window.navigator.userAgentData.brands.forEach((data: any) => {
+        if (data.brand === 'Google Chrome') {
+          type = 'Chrome';
+        } else if (data.brand === 'Microsoft Edge') {
+          type = 'Edge';
+        }
+      });
+    } else {
+      if (window.navigator.userAgent.includes('Edg')) {
+        type = 'Edge';
+      } else if (window.hasOwnProperty('chrome')) {
+        type = 'Chrome';
+      }
+    }
+
+    return type;
+  }
+
   public async LanguagePairStatus() {
     // @ts-ignore
     if (!window?.self?.translation && !window?.self?.ai?.translator && !window?.self?.Translator) {
-      return { error: '<span style="color: #ff4646; display: inline-block;">The Translator AI modal is currently not supported or disabled in your browser. Please enable it. For detailed instructions on how to enable the Translator AI modal in your Chrome browser, <a href="https://developer.chrome.com/docs/ai/translator-api#bypass_language_restrictions_for_local_testing" target="_blank">click here</a>.</span>' };
+      return { error: `<span style="color: #ff4646; display: inline-block;">The Translator AI modal is currently not supported or disabled in your browser. Please enable it. For detailed instructions on how to enable the Translator AI modal in your ${Translator.getBrowserType() === 'Edge' ? 'Edge' : 'Chrome'} browser, <a href="${Translator.getBrowserType() === 'Edge' ? 'https://learn.microsoft.com/en-us/microsoft-edge/web-platform/translator-api#bypass_language_restrictions_for_local_testing' : 'https://developer.chrome.com/docs/ai/translator-api#bypass_language_restrictions_for_local_testing'}" target="_blank">click here</a>.</span>` };
     }
 
     const status = await this.languagePairAvality(this.sourceLang, this.targetLang);
 
     // Handle case for language pack after download
     if (status === "after-download" || status === "downloadable" || status === "unavailable") {
-      return { error: `<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">
+      return {
+        error: `<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">
           <h4>Installation Instructions for Language Packs:</h4>
           <ol>
               <li>
                   To proceed, please install the language pack for <strong>${this.targetLangLabel} (${this.targetLang})</strong> or <strong>${this.sourceLangLabel} (${this.sourceLang})</strong>.
               </li>
               <li>
-                  After installing the language pack, add this language to your browser's system languages in Chrome settings.<br>
+                  After installing the language pack, add this language to your browser's system languages in ${Translator.getBrowserType() === 'Edge' ? 'Edge' : 'Chrome'} settings.<br>
                   Go to <strong>Settings &gt; Languages &gt; Add languages</strong> and add <strong>${this.targetLangLabel}</strong> or <strong>${this.sourceLangLabel}</strong> to your preferred languages list & reload the page.
               </li>
               <li>
                   You can install it by visiting the following link: 
                   <strong>
-                      <span data-clipboard-text="chrome://on-device-translation-internals" target="_blank" class="chrome-ai-translator-flags">
-                          chrome://on-device-translation-internals ${svgIcons({iconName: 'copy'})}
+                      <span data-clipboard-text="${Translator.getBrowserType() === 'Edge' ? 'edge' : 'chrome'}://on-device-translation-internals" target="_blank" class="chrome-ai-translator-flags">
+                          ${Translator.getBrowserType() === 'Edge' ? 'edge' : 'chrome'}://on-device-translation-internals ${svgIcons({ iconName: 'copy' })}
                       </span>
                   </strong>. Click on the URL to copy it, then open a new window and paste this URL to access the settings.
               </li>
@@ -48,7 +72,7 @@ class Translator {
               <li>
                   You need to install both language packs for translation to work. You can search for each language by its language code: <strong>${this.sourceLang}</strong> and <strong>${this.targetLang}</strong>.
               </li>
-              <li>For more help, refer to the documentation to check <a href="https://developer.chrome.com/docs/ai/translator-api#supported-languages" target="_blank">supported languages</a>.</li>
+              <li>For more help, refer to the documentation to check <a href="${Translator.getBrowserType() === 'Edge' ? 'https://learn.microsoft.com/en-us/microsoft-edge/web-platform/translator-api#supported-languages' : 'https://developer.chrome.com/docs/ai/translator-api#supported-languages'}" target="_blank">supported languages</a>.</li>
           </ol>
       </span>`};
     }
@@ -67,11 +91,11 @@ class Translator {
               <li>
                   You can check the download progress by opening:
                   <strong>
-                      <span data-clipboard-text="chrome://on-device-translation-internals" target="_blank" class="chrome-ai-translator-flags">
-                          chrome://on-device-translation-internals ${svgIcons({iconName: 'copy'})}
+                      <span data-clipboard-text="${Translator.getBrowserType() === 'Edge' ? 'edge' : 'chrome'}://on-device-translation-internals" target="_blank" class="chrome-ai-translator-flags">
+                          ${Translator.getBrowserType() === 'Edge' ? 'edge' : 'chrome'}://on-device-translation-internals ${svgIcons({ iconName: 'copy' })}
                       </span>
                   </strong>
-                  . Click on the URL to copy it, then open a new window and paste this URL in Chrome to view the status.
+                  . Click on the URL to copy it, then open a new window and paste this URL in ${Translator.getBrowserType() === 'Edge' ? 'Edge' : 'Chrome'} to view the status.
               </li>
               <li>
                   <strong>What to do next:</strong>
@@ -81,23 +105,24 @@ class Translator {
                   </ul>
               </li>
               <li>
-                  For more help, refer to the documentation to check <a href="https://developer.chrome.com/docs/ai/translator-api#supported-languages" target="_blank">supported languages</a>.
+                  For more help, refer to the documentation to check <a href="${Translator.getBrowserType() === 'Edge' ? 'https://learn.microsoft.com/en-us/microsoft-edge/web-platform/translator-api#supported-languages' : 'https://developer.chrome.com/docs/ai/translator-api#supported-languages'}" target="_blank">supported languages</a>.
               </li>
           </ol>
           <div style="text-align: right;">
-              <button onclick="location.reload()" class="atfp-error-reload-btn">Reload Page</button>
+              <button onclick="location.reload()" class="atfpp-error-reload-btn">Reload Page</button>
           </div>
       </span>`;
       return { error: message };
     }
 
     if (status !== "readily" && status !== 'available') {
-      return { error: `<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">
+      return {
+        error: `<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">
           <h4>Language Pack Installation Required</h4>
           <ol>
               <li>Please ensure that the language pack for <strong>${this.targetLangLabel} (${this.targetLang})</strong> or <strong>${this.sourceLangLabel} (${this.sourceLang})</strong> is installed and set as a preferred language in your browser.</li>
-              <li>To install the language pack, visit <strong><span data-clipboard-text="chrome://on-device-translation-internals" target="_blank" class="chrome-ai-translator-flags">chrome://on-device-translation-internals ${svgIcons({iconName: 'copy'})}</span></strong>. Click on the URL to copy it, then open a new window and paste this URL to access the settings.</li>
-              <li>If you encounter any issues, please refer to the documentation to check <a href="https://developer.chrome.com/docs/ai/translator-api#supported-languages" target="_blank">supported languages</a> for further assistance.</li>
+              <li>To install the language pack, visit <strong><span data-clipboard-text="${Translator.getBrowserType() === 'Edge' ? 'edge' : 'chrome'}://on-device-translation-internals" target="_blank" class="chrome-ai-translator-flags">${Translator.getBrowserType() === 'Edge' ? 'edge' : 'chrome'}://on-device-translation-internals ${svgIcons({ iconName: 'copy' })}</span></strong>. Click on the URL to copy it, then open a new window and paste this URL to access the settings.</li>
+              <li>If you encounter any issues, please refer to the documentation to check <a href="${Translator.getBrowserType() === 'Edge' ? 'https://learn.microsoft.com/en-us/microsoft-edge/web-platform/translator-api#supported-languages' : 'https://developer.chrome.com/docs/ai/translator-api#supported-languages'}" target="_blank">supported languages</a> for further assistance.</li>
           </ol>
       </span>` };
     }
@@ -135,17 +160,17 @@ class Translator {
     }
 
     // @ts-ignore
-    if(['unavailable', 'downloading', 'after-download', 'downloadable'].includes(status) && window?.self?.Translator){
+    if (['unavailable', 'downloading', 'after-download', 'downloadable'].includes(status) && window?.self?.Translator) {
       try {
         // @ts-ignore
         const translator = await window?.self?.Translator?.create({
-            sourceLanguage: source,
-            targetLanguage: target,
-            monitor(m) {
-                m.addEventListener('downloadprogress', (e) => {
-                    console.log(`Downloaded ${e.loaded * 100}%`);
-                });
-            },
+          sourceLanguage: source,
+          targetLanguage: target,
+          monitor(m) {
+            m.addEventListener('downloadprogress', (e) => {
+              console.log(`Downloaded ${e.loaded * 100}%`);
+            });
+          },
         });
 
         // @ts-ignore
