@@ -10,6 +10,7 @@ jQuery(function ($) {
             .replace(/"/g, '&quot;')
             .replace(/'/g, '&#039;');
     }
+    console.log(atfpChromeAiNoticeData.enabled_providers)
 
     class ChromeAiTranslator {
 
@@ -39,6 +40,27 @@ jQuery(function ($) {
             return false;
         }
 
+        static getBrowserType = () => {
+            let type='Other';
+            if(navigator && navigator.userAgentData && navigator.userAgentData.brands){
+                navigator.userAgentData.brands.forEach(data=>{
+                    if(data.brand === 'Google Chrome'){
+                        type='Chrome';
+                    }else if(data.brand === 'Microsoft Edge'){
+                        type='Edge';
+                    }
+                });
+            }else{
+                if(navigator.userAgent.includes('Edg')){
+                    type='Edge';
+                }else if(window.hasOwnProperty('chrome')){
+                    type='Chrome';
+                }
+            }
+    
+            return type;
+        }
+
         /**
          * Get the list of supported languages for Chrome AI Translator
          * @returns {string[]} Array of supported language codes (lowercase)
@@ -52,9 +74,9 @@ jQuery(function ($) {
          * @returns {boolean} True if browser is Chrome, false otherwise
          */
         static checkBrowserCompatibility = () => {
-            return window.hasOwnProperty('chrome') &&
-                navigator.userAgent.includes('Chrome') &&
-                !navigator.userAgent.includes('Edg');
+            const browserType = ChromeAiTranslator.getBrowserType();
+
+            return 'Other' !== browserType && (window.hasOwnProperty('chrome') || navigator.userAgent.includes('Chrome'));
         }
 
         /**
@@ -188,9 +210,14 @@ jQuery(function ($) {
     async function initChromeLocalAINotice() {
         // Check if notice element exists
         const $notice = $('#atfp-chrome-local-ai-notice');
+
         if (!$notice.length) {
             return; // Notice element doesn't exist, exit early
         }
+        
+        const browserType=ChromeAiTranslator.getBrowserType()==='Edge' || (atfpChromeAiNoticeData.enabled_providers.includes('edge-built-in-ai') && !atfpChromeAiNoticeData.enabled_providers.includes('chrome-built-in-ai')) ? 'edge' : 'chrome';
+        const browserTitle=browserType==='edge' ? 'Edge' : 'Chrome';
+        
         // Use centralized Chrome AI Translator utility methods
         const bypassBrowser = typeof atfpChromeAiNoticeData !== 'undefined' && atfpChromeAiNoticeData.chrome_ai_bypass_browser_check === '1';
         const bypassSecure = typeof atfpChromeAiNoticeData !== 'undefined' && atfpChromeAiNoticeData.chrome_ai_bypass_secure_check === '1';
@@ -250,11 +277,11 @@ jQuery(function ($) {
         const notices = {
             browserHeading: '⚠️ Important Notice: Browser Compatibility',
             browserMessage: '<ul><li>' +
-                'The <strong>Translator API</strong>, which uses Chrome Local AI Models, is designed exclusively for use with the <strong>Chrome browser</strong>.' +
+                `The <strong>Translator API</strong>, which uses ${browserTitle} Local AI Models, is designed exclusively for use with the <strong>${browserTitle} browser</strong>.` +
                 '</li><li>' +
-                'If you are using a different browser (such as Edge, Firefox, or Safari), the API may not function correctly.' +
+                'If you are using a different browser (such as Firefox, or Safari), the API may not function correctly.' +
                 '</li><li>' +
-                'Learn more in the <a href="https://developer.chrome.com/docs/ai/translator-api" target="_blank" rel="noreferrer">official documentation</a>.' +
+                `Learn more in the <a href="${browserType==='edge' ? 'https://developer.microsoft.com/en-us/microsoft-edge/ai/docs/api-reference/index' : 'https://developer.chrome.com/docs/ai/translator-api'}" target="_blank" rel="noreferrer">official documentation</a>.` +
                 '</li></ul>',
             secureHeading: '⚠️ Important Notice: Secure Connection Required',
             secureMessage: '<ul><li>' +
@@ -266,17 +293,17 @@ jQuery(function ($) {
                 '<ol>' +
                 '<li>Switch to a secure connection by using <strong><code>https://</code></strong>.</li>' +
                 '<li>' +
-                'Alternatively, add this URL to Chrome\'s list of insecure origins treated as secure: ' + createCopyableLink('chrome://flags/#unsafely-treat-insecure-origin-as-secure') +
+                `Alternatively, add this URL to ${browserTitle} list of insecure origins treated as secure: ` + createCopyableLink(`${browserType==='edge' ? 'edge://flags/#unsafely-treat-insecure-origin-as-secure' : 'chrome://flags/#unsafely-treat-insecure-origin-as-secure'}`) +
                 '<br />Copy the URL and then open a new window and paste this URL to access the settings.' +
                 '</li></ol>',
             apiHeading: '⚠️ Important Notice: API Availability',
             apiMessage: '<ol>' +
-                '<li>Open this URL in a new Chrome tab: ' + createCopyableLink('chrome://flags/#translation-api') + '. Copy this URL and then open a new window and paste this URL to access the settings.</li>' +
+                `<li>Open this URL in a new ${browserTitle} tab: ` + createCopyableLink(`${browserType==='edge' ? 'edge://flags/#translation-api' : 'chrome://flags/#translation-api'}`) + `. Copy this URL and then open a new window and paste this URL to access the settings.</li>` +
                 '<li>Ensure that the <strong>Experimental translation API</strong> option is set to <strong>Enabled</strong>.</li>' +
                 '<li>After change the setting, Click on the <strong>Relaunch</strong> button to apply the changes.</li>' +
                 '<li>The Translator AI modal should now be enabled and ready for use.</li>' +
                 '</ol>' +
-                '<p>For more information, please refer to the <a href="https://developer.chrome.com/docs/ai/translator-api" target="_blank">documentation</a>.</p>' +
+                `<p>For more information, please refer to the <a href="${browserType==='edge' ? 'https://developer.microsoft.com/en-us/microsoft-edge/ai/docs/api-reference/index' : 'https://developer.chrome.com/docs/ai/translator-api'}" target="_blank">documentation</a>.</p>` +
                 '<p>If the issue persists, please ensure that your browser is up to date and restart your browser.</p>' +
                 '<p>If you continue to experience issues after following the above steps, please <a href="https://my.coolplugins.net/account/support-tickets/" target="_blank" rel="noopener">open a support ticket</a> with our team. We are here to help you resolve any problems and ensure a smooth translation experience.</p>'
         };
@@ -802,7 +829,11 @@ jQuery(function ($) {
                             });
 
                             if (status !== 'available') {
-                                $errorDiv.html('Language pack is downloding. Please select another language or wait for it to finish downloading.').show();
+                                $errorDiv.text(
+                                    typeof wp !== 'undefined' && wp.i18n
+                                        ? wp.i18n.__('Language pack is downloading. Please select another language or wait for it to finish downloading.', 'autopoly-ai-translation-for-polylang-pro')
+                                        : 'Language pack is downloading. Please select another language or wait for it to finish downloading.'
+                                ).show();
                                 return;
                             }else{
                                 $sourceSelect.find('option[value="' + sourceLang + '"]').text($sourceSelect.find('option[value="' + sourceLang + '"]').text().replace(' (Downloadable)', ''));
@@ -811,12 +842,20 @@ jQuery(function ($) {
                         }
                     }catch(error){
                         testWrap.hide();
-                        $errorDiv.html('Language pack is not available. Please select another language.').show();
+                        $errorDiv.text(
+                            typeof wp !== 'undefined' && wp.i18n
+                                ? wp.i18n.__('Language pack is not available. Please select another language.', 'autopoly-ai-translation-for-polylang-pro')
+                                : 'Language pack is not available. Please select another language.'
+                        ).show();
                         return;
                     }
                 } else {
                     testWrap.hide();
-                    $errorDiv.html('Language pack is not available. Please select another language.').show();
+                    $errorDiv.text(
+                        typeof wp !== 'undefined' && wp.i18n
+                            ? wp.i18n.__('Language pack is not available. Please select another language.', 'autopoly-ai-translation-for-polylang-pro')
+                            : 'Language pack is not available. Please select another language.'
+                    ).show();
                     return;
                 }
             }
@@ -872,7 +911,7 @@ jQuery(function ($) {
 
                 // Perform translation
                 const translatedText = await translator.translate(textToTranslate);
-
+                
                 // Display result
                 $resultDiv.html(
                     '<strong>Original:</strong> ' + $('<div>').text(textToTranslate).html() + '<br><br>' +
@@ -891,7 +930,7 @@ jQuery(function ($) {
                 } else {
                     errorMessage += 'Please check your Chrome AI Translator configuration.';
                 }
-                $errorDiv.html(errorMessage).show();
+                $errorDiv.text(errorMessage).show();
             } finally {
                 // Re-enable button
                 $testBtn.prop('disabled', false).text('Test Translation');
@@ -1006,10 +1045,14 @@ jQuery(function ($) {
         }
     }
 
-    const showConfigurationNotice = async () => {
-        if ($('.atfp-chrome-ai-card .atfp-chrome-configure-notice').length > 0) {
-            $('.atfp-chrome-ai-card .atfp-chrome-configure-notice').show();
-            $('.atfp-chrome-configure-button').show();
+    const showConfigurationNotice = async (type = 'chrome') => {
+        const browserType=ChromeAiTranslator.getBrowserType();
+        if ($(`.atfp-card-${type}-built-in-ai .atfp-chrome-configure-notice`).length > 0) {
+            $(`.atfp-card-${type}-built-in-ai .atfp-chrome-configure-notice`).show();
+            
+            if(type !== 'edge' || browserType !== 'Other'){
+                $(`.atfp-${type}-configure-button`).show();
+            }
             return;
         }
 
@@ -1046,47 +1089,61 @@ jQuery(function ($) {
         }
 
         if (hasError) {
+            const browerName=type.charAt(0).toUpperCase() + type.slice(1);
             // Create notice with specific message based on error type
-            let noticeMessage = 'Please configure the Chrome settings to use Chrome AI Translator.';
+            let noticeMessage = `Please configure the ${browerName} settings to use ${browerName} AI Translator.`;
 
             if (errorType === 'browser') {
-                noticeMessage = 'Chrome browser is required. Please configure Chrome settings.';
+                noticeMessage = `${browerName} browser is required.`;
             } else if (errorType === 'secure') {
-                noticeMessage = 'Secure connection (HTTPS) is required. Please configure Chrome settings.';
+                noticeMessage = `Secure connection (HTTPS) is required. Please configure ${browerName} settings.`;
             } else if (errorType === 'api') {
-                noticeMessage = 'Chrome Translation API is not available. Please configure Chrome settings.';
+                noticeMessage = `${browerName} Translation API is not available. Please configure ${browerName} settings.`;
             } else if (errorType === 'language-pack') {
-                noticeMessage = 'Language pack is required. Please configure Chrome settings.';
+                noticeMessage = `Language pack is required. Please configure ${browerName} settings.`;
             }
 
-            const notice = $('<div class="atfp-chrome-configure-notice" style="margin-top: 10px; font-size: 12px; color: #dc2626;">' + noticeMessage + '</div>');
+            const notice = $(`<div class="atfp-${type}-configure-notice" style="margin-top: 10px; font-size: 12px; color: #dc2626;">` + noticeMessage + '</div>');
 
-            $('.atfp-chrome-ai-card').append(notice);
-            $('.atfp-chrome-configure-button').show();
+            $(`.atfp-card-${type}-built-in-ai`).append(notice);
+            if(errorType !== 'browser' && (type !== 'edge' || browserType !== 'Other' || !atfpChromeAiNoticeData.enabled_providers.includes('chrome-built-in-ai') || !atfpChromeAiNoticeData.enabled_providers.includes('edge-built-in-ai'))){
+                $(`.atfp-${type}-configure-button`).show();
+            }
         } else {
-            $('.atfp-chrome-ai-card .atfp-chrome-configure-notice').hide();
-            $('.atfp-chrome-configure-button').hide();
+            $(`.atfp-card-${type}-built-in-ai .atfp-${type}-configure-notice`).hide();
+            $(`.atfp-${type}-configure-button`).hide();
         }
     }
 
+    const browserTypes=['chrome', 'edge'];
+    const browserType=ChromeAiTranslator.getBrowserType();
 
-    if ($('.atfp-chrome-ai-card').length > 0) {
-        const ctfp_chrome_ai_toogle = $('.atfp-chrome-ai-card .atfp-provider-toggle');
-        const chrome_ai_enabled = ctfp_chrome_ai_toogle.is(':checked');
-
-        if (chrome_ai_enabled) {
-            showConfigurationNotice();
+    if (browserType !== 'Other') {
+        if(browserType === 'Chrome') {
+            $('.atfp-card-edge-built-in-ai').hide();
+        } else if(browserType === 'Edge') {
+            $('.atfp-card-chrome-built-in-ai').hide();
         }
+    }
 
-        ctfp_chrome_ai_toogle.on('change', function () {
+    browserTypes.forEach(type => {
+        if ($(`.atfp-card-${type}-built-in-ai`).length > 0) {
+            const ctfp_chrome_ai_toogle = $(`.atfp-card-${type}-built-in-ai .atfp-provider-toggle`);
             const chrome_ai_enabled = ctfp_chrome_ai_toogle.is(':checked');
+                
             if (chrome_ai_enabled) {
-                showConfigurationNotice();
-            } else {
-                $('.atfp-chrome-ai-card .atfp-chrome-configure-notice').hide();
-                $('.atfp-chrome-configure-button').hide();
+                showConfigurationNotice(type);
             }
-        });
-    }
-
+    
+            ctfp_chrome_ai_toogle.on('change', function () {
+                const chrome_ai_enabled = ctfp_chrome_ai_toogle.is(':checked');
+                if (chrome_ai_enabled) {
+                    showConfigurationNotice(type);
+                } else {
+                    $(`.atfp-card-${type}-built-in-ai .atfp-${type}-configure-notice`).hide();
+                    $(`.atfp-${type}-configure-button`).hide();
+                }
+            });
+        }
+    });
 });
