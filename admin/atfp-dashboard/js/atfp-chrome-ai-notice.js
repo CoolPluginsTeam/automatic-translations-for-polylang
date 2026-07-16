@@ -1047,8 +1047,14 @@ jQuery(function ($) {
 
     const showConfigurationNotice = async (type = 'chrome') => {
         const browserType=ChromeAiTranslator.getBrowserType();
-        if ($(`.atfp-card-${type}-built-in-ai .atfp-chrome-configure-notice`).length > 0) {
-            $(`.atfp-card-${type}-built-in-ai .atfp-chrome-configure-notice`).show();
+        if ($(`.atfp-card-${type}-built-in-ai .atfp-${type}-configure-notice`).length > 0) {
+            $(`.atfp-card-${type}-built-in-ai .atfp-${type}-configure-notice`).show();
+
+            const errorType = $(`.atfp-card-${type}-built-in-ai .atfp-${type}-configure-notice`).data('error-type');
+
+            if(errorType === 'browser'){
+                return;
+            }
             
             if(type !== 'edge' || browserType !== 'Other'){
                 $(`.atfp-${type}-configure-button`).show();
@@ -1103,7 +1109,7 @@ jQuery(function ($) {
                 noticeMessage = `Language pack is required. Please configure ${browerName} settings.`;
             }
 
-            const notice = $(`<div class="atfp-${type}-configure-notice" style="margin-top: 10px; font-size: 12px; color: #dc2626;">` + noticeMessage + '</div>');
+            const notice = $(`<div class="atfp-${type}-configure-notice" style="margin-top: 10px; font-size: 12px; color: #dc2626;" data-error-type="${errorType}">` + noticeMessage + '</div>');
 
             $(`.atfp-card-${type}-built-in-ai`).append(notice);
             if(errorType !== 'browser' && (type !== 'edge' || browserType !== 'Other' || !atfpChromeAiNoticeData.enabled_providers.includes('chrome-built-in-ai') || !atfpChromeAiNoticeData.enabled_providers.includes('edge-built-in-ai'))){
