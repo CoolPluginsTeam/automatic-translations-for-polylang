@@ -10,7 +10,6 @@ jQuery(function ($) {
             .replace(/"/g, '&quot;')
             .replace(/'/g, '&#039;');
     }
-    console.log(atfpChromeAiNoticeData.enabled_providers)
 
     class ChromeAiTranslator {
 
