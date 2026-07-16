@@ -1,6 +1,7 @@
 import YandexTranslater from "./yandex";
 import localAiTranslator from "./local-ai-translator";
 import { sprintf, __ } from "@wordpress/i18n";
+import ChromeAiTranslator from "./local-ai-translator/local-ai-translator";
 
 /**
  * Provides translation services using Yandex Translate.
@@ -10,9 +11,11 @@ export default (props) => {
     const { Service = false, openErrorModalHandler=()=>{} } = props;
     const refrenceText = window.atfp_global_object.refrence_text;
     const activeProviders = window.atfp_global_object.active_providers;
+    const browserType = ChromeAiTranslator.getBrowserType();
 
     const freeProviders=Object.freeze({
         yandex: 'yandex-translate',
+        edgeAiTranslator: 'edge-built-in-ai',
         localAiTranslator: 'chrome-built-in-ai',
     });
 
@@ -31,15 +34,34 @@ export default (props) => {
         },
         localAiTranslator: {
             Provider: localAiTranslator,
-            title: "Chrome Built-in AI",
+            title: browserType === 'Edge' ? "Edge Built-in AI" : "Chrome Built-in AI",
             SettingBtnText: "Translate",
-            serviceLabel: "Chrome AI Translator",
-            heading: sprintf(__("Translate Using %s", 'automatic-translations-for-polylang'), "Chrome built-in API"),
-            Docs: "https://docs.coolplugins.net/doc/chrome-ai-translation-polylang/?"+refrenceText+"&utm_medium=inside&utm_campaign=docs&utm_content=popup_chrome",
+            serviceLabel: browserType === 'Edge' ? "Edge AI Translator" : "Chrome AI Translator",
+            heading: sprintf(
+              __("Translate Using %s", "autopoly-ai-translation-for-polylang-pro"),
+              browserType === 'Edge' ? "Edge built-in API" : "Chrome built-in API"
+            ),
+            Docs: browserType === 'Edge' ? "https://docs.coolplugins.net/doc/edge-ai-translation-polylang/?"+refrenceText+"&utm_medium=inside&utm_campaign=docs&utm_content=popup_edge" : "https://docs.coolplugins.net/doc/chrome-ai-translation-polylang/?"+refrenceText+"&utm_medium=inside&utm_campaign=docs&utm_content=popup_chrome",
             BetaEnabled: false,
             ButtonDisabled: props.localAiTranslatorButtonDisabled,
             ErrorMessage: props.localAiTranslatorButtonDisabled ? <div className="atfp-provider-error" onClick={() => openErrorModalHandler("localAiTranslator")}>{__('View Error', 'automatic-translations-for-polylang')}</div> : <></>,
-            Logo: 'chrome.png'
+            Logo: browserType === 'Edge' ? "edge.png" : "chrome.png",
+        },
+        // Only for other browsers for promoting Edge AI Translator
+        edgeAiTranslator: {
+            Provider: localAiTranslator,
+            title: "Edge Built-in AI",
+            SettingBtnText: "Translate",
+            serviceLabel: "Edge AI Translator",
+            heading: sprintf(
+            __("Translate Using %s", "automatic-translations-for-polylang"),
+            "Edge built-in API"
+            ),
+            Docs: "https://docs.coolplugins.net/doc/edge-ai-translation-polylang/?"+refrenceText+"&utm_medium=inside&utm_campaign=docs&utm_content=popup_edge",
+            BetaEnabled: true,
+            ButtonDisabled: props.edgeAiTranslatorButtonDisabled,
+            ErrorMessage: props.edgeAiTranslatorButtonDisabled ? <div className="atfp-provider-error" onClick={() => openErrorModalHandler("edgeAiTranslator")}>{__('View Error', 'autopoly-ai-translation-for-polylang-pro')}</div> : <></>,
+            Logo: "edge.png",
         },
         google: {
             title: "Google Translate",
@@ -86,6 +108,10 @@ export default (props) => {
             Logo: 'deepl.png',
         }
     };
+
+    if(browserType !== 'Other') {
+        delete Services.edgeAiTranslator;
+    }
 
     Object.keys(freeProviders).forEach(provider => {
         if(!activeProviders.includes(freeProviders[provider])){

@@ -683,7 +683,7 @@
   cursor: not-allowed;
 }
 
-#atfp-setting-modal .atfp-setting-modal-body .atfp-provider-card-disabled#atfp-provider-card-localAiTranslator {
+#atfp-setting-modal .atfp-setting-modal-body .atfp-provider-card-disabled#atfp-provider-card-localAiTranslator:not(.atfp-provider-browser-other) {
   opacity: 1;
   cursor: pointer;
 }

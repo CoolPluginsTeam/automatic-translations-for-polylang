@@ -322,7 +322,7 @@ class ATFP_Register_Backend_Assets
         $languages = PLL()->model->get_languages_list();
         $active_providers = ATFP_Helper::get_active_providers();
 
-        $valid_providers = array('chrome-built-in-ai', 'yandex-translate');
+        $valid_providers = array('chrome-built-in-ai', 'yandex-translate', 'edge-built-in-ai');
 
         $active_providers = array_values(array_filter($active_providers, function($provider_name) use ($valid_providers) {
             return in_array($provider_name, $valid_providers);
