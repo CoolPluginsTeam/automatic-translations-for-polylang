@@ -174,7 +174,7 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 				}
 			}
 
-			if($page == 'polylang-atfp-dashboard' && in_array($active_tab, array('settings', 'dashboard'))){
+			if($page == 'polylang-atfp-dashboard' && (empty($active_tab) || in_array($active_tab, array('settings', 'dashboard')))){
 				wp_enqueue_script( 'atfp-dashboard-settings-script', ATFP_URL . 'admin/atfp-dashboard/js/atfp-chrome-ai-notice.min.js', array('jquery'), ATFP_V, true );
 				
 				$atfp_langugages=array(
@@ -184,7 +184,8 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 					'all_languages' => array(),
 					'chrome_ai_bypass_api_check' => false,
 					'chrome_ai_bypass_language_check' => false,
-					'chrome_ai_bypass_browser_check' => false
+					'chrome_ai_bypass_browser_check' => false,
+					'enabled_providers' => ATFP_Helper::get_active_providers()
 				);
 
 				$atfp_supported_langugages=ATFP_Helper::get_polylang_supported_languages();
