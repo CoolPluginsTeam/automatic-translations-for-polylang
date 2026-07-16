@@ -30,9 +30,9 @@ $atfp_providers = [
 	'edge-built-in-ai' => ["Edge Built-in AI", "edge-built-in-ai-logo.png", "Free", ["Fast AI Translations in Browser", "Unlimited Free Translations", "Bulk Translation (Pro)"], esc_url('https://docs.coolplugins.net/doc/edge-ai-translation-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_edge_pro')],
 	'yandex-translate' => ["Yandex Translate", "yandex-translate-logo.png", "Free", ["Unlimited Free Translations", "No API & No Extra Cost"], esc_url('https://docs.coolplugins.net/doc/yandex-translate-for-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_yandex_pro')],
 	'google-translate' => ["Google Translate", "google-translate-logo.png", "Pro", ["Unlimited Free Translations", "Fast & No API Key Required", "Bulk Translation (Pro)"], esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?utm_source=dupcap_plugin&utm_campaign=get_pro&utm_content=dashboard_google')],
-	'openai' => ["OpenAI", "openai-translate-logo.png", "Pro", ["Unlimited Translations", "Use Translation Modals", "Bulk Translation (Pro)"], esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?utm_source=dupcap_plugin&utm_campaign=get_pro&utm_content=dashboard_openai'), esc_url('admin.php?page=polylang-atfpp-dashboard&tab=settings')],
-	'gemini' => ["Gemini AI", "powered-by-google-gemini.png", "Pro", ["Unlimited Translations", "Use Translation Modals", "Bulk Translation (Pro)"], esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?utm_source=dupcap_plugin&utm_campaign=get_pro&utm_content=dashboard_gemini'), esc_url('admin.php?page=polylang-atfpp-dashboard&tab=settings')],
-	'deepl' => ["DeepL", "deepl-logo.png", "Pro", ["Unlimited Translations", "High-Quality Translations", "Bulk Translation (Pro)"], esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?utm_source=dupcap_plugin&utm_campaign=get_pro&utm_content=dashboard_deepl'), esc_url('admin.php?page=polylang-atfpp-dashboard&tab=settings')],
+	'openai' => ["OpenAI", "openai-translate-logo.png", "Pro", ["Unlimited Translations", "Use Translation Modals", "Bulk Translation (Pro)"], esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?utm_source=dupcap_plugin&utm_campaign=get_pro&utm_content=dashboard_openai'), esc_url('admin.php?page=polylang-atfp-dashboard&tab=settings')],
+	'gemini' => ["Gemini AI", "powered-by-google-gemini.png", "Pro", ["Unlimited Translations", "Use Translation Modals", "Bulk Translation (Pro)"], esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?utm_source=dupcap_plugin&utm_campaign=get_pro&utm_content=dashboard_gemini'), esc_url('admin.php?page=polylang-atfp-dashboard&tab=settings')],
+	'deepl' => ["DeepL", "deepl-logo.png", "Pro", ["Unlimited Translations", "High-Quality Translations", "Bulk Translation (Pro)"], esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?utm_source=dupcap_plugin&utm_campaign=get_pro&utm_content=dashboard_deepl'), esc_url('admin.php?page=polylang-atfp-dashboard&tab=settings')],
 ];
 ?>
 <div class="atfp-dashboard-left-section">
@@ -116,6 +116,12 @@ $atfp_providers = [
 						</ul>
 						<div class="atfp-dashboard-provider-buttons">
 							<a href="<?php echo esc_url( $provider_data[4][0] ); ?>" class="atfp-dashboard-btn" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Docs', 'automatic-translations-for-polylang' ); ?></a>
+							<?php if($provider_key === 'chrome-built-in-ai'){ ?>
+                                <a href="<?php echo esc_url(admin_url('admin.php?page=polylang-atfp-dashboard&tab=settings')); ?>" class="atfp-chrome-configure-button atfp-dashboard-btn primary" style="display: none;"><?php echo esc_html__('Configure', 'automatic-translations-for-polylang'); ?></a>
+                            <?php }
+                             if($provider_key === 'edge-built-in-ai'){ ?>
+                                <a href="<?php echo esc_url(admin_url('admin.php?page=polylang-atfp-dashboard&tab=settings')); ?>" class="atfp-edge-configure-button atfp-dashboard-btn primary" style="display: none;"><?php echo esc_html__('Configure', 'automatic-translations-for-polylang'); ?></a>
+                            <?php } ?>
 						</div>
 					</div>
 				<?php endforeach; ?>
