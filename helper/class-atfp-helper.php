@@ -354,6 +354,11 @@ if (! class_exists('ATFP_Helper')) {
 		
 				// Strip size suffix if present
 				$cleaned_path = preg_replace( '/-\d+x\d+(?=\.(jpg|jpeg|png|gif|webp)$)/i', '', $relative_path );
+
+				if(empty($cleaned_path)){
+					$results[ $url ] = false;
+					continue;
+				}
 		
 				// Map cleaned path to original URL(s)
 				if ( ! isset( $cleaned_paths_map[ $cleaned_path ] ) ) {
@@ -426,6 +431,11 @@ if (! class_exists('ATFP_Helper')) {
 					// Fallback to cleaned path match
 					$relative_path = str_replace( $base_url . '/', '', $original_url );
 					$cleaned_path  = preg_replace('/-\d+x\d+(?=\.(jpg|jpeg|png|gif|webp)$)/i', '', $relative_path );
+
+					if(empty($cleaned_path)){
+						$results[ $original_url ] = $original_url;
+						continue;
+					}
 
 					preg_match('/-\d+x\d+(?=\.(jpg|jpeg|png|gif|webp)$)/i', $original_url, $matches);
 					$suffix = isset($matches[0]) ? $matches[0] : '';
