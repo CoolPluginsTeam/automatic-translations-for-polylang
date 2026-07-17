@@ -184,60 +184,107 @@ if (! class_exists('ATFP_Helper')) {
 		public static function replace_links_with_translations($content, $locale, $current_locale)
 		{
 			// Get all URLs in the content that start with the current home page URL (current domain), regardless of attribute or tag
-			$home_url = preg_quote(get_home_url(), '/');
-			$pattern = '/(' . $home_url . '[^\s"\'<>]*)/i';
+			$home_url = get_home_url();
+			$pattern = '/(' . preg_quote($home_url, '/') . '[^\s"\'<>]*)/i';
 			$terms_data=self::get_terms_data();
 
-			if (preg_match_all($pattern, $content, $matches)) {
+			preg_match_all($pattern, $content, $matches);
+			$content=self::update_urls_translations_in_arrya($content, $matches, $terms_data, $pattern, $locale, $current_locale);
+			
+			$home_url = untrailingslashit(
+				str_replace( '\/', '/', $home_url )
+			);
 
-				foreach ($matches[1] as $href) {
-					$postID = url_to_postid($href);
+			$escaped_home_url = preg_quote( $home_url, '~' );
+
+			// Match both "/" and JSON-escaped "\/".
+			$escaped_home_url = str_replace(
+				'/',
+				'(?:\\\\)?/',
+				$escaped_home_url
+			);
+
+			$pattern = '~(' . $escaped_home_url . '[^\s"\'<>]*)~i';
+			preg_match_all($pattern, $content, $matches);
+			
+			$content=self::update_urls_translations_in_arrya($content, $matches, $terms_data, $pattern, $locale, $current_locale, true);
+
+			return $content;
+		}
+
+		private static function update_urls_translations_in_arrya($content, $matches = [], $terms_data = [], $pattern = '', $locale = '', $current_locale = '', $is_plain_url = false){
+			if ($matches && count($matches) > 0) {
+
+				if($is_plain_url){
+					$matches[1]=str_replace('\/', '/', $matches[1]);
+				}
+
+				$image_urls=self::get_image_ids_by_urls($matches[1], $locale);
+
+				$content = preg_replace_callback($pattern, function ($match) use ($image_urls, $locale, $current_locale, $terms_data, $is_plain_url) {		
+					$original_href = $match[1];
+					$href = $match[1];
+
+					if($is_plain_url){
+						$href = str_replace('\/', '/', $href);
+					}
 		
+					if (preg_match('/<img[^>]+(src|srcset)=[\'"][^\'"]*' . preg_quote($href, '/') . '[\'"][^>]*>/i', $match[0])) {
+						return $href;
+					}
+		
+					if (isset($image_urls[$href]) && !empty($image_urls[$href])) {
+						return $image_urls[$href];
+					}
+		
+					$postID = url_to_postid($href);
+
 					if ($postID > 0) {
 						$translatedPost = pll_get_post($postID, $locale);
 						if ($translatedPost) {
 							$link = get_permalink($translatedPost);
-							
 							if ($link) {
-								$link=esc_url(urldecode_deep($link));
-								$content = str_replace($href, $link, $content);
-							}
-						}
-					} else {
-						$path = trim(str_replace(home_url(), '', $href), '/');
-						$category_slug = array_filter(explode('/', $path));
-						$category_slug = end($category_slug);
-						$taxonomy_name=self::extract_taxonomy_name($path, $terms_data);
-						$taxonomy_name=$taxonomy_name ? $taxonomy_name : 'category';
-
-						$category = get_term_by('slug', $category_slug, $taxonomy_name);
-
-						if(!$category){
-								// Remove the language prefix if using Polylang
-							$languages = pll_languages_list(); // e.g., ['en', 'fr']
-							$segments = explode('/', $path);
-							if (in_array($segments[0], $languages)) {
-								$lang_code=$segments[0];
-								$category_id=Pll()->model->term_exists_by_slug($category_slug, $lang_code, $taxonomy_name);
-
-								if($category_id){
-									$category=get_term($category_id, $taxonomy_name);
-								}
-							}
-						}
-
-						
-						if ($category) {
-							$term_id = pll_get_term($category->term_id, $locale);
-							if ($term_id > 0) {
-								$link = get_category_link($term_id);
-								$content = str_replace($href, esc_url($link), $content);
+								return esc_url(urldecode_deep($link));
 							}
 						}
 					}
-				}
+
+					$path = trim(str_replace(pll_home_url($current_locale), '', $original_href), '/');
+					$path_segments = array_filter( explode( '/', $path ) );
+					$category_slug = end( $path_segments );
+		
+					$taxonomy_name = self::extract_taxonomy_name($path, $terms_data);
+					$taxonomy_name = $taxonomy_name ? $taxonomy_name : 'category';
+		
+					$category = get_term_by('slug', $category_slug, $taxonomy_name);
+		
+					if (!$category) {
+						// Remove the language prefix if using Polylang
+						$languages = pll_languages_list(); // e.g., ['en', 'fr']
+						$segments = explode('/', $path);
+						if (in_array($segments[0], $languages)) {
+							$lang_code = $segments[0];
+							$category_id = Pll()->model->term_exists_by_slug($category_slug, $lang_code, $taxonomy_name);
+
+							if ($category_id) {
+								$category = get_term($category_id, $taxonomy_name);
+							}
+						}
+					}
+		
+					if ($category) {
+						$term_id = pll_get_term($category->term_id, $locale);
+						if ($term_id > 0) {
+							$link = get_category_link($term_id);
+							return esc_url($link);
+
+						}
+					}
+					return $href;
+		
+				}, $content);
 			}
-			
+
 			return $content;
 		}
 
@@ -276,6 +323,141 @@ if (! class_exists('ATFP_Helper')) {
 			}
 
 			return $taxonomies_data;
+		}
+
+		private static function get_image_ids_by_urls( $image_urls = [] , $locale='en') {
+			global $wpdb;
+		
+			// Convert single URL string to array
+			if ( is_string( $image_urls ) ) {
+				$image_urls = [ $image_urls ];
+			}
+		
+			if ( empty( $image_urls ) || ! is_array( $image_urls ) ) {
+				return [];
+			}
+		
+			$upload_dir = wp_upload_dir();
+			$base_url   = $upload_dir['baseurl'];
+			$results    = [];
+
+			$cleaned_paths_map = []; // [cleaned_path] => [original_urls]
+		
+			foreach ( $image_urls as $url ) {
+				if ( strpos( $url, $base_url ) === false ) {
+					$results[ $url ] = false;
+					continue;
+				}
+		
+				// Relative path
+				$relative_path = str_replace( $base_url . '/', '', $url );
+		
+				// Strip size suffix if present
+				$cleaned_path = preg_replace( '/-\d+x\d+(?=\.(jpg|jpeg|png|gif|webp)$)/i', '', $relative_path );
+
+				if(empty($cleaned_path)){
+					$results[ $url ] = false;
+					continue;
+				}
+		
+				// Map cleaned path to original URL(s)
+				if ( ! isset( $cleaned_paths_map[ $cleaned_path ] ) ) {
+					$cleaned_paths_map[ $cleaned_path ] = [];
+				}
+		
+				$cleaned_paths_map[ $cleaned_path ][] = $url;
+			}
+
+			$like_parts = [];
+			$args       = [];
+
+			// Build the OR'ed LIKEs and gather args
+			foreach ( array_keys( $cleaned_paths_map ) as $path ) {
+				$like_parts[] = 'guid LIKE %s';
+				// Always escape for LIKE, then add wildcards yourself
+				$args[] = '%' . $wpdb->esc_like( sanitize_text_field($path) ) . '%';
+			}
+
+			// Nothing to search? bail early.
+			if ( empty( $like_parts ) ) {
+				return $results;
+			}
+
+			// Compose the SQL with placeholders only
+			$sql = "
+				SELECT ID, guid
+				FROM {$wpdb->posts}
+				WHERE post_type = %s
+				AND (" . implode( ' OR ', $like_parts ) . ")
+			";
+
+			// First arg is for post_type, then all the LIKE args
+			array_unshift( $args, 'attachment' );
+
+			// Run the query
+			// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.DirectQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter -- $sql is already sanitized and sql esc_like it's safe.
+			$found = $wpdb->get_results( $wpdb->prepare( $sql, $args ) );
+
+		
+			// Map found GUIDs to IDs
+			$guid_to_id = [];
+			foreach ( $found as $row ) {
+				
+				$guid_to_id[ $row->guid ] = esc_url($row->guid);
+				$translated_post=pll_get_post(intval($row->ID), $locale);
+
+				if($translated_post){
+					$image_url=wp_get_attachment_url(intval($translated_post));
+
+					if($image_url && !empty($image_url)){
+						$guid_to_id[$row->guid]=esc_url($image_url);
+					}
+				}
+			}
+		
+			// Match original URLs to found IDs
+			foreach ( $image_urls as $original_url ) {
+				$found_id = false;
+		
+				if(isset($guid_to_id[$original_url])){
+					$results[$original_url]=$guid_to_id[$original_url];
+					continue;
+				}
+
+				// Exact match first
+				if ( isset( $guid_to_id[ $original_url ] ) ) {
+					$found_id = $guid_to_id[ $original_url ];
+				} else {
+					// Fallback to cleaned path match
+					$relative_path = str_replace( $base_url . '/', '', $original_url );
+					$cleaned_path  = preg_replace('/-\d+x\d+(?=\.(jpg|jpeg|png|gif|webp)$)/i', '', $relative_path );
+
+					if(empty($cleaned_path)){
+						$results[ $original_url ] = $original_url;
+						continue;
+					}
+
+					preg_match('/-\d+x\d+(?=\.(jpg|jpeg|png|gif|webp)$)/i', $original_url, $matches);
+					$suffix = isset($matches[0]) ? $matches[0] : '';
+
+					foreach ( $guid_to_id as $guid => $url ) {
+						if ( strpos( $guid, $cleaned_path ) !== false ) {
+							if (!empty($suffix)) {
+								// Insert $suffix before the file extension in $url
+								$found_id = preg_replace('/(\.[a-zA-Z0-9]+)$/', $suffix . '$1', $url);
+							} else {
+								$found_id = $url;
+							}
+							break;
+						}
+					}
+				}
+		
+				$results[ $original_url ] = esc_url($found_id);
+			}
+
+
+			return $results;
 		}
 
 		public static function get_translation_data($key_exists=array()){

@@ -1,4 +1,4 @@
-import createBlocks from './create-block';
+import createBlocks, {getContentBlockClientIds} from './create-block';
 import { dispatch, select } from '@wordpress/data';
 import YoastSeoFields from '../../component/translate-seo-fields/yoast-seo-fields';
 import RankMathSeo from '../../component/translate-seo-fields/rank-math-seo';
@@ -37,11 +37,11 @@ const translatePost = (props) => {
      */
     const postMetaFieldsUpdate = () => {
         const metaFieldsData = postContent.metaFields;
-        
-        if ( ! metaFieldsData || Object.keys( metaFieldsData ).length < 1 ) {
+
+        if (!metaFieldsData || Object.keys(metaFieldsData).length < 1) {
             return;
         }
-        
+
         const AllowedMetaFields = select('block-atfp/translate').getAllowedMetaFields();
 
         Object.keys(metaFieldsData).forEach(key => {
@@ -67,52 +67,52 @@ const translatePost = (props) => {
     const postAcfFieldsUpdate = () => {
         const AllowedMetaFields = select('block-atfp/translate').getAllowedMetaFields();
         const metaFieldsData = postContent.metaFields;
-        
+
         if (window.acf) {
             acf.getFields().forEach(field => {
 
-                const fieldData=JSON.parse(JSON.stringify({key: field.data.key, type: field.data.type, name: field.data.name}));
+                const fieldData = JSON.parse(JSON.stringify({ key: field.data.key, type: field.data.type, name: field.data.name }));
                 // Update repeater fields
-                if(field.$el && field.$el.closest('.acf-field.acf-field-repeater') && field.$el.closest('.acf-field.acf-field-repeater').length > 0){
-                    const rowId=field.$el.closest('.acf-row').data('id');
-                    const repeaterItemName=field.$el.closest('.acf-field.acf-field-repeater').data('name');
+                if (field.$el && field.$el.closest('.acf-field.acf-field-repeater') && field.$el.closest('.acf-field.acf-field-repeater').length > 0) {
+                    const rowId = field.$el.closest('.acf-row').data('id');
+                    const repeaterItemName = field.$el.closest('.acf-field.acf-field-repeater').data('name');
 
-                    if(rowId && '' !== rowId){
-                        const index=rowId.replace('row-', '');
-                    
-                        fieldData.name=repeaterItemName+'_'+index+'_'+fieldData.name;
+                    if (rowId && '' !== rowId) {
+                        const index = rowId.replace('row-', '');
+
+                        fieldData.name = repeaterItemName + '_' + index + '_' + fieldData.name;
                     }
                 }
 
-               if(fieldData && fieldData.key && Object.keys(AllowedMetaFields).includes(fieldData.name)){
-                   const fieldName = fieldData.name;
-                   const inputType = fieldData.type;
+                if (fieldData && fieldData.key && Object.keys(AllowedMetaFields).includes(fieldData.name)) {
+                    const fieldName = fieldData.name;
+                    const inputType = fieldData.type;
 
-                   let sourceValue = metaFieldsData[fieldName] && metaFieldsData[fieldName][0] ? metaFieldsData[fieldName][0] : field?.val();
+                    let sourceValue = metaFieldsData[fieldName] && metaFieldsData[fieldName][0] ? metaFieldsData[fieldName][0] : field?.val();
 
-                   let translatedMetaFields = select('block-atfp/translate').getTranslatedString('metaFields', sourceValue, fieldData.name, service);
+                    let translatedMetaFields = select('block-atfp/translate').getTranslatedString('metaFields', sourceValue, fieldData.name, service);
 
-                   if(!translatedMetaFields || '' === translatedMetaFields){
-                       return;
-                   }
+                    if (!translatedMetaFields || '' === translatedMetaFields) {
+                        return;
+                    }
 
-                   if('wysiwyg' === inputType && window.tinymce){
-                       const editorId = field.data.id;
-                       
-                       const tinymceTranslatedMetaFields = translatedMetaFields.replace(/(\r\n\r\n)/g, '</p><p>');
-                       
-                       tinymce.get(editorId)?.setContent(tinymceTranslatedMetaFields);
-                       
-                       const tinymceTextArea = document.querySelector(`textarea#${editorId}`);
+                    if ('wysiwyg' === inputType && window.tinymce) {
+                        const editorId = field.data.id;
 
-                       if(tinymceTextArea){
-                        tinymceTextArea.value = translatedMetaFields;
-                       }
+                        const tinymceTranslatedMetaFields = translatedMetaFields.replace(/(\r\n\r\n)/g, '</p><p>');
 
-                   }else{
-                       field.val(translatedMetaFields);
-                   }
-               }
+                        tinymce.get(editorId)?.setContent(tinymceTranslatedMetaFields);
+
+                        const tinymceTextArea = document.querySelector(`textarea#${editorId}`);
+
+                        if (tinymceTextArea) {
+                            tinymceTextArea.value = translatedMetaFields;
+                        }
+
+                    } else {
+                        field.val(translatedMetaFields);
+                    }
+                }
             });
         }
     }
@@ -120,16 +120,39 @@ const translatePost = (props) => {
     /**
      * Updates the post content based on translation.
      */
-    const postContentUpdate = () => {
+    const postContentUpdate = async () => {
         const postContentData = postContent.content;
 
         if (postContentData.length <= 0) {
             return;
         }
 
+        const diviPlacholderBlocks = select('core/block-editor').getBlocksByName('divi/placeholder');
+        const allIds = getContentBlockClientIds();
+
+        if (diviPlacholderBlocks && diviPlacholderBlocks.length > 0) {
+            diviPlacholderBlocks.forEach(blockId => {
+
+                const placeholderBlock = document.querySelector(`#block-${blockId}`);
+                if (placeholderBlock) {
+                    const gutenbergButton = placeholderBlock.querySelector('button#et-switch-to-gutenberg');
+
+                    if (gutenbergButton) {
+                        gutenbergButton.click();
+                    }
+                }
+            });
+
+            await new Promise(resolve => setTimeout(resolve, 1000));
+        }
+
         Object.values(postContentData).forEach(block => {
             createBlocks(block, service);
         });
+
+        if(allIds && allIds.length > 0) {
+            dispatch('core/block-editor').removeBlocks(allIds);
+        }
     }
 
     // Update post title and excerpt text

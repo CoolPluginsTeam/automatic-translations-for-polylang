@@ -167,11 +167,22 @@ class ATFP_Register_Backend_Assets
         }else{
             global $post;
                 
-            if (null === $post) {
+            if (null === $post || !isset($post->ID)) {
                 return;
             }
 
-            $this->enqueue_re_translation_assets('gutenberg', $post->ID);
+            $old_untranslated_post=ATFP_Re_Translation::is_old_untranslated_post($post->ID);
+            if($old_untranslated_post){
+                $data = array(
+                    'action_fetch'       => 'atfp_fetch_post_content',
+                    'action_block_rules' => 'atfp_block_parsing_rules',
+                    'parent_post_id'     => $old_untranslated_post,
+                    'old_post' => true,
+                );
+                $this->enqueue_automatic_translate_assets(pll_get_post_language($old_untranslated_post, 'slug'), pll_get_post_language($post->ID, 'slug'), 'gutenberg', $data);
+            }else{
+                $this->enqueue_re_translation_assets('gutenberg', $post->ID);
+            }
         }
     }
 
@@ -185,7 +196,29 @@ class ATFP_Register_Backend_Assets
 
         if ((!empty($page_translated) && $page_translated === 'true') || empty($parent_post_language_slug)) {
             if(function_exists('get_the_ID')){
-                $this->enqueue_re_translation_assets('elementor', get_the_ID());
+                $old_untranslated_post=ATFP_Re_Translation::is_old_untranslated_post(get_the_ID());
+                if($old_untranslated_post){
+                    $current_post_id=get_the_ID();
+                    $elementor_data = \Elementor\Plugin::$instance->documents->get( $old_untranslated_post )->get_elements_data();
+                    $post_language_slug = pll_get_post_language($old_untranslated_post, 'slug');
+
+                    $elementor_data=ATFP_Helper::replace_links_with_translations(json_encode($elementor_data), $post_language_slug, $parent_post_language_slug);
+
+                    $meta_fields=get_post_meta($old_untranslated_post);
+
+                    $data = array(
+                        'update_elementor_data' => 'atfp_update_elementor_data',
+                        'elementorData' => $elementor_data,
+                        'metaFields' => $meta_fields,
+                        'parent_post_id' => $old_untranslated_post,
+                        'old_post' => true,
+                    );
+                    
+                    wp_enqueue_style('atfp-elementor-translate', ATFP_URL . 'assets/css/atfp-elementor-translate.min.css', array(), ATFP_V);
+                    $this->enqueue_automatic_translate_assets($post_language_slug, pll_get_post_language(get_the_ID(), 'slug'), 'elementor', $data);
+                }else{
+                    $this->enqueue_re_translation_assets('elementor', get_the_ID());
+                }
             }
             return;
         }
@@ -199,12 +232,17 @@ class ATFP_Register_Backend_Assets
 
         $elementor_data = \Elementor\Plugin::$instance->documents->get( $current_post_id )->get_elements_data();
 
-
         if ($parent_post_language_slug === $post_language_slug) {
             return;
         }
+            
+        $elementor_data=ATFP_Helper::replace_links_with_translations(json_encode($elementor_data), $post_language_slug, $parent_post_language_slug);
+        
+        $parent_post_id = get_post_meta(get_the_ID(), '_atfp_parent_post_id', true);
 
-        $parent_post_id=PLL()->model->post->get_translation($current_post_id, $parent_post_language_slug);
+        if(!$parent_post_id){
+            $parent_post_id=PLL()->model->post->get_translation($current_post_id, $parent_post_language_slug);
+        }
 
         $meta_fields=get_post_meta($current_post_id);
 
@@ -234,6 +272,14 @@ class ATFP_Register_Backend_Assets
                 isset($_GET['from_post'], $_GET['new_lang'], $_GET['_wpnonce']) &&
                 wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['_wpnonce'])), 'new-post-translation')
             ) {
+                $from_post_id = isset($_GET['from_post']) ? absint($_GET['from_post']) : 0;
+                if ('builder' === get_post_meta($from_post_id, '_elementor_edit_mode', true) && defined('ELEMENTOR_VERSION')) {
+                    $lang = isset($_GET['new_lang']) ? sanitize_key($_GET['new_lang']) : '';
+                    $source_lang_name = pll_get_post_language($from_post_id, 'slug');
+                    $this->enqueue_elementor_confirm_box_assets($from_post_id, $lang, $source_lang_name, 'classic');
+                    return;
+                }
+
                 $atfp_utm_parameters='utm_source=atfp_plugin';
                 if(class_exists('ATFP_Helper')){
                     $atfp_utm_parameters=ATFP_Helper::utm_source_text();

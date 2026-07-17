@@ -73,6 +73,7 @@ if ( ! class_exists( 'ATFP_Elementor_Translate' ) ) {
 						delete_post_meta( $current_post_id, 'atfpp_elementor_translated' );
 						delete_post_meta( $current_post_id, 'atfp_parent_post_language_slug' );
 						$parent_post_language_slug = pll_get_post_language( $parent_post_id, 'slug' );
+						update_post_meta($current_post_id, '_atfp_parent_post_id', $parent_post_id);
 						update_post_meta( $current_post_id, '_atfp_parent_post_language_slug', $parent_post_language_slug );
 					}
 				}

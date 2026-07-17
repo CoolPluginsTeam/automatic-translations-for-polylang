@@ -1,6 +1,7 @@
 import { select } from '@wordpress/data';
 import YoastSeoFields from '../../component/translate-seo-fields/yoast-seo-fields';
 import RankMathSeo from '../../component/translate-seo-fields/rank-math-seo';
+import updateOldPost from './old-post-update';
 
 // Update widget content with translations
 const atfpUpdateWidgetContent = (translations) => {
@@ -12,6 +13,7 @@ const atfpUpdateWidgetContent = (translations) => {
         if (model) {
             const isAtomic=translation?.isAtomic;
             const settings = model.get('settings');
+            const isUrlLink = translation?.isUrlLink;
 
             if(isAtomic){
                 const settingKey=translation.key.split('_atfp_');
@@ -36,6 +38,18 @@ const atfpUpdateWidgetContent = (translations) => {
                         }
                     }
                 }
+            }
+
+            if (isUrlLink) {
+                const linkKey = translation.key.split('_atfp_');
+                const linkValue = settings.get(linkKey[0]);
+
+                if (linkValue) {
+                    linkValue.url = translation.translatedContent;
+
+                    settings.set(linkKey[0], linkValue);
+                    model?.renderRemoteServer();
+                }   
             }
             
             // Check for normal fields (title, text, editor, etc.)
@@ -102,7 +116,7 @@ const atfpUpdateTitle = (title, service) => {
 
 // Find Elementor model by ID
 const atfpFindModelById = (elements, id) => {
-    for (const model of elements) {
+    for (const model of elements) {   
         if (model.get('id') === id) {
             return model;
         }
@@ -113,6 +127,23 @@ const atfpFindModelById = (elements, id) => {
         }
     }
     return null;
+}
+
+const reRenderDynamicWidgets = (elements) => {
+    for (const model of elements) {
+        const widgetName = model.get('elType') === 'widget' ? model.get('widgetType') : model.get('name');
+        if(widgetName){
+            if(widgetName.includes('theme-post-')){
+                model.renderRemoteServer();
+                console.log(model.get('id'));
+            }
+        }
+
+        const nestedElements = model.get('elements').models;
+        if(nestedElements && Array.isArray(nestedElements)){
+            reRenderDynamicWidgets(nestedElements);
+        }
+    }
 }
 
 const updateElementorPage = ({ postContent, modalClose, service }) => {
@@ -129,7 +160,7 @@ const updateElementorPage = ({ postContent, modalClose, service }) => {
     ];
 
     const subStringsToCheck=(strings)=>{
-        const dynamicSubStrings=['title', 'description', 'editor', 'text', 'content', 'label'];
+        const dynamicSubStrings=['title', 'description', 'editor', 'text', 'content', 'label', 'url'];
         const staticSubStrings=['caption','heading','sub_heading', 'testimonial_content', 'testimonial_job', 'testimonial_name', 'name'];
 
         return dynamicSubStrings.some(substring => strings.toLowerCase().includes(substring)) || staticSubStrings.some(substring => strings === substring);
@@ -223,6 +254,13 @@ const updateElementorPage = ({ postContent, modalClose, service }) => {
                             });
                         }
                     });
+                }else if(key === 'link' && settings[key].url && '' !== settings[key].url){
+                    translations.push({
+                        ID: widgetId,
+                        key: `${key}_atfp_url`,
+                        translatedContent: settings[key].url,
+                        isUrlLink: true
+                    })
                 }
             });
         }
@@ -285,6 +323,10 @@ const updateElementorPage = ({ postContent, modalClose, service }) => {
     
     const elementorData = replaceSourceString();
 
+    if(atfp_global_object.old_post && atfp_global_object.old_post === "1"){
+        updateOldPost.createTree(elementorData);
+    }
+
     const requestBody={
         action: atfp_global_object.update_elementor_data,
         post_id: postID,
@@ -303,6 +345,7 @@ const updateElementorPage = ({ postContent, modalClose, service }) => {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
+                reRenderDynamicWidgets(elementor.elements.models);
                 const translateButton = document.querySelector('.atfp-translate-button[name="atfp_meta_box_translate"]');
                 if(translateButton){
                     translateButton.setAttribute('title', 'Translation process completed successfully.');
