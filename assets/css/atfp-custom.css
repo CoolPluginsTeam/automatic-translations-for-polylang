@@ -409,6 +409,7 @@
   height: auto;
   padding: 15px 24px;
   overflow: auto;
+  text-align: justify;
 }
 
 #atfp-setting-modal .atfp-error-modal-box

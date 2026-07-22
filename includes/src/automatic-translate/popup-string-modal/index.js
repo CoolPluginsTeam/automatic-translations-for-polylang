@@ -44,7 +44,8 @@ const popStringModal = (props) => {
         const serviceProvider = props.service;
 
         if (serviceProvider === 'localAiTranslator') {
-            return 'Chrome AI Translator';
+            const browserType = ChromeAiTranslator.getBrowserType();
+            return browserType === 'Edge' ? 'Edge AI Translator' : 'Chrome AI Translator';
         } else if (serviceProvider === 'edgeAiTranslator') {
             return 'Edge AI Translator';
         } else{

@@ -198,7 +198,7 @@ class ChromeAiTranslator {
                 <ol>
                     <li>The current version of ${browserType === 'Edge' ? 'Edge' : 'Chrome'} AI Translator does not support the Target Language <strong>${targetLanguageLabel} (${targetLanguage})</strong></li>
                     <li>To view the list of supported languages, please <span data-clipboard-text="${browserUrl}://on-device-translation-internals" target="_blank" class="chrome-ai-translator-flags">${browserUrl}://on-device-translation-internals ${ChromeAiTranslator.svgIcons('copy')}</span>. Click on the URL to copy it, then open a new window and paste this URL to access the settings.</li>
-                    <li>Ensure your Chrome browser is updated to the latest version for optimal performance.</li>
+                    <li>Ensure your ${browserType === 'Edge' ? 'Edge' : 'Chrome'} browser is updated to the latest version for optimal performance.</li>
                 </ol>
             </span>`);
                 return message;
@@ -211,7 +211,7 @@ class ChromeAiTranslator {
                 <ol>
                     <li>The current version of ${browserType === 'Edge' ? 'Edge' : 'Chrome'} AI Translator does not support the Source Language <strong>${sourceLanguageLabel} (${sourceLanguage})</strong></li>
                     <li>To view the list of supported languages, please <span data-clipboard-text="${browserUrl}://on-device-translation-internals" target="_blank" class="chrome-ai-translator-flags">${browserUrl}://on-device-translation-internals ${ChromeAiTranslator.svgIcons('copy')}</span>. Click on the URL to copy it, then open a new window and paste this URL to access the settings.</li>
-                    <li>Ensure your Chrome browser is updated to the latest version for optimal performance.</li>
+                    <li>Ensure your ${browserType === 'Edge' ? 'Edge' : 'Chrome'} browser is updated to the latest version for optimal performance.</li>
                 </ol>
             </span>`);
                 return message;
@@ -536,6 +536,7 @@ class ChromeAiTranslator {
 
     // Method to add a progress bar to the UI
     addProgressBar = () => {
+        const browserType = ChromeAiTranslator.getBrowserType();
         if (!document.querySelector("#chrome-ai-translator-modal .chrome-ai-translator_progress_bar")) {
             const progressBar = jQuery(`
                 <div class="chrome-ai-translator_progress_bar" style="background-color: #f3f3f3;border-radius: 10px;overflow: hidden;margin: 1.5rem auto; width: 50%;">
@@ -545,7 +546,7 @@ class ChromeAiTranslator {
                     Wahooo! You have saved your valuable time via auto translating 
                     <strong class="totalChars">0</strong> characters using 
                     <strong>
-                        Chrome AI Translator
+                        ${browserType === 'Edge' ? "Edge AI Translator" : "Chrome AI Translator"}
                     </strong>
                 </div>
             `);
