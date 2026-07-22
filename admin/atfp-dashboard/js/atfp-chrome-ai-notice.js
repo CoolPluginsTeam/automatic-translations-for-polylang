@@ -724,7 +724,7 @@ jQuery(function ($) {
                                     const status = await callBackLoop(langCode, supportedLangs, callbackAsync, 0);
                                     isAvailable = true
                                     if(status !== 'available'){
-                                        lang.label = lang.label + ' (Downloadable)';
+                                        lang.label = lang.label + (lang.label.includes('(Downloadable)') ? '' : ' (Downloadable)');
                                     }
                                 }
                             } catch (error) {
@@ -740,7 +740,7 @@ jQuery(function ($) {
                             isAvailable = true;
                         }else if (status === 'downloadable') {
                             isAvailable = true;
-                            lang.label = lang.label + ' (Downloadable)';
+                            lang.label = lang.label + (lang.label.includes('(Downloadable)') ? '' : ' (Downloadable)');
                         }
                     } catch (error) {
                         // Language pack not available for this pair
