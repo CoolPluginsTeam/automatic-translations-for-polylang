@@ -38,7 +38,7 @@ export default (props) => {
             SettingBtnText: "Translate",
             serviceLabel: browserType === 'Edge' ? "Edge AI Translator" : "Chrome AI Translator",
             heading: sprintf(
-              __("Translate Using %s", "autopoly-ai-translation-for-polylang-pro"),
+              __("Translate Using %s", "automatic-translations-for-polylang"),
               browserType === 'Edge' ? "Edge built-in API" : "Chrome built-in API"
             ),
             Docs: browserType === 'Edge' ? "https://docs.coolplugins.net/doc/edge-ai-translation-polylang/?"+refrenceText+"&utm_medium=inside&utm_campaign=docs&utm_content=popup_edge" : "https://docs.coolplugins.net/doc/chrome-ai-translation-polylang/?"+refrenceText+"&utm_medium=inside&utm_campaign=docs&utm_content=popup_chrome",
@@ -60,7 +60,7 @@ export default (props) => {
             Docs: "https://docs.coolplugins.net/doc/edge-ai-translation-polylang/?"+refrenceText+"&utm_medium=inside&utm_campaign=docs&utm_content=popup_edge",
             BetaEnabled: true,
             ButtonDisabled: props.edgeAiTranslatorButtonDisabled,
-            ErrorMessage: props.edgeAiTranslatorButtonDisabled ? <div className="atfp-provider-error" onClick={() => openErrorModalHandler("edgeAiTranslator")}>{__('View Error', 'autopoly-ai-translation-for-polylang-pro')}</div> : <></>,
+            ErrorMessage: props.edgeAiTranslatorButtonDisabled ? <div className="atfp-provider-error" onClick={() => openErrorModalHandler("edgeAiTranslator")}>{__('View Error', 'automatic-translations-for-polylang')}</div> : <></>,
             Logo: "edge.png",
         },
         google: {

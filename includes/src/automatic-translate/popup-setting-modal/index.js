@@ -136,14 +136,14 @@ const SettingModal = (props) => {
             if (localAiTranslatorSupport !== true && typeof localAiTranslatorSupport === 'object') {
                 setChromeAiBtnDisabled(true);
 
-                errors.localAiTranslator = { message: localAiTranslatorSupport.chrome ? localAiTranslatorSupport.chrome : localAiTranslatorSupport, Title: sprintf(__("%s AI Translator", 'autopoly-ai-translation-for-polylang-pro'), browserType === 'Edge' ? "Edge" : "Chrome") };
+                errors.localAiTranslator = { message: localAiTranslatorSupport.chrome ? localAiTranslatorSupport.chrome : localAiTranslatorSupport, Title: sprintf(__("%s AI Translator", 'automatic-translations-for-polylang'), browserType === 'Edge' ? "Edge" : "Chrome") };
 
                 setServiceModalErrors(prev => ({ ...prev, localAiTranslator: errors.localAiTranslator }));
 
                 if (['Other','Edge'].includes(browserType)) {
                     setEdgeAiBtnDisabled(true);
     
-                    errors.edgeAiTranslator = { message: localAiTranslatorSupport.edge ? localAiTranslatorSupport.edge : localAiTranslatorSupport, Title: __("Edge AI Translator", 'autopoly-ai-translation-for-polylang-pro') };
+                    errors.edgeAiTranslator = { message: localAiTranslatorSupport.edge ? localAiTranslatorSupport.edge : localAiTranslatorSupport, Title: __("Edge AI Translator", 'automatic-translations-for-polylang') };
     
                     setServiceModalErrors(prev => ({ ...prev, edgeAiTranslator: errors.edgeAiTranslator }));
                 }
