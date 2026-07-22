@@ -709,6 +709,8 @@
     color: #C70000;
   }
 
+
+
 #atfp-setting-modal
   .atfp-setting-modal-body
   .atfp-provider-card-disabled
@@ -726,6 +728,48 @@
   .atfp-provider-btn-pro:hover {
     color: #001B33;
   }
+
+.atfp-provider-card-loading{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-left: auto;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  border: 1px solid #f5c2c0;
+  cursor: default;
+  pointer-events: none;
+  white-space: nowrap;
+  background: #fff5f5;
+  color: #d63638;
+  user-select: none;
+}
+
+.atfp-provider-card-loading p{
+  margin: 0;
+  padding: 0;
+}
+
+.atfp-provider-loading-spinner{
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(214,54,56,.25);
+  border-top-color: #d63638;
+  border-radius: 50%;
+  animation: atfp-lang-loading-spin .7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes atfp-lang-loading-spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
 
 #atfp-setting-modal .atfp-setting-modal-body .atfp-provider-card-selected {
   border-color: var(--wp-admin-theme-color, #2271b1) !important;

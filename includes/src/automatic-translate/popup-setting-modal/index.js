@@ -58,27 +58,20 @@ const SettingModal = (props) => {
 
         if(!progressElements.hasOwnProperty('initialized')){
             const progressElement=document.createElement('div');
-            progressElement.classList.add(prefix+'-provider-card-progress');
+            progressElement.classList.add(prefix+'-provider-card-loading');
 
             progressElements.initialized = true;
             actionElement.appendChild(progressElement);
             progressElements.progressElement = progressElement;
 
+            const progressStatusElement=document.createElement('span');
+            progressStatusElement.classList.add(prefix+'-provider-loading-spinner');
+            progressElements.progressStatusElement = progressStatusElement;
+            progressElement.appendChild(progressStatusElement);
+
             const progressTextElement=document.createElement('p');
             progressTextElement.textContent = 'Loading... ';
             progressElement.appendChild(progressTextElement);
-
-            const progressStatusElement=document.createElement('span');
-            progressStatusElement.textContent = '0%';
-            progressElements.progressStatusElement = progressStatusElement;
-            progressElement.appendChild(progressStatusElement);
-        }
-
-        if(progressElements.hasOwnProperty('initialized')){
-            const progressStatusElement=progressElements.progressStatusElement;
-            if(progressStatusElement){
-                progressStatusElement.textContent = `${status}%`;
-            }
         }
 
         if(status === 100){
