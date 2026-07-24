@@ -4,6 +4,7 @@ import { select } from "@wordpress/data";
 import StringPopUpHeader from "./header";
 import StringPopUpBody from "./body";
 import StringPopUpFooter from "./footer";
+import ChromeAiTranslator from "../component/translate-provider/local-ai-translator/local-ai-translator";
 
 const popStringModal = (props) => {
 
@@ -43,7 +44,10 @@ const popStringModal = (props) => {
         const serviceProvider = props.service;
 
         if (serviceProvider === 'localAiTranslator') {
-            return 'Chrome AI Translator';
+            const browserType = ChromeAiTranslator.getBrowserType();
+            return browserType === 'Edge' ? 'Edge AI Translator' : 'Chrome AI Translator';
+        } else if (serviceProvider === 'edgeAiTranslator') {
+            return 'Edge AI Translator';
         } else{
             return serviceProvider.replace(/^\w/, c => c.toUpperCase()) + ' Translate';
         }
@@ -54,7 +58,7 @@ const popStringModal = (props) => {
      */
     useEffect(() => {
         if (!props.postDataFetchStatus) {
-                props.fetchPostData({ postId: props.postId, sourceLang: props.sourceLang, targetLang: props.targetLang, updatePostDataFetch: props.updatePostDataFetch, refPostData: data => setRefPostData((prev) => ({ ...prev, ...data })), updateDestroyHandler: updateDestroyHandler });
+            props.fetchPostData({ postId: props.postId, sourceLang: props.sourceLang, targetLang: props.targetLang, updatePostDataFetch: props.updatePostDataFetch, refPostData: data => setRefPostData((prev) => ({ ...prev, ...data })), updateDestroyHandler: updateDestroyHandler });
         }
     }, [props.postDataFetchStatus, props.modalRender])
 
@@ -102,6 +106,14 @@ const popStringModal = (props) => {
 
         props.translatePost({ postContent: postContent, modalClose: modalClose, service: service });
         props.pageTranslate(true);
+
+        if(props.service === 'localAiTranslator'){
+            const browserType = ChromeAiTranslator.getBrowserType();
+            if(browserType === 'Edge'){
+                service = 'edgeLocalAiTranslator';
+            }
+        }
+        
         updateTranslateData({ provider: service, sourceLang: props.sourceLang, targetLang: props.targetLang, postId: props.currentPostId });
     }
 

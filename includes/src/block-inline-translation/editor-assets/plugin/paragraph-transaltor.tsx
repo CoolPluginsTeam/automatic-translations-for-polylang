@@ -110,4 +110,6 @@ registerFormatType("atfp/paragraph-rewriter", {
   tagName: "atfp-paragraph-rewriter",
   className: null,
   edit: ParagraphRewriter,
+} as Parameters<typeof registerFormatType>[1] & {
+  object: boolean;
 });

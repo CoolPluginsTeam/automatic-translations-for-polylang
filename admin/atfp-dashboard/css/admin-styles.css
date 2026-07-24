@@ -355,11 +355,11 @@ a.atfp-dashboard-docs:focus{
 }
 
 /* Pro Tag on Hover */
-.atfp-pro-provider {
+.atfp-pro-provider .atfp-provider-switch{
     position: relative;
 }
 
-.atfp-pro-provider:hover::after {
+.atfp-pro-provider .atfp-provider-switch:hover::after {
     content: "Pro";
     position: absolute;
     top: -30px;
@@ -377,7 +377,7 @@ a.atfp-dashboard-docs:focus{
     pointer-events: none;
 }
 
-.atfp-pro-provider:hover::before {
+.atfp-pro-provider .atfp-provider-switch:hover::before {
     content: "";
     position: absolute;
     top: -10px;

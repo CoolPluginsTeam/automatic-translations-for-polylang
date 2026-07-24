@@ -3,10 +3,9 @@ import { __ } from '@wordpress/i18n';
 import styles from './style.modules.css';
 import Translator from "../translator";
 import isTranslatorApiAvailable from "../is-translator-api-available";
-import languages from "../languages";
 import isLanguageDetectorPaiAvailable from "../is-language-detector-api-available";
 import LanguageDetector from "../language-detector";
-import Languages from "../languages";
+import Languages, { edgeLanguages } from "../languages";
 import Skeleton from 'react-loading-skeleton';
 import skeletonStyles from 'react-loading-skeleton/dist/skeleton.css'
 import ModalStyle from './modal-style';
@@ -58,6 +57,14 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
   let activeSourceLang = 'hi';
   let activeTargetLang = 'es';
   let notSupportedLang = {};
+  const browserType = Translator.getBrowserType();
+  const browserName = browserType === 'Edge' ? 'Edge' : 'Chrome';
+
+  let languages=Languages;
+
+  if(browserType === 'Edge'){
+    languages={...languages,...edgeLanguages};
+  }
 
   if (pageLanguage) {
     const activePageLanguage = pageLanguage;
@@ -79,7 +86,7 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
   const [translatedContent, setTranslatedContent] = useState<string>("");
   const [sourceLang, setSourceLang] = useState<string>(activeSourceLang);
   const [targetLang, setTargetLang] = useState<string>(activeTargetLang);
-  const [targetLanguages, setTargetLanguages] = useState<Array<string>>(Object.keys({...Languages,...notSupportedLang}).filter((lang) => lang !== activeSourceLang));
+  const [targetLanguages, setTargetLanguages] = useState<Array<string>>(Object.keys({...languages,...notSupportedLang}).filter((lang) => lang !== activeSourceLang));
   const [apiError, setApiError] = useState<string>("");
   const [langError, setLangError] = useState<string>("");
   const [shortLangError, setShortLangError] = useState<string>("");
@@ -89,6 +96,7 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
   const [isErrorModalOpen, setIsErrorModalOpen] = useState<boolean>(false);
   const safeBrowser = window.location.protocol === 'https:';
   const browserContentSecure=window?.isSecureContext;
+  const browserFlagBase=browserType === 'Edge' ? 'edge' : 'chrome';
 
   useEffect(() => {
     setLangError("");
@@ -100,14 +108,14 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
     }
 
     // Browser check
-    if (!window.hasOwnProperty('chrome') || !navigator.userAgent.includes('Chrome') || navigator.userAgent.includes('Edg')) {
+    if (browserType === 'Other') {
       setLangError(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">
           <strong>Important Notice:</strong>
           <ol>
-              <li>The Translator API, which leverages Chrome local AI models, is designed specifically for use with the Chrome browser.</li>
-              <li>For comprehensive information about the Translator API, <a href="https://developer.chrome.com/docs/ai/translator-api" target="_blank">click here</a>.</li>
+              <li>The Translator API, which leverages Chrome local AI or Edge local AI models, is designed specifically for use with the Chrome or Edge browser.</li>
+              <li>For comprehensive information about the Translator API, <a href="https://developer.chrome.com/docs/ai/translator-api" target="_blank">Chrome click here</a> or <a href="https://learn.microsoft.com/en-us/microsoft-edge/ai/overview" target="_blank">Edge click here</a>.</li>
           </ol>
-          <p>Please ensure you are using the Chrome browser for optimal performance and compatibility.</p>
+          <p>Please ensure you are using the Chrome or Edge browser for optimal performance and compatibility.</p>
       </span>`);
       return;
     }
@@ -121,8 +129,8 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
                     </li>
                     <li>
                         Please switch to a secure connection (HTTPS) or add this URL to the list of insecure origins treated as secure by visiting 
-                        <span data-clipboard-text="chrome://flags/#unsafely-treat-insecure-origin-as-secure" target="_blank" class="chrome-ai-translator-flags">
-                            chrome://flags/#unsafely-treat-insecure-origin-as-secure ${svgIcons({iconName: 'copy'})}
+                        <span data-clipboard-text="${browserFlagBase}://flags/#unsafely-treat-insecure-origin-as-secure" target="_blank" class="chrome-ai-translator-flags">
+                            ${browserFlagBase}://flags/#unsafely-treat-insecure-origin-as-secure ${svgIcons({iconName: 'copy'})}
                         </span>.
                         Click on the URL to copy it, then open a new window and paste this URL to access the settings.
                     </li>
@@ -130,18 +138,26 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
             </span>`);
       return;
     }else if(!isTranslatorApiAvailable()){
-      setLangError(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">
-          <h4>Steps to Enable the Translator AI Modal:</h4>
-          <ol>
-              <li>Open this URL in a new Chrome tab: <strong><span data-clipboard-text="chrome://flags/#translation-api" target="_blank" class="chrome-ai-translator-flags">chrome://flags/#translation-api ${svgIcons({iconName: 'copy'})}</span></strong>. Click on the URL to copy it, then open a new window and paste this URL to access the settings.</li>
-              <li>Ensure that the <strong>Experimental translation API</strong> option is set to <strong>Enabled</strong>.</li>
-              <li>Click on the <strong>Save</strong> button to apply the changes.</li>
-              <li>The Translator AI modal should now be enabled and ready for use.</li>
-          </ol>
-          <p>For more information, please refer to the <a href="https://developer.chrome.com/docs/ai/translator-api" target="_blank">documentation</a>.</p>   
-          <p>If the issue persists, please ensure that your browser is up to date and restart your browser.</p>
-          <p>If you continue to experience issues after following the above steps, please <a href="https://my.coolplugins.net/account/support-tickets/" target="_blank" rel="noopener">open a support ticket</a> with our team. We are here to help you resolve any problems and ensure a smooth translation experience.</p>
-      </span>`)
+      if(browserType === 'Edge'){
+        setLangError(`<<span style="display: inline-block;">
+        <h4>You are using an outdated browser version. Please update your browser to version 148 or later to use the Translator AI modal</h4>
+        <p>Please update your browser to the latest version to use the Translator AI modal.</p>
+        <p>If you continue to experience issues with latest version of the browser, please <a href="https://my.coolplugins.net/account/support-tickets/" target="_blank" rel="noopener">open a support ticket</a> with our team. We are here to help you resolve any problems and ensure a smooth translation experience.</p>
+        </span>`)
+      }else{
+        setLangError(`<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">
+            <h4>Steps to Enable the Translator AI Modal:</h4>
+            <ol>
+                <li>Open this URL in a new Chrome tab: <strong><span data-clipboard-text="chrome://flags/#translation-api" target="_blank" class="chrome-ai-translator-flags">chrome://flags/#translation-api ${svgIcons({iconName: 'copy'})}</span></strong>. Click on the URL to copy it, then open a new window and paste this URL to access the settings.</li>
+                <li>Ensure that the <strong>Experimental translation API</strong> option is set to <strong>Enabled</strong>.</li>
+                <li>Click on the <strong>Save</strong> button to apply the changes.</li>
+                <li>The Translator AI modal should now be enabled and ready for use.</li>
+            </ol>
+            <p>For more information, please refer to the <a href="https://developer.chrome.com/docs/ai/translator-api" target="_blank">documentation</a>.</p>   
+            <p>If the issue persists, please ensure that your browser is up to date and restart your browser.</p>
+            <p>If you continue to experience issues after following the above steps, please <a href="https://my.coolplugins.net/account/support-tickets/" target="_blank" rel="noopener">open a support ticket</a> with our team. We are here to help you resolve any problems and ensure a smooth translation experience.</p>
+        </span>`)
+      }
 
       return;
     } 
@@ -155,7 +171,7 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
               </li>
               <li>
                   Please switch to a secure connection (HTTPS) or add this URL to the list of insecure origins treated as secure by visiting 
-                  <strong><span data-clipboard-text="chrome://flags/#unsafely-treat-insecure-origin-as-secure" target="_blank" class="chrome-ai-translator-flags">chrome://flags/#unsafely-treat-insecure-origin-as-secure ${svgIcons({iconName: 'copy'})}</span></strong>.
+                  <strong><span data-clipboard-text="${browserFlagBase}://flags/#unsafely-treat-insecure-origin-as-secure" target="_blank" class="chrome-ai-translator-flags">${browserFlagBase}://flags/#unsafely-treat-insecure-origin-as-secure ${svgIcons({iconName: 'copy'})}</span></strong>.
                   Copy the URL and open a new window and paste this URL to access the settings.
               </li>
           </ol>
@@ -182,8 +198,8 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
               <li>
                 Open a new Chrome tab and go to 
                 <strong>
-                  <span data-clipboard-text="chrome://flags/#language-detection-api" target="_blank" class="chrome-ai-translator-flags">
-                    chrome://flags/#language-detection-api ${svgIcons({iconName: 'copy'})}
+                  <span data-clipboard-text="${browserFlagBase}://flags/#language-detection-api" target="_blank" class="chrome-ai-translator-flags">
+                    ${browserFlagBase}://flags/#language-detection-api ${svgIcons({iconName: 'copy'})}
                   </span>
                 </strong>. Click to copy, then paste it in the address bar.
               </li>
@@ -235,7 +251,7 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
   }
 
   const DetectLanguage = async (text) => {
-    const languageDetector = new LanguageDetector(Object.keys(Languages));
+    const languageDetector = new LanguageDetector(Object.keys(languages));
     const status = await languageDetector.Status();
 
 
@@ -261,7 +277,7 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
     setSourceLang(value);
 
     if(value === targetLang || Object.values(targetLanguages).includes(value)){
-      const targetLanges=value !== targetLang ? {...Languages,...notSupportedLang} : Languages;
+      const targetLanges=value !== targetLang ? {...languages,...notSupportedLang} : languages;
       setTargetLanguages(Object.keys(targetLanges).filter((lang) => lang !== value));
       value === targetLang && setTargetLang(Object.keys(targetLanges).filter((lang) => lang !== value)[0]);
     }
@@ -269,7 +285,7 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
     let activeTargetLang = targetLang;
 
     if (targetLang === value) {
-      activeTargetLang = Object.keys(Languages).filter((lang) => lang !== value)[0];
+      activeTargetLang = Object.keys(languages).filter((lang) => lang !== value)[0];
       setTargetLang(activeTargetLang);
     }
 
@@ -280,7 +296,7 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
     setTargetLang(value);
 
     if(Object.keys(notSupportedLang).length > 0 && Object.values(targetLanguages).includes(Object.keys(notSupportedLang)[0])){
-      setTargetLanguages(Object.keys(Languages).filter((lang) => lang !== sourceLang));
+      setTargetLanguages(Object.keys(languages).filter((lang) => lang !== sourceLang));
     }
 
     if(sourceLang === "not-selected"){
@@ -391,13 +407,13 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
     setIsModalOpen(false);
   }
 
-  return (isErrorModalOpen ? <ErrorModalBoxCompat message={langError} onClose={() => {setIsErrorModalOpen(false); setIsModalOpen(true)}} Title={__("Chrome built-in translator AI", 'automatic-translations-for-polylang')}>
+  return (isErrorModalOpen ? <ErrorModalBoxCompat message={langError} onClose={() => {setIsErrorModalOpen(false); setIsModalOpen(true)}} Title={__(`${browserName} built-in translator AI`, 'automatic-translations-for-polylang')}>
     {errorBtns.length > 0 && <ButtonGroupCompat className={styles.errorBtnGroup} buttons={errorBtns} />}
   </ErrorModalBoxCompat> : isModalOpen ? (
     isModalOpen ? (
       <>
       <ModalCompat
-        title="Chrome built-in translator AI"
+        title={`${browserName} built-in translator AI`}
         onRequestClose={HandlerCloseModal}
         className={styles.modalContainer}
         overlayClassName={styles.modalOverlay}
@@ -419,8 +435,8 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
                   options={[...sourceLang !== "not-selected" ? [] : [{
                     label: 'Select Language',
                     value: 'not-selected',
-                  }], ...Object.keys(Languages).filter((lang) => lang !== notSupportedLang).map((lang) => ({
-                    label: Languages[lang],
+                  }], ...Object.keys(languages).filter((lang) => lang !== notSupportedLang).map((lang) => ({
+                    label: languages[lang],
                     value: lang,
                   }))]}
                   onChange={(value) => HandlerSourceLanguageChange(value)}
@@ -430,7 +446,7 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
                   label="Target Language"
                   value={targetLang}
                   options={targetLanguages.map((lang) => ({
-                    label: Languages[lang] || notSupportedLang[lang],
+                    label: languages[lang] || notSupportedLang[lang],
                     value: lang,
                   }))}
                   onChange={(value) => HandlerTargetLanguageChange(value)}

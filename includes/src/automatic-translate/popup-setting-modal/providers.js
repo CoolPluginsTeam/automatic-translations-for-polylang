@@ -1,5 +1,6 @@
 import TranslateService from "../component/translate-provider";
 import { __, sprintf } from "@wordpress/i18n";
+import ChromeLocalAiTranslator from "../component/translate-provider/local-ai-translator/local-ai-translator";
 
 const Providers = (props) => {
   const service = props.Service;
@@ -10,6 +11,20 @@ const Providers = (props) => {
 
   const isSelected = activeProvider === service;
   const isDisabled = ActiveService.ButtonDisabled || buttonDisable;
+  const browserType = ChromeLocalAiTranslator.getBrowserType(); 
+
+  let classNames='atfp-provider-card';
+  if(isDisabled){
+    classNames += ' atfp-provider-card-disabled';
+  }
+  if(isSelected){
+    classNames += ' atfp-provider-card-selected';
+  }
+
+  if(['localAiTranslator','edgeAiTranslator'].includes(service) && browserType === 'Other'){
+    classNames += ' atfp-provider-browser-other';
+  }
+
   const handleCardClick = () => {
     if(isDisabled && 'localAiTranslator' === service) {
       props.openErrorModalHandler("localAiTranslator");
@@ -22,7 +37,7 @@ const Providers = (props) => {
 
   return (
     <div
-            className={`atfp-provider-card ${isDisabled? `atfp-provider-card-disabled` : ""} ${isSelected ? `atfp-provider-card-selected` : ""}`}
+            className={classNames}
             data-service={service}
             onClick={handleCardClick}
             onKeyDown={(e) => { if ((e.key === "Enter" || e.key === " ") && !isDisabled) { e.preventDefault(); handleCardClick(); } }}
