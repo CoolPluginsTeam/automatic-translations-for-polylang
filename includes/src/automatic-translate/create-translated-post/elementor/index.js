@@ -68,7 +68,27 @@ const atfpUpdateWidgetContent = (translations) => {
                 if (Array.isArray(repeaterArray.models) && repeaterArray.models[index]) {
                     let repeaterModel = repeaterArray.models[index]
                     let repeaterAttribute = repeaterModel.attributes
-                    repeaterAttribute[subKey] = translation.translatedContent;
+
+                    if(translation.key.includes('_atfp_')){
+                        const repeaterKeyArray = subKey.split('_atfp_');
+                        let totalKeys = repeaterKeyArray.length - 1;
+
+                        if (repeaterKeyArray && repeaterKeyArray.length > 0) {
+
+                            let currentObject = repeaterAttribute;
+                            const lastKey = repeaterKeyArray[totalKeys];
+                            for (let i = 0; i < totalKeys; i++) {
+                                currentObject = currentObject[repeaterKeyArray[i]];
+                            }
+
+                            if (currentObject && lastKey && currentObject[lastKey]) {
+                                currentObject[lastKey] = translation.translatedContent;
+                            }
+                        }
+                        
+                    }else{
+                        repeaterAttribute[subKey] = translation.translatedContent;
+                    }
 
                     settings.set(repeaterKey, repeaterArray); // Set the updated array back to settings
                     model?.renderRemoteServer();
@@ -237,6 +257,16 @@ const updateElementorPage = ({ postContent, modalClose, service }) => {
                                     return; // Skip this property
                                 }
 
+                                if(repeaterKey.includes('link') && item[repeaterKey].url && '' !== item[repeaterKey].url){
+                                    const fieldKey = `${key}[${index}].${repeaterKey}`
+
+                                    translations.push({
+                                        ID: widgetId,
+                                        key: `${fieldKey}_atfp_url`,
+                                        translatedContent: item[repeaterKey].url,
+                                    })
+                                }
+
                                 if (subStringsToCheck(repeaterKey) &&
                                     typeof item[repeaterKey] === 'string' && item[repeaterKey].trim() !== '') {
 
@@ -254,7 +284,7 @@ const updateElementorPage = ({ postContent, modalClose, service }) => {
                             });
                         }
                     });
-                }else if(key === 'link' && settings[key].url && '' !== settings[key].url){
+                }else if(key.includes('link') && settings[key].url && '' !== settings[key].url){
                     translations.push({
                         ID: widgetId,
                         key: `${key}_atfp_url`,
