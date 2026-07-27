@@ -58,7 +58,7 @@ if(!current_user_can('manage_options')){
         $browserType='chrome';
         $browser_title='Chrome';
 
-        if(strpos($user_agent_info, 'Edg') !== false || !in_array('chrome-built-in-ai', $atfp_enabled_providers)){
+        if(strpos($user_agent_info, 'Edg') !== false || (!in_array('chrome-built-in-ai', $atfp_enabled_providers) && $browserType !== 'chrome')){
             $browserType='edge';
             $browser_title='Edge';
         }
