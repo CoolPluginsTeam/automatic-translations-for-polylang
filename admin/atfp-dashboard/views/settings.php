@@ -54,15 +54,16 @@ if(!current_user_can('manage_options')){
     <?php
         $atfp_enabled_providers = ATFP_Helper::get_active_providers();
         $atfp_polylang_supported_languages=ATFP_Helper::get_polylang_supported_languages();
+        $user_agent_info=sanitize_text_field(wp_unslash($_SERVER['HTTP_USER_AGENT']));
+        $browserType='chrome';
+        $browser_title='Chrome';
 
-        if ( is_array( $atfp_enabled_providers ) && (in_array( 'chrome-built-in-ai', $atfp_enabled_providers ) || in_array('edge-built-in-ai', $atfp_enabled_providers)) ) {
-			$user_agent_info=$_SERVER['HTTP_USER_AGENT'];
-			$browserType='chrome';
-			$browser_title='Chrome';
-			if(strpos($user_agent_info, 'Edg') !== false || !in_array('chrome-built-in-ai', $atfp_enabled_providers)){
-				$browserType='edge';
-				$browser_title='Edge';
-			}
+        if(strpos($user_agent_info, 'Edg') !== false || !in_array('chrome-built-in-ai', $atfp_enabled_providers)){
+            $browserType='edge';
+            $browser_title='Edge';
+        }
+
+        if ( is_array( $atfp_enabled_providers ) && ($browserType === 'chrome' && in_array( 'chrome-built-in-ai', $atfp_enabled_providers )) || ($browserType === 'edge' && in_array('edge-built-in-ai', $atfp_enabled_providers)) ) {
 			$logo_base_url=ATFP_URL . 'assets/images/';
         ?>
             <h2 class="atfp-section-title atfp-section-title-with-icon">
