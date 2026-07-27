@@ -41,7 +41,7 @@ export default (props) => {
               __("Translate Using %s", "automatic-translations-for-polylang"),
               browserType === 'Edge' ? "Edge built-in API" : "Chrome built-in API"
             ),
-            Docs: browserType === 'Edge' ? "https://docs.coolplugins.net/doc/edge-ai-translation-polylang/?"+refrenceText+"&utm_medium=inside&utm_campaign=docs&utm_content=popup_edge" : "https://docs.coolplugins.net/doc/chrome-ai-translation-polylang/?"+refrenceText+"&utm_medium=inside&utm_campaign=docs&utm_content=popup_chrome",
+            Docs: browserType === 'Edge' ? "https://docs.coolplugins.net/doc/microsoft-edge-ai-polylang-translation/?"+refrenceText+"&utm_medium=inside&utm_campaign=docs&utm_content=popup_edge" : "https://docs.coolplugins.net/doc/chrome-ai-translation-polylang/?"+refrenceText+"&utm_medium=inside&utm_campaign=docs&utm_content=popup_chrome",
             BetaEnabled: false,
             ButtonDisabled: props.localAiTranslatorButtonDisabled,
             ErrorMessage: props.localAiTranslatorButtonDisabled ? <div className="atfp-provider-error" onClick={() => openErrorModalHandler("localAiTranslator")}>{__('View Error', 'automatic-translations-for-polylang')}</div> : <></>,
@@ -57,7 +57,7 @@ export default (props) => {
             __("Translate Using %s", "automatic-translations-for-polylang"),
             "Edge built-in API"
             ),
-            Docs: "https://docs.coolplugins.net/doc/edge-ai-translation-polylang/?"+refrenceText+"&utm_medium=inside&utm_campaign=docs&utm_content=popup_edge",
+            Docs: "https://docs.coolplugins.net/doc/microsoft-edge-ai-polylang-translation/?"+refrenceText+"&utm_medium=inside&utm_campaign=docs&utm_content=popup_edge",
             BetaEnabled: true,
             ButtonDisabled: props.edgeAiTranslatorButtonDisabled,
             ErrorMessage: props.edgeAiTranslatorButtonDisabled ? <div className="atfp-provider-error" onClick={() => openErrorModalHandler("edgeAiTranslator")}>{__('View Error', 'automatic-translations-for-polylang')}</div> : <></>,
