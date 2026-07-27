@@ -63,7 +63,7 @@ if(!current_user_can('manage_options')){
             $browser_title='Edge';
         }
 
-        if ( is_array( $atfp_enabled_providers ) && ($browserType === 'chrome' && in_array( 'chrome-built-in-ai', $atfp_enabled_providers )) || ($browserType === 'edge' && in_array('edge-built-in-ai', $atfp_enabled_providers)) ) {
+        if ( is_array( $atfp_enabled_providers ) && (($browserType === 'chrome' && in_array( 'chrome-built-in-ai', $atfp_enabled_providers )) || ($browserType === 'edge' && in_array('edge-built-in-ai', $atfp_enabled_providers))) ) {
 			$logo_base_url=ATFP_URL . 'assets/images/';
         ?>
             <h2 class="atfp-section-title atfp-section-title-with-icon">
