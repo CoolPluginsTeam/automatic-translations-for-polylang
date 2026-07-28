@@ -164,10 +164,10 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 
 				if(empty($active_tab) || $active_tab === 'dashboard'){
 					$dashboard_data=array(
-						'ajax_url' => admin_url('admin-ajax.php'),
+						'ajax_url' => esc_url(admin_url('admin-ajax.php')),
 						'nonce' => wp_create_nonce('atfp_update_enabled_providers'),
 						'buy_pro_url' => $buy_pro_url,
-						'dashboard_url' => admin_url('admin.php?page=polylang-atfp-dashboard&tab=dashboard')
+						'dashboard_url' => esc_url(admin_url('admin.php?page=polylang-atfp-dashboard&tab=dashboard'))
 					);
 					
 					wp_localize_script('atfp-dashboard-script', 'atfpSettingsScriptData', $dashboard_data);
