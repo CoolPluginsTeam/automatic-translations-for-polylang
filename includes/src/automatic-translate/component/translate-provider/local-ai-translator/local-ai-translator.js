@@ -52,6 +52,8 @@ class ChromeAiTranslator {
         'sl', 'sv', 'uk', 'kn', 'ta', 'te', 'mr', 'zh', 'iw', 'no'
     ];
     
+    // Edge-exclusive language codes. Reference: https://learn.microsoft.com/en-us/microsoft-edge/web-platform/translator-api
+    // Last updated: 2026-07 for Edge 148+
     static edgeOnlyLanguages = [
         'nb', 'af', 'is', 'fo', 'lb', 'pt-pt', 'ca', 'gl', 'oc', 'la',
         'bs', 'dsb', 'hsb', 'sr-latn', 'be', 'mk', 'sr-cyrl', 'kk',
@@ -70,7 +72,7 @@ class ChromeAiTranslator {
 
     static getBrowserType = () => {
         let type='Other';
-        if(navigator && navigator.userAgentData && navigator.userAgentData.brands){
+        if(navigator?.userAgentData?.brands){
             navigator.userAgentData.brands.forEach(data=>{
                 if(data.brand === 'Google Chrome'){
                     type='Chrome';

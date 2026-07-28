@@ -513,7 +513,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 			}
 
 			// Get the JSON string directly, unslashing but not sanitizing as text
-			$enabled_providers = isset($_POST['enabled_providers']) ? wp_strip_all_tags(wp_unslash($_POST['enabled_providers'])) : '';
+			$enabled_providers = isset($_POST['enabled_providers']) ? wp_unslash($_POST['enabled_providers']) : '';
 			$enabled_providers = json_decode($enabled_providers, true);
 
 			if ( json_last_error() !== JSON_ERROR_NONE ) {
@@ -555,7 +555,11 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
                 ]);
             }
 
-            check_ajax_referer('atfp_install_nonce', '_wpnonce', true);
+            if ( ! check_ajax_referer( 'atfp_install_nonce', '_wpnonce', false ) ) {
+                return wp_send_json_error([
+                    'errorMessage' => __('Security check failed.', 'automatic-translations-for-polylang'),
+                ]);
+            }
 
             if (empty($_POST['slug'])) {
                 return wp_send_json_error([
