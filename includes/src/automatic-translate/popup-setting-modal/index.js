@@ -23,6 +23,7 @@ const SettingModal = (props) => {
     const [serviceModalErrors, setServiceModalErrors] = useState({});
     const [errorModalVisibility, setErrorModalVisibility] = useState(false);
     const [chromeAiBtnDisabled, setChromeAiBtnDisabled] = useState(false);
+    const [edgeAiBtnDisabled, setEdgeAiBtnDisabled] = useState(false);
     const [showBulkPromotionModal, setShowBulkPromotionModal] = useState(false);
     const characterCount = parseInt(window.atfp_global_object.translation_data.total_character_count);
 
@@ -46,6 +47,41 @@ const SettingModal = (props) => {
     const openErrorModalHandler = (service) => {
         setSettingVisibility(false);
         setErrorModalVisibility(service);
+    }
+
+    const localAiUpdateStatus =  (status,progressElements={}, cardElement, actionElement) => {
+        const prefix='atfp';
+        
+        if(cardElement){
+            cardElement.classList.add(prefix+'-provider-card-disabled')
+        }
+
+        if(!progressElements.hasOwnProperty('initialized')){
+            const progressElement=document.createElement('div');
+            progressElement.classList.add(prefix+'-provider-card-loading');
+
+            progressElements.initialized = true;
+            actionElement.appendChild(progressElement);
+            progressElements.progressElement = progressElement;
+
+            const progressStatusElement=document.createElement('span');
+            progressStatusElement.classList.add(prefix+'-provider-loading-spinner');
+            progressElements.progressStatusElement = progressStatusElement;
+            progressElement.appendChild(progressStatusElement);
+
+            const progressTextElement=document.createElement('p');
+            progressTextElement.textContent = 'Loading... ';
+            progressElement.appendChild(progressTextElement);
+        }
+
+        if(status === 100){
+            cardElement.classList.remove(prefix+'-provider-card-disabled')
+            setTimeout(() => {
+                actionElement.removeChild(progressElements.progressElement);
+            }, 5000);
+        }
+
+        return progressElements;
     }
 
     /**
@@ -84,15 +120,36 @@ const SettingModal = (props) => {
      * useEffect hook to check if the local AI translator is supported.
      */
     useEffect(() => {
+        const localAiCardElement=document.querySelector('#atfp-provider-card-localAiTranslator');
+        const actionElement=localAiCardElement?.querySelector('.atfp-provider-card-actions');
+        let progressButton={};
+        
+        const localAiUpdateStatusHandler = (status) => {
+            progressButton = localAiUpdateStatus(status, progressButton, localAiCardElement, actionElement);
+        }
+
         const languageSupportedStatus = async () => {
-            const localAiTranslatorSupport = await ChromeLocalAiTranslator.languageSupportedStatus(sourceLang, targetLang, targetLangName, sourceLangName);
+            let errors = {};
+            const browserType = ChromeLocalAiTranslator.getBrowserType();
+            const localAiTranslatorSupport = await ChromeLocalAiTranslator.languageSupportedStatus(sourceLang, targetLang, targetLangName, sourceLangName, localAiUpdateStatusHandler);
 
             if (localAiTranslatorSupport !== true && typeof localAiTranslatorSupport === 'object') {
                 setChromeAiBtnDisabled(true);
+
+                errors.localAiTranslator = { message: localAiTranslatorSupport.chrome ? localAiTranslatorSupport.chrome : localAiTranslatorSupport, Title: sprintf(__("%s AI Translator", 'automatic-translations-for-polylang'), browserType === 'Edge' ? "Edge" : "Chrome") };
+
+                setServiceModalErrors(prev => ({ ...prev, localAiTranslator: errors.localAiTranslator }));
+
+                if (['Other','Edge'].includes(browserType)) {
+                    setEdgeAiBtnDisabled(true);
     
-                setServiceModalErrors(prev => ({ ...prev, localAiTranslator: {message: localAiTranslatorSupport} }));
+                    errors.edgeAiTranslator = { message: localAiTranslatorSupport.edge ? localAiTranslatorSupport.edge : localAiTranslatorSupport, Title: __("Edge AI Translator", 'automatic-translations-for-polylang') };
+    
+                    setServiceModalErrors(prev => ({ ...prev, edgeAiTranslator: errors.edgeAiTranslator }));
+                }
             }
         };
+
         if(settingVisibility){
             if(!yandexSupport){
                 setServiceModalErrors(prev => ({
@@ -156,7 +213,7 @@ const SettingModal = (props) => {
     const updateActiveProviderHandler = async (service, serviceLabel) => {
 
         if (service === 'localAiTranslator') {
-            const localAiTranslatorSupport = await ChromeLocalAiTranslator.languageSupportedStatus(sourceLang, targetLang, targetLangName);
+            const localAiTranslatorSupport = await ChromeLocalAiTranslator.languageSupportedStatus(sourceLang, targetLang, targetLangName, sourceLangName);
             if (localAiTranslatorSupport !== true && typeof localAiTranslatorSupport === 'object') {
                 return;
             }
@@ -209,6 +266,7 @@ const SettingModal = (props) => {
                             postType={props.postType}
                             sourceLangName={sourceLangName}
                             localAiTranslatorDisabled={chromeAiBtnDisabled}
+                            edgeAiTranslatorDisabled={edgeAiBtnDisabled}
                             openErrorModalHandler={openErrorModalHandler}
                             onSelectProvider={updateActiveProviderHandler}
                             activeProvider={activeProvider.service}

@@ -31,6 +31,7 @@ if(!defined('ABSPATH')){
                 $atfp_features = [
                     'Yandex Translate Widget Support' => [true, true],
                     'Chrome Built-in AI Support' => [true, true],
+                    'Edge Built-in AI Support' => [true, true],
                     'No API Key Required' => [true, true],
                     'Unlimited Translations' => [true, true],
                     'Google Translate Widget Support' => [false, true],

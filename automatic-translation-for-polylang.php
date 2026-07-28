@@ -2,7 +2,7 @@
 /*
 Plugin Name: AutoPoly - AI Translation For Polylang
 Plugin URI: https://coolplugins.net/
-Version: 1.4.16
+Version: 1.5.0
 Author: Cool Plugins
 Author URI: https://coolplugins.net/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=author_page&utm_content=plugins_list
 Description: AutoPoly - AI Translation For Polylang simplifies your translation process by automatically translating all pages/posts content from one language to another.
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 if ( ! defined( 'ATFP_V' ) ) {
-	define( 'ATFP_V', '1.4.16' );
+	define( 'ATFP_V', '1.5.0' );
 }
 if ( ! defined( 'ATFP_DIR_PATH' ) ) {
 	define( 'ATFP_DIR_PATH', plugin_dir_path( __FILE__ ) );
@@ -164,17 +164,17 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 
 				if(empty($active_tab) || $active_tab === 'dashboard'){
 					$dashboard_data=array(
-						'ajax_url' => admin_url('admin-ajax.php'),
+						'ajax_url' => esc_url(admin_url('admin-ajax.php')),
 						'nonce' => wp_create_nonce('atfp_update_enabled_providers'),
 						'buy_pro_url' => $buy_pro_url,
-						'dashboard_url' => admin_url('admin.php?page=polylang-atfp-dashboard&tab=dashboard')
+						'dashboard_url' => esc_url(admin_url('admin.php?page=polylang-atfp-dashboard&tab=dashboard'))
 					);
 					
 					wp_localize_script('atfp-dashboard-script', 'atfpSettingsScriptData', $dashboard_data);
 				}
 			}
 
-			if($page == 'polylang-atfp-dashboard' && in_array($active_tab, array('settings', 'dashboard'))){
+			if($page == 'polylang-atfp-dashboard' && (empty($active_tab) || in_array($active_tab, array('settings', 'dashboard')))){
 				wp_enqueue_script( 'atfp-dashboard-settings-script', ATFP_URL . 'admin/atfp-dashboard/js/atfp-chrome-ai-notice.min.js', array('jquery'), ATFP_V, true );
 				
 				$atfp_langugages=array(
@@ -184,7 +184,8 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 					'all_languages' => array(),
 					'chrome_ai_bypass_api_check' => false,
 					'chrome_ai_bypass_language_check' => false,
-					'chrome_ai_bypass_browser_check' => false
+					'chrome_ai_bypass_browser_check' => false,
+					'enabled_providers' => ATFP_Helper::get_active_providers()
 				);
 
 				$atfp_supported_langugages=ATFP_Helper::get_polylang_supported_languages();

@@ -4,7 +4,7 @@ Tags: Polylang, AI Translation, Content Translation, Translate
 Requires at least: 5.0
 Tested up to: 7.0
 Requires PHP: 5.6
-Stable tag: 1.4.16
+Stable tag: 1.5.0
 Author URI: https://coolplugins.net/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=author_page&utm_content=plugins_list
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -222,6 +222,14 @@ Yes, this plugin supports automatic translations for content created with the Cl
 You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities.[Report a security vulnerability](https://patchstack.com/database/wordpress/plugin/automatic-translations-for-polylang/vdp)
 
 == Changelog ==
+
+= Version 1.5.0 | 28 July 2026 =
+* **Added:** Edge local built-in AI translator API support.
+* **Added:** Translation support for old page which are created before activation of this plugin.
+* **Fixed:** Elementor page and template languages linking issue.
+* **Fixed:** Elementor content internal links translation issue.
+* **Fixed:** Empty block added in gutenberg after translation.
+* **Fixed:** In elementor template post_content widget not updated after translation before refreshing the page.
 
 = Version 1.4.16 | 06 July 2026 =
 * **Fixed:** Fixed page translation issue with editor role users.

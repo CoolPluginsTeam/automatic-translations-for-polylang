@@ -7,6 +7,7 @@ import Notice from './component/notice';
 import { select } from '@wordpress/data';
 import { sprintf, __ } from '@wordpress/i18n';
 import FormatNumberCount from './component/format-number-count';
+import ChromeAiTranslator from './component/translate-provider/local-ai-translator/local-ai-translator';
 
 // Elementor post fetch and update page
 import ElementorPostFetch from './fetch-post/elementor';
@@ -20,6 +21,16 @@ const init = () => {
   let atfpModals = new Array();
   const atfpSettingModalWrp = '<!-- The Modal --><div id="atfp-setting-modal"></div>';
   const atfpStringModalWrp = '<div id="atfp_strings_model" class="modal atfp_custom_model"></div>';
+  const enabledProviders = window.atfp_global_object.active_providers || [];
+  const browserType = ChromeAiTranslator.getBrowserType();
+
+  if(enabledProviders.includes('edge-built-in-ai') && browserType === 'Edge' && !enabledProviders.includes('chrome-built-in-ai')) {
+    enabledProviders.push('chrome-built-in-ai');
+  }
+
+  if(!enabledProviders.includes('edge-built-in-ai') && browserType === 'Edge' && enabledProviders.includes('chrome-built-in-ai')) {
+    enabledProviders.splice(enabledProviders.indexOf('chrome-built-in-ai'), 1);
+  }
 
   atfpModals.push(atfpSettingModalWrp, atfpStringModalWrp);
 

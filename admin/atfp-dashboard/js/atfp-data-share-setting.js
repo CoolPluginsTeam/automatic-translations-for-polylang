@@ -93,7 +93,7 @@ jQuery(function($) {
         });
     });
 
-    $('.atfp-provider-toggle').on('change', function() {
+    $('.atfp-provider-switch-container:not(.atfp-pro-provider) .atfp-provider-toggle').on('change', function() {
         const checkedProviders = $('.atfp-provider-toggle:checked');
         const enabledProviders={};
 
@@ -129,7 +129,7 @@ jQuery(function($) {
         });
     });
 
-    $('.atfp-provider-switch-container[data-provider]').on('click', function(e) {
+    $('.atfp-provider-switch-container.atfp-pro-provider').on('click', function(e) {
         const provider = $(this).data('provider');
         const utm_link=atfpSettingsScriptData.buy_pro_url + '&utm_campaign=get_pro&utm_content=dashboard_'+provider;
         window.open(utm_link, '_blank');
