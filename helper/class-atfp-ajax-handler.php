@@ -584,6 +584,11 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
                     ],
                     'dependency'     => 'loco-translate/loco.php',
                     'dependency_msg' => esc_html__( 'Please activate Loco Translate plugin first.', 'automatic-translations-for-polylang' ),
+                ],
+                'language-switcher-for-divi-polylang' => [
+                    'files' => [
+                        'language-switcher-for-divi-polylang/language-switcher-for-divi-polylang.php',
+                    ],
                 ]
             ];
 

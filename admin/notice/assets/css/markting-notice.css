@@ -1,0 +1,72 @@
+.inside #atfp-lsdp-ml-box-notice {
+  margin: 12px 0px 0px 0px !important;
+  background: linear-gradient(135deg, #eaf2ff 0%, #eef2ff 50%, #f4eeff 100%);
+  border: 1.8px solid #d5e2ff;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  border-radius: 4px;
+  padding: 18px 10px;
+  text-align: center;
+  position: relative;
+}
+
+.inside .atfp-lsdp-card-wrapper .atfp-install-plugin {
+  border-radius: 5px;
+  min-height: 30px !important;
+  margin-top: 5px !important;
+  font-size: 12px;
+  line-height: normal;
+  padding: 1px 0px;
+  width: 51%;
+}
+
+.inside .atfp-lsdp-card-wrapper p {
+  margin-top: 1px !important;
+  margin-bottom: 0px !important;
+}
+.inside .atfp-lsdp-card-wrapper .atfp-lsdp-card-icon {
+  width: 100px;
+}
+.inside .atfp-lsdp-card-icon span {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.inside .atfp-lsdp-card-wrapper .atfp-lsdp-card-description {
+  line-height: 17px;
+  font-size: 12px !important;
+  margin: 5px 0px !important;
+}
+.inside .atfp-lsdp-card-wrapper .atfp-lsdp-card-title {
+  font-size: 13px;
+}
+
+.inside .atfp-lsdp-card-wrapper .atfp-dismiss-btn {
+  top: 6px;
+  right: 10px;
+}
+
+@media (min-width: 1024px) {
+  .atfp-lsdp-card-wrapper p.atfp-admin-card-title {
+    display: inline-flex !important;
+    gap: 6px !important;
+    align-items: center;
+    margin: 0px;
+  }
+}
+@media (max-width: 1024px) {
+  .atfp-lsdp-card-wrapper p.atfp-admin-card-title {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+  }
+  p.atfp-admin-card-title .atfp-install-plugin {
+    margin: 0px !important;
+    margin-top: 10px !important;
+    font-size: 12px;
+    min-height: 34px;
+  }
+}
