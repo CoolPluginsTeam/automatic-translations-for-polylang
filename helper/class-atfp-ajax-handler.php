@@ -143,9 +143,9 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 			$this->seo_fields_data($atfp_meta_fields, $post_id);
 
 			$data    = array(
-				'title'   => $post_data->post_title,
-				'excerpt' => $post_data->post_excerpt,
-				'content' => $content,
+				'title'   => is_string( $post_data->post_title ) ? $post_data->post_title : '',
+				'excerpt' => is_string( $post_data->post_excerpt ) ? $post_data->post_excerpt : '',
+				'content' => is_string( $content ) ? $content : '',
 				'metaFields' => $atfp_meta_fields
 			);
 
@@ -170,6 +170,10 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 					$acf_repeater_key=$acf_key . $acf_values['name'].'_'.$repeater_item_index.'_';
 
 					foreach($repeater_item_value as $repeater_item_value_key => $repeater_item_value_value){
+						if(!is_string($repeater_item_value_value) || '' === trim($repeater_item_value_value)){
+							continue;
+						}
+
 						$meta_fields_arr[$acf_repeater_key .$repeater_item_value_key][] = $repeater_item_value_value;
 					}
 				}
@@ -179,12 +183,16 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 
 			if(is_array($acf_values['value'])){
 				foreach($acf_values['value'] as $acf_value_key => $acf_value_value){
+					if(!is_string($acf_value_value) || '' === trim($acf_value_value)){
+						continue;
+					}
+
 					$meta_fields_arr[$acf_key . $acf_values['name'] . '_' . $acf_value_key][] = $acf_value_value;
 				}
 				return;
 			}
 
-			if(gettype($acf_values['value']) !== 'string'){
+			if(gettype($acf_values['value']) !== 'string' || '' === trim($acf_values['value'])){
 				return;
 			}
 
@@ -224,7 +232,12 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 
 			foreach($all_post_meta as $meta_key => $meta_value){
 				if(in_array($meta_key, $atfp_allowed_seo_fields)){
-					$meta_fields_arr[$meta_key] = $meta_value;
+					$seo_value = isset($meta_value[0]) ? $meta_value[0] : '';
+					if(!is_string($seo_value) || '' === trim($seo_value)){
+						continue;
+					}
+
+					$meta_fields_arr[$meta_key] = array($seo_value);
 				}
 			}
 		}

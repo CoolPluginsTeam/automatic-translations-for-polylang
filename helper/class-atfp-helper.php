@@ -580,27 +580,23 @@ if (! class_exists('ATFP_Helper')) {
 			}
 
 			$translated_post_types = $polylang->model->get_translated_post_types();
-			$translated_taxonomies = $polylang->model->get_translated_taxonomies();
-	
 			$translated_post_types = array_values($translated_post_types);
-			$translated_taxonomies = array_values($translated_taxonomies);
 				
 			$translated_post_types=array_filter($translated_post_types, function($post_type){
 				return is_string($post_type);
 			});
-	
-			$translated_taxonomies=array_filter($translated_taxonomies, function($taxonomy){
-				return is_string($taxonomy);
-			});
+
+			if(isset($current_screen->taxonomy) && !empty($current_screen->taxonomy)){
+				return false;
+			}
 	
 			$valid_post_type=(isset($current_screen->post_type) && !empty($current_screen->post_type)) && in_array($current_screen->post_type, $translated_post_types) && $current_screen->post_type !== 'attachment' ? $current_screen->post_type : false;
-			$valid_taxonomy=(isset($current_screen->taxonomy) && !empty($current_screen->taxonomy)) && in_array($current_screen->taxonomy, $translated_taxonomies) ? $current_screen->taxonomy : false;
 
 			if(isset($current_screen->is_block_editor) && true === $current_screen->is_block_editor){
 				return false;
 			}
 	
-			if((!$valid_post_type && !$valid_taxonomy) || ((!$valid_post_type || empty($valid_post_type)) && !isset($valid_taxonomy)) || (isset($current_screen->taxonomy) && !empty($current_screen->taxonomy) && !$valid_taxonomy)){
+			if(!$valid_post_type || empty($valid_post_type)){
 				return false;
 			}
 
@@ -654,6 +650,234 @@ if (! class_exists('ATFP_Helper')) {
 			$active_providers = array_intersect(array_keys($active_providers), $valid_providers);
 
 			return $active_providers;
+		}
+
+
+		public static function get_automatic_translate_meta_fields( $post_id = 0 ) {
+			$allowed_fields = array(
+				'_yoast_wpseo_title'                 => array( 'status' => true, 'type' => 'string' ),
+				'_yoast_wpseo_focuskw'               => array( 'status' => true, 'type' => 'string' ),
+				'_yoast_wpseo_metadesc'              => array( 'status' => true, 'type' => 'string' ),
+				'_yoast_wpseo_bctitle'               => array( 'status' => true, 'type' => 'string' ),
+				'_yoast_wpseo_opengraph-title'       => array( 'status' => true, 'type' => 'string' ),
+				'_yoast_wpseo_opengraph-description' => array( 'status' => true, 'type' => 'string' ),
+				'_yoast_wpseo_twitter-title'         => array( 'status' => true, 'type' => 'string' ),
+				'_yoast_wpseo_twitter-description'   => array( 'status' => true, 'type' => 'string' ),
+				'rank_math_title'                    => array( 'status' => true, 'type' => 'string' ),
+				'rank_math_description'              => array( 'status' => true, 'type' => 'string' ),
+				'rank_math_focus_keyword'            => array( 'status' => true, 'type' => 'string' ),
+				'rank_math_facebook_title'           => array( 'status' => true, 'type' => 'string' ),
+				'rank_math_facebook_description'     => array( 'status' => true, 'type' => 'string' ),
+				'rank_math_twitter_title'            => array( 'status' => true, 'type' => 'string' ),
+				'rank_math_twitter_description'      => array( 'status' => true, 'type' => 'string' ),
+				'rank_math_breadcrumb_title'         => array( 'status' => true, 'type' => 'string' ),
+				'_seopress_titles_title'             => array( 'status' => true, 'type' => 'string' ),
+				'_seopress_titles_desc'              => array( 'status' => true, 'type' => 'string' ),
+				'_seopress_social_fb_title'          => array( 'status' => true, 'type' => 'string' ),
+				'_seopress_social_fb_desc'           => array( 'status' => true, 'type' => 'string' ),
+				'_seopress_social_twitter_title'     => array( 'status' => true, 'type' => 'string' ),
+				'_seopress_social_twitter_desc'      => array( 'status' => true, 'type' => 'string' ),
+				'_seopress_analysis_target_kw'       => array( 'status' => true, 'type' => 'string' ),
+			);
+
+			$post_id = absint( $post_id );
+			if ( $post_id ) {
+				$allowed_fields = array_merge( $allowed_fields, self::get_post_acf_meta_fields( $post_id ) );
+			}
+
+			return $allowed_fields;
+		}
+
+		/**
+		 * Collects ACF text/textarea/wysiwyg meta keys for a post, including nested repeater and flexible-content rows.
+		 *
+		 * Nested keys (e.g. repeater_0_title) are stored as public post meta with a matching _key field reference.
+		 * Parent repeater/flexible fields are skipped; those are synced as-is, not translated.
+		 *
+		 * @param int $post_id Source post ID.
+		 * @return array
+		 */
+		private static function get_post_acf_meta_fields( $post_id ) {
+			$allowed_fields = array();
+			$post_id        = absint( $post_id );
+
+			if ( ! $post_id ) {
+				return $allowed_fields;
+			}
+
+			if ( ! function_exists( 'acf_get_field' ) ) {
+				if ( ! function_exists( 'get_field_objects' ) ) {
+					return $allowed_fields;
+				}
+
+				$acf_fields = get_field_objects( $post_id );
+				if ( ! is_array( $acf_fields ) ) {
+					return $allowed_fields;
+				}
+
+				foreach ( $acf_fields as $field ) {
+					if ( isset( $field['type'], $field['name'] ) && in_array( $field['type'], array( 'text', 'textarea', 'wysiwyg' ), true ) && ! empty( $field['name'] ) ) {
+						$allowed_fields[ $field['name'] ] = array( 'status' => true, 'type' => 'string' );
+					}
+				}
+
+				return $allowed_fields;
+			}
+
+			$text_types = array( 'text', 'textarea', 'wysiwyg' );
+			$all_meta   = get_post_meta( $post_id );
+
+			foreach ( (array) $all_meta as $key => $values ) {
+				if ( '' === $key || '_' === $key[0] ) {
+					continue;
+				}
+
+				if ( self::is_acf_structural_field( $key, $post_id ) ) {
+					continue;
+				}
+
+				$field_ref = isset( $all_meta[ '_' . $key ][0] ) ? maybe_unserialize( $all_meta[ '_' . $key ][0] ) : '';
+				$field     = ( is_string( $field_ref ) && isset( $field_ref[0] ) && 'field_' === substr( $field_ref, 0, 6 ) ) ? acf_get_field( $field_ref ) : acf_get_field( $key );
+
+				if ( ! $field || ! isset( $field['type'] ) || ! in_array( $field['type'], $text_types, true ) ) {
+					continue;
+				}
+
+				$allowed_fields[ $key ] = array( 'status' => true, 'type' => 'string' );
+			}
+
+			return $allowed_fields;
+		}
+
+		/**
+		 * Checks whether a meta key is the parent field of an ACF flexible content or repeater field.
+		 *
+		 * @param string $meta_key Meta key to check.
+		 * @param int    $post_id  Optional post ID used to resolve nested field keys.
+		 * @return bool
+		 */
+		public static function is_acf_structural_field( $meta_key, $post_id = 0 ) {
+			if ( ! function_exists( 'acf_get_field' ) ) {
+				return false;
+			}
+
+			$meta_key  = sanitize_text_field( $meta_key );
+			$field_key = $post_id ? get_post_meta( absint( $post_id ), '_' . $meta_key, true ) : '';
+			$field     = ( is_string( $field_key ) && isset( $field_key[0] ) && 'field_' === substr( $field_key, 0, 6 ) ) ? acf_get_field( $field_key ) : acf_get_field( $meta_key );
+
+			return $field && isset( $field['type'] ) && in_array( $field['type'], array( 'flexible_content', 'repeater' ), true );
+		}
+
+		/**
+		 * Returns hashes of ACF repeater/flexible parent fields on a post.
+		 *
+		 * @param int $post_id Source post ID.
+		 * @return array
+		 */
+		public static function get_acf_structural_field_hashes( $post_id ) {
+			$hashes  = array();
+			$post_id = absint( $post_id );
+
+			if ( ! $post_id ) {
+				return $hashes;
+			}
+
+			foreach ( array_keys( (array) get_post_meta( $post_id ) ) as $key ) {
+				if ( '' !== $key && '_' !== $key[0] && self::is_acf_structural_field( $key, $post_id ) ) {
+					$value           = get_post_meta( $post_id, $key, true );
+					$hashes[ sanitize_text_field( $key ) ] = md5( sanitize_text_field( is_array( $value ) ? maybe_serialize( $value ) : $value ) );
+				}
+			}
+
+			return $hashes;
+		}
+
+		/**
+		 * Copies ACF repeater/flexible parent structure and nested field-key references from source to target.
+		 *
+		 * The parent field stores row counts or layout names. Translating those values breaks ACF rendering
+		 * even when subfields are translated correctly. They must be copied as-is.
+		 *
+		 * @param int $source_post_id Source post ID.
+		 * @param int $target_post_id Target post ID.
+		 * @return void
+		 */
+		public static function sync_acf_structural_fields( $source_post_id, $target_post_id ) {
+			$source_post_id = absint( $source_post_id );
+			$target_post_id = absint( $target_post_id );
+
+			if ( ! $source_post_id || ! $target_post_id || $source_post_id === $target_post_id ) {
+				return;
+			}
+
+			$source_meta              = get_post_meta( $source_post_id );
+			$structural_field_hashes  = self::get_acf_structural_field_hashes( $source_post_id );
+
+			foreach ( array_keys( $structural_field_hashes ) as $key ) {
+				if ( isset( $source_meta[ $key ][0] ) ) {
+					update_post_meta( $target_post_id, $key, maybe_unserialize( $source_meta[ $key ][0] ) );
+				}
+
+				$field_key = isset( $source_meta[ '_' . $key ][0] ) ? maybe_unserialize( $source_meta[ '_' . $key ][0] ) : '';
+				if ( is_string( $field_key ) && isset( $field_key[0] ) && 'field_' === substr( $field_key, 0, 6 ) ) {
+					update_post_meta( $target_post_id, '_' . $key, $field_key );
+				}
+
+				$nested_meta_prefix = '_' . $key . '_';
+				foreach ( (array) $source_meta as $meta_key => $values ) {
+					if ( isset( $meta_key[0] ) && substr( $meta_key, 0, strlen( $nested_meta_prefix ) ) === $nested_meta_prefix && isset( $values[0] ) && is_string( $values[0] ) && isset( $values[0][0] ) && 'field_' === substr( $values[0], 0, 6 ) ) {
+						update_post_meta( $target_post_id, $meta_key, $values[0] );
+					}
+				}
+			}
+		}
+
+		public static function has_elementor_data(int $post_id): bool {
+			$elementor_data = get_post_meta($post_id, '_elementor_data', true);
+
+			if (is_array($elementor_data)) {
+				return !empty($elementor_data);
+			}
+
+			if (!is_string($elementor_data)) {
+				return !empty($elementor_data);
+			}
+
+			$elementor_data = trim($elementor_data);
+
+			if ('' === $elementor_data) {
+				return false;
+			}
+
+			$decoded_data = json_decode($elementor_data, true);
+
+			if (JSON_ERROR_NONE === json_last_error()) {
+				return self::elementor_data_has_widgets($decoded_data);
+			}
+
+			return true;
+		}
+
+		private static function elementor_data_has_widgets($data): bool {
+			if (!is_array($data) || empty($data)) {
+				return false;
+			}
+
+			foreach ($data as $element) {
+				if (!is_array($element)) {
+					continue;
+				}
+
+				if ((isset($element['elType']) && 'widget' === $element['elType']) || !empty($element['widgetType'])) {
+					return true;
+				}
+
+				if (isset($element['elements']) && self::elementor_data_has_widgets($element['elements'])) {
+					return true;
+				}
+			}
+
+			return false;
 		}
 	}
 }

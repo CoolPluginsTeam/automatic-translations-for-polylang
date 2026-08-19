@@ -1,15 +1,15 @@
 <?php
 
-if(!defined('ABSPATH')) exit;
+if (!defined('ABSPATH')) exit;
 
-if(!class_exists('ATFP_Bulk_Translation')):
+if (!class_exists('ATFP_Bulk_Translation')):
     class ATFP_Bulk_Translation
     {
         private static $instance;
 
         public static function get_instance()
         {
-            if(!isset(self::$instance)) {
+            if (!isset(self::$instance)) {
                 self::$instance = new self();
             }
             return self::$instance;
@@ -22,35 +22,36 @@ if(!class_exists('ATFP_Bulk_Translation')):
 
         public function bulk_translate_btn($screen)
         {
-            if(!isset($screen) || !is_object($screen)){
+            if (!isset($screen) || !is_object($screen)) {
                 return;
             }
 
-            if(!class_exists('ATFP_Helper') || !ATFP_Helper::bulk_translation_render($screen)){
+            if (!class_exists('ATFP_Helper') || !ATFP_Helper::bulk_translation_render($screen)) {
                 return;
             }
 
-            add_filter( "views_{$screen->id}", array($this, 'atfp_bulk_translate_button') );
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce verification is not required here
+            $post_status = isset($_GET['post_status']) ? sanitize_text_field(wp_unslash($_GET['post_status'])) : '';
+            
+            if ('trash' === $post_status) {
+                return;
+            }
+
+            add_filter("views_{$screen->id}", array($this, 'atfp_bulk_translate_button'));
+
+            add_action('admin_footer', array($this, 'bulk_translate_container'));
         }
 
         public function atfp_bulk_translate_button($views)
         {
-            $atfp_utm_parameters='utm_source=atfp_plugin';
-            $atfp_magic_wand_url=ATFP_URL . 'assets/images/magic-wand.svg';
-
-			if(class_exists('ATFP_Helper')){
-				$atfp_utm_parameters=ATFP_Helper::utm_source_text();
-			}
-
-            echo sprintf(wp_kses("<a class='button button-primary atfp-bulk-translate-btn' style='display:none; align-items: center;' title='Bulk Translate option is avialable in pro version only' href='https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?".sanitize_text_field($atfp_utm_parameters)."&utm_medium=inside&utm_campaign=get_pro&utm_content=bulk_translate' target='_blank'><img src='".esc_url($atfp_magic_wand_url)."' style='width: 18px; height: 18px; margin-right: 5px; filter: %s' alt='Bulk Translate'>Bulk Translate</a>",
-                array('a' => array('class' => array(), 'style' => array(), 'title' => array(), 'href' => array(), 'target' => array(), 'rel' => array(), 'align-items' => array()), 'img' => array('src' => array(), 'style' => array(
-                    'width' => array(), 'height' => array(), 'margin-right' => array(), 'filter' => array(
-                        'brightness(0) invert(1)'
-                    )
-                ), 'alt' => array()))
-            ), esc_attr('brightness(0) invert(1)'));
+            echo '<button class="button button-primary atfp-bulk-translate-btn" style="display:none;">' . esc_html__( 'Ai Translate', 'autopoly-ai-translation-for-polylang' ) . '</button>';
 
             return $views;
+        }
+
+        public function bulk_translate_container()
+        {
+            echo "<div id='atfp-bulk-translate-wrapper'></div>";
         }
     }
 endif;

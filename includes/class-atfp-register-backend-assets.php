@@ -41,23 +41,91 @@ class ATFP_Register_Backend_Assets
     }
 
     public function enqueue_bulk_translation_assets(){
-        if(!function_exists('get_current_screen') || !class_exists('ATFP_Helper') || !ATFP_Helper::bulk_translation_render(get_current_screen())){
+        global $polylang;
+        
+        if(!$polylang || !property_exists($polylang, 'model')){
             return;
         }
 
-        $atfp_utm_parameters='utm_source=atfp_plugin';
-        if(class_exists('ATFP_Helper')){
-            $atfp_utm_parameters=ATFP_Helper::utm_source_text();
+        $current_screen = function_exists('get_current_screen') ? get_current_screen() : false;
+
+        if(!$current_screen){
+            return;
+        }
+        
+        if(!class_exists('ATFP_Helper') || !ATFP_Helper::bulk_translation_render($current_screen)){
+            return;
         }
 
-        $atfp_bulk_data=array(
-            'atfp_utm_parameters' => sanitize_text_field($atfp_utm_parameters),
-            'pro_version_url' => esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/'),
-            'bulk_doc_url' => esc_url('https://docs.coolplugins.net/doc/ai-translation-polylang-bulk-translation/'),
-        );
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce verification is not required here
+        $post_status=isset($_GET['post_status']) ? sanitize_text_field(wp_unslash($_GET['post_status'])) : '';
 
-        wp_enqueue_script('atfp-bulk-translation', ATFP_URL . 'assets/js/atfp-bulk-translate.min.js', array('jquery'), ATFP_V, true);
-        wp_localize_script('atfp-bulk-translation', 'atfpBulkTranslationData', $atfp_bulk_data);
+        if('trash' === $post_status){
+            return;
+        }
+
+        $post_label=__("Pages", "autopoly-ai-translation-for-polylang");
+
+        if(isset($current_screen->post_type)){
+            $post_type = $current_screen->post_type;
+
+            if(isset(get_post_type_object($post_type)->label) && !empty(get_post_type_object($post_type)->label)){
+                $post_label = get_post_type_object($post_type)->label;
+            }
+        }
+        
+        $editor_script_asset = include ATFP_DIR_PATH . 'assets/bulk-translate/index.asset.php';
+        
+        $rtl=function_exists('is_rtl') ? is_rtl() : false;
+        $css_file=$rtl ? 'index-rtl.css' : 'index.css';
+      
+        wp_enqueue_script('atfp-bulk-translate', ATFP_URL . 'assets/bulk-translate/index.js', $editor_script_asset['dependencies'], $editor_script_asset['version'], true);
+       
+        wp_enqueue_style('atfp-bulk-translate', ATFP_URL . 'assets/bulk-translate/'.$css_file, array(), $editor_script_asset['version']);
+
+        $languages = PLL()->model->get_languages_list();
+
+        $lang_object = array();
+
+        $default_language=PLL()->model->get_default_language();
+		$default_language_slug=false;
+
+		if(isset($default_language->slug) && !empty($default_language->slug)){
+			$default_language_slug=$default_language->slug;
+		}
+
+        foreach ($languages as $lang) {
+            $lang_object[$lang->slug] = array('name' => $lang->name, 'flag' => $lang->flag_url, 'locale' => $lang->locale);
+        }
+
+        $extra_data = array();
+
+        if (!isset(PLL()->options['sync']) || (isset(PLL()->options['sync']) && !in_array('post_meta', PLL()->options['sync']))) {
+            $extra_data['postMetaSync'] = 'false';
+        } else {
+            $extra_data['postMetaSync'] = 'true';
+        }
+
+        wp_localize_script(
+            'atfp-bulk-translate',
+            'atfp_bulk_translate_object',
+            array_merge(array(
+                'ajax_url' => admin_url('admin-ajax.php'),
+                'languageObject' => $lang_object,
+                'nonce' => wp_create_nonce('wp_rest'),
+                'bulkTranslateRouteUrl' => get_rest_url(null, 'atfp-translate'),
+                'bulkTranslatePrivateKey' => wp_create_nonce('atfp_bulk_translate_entries_nonce'),
+                'atfp_url'           => esc_url(ATFP_URL),
+                'admin_url' => admin_url(),
+                'post_label' => $post_label,
+                'update_translate_data' => 'atfp_update_translate_data',
+                'pendingPostsIdsKey' => wp_create_nonce('atfp_pending_posts_ids_nonce'),
+                'default_language_slug' => $default_language_slug,
+                'active_providers' => ATFP_Helper::get_active_providers(),
+                'pro_version_url' => esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/'),
+                'refrence_text' => class_exists('ATFP_Helper') ? ATFP_Helper::utm_source_text() : 'utm_source=atfp_plugin',
+            ), $extra_data)
+        );
     }
 
     public function atfp_enqueue_admin_assets(){

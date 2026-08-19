@@ -830,7 +830,7 @@ jQuery(function ($) {
                             if (status !== 'available') {
                                 $errorDiv.text(
                                     typeof wp !== 'undefined' && wp.i18n
-                                        ? wp.i18n.__('Language pack is downloading. Please select another language or wait for it to finish downloading.', 'autopoly-ai-translation-for-polylang-pro')
+                                        ? wp.i18n.__('Language pack is downloading. Please select another language or wait for it to finish downloading.', 'automatic-translations-for-polylang')
                                         : 'Language pack is downloading. Please select another language or wait for it to finish downloading.'
                                 ).show();
                                 return;
@@ -843,7 +843,7 @@ jQuery(function ($) {
                         testWrap.hide();
                         $errorDiv.text(
                             typeof wp !== 'undefined' && wp.i18n
-                                ? wp.i18n.__('Language pack is not available. Please select another language.', 'autopoly-ai-translation-for-polylang-pro')
+                                ? wp.i18n.__('Language pack is not available. Please select another language.', 'automatic-translations-for-polylang')
                                 : 'Language pack is not available. Please select another language.'
                         ).show();
                         return;
@@ -852,7 +852,7 @@ jQuery(function ($) {
                     testWrap.hide();
                     $errorDiv.text(
                         typeof wp !== 'undefined' && wp.i18n
-                            ? wp.i18n.__('Language pack is not available. Please select another language.', 'autopoly-ai-translation-for-polylang-pro')
+                            ? wp.i18n.__('Language pack is not available. Please select another language.', 'automatic-translations-for-polylang')
                             : 'Language pack is not available. Please select another language.'
                     ).show();
                     return;

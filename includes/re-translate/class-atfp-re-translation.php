@@ -94,6 +94,19 @@ if ( ! class_exists( 'ATFP_Re_Translation' ) ) {
 		}
 
 		/**
+		 * Whether an existing Polylang translation can still receive a first AutoPoly translation.
+		 *
+		 * Automatic only treats a post as retranslate after AutoPoly has already
+		 * translated it. A Polylang "+" copy with manual text is still translatable.
+		 *
+		 * @param int $translated_post_id Existing translation post ID.
+		 * @return bool
+		 */
+		public static function is_pending_first_translation( $translated_post_id ) {
+			return (bool) self::is_old_untranslated_post( absint( $translated_post_id ) );
+		}
+
+		/**
 		 * Check if the post is an old untranslated post
 		 *
 		 * @param int $post_id
