@@ -116,7 +116,7 @@ const normalizeEnabledProviders = (providers = [], browserType) => {
                 if (Object.keys(languagesObj).length === 0) {
                     document.removeEventListener('mousemove', onMouseMove);
 
-                    const doActionsBtn = document.querySelectorAll(`.${prefix}-btn`);
+                    const doActionsBtn = getTranslateTriggers();
                     doActionsBtn.forEach(btn => {
                         btn.removeEventListener('mousemove', checkLanguagePackAvailability);
                         btn.removeEventListener('mouseleave', checkLanguagePackAvailability);
@@ -133,13 +133,26 @@ const normalizeEnabledProviders = (providers = [], browserType) => {
             document.addEventListener('mousemove', onMouseMove);
         };
 
+        const getTranslateTriggers = () => document.querySelectorAll(`.${prefix}-btn, .${prefix}-row-btn`);
+
         const bulkTranslationHandler = (e) => {
+            const trigger = e.target.closest(`.${prefix}-btn, .${prefix}-row-btn`);
+
+            if (!trigger) {
+                return;
+            }
+
             e.preventDefault();
 
-            const checkboxClass = 'table.widefat input[name="post[]"]:checked';
+            const rowPostId = trigger.getAttribute('data-post-id');
+            let postIds = [];
 
-            const selectedPostIds = document.querySelectorAll(checkboxClass);
-            const postIds = Array.from(selectedPostIds).map(postId => postId.value);
+            if (rowPostId) {
+                postIds = [rowPostId];
+            } else {
+                const selectedPostIds = document.querySelectorAll('table.widefat input[name="post[]"]:checked');
+                postIds = Array.from(selectedPostIds).map(postId => postId.value);
+            }
 
             if (postIds.length > 1) {
                 // Do not redirect. Open modal to show marketing message.
@@ -152,17 +165,25 @@ const normalizeEnabledProviders = (providers = [], browserType) => {
         }
 
         useEffect(() => {
-            const doActionsBtn = document.querySelectorAll(`.${prefix}-btn`);
-            
-            if (doActionsBtn) {
-                clearOldTranslatorCacheOnLoad();
+            clearOldTranslatorCacheOnLoad();
+
+            document.addEventListener('click', bulkTranslationHandler);
+
+            const doActionsBtn = getTranslateTriggers();
+            doActionsBtn.forEach(btn => {
+                btn.addEventListener('mousemove', checkLanguagePackAvailability);
+                btn.addEventListener('mouseleave', checkLanguagePackAvailability);
+                btn.addEventListener('mouseenter', checkLanguagePackAvailability);
+            });
+
+            return () => {
+                document.removeEventListener('click', bulkTranslationHandler);
                 doActionsBtn.forEach(btn => {
-                    btn.addEventListener('click', bulkTranslationHandler);
-                    btn.addEventListener('mousemove', checkLanguagePackAvailability);
-                    btn.addEventListener('mouseleave', checkLanguagePackAvailability);
-                    btn.addEventListener('mouseenter', checkLanguagePackAvailability);
+                    btn.removeEventListener('mousemove', checkLanguagePackAvailability);
+                    btn.removeEventListener('mouseleave', checkLanguagePackAvailability);
+                    btn.removeEventListener('mouseenter', checkLanguagePackAvailability);
                 });
-            }
+            };
         }, []);
 
         useEffect(() => {

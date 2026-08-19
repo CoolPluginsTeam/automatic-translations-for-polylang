@@ -38,6 +38,8 @@ if (!class_exists('ATFP_Bulk_Translation')):
             }
 
             add_filter("views_{$screen->id}", array($this, 'atfp_bulk_translate_button'));
+            add_filter('post_row_actions', array($this, 'add_row_translate_action'), 10, 2);
+            add_filter('page_row_actions', array($this, 'add_row_translate_action'), 10, 2);
 
             add_action('admin_footer', array($this, 'bulk_translate_container'));
         }
@@ -47,6 +49,46 @@ if (!class_exists('ATFP_Bulk_Translation')):
             echo '<button class="button button-primary atfp-bulk-translate-btn" style="display:none;">' . esc_html__( 'Ai Translate', 'autopoly-ai-translation-for-polylang' ) . '</button>';
 
             return $views;
+        }
+
+        /**
+         * Add a Translate row action next to Edit | Quick Edit | Trash | View.
+         *
+         * @param array    $actions Existing row actions.
+         * @param WP_Post  $post    Current post.
+         * @return array
+         */
+        public function add_row_translate_action( $actions, $post ) {
+            if ( ! $post instanceof WP_Post || ! current_user_can( 'edit_post', $post->ID ) ) {
+                return $actions;
+            }
+
+            $translate_link = sprintf(
+                '<a href="#" class="atfp-bulk-translate-row-btn" data-post-id="%d" aria-label="%s">%s</a>',
+                absint( $post->ID ),
+                esc_attr(
+                    sprintf(
+                        /* translators: %s: post title */
+                        __( 'Translate &#8220;%s&#8221;', 'automatic-translations-for-polylang' ),
+                        $post->post_title
+                    )
+                ),
+                esc_html__( 'Translate', 'automatic-translations-for-polylang' )
+            );
+
+            $new_actions = array();
+            foreach ( $actions as $key => $action ) {
+                $new_actions[ $key ] = $action;
+                if ( 'view' === $key ) {
+                    $new_actions['atfp_translate'] = $translate_link;
+                }
+            }
+
+            if ( ! isset( $new_actions['atfp_translate'] ) ) {
+                $new_actions['atfp_translate'] = $translate_link;
+            }
+
+            return $new_actions;
         }
 
         public function bulk_translate_container()
