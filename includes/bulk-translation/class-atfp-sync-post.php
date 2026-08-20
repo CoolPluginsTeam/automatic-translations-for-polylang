@@ -10,7 +10,7 @@ if(!defined('ABSPATH')) exit;
  *
  * @since 2.6
  */
-class ATFP_Sync_Content {
+class ATFPP_Sync_Content {
 	/**
 	 * Stores the plugin options.
 	 *

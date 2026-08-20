@@ -576,7 +576,7 @@ if ( ! class_exists( 'ATFP_Register_Route' ) ) :
 			}
 
 			global $polylang;
-			$post_clone = new ATFP_Posts_Clone( $polylang );
+			$post_clone = new ATFPP_Posts_Clone( $polylang );
 			$post_id    = $post_clone->copy_post( $post_id, $source_language, $target_language, false, $post_data );
 
 			if ( ! $post_id ) {

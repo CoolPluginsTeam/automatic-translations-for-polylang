@@ -8,7 +8,7 @@ if(!defined('ABSPATH')) exit;
 /**
  * Model for synchronizing posts
  */
-class ATFP_Posts_Clone {
+class ATFPP_Posts_Clone {
 	/**
 	 * Stores the plugin options.
 	 *
@@ -47,7 +47,7 @@ class ATFP_Posts_Clone {
 		$this->options      = &$polylang->options;
 		$this->model        = &$polylang->model;
 		$this->sync         = &$polylang->sync;
-		$this->sync_content = new ATFP_Sync_Content( $polylang );
+		$this->sync_content = new ATFPP_Sync_Content( $polylang );
 
 		add_filter( 'pll_copy_taxonomies', array( $this, 'copy_taxonomies' ), 99, 4 );
 		add_filter( 'pll_copy_post_metas', array( $this, 'copy_post_metas' ), 99, 4 );
