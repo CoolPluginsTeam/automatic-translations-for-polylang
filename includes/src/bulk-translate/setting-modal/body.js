@@ -3,13 +3,14 @@ import Providers from "./providers";
 import TranslateService from "../components/translate-provider";
 
 const SettingModalBody = (props) => {
-    const { prefix, localAiModalError, edgeAiModalError, yandexDisabled } = props;
+    const { prefix, localAiModalError, edgeAiModalError, yandexDisabled, googleDisabled } = props;
     const ServiceProviders = TranslateService({
         prefix,
         localAiTranslatorButtonDisabled: localAiModalError,
         edgeAiTranslatorButtonDisabled: edgeAiModalError,
         yandexButtonDisabled: yandexDisabled,
-        openErrorModalHandler: props.openErrorModalHandler
+        googleButtonDisabled: googleDisabled,
+        openErrorModalHandler: props.errorModalHandler
     });
     const adminUrl = window.atfp_bulk_translate_object.admin_url;
 
@@ -26,6 +27,7 @@ const SettingModalBody = (props) => {
                     edgeAiTranslatorDisabled={edgeAiModalError}
                     edgeAiModalError={edgeAiModalError}
                     yandexDisabled={yandexDisabled}
+                    googleDisabled={googleDisabled}
                     Service={provider}
                 />
             )) : <div className={`${prefix}-bulk-translate-empty ${prefix}-provider-empty`}>
@@ -42,7 +44,7 @@ const SettingModalBody = (props) => {
                 >
                     {__('Dashboard', 'automatic-translations-for-polylang')}
                 </a>{' '}
-                {__('to enable Yandex, Chrome, or Edge built-in AI.', 'automatic-translations-for-polylang')}
+                {__('to enable Yandex, Google, Chrome, or Edge built-in AI.', 'automatic-translations-for-polylang')}
             </span>
         </div>}
         </div>

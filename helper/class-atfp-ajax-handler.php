@@ -537,7 +537,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				return wp_send_json_error( __( 'Invalid enabled providers.', 'automatic-translations-for-polylang' ) );
 			}
 			
-			$default_providers = array('chrome-built-in-ai'=>false, 'edge-built-in-ai'=>false, 'yandex-translate'=>false);
+			$default_providers = array('chrome-built-in-ai'=>false, 'edge-built-in-ai'=>false, 'yandex-translate'=>false, 'google-translate'=>false);
 
 			$updated_providers=array();
 			

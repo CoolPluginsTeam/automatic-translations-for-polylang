@@ -5,6 +5,14 @@ import { __, sprintf } from '@wordpress/i18n';
 import Provider from './components/translate-provider';
 import { updateTranslateData, getContentCount } from './helper';
 
+/**
+ * Editor types the free version can translate.
+ *
+ * Mirrors ATFP_Helper::get_supported_editor_types() on the server. The automatic
+ * flow only translates block editor and Elementor content, so bulk matches it.
+ * Classic editor content is a Pro capability.
+ */
+export const SUPPORTED_EDITOR_TYPES = ['block', 'elementor'];
 
 const initBulkTranslate = async (postKeys = [], nonce, storeDispatch, prefix, updateDestoryHandler) => {
     const pendingPosts = store.getState().pendingPosts;
@@ -38,7 +46,7 @@ const initBulkTranslate = async (postKeys = [], nonce, storeDispatch, prefix, up
                 return;
             }
 
-            if (!['classic', 'block', 'elementor'].includes(editorType)) {
+            if (!SUPPORTED_EDITOR_TYPES.includes(editorType)) {
                 for (const lang of languages) {
                     storeDispatch(unsetPendingPost(postId + '_' + lang));
                     storeDispatch(updateProgressStatus(100 / pendingPosts.length));
@@ -354,7 +362,7 @@ const bulkTranslateEntries = async ({ ids, langs, storeDispatch }) => {
                     await filterContent(data);
                 }
 
-                if (['classic', 'block', 'elementor'].includes(editor_type)) {
+                if (SUPPORTED_EDITOR_TYPES.includes(editor_type)) {
 
                     if (title && title.trim() !== '') {
                         storeDispatch(updateSourceContent({ postId, uniqueKey: 'title', value: title }));

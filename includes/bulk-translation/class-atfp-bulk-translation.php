@@ -46,7 +46,7 @@ if (!class_exists('ATFP_Bulk_Translation')):
 
         public function atfp_bulk_translate_button($views)
         {
-            echo '<button class="button button-primary atfp-bulk-translate-btn" style="display:none;">' . esc_html__( 'Ai Translate', 'autopoly-ai-translation-for-polylang' ) . '</button>';
+            echo '<button class="button button-primary atfp-bulk-translate-btn" style="display:none;">' . esc_html__( 'AI Translate', 'automatic-translations-for-polylang' ) . '</button>';
 
             return $views;
         }

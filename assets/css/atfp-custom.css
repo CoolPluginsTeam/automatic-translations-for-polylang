@@ -1381,6 +1381,10 @@ body
   visibility: hidden !important;
 }
 
+#atfp_google_translate_element select {
+  width: 100%;
+}
+
 /* meta box review notice style start */
 .atfp-review-meta-box {
   text-align: center;

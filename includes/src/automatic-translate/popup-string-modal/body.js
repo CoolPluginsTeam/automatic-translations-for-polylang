@@ -13,7 +13,7 @@ const StringPopUpBody = (props) => {
 
     useEffect(() => {
 
-        if (['yandex'].includes(props.service)) {
+        if (['yandex', 'google'].includes(props.service)) {
             document.documentElement.setAttribute('translate', 'no');
             document.body.classList.add('notranslate');
         }

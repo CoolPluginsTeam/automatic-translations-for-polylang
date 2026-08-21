@@ -6,6 +6,7 @@ import { resetStore, updateServiceProvider, updateCountInfo } from './redux-stor
 import { selectCountInfo } from './redux-store/features/selectors';
 import ChromeAiTranslator from './components/translate-provider/local-ai/local-ai-translate';
 import yandexLanguage from './components/translate-provider/yandex/yandex-language';
+import googleLanguage from './components/translate-provider/google/google-language';
 import ErrorModalBox from './components/error-modal-box';
 import SettingModal from './setting-modal';
 import DOMPurify from 'dompurify';
@@ -27,10 +28,18 @@ const App = ({ onDestory, prefix, postIds }) => {
     const translatePostsCount = useSelector(selectCountInfo).totalPosts;
     const [isLoading, setIsLoading] = useState(true);
     const [errorModal, setErrorModal] = useState(false);
+    const [proRequiredReason, setProRequiredReason] = useState(postIds.length > 1 ? 'multiple' : false);
     const [localAiModalError, setLocalAiModalError] = useState(false);
     const [edgeAiModalError, setEdgeAiModalError] = useState(false);
     const yandexSupport = selectedLanguages.some((language) => yandexLanguage().includes(language) || yandexLanguage().includes(language.replace('_', '-')));
     const yandexDisabled = !yandexSupport ? sprintf(__("Yandex Translate does not support the selected target language(s).", 'automatic-translations-for-polylang')) : false;
+    const googleSupport = selectedLanguages.some((language) => {
+        const googleLang = language === 'zh'
+            ? (languageObject['zh']?.locale || '').replace('_', '-')
+            : language;
+        return googleLanguage().includes(googleLang) || googleLanguage().includes(language.replace('_', '-'));
+    });
+    const googleDisabled = !googleSupport ? sprintf(__("Google Translate does not support the selected target language(s).", 'automatic-translations-for-polylang')) : false;
 
     const destroyApp = (e) => {
         setStatusModalVisibility(false);
@@ -159,48 +168,50 @@ const App = ({ onDestory, prefix, postIds }) => {
         return;
     }
 
-    const [isProRequired, setIsProRequired] = useState(false);
-
-    useEffect(() => {
-        let hasRetranslate = false;
-        postIds.forEach(id => {
-            if (atfp_bulk_translate_object.posts && atfp_bulk_translate_object.posts[id] && atfp_bulk_translate_object.posts[id].ReTranslatePosts && Object.keys(atfp_bulk_translate_object.posts[id].ReTranslatePosts).length > 0) {
-                hasRetranslate = true;
-            }
-        });
-        if (postIds.length > 1 || hasRetranslate) {
-            setIsProRequired(true);
-        }
-    }, [postIds]);
-
     const ProMarketingMessage = () => {
+        const proMessages = {
+            'multiple': {
+                text: sprintf(__('Translating more than one %s at a time is a Pro feature.', 'automatic-translations-for-polylang'), atfp_bulk_translate_object.post_label),
+                utm: 'bulk_multiple_posts',
+            },
+            'unsupported-editor': {
+                text: __('This content was built with the classic editor. Classic editor translation is a Pro feature.', 'automatic-translations-for-polylang'),
+                utm: 'bulk_classic_editor',
+            },
+            'retranslate': {
+                text: __('Re-translating existing content is a Pro feature.', 'automatic-translations-for-polylang'),
+                utm: 'bulk_retranslate',
+            },
+        };
+
+        const proMessage = proMessages[proRequiredReason] || proMessages.retranslate;
+
         return (
             <div id={`${prefix}-setting-modal-container`}>
                 <div className={`${prefix}-setting-modal-content`}>
                     
                     <div className={`${prefix}-header`}>
                         <div className={`${prefix}-modal-header-inner`}>
-                            <h2>{__("AutoPoly Pro Feature", 'autopoly-ai-translation-for-polylang')}</h2>
-                            <p className={`${prefix}-modal-desc`}>{__("Upgrade to Pro to unlock advanced AI translation capabilities.", 'autopoly-ai-translation-for-polylang')}</p>
+                            <h2>{__("AutoPoly Pro Feature", 'automatic-translations-for-polylang')}</h2>
+                            <p className={`${prefix}-modal-desc`}>{__("Upgrade to Pro to unlock advanced AI translation capabilities.", 'automatic-translations-for-polylang')}</p>
                         </div>
-                        <button type="button" aria-label={__('Close', 'autopoly-ai-translation-for-polylang')} className={`${prefix}-modal-close`} onClick={destroyApp}>&times;</button>
+                        <button type="button" aria-label={__('Close', 'automatic-translations-for-polylang')} className={`${prefix}-modal-close`} onClick={destroyApp}>&times;</button>
                     </div>
 
                     <div className={`${prefix}-setting-modal-body`}>
                         <div className={`${prefix}-provider-cards`}>
                             <div className={`${prefix}-bulk-translate-empty ${prefix}-provider-empty`}>
-                                <strong>{__('Unlock AutoPoly Pro', 'autopoly-ai-translation-for-polylang')}</strong>
+                                <strong>{__('Unlock AutoPoly Pro', 'automatic-translations-for-polylang')}</strong>
                                 <br />
-                                {__('Bulk translation of multiple pages and re-translating existing content are Pro features.', 'autopoly-ai-translation-for-polylang')}
+                                {proMessage.text}
                                 <br />
                                 <span className={`${prefix}-provider-empty-actions`}>
                                     <a
-                                        href={`https://autopoly.ai/pricing/?utm_source=free-plugin&utm_medium=bulk-translate&utm_campaign=${postIds.length > 1 ? 'multiple-pages' : 'retranslate'}`}
+                                        href={`${atfp_bulk_translate_object.pro_version_url}?${atfp_bulk_translate_object.refrence_text}&utm_medium=inside&utm_campaign=get_pro&utm_content=${proMessage.utm}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        style={{ textDecoration: 'underline', fontWeight: 'bold' }}
                                     >
-                                        {__('Upgrade to Pro', 'autopoly-ai-translation-for-polylang')}
+                                        {__('Upgrade to Pro', 'automatic-translations-for-polylang')}
                                     </a>
                                 </span>
                             </div>
@@ -208,13 +219,13 @@ const App = ({ onDestory, prefix, postIds }) => {
                     </div>
 
                     <div className={`${prefix}-footer`}>
-                        <button type="button" className={`${prefix}-footer-button button`} onClick={destroyApp}>&#8592; {__("Back", 'autopoly-ai-translation-for-polylang')}</button>
+                        <button type="button" className={`${prefix}-footer-button button`} onClick={destroyApp}>&#8592; {__("Back", 'automatic-translations-for-polylang')}</button>
                         <button
                             type="button"
                             className={`${prefix}-footer-button button button-primary`}
                             disabled={true}
                         >
-                            {__("Start Translation", 'autopoly-ai-translation-for-polylang')} <span className={`${prefix}-next-arrow`}>&#8594;</span>
+                            {__("Start Translation", 'automatic-translations-for-polylang')} <span className={`${prefix}-next-arrow`}>&#8594;</span>
                         </button>
                     </div>
 
@@ -223,7 +234,7 @@ const App = ({ onDestory, prefix, postIds }) => {
         );
     }
 
-    if (isProRequired) {
+    if (proRequiredReason) {
         return (
             <div id={`${prefix}-container`} className={containerCls()}>
                 <ProMarketingMessage />
@@ -242,6 +253,7 @@ const App = ({ onDestory, prefix, postIds }) => {
             localAiModalError={localAiModalError}
             edgeAiModalError={edgeAiModalError}
             yandexDisabled={yandexDisabled}
+            googleDisabled={googleDisabled}
         />}
 
         {statusModalVisibility && !settingModalVisibility && (isLoading ?
@@ -252,9 +264,9 @@ const App = ({ onDestory, prefix, postIds }) => {
                 selectedLanguages={selectedLanguages}
                 prefix={prefix}
                 onDestory={destroyApp}
-                onRetranslateRequired={() => {
+                onProRequired={(reason) => {
                     setStatusModalVisibility(false);
-                    setIsProRequired(true);
+                    setProRequiredReason(reason || 'retranslate');
                 }}
             />)}
         {!statusModalVisibility && !settingModalVisibility &&
@@ -265,8 +277,8 @@ const App = ({ onDestory, prefix, postIds }) => {
                     <div className={`${prefix}-modal-header-inner`}>
                         {errorMessage && errorMessage !== '' ?
                         <div className={`${prefix}-modal-header-left`}>
-                        <img src={atfp_bulk_translate_object.atfp_url + 'assets/images/magic-wand.svg'} style={{width: '20px', height: '20px', marginRight: '5px', filter: 'brightness(0) invert(0)'}} alt={__("AI", "autopoly-ai-translation-for-polylang")}/>
-                        <h3>{__("AI Translation", "autopoly-ai-translation-for-polylang")}</h3>
+                        <img src={atfp_bulk_translate_object.atfp_url + 'assets/images/magic-wand.svg'} style={{width: '20px', height: '20px', marginRight: '5px', filter: 'brightness(0) invert(0)'}} alt={__("AI", "automatic-translations-for-polylang")}/>
+                        <h3>{__("AI Translation", "automatic-translations-for-polylang")}</h3>
                         </div>:
                         <>
                             <span className={`${prefix}-step-label`}>{__('STEP 1 OF 3', 'automatic-translations-for-polylang')}</span>

@@ -2,6 +2,7 @@ import ReactDOM from "react-dom/client";
 import { useEffect, useState } from "@wordpress/element";
 import PopStringModal from "../popup-string-modal";
 import yandexLanguage from "../component/translate-provider/yandex/yandex-language";
+import googleLanguage from "../component/translate-provider/google/google-language";
 import ChromeLocalAiTranslator from "../component/translate-provider/local-ai-translator/local-ai-translator";
 import SettingModalHeader from "./header";
 import SettingModalBody from "./body";
@@ -20,6 +21,7 @@ const SettingModal = (props) => {
     const targetLangName = atfp_global_object.languageObject[targetLang]['name'];
     const imgFolder = atfp_global_object.atfp_url + 'assets/images/';
     const yandexSupport = yandexLanguage().includes(targetLang);
+    const googleSupport = googleLanguage().includes(targetLang === 'zh' ? atfp_global_object.languageObject['zh']?.locale.replace('_', '-') : targetLang);
     const [serviceModalErrors, setServiceModalErrors] = useState({});
     const [errorModalVisibility, setErrorModalVisibility] = useState(false);
     const [chromeAiBtnDisabled, setChromeAiBtnDisabled] = useState(false);
@@ -164,6 +166,19 @@ const SettingModal = (props) => {
                 }));
             };
 
+            if (!googleSupport) {
+                setServiceModalErrors(prev => ({
+                    ...prev,
+                    google: {
+                        message: "<p style={{ fontSize: '1rem', color: '#ff4646' }}>" + sprintf(
+                            __("Google Translate does not support the target language: %s.", 'automatic-translations-for-polylang'),
+                            "<strong>" + targetLangName + "</strong>"
+                        ) + "</p>",
+                        Title: __("Google Translate", 'automatic-translations-for-polylang')
+                    }
+                }));
+            };
+
             languageSupportedStatus();
         }
     }, [settingVisibility]);
@@ -261,6 +276,7 @@ const SettingModal = (props) => {
                         />
                         <SettingModalBody
                             yandexDisabled={!yandexSupport}
+                            googleDisabled={!googleSupport}
                             imgFolder={imgFolder}
                             targetLangName={targetLangName}
                             postType={props.postType}

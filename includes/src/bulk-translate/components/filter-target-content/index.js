@@ -518,12 +518,12 @@ const FilterTargetContent = (props, storeUpdateContent) => {
      * The content to be filtered based on the service type.
      * If the service is Yandex or Chrome/Edge built-in AI the content is filtered using filterSourceData, otherwise it remains unchanged.
      */
-    const content = ['yandex', 'localAiTranslator', 'edgeAiTranslator'].includes(props.service) ? filterSourceData(props.content) : props.content;
+    const content = ['yandex', 'google', 'localAiTranslator', 'edgeAiTranslator'].includes(props.service) ? filterSourceData(props.content) : props.content;
 
     return (
         <>
             {
-                ['yandex', 'localAiTranslator', 'edgeAiTranslator'].includes(props.service) ? content.map((data, index) => {
+                ['yandex', 'google', 'localAiTranslator', 'edgeAiTranslator'].includes(props.service) ? content.map((data, index) => {
                     const notTranslate = notTranslatePattern.test(data);
                     if (notTranslate) {
                         return <span key={index} className="notranslate atfp-notraslate-tag" translate="no">{filterContent(data)}</span>;

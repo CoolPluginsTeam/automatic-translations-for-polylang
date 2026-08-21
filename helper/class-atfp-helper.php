@@ -626,7 +626,7 @@ if (! class_exists('ATFP_Helper')) {
 		public static function get_active_providers(){
 			$active_providers = get_option('atfp_enabled_providers', array());
 			
-			$default_active_providers = array('chrome-built-in-ai'=>true, 'edge-built-in-ai'=>true, 'yandex-translate'=>true);
+			$default_active_providers = array('chrome-built-in-ai'=>true, 'edge-built-in-ai'=>true, 'yandex-translate'=>true, 'google-translate'=>true);
 
 			if($active_providers && !empty($active_providers)){
 				$active_providers_values=array_values($active_providers);
@@ -641,7 +641,7 @@ if (! class_exists('ATFP_Helper')) {
 
 			$active_providers=array_merge($default_active_providers, $active_providers);
 	
-			$valid_providers = array('chrome-built-in-ai', 'edge-built-in-ai', 'yandex-translate');
+			$valid_providers = array('chrome-built-in-ai', 'edge-built-in-ai', 'yandex-translate', 'google-translate');
 	
 			$active_providers = array_filter($active_providers, function($status) {
 				return $status === true;
@@ -830,6 +830,57 @@ if (! class_exists('ATFP_Helper')) {
 					}
 				}
 			}
+		}
+
+		/**
+		 * Editor types the free version can translate.
+		 *
+		 * The automatic (single post) flow only translates block editor and Elementor
+		 * content; classic editor content is a Pro capability. Bulk translation must
+		 * honour exactly the same list so both flows offer identical support.
+		 *
+		 * @since 1.5.0
+		 * @return string[] Supported editor type slugs.
+		 */
+		public static function get_supported_editor_types() {
+			return array( 'block', 'elementor' );
+		}
+
+		/**
+		 * Whether the given editor type can be translated by the free version.
+		 *
+		 * @since 1.5.0
+		 * @param string $editor_type Editor type slug.
+		 * @return bool
+		 */
+		public static function is_supported_editor_type( $editor_type ) {
+			return in_array( $editor_type, self::get_supported_editor_types(), true );
+		}
+
+		/**
+		 * Resolve which editor a post's content belongs to.
+		 *
+		 * @since 1.5.0
+		 * @param int $post_id Post ID.
+		 * @return string|false One of 'elementor', 'block', 'classic', or false when the post is missing.
+		 */
+		public static function get_post_editor_type( $post_id ) {
+			$post_id   = absint( $post_id );
+			$post_data = get_post( $post_id );
+
+			if ( ! $post_data ) {
+				return false;
+			}
+
+			if (
+				'builder' === get_post_meta( $post_id, '_elementor_edit_mode', true )
+				&& defined( 'ELEMENTOR_VERSION' )
+				&& self::has_elementor_data( (int) $post_id )
+			) {
+				return 'elementor';
+			}
+
+			return has_blocks( $post_data->post_content ) ? 'block' : 'classic';
 		}
 
 		public static function has_elementor_data(int $post_id): bool {

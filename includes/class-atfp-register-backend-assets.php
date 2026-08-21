@@ -40,6 +40,19 @@ class ATFP_Register_Backend_Assets
         add_action('admin_enqueue_scripts', array($this, 'enqueue_bulk_translation_assets'));
     }
 
+    /**
+     * Translation providers bundled with the free plugin.
+     *
+     * Shared by the automatic (single post) and bulk translation flows so both
+     * always offer exactly the same set of services.
+     *
+     * @since 1.5.0
+     * @return string[] List of valid provider slugs.
+     */
+    private static function get_valid_providers(){
+        return array('chrome-built-in-ai', 'edge-built-in-ai', 'yandex-translate', 'google-translate');
+    }
+
     public function enqueue_bulk_translation_assets(){
         global $polylang;
         
@@ -64,7 +77,7 @@ class ATFP_Register_Backend_Assets
             return;
         }
 
-        $post_label=__("Pages", "autopoly-ai-translation-for-polylang");
+        $post_label=__("Pages", "automatic-translations-for-polylang");
 
         if(isset($current_screen->post_type)){
             $post_type = $current_screen->post_type;
@@ -75,12 +88,26 @@ class ATFP_Register_Backend_Assets
         }
         
         $editor_script_asset = include ATFP_DIR_PATH . 'assets/bulk-translate/index.asset.php';
-        
+
         $rtl=function_exists('is_rtl') ? is_rtl() : false;
         $css_file=$rtl ? 'index-rtl.css' : 'index.css';
-      
-        wp_enqueue_script('atfp-bulk-translate', ATFP_URL . 'assets/bulk-translate/index.js', $editor_script_asset['dependencies'], $editor_script_asset['version'], true);
-       
+
+        // Same provider allow-list as the automatic translation flow, so both offer identical services.
+        $active_providers = array_values(array_filter(ATFP_Helper::get_active_providers(), function($provider_name){
+            return in_array($provider_name, self::get_valid_providers(), true);
+        }));
+
+        $script_dependencies = $editor_script_asset['dependencies'];
+
+        // Only pull in the third party Google widget when Google Translate is actually enabled.
+        if (in_array('google-translate', $active_providers, true)) {
+            wp_enqueue_script('atfp-google-api', 'https://translate.google.com/translate_a/element.js', array(), ATFP_V, true);
+            $script_dependencies[] = 'atfp-google-api';
+        }
+
+        wp_enqueue_script('atfp-bulk-translate', ATFP_URL . 'assets/bulk-translate/index.js', $script_dependencies, $editor_script_asset['version'], true);
+        wp_set_script_translations('atfp-bulk-translate', 'automatic-translations-for-polylang', ATFP_DIR_PATH . 'languages');
+
         wp_enqueue_style('atfp-bulk-translate', ATFP_URL . 'assets/bulk-translate/'.$css_file, array(), $editor_script_asset['version']);
 
         $languages = PLL()->model->get_languages_list();
@@ -121,7 +148,7 @@ class ATFP_Register_Backend_Assets
                 'update_translate_data' => 'atfp_update_translate_data',
                 'pendingPostsIdsKey' => wp_create_nonce('atfp_pending_posts_ids_nonce'),
                 'default_language_slug' => $default_language_slug,
-                'active_providers' => ATFP_Helper::get_active_providers(),
+                'active_providers' => $active_providers,
                 'pro_version_url' => esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/'),
                 'refrence_text' => class_exists('ATFP_Helper') ? ATFP_Helper::utm_source_text() : 'utm_source=atfp_plugin',
             ), $extra_data)
@@ -383,18 +410,24 @@ class ATFP_Register_Backend_Assets
         wp_register_style('atfp-automatic-translate-custom', ATFP_URL . 'assets/css/atfp-custom.min.css', array(), ATFP_V);
 
         $editor_script_asset = include ATFP_DIR_PATH . 'assets/automatic-translate/index.asset.php';
-        wp_register_script('atfp-automatic-translate', ATFP_URL . 'assets/automatic-translate/index.js', $editor_script_asset['dependencies'], $editor_script_asset['version'], true);
 
         $post_type = get_post_type();
 
         $languages = PLL()->model->get_languages_list();
-        $active_providers = ATFP_Helper::get_active_providers();
 
-        $valid_providers = array('chrome-built-in-ai', 'yandex-translate', 'edge-built-in-ai');
-
-        $active_providers = array_values(array_filter($active_providers, function($provider_name) use ($valid_providers) {
-            return in_array($provider_name, $valid_providers);
+        $active_providers = array_values(array_filter(ATFP_Helper::get_active_providers(), function($provider_name){
+            return in_array($provider_name, self::get_valid_providers(), true);
         }));
+
+        $script_dependencies = $editor_script_asset['dependencies'];
+
+        // Only pull in the third party Google widget when Google Translate is actually enabled.
+        if (in_array('google-translate', $active_providers, true)) {
+            wp_register_script('atfp-google-api', 'https://translate.google.com/translate_a/element.js', array(), ATFP_V, true);
+            $script_dependencies[] = 'atfp-google-api';
+        }
+
+        wp_register_script('atfp-automatic-translate', ATFP_URL . 'assets/automatic-translate/index.js', $script_dependencies, $editor_script_asset['version'], true);
 
         $lang_object = array();
         foreach ($languages as $lang) {

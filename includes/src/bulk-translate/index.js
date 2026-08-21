@@ -5,7 +5,6 @@ import './index.scss';
 import { store } from './redux-store/store';
 import { Provider } from 'react-redux';
 import LocalAITranslate from './components/translate-provider/local-ai/local-ai-translate';
-import ChromeAiTranslator from './components/translate-provider/local-ai/local-ai-translate';
 
 /**
  * localAiTranslator is keyed to chrome-built-in-ai.
@@ -35,13 +34,12 @@ const normalizeEnabledProviders = (providers = [], browserType) => {
         const [modalVisible, setModalVisible] = useState(false);
         const [postIds, setPostIds] = useState([]);
         const prefix = props.prefix;
-        const wrapper = document.getElementById(`${prefix}-wrapper`);
         let localAiCheckInProgres = false;
 
         if (!window.atfp_bulk_translate_object._activeProvidersNormalized) {
             window.atfp_bulk_translate_object.active_providers = normalizeEnabledProviders(
                 window.atfp_bulk_translate_object.active_providers || [],
-                ChromeAiTranslator.getBrowserType()
+                LocalAITranslate.getBrowserType()
             );
             window.atfp_bulk_translate_object._activeProvidersNormalized = true;
         }
@@ -50,6 +48,7 @@ const normalizeEnabledProviders = (providers = [], browserType) => {
             e.preventDefault();
 
             setModalVisible(prev => !prev);
+            destroyGoogleWidget();
 
         }
 
@@ -135,6 +134,18 @@ const normalizeEnabledProviders = (providers = [], browserType) => {
 
         const getTranslateTriggers = () => document.querySelectorAll(`.${prefix}-btn, .${prefix}-row-btn`);
 
+        const destroyGoogleWidget = () => {
+            const googleWidget = document.querySelector('.skiptranslate iframe[id=":1.container"]');
+            document.body.classList.remove(prefix + '-google-translate');
+
+            if (googleWidget) {
+                const closeButton = googleWidget.contentDocument.querySelector('a[id=":1.close"][title="Close"] img');
+                if (closeButton) {
+                    closeButton.click();
+                }
+            }
+        }
+
         const bulkTranslationHandler = (e) => {
             const trigger = e.target.closest(`.${prefix}-btn, .${prefix}-row-btn`);
 
@@ -152,10 +163,6 @@ const normalizeEnabledProviders = (providers = [], browserType) => {
             } else {
                 const selectedPostIds = document.querySelectorAll('table.widefat input[name="post[]"]:checked');
                 postIds = Array.from(selectedPostIds).map(postId => postId.value);
-            }
-
-            if (postIds.length > 1) {
-                // Do not redirect. Open modal to show marketing message.
             }
 
             checkLanguagePackAvailability();

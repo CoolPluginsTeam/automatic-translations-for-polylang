@@ -9,7 +9,7 @@ import DOMPurify from 'dompurify';
 import LoopCallback from '../components/loop-callback'
 import { updateCountInfo, updateTranslatePostInfo, unsetPendingPost } from '../redux-store/features/actions';
 
-const StatusModal = ({ postIds, selectedLanguages, prefix, onDestory, onRetranslateRequired }) => {
+const StatusModal = ({ postIds, selectedLanguages, prefix, onDestory, onProRequired }) => {
 
     const storeDispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true);
@@ -70,14 +70,18 @@ const StatusModal = ({ postIds, selectedLanguages, prefix, onDestory, onRetransl
                 const hasPendingLanguages = pendingPostsData && Object.values(pendingPostsData).some(
                     (post) => Array.isArray(post.languages) && post.languages.length > 0
                 );
+                // The server flags content the free version cannot translate (classic editor).
+                const hasUnsupportedEditor = pendingPostsData && Object.values(pendingPostsData).some(
+                    (post) => true === post.unsupported_editor
+                );
 
                 if (responseData && responseData.success && hasPendingLanguages) {
                     setIsLoading(false);
                     await translatePosts(pendingPostsData);
 
                     storeDispatch(updateCountInfo({ endTime: new Date().getTime() }));
-                } else if (responseData && responseData.success && typeof onRetranslateRequired === 'function') {
-                    onRetranslateRequired();
+                } else if (responseData && responseData.success && typeof onProRequired === 'function') {
+                    onProRequired(hasUnsupportedEditor ? 'unsupported-editor' : 'retranslate');
                 } else {
                     setIsLoading(false);
                     if (responseData?.message) {

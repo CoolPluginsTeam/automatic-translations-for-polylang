@@ -265,23 +265,26 @@ if ( ! class_exists( 'ATFP_Register_Route' ) ) :
 					continue;
 				}
 
-				if ( ! $gutenberg_block ) {
-					$post_data     = get_post( $post_id );
-					$editor_type   = has_blocks( $post_data->post_content ) ? 'block' : 'classic';
-					$elementor_enabled = get_post_meta( $post_id, '_elementor_edit_mode', true );
+				$editor_type = ATFP_Helper::get_post_editor_type( $post_id );
 
-					if ( $elementor_enabled && 'builder' === $elementor_enabled && defined( 'ELEMENTOR_VERSION' ) && ATFP_Helper::has_elementor_data( (int) $post_id ) ) {
-						$editor_type = 'elementor';
-					}
+				if ( ! $editor_type ) {
+					continue;
+				}
 
-					if ( $editor_type === 'block' ) {
-						$gutenberg_block = true;
-					}
+				if ( 'block' === $editor_type ) {
+					$gutenberg_block = true;
 				}
 
 				$posts_translate[ $post_id ] = array(
-					'title' => get_the_title( $post_id ),
+					'title'       => get_the_title( $post_id ),
+					'editor_type' => $editor_type,
 				);
+
+				// Classic editor content is a Pro capability in the automatic flow, so bulk must not translate it either.
+				if ( ! ATFP_Helper::is_supported_editor_type( $editor_type ) ) {
+					$posts_translate[ $post_id ]['unsupported_editor'] = true;
+					continue;
+				}
 
 				foreach ( $translate_lang as $lang ) {
 					if ( in_array( $lang, $pll_langs_slugs, true ) && $this->language_needs_first_translation( $post_id, $lang, $polylang ) ) {
@@ -404,32 +407,41 @@ if ( ! class_exists( 'ATFP_Register_Route' ) ) :
 			$postId    = intval( $post_id );
 			$post_data = get_post( $postId );
 
+			if ( ! $post_data ) {
+				return;
+			}
+
 			$excerpt_fetch       = true;
 			$content_fetch       = true;
 			$custom_fields_fetch = true;
 
+			$resolved_editor_type = ATFP_Helper::get_post_editor_type( $postId );
+
 			if ( ! $Object[ $postId ]['sourceLanguage'] ) {
 				$Object[ $postId ]['sourceLanguage'] = false;
 				$Object[ $postId ]['title'] = $post_data->post_title;
-				$Object[ $postId ]['editor_type'] = has_blocks( $post_data->post_content ) ? 'block' : 'classic';
+				$Object[ $postId ]['editor_type'] = $resolved_editor_type;
 				$Object[ $postId ]['post_link']   = html_entity_decode( get_edit_post_link( $postId ) );
+				return;
+			}
+
+			// Classic editor content is a Pro capability in the automatic flow; never hand its content to bulk.
+			if ( ! ATFP_Helper::is_supported_editor_type( $resolved_editor_type ) ) {
+				$Object[ $postId ]['title']              = $post_data->post_title;
+				$Object[ $postId ]['editor_type']        = $resolved_editor_type;
+				$Object[ $postId ]['unsupported_editor'] = true;
 				return;
 			}
 
 			$elementor_enabled = get_post_meta( $postId, '_elementor_edit_mode', true );
 
-			if ( ! $post_data ) {
-				return;
-			}
-
 			$Object[ $postId ]['title'] = $post_data->post_title;
 
 			if ( $content_fetch ) {
 				$Object[ $postId ]['content'] = has_blocks( $post_data->post_content ) ? parse_blocks( $post_data->post_content ) : $post_data->post_content;
-				$Object[ $postId ]['content'] = has_blocks( $post_data->post_content ) ? parse_blocks( $post_data->post_content ) : $post_data->post_content;
 			}
 
-			$Object[ $postId ]['editor_type'] = has_blocks( $post_data->post_content ) ? 'block' : 'classic';
+			$Object[ $postId ]['editor_type'] = $resolved_editor_type;
 
 			if ( isset( $post_data->post_excerpt ) && ! empty( $post_data->post_excerpt ) && $excerpt_fetch ) {
 				$Object[ $postId ]['excerpt'] = $post_data->post_excerpt;
@@ -517,8 +529,18 @@ if ( ! class_exists( 'ATFP_Register_Route' ) ) :
 
 			$post_id         = intval( sanitize_text_field( $params['post_id'] ) );
 			$target_language = sanitize_text_field( $params['target_language'] );
-			$editor_type     = sanitize_text_field( $params['editor_type'] );
 			$source_language = sanitize_text_field( $params['source_language'] );
+
+			// Resolve the editor from the source post rather than trusting the request body.
+			$editor_type = ATFP_Helper::get_post_editor_type( $post_id );
+
+			if ( ! $editor_type ) {
+				wp_send_json_error( esc_html__( 'Invalid post.', 'automatic-translations-for-polylang' ) );
+			}
+
+			if ( ! ATFP_Helper::is_supported_editor_type( $editor_type ) ) {
+				wp_send_json_error( esc_html__( 'This editor type is not supported by the free version.', 'automatic-translations-for-polylang' ) );
+			}
 
 			$title = isset( $params['post_title'] ) ? sanitize_text_field( $params['post_title'] ) : false;
 

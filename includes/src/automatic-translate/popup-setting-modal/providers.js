@@ -30,6 +30,10 @@ const Providers = (props) => {
       props.openErrorModalHandler("localAiTranslator");
       return;
     }
+    if(isDisabled && 'google' === service) {
+      props.openErrorModalHandler("google");
+      return;
+    }
     if (!isDisabled && props.onSelectProvider) {
       props.onSelectProvider(service);
     }

@@ -1,4 +1,5 @@
 import YandexTranslater from "./yandex";
+import GoogleTranslater from "./google";
 import localAiTranslator from "./local-ai";
 import { sprintf, __ } from "@wordpress/i18n";
 import ChromeAiTranslator from "./local-ai/local-ai-translate";
@@ -11,11 +12,12 @@ export default (props) => {
     const { Service = false, openErrorModalHandler=()=>{}, prefix='' } = props;
     const activeProviders = window.atfp_bulk_translate_object.active_providers || [];
     const browserType = ChromeAiTranslator.getBrowserType();
-    const refrenceText = window.atfp_bulk_translate_object.refrence_text || 'utm_source=atfp_plugin';
-    const proVersionUrl = window.atfp_bulk_translate_object.pro_version_url || 'https://coolplugins.net/product/autopoly-ai-translation-for-polylang/';
+    const refrenceText = window.atfp_bulk_translate_object.refrence_text;
+    const proVersionUrl = window.atfp_bulk_translate_object.pro_version_url;
 
     const freeProviders = Object.freeze({
       yandex: 'yandex-translate',
+      google: 'google-translate',
       localAiTranslator: 'chrome-built-in-ai',
       edgeAiTranslator: 'edge-built-in-ai',
     });
@@ -32,6 +34,19 @@ export default (props) => {
             ButtonDisabled: props.yandexButtonDisabled,
             ErrorMessage: props.yandexButtonDisabled ? <div className={`${prefix}-provider-error`} onClick={() => openErrorModalHandler(props.yandexButtonDisabled)}>{__('View Error', 'automatic-translations-for-polylang')}</div> : <></>,
             Logo: 'yandex.png',
+            filterHtmlContent: true
+        },
+        google: {
+            Provider: GoogleTranslater,
+            title: "Google Translate",
+            SettingBtnText: "Translate",
+            serviceLabel: "Google Translate",
+            Docs: "https://docs.coolplugins.net/doc/google-translate-for-polylang/?"+refrenceText+"&utm_medium=inside&utm_campaign=docs&utm_content=bulk_google",
+            heading: __("Choose Language", 'automatic-translations-for-polylang'),
+            BetaEnabled: false,
+            ButtonDisabled: props.googleButtonDisabled,
+            ErrorMessage: props.googleButtonDisabled ? <div className={`${prefix}-provider-error`} onClick={() => openErrorModalHandler(props.googleButtonDisabled)}>{__('View Error', 'automatic-translations-for-polylang')}</div> : <></>,
+            Logo: 'google.png',
             filterHtmlContent: true
         },
         localAiTranslator: {
@@ -62,17 +77,6 @@ export default (props) => {
             ErrorMessage: props.edgeAiTranslatorButtonDisabled ? <div className={`${prefix}-provider-error`} onClick={() => openErrorModalHandler(props.edgeAiTranslatorButtonDisabled)}>{__('View Error', 'automatic-translations-for-polylang')}</div> : <></>,
             Logo: "edge.png",
             filterHtmlContent: true
-        },
-        google: {
-            title: "Google Translate",
-            SettingBtnText: "Translate",
-            serviceLabel: "Google Translate",
-            Docs: "https://docs.coolplugins.net/doc/google-translate-for-polylang/?"+refrenceText+"&utm_medium=inside&utm_campaign=docs&utm_content=bulk_google",
-            heading: __("Choose Language", 'automatic-translations-for-polylang'),
-            BetaEnabled: false,
-            ButtonDisabled: true,
-            ErrorMessage: <a className={`${prefix}-provider-btn-pro`} href={`${proVersionUrl}?${refrenceText}&utm_medium=inside&utm_campaign=get_pro&utm_content=bulk_google`} target="_blank">{__('Buy Pro', 'automatic-translations-for-polylang')}</a>,
-            Logo: 'google.png'
         },
         openai_ai: {
             title: "OpenAI Model",

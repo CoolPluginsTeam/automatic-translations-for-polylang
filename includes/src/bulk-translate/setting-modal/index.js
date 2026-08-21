@@ -54,6 +54,7 @@ const SettingModal = (props) => {
                         errorModalHandler={errorModalHandler}
                         edgeAiModalError={props.edgeAiModalError}
                         yandexDisabled={props.yandexDisabled}
+                        googleDisabled={props.googleDisabled}
                     />
                     <SettingModalFooter
                         setSettingVisibility={props.onCloseHandler}

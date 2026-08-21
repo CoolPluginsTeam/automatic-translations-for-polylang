@@ -142,6 +142,11 @@ $prefix: atfp-bulk-translate;
                         font-size: 0.9rem;
                         text-align: center;
                         grid-column: 1 / -1;
+
+                        .#{$prefix}-provider-empty-actions a {
+                            font-weight: 700;
+                            text-decoration: underline;
+                        }
                     }
                 }
 
@@ -173,6 +178,14 @@ $prefix: atfp-bulk-translate;
                     &-disabled {
                         opacity: 0.7;
                         cursor: not-allowed;
+
+                        // A built-in AI card stays actionable so its setup error can be opened,
+                        // except on browsers that have no built-in AI at all.
+                        &##{$prefix}-provider-card-localAiTranslator:not(.#{$prefix}-provider-browser-other),
+                        &##{$prefix}-provider-card-edgeAiTranslator:not(.#{$prefix}-provider-browser-other) {
+                            opacity: 1;
+                            cursor: pointer;
+                        }
 
                         .#{$prefix}-provider-error {
                             color: var(--wp-admin-theme-color, #2271b1);
@@ -1394,3 +1407,37 @@ $prefix: atfp-bulk-translate;
     pointer-events: none;
     white-space: pre-wrap;
 }
+
+/* Google Translate CSS Start */
+
+body>div.skiptranslate iframe.skiptranslate[frameborder][src][style="visibility:visible"] {
+    display: none !important;
+}
+
+##{$prefix}-google-table-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    color: #fff;
+    max-height: 100%;
+    overflow: auto;
+    z-index: -999;
+    opacity: 0 !important;
+    white-space: pre-wrap;
+
+    ##{$prefix}-google-translate-btn {
+        display: none;
+    }
+}
+
+body.#{$prefix}-google-translate {
+    top: 0px !important;
+}
+
+/* Google Translate CSS End */
