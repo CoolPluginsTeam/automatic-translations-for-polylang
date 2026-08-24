@@ -1,5 +1,9 @@
 $prefix: atfp-bulk-translate;
 
+// Shared by the setup and the translating screens so the modal keeps one width
+// for the whole flow instead of resizing between steps.
+$modal-width: clamp(320px, 1040px, 94vw);
+
 .#{$prefix}-btn_re_translation {
 
     margin-left: 10px !important;
@@ -62,7 +66,7 @@ $prefix: atfp-bulk-translate;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 
         &.#{$prefix}-status-modal-active {
-            width: clamp(200px, 800px, 90%);
+            width: $modal-width;
             height: auto;
             max-height: 70vh;
 
@@ -105,6 +109,17 @@ $prefix: atfp-bulk-translate;
             max-height: 90vh;
         }
 
+        // The combined setup screen shows languages and engines side by side,
+        // so it needs more room than the single column setting screens.
+        &.#{$prefix}-setup-modal-active {
+            width: $modal-width;
+        }
+
+        // The Pro upsell shares the setup width so the modal never resizes.
+        &.#{$prefix}-pro-modal-active {
+            width: $modal-width;
+        }
+
         & .#{$prefix}-language-container {
             max-width: 500px;
         }
@@ -119,10 +134,13 @@ $prefix: atfp-bulk-translate;
                 display: flex;
                 flex-direction: column;
                 height: 100%;
+                max-height: 90vh;
 
                 .#{$prefix}-setting-modal-body {
                     max-width: 100vw;
                     overflow-x: auto;
+                    overflow-y: auto;
+                    flex: 1;
 
                     .#{$prefix}-provider-cards {
                         display: grid;
@@ -131,6 +149,238 @@ $prefix: atfp-bulk-translate;
                         padding: 16px 24px;
                         max-width: 560px;
                         min-width: 500px;
+                    }
+
+                    /* Combined setup layout: languages (step 1) and engines (step 2). */
+                    .#{$prefix}-setup-layout {
+                        display: flex;
+                        align-items: stretch;
+                        gap: 0;
+                        padding: 20px 24px;
+                        box-sizing: border-box;
+
+                        .#{$prefix}-setup-column {
+                            display: flex;
+                            flex-direction: column;
+                            flex: 1 1 50%;
+                            min-width: 0;
+                        }
+
+                        .#{$prefix}-setup-column-head {
+                            align-items: center;
+                            display: flex;
+                            gap: 8px;
+
+                            h3 {
+                                color: #1d2327;
+                                font-size: 15px;
+                                font-weight: 600;
+                                margin: 0;
+                                padding: 0;
+                            }
+                        }
+
+                        .#{$prefix}-setup-step-badge {
+                            align-items: center;
+                            background: var(--wp-admin-theme-color, #2271b1);
+                            border-radius: 50%;
+                            box-sizing: border-box;
+                            color: #fff;
+                            display: inline-flex;
+                            flex-shrink: 0;
+                            font-size: 12px;
+                            font-weight: 700;
+                            height: 22px;
+                            justify-content: center;
+                            line-height: 1;
+                            width: 22px;
+                        }
+
+                        .#{$prefix}-setup-column-desc {
+                            color: #888;
+                            font-size: 12px;
+                            font-weight: 500;
+                            margin: 6px 0 12px;
+                            padding: 0;
+                        }
+
+                        .#{$prefix}-setup-divider {
+                            background: #00000012;
+                            flex: 0 0 1px;
+                            margin-inline: 28px;
+                            position: relative;
+                            width: 1px;
+                        }
+
+                        .#{$prefix}-setup-divider-arrow {
+                            align-items: center;
+                            background: #fff;
+                            border: 1px solid #00000012;
+                            border-radius: 50%;
+                            color: #64748b;
+                            display: inline-flex;
+                            font-size: 14px;
+                            height: 32px;
+                            justify-content: center;
+                            left: 50%;
+                            line-height: 1;
+                            position: absolute;
+                            top: 50%;
+                            transform: translate(-50%, -50%);
+                            width: 32px;
+                        }
+
+                        .#{$prefix}-provider-cards {
+                            gap: 12px;
+                            max-width: none;
+                            min-width: 0;
+                            padding: 0;
+                        }
+                    }
+
+                    /* Pro upsell panel. Purple accent matches the badge artwork. */
+                    .#{$prefix}-pro-panel {
+                        background:
+                            radial-gradient(circle at 88% 16%, rgba(109, 86, 242, .08), transparent 42%),
+                            radial-gradient(circle at 8% 88%, rgba(109, 86, 242, .06), transparent 38%),
+                            linear-gradient(135deg, #f5f2ff 0%, #fbfaff 100%);
+                        border: 1px solid #e4ddfb;
+                        border-radius: 12px;
+                        box-sizing: border-box;
+                        margin: 24px;
+                        padding: 26px 32px 30px;
+
+                        &-head {
+                            text-align: center;
+
+                            h3 {
+                                color: #1f2937;
+                                font-size: 26px;
+                                font-weight: 700;
+                                line-height: 1.3;
+                                margin: 4px 0 0;
+                                padding: 0;
+                            }
+
+                            p {
+                                color: #4b5563;
+                                font-size: 16px;
+                                line-height: 1.5;
+                                margin: 6px 0 0;
+                                padding: 0;
+                            }
+                        }
+
+                        // Centre the art and benefits as one group so the panel
+                        // does not leave a wide empty gutter on the right.
+                        &-body {
+                            align-items: center;
+                            display: flex;
+                            gap: 40px;
+                            justify-content: center;
+                            margin: 24px auto 0;
+                            max-width: 900px;
+                        }
+
+                        &-art {
+                            border-right: 1px solid #e4ddfb;
+                            display: flex;
+                            flex: 0 0 auto;
+                            justify-content: center;
+                            padding-right: 40px;
+
+                            img {
+                                height: auto;
+                                max-width: 100%;
+                                width: 280px;
+                            }
+                        }
+                    }
+
+                    .#{$prefix}-pro-crown {
+                        display: inline-flex;
+                    }
+
+                    .#{$prefix}-pro-accent {
+                        color: #4e2bcb;
+                        font-weight: 700;
+                    }
+
+                    .#{$prefix}-pro-benefits {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 18px;
+                        list-style: none;
+                        margin: 0;
+                        min-width: 0;
+                        padding: 0;
+
+                        li {
+                            align-items: flex-start;
+                            display: flex;
+                            gap: 12px;
+                            margin: 0;
+                        }
+                    }
+
+                    .#{$prefix}-pro-benefit-icon {
+                        color: #6d56f2;
+                        display: inline-flex;
+                        flex-shrink: 0;
+                        margin-top: 1px;
+                    }
+
+                    .#{$prefix}-pro-benefit-text {
+                        display: flex;
+                        flex-direction: column;
+                        min-width: 0;
+
+                        strong {
+                            color: #1f2937;
+                            font-size: 15px;
+                            font-weight: 600;
+                        }
+
+                        span {
+                            color: #6b7280;
+                            font-size: 13px;
+                            margin-top: 2px;
+                        }
+                    }
+
+                    .#{$prefix}-setup-info {
+                        align-items: flex-start;
+                        background: #f0f6ff;
+                        border: 1px solid #cfe0f5;
+                        border-radius: 8px;
+                        display: flex;
+                        gap: 10px;
+                        margin: 0 24px 20px;
+                        padding: 12px 14px;
+
+                        .#{$prefix}-setup-info-icon {
+                            color: var(--wp-admin-theme-color, #2271b1);
+                            display: inline-flex;
+                            flex-shrink: 0;
+                            margin-top: 2px;
+                        }
+
+                        .#{$prefix}-setup-info-text {
+                            strong {
+                                color: #1d2327;
+                                display: block;
+                                font-size: 13px;
+                                font-weight: 600;
+                            }
+
+                            p {
+                                color: #888;
+                                font-size: 12px;
+                                font-weight: 500;
+                                margin: 2px 0 0;
+                                padding: 0;
+                            }
+                        }
                     }
 
                     .#{$prefix}-bulk-translate-empty {
@@ -200,7 +450,6 @@ $prefix: atfp-bulk-translate;
 
                     &-selected {
                         border-color: var(--wp-admin-theme-color, #2271b1) !important;
-                        box-shadow: 0 0 0 1px var(--wp-admin-theme-color, #2271b1);
                         background: #eff6ff;
 
                         .#{$prefix}-provider-card-check {
@@ -320,7 +569,7 @@ $prefix: atfp-bulk-translate;
             flex-direction: column;
             height: 100%;
             justify-content: center;
-            max-width: 900px;
+            max-width: 100%;
             width: 100%;
             position: relative;
             z-index: 2;
@@ -807,6 +1056,20 @@ $prefix: atfp-bulk-translate;
                     gap: 1px;
                     padding-block: 10px;
 
+                    .#{$prefix}-modal-header-icon {
+                        filter: brightness(0) invert(0);
+                        height: 20px;
+                        margin-right: 5px;
+                        width: 20px;
+                    }
+
+                    .#{$prefix}-pro-header-badge {
+                        flex-shrink: 0;
+                        height: 56px;
+                        margin-right: 14px;
+                        width: 56px;
+                    }
+
                     h3{
                         margin: 0;
                         font-size: 13px;
@@ -890,11 +1153,11 @@ $prefix: atfp-bulk-translate;
             }
         }
 
-        .#{$prefix}-body {
+        .#{$prefix}-setup-languages {
 
             .#{$prefix}-notice {
-                margin-top: 1rem;
-                margin-inline: 25px;
+                margin-top: 0;
+                margin-bottom: 12px;
             }
 
             .#{$prefix}-loading {
@@ -905,24 +1168,28 @@ $prefix: atfp-bulk-translate;
             .#{$prefix}-languages {
                 display: grid;
                 gap: 10px;
-                grid-template-columns: repeat(3, 1fr);
-                padding: 1rem 25px;
-                padding-bottom: 0;
+                grid-template-columns: repeat(2, 1fr);
+                padding: 0;
+                max-height: 320px;
+                overflow-y: auto;
 
+                // A 2px border in both states keeps the outline crisp and the chip
+                // size stable, matching how the provider cards are drawn.
                 .#{$prefix}-language {
-                    border: 1px solid #ddd;
+                    border: 2px solid #e2e8f0;
                     border-radius: 8px;
+                    box-sizing: border-box;
                     display: inline-flex;
+                    min-width: 0;
                     padding: 7px;
 
                     &.language-selected {
                         background-color: #f0f6ff;
-                        border-color: #2271b1;
-                        box-shadow: 0 0 0 1px #2271b1;
+                        border-color: var(--wp-admin-theme-color, #2271b1);
 
                         .#{$prefix}-language-check-visual {
-                            background-color: #2271b1;
-                            border-color: #2271b1;
+                            background-color: var(--wp-admin-theme-color, #2271b1);
+                            border-color: var(--wp-admin-theme-color, #2271b1);
                         }
                     }
 
@@ -931,7 +1198,9 @@ $prefix: atfp-bulk-translate;
                         display: flex;
                         gap: 8px;
                         min-height: 22px;
+                        min-width: 0;
                         position: relative;
+                        width: 100%;
                     }
 
                     &-check-visual {
@@ -962,7 +1231,17 @@ $prefix: atfp-bulk-translate;
                     }
 
                     &-label {
+                        align-items: center;
+                        display: inline-flex;
                         margin-left: 7px;
+                        min-width: 0;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+
+                        img {
+                            flex-shrink: 0;
+                        }
                     }
 
                     input[type="checkbox"] {
@@ -985,28 +1264,30 @@ $prefix: atfp-bulk-translate;
             }
 
             .#{$prefix}-select-all-languages {
-                display: grid;
-                gap: 10px;
-                grid-template-columns: repeat(3, 1fr);
-                padding: 1rem 25px;
+                display: block;
+                padding: 14px 0 0;
+
+                // Keep the toggle as a compact pill instead of a full width bar.
+                label {
+                    display: inline-block;
+                }
 
                 &.all-languages-selected {
                     .#{$prefix}-select-all-languages-inner {
                         background-color: #f0f6ff;
-                        border-color: #2271b1;
-                        box-shadow: 0 0 0 1px #2271b1;
+                        border-color: var(--wp-admin-theme-color, #2271b1);
                     }
                 }
 
                 &-inner {
-                    border: 1px solid #ddd;
-                    border-radius: 8px;
-                    display: inline-flex;
-                    padding: 7px;
                     align-items: center;
-                    display: flex;
+                    border: 2px solid #e2e8f0;
+                    border-radius: 8px;
+                    box-sizing: border-box;
+                    display: inline-flex;
                     gap: 8px;
                     min-height: 22px;
+                    padding: 7px 12px 7px 7px;
                     position: relative;
                 }
 
@@ -1027,8 +1308,8 @@ $prefix: atfp-bulk-translate;
                     z-index: 2;
 
                     &:checked+.#{$prefix}-select-all-languages-check-visual {
-                        background-color: #2271b1;
-                        border-color: #2271b1;
+                        background-color: var(--wp-admin-theme-color, #2271b1);
+                        border-color: var(--wp-admin-theme-color, #2271b1);
                     }
                 }
 
@@ -1060,12 +1341,16 @@ $prefix: atfp-bulk-translate;
                 }
 
                 span.#{$prefix}-language-label {
+                    color: var(--wp-admin-theme-color, #2271b1);
+                    font-weight: 500;
                     margin-left: 7px;
                 }
             }
         }
 
         .#{$prefix}-footer {
+            align-items: center;
+            background: #f8fafc;
             border: none;
             display: flex;
             justify-content: space-between;
@@ -1073,31 +1358,80 @@ $prefix: atfp-bulk-translate;
             padding: 16px 22.4px;
             border-top: 2px solid #00000012;
 
-            .#{$prefix}-footer-button:nth-of-type(1) {
-                background-color: #ffffff;
+            // Direct children only: the Pro screen nests its primary buttons in
+            // a .footer-actions group, which must not pick up the Back styling.
+            &>.#{$prefix}-footer-button:nth-of-type(1) {
+                background: transparent;
                 border: none;
+                box-shadow: none;
                 color: var(--wp-admin-theme-color, #2271b1);
                 font-size: 14px;
                 font-weight: 600;
 
                 &:hover {
-                    background-color: #fff;
-                    border-color: #fff;
+                    background: transparent;
+                    border-color: transparent;
                     color: var(--wp-admin-theme-color-darker-20, #1c5788);
                 }
             }
 
-            .#{$prefix}-footer-button:nth-of-type(2),
-            .#{$prefix}-footer-button-next {
+            &>.#{$prefix}-footer-button:nth-of-type(2) {
                 &:disabled {
                     cursor: not-allowed;
                     opacity: .6;
                 }
             }
 
-            .#{$prefix}-footer-button:nth-child(1):hover {
-                background-color: #ffffff;
-                border-color: #000000;
+            .#{$prefix}-footer-actions {
+                align-items: center;
+                display: flex;
+                gap: 12px;
+
+                .#{$prefix}-footer-button:disabled {
+                    cursor: not-allowed;
+                    opacity: .6;
+                }
+            }
+        }
+
+        // Lives outside the modal body because the Pro screen renders it in the
+        // footer, next to the disabled Start Translation button.
+        .#{$prefix}-pro-upgrade-button {
+            align-items: center;
+            background: linear-gradient(135deg, #6d56f2 0%, #4e2bcb 100%);
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 6px 14px rgba(77, 52, 201, .25);
+            box-sizing: border-box;
+            color: #fff;
+            display: inline-flex;
+            font-size: 15px;
+            font-weight: 600;
+            gap: 8px;
+            line-height: 1.2;
+            padding: 12px 22px;
+            text-decoration: none;
+            white-space: nowrap;
+
+            &:hover,
+            &:focus,
+            &:active,
+            &:visited {
+                color: #fff;
+                text-decoration: none;
+            }
+
+            &:hover {
+                filter: brightness(1.06);
+            }
+
+            &:focus {
+                box-shadow: 0 0 0 2px #fff, 0 0 0 4px #6d56f2;
+                outline: none;
+            }
+
+            .#{$prefix}-pro-upgrade-icon {
+                display: inline-flex;
             }
         }
 
@@ -1384,6 +1718,56 @@ $prefix: atfp-bulk-translate;
         @media (max-width: 576px) {
             &.#{$prefix}-translation-active {
                 width: clamp(200px, 800px, 80%);
+            }
+        }
+
+        // Stack the two setup steps once there is no room for two columns.
+        @media (max-width: 900px) {
+            ##{$prefix}-setting-modal-container {
+                .#{$prefix}-setting-modal-content {
+                    .#{$prefix}-setting-modal-body {
+                        .#{$prefix}-setup-layout {
+                            display: block;
+                            padding: 16px;
+
+                            .#{$prefix}-setup-divider {
+                                height: 1px;
+                                margin: 20px 0;
+                                width: auto;
+                            }
+
+                            // The flow reads top to bottom once the columns stack.
+                            .#{$prefix}-setup-divider-arrow {
+                                transform: translate(-50%, -50%) rotate(90deg);
+                            }
+
+                            .#{$prefix}-provider-cards {
+                                grid-template-columns: 1fr;
+                            }
+                        }
+
+                        .#{$prefix}-pro-panel {
+                            margin: 16px;
+                            padding: 20px;
+
+                            &-body {
+                                display: block;
+                            }
+
+                            &-art {
+                                border-right: none;
+                                margin-bottom: 20px;
+                                padding-right: 0;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .#{$prefix}-setup-languages {
+                .#{$prefix}-languages {
+                    grid-template-columns: 1fr;
+                }
             }
         }
     }

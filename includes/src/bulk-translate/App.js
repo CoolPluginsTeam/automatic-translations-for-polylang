@@ -7,10 +7,9 @@ import { selectCountInfo } from './redux-store/features/selectors';
 import ChromeAiTranslator from './components/translate-provider/local-ai/local-ai-translate';
 import yandexLanguage from './components/translate-provider/yandex/yandex-language';
 import googleLanguage from './components/translate-provider/google/google-language';
-import ErrorModalBox from './components/error-modal-box';
 import SettingModal from './setting-modal';
-import DOMPurify from 'dompurify';
-import Notice from './components/notice';
+import ProNotice from './components/pro-notice';
+import Notice from './components/Notice';
 
 const App = ({ onDestory, prefix, postIds }) => {
     const dispatch = useDispatch();
@@ -21,13 +20,13 @@ const App = ({ onDestory, prefix, postIds }) => {
       atfp_bulk_translate_object.default_language_slug
     ];
 
+    const hasPosts = postIds.length > 0;
+    const errorMessage = hasPosts ? '' : emptyPostIdsErrorMessage;
+
     const [selectedLanguages, setSelectedLanguages] = useState(Object.keys(targetLanguages));
-    const [errorMessage, setErrorMessage] = useState(postIds.length === 0 ? emptyPostIdsErrorMessage : '');
-    const [settingModalVisibility, setSettingModalVisibility] = useState(false);
     const [statusModalVisibility, setStatusModalVisibility] = useState(false);
     const translatePostsCount = useSelector(selectCountInfo).totalPosts;
     const [isLoading, setIsLoading] = useState(true);
-    const [errorModal, setErrorModal] = useState(false);
     const [proRequiredReason, setProRequiredReason] = useState(postIds.length > 1 ? 'multiple' : false);
     const [localAiModalError, setLocalAiModalError] = useState(false);
     const [edgeAiModalError, setEdgeAiModalError] = useState(false);
@@ -43,7 +42,6 @@ const App = ({ onDestory, prefix, postIds }) => {
 
     const destroyApp = (e) => {
         setStatusModalVisibility(false);
-        setSettingModalVisibility(false);
         onDestory(e);
     }
 
@@ -71,25 +69,20 @@ const App = ({ onDestory, prefix, postIds }) => {
     }, [statusModalVisibility]);
 
     useEffect(() => {
-        if (!statusModalVisibility && !settingModalVisibility) {
+        if (!statusModalVisibility) {
             dispatch(resetStore());
         }
-    }, [statusModalVisibility, settingModalVisibility, dispatch]);
+    }, [statusModalVisibility, dispatch]);
 
-    const settingModalVisibilityHandler = async () => {
-        if (selectedLanguages.length === 0 && !settingModalVisibility) {
-            setErrorMessage(__('Please select at least one language', 'automatic-translations-for-polylang'));
-            setErrorModal(true);
-            return;
-        }
-
-        if (false === settingModalVisibility) {
-            dispatch(updateCountInfo({ startTime: new Date().getTime() }));
-        }
-
-        setSettingModalVisibility((prev) => !prev);
-    }
-
+    /**
+     * Adds or removes a single target language from the selection.
+     *
+     * @since 1.1.0
+     *
+     * @param {Event} e Change event of the language checkbox.
+     *
+     * @return {void}
+     */
     const handleLanguageChange = (e) => {
         const { value } = e.target;
         const checked = e.target.checked;
@@ -100,10 +93,15 @@ const App = ({ onDestory, prefix, postIds }) => {
         }
     }
 
-    const closeErrorModal = (e) => {
-        setErrorModal(false);
-    }
-
+    /**
+     * Selects or clears every available target language.
+     *
+     * @since 1.1.0
+     *
+     * @param {Event} e Change event of the select-all checkbox.
+     *
+     * @return {void}
+     */
     const handleSelectAllLanguages = (e) => {
         const checked = e.target.checked;
         if (checked) {
@@ -113,32 +111,86 @@ const App = ({ onDestory, prefix, postIds }) => {
         }
     }
 
+    /**
+     * Starts the translation with the selected languages and provider.
+     *
+     * @since 1.1.0
+     *
+     * @param {string} services Provider key picked on the setup screen.
+     *
+     * @return {void}
+     */
     const startTranslationHandler = (services) => {
+        if (!hasPosts || 0 === selectedLanguages.length || !services) {
+            return;
+        }
+
+        dispatch(updateCountInfo({ startTime: new Date().getTime() }));
         dispatch(updateServiceProvider(services));
-        setSettingModalVisibility(false);
         setStatusModalVisibility(true);
         setIsLoading(true);
     }
 
-    const containerCls = () => {
-        let cls = [];
+    /**
+     * Resolves which screen the modal currently shows.
+     *
+     * @since 1.1.0
+     *
+     * @return {string} One of pro, status, error or setup.
+     */
+    const activeScreen = () => {
+        if (proRequiredReason) {
+            return 'pro';
+        }
+
         if (statusModalVisibility) {
+            return 'status';
+        }
+
+        if (errorMessage) {
+            return 'error';
+        }
+
+        return 'setup';
+    }
+
+    /**
+     * Builds the container class list for the given screen.
+     *
+     * @since 1.1.0
+     *
+     * @param {string} screen Screen returned by activeScreen().
+     *
+     * @return {string} Space separated class list.
+     */
+    const containerCls = (screen) => {
+        const cls = [];
+
+        if ('status' === screen) {
             cls.push(`${prefix}-status-modal-active`);
-        }
 
-        if (settingModalVisibility) {
+            if (!translatePostsCount) {
+                cls.push(`${prefix}-empty-posts`);
+            }
+        } else if ('setup' === screen) {
             cls.push(`${prefix}-setting-modal-active`);
-        }
-
-        if (!translatePostsCount && !settingModalVisibility && statusModalVisibility) {
-            cls.push(`${prefix}-empty-posts`);
+            cls.push(`${prefix}-setup-modal-active`);
+        } else if ('pro' === screen) {
+            cls.push(`${prefix}-setting-modal-active`);
+            cls.push(`${prefix}-pro-modal-active`);
         }
 
         return cls.join(' ');
     }
 
-    const SelectLanguageNotice = () => {
-
+    /**
+     * Builds the notices shown above the language list.
+     *
+     * @since 1.1.0
+     *
+     * @return {?JSX.Element[]} Notices, or null when there is nothing to warn about.
+     */
+    const languageNotices = () => {
         const notices = [];
 
         const postMetaSync = atfp_bulk_translate_object.postMetaSync === 'true';
@@ -159,104 +211,60 @@ const App = ({ onDestory, prefix, postIds }) => {
             });
         }
 
-        const noticeLength = notices.length;
-
-        if (notices.length > 0) {
-            return notices.map((notice, index) => <Notice className={notice.className} key={index} lastNotice={index === noticeLength - 1}>{notice.message}</Notice>);
+        if (0 === notices.length) {
+            return null;
         }
 
-        return;
+        const noticeLength = notices.length;
+
+        return notices.map((notice, index) => <Notice className={notice.className} key={index} lastNotice={index === noticeLength - 1}>{notice.message}</Notice>);
     }
 
-    const ProMarketingMessage = () => {
-        const proMessages = {
-            'multiple': {
-                text: sprintf(__('Translating more than one %s at a time is a Pro feature.', 'automatic-translations-for-polylang'), atfp_bulk_translate_object.post_label),
-                utm: 'bulk_multiple_posts',
-            },
-            'unsupported-editor': {
-                text: __('This content was built with the classic editor. Classic editor translation is a Pro feature.', 'automatic-translations-for-polylang'),
-                utm: 'bulk_classic_editor',
-            },
-            'retranslate': {
-                text: __('Re-translating existing content is a Pro feature.', 'automatic-translations-for-polylang'),
-                utm: 'bulk_retranslate',
-            },
-        };
-
-        const proMessage = proMessages[proRequiredReason] || proMessages.retranslate;
-
-        return (
-            <div id={`${prefix}-setting-modal-container`}>
-                <div className={`${prefix}-setting-modal-content`}>
-                    
-                    <div className={`${prefix}-header`}>
-                        <div className={`${prefix}-modal-header-inner`}>
-                            <h2>{__("AutoPoly Pro Feature", 'automatic-translations-for-polylang')}</h2>
-                            <p className={`${prefix}-modal-desc`}>{__("Upgrade to Pro to unlock advanced AI translation capabilities.", 'automatic-translations-for-polylang')}</p>
-                        </div>
-                        <button type="button" aria-label={__('Close', 'automatic-translations-for-polylang')} className={`${prefix}-modal-close`} onClick={destroyApp}>&times;</button>
+    /**
+     * Renders the screen shown when no post was selected for translation.
+     *
+     * @since 1.1.0
+     *
+     * @return {JSX.Element} Empty selection screen.
+     */
+    const ErrorMessageScreen = () => (
+        <div className={`${prefix}-language-container`}>
+            <div className={`${prefix}-header`}>
+                <div className={`${prefix}-modal-header-inner`}>
+                    <div className={`${prefix}-modal-header-left`}>
+                        <img
+                            src={`${atfp_bulk_translate_object.atfp_url}assets/images/magic-wand.svg`}
+                            className={`${prefix}-modal-header-icon`}
+                            alt=""
+                            aria-hidden="true"
+                        />
+                        <h3>{__('AI Translation', 'automatic-translations-for-polylang')}</h3>
                     </div>
-
-                    <div className={`${prefix}-setting-modal-body`}>
-                        <div className={`${prefix}-provider-cards`}>
-                            <div className={`${prefix}-bulk-translate-empty ${prefix}-provider-empty`}>
-                                <strong>{__('Unlock AutoPoly Pro', 'automatic-translations-for-polylang')}</strong>
-                                <br />
-                                {proMessage.text}
-                                <br />
-                                <span className={`${prefix}-provider-empty-actions`}>
-                                    <a
-                                        href={`${atfp_bulk_translate_object.pro_version_url}?${atfp_bulk_translate_object.refrence_text}&utm_medium=inside&utm_campaign=get_pro&utm_content=${proMessage.utm}`}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        {__('Upgrade to Pro', 'automatic-translations-for-polylang')}
-                                    </a>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className={`${prefix}-footer`}>
-                        <button type="button" className={`${prefix}-footer-button button`} onClick={destroyApp}>&#8592; {__("Back", 'automatic-translations-for-polylang')}</button>
-                        <button
-                            type="button"
-                            className={`${prefix}-footer-button button button-primary`}
-                            disabled={true}
-                        >
-                            {__("Start Translation", 'automatic-translations-for-polylang')} <span className={`${prefix}-next-arrow`}>&#8594;</span>
-                        </button>
-                    </div>
-
                 </div>
+                <button
+                    type="button"
+                    className={`${prefix}-modal-close`}
+                    onClick={destroyApp}
+                    title={__('Close', 'automatic-translations-for-polylang')}
+                    aria-label={__('Close', 'automatic-translations-for-polylang')}
+                >
+                    &times;
+                </button>
             </div>
-        );
-    }
+            <div className={`${prefix}-error-message`}>{errorMessage}</div>
+        </div>
+    );
 
-    if (proRequiredReason) {
-        return (
-            <div id={`${prefix}-container`} className={containerCls()}>
-                <ProMarketingMessage />
-            </div>
-        );
-    }
+    const screen = activeScreen();
 
     return <div
         id={`${prefix}-container`}
-        className={containerCls()}>
-        {settingModalVisibility && <SettingModal
-            prefix={prefix}
-            onDestory={destroyApp}
-            onCloseHandler={settingModalVisibilityHandler}
-            startTranslationHandler={startTranslationHandler}
-            localAiModalError={localAiModalError}
-            edgeAiModalError={edgeAiModalError}
-            yandexDisabled={yandexDisabled}
-            googleDisabled={googleDisabled}
-        />}
+        className={containerCls(screen)}>
+        {'pro' === screen && <ProNotice prefix={prefix} reason={proRequiredReason} onDestory={destroyApp} />}
 
-        {statusModalVisibility && !settingModalVisibility && (isLoading ?
+        {'error' === screen && <ErrorMessageScreen />}
+
+        {'status' === screen && (isLoading ?
             <div
                 className={`${prefix}-skeleton-loader`}></div> :
             <StatusModal
@@ -269,107 +277,24 @@ const App = ({ onDestory, prefix, postIds }) => {
                     setProRequiredReason(reason || 'retranslate');
                 }}
             />)}
-        {!statusModalVisibility && !settingModalVisibility &&
-            <div
-                className={`${prefix}-language-container`}>
-                <div
-                    className={`${prefix}-header`}>
-                    <div className={`${prefix}-modal-header-inner`}>
-                        {errorMessage && errorMessage !== '' ?
-                        <div className={`${prefix}-modal-header-left`}>
-                        <img src={atfp_bulk_translate_object.atfp_url + 'assets/images/magic-wand.svg'} style={{width: '20px', height: '20px', marginRight: '5px', filter: 'brightness(0) invert(0)'}} alt={__("AI", "automatic-translations-for-polylang")}/>
-                        <h3>{__("AI Translation", "automatic-translations-for-polylang")}</h3>
-                        </div>:
-                        <>
-                            <span className={`${prefix}-step-label`}>{__('STEP 1 OF 3', 'automatic-translations-for-polylang')}</span>
-                            <h2>{__('Select Languages', 'automatic-translations-for-polylang')}</h2>
-                        </>
-                        }
-                    </div>
-                    <button
-                        type="button"
-                        className={`${prefix}-modal-close`}
-                        onClick={destroyApp}
-                        title={__('Close', 'automatic-translations-for-polylang')}
-                        aria-label={__('Close', 'automatic-translations-for-polylang')}
-                    >
-                        &times;
-                    </button>
-                </div>
-                {errorMessage && errorMessage !== '' ? (errorModal ? <ErrorModalBox
-                    message={errorMessage}
-                    onClose={closeErrorModal}
-                /> : <div
-                    className={`${prefix}-error-message`}
-                    dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(errorMessage) }}
-                />) :
-                    <>
-                        <div
-                            className={`${prefix}-body`}>
-                            <SelectLanguageNotice />
-                            <div
-                                className={`${prefix}-languages`}>
-                                {Object.keys(targetLanguages).map((language) => {
-                                    return (atfp_bulk_translate_object.default_language_slug && atfp_bulk_translate_object.default_language_slug === language ? null : <label htmlFor={language} key={language} className={`${prefix}-language${selectedLanguages.includes(language) ? ' language-selected' : ''}`}>
-                                        <div
-                                            className={`${prefix}-language-item`}
-                                            title={!postIds.length ? emptyPostIdsErrorMessage : targetLanguages[language].name}>
-                                            <input
-                                                type="checkbox"
-                                                name="languages"
-                                                id={language}
-                                                value={language}
-                                                onChange={(e) => handleLanguageChange(e)}
-                                                disabled={!postIds.length}
-                                                checked={selectedLanguages.includes(language)} />
-                                            <span className={`${prefix}-language-check-visual`}></span>
-                                            <div>
-                                            <span
-                                                className={`${prefix}-language-label`}
-                                                title={targetLanguages[language].name}
-                                            >
-                                                <img
-                                                    src={targetLanguages[language].flag}
-                                                    alt={targetLanguages[language].name} />
-                                                &nbsp; {targetLanguages[language].name}
-                                            </span>
-                                            </div>
-                                        </div>
-                                    </label>)
-                                })}
-                            </div>
-                            <div className={`${prefix}-select-all-languages ${selectedLanguages.length === Object.keys(targetLanguages).length ? 'all-languages-selected' : ''}`}>
-                            <label htmlFor="select-all-languages">
-                                <div className={`${prefix}-select-all-languages-inner`}>
-                                <input
-                                    type="checkbox"
-                                    name="select-all-languages"
-                                    id="select-all-languages"
-                                    onChange={(e) => handleSelectAllLanguages(e)}
-                                    checked={selectedLanguages.length === Object.keys(targetLanguages).length} />
-                                <span className={`${prefix}-select-all-languages-check-visual`}></span>
-                                <span
-                                    htmlFor="select-all-languages"
-                                >
-                                    {selectedLanguages.length === Object.keys(targetLanguages).length ? __('Unselect All', 'automatic-translations-for-polylang') : __('Select All', 'automatic-translations-for-polylang')}
-                                </span>
-                                </div>
-                            </label>
-                            </div>
-                        </div>
-                        <div
-                            className={`${prefix}-footer`}>
-                            <button
-                                className={`${prefix}-footer-button-next button button-primary`}
-                                onClick={settingModalVisibilityHandler}
-                                disabled={!postIds.length || !selectedLanguages.length}
-                                title={!postIds.length ? emptyPostIdsErrorMessage : (!selectedLanguages.length ? __('Please select at least one language', 'automatic-translations-for-polylang') : '')}
-                                style={{ marginLeft: 'auto' }}>
-                                {__('Next', 'automatic-translations-for-polylang')}<span> &#8594;</span>
-                            </button>
-                        </div>
-                    </>}
-            </div>
+
+        {'setup' === screen &&
+            <SettingModal
+                prefix={prefix}
+                onDestory={destroyApp}
+                startTranslationHandler={startTranslationHandler}
+                localAiModalError={localAiModalError}
+                edgeAiModalError={edgeAiModalError}
+                yandexDisabled={yandexDisabled}
+                googleDisabled={googleDisabled}
+                targetLanguages={targetLanguages}
+                selectedLanguages={selectedLanguages}
+                onLanguageChange={handleLanguageChange}
+                onSelectAllLanguages={handleSelectAllLanguages}
+                languageNotice={languageNotices()}
+                languagesDisabled={!hasPosts}
+                languagesDisabledReason={emptyPostIdsErrorMessage}
+            />
         }
     </div>
 }
