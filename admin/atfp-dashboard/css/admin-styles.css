@@ -695,17 +695,8 @@ ul.atfp-dashboard-sts-btm li:last-child {
     margin-top: 8px;
 }
 
-:where(.atfp-dashboard-free-vs-pro,.atfp-dashboard-settings) .atfp-dashboard-status {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
 
 
-:where(.atfp-dashboard-free-vs-pro,.atfp-dashboard-settings) .atfp-dashboard-status span{
-    font-size: 15px;
-    font-weight: 600;
-}
 
 /* ================================================
    Free vs Pro
@@ -1140,11 +1131,25 @@ ul.atfp-dashboard-sts-btm li:last-child {
     margin-bottom: 28px;
 }
 
-.atfp-dashboard-translation-settings :where(label[for="bulk-translate-post-status"], label[for="slug-translation-settings"]){
+.atfp-dashboard-translation-settings label[for="slug-translation-settings"]{
     margin-bottom: 15px !important;
 }
 
-.atfp-dashboard-translation-settings label[for="bulk-translate-post-status"] + .atfp-bulk-translation-post-status-options{
+/* The editable AI translation defaults reuse .atfp-dashboard-translation-settings
+   so they render exactly like the cards above; only the select is new here. */
+.atfp-dashboard-bulk-settings select{
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    max-width: 320px;
+    padding: 6px 10px;
+    width: 100%;
+}
+
+.atfp-dashboard-translation-settings label.atfp-settings-group-label{
+    margin-bottom: 15px !important;
+}
+
+.atfp-dashboard-translation-settings .atfp-settings-group-label + .atfp-bulk-translation-post-status-options{
     margin-bottom: 25px !important;
 }
 

@@ -623,10 +623,24 @@ if (! class_exists('ATFP_Helper')) {
 			return array();
 		}
 
+		/**
+		 * Translation engines shipped with the free version.
+		 *
+		 * Single source of truth for the provider allow-list, so option values
+		 * coming from settings and AJAX are validated against the same set.
+		 *
+		 * @since 1.5.0
+		 *
+		 * @return string[] Provider keys.
+		 */
+		public static function get_supported_providers(){
+			return array('chrome-built-in-ai', 'edge-built-in-ai', 'yandex-translate', 'google-translate');
+		}
+
 		public static function get_active_providers(){
 			$active_providers = get_option('atfp_enabled_providers', array());
-			
-			$default_active_providers = array('chrome-built-in-ai'=>true, 'edge-built-in-ai'=>true, 'yandex-translate'=>true, 'google-translate'=>true);
+
+			$default_active_providers = array_fill_keys(self::get_supported_providers(), true);
 
 			if($active_providers && !empty($active_providers)){
 				$active_providers_values=array_values($active_providers);
@@ -641,7 +655,7 @@ if (! class_exists('ATFP_Helper')) {
 
 			$active_providers=array_merge($default_active_providers, $active_providers);
 	
-			$valid_providers = array('chrome-built-in-ai', 'edge-built-in-ai', 'yandex-translate', 'google-translate');
+			$valid_providers = self::get_supported_providers();
 	
 			$active_providers = array_filter($active_providers, function($status) {
 				return $status === true;

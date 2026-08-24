@@ -3,6 +3,7 @@ import SettingModalHeader from "./header";
 import SettingModalBody from "./body";
 import SettingModalFooter from "./footer";
 import ErrorModalBox from "../components/error-modal-box";
+import { resolveDefaultService } from "../components/translate-provider";
 
 /**
  * Translation setup screen.
@@ -34,7 +35,9 @@ const SettingModal = (props) => {
     const prefix = props.prefix || 'atfp-bulk-translate';
     const imgFolder = `${atfp_bulk_translate_object.atfp_url}assets/images/`;
     const [errorModal, setErrorModal] = useState(false);
-    const [activeProvider, setActiveProvider] = useState(null);
+    // Seed with the engine chosen in settings. The effect below clears it
+    // again if that engine turns out to be unusable in this browser.
+    const [activeProvider, setActiveProvider] = useState(resolveDefaultService);
 
     const { localAiModalError, edgeAiModalError, yandexDisabled, googleDisabled } = props;
 

@@ -5,6 +5,54 @@ import { sprintf, __ } from "@wordpress/i18n";
 import ChromeAiTranslator from "./local-ai/local-ai-translate";
 
 /**
+ * Maps a service key to the provider key stored by the dashboard toggles.
+ */
+const freeProviders = Object.freeze({
+    localAiTranslator: 'chrome-built-in-ai',
+    edgeAiTranslator: 'edge-built-in-ai',
+    google: 'google-translate',
+    yandex: 'yandex-translate',
+});
+
+/**
+ * Resolves the engine chosen as default in the plugin settings to the service
+ * key used by this module.
+ *
+ * Returns null when no default is set, or when that engine is not currently
+ * enabled, so the modal simply opens with nothing pre-selected.
+ *
+ * @since 1.5.0
+ *
+ * @return {?string} Service key, or null when there is nothing to pre-select.
+ */
+export const resolveDefaultService = () => {
+    const settings = window.atfp_bulk_translate_object || {};
+    const defaultProvider = settings.default_provider || '';
+
+    if (!defaultProvider) {
+        return null;
+    }
+
+    // On Edge the built-in engine is served by localAiTranslator, so both
+    // browser AI provider keys resolve to it there.
+    const browserType = ChromeAiTranslator.getBrowserType();
+    const serviceKey = {
+        'chrome-built-in-ai': 'localAiTranslator',
+        'edge-built-in-ai': 'Edge' === browserType ? 'localAiTranslator' : 'edgeAiTranslator',
+        'google-translate': 'google',
+        'yandex-translate': 'yandex',
+    }[defaultProvider];
+
+    if (!serviceKey) {
+        return null;
+    }
+
+    const activeProviders = settings.active_providers || [];
+
+    return activeProviders.includes(freeProviders[serviceKey]) ? serviceKey : null;
+};
+
+/**
  * Provides the same translation services as automatic translation.
  */
 export default (props) => {
@@ -14,13 +62,6 @@ export default (props) => {
     const browserType = ChromeAiTranslator.getBrowserType();
     const refrenceText = window.atfp_bulk_translate_object.refrence_text;
     const proVersionUrl = window.atfp_bulk_translate_object.pro_version_url;
-
-    const freeProviders = Object.freeze({
-      localAiTranslator: 'chrome-built-in-ai',
-      edgeAiTranslator: 'edge-built-in-ai',
-      google: 'google-translate',
-      yandex: 'yandex-translate',
-    });
 
     const Services = {
         localAiTranslator: {

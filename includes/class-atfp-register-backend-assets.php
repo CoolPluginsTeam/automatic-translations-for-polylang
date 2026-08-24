@@ -50,7 +50,7 @@ class ATFP_Register_Backend_Assets
      * @return string[] List of valid provider slugs.
      */
     private static function get_valid_providers(){
-        return array('chrome-built-in-ai', 'edge-built-in-ai', 'yandex-translate', 'google-translate');
+        return ATFP_Helper::get_supported_providers();
     }
 
     public function enqueue_bulk_translation_assets(){
@@ -149,6 +149,8 @@ class ATFP_Register_Backend_Assets
                 'pendingPostsIdsKey' => wp_create_nonce('atfp_pending_posts_ids_nonce'),
                 'default_language_slug' => $default_language_slug,
                 'active_providers' => $active_providers,
+                // Engine pre-selected in the bulk translation modal.
+                'default_provider' => sanitize_key( get_option( 'atfp_default_provider', '' ) ),
                 'pro_version_url' => esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/'),
                 'refrence_text' => class_exists('ATFP_Helper') ? ATFP_Helper::utm_source_text() : 'utm_source=atfp_plugin',
             ), $extra_data)
