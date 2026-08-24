@@ -16,39 +16,13 @@ export default (props) => {
     const proVersionUrl = window.atfp_bulk_translate_object.pro_version_url;
 
     const freeProviders = Object.freeze({
-      yandex: 'yandex-translate',
-      google: 'google-translate',
       localAiTranslator: 'chrome-built-in-ai',
       edgeAiTranslator: 'edge-built-in-ai',
+      google: 'google-translate',
+      yandex: 'yandex-translate',
     });
 
     const Services = {
-        yandex: {
-            Provider: YandexTranslater,
-            title: "Yandex Translate",
-            SettingBtnText: "Translate",
-            serviceLabel: "Yandex Translate",
-            Docs: "https://docs.coolplugins.net/doc/yandex-translate-for-polylang/?"+refrenceText+"&utm_medium=inside&utm_campaign=docs&utm_content=bulk_yandex",
-            heading: __("Choose Language", 'automatic-translations-for-polylang'),
-            BetaEnabled: false,
-            ButtonDisabled: props.yandexButtonDisabled,
-            ErrorMessage: props.yandexButtonDisabled ? <div className={`${prefix}-provider-error`} onClick={() => openErrorModalHandler(props.yandexButtonDisabled)}>{__('View Error', 'automatic-translations-for-polylang')}</div> : <></>,
-            Logo: 'yandex.png',
-            filterHtmlContent: true
-        },
-        google: {
-            Provider: GoogleTranslater,
-            title: "Google Translate",
-            SettingBtnText: "Translate",
-            serviceLabel: "Google Translate",
-            Docs: "https://docs.coolplugins.net/doc/google-translate-for-polylang/?"+refrenceText+"&utm_medium=inside&utm_campaign=docs&utm_content=bulk_google",
-            heading: __("Choose Language", 'automatic-translations-for-polylang'),
-            BetaEnabled: false,
-            ButtonDisabled: props.googleButtonDisabled,
-            ErrorMessage: props.googleButtonDisabled ? <div className={`${prefix}-provider-error`} onClick={() => openErrorModalHandler(props.googleButtonDisabled)}>{__('View Error', 'automatic-translations-for-polylang')}</div> : <></>,
-            Logo: 'google.png',
-            filterHtmlContent: true
-        },
         localAiTranslator: {
             Provider: localAiTranslator,
             title: browserType === 'Edge' ? "Edge Built-in AI" : "Chrome Built-in AI",
@@ -76,6 +50,32 @@ export default (props) => {
             ButtonDisabled: props.edgeAiTranslatorButtonDisabled,
             ErrorMessage: props.edgeAiTranslatorButtonDisabled ? <div className={`${prefix}-provider-error`} onClick={() => openErrorModalHandler(props.edgeAiTranslatorButtonDisabled)}>{__('View Error', 'automatic-translations-for-polylang')}</div> : <></>,
             Logo: "edge.png",
+            filterHtmlContent: true
+        },
+        google: {
+            Provider: GoogleTranslater,
+            title: "Google Translate",
+            SettingBtnText: "Translate",
+            serviceLabel: "Google Translate",
+            Docs: "https://docs.coolplugins.net/doc/google-translate-for-polylang/?"+refrenceText+"&utm_medium=inside&utm_campaign=docs&utm_content=bulk_google",
+            heading: __("Choose Language", 'automatic-translations-for-polylang'),
+            BetaEnabled: false,
+            ButtonDisabled: props.googleButtonDisabled,
+            ErrorMessage: props.googleButtonDisabled ? <div className={`${prefix}-provider-error`} onClick={() => openErrorModalHandler(props.googleButtonDisabled)}>{__('View Error', 'automatic-translations-for-polylang')}</div> : <></>,
+            Logo: 'google.png',
+            filterHtmlContent: true
+        },
+        yandex: {
+            Provider: YandexTranslater,
+            title: "Yandex Translate",
+            SettingBtnText: "Translate",
+            serviceLabel: "Yandex Translate",
+            Docs: "https://docs.coolplugins.net/doc/yandex-translate-for-polylang/?"+refrenceText+"&utm_medium=inside&utm_campaign=docs&utm_content=bulk_yandex",
+            heading: __("Choose Language", 'automatic-translations-for-polylang'),
+            BetaEnabled: false,
+            ButtonDisabled: props.yandexButtonDisabled,
+            ErrorMessage: props.yandexButtonDisabled ? <div className={`${prefix}-provider-error`} onClick={() => openErrorModalHandler(props.yandexButtonDisabled)}>{__('View Error', 'automatic-translations-for-polylang')}</div> : <></>,
+            Logo: 'yandex.png',
             filterHtmlContent: true
         },
         openai_ai: {

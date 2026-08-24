@@ -4,6 +4,79 @@ $prefix: atfp-bulk-translate;
 // for the whole flow instead of resizing between steps.
 $modal-width: clamp(320px, 1040px, 94vw);
 
+// Bulk action group shown above the posts table.
+.#{$prefix}-btn-group {
+    align-items: center;
+    display: inline-flex;
+    gap: 6px;
+    vertical-align: middle;
+}
+
+// Core styles .wp-core-ui .button (0,2,0) and a branch scoped rule paints
+// button icons with --wp-admin-theme-color (0,4,0) -- the same blue as the
+// primary button, which made the icon invisible. Both selectors below are
+// deliberately more specific than those so the layout and colour stick.
+.wp-core-ui .button.#{$prefix}-btn {
+    align-items: center;
+    display: inline-flex;
+    gap: 6px;
+}
+
+// The Pro upsell sits beside the primary action, so it stays borderless.
+.#{$prefix}-pro-btn {
+    align-items: center;
+    background: none;
+    border: 1px solid var(--wp-admin-theme-color, #2271b1);
+    border-radius: 3px;
+    box-shadow: none;
+    color: var(--wp-admin-theme-color, #2271b1);
+    display: inline-flex;
+    font-size: 13px;
+    gap: 4px;
+    line-height: 2.15384615;
+    min-height: 30px;
+    padding: 0 10px;
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+        background: none;
+        border-color: var(--wp-admin-theme-color-darker-10, #135e96);
+        color: var(--wp-admin-theme-color-darker-10, #135e96);
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 1px var(--wp-admin-theme-color-darker-10, #135e96);
+        outline: 2px solid transparent;
+    }
+}
+
+.wp-core-ui .button.button-primary.#{$prefix}-btn .dashicons,
+.wp-core-ui .button.button-primary.#{$prefix}-btn:hover .dashicons,
+.wp-core-ui .button.button-primary.#{$prefix}-btn:focus .dashicons {
+    color: #fff;
+    flex-shrink: 0;
+    font-family: dashicons;
+    font-size: 18px;
+    height: 18px;
+    line-height: 1;
+    margin: 0;
+    vertical-align: middle;
+    width: 18px;
+}
+
+.#{$prefix}-pro-btn .dashicons {
+    color: inherit;
+    flex-shrink: 0;
+    font-family: dashicons;
+    font-size: 18px;
+    height: 18px;
+    line-height: 1;
+    margin: 0;
+    vertical-align: middle;
+    width: 18px;
+}
+
 .#{$prefix}-btn_re_translation {
 
     margin-left: 10px !important;
