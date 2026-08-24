@@ -419,19 +419,30 @@ li.atfp-engine-row:last-child {
 
 /* The readiness script appends its own notice to the row and reveals the
    Configure link, so the badge follows that check rather than repeating the
-   browser detection here. The margin override counters its inline style. */
+   browser detection here. The margin override counters its inline style.
+
+   The notice is ordered last and given a full-width basis so it always drops
+   to a line of its own beneath the row. Keeping it inline only works while the
+   row is wide enough for that particular message, and the messages vary a lot
+   in length, so the actions would otherwise get pushed down on their own at
+   unpredictable widths. */
 .atfp-engine-row .atfp-chrome-configure-notice,
 .atfp-engine-row .atfp-edge-configure-notice {
-    margin-top: 0 !important;
-    order: 4;
+    margin-top: 2px !important;
+    order: 7;
+    flex: 1 0 100%;
+    line-height: 1.5;
 }
 
 .atfp-engine-row .atfp-dashboard-btn {
     order: 5;
+    flex-shrink: 0;
+    white-space: nowrap;
 }
 
 .atfp-engine-row .atfp-provider-switch-container {
     order: 6;
+    flex-shrink: 0;
 }
 
 .atfp-engine-status-setup {
