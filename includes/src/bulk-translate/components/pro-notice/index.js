@@ -165,30 +165,21 @@ const ProNotice = ({ prefix, reason, onDestory }) => {
                 </div>
 
                 <div className={`${prefix}-footer`}>
-                    <div className={`${prefix}-footer-actions`}>
-                        <a
-                            className={`${prefix}-pro-upgrade-button`}
-                            href={upgradeUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            {__('Upgrade to Pro', 'automatic-translations-for-polylang')}
-                            <span className={`${prefix}-pro-upgrade-icon`} aria-hidden="true">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M14 4h6v6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                    <path d="M20 4l-8.5 8.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                    <path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                            </span>
-                        </a>
-                        <button
-                            type="button"
-                            className={`${prefix}-footer-button button button-primary`}
-                            disabled={true}
-                        >
-                            {__('Start Translation', 'automatic-translations-for-polylang')} <span className={`${prefix}-next-arrow`}>&#8594;</span>
-                        </button>
-                    </div>
+                    <a
+                        className={`${prefix}-pro-upgrade-button`}
+                        href={upgradeUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        {__('Upgrade to Pro', 'automatic-translations-for-polylang')}
+                        <span className={`${prefix}-pro-upgrade-icon`} aria-hidden="true">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14 4h6v6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                <path d="M20 4l-8.5 8.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                <path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                        </span>
+                    </a>
                 </div>
 
             </div>

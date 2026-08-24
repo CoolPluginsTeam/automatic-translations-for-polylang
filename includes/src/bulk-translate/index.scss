@@ -1366,12 +1366,6 @@ $modal-width: clamp(320px, 1040px, 94vw);
                 cursor: not-allowed;
                 opacity: .6;
             }
-
-            .#{$prefix}-footer-actions {
-                align-items: center;
-                display: flex;
-                gap: 12px;
-            }
         }
 
         // Lives outside the modal body because the Pro screen renders it in the

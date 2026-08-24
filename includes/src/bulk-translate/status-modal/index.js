@@ -255,7 +255,7 @@ const StatusModal = ({ postIds, selectedLanguages, prefix, onDestory, onProRequi
     };
 
     return (
-        errorModal ? <ErrorModalBox message={errorModalData.errorHtml} onClose={closeErrorModal} Title={__('Bulk Translation Error', 'automatic-translations-for-polylang')} prefix={prefix} /> :
+        errorModal ? <ErrorModalBox message={errorModalData.errorHtml} onClose={closeErrorModal} Title={__('AI Translation Error', 'automatic-translations-for-polylang')} prefix={prefix} /> :
             <div id={`${prefix}-status-modal-container`} className="notranslate" translate="no">
                 <div className={`${prefix}-header`}>
                     <div className={`${prefix}-modal-header-inner`}>
@@ -264,7 +264,7 @@ const StatusModal = ({ postIds, selectedLanguages, prefix, onDestory, onProRequi
                         </span>
                         <h2 className={`${prefix}-bulk-status-heading ${bulkStatus}`}>
                             {sprintf(
-                                __("Bulk Translation %s", "automatic-translations-for-polylang"),
+                                __("AI Translation %s", "automatic-translations-for-polylang"),
                                 getBulkStatus(),
                             )}
                             {bulkStatus === "running" && (

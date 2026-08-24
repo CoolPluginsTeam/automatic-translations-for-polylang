@@ -69,11 +69,11 @@ if (!class_exists('ATFP_Bulk_Translation')):
                 esc_attr(
                     sprintf(
                         /* translators: %s: post title */
-                        __( 'Translate &#8220;%s&#8221;', 'automatic-translations-for-polylang' ),
+                        __( 'AI Translate &#8220;%s&#8221;', 'automatic-translations-for-polylang' ),
                         $post->post_title
                     )
                 ),
-                esc_html__( 'Translate', 'automatic-translations-for-polylang' )
+                esc_html__( 'AI Translate', 'automatic-translations-for-polylang' )
             );
 
             $new_actions = array();

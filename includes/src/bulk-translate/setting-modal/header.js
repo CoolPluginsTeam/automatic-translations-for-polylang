@@ -15,7 +15,7 @@ const SettingModalHeader = ({ prefix, onClose }) => {
     return (
         <div className={`${prefix}-header`}>
             <div className={`${prefix}-modal-header-inner`}>
-                <h2>{__('Bulk Translation Setup', 'automatic-translations-for-polylang')}</h2>
+                <h2>{__('AI Translation Setup', 'automatic-translations-for-polylang')}</h2>
                 <p className={`${prefix}-modal-desc`}>
                     {__('Configure your translation settings and start translating.', 'automatic-translations-for-polylang')}
                 </p>
