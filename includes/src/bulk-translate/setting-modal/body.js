@@ -1,4 +1,3 @@
-import { __ } from "@wordpress/i18n";
 import SettingModalLanguages from "./languages";
 import SettingModalEngines from "./engines";
 
@@ -48,19 +47,6 @@ const SettingModalBody = (props) => {
                 />
             </div>
 
-            <div className={`${prefix}-setup-info`} role="note">
-                <span className={`${prefix}-setup-info-icon`} aria-hidden="true">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.8" />
-                        <path d="M12 11v6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-                        <circle cx="12" cy="8" r="1.1" fill="currentColor" />
-                    </svg>
-                </span>
-                <div className={`${prefix}-setup-info-text`}>
-                    <strong>{__('Not sure which engine to choose?', 'automatic-translations-for-polylang')}</strong>
-                    <p>{__('You can select a different engine the next time you translate.', 'automatic-translations-for-polylang')}</p>
-                </div>
-            </div>
         </div>
     );
 }

@@ -425,41 +425,6 @@ $modal-width: clamp(320px, 1040px, 94vw);
                         }
                     }
 
-                    .#{$prefix}-setup-info {
-                        align-items: flex-start;
-                        background: #f0f6ff;
-                        border: 1px solid #cfe0f5;
-                        border-radius: 8px;
-                        display: flex;
-                        gap: 10px;
-                        margin: 0 24px 20px;
-                        padding: 12px 14px;
-
-                        .#{$prefix}-setup-info-icon {
-                            color: var(--wp-admin-theme-color, #2271b1);
-                            display: inline-flex;
-                            flex-shrink: 0;
-                            margin-top: 2px;
-                        }
-
-                        .#{$prefix}-setup-info-text {
-                            strong {
-                                color: #1d2327;
-                                display: block;
-                                font-size: 13px;
-                                font-weight: 600;
-                            }
-
-                            p {
-                                color: #888;
-                                font-size: 12px;
-                                font-weight: 500;
-                                margin: 2px 0 0;
-                                padding: 0;
-                            }
-                        }
-                    }
-
                     .#{$prefix}-bulk-translate-empty {
                         padding: 20px;
                         background: #fff1f2;
