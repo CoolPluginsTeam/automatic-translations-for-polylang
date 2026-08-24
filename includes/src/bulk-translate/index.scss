@@ -374,6 +374,19 @@ $modal-width: clamp(320px, 1040px, 94vw);
                         }
                     }
 
+                    // Sits under the subtitle as a badge, so it reads as a claim
+                    // rather than another paragraph competing with the heading.
+                    .#{$prefix}-pro-highlight {
+                        border-radius: 999px;
+                        color: #4e2bcb;
+                        display: inline-block;
+                        font-size: 13px;
+                        font-weight: 600;
+                        line-height: 1.4;
+                        margin: 12px 0 0;
+                        padding: 6px 16px;
+                    }
+
                     .#{$prefix}-pro-crown {
                         display: inline-flex;
                     }

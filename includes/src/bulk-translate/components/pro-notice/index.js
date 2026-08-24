@@ -24,6 +24,7 @@ const ProNotice = ({ prefix, reason, onDestory }) => {
         'multiple': {
             /* translators: %s: post type label, for example Posts or Pages. */
             text: sprintf(__('Translating more than one %s at a time is a <accent>Pro</accent> feature.', 'automatic-translations-for-polylang'), postLabel),
+            highlight: __('Translate 10× faster with Bulk Translation — save hours of manual work and effort.', 'automatic-translations-for-polylang'),
             image: 'bulk-translation-icon-badge.svg',
             utm: 'bulk_multiple_posts',
             benefits: [
@@ -138,6 +139,9 @@ const ProNotice = ({ prefix, reason, onDestory }) => {
                                 )}
                             </h3>
                             <p>{createInterpolateElement(proMessage.text, { accent })}</p>
+                            {proMessage.highlight && (
+                                <p className={`${prefix}-pro-highlight`}>{proMessage.highlight}</p>
+                            )}
                         </div>
 
                         <div className={`${prefix}-pro-panel-body`}>
