@@ -175,9 +175,8 @@ const App = ({ onDestory, prefix, postIds }) => {
         } else if ('setup' === screen) {
             cls.push(`${prefix}-setting-modal-active`);
             cls.push(`${prefix}-setup-modal-active`);
-        } else if ('pro' === screen) {
+        } else if ('pro' === screen || 'error' === screen) {
             cls.push(`${prefix}-setting-modal-active`);
-            cls.push(`${prefix}-pro-modal-active`);
         }
 
         return cls.join(' ');
@@ -228,30 +227,40 @@ const App = ({ onDestory, prefix, postIds }) => {
      * @return {JSX.Element} Empty selection screen.
      */
     const ErrorMessageScreen = () => (
-        <div className={`${prefix}-language-container`}>
-            <div className={`${prefix}-header`}>
-                <div className={`${prefix}-modal-header-inner`}>
-                    <div className={`${prefix}-modal-header-left`}>
-                        <img
-                            src={`${atfp_bulk_translate_object.atfp_url}assets/images/magic-wand.svg`}
-                            className={`${prefix}-modal-header-icon`}
-                            alt=""
-                            aria-hidden="true"
-                        />
-                        <h3>{__('AI Translation', 'automatic-translations-for-polylang')}</h3>
+        <div id={`${prefix}-setting-modal-container`}>
+            <div className={`${prefix}-setting-modal-content`}>
+                <div className={`${prefix}-header`}>
+                    <div className={`${prefix}-modal-header-inner`}>
+                        <h2>{__('AI Translation', 'automatic-translations-for-polylang')}</h2>
+                        <p className={`${prefix}-modal-desc`}>
+                            {__('Nothing is ready to translate yet.', 'automatic-translations-for-polylang')}
+                        </p>
                     </div>
+                    <button
+                        type="button"
+                        className={`${prefix}-modal-close`}
+                        onClick={destroyApp}
+                        title={__('Close', 'automatic-translations-for-polylang')}
+                        aria-label={__('Close', 'automatic-translations-for-polylang')}
+                    >
+                        &times;
+                    </button>
                 </div>
-                <button
-                    type="button"
-                    className={`${prefix}-modal-close`}
-                    onClick={destroyApp}
-                    title={__('Close', 'automatic-translations-for-polylang')}
-                    aria-label={__('Close', 'automatic-translations-for-polylang')}
-                >
-                    &times;
-                </button>
+
+                <div className={`${prefix}-setting-modal-body`}>
+                    <div className={`${prefix}-error-message`}>{errorMessage}</div>
+                </div>
+
+                <div className={`${prefix}-footer`}>
+                    <button
+                        type="button"
+                        className={`${prefix}-footer-button button button-primary`}
+                        onClick={destroyApp}
+                    >
+                        {__('Close', 'automatic-translations-for-polylang')}
+                    </button>
+                </div>
             </div>
-            <div className={`${prefix}-error-message`}>{errorMessage}</div>
         </div>
     );
 

@@ -1,24 +1,21 @@
 <svg width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#F0ECFF"/>
-      <stop offset="100%" stop-color="#FAF9FF"/>
-    </linearGradient>
-    <linearGradient id="purple" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#6D56F2"/>
-      <stop offset="100%" stop-color="#4E2BCB"/>
-    </linearGradient>
-    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
-      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#4D34C9" flood-opacity="0.18"/>
-    </filter>
-  </defs>
-
-  <circle cx="48" cy="48" r="40" fill="url(#bg)"/>
-  <g filter="url(#shadow)">
-    <rect x="28" y="26" width="31" height="31" rx="6" fill="url(#purple)"/>
-    <text x="43.5" y="48" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#fff">A</text>
-
-    <rect x="45" y="43" width="25" height="25" rx="6" fill="#4F2EC6"/>
-    <text x="57.5" y="61" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#fff">文</text>
-  </g>
+<path d="M48 88C70.0914 88 88 70.0914 88 48C88 25.9086 70.0914 8 48 8C25.9086 8 8 25.9086 8 48C8 70.0914 25.9086 88 48 88Z" fill="url(#paint0_linear_436_64)"/>
+<path d="M53 26H34C30.6863 26 28 28.6863 28 32V51C28 54.3137 30.6863 57 34 57H53C56.3137 57 59 54.3137 59 51V32C59 28.6863 56.3137 26 53 26Z" fill="url(#paint1_linear_436_64)"/>
+<path d="M51.1387 46H47.9941L46.7441 42.748H41.0215L39.8398 46H36.7734L42.3496 31.6836H45.4062L51.1387 46ZM45.8164 40.3359L43.8438 35.0234L41.9102 40.3359H45.8164Z" fill="white"/>
+<path d="M64 43H51C47.6863 43 45 45.6863 45 49V62C45 65.3137 47.6863 68 51 68H64C67.3137 68 70 65.3137 70 62V49C70 45.6863 67.3137 43 64 43Z" fill="url(#paint2_linear_436_64)"/>
+<path d="M60.572 49.968L62.62 50.576C61.948 52.496 61.0787 54.16 60.012 55.568C58.9453 56.976 57.676 58.1653 56.204 59.136C54.7427 60.096 53.052 60.88 51.132 61.488C51.068 61.3173 50.9613 61.1147 50.812 60.88C50.6627 60.6453 50.508 60.4107 50.348 60.176C50.1987 59.952 50.0547 59.7653 49.916 59.616C51.7613 59.1253 53.3773 58.4587 54.764 57.616C56.1507 56.7733 57.324 55.728 58.284 54.48C59.244 53.2213 60.0067 51.7173 60.572 49.968ZM54.38 50.096C54.924 51.6853 55.676 53.1093 56.636 54.368C57.596 55.6267 58.78 56.6933 60.188 57.568C61.6067 58.4427 63.26 59.0933 65.148 59.52C64.9987 59.6693 64.8333 59.8613 64.652 60.096C64.4813 60.3307 64.316 60.5653 64.156 60.8C63.996 61.0453 63.868 61.2587 63.772 61.44C61.7773 60.928 60.06 60.1813 58.62 59.2C57.18 58.208 55.9587 57.0027 54.956 55.584C53.964 54.1653 53.132 52.528 52.46 50.672L54.38 50.096ZM50.204 48.944H64.86V50.816H50.204V48.944ZM56.508 46.4H58.476V50.08H56.508V46.4Z" fill="white"/>
+<defs>
+<linearGradient id="paint0_linear_436_64" x1="8" y1="8" x2="88" y2="88" gradientUnits="userSpaceOnUse">
+<stop stop-color="#ECF0FF"/>
+<stop offset="1" stop-color="#FAF9FF"/>
+</linearGradient>
+<linearGradient id="paint1_linear_436_64" x1="28" y1="26" x2="102" y2="117" gradientUnits="userSpaceOnUse">
+<stop stop-color="#3858E9"/>
+<stop offset="1" stop-color="#283A8E"/>
+</linearGradient>
+<linearGradient id="paint2_linear_436_64" x1="41" y1="38.5" x2="106.5" y2="111.5" gradientUnits="userSpaceOnUse">
+<stop stop-color="#3858E9"/>
+<stop offset="0.853585" stop-color="#1F3183"/>
+</linearGradient>
+</defs>
 </svg>

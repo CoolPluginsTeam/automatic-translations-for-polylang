@@ -188,15 +188,6 @@ $modal-width: clamp(320px, 1040px, 94vw);
             width: $modal-width;
         }
 
-        // The Pro upsell shares the setup width so the modal never resizes.
-        &.#{$prefix}-pro-modal-active {
-            width: $modal-width;
-        }
-
-        & .#{$prefix}-language-container {
-            max-width: 500px;
-        }
-
         /* Setting Modal CSS Start */
         ##{$prefix}-setting-modal-container {
             height: 100%;
@@ -314,10 +305,10 @@ $modal-width: clamp(320px, 1040px, 94vw);
                     /* Pro upsell panel. Purple accent matches the badge artwork. */
                     .#{$prefix}-pro-panel {
                         background:
-                            radial-gradient(circle at 88% 16%, rgba(109, 86, 242, .08), transparent 42%),
-                            radial-gradient(circle at 8% 88%, rgba(109, 86, 242, .06), transparent 38%),
-                            linear-gradient(135deg, #f5f2ff 0%, #fbfaff 100%);
-                        border: 1px solid #e4ddfb;
+                            radial-gradient(circle at 88% 16%, rgba(56, 88, 233, .08), transparent 42%),
+                            radial-gradient(circle at 8% 88%, rgba(56, 88, 233, .06), transparent 38%),
+                            linear-gradient(135deg, #f2f5fe 0%, #fbfcff 100%);
+                        border: 1px solid #dce3fb;
                         border-radius: 12px;
                         box-sizing: border-box;
                         margin: 14px 24px;
@@ -347,30 +338,9 @@ $modal-width: clamp(320px, 1040px, 94vw);
                         // Centre the art and benefits as one group so the panel
                         // does not leave a wide empty gutter on the right.
                         &-body {
-                            align-items: center;
                             display: flex;
-                            gap: 40px;
                             justify-content: center;
-                            margin: 14px auto 0;
-                            max-width: 900px;
-                        }
-
-                        &-art {
-                            border-right: 1px solid #e4ddfb;
-                            display: flex;
-                            flex: 0 0 auto;
-                            justify-content: center;
-                            padding-right: 40px;
-
-                            // Bounded box keeps the panel from outgrowing the
-                            // setup screen whatever artwork a reason supplies.
-                            img {
-                                height: auto;
-                                max-height: 150px;
-                                max-width: 100%;
-                                object-fit: contain;
-                                width: 200px;
-                            }
+                            margin: 16px 0 0;
                         }
                     }
 
@@ -378,7 +348,7 @@ $modal-width: clamp(320px, 1040px, 94vw);
                     // rather than another paragraph competing with the heading.
                     .#{$prefix}-pro-highlight {
                         border-radius: 999px;
-                        color: #4e2bcb;
+                        color: #3858e9;
                         display: inline-block;
                         font-size: 13px;
                         font-weight: 600;
@@ -392,7 +362,7 @@ $modal-width: clamp(320px, 1040px, 94vw);
                     }
 
                     .#{$prefix}-pro-accent {
-                        color: #4e2bcb;
+                        color: #3858e9;
                         font-weight: 700;
                     }
 
@@ -414,7 +384,7 @@ $modal-width: clamp(320px, 1040px, 94vw);
                     }
 
                     .#{$prefix}-pro-benefit-icon {
-                        color: #6d56f2;
+                        color: #3858e9;
                         display: inline-flex;
                         flex-shrink: 0;
                         margin-top: 1px;
@@ -1111,13 +1081,6 @@ $modal-width: clamp(320px, 1040px, 94vw);
                     gap: 1px;
                     padding-block: 10px;
 
-                    .#{$prefix}-modal-header-icon {
-                        filter: brightness(0) invert(0);
-                        height: 20px;
-                        margin-right: 5px;
-                        width: 20px;
-                    }
-
                     .#{$prefix}-pro-header-badge {
                         flex-shrink: 0;
                         height: 56px;
@@ -1423,10 +1386,10 @@ $modal-width: clamp(320px, 1040px, 94vw);
         // footer, next to the disabled Start Translation button.
         .#{$prefix}-pro-upgrade-button {
             align-items: center;
-            background: linear-gradient(135deg, #6d56f2 0%, #4e2bcb 100%);
+            background: linear-gradient(135deg, #3858e9 0%, #2d46ba 100%);
             border: none;
             border-radius: 8px;
-            box-shadow: 0 6px 14px rgba(77, 52, 201, .25);
+            box-shadow: 0 6px 14px rgba(56, 88, 233, .25);
             box-sizing: border-box;
             color: #fff;
             display: inline-flex;
@@ -1451,7 +1414,7 @@ $modal-width: clamp(320px, 1040px, 94vw);
             }
 
             &:focus {
-                box-shadow: 0 0 0 2px #fff, 0 0 0 4px #6d56f2;
+                box-shadow: 0 0 0 2px #fff, 0 0 0 4px #3858e9;
                 outline: none;
             }
 
@@ -1774,16 +1737,6 @@ $modal-width: clamp(320px, 1040px, 94vw);
                         .#{$prefix}-pro-panel {
                             margin: 16px;
                             padding: 20px;
-
-                            &-body {
-                                display: block;
-                            }
-
-                            &-art {
-                                border-right: none;
-                                margin-bottom: 20px;
-                                padding-right: 0;
-                            }
                         }
                     }
                 }

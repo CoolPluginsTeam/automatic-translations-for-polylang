@@ -247,8 +247,8 @@ Polylang Addon Dashboard - Admin Panel Styles
 }
 
 .atfp-dashboard-video {
-    flex: 0 0 56%;
-    max-width: 56%;
+    flex: 0 0 37%;
+    max-width: 37%;
 }
 
 .atfp-dashboard-video-frame {
@@ -256,7 +256,9 @@ Polylang Addon Dashboard - Admin Panel Styles
     aspect-ratio: 4 / 3;
     background-color: var(--background-color);
     background-position: center;
-    background-size: cover;
+    /* The poster ships with its own white margin, so zoom past `cover` to
+       crop it rather than letting it read as a border inside the frame. */
+    background-size: 125%;
     border: 1px solid var(--border-color);
     border-radius: 8px;
     display: flex;
@@ -264,6 +266,14 @@ Polylang Addon Dashboard - Admin Panel Styles
     justify-content: center;
     overflow: hidden;
     position: relative;
+}
+
+/* Soften the poster so the play control stays legible over it. */
+.atfp-dashboard-video-frame::before {
+    background: rgba(255, 255, 255, .38);
+    content: "";
+    inset: 0;
+    position: absolute;
 }
 
 .atfp-dashboard-video-play {
@@ -277,9 +287,11 @@ Polylang Addon Dashboard - Admin Panel Styles
     display: flex;
     height: 64px;
     justify-content: center;
-    padding: 0 0 0 5px;
+    padding: 0;
+    position: relative;
     transition: transform .2s ease, background .2s ease;
     width: 64px;
+    z-index: 1;
 }
 
 .atfp-dashboard-video-play:hover,
@@ -296,11 +308,13 @@ Polylang Addon Dashboard - Admin Panel Styles
     position: absolute;
     top: 0;
     width: 100%;
+    z-index: 2;
 }
 
 .atfp-dashboard-steps {
     flex: 1;
     min-width: 0;
+    padding: 8px 15px;
 }
 
 .atfp-dashboard-steps h2 {
@@ -415,6 +429,25 @@ li.atfp-engine-row:last-child {
 .atfp-engine-docs:focus {
     box-shadow: none;
     outline: none;
+}
+
+/* The Configure link is rendered with .primary by the engine row, but there it
+   is a secondary action. These selectors carry one class more than
+   .atfp-dashboard-btn.primary, so the neutral look wins. */
+.atfp-dashboard-btn.primary.atfp-chrome-configure-button,
+.atfp-dashboard-btn.primary.atfp-edge-configure-button {
+    background: none;
+    border-color: #c3c4c7;
+    color: #000;
+}
+
+.atfp-dashboard-btn.primary.atfp-chrome-configure-button:hover,
+.atfp-dashboard-btn.primary.atfp-edge-configure-button:hover,
+.atfp-dashboard-btn.primary.atfp-chrome-configure-button:focus,
+.atfp-dashboard-btn.primary.atfp-edge-configure-button:focus {
+    background: none;
+    border-color: #8c8f94;
+    color: #000;
 }
 
 /* The readiness script appends its own notice to the row and reveals the

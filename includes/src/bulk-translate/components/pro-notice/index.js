@@ -22,10 +22,7 @@ const ProNotice = ({ prefix, reason, onDestory }) => {
 
     const proMessages = {
         'multiple': {
-            /* translators: %s: post type label, for example Posts or Pages. */
-            text: sprintf(__('Translating more than one %s at a time is a <accent>Pro</accent> feature.', 'automatic-translations-for-polylang'), postLabel),
             highlight: __('Translate 10× faster with Bulk Translation — save hours of manual work and effort.', 'automatic-translations-for-polylang'),
-            image: 'bulk-translation-icon-badge.svg',
             utm: 'bulk_multiple_posts',
             benefits: [
                 {
@@ -45,7 +42,6 @@ const ProNotice = ({ prefix, reason, onDestory }) => {
         },
         'unsupported-editor': {
             text: __('Classic editor translation is a <accent>Pro</accent> feature.', 'automatic-translations-for-polylang'),
-            image: 'bulk-translation-icon-badge.svg',
             utm: 'bulk_classic_editor',
             benefits: [
                 {
@@ -64,7 +60,6 @@ const ProNotice = ({ prefix, reason, onDestory }) => {
         },
         'retranslate': {
             text: __('Re-translating existing content is a <accent>Pro</accent> feature.', 'automatic-translations-for-polylang'),
-            image: 're-translaton-notice-badge.svg',
             utm: 'bulk_retranslate',
             benefits: [
                 {
@@ -138,16 +133,15 @@ const ProNotice = ({ prefix, reason, onDestory }) => {
                                     { accent }
                                 )}
                             </h3>
-                            <p>{createInterpolateElement(proMessage.text, { accent })}</p>
+                            {proMessage.text && (
+                                <p>{createInterpolateElement(proMessage.text, { accent })}</p>
+                            )}
                             {proMessage.highlight && (
                                 <p className={`${prefix}-pro-highlight`}>{proMessage.highlight}</p>
                             )}
                         </div>
 
                         <div className={`${prefix}-pro-panel-body`}>
-                            <div className={`${prefix}-pro-panel-art`} aria-hidden="true">
-                                <img src={`${imgFolder}${proMessage.image}`} alt="" />
-                            </div>
                             <ul className={`${prefix}-pro-benefits`}>
                                 {proMessage.benefits.map((benefit) => (
                                     <li key={benefit.title}>
