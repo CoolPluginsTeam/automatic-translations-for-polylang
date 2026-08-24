@@ -247,26 +247,26 @@ $modal-width: clamp(320px, 1040px, 94vw);
                         border: 1px solid #e4ddfb;
                         border-radius: 12px;
                         box-sizing: border-box;
-                        margin: 24px;
-                        padding: 26px 32px 30px;
+                        margin: 14px 24px;
+                        padding: 14px 32px 18px;
 
                         &-head {
                             text-align: center;
 
                             h3 {
                                 color: #1f2937;
-                                font-size: 26px;
+                                font-size: 21px;
                                 font-weight: 700;
-                                line-height: 1.3;
-                                margin: 4px 0 0;
+                                line-height: 1.25;
+                                margin: 0;
                                 padding: 0;
                             }
 
                             p {
                                 color: #4b5563;
-                                font-size: 16px;
-                                line-height: 1.5;
-                                margin: 6px 0 0;
+                                font-size: 14px;
+                                line-height: 1.45;
+                                margin: 4px 0 0;
                                 padding: 0;
                             }
                         }
@@ -278,7 +278,7 @@ $modal-width: clamp(320px, 1040px, 94vw);
                             display: flex;
                             gap: 40px;
                             justify-content: center;
-                            margin: 24px auto 0;
+                            margin: 14px auto 0;
                             max-width: 900px;
                         }
 
@@ -289,10 +289,14 @@ $modal-width: clamp(320px, 1040px, 94vw);
                             justify-content: center;
                             padding-right: 40px;
 
+                            // Bounded box keeps the panel from outgrowing the
+                            // setup screen whatever artwork a reason supplies.
                             img {
                                 height: auto;
+                                max-height: 150px;
                                 max-width: 100%;
-                                width: 280px;
+                                object-fit: contain;
+                                width: 200px;
                             }
                         }
                     }
@@ -309,7 +313,7 @@ $modal-width: clamp(320px, 1040px, 94vw);
                     .#{$prefix}-pro-benefits {
                         display: flex;
                         flex-direction: column;
-                        gap: 18px;
+                        gap: 12px;
                         list-style: none;
                         margin: 0;
                         min-width: 0;
@@ -1353,44 +1357,20 @@ $modal-width: clamp(320px, 1040px, 94vw);
             background: #f8fafc;
             border: none;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end;
             margin-top: 0;
             padding: 16px 22.4px;
             border-top: 2px solid #00000012;
 
-            // Direct children only: the Pro screen nests its primary buttons in
-            // a .footer-actions group, which must not pick up the Back styling.
-            &>.#{$prefix}-footer-button:nth-of-type(1) {
-                background: transparent;
-                border: none;
-                box-shadow: none;
-                color: var(--wp-admin-theme-color, #2271b1);
-                font-size: 14px;
-                font-weight: 600;
-
-                &:hover {
-                    background: transparent;
-                    border-color: transparent;
-                    color: var(--wp-admin-theme-color-darker-20, #1c5788);
-                }
-            }
-
-            &>.#{$prefix}-footer-button:nth-of-type(2) {
-                &:disabled {
-                    cursor: not-allowed;
-                    opacity: .6;
-                }
+            .#{$prefix}-footer-button:disabled {
+                cursor: not-allowed;
+                opacity: .6;
             }
 
             .#{$prefix}-footer-actions {
                 align-items: center;
                 display: flex;
                 gap: 12px;
-
-                .#{$prefix}-footer-button:disabled {
-                    cursor: not-allowed;
-                    opacity: .6;
-                }
             }
         }
 

@@ -8,18 +8,16 @@ import { __ } from "@wordpress/i18n";
  *
  * @since 1.1.0
  *
- * @param {Object}   props                   Component props.
- * @param {string}   props.prefix            CSS class prefix.
- * @param {Function} props.onCancel          Callback invoked when the cancel button is clicked.
- * @param {?string}  props.selectedProvider  Currently selected provider key.
- * @param {string[]} props.selectedLanguages Slugs of the currently selected languages.
+ * @param {Object}   props                    Component props.
+ * @param {string}   props.prefix             CSS class prefix.
+ * @param {?string}  props.selectedProvider   Currently selected provider key.
+ * @param {string[]} props.selectedLanguages  Slugs of the currently selected languages.
  * @param {Function} props.onStartTranslation Callback invoked to start the translation.
  *
  * @return {JSX.Element} Setup screen footer.
  */
 const SettingModalFooter = ({
     prefix,
-    onCancel,
     selectedProvider,
     selectedLanguages = [],
     onStartTranslation,
@@ -35,13 +33,6 @@ const SettingModalFooter = ({
 
     return (
         <div className={`${prefix}-footer`}>
-            <button
-                type="button"
-                className={`${prefix}-footer-button button`}
-                onClick={onCancel}
-            >
-                &#8592; {__('Back', 'automatic-translations-for-polylang')}
-            </button>
             <button
                 type="button"
                 className={`${prefix}-footer-button button button-primary`}

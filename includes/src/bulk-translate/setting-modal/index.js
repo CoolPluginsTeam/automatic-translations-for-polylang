@@ -134,7 +134,6 @@ const SettingModal = (props) => {
                 />
                 <SettingModalFooter
                     prefix={prefix}
-                    onCancel={props.onDestory}
                     selectedProvider={activeProvider}
                     selectedLanguages={props.selectedLanguages}
                     onStartTranslation={startTranslationHandler}

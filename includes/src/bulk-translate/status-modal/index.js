@@ -260,7 +260,7 @@ const StatusModal = ({ postIds, selectedLanguages, prefix, onDestory, onProRequi
                 <div className={`${prefix}-header`}>
                     <div className={`${prefix}-modal-header-inner`}>
                         <span className={`${prefix}-step-label`}>
-                            {__("STEP 3 OF 3", "automatic-translations-for-polylang")}
+                            {__("STEP 2 OF 2", "automatic-translations-for-polylang")}
                         </span>
                         <h2 className={`${prefix}-bulk-status-heading ${bulkStatus}`}>
                             {sprintf(

@@ -122,7 +122,7 @@ const ProNotice = ({ prefix, reason, onDestory }) => {
                     <div className={`${prefix}-pro-panel`}>
                         <div className={`${prefix}-pro-panel-head`}>
                             <span className={`${prefix}-pro-crown`} aria-hidden="true">
-                                <svg width="86" height="40" viewBox="0 0 86 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg width="74" height="34" viewBox="0 0 86 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M29 31L25 10l10.5 7.5L43 6l7.5 11.5L61 10l-4 21H29z" fill="#f5b301" />
                                     <path d="M29 31h28v4H29z" fill="#e29c02" />
                                     <path d="M13 8l1.5 3.5L18 13l-3.5 1.5L13 18l-1.5-3.5L8 13l3.5-1.5L13 8z" fill="#fbd15b" />
@@ -165,13 +165,6 @@ const ProNotice = ({ prefix, reason, onDestory }) => {
                 </div>
 
                 <div className={`${prefix}-footer`}>
-                    <button
-                        type="button"
-                        className={`${prefix}-footer-button button`}
-                        onClick={onDestory}
-                    >
-                        &#8592; {__('Back', 'automatic-translations-for-polylang')}
-                    </button>
                     <div className={`${prefix}-footer-actions`}>
                         <a
                             className={`${prefix}-pro-upgrade-button`}
