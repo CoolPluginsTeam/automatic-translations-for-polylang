@@ -50,6 +50,15 @@ Polylang Addon Dashboard - Admin Panel Styles
     line-height: 1;
 }
 
+/* Icons ship at whatever size they were drawn at, so pin them to the button
+   rather than relying on each SVG's intrinsic width. */
+.atfp-dashboard-btn img{
+    flex-shrink: 0;
+    height: 16px;
+    object-fit: contain;
+    width: 16px;
+}
+
 .atfp-dashboard-btn:hover{
     background: var(--primary-light-color);
     color: var(--primary-color);
@@ -210,88 +219,250 @@ Polylang Addon Dashboard - Admin Panel Styles
 /* ================================================
    Welcome Section
 ================================================ */
-.atfp-dashboard-get-started{
-    padding: 20px;
-    background: #fff;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow);
+.atfp-dashboard-welcome {
+    margin-bottom: 20px;
 }
 
-.atfp-dashboard-get-started-grid{
-    display: flex;
-    justify-content: center;
-    background: white;
-    border-radius: 14px;
-    margin-top: 20px;
-    gap: 20px;
-}
-
-.atfp-dashboard-get-started-grid .atfp-dashboard-get-started-grid-content{
-    width: 50%;
+.atfp-dashboard-welcome h1 {
+    color: var(--text-color);
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
     padding: 0;
 }
 
-.atfp-dashboard-get-started-grid-content h2{
-    font-size: 16px;
-    font-weight: bold;
-    margin: 10px 0;
-    line-height: 25px;
-    margin-top: 0;
-}
-
-.atfp-dashboard-get-started-grid-content p{
-    font-size: 0.875rem;
-    color: var(--text-color-light);
-    margin: 10px 0 20px;
-}
-
-.atfp-dashboard-get-started-grid div ul{
-    list-style: disc;
-    padding-block: 0;
-    margin-block: 0;
-    padding-right: 20px;
-}
-
-.atfp-dashboard-get-started-grid div:nth-child(2){
-    display: flex;
-    border: 1px solid var(--border-color);
-    padding: 15px;
-    border-radius: 8px;
-}
-
-.atfp-dashboard-get-started-grid iframe{
-    max-width: 100%;
-    width: 100%;
-    aspect-ratio: 2/1;
-}
-
-.atfp-dashboard-get-started-grid:nth-child(3){
-    margin-block: 24px;
-}
-
-.atfp-dashboard-translation-providers{
-    margin-top: 24px;
-}
-a.atfp-dashboard-docs {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    margin-top: 30px;
+.atfp-dashboard-welcome p {
+    color: var(--primary-color);
     font-size: 14px;
+    margin: 8px 0 0;
+}
+
+/* ================================================
+   Get Started card
+================================================ */
+.atfp-dashboard-start-grid {
+    align-items: stretch;
+    display: flex;
+    gap: 24px;
+}
+
+.atfp-dashboard-video {
+    flex: 0 0 56%;
+    max-width: 56%;
+}
+
+.atfp-dashboard-video-frame {
+    align-items: center;
+    aspect-ratio: 4 / 3;
+    background-color: var(--background-color);
+    background-position: center;
+    background-size: cover;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.atfp-dashboard-video-play {
+    align-items: center;
+    background: var(--primary-color);
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(48, 178, 48, .35);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    height: 64px;
+    justify-content: center;
+    padding: 0 0 0 5px;
+    transition: transform .2s ease, background .2s ease;
+    width: 64px;
+}
+
+.atfp-dashboard-video-play:hover,
+.atfp-dashboard-video-play:focus {
+    background: var(--secondary-color);
+    transform: scale(1.06);
+}
+
+/* Injected in place of the poster once the viewer opts in. */
+.atfp-dashboard-video-frame iframe {
+    border: 0;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+.atfp-dashboard-steps {
+    flex: 1;
+    min-width: 0;
+}
+
+.atfp-dashboard-steps h2 {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0 0 14px;
+    padding: 0;
+}
+
+ol.atfp-dashboard-step-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+ol.atfp-dashboard-step-list li {
+    align-items: center;
+    display: flex;
+    gap: 10px;
+    margin: 0 0 10px;
+}
+
+.atfp-dashboard-step-num {
+    align-items: center;
+    background: var(--primary-light-color);
+    border-radius: 50%;
+    color: var(--secondary-color);
+    display: inline-flex;
+    flex-shrink: 0;
+    font-size: 12px;
+    font-weight: 700;
+    height: 24px;
+    justify-content: center;
+    width: 24px;
+}
+
+.atfp-dashboard-step-text {
+    color: var(--primary-color);
+    font-size: 14px;
+}
+
+.atfp-dashboard-step-text strong {
     color: var(--text-color);
-    font-weight: 500;
+    font-weight: 600;
+}
+
+.atfp-dashboard-start .atfp-dashboard-btns-row {
+    margin-top: 18px;
+}
+
+/* ================================================
+   Translation Engines
+================================================ */
+.atfp-dashboard-engines {
+    margin-top: 20px;
+}
+
+ul.atfp-engine-list {
+    list-style: none;
+    margin: 10px 0 0;
+    padding: 0;
+}
+
+li.atfp-engine-row {
+    align-items: center;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 0 0 10px;
+    padding: 12px 16px;
+}
+
+li.atfp-engine-row:last-child {
+    margin-bottom: 0;
+}
+
+.atfp-engine-logo {
+    flex-shrink: 0;
+    height: 26px;
+    object-fit: contain;
+    width: 26px;
+}
+
+.atfp-engine-name {
+    color: var(--text-color);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.atfp-engine-status {
+    background: var(--primary-light-color);
+    border-radius: 12px;
+    color: var(--secondary-color);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 2px 10px;
+}
+
+.atfp-engine-docs {
+    color: var(--text-color-light);
+    font-size: 13px;
+    margin-left: auto;
     text-decoration: underline;
 }
 
-a.atfp-dashboard-docs:hover {
+.atfp-engine-docs:hover {
     color: var(--primary-color);
 }
 
-a.atfp-dashboard-docs:focus{
-    border: none;
+.atfp-engine-docs:focus {
     box-shadow: none;
     outline: none;
+}
+
+/* The readiness script appends its own notice to the row and reveals the
+   Configure link, so the badge follows that check rather than repeating the
+   browser detection here. The margin override counters its inline style. */
+.atfp-engine-row .atfp-chrome-configure-notice,
+.atfp-engine-row .atfp-edge-configure-notice {
+    margin-top: 0 !important;
+    order: 4;
+}
+
+.atfp-engine-row .atfp-dashboard-btn {
+    order: 5;
+}
+
+.atfp-engine-row .atfp-provider-switch-container {
+    order: 6;
+}
+
+.atfp-engine-status-setup {
+    display: none;
+}
+
+.atfp-engine-row:has(.atfp-chrome-configure-notice:not([style*="display: none"])) .atfp-engine-status,
+.atfp-engine-row:has(.atfp-edge-configure-notice:not([style*="display: none"])) .atfp-engine-status {
+    background: #fff6ed;
+    color: #b45309;
+}
+
+.atfp-engine-row:has(.atfp-chrome-configure-notice:not([style*="display: none"])) .atfp-engine-status-ready,
+.atfp-engine-row:has(.atfp-edge-configure-notice:not([style*="display: none"])) .atfp-engine-status-ready {
+    display: none;
+}
+
+.atfp-engine-row:has(.atfp-chrome-configure-notice:not([style*="display: none"])) .atfp-engine-status-setup,
+.atfp-engine-row:has(.atfp-edge-configure-notice:not([style*="display: none"])) .atfp-engine-status-setup {
+    display: inline;
+}
+
+@media (max-width: 900px) {
+    .atfp-dashboard-start-grid {
+        display: block;
+    }
+
+    .atfp-dashboard-video {
+        margin-bottom: 20px;
+        max-width: 100%;
+    }
 }
 
 /* Provider Toggle Switch */
@@ -354,111 +525,10 @@ a.atfp-dashboard-docs:focus{
     box-shadow: 0 0 1px var(--primary-color);
 }
 
-/* Pro Tag on Hover */
-.atfp-pro-provider .atfp-provider-switch{
-    position: relative;
-}
-
-.atfp-pro-provider .atfp-provider-switch:hover::after {
-    content: "Pro";
-    position: absolute;
-    top: -30px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--primary-color);
-    color: #fff;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 11px;
-    font-weight: 600;
-    z-index: 10;
-    white-space: nowrap;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    pointer-events: none;
-}
-
-.atfp-pro-provider .atfp-provider-switch:hover::before {
-    content: "";
-    position: absolute;
-    top: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    border: 6px solid transparent;
-    border-top-color: var(--primary-color);
-    z-index: 10;
-    pointer-events: none;
-}
-
-.atfp-dashboard-provider-buttons {
-    display: flex;
-    gap: 10px;
-    font-size: 11px;
-}
-
 #chrome-local-ai-error-message{
     margin-bottom: 10px;
     font-size: 12px;
     color: #dc2626;
-}
-
-/* ================================================
-   Translation Providers
-================================================ */
-.atfp-dashboard-providers-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 20px;
-}
-
-.atfp-dashboard-provider-card {
-    background: #fff;
-    padding: 21px;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow);
-}
-
-.atfp-dashboard-provider-card li{
-    margin: 0;
-    padding-block: 13px;
-    border-bottom: 1px solid #e9e9e9b0;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.atfp-dashboard-provider-card li:last-child{
-    border-bottom: none;
-}
-
-.atfp-dashboard-provider-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 15px;
-}
-
-.atfp-dashboard-provider-header img {
-    height: 25px;
-}
-
-.atfp-dashboard-badge {
-    background: #131413;
-    color: #fff;
-    padding: 2px 8px;
-    font-size: 12px;
-    border-radius: 12px;
-}
-
-.atfp-dashboard-badge.free {
-    background: var(--primary-color);
-}
-
-.atfp-dashboard-provider-buttons {
-    display: flex;
-    gap: 10px;
-    font-size: 11px;
 }
 
 /* ================================================
@@ -599,15 +669,6 @@ ul.atfp-dashboard-sts-btm li:last-child {
     font-weight: bold;
 }
 
-/* ================================================
-   Animations
-================================================ */
-@keyframes play-icon {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
-}
-
 /*===============================================
     Tab Content
 ================================================ */
@@ -617,28 +678,20 @@ ul.atfp-dashboard-sts-btm li:last-child {
     padding: 0 30px;
 }
 
-.atfp-dashboard-get-started .header,
 .atfp-dashboard-free-vs-pro .header,
-.atfp-dashboard-license .header ,
-.atfp-dashboard-settings .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-}
 
-:where(.atfp-dashboard-get-started,.atfp-dashboard-free-vs-pro ,.atfp-dashboard-license,.atfp-dashboard-settings) h1{
+:where(.atfp-dashboard-free-vs-pro,.atfp-dashboard-settings) h1{
     margin-top: 8px;
 }
 
-:where(.atfp-dashboard-get-started,.atfp-dashboard-free-vs-pro ,.atfp-dashboard-license,.atfp-dashboard-settings) .atfp-dashboard-status {
+:where(.atfp-dashboard-free-vs-pro,.atfp-dashboard-settings) .atfp-dashboard-status {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
 
-:where(.atfp-dashboard-get-started,.atfp-dashboard-free-vs-pro ,.atfp-dashboard-license,.atfp-dashboard-settings) .atfp-dashboard-status span{
+:where(.atfp-dashboard-free-vs-pro,.atfp-dashboard-settings) .atfp-dashboard-status span{
     font-size: 15px;
     font-weight: 600;
 }
@@ -705,60 +758,13 @@ ul.atfp-dashboard-sts-btm li:last-child {
     }
 }
 
-/* ================================================
-   License
-================================================ */
-.atfp-dashboard-license {
-    width: 100%;
-    margin-top: 25px;
-    flex: 2;
-}
 
-.atfp-dashboard-license-container{
-    background: white;
-    font-family: Arial, sans-serif;
-    color: #333;
-    border: 1px solid #ddd;
-    padding: 24px;
-    border-radius: 5px;
-}
 
-.atfp-dashboard-license h1 {
-    font-weight: 600;
-    color: #000;
-    margin: 14px 0px 22px 0px;
-    font-size: 22px;
-}
 
-.atfp-dashboard-license p {
-    margin: 5px 0;
-    font-size: 14px;
-}
 
-.atfp-dashboard-upgrade-box {
-    background-color: #f3fcf3;
-    padding: 10px;
-    border-radius: 5px;
-    margin-top: 10px;
-    border-left: 4px solid #30b230;
-}
 
-.atfp-dashboard-upgrade-box a {
-    color: #0073aa;
-    text-decoration: none;
-    font-weight: bold;
-}
 
-.atfp-dashboard-upgrade-box a:hover {
-    text-decoration: underline;
-}
 
-.atfp-dashboard-upgrade-box em {
-    display: block;
-    margin-top: 5px;
-    font-size: 13px;
-    color: #555;
-}
 
 /* ================================================
    Settings Section
@@ -1227,8 +1233,7 @@ ul.atfp-dashboard-sts-btm li:last-child {
 }
 @media (max-width: 488px) and  (min-width:100px){
 	.atfp-dashboard-free-vs-pro-container .header,
-	.atfp-dashboard-settings-container .header,
-	.atfp-dashboard-license-container .header{
+	.atfp-dashboard-settings-container .header{
     flex-direction: column;
     align-items: start;
 	padding-bottom: 10px;
@@ -1257,8 +1262,7 @@ ul.atfp-dashboard-sts-btm li:last-child {
         gap: 6px;
     }
     .atfp-dashboard-free-vs-pro-container .header,
-    .atfp-dashboard-settings-container .header,
-    .atfp-dashboard-license-container .header {
+    .atfp-dashboard-settings-container .header {
         flex-direction: column;
         align-items: start;
         padding-bottom: 10px;

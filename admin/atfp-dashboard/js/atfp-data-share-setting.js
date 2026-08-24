@@ -93,7 +93,7 @@ jQuery(function($) {
         });
     });
 
-    $('.atfp-provider-switch-container:not(.atfp-pro-provider) .atfp-provider-toggle').on('change', function() {
+    $('.atfp-provider-switch-container .atfp-provider-toggle').on('change', function() {
         const checkedProviders = $('.atfp-provider-toggle:checked');
         const enabledProviders={};
 
@@ -129,10 +129,27 @@ jQuery(function($) {
         });
     });
 
-    $('.atfp-provider-switch-container.atfp-pro-provider').on('click', function(e) {
-        const provider = $(this).data('provider');
-        const utm_link=atfpSettingsScriptData.buy_pro_url + '&utm_campaign=get_pro&utm_content=dashboard_'+provider;
-        window.open(utm_link, '_blank');
-        e.preventDefault();
+    /**
+     * Load the walkthrough embed only once the viewer asks for it, so the
+     * dashboard makes no third-party request on page load.
+     */
+    $(document).on('click', '.atfp-dashboard-video-play', function () {
+        const $video = $(this).closest('.atfp-dashboard-video');
+        const $frame = $video.find('.atfp-dashboard-video-frame');
+        const videoId = $video.data('video-id');
+
+        if (!videoId || !$frame.length) {
+            return;
+        }
+
+        const $iframe = $('<iframe></iframe>', {
+            src: 'https://www.youtube.com/embed/' + encodeURIComponent(videoId) + '?autoplay=1',
+            title: $video.data('video-title') || '',
+            allow: 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share',
+            allowfullscreen: 'allowfullscreen',
+            referrerpolicy: 'strict-origin-when-cross-origin'
+        });
+
+        $frame.empty().append($iframe);
     });
 });

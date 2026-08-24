@@ -419,7 +419,6 @@ if (! class_exists('AutoPoly')) {
 			$valid_tabs = [
 				'dashboard'       => __('Dashboard', 'automatic-translations-for-polylang'),
 				'settings'        => __('Settings', 'automatic-translations-for-polylang'),
-				'license'         => __('License', 'automatic-translations-for-polylang'),
 				'free-vs-pro'     => __('Free vs Pro', 'automatic-translations-for-polylang'),
 				'support-blocks'  => __('Supported Blocks', 'automatic-translations-for-polylang')
 			];
@@ -440,10 +439,11 @@ if (! class_exists('AutoPoly')) {
 			// Action buttons configuration
 			$buttons = [
 				[
-					'url' => 'https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?' . sanitize_text_field($atfp_utm_parameters) . '&utm_medium=inside&utm_campaign=get_pro&utm_content=dashboard_header',
-					'img' => 'upgrade-now.svg',
-					'alt' => __('Unlock Pro Features', 'automatic-translations-for-polylang'),
-					'text' => __('Unlock Pro Features', 'automatic-translations-for-polylang')
+					'url' => 'https://docs.coolplugins.net/plugin/ai-translation-for-polylang/?' . sanitize_text_field($atfp_utm_parameters) . '&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_header',
+					'img' => 'docs.svg',
+					'alt' => __('Read Docs', 'automatic-translations-for-polylang'),
+					'text' => __('Read Docs', 'automatic-translations-for-polylang'),
+					'class' => 'atfp-dashboard-btn primary'
 				]
 			];
 
@@ -464,7 +464,7 @@ if (! class_exists('AutoPoly')) {
 						<span><?php echo esc_html('AutoPoly - AI Translation For Polylang'); ?></span>
 						<?php foreach ($buttons as $button): ?>
 							<a href="<?php echo esc_url($button['url']); ?>"
-								class="atfp-dashboard-btn"
+								class="<?php echo esc_attr(isset($button['class']) ? $button['class'] : 'atfp-dashboard-btn'); ?>"
 								target="_blank"
 								aria-label="<?php echo isset($button['alt']) ? esc_attr($button['alt']) : ''; ?>">
 								<img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/' . $button['img']); ?>"
