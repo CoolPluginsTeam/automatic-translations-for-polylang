@@ -229,7 +229,7 @@ if (! class_exists('AutoPoly')) {
 						'translationFailed' => esc_html__( '✗ Translation failed. This pair may need its own model, or see advanced steps below.', 'automatic-translations-for-polylang' ),
 						'advancedTitle' => esc_html__( 'Still not working? Advanced steps', 'automatic-translations-for-polylang' ),
 						'advancedBrowserRequirements' => esc_html__( 'Chrome AI translation needs Chrome or Edge on desktop (version 138+). It doesn’t run on mobile phones or tablets.', 'automatic-translations-for-polylang' ),
-						'openSetupGuide' => esc_html__( 'Open official setup guide →', 'automatic-translations-for-polylang' )
+						'openSetupGuide' => esc_html__( 'Open Official Setup Guide →', 'automatic-translations-for-polylang' )
 					)
 				);
 

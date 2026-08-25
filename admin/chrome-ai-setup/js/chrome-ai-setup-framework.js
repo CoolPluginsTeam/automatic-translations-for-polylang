@@ -64,7 +64,7 @@ class ChromeAISetupFramework {
             translationFailed: '✗ Translation failed. This pair may need its own model, or see advanced steps below.',
             advancedTitle: 'Still not working? Advanced steps',
             advancedBrowserRequirements: 'Chrome AI translation needs <b>Chrome or Edge on desktop</b> (version 138+). It doesn’t run on mobile phones or tablets.',
-            openSetupGuide: 'Open official setup guide →',
+            openSetupGuide: 'Open Official Setup Guide →',
             unsupportedBrowser: 'Chrome AI not supported in this browser'
         }, options.texts);
 
@@ -1200,11 +1200,17 @@ class ChromeAISetupFramework {
         }
 
         // Dynamically toggle Advanced Steps accordion visibility and update list
-        if (state === 'available' || state === 'checking') {
+        if (state === 'checking') {
             this.elAccordion.style.display = 'none';
         } else {
-            this.elAccordion.style.display = 'block';
-            this.updateFallbackAccordion(state);
+            const hasIncompleteLangs = this.allLanguageStatuses && this.allLanguageStatuses.some(l => l.status !== 'available');
+            
+            if (state === 'available' && !hasIncompleteLangs) {
+                this.elAccordion.style.display = 'none';
+            } else {
+                this.elAccordion.style.display = 'block';
+                this.updateFallbackAccordion(state);
+            }
         }
 
         // Trigger hooks
