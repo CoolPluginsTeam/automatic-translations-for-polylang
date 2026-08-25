@@ -207,8 +207,10 @@ jQuery(function ($) {
             container: '#cais-chrome-setup-container',
             dataVar: 'caisNoticeData',
             providerTypes: ['chrome', 'edge'],
-            // atfp-provider-toggle is used by admin-styles.css — keep plugin-specific class
-            toggleSelectorPattern: '.cais-card-{type}-built-in-ai .atfp-provider-toggle'
+            cardSelectorPattern: '.atfp-card-{type}-built-in-ai',
+            toggleSelectorPattern: '.atfp-card-{type}-built-in-ai .atfp-provider-toggle',
+            configureBtnSelectorPattern: '.atfp-{type}-configure-button',
+            noticeClassPattern: 'atfp-{type}-configure-notice'
         });
     }
 });
