@@ -638,7 +638,7 @@ if (! class_exists('ATFP_Helper')) {
 		}
 
 		/**
-		 * Engine pre-selected when the translation modal opens.
+		 * Provider pre-selected when the translation modal opens.
 		 *
 		 * Falls back to Google Translate when the site has not chosen one, and
 		 * returns an empty string when that engine is switched off, so callers

@@ -52,7 +52,7 @@ $atfp_providers = array(
 $atfp_steps = array(
 	__( 'Choose the page or post you want to translate.', 'automatic-translations-for-polylang' ),
 	__( 'Click the AI Translate button.', 'automatic-translations-for-polylang' ),
-	__( 'Choose your target languages and AI translation engine.', 'automatic-translations-for-polylang' ),
+	__( 'Choose your target languages and AI translation provider.', 'automatic-translations-for-polylang' ),
 	__( 'Start the translation and update the page to save it.', 'automatic-translations-for-polylang' ),
 );
 
@@ -97,8 +97,8 @@ $atfp_video_title       = __( 'Automate the Translation Process with AutoPoly - 
 	</div>
 
 	<div class="atfp-dashboard-card atfp-dashboard-engines">
-		<h3><?php echo esc_html__( 'Translation engines', 'automatic-translations-for-polylang' ); ?></h3>
-		<p class="atfp-engine-intro"><?php echo esc_html__( 'Select your default translation engine. This engine will be pre-selected when the translation modal opens.', 'automatic-translations-for-polylang' ); ?></p>
+		<h3><?php echo esc_html__( 'Translation Providers', 'automatic-translations-for-polylang' ); ?></h3>
+		<p class="atfp-engine-intro"><?php echo esc_html__( 'Select your default translation provider. This provider will be pre-selected when the translation modal opens.', 'automatic-translations-for-polylang' ); ?></p>
 
 		<div class="atfp-engine-note">
 			<span class="atfp-engine-note-icon" aria-hidden="true">
@@ -108,7 +108,7 @@ $atfp_video_title       = __( 'Automate the Translation Process with AutoPoly - 
 					<circle cx="12" cy="7.8" r="1.2" fill="#fff" />
 				</svg>
 			</span>
-			<p><?php echo esc_html__( 'You can change the engine anytime from the translation modal.', 'automatic-translations-for-polylang' ); ?></p>
+			<p><?php echo esc_html__( 'You can change the provider anytime from the translation modal.', 'automatic-translations-for-polylang' ); ?></p>
 		</div>
 
 		<ul class="atfp-engine-list" data-nonce="<?php echo esc_attr( $atfp_default_nonce ); ?>">
@@ -131,7 +131,7 @@ $atfp_video_title       = __( 'Automate the Translation Process with AutoPoly - 
 						/>
 						<span class="atfp-engine-default-mark" aria-hidden="true"></span>
 						<span class="atfp-engine-default-text"><?php echo esc_html__( 'Set as default', 'automatic-translations-for-polylang' ); ?></span>
-						<span class="atfp-engine-default-active"><?php echo esc_html__( 'Default engine', 'automatic-translations-for-polylang' ); ?></span>
+						<span class="atfp-engine-default-active"><?php echo esc_html__( 'Default provider', 'automatic-translations-for-polylang' ); ?></span>
 					</label>
 					<a class="atfp-engine-docs" href="<?php echo esc_url( $atfp_provider['docs'] ); ?>" target="_blank" rel="noopener noreferrer"><?php echo esc_html__( 'Docs', 'automatic-translations-for-polylang' ); ?></a>
 					<?php if ( '' !== $atfp_provider['configure'] ) : ?>
@@ -145,7 +145,7 @@ $atfp_video_title       = __( 'Automate the Translation Process with AutoPoly - 
 								data-provider="<?php echo esc_attr( $atfp_provider_key ); ?>"
 								<?php checked( in_array( $atfp_provider_key, $atfp_active_providers, true ), true ); ?>
 								<?php disabled( $atfp_is_default, true ); ?>
-								title="<?php echo $atfp_is_default ? esc_attr__( 'The default engine stays enabled. Pick another default to turn this off.', 'automatic-translations-for-polylang' ) : ''; ?>"
+								title="<?php echo $atfp_is_default ? esc_attr__( 'The default provider stays enabled. Pick another default to turn this off.', 'automatic-translations-for-polylang' ) : ''; ?>"
 							/>
 							<span class="atfp-switch-slider"></span>
 							<span class="screen-reader-text">

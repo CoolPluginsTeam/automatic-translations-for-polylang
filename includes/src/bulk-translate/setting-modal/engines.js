@@ -49,7 +49,7 @@ const SettingModalEngines = ({
         <section className={`${prefix}-setup-column ${prefix}-setup-engines`}>
             <div className={`${prefix}-setup-column-head`}>
                 <span className={`${prefix}-setup-step-badge`} aria-hidden="true">2</span>
-                <h3>{__('Select Translation Engine', 'automatic-translations-for-polylang')}</h3>
+                <h3>{__('Select Translation Provider', 'automatic-translations-for-polylang')}</h3>
             </div>
             <p className={`${prefix}-setup-column-desc`}>
                 {__('Select an AI provider to automatically translate your content.', 'automatic-translations-for-polylang')}

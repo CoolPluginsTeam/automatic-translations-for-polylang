@@ -267,6 +267,7 @@ Polylang Addon Dashboard - Admin Panel Styles
        crop it rather than letting it read as a border inside the frame. */
     background-size: 103%;
     border-radius: 9px;
+    border: 1px solid #ddd;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -407,12 +408,16 @@ ol.atfp-dashboard-step-list li {
 }
 
 /* Default engine picker inside each row. */
+/* Taken out of flow so it sits on the row's true centre line and lands in the
+   same place on every row, whatever the engine name length. */
 .atfp-engine-default {
     align-items: center;
     cursor: pointer;
     display: inline-flex;
     gap: 8px;
-    margin-left: auto;
+    left: 50%;
+    position: absolute;
+    transform: translateX(-50%);
 }
 
 .atfp-engine-default-input {
@@ -503,6 +508,7 @@ ul.atfp-engine-list {
 
 li.atfp-engine-row {
     align-items: center;
+    position: relative;
     border: 1px solid var(--border-color);
     border-radius: 8px;
     display: flex;
@@ -530,6 +536,7 @@ li.atfp-engine-row:last-child {
 }
 
 .atfp-engine-status {
+    margin-right: auto;
     background: var(--primary-light-color);
     border-radius: 12px;
     color: var(--secondary-color);
@@ -640,10 +647,24 @@ li.atfp-engine-row:last-child {
     margin: 0;
 }
 
-.atfp-provider-switch .atfp-provider-toggle {
+/*
+ * Core outranks a plain class selector here, so both rules below carry the
+ * wrapper, the type attribute and the class to stay ahead of it:
+ *   input[type=checkbox]:disabled                 (0,2,1) -> opacity .7
+ *   .wp-core-ui input[type=checkbox]:checked::before (0,3,2) -> dashicon check
+ * Without that the disabled toggle on the default row becomes visible and its
+ * checkmark spills out of the 0x0 input.
+ */
+.atfp-dashboard-wrapper .atfp-provider-switch input[type=checkbox].atfp-provider-toggle {
+    height: 0;
     opacity: 0;
     width: 0;
-    height: 0;
+}
+
+.atfp-dashboard-wrapper .atfp-provider-switch input[type=checkbox].atfp-provider-toggle::before,
+.atfp-dashboard-wrapper .atfp-provider-switch input[type=checkbox].atfp-provider-toggle:checked::before {
+    content: none;
+    margin: 0;
 }
 
 .atfp-switch-slider {

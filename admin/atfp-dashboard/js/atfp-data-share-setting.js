@@ -130,7 +130,7 @@ jQuery(function($) {
     });
 
     /**
-     * Persist the engine that should be pre-selected in the translation modal.
+     * Persist the provider that should be pre-selected in the translation modal.
      */
     $(document).on('change', '.atfp-engine-default-input', function () {
         const $input = $(this);
@@ -153,7 +153,7 @@ jQuery(function($) {
                     const $row = $input.closest('.atfp-engine-row');
 
                     // Only one row can carry the default, so move the marker and
-                    // the toggle lock that keeps the default engine enabled.
+                    // the toggle lock that keeps the default provider enabled.
                     $('.atfp-engine-row').removeClass('is-default');
                     $('.atfp-engine-row .atfp-provider-toggle').prop('disabled', false).attr('title', '');
 
@@ -170,7 +170,7 @@ jQuery(function($) {
             },
             error: function () {
                 $input.prop('checked', false);
-                $message.addClass('is-error').text('Could not save the default translation engine.');
+                $message.addClass('is-error').text('Could not save the default translation provider.');
             }
         });
     });

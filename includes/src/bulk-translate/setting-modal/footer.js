@@ -28,7 +28,7 @@ const SettingModalFooter = ({
     if (0 === selectedLanguages.length) {
         startTitle = __('Please select at least one language.', 'automatic-translations-for-polylang');
     } else if (!selectedProvider) {
-        startTitle = __('Please select a translation engine.', 'automatic-translations-for-polylang');
+        startTitle = __('Please select a translation provider.', 'automatic-translations-for-polylang');
     }
 
     return (

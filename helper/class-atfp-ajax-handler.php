@@ -590,13 +590,13 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 
 			// An empty value clears the default, so it is valid alongside the list.
 			if ( '' !== $default_provider && ! in_array( $default_provider, ATFP_Helper::get_supported_providers(), true ) ) {
-				return wp_send_json_error( __( 'Invalid translation engine.', 'automatic-translations-for-polylang' ) );
+				return wp_send_json_error( __( 'Invalid translation provider.', 'automatic-translations-for-polylang' ) );
 			}
 
 			// A disabled engine can never be pre-selected, so refuse rather than
 			// storing a default the translation modal would silently ignore.
 			if ( '' !== $default_provider && ! in_array( $default_provider, ATFP_Helper::get_active_providers(), true ) ) {
-				return wp_send_json_error( __( 'Enable this translation engine before making it the default.', 'automatic-translations-for-polylang' ) );
+				return wp_send_json_error( __( 'Enable this translation provider before making it the default.', 'automatic-translations-for-polylang' ) );
 			}
 
 			update_option( 'atfp_default_provider', $default_provider );
@@ -604,7 +604,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 			return wp_send_json_success(
 				array(
 					'default_provider' => $default_provider,
-					'message'          => __( 'Default translation engine updated successfully.', 'automatic-translations-for-polylang' ),
+					'message'          => __( 'Default translation provider updated successfully.', 'automatic-translations-for-polylang' ),
 				)
 			);
 		}

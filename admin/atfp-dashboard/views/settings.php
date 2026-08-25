@@ -100,16 +100,16 @@ if(!current_user_can('manage_options')){
                         decoding="async"
                     />
                 </span>
-                <?php esc_html_e('AI Translation Settings', 'automatic-translations-for-polylang'); ?>
+                <?php esc_html_e('Translated Posts Status', 'automatic-translations-for-polylang'); ?>
             </h2>
             <p class="atfp-section-description">
-                <?php esc_html_e('Defaults applied when you translate content with AI.', 'automatic-translations-for-polylang'); ?>
+                <?php esc_html_e('Choose the default status for Translated posts', 'automatic-translations-for-polylang'); ?>
             </p>
             <div class="atfp-dashboard-bulk-settings atfp-dashboard-translation-settings atfp-dashboard-settings-card">
             <!-- Add bulk translate post status -->
             <?php $atfp_bulk_post_status = get_option('atfp_bulk_post_status', 'draft'); ?>
             <label class="atfp-settings-group-label">
-                <?php echo esc_html__('AI Translation default Post Status', 'automatic-translations-for-polylang'); ?>
+                <?php echo esc_html__('Default Post Status', 'automatic-translations-for-polylang'); ?>
             </label>
             <div class="atfp-bulk-translation-post-status-options">
                 <input type="radio" name="atfp_bulk_post_status" id="atfp_bulk_post_status_publish" value="publish" <?php checked($atfp_bulk_post_status, 'publish'); ?>>
@@ -118,7 +118,7 @@ if(!current_user_can('manage_options')){
                 <label for="atfp_bulk_post_status_draft"><?php echo esc_html__('Draft', 'automatic-translations-for-polylang'); ?></label>
             </div>
             <p class="api-settings-description">
-                <?php echo esc_html__('Status given to translated posts created by AI translation.', 'automatic-translations-for-polylang'); ?>
+                <?php echo esc_html__('Select the status automatically applied to posts after translation is completed.', 'automatic-translations-for-polylang'); ?>
             </p>
             </div>
 
