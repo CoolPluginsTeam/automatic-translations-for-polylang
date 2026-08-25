@@ -59,6 +59,12 @@ Polylang Addon Dashboard - Admin Panel Styles
     width: 16px;
 }
 
+/* An <img> renders an SVG as a separate document, so its fill="currentColor"
+   never picks up the button's white. Force it instead of editing the asset. */
+.atfp-dashboard-btn.primary img{
+    filter: brightness(0) invert(1);
+}
+
 .atfp-dashboard-btn:hover{
     background: var(--primary-light-color);
     color: var(--primary-color);
@@ -232,7 +238,7 @@ Polylang Addon Dashboard - Admin Panel Styles
 }
 
 .atfp-dashboard-welcome p {
-    color: var(--primary-color);
+    color: #222;
     font-size: 14px;
     margin: 8px 0 0;
 }
@@ -352,13 +358,8 @@ ol.atfp-dashboard-step-list li {
 }
 
 .atfp-dashboard-step-text {
-    color: var(--primary-color);
+    color: #222;
     font-size: 14px;
-}
-
-.atfp-dashboard-step-text strong {
-    color: var(--text-color);
-    font-weight: 600;
 }
 
 .atfp-dashboard-start .atfp-dashboard-btns-row {

@@ -48,33 +48,12 @@ $atfp_providers = array(
 );
 
 $atfp_steps = array(
-	sprintf(
-		/* translators: 1: opening strong tag, 2: closing strong tag */
-		__( '%1$sOpen a page%2$s you want in another language.', 'automatic-translations-for-polylang' ),
-		'<strong>',
-		'</strong>'
-	),
-	sprintf(
-		/* translators: 1: opening strong tag, 2: closing strong tag */
-		__( '%1$sClick the &#8220;+&#8221; icon%2$s on the target language.', 'automatic-translations-for-polylang' ),
-		'<strong>',
-		'</strong>'
-	),
-	sprintf(
-		/* translators: 1: opening strong tag, 2: closing strong tag */
-		__( '%1$sPick an engine%2$s, then hit Translate.', 'automatic-translations-for-polylang' ),
-		'<strong>',
-		'</strong>'
-	),
-	sprintf(
-		/* translators: 1: opening strong tag, 2: closing strong tag */
-		__( '%1$sUpdate%2$s the page to save your translation.', 'automatic-translations-for-polylang' ),
-		'<strong>',
-		'</strong>'
-	),
+	__( 'Choose the page or post you want to translate.', 'automatic-translations-for-polylang' ),
+	__( 'Click the AI Translate button.', 'automatic-translations-for-polylang' ),
+	__( 'Choose your target languages and AI translation engine.', 'automatic-translations-for-polylang' ),
+	__( 'Start the translation and update the page to save it.', 'automatic-translations-for-polylang' ),
 );
 
-$atfp_step_allowed_tags = array( 'strong' => array() );
 $atfp_video_id          = 'ecHsOyIL_J4';
 $atfp_video_title       = __( 'Automate the Translation Process with AutoPoly - AI Translation For Polylang', 'automatic-translations-for-polylang' );
 ?>
@@ -103,7 +82,7 @@ $atfp_video_title       = __( 'Automate the Translation Process with AutoPoly - 
 					<?php foreach ( $atfp_steps as $atfp_step_index => $atfp_step ) : ?>
 						<li>
 							<span class="atfp-dashboard-step-num"><?php echo esc_html( $atfp_step_index + 1 ); ?></span>
-							<span class="atfp-dashboard-step-text"><?php echo wp_kses( $atfp_step, $atfp_step_allowed_tags ); ?></span>
+							<span class="atfp-dashboard-step-text"><?php echo esc_html( $atfp_step ); ?></span>
 						</li>
 					<?php endforeach; ?>
 				</ol>
