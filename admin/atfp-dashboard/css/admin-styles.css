@@ -68,7 +68,7 @@ Polylang Addon Dashboard - Admin Panel Styles
 .atfp-dashboard-btn:hover{
     background: var(--primary-light-color);
     color: var(--primary-color);
-    border-color: var(--border-color);
+    border-color: var(--primary-color);
 }
 
 /* General Wrapper */
@@ -104,8 +104,12 @@ Polylang Addon Dashboard - Admin Panel Styles
     gap: 10px;
 }
 
-.atfp-dashboard-btn:focus {
-   box-shadow: none;
+.atfp-dashboard-btn:focus{
+    background: var(--primary-light-color);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px var(--primary-light-color);
+    color: var(--primary-color);
+    outline: none;
 }
 
 .atfp-dashboard-btn.primary {
@@ -114,13 +118,20 @@ Polylang Addon Dashboard - Admin Panel Styles
     border-color: var(--secondary-color);
 }
 
-.atfp-dashboard-btn:focus{
-    box-shadow: none;
-    border-radius: 6px;
-    background: var(--primary-light-color);
-    color: var(--primary-color);
+/*
+ * Declared after the base :hover/:focus above, which carry the same
+ * specificity -- without this the solid buttons stayed inert on hover while
+ * every other button responded.
+ */
+.atfp-dashboard-btn.primary:hover,
+.atfp-dashboard-btn.primary:focus {
+    background: var(--secondary-color);
     border-color: var(--secondary-color);
-    box-shadow: 0 0 0px 3px var(--primary-light-color);
+    color: #fff;
+}
+
+.atfp-dashboard-btn.primary:focus {
+    box-shadow: 0 0 0 3px var(--primary-light-color);
 }
 
 /* ================================================
@@ -567,25 +578,6 @@ li.atfp-engine-row:last-child {
 .atfp-engine-docs:focus {
     box-shadow: none;
     outline: none;
-}
-
-/* The Configure link is rendered with .primary by the engine row, but there it
-   is a secondary action. These selectors carry one class more than
-   .atfp-dashboard-btn.primary, so the neutral look wins. */
-.atfp-dashboard-btn.primary.atfp-chrome-configure-button,
-.atfp-dashboard-btn.primary.atfp-edge-configure-button {
-    background: none;
-    border-color: #c3c4c7;
-    color: #000;
-}
-
-.atfp-dashboard-btn.primary.atfp-chrome-configure-button:hover,
-.atfp-dashboard-btn.primary.atfp-edge-configure-button:hover,
-.atfp-dashboard-btn.primary.atfp-chrome-configure-button:focus,
-.atfp-dashboard-btn.primary.atfp-edge-configure-button:focus {
-    background: none;
-    border-color: #8c8f94;
-    color: #000;
 }
 
 /* The readiness script appends its own notice to the row and reveals the

@@ -15,7 +15,7 @@ import Notice from './components/Notice';
 const App = ({ onDestory, prefix, postIds }) => {
     const dispatch = useDispatch();
     const { languageObject = {} } = atfp_bulk_translate_object || {};
-    const emptyPostIdsErrorMessage = sprintf(__('Please select at least one %s for translation.', 'automatic-translations-for-polylang'), atfp_bulk_translate_object.post_label);
+    const emptyPostIdsErrorMessage = __('You need to select one page for translation.', 'automatic-translations-for-polylang');
     const targetLanguages = JSON.parse(JSON.stringify(languageObject));
     delete targetLanguages[
       atfp_bulk_translate_object.default_language_slug
@@ -256,17 +256,20 @@ const App = ({ onDestory, prefix, postIds }) => {
                 </div>
 
                 <div className={`${prefix}-setting-modal-body`}>
-                    <div className={`${prefix}-error-message`}>{errorMessage}</div>
-                </div>
-
-                <div className={`${prefix}-footer`}>
-                    <button
-                        type="button"
-                        className={`${prefix}-footer-button button button-primary`}
-                        onClick={destroyApp}
-                    >
-                        {__('Close', 'automatic-translations-for-polylang')}
-                    </button>
+                    <div className={`${prefix}-empty-state`}>
+                        <span className={`${prefix}-empty-state-art`} aria-hidden="true">
+                            <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="14" y="10" width="34" height="42" rx="4" stroke="currentColor" strokeWidth="2.5" />
+                                <rect x="20" y="16" width="34" height="42" rx="4" fill="#fff" stroke="currentColor" strokeWidth="2.5" />
+                                <path d="M27 27h20M27 35h20M27 43h12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+                                <circle cx="55" cy="52" r="11" fill="#fff" stroke="currentColor" strokeWidth="2.5" />
+                                <path d="M44 52h22M55 41c3 3.5 3 18 0 22-3-4-3-18.5 0-22z" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+                                <path d="M12 62L64 8" stroke="#d63638" strokeWidth="3" strokeLinecap="round" strokeDasharray="5 6" />
+                            </svg>
+                        </span>
+                        <h3>{__('No Page Selected', 'automatic-translations-for-polylang')}</h3>
+                        <p>{errorMessage}</p>
+                    </div>
                 </div>
             </div>
         </div>

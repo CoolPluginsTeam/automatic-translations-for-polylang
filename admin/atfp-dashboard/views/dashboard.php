@@ -23,6 +23,12 @@ $atfp_default_nonce     = wp_create_nonce( 'atfp_update_enabled_providers' );
  * their Configure link when the browser cannot run the built-in translator.
  */
 $atfp_providers = array(
+	'google-translate'   => array(
+		'name'      => __( 'Google Translate', 'automatic-translations-for-polylang' ),
+		'logo'      => 'google.png',
+		'docs'      => 'https://docs.coolplugins.net/doc/google-translate-for-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_google',
+		'configure' => '',
+	),
 	'chrome-built-in-ai' => array(
 		'name'      => __( 'Chrome Built-in AI', 'automatic-translations-for-polylang' ),
 		'logo'      => 'chrome.png',
@@ -34,12 +40,6 @@ $atfp_providers = array(
 		'logo'      => 'edge.png',
 		'docs'      => 'https://docs.coolplugins.net/doc/microsoft-edge-ai-polylang-translation/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_edge_pro',
 		'configure' => 'edge',
-	),
-	'google-translate'   => array(
-		'name'      => __( 'Google Translate', 'automatic-translations-for-polylang' ),
-		'logo'      => 'google.png',
-		'docs'      => 'https://docs.coolplugins.net/doc/google-translate-for-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_google',
-		'configure' => '',
 	),
 	'yandex-translate'   => array(
 		'name'      => __( 'Yandex Translate', 'automatic-translations-for-polylang' ),
@@ -110,7 +110,7 @@ $atfp_video_title       = __( 'Automate the Translation Process with AutoPoly - 
 					<circle cx="12" cy="7.8" r="1.2" fill="#fff" />
 				</svg>
 			</span>
-			<p><?php echo esc_html__( 'You can change the provider anytime from the translation modal.', 'automatic-translations-for-polylang' ); ?></p>
+			<p><?php echo esc_html__( 'You can switch providers anytime from the translation modal.', 'automatic-translations-for-polylang' ); ?></p>
 		</div>
 
 		<ul class="atfp-engine-list" data-nonce="<?php echo esc_attr( $atfp_default_nonce ); ?>">
@@ -137,7 +137,7 @@ $atfp_video_title       = __( 'Automate the Translation Process with AutoPoly - 
 					</label>
 					<a class="atfp-engine-docs" href="<?php echo esc_url( $atfp_provider['docs'] ); ?>" target="_blank" rel="noopener noreferrer"><?php echo esc_html__( 'Docs', 'automatic-translations-for-polylang' ); ?></a>
 					<?php if ( '' !== $atfp_provider['configure'] ) : ?>
-						<a href="<?php echo esc_url( admin_url( 'admin.php?page=polylang-atfp-dashboard&tab=settings' ) ); ?>" class="atfp-<?php echo esc_attr( $atfp_provider['configure'] ); ?>-configure-button atfp-dashboard-btn primary" style="display: none;"><?php echo esc_html__( 'Configure', 'automatic-translations-for-polylang' ); ?></a>
+						<a href="<?php echo esc_url( admin_url( 'admin.php?page=polylang-atfp-dashboard&tab=settings' ) ); ?>" class="atfp-<?php echo esc_attr( $atfp_provider['configure'] ); ?>-configure-button atfp-dashboard-btn" style="display: none;"><?php echo esc_html__( 'Configure', 'automatic-translations-for-polylang' ); ?></a>
 					<?php endif; ?>
 					<div class="atfp-provider-switch-container" data-provider="<?php echo esc_attr( $atfp_provider_key ); ?>">
 						<label class="atfp-provider-switch">
