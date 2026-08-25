@@ -174,7 +174,7 @@ class ChromeAiTranslator {
                     <ol>
                         <li>Open this URL in a new Chrome tab: <strong><span data-clipboard-text="chrome://flags/#translation-api" target="_blank" class="chrome-ai-translator-flags">chrome://flags/#translation-api ${ChromeAiTranslator.svgIcons('copy')}</span></strong>. Click on the URL to copy it, then open a new window and paste this URL to access the settings.</li>
                         <li>Ensure that the <strong>Experimental translation API</strong> option is set to <strong>Enabled</strong>.</li>
-                        <li>Click on the <strong>Save</strong> button to apply the changes.</li>
+                        <li>Relaunch Chrome and refresh the WordPress page to apply the changes.</li>
                         <li>The Translator AI modal should now be enabled and ready for use.</li>
                     </ol>
                     <p>For more information, please refer to the <a href="https://developer.chrome.com/docs/ai/translator-api" target="_blank">documentation</a>.</p>   

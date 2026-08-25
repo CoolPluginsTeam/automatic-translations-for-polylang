@@ -66,64 +66,24 @@ if(!current_user_can('manage_options')){
         if ( is_array( $atfp_enabled_providers ) && (($browserType === 'chrome' && in_array( 'chrome-built-in-ai', $atfp_enabled_providers )) || ($browserType === 'edge' && in_array('edge-built-in-ai', $atfp_enabled_providers))) ) {
 			$logo_base_url=ATFP_URL . 'assets/images/';
         ?>
-            <h2 class="atfp-section-title atfp-section-title-with-icon">
-                <span class="atfp-section-icon atfp-icon-sparkle" aria-hidden="true">
-                    <img
-                        src="<?php echo esc_url( $logo_base_url . $browserType . '.png' ); ?>"
-                        alt=""
-                        width="20"
-                        height="20"
-                        loading="lazy"
-                        decoding="async"
-                    />
-                </span>
-                <?php printf(esc_html__( '%1$s AI Configuration', 'automatic-translations-for-polylang' ), $browser_title); // translators: %1$s is the browser title ?>
-            </h2>
-            <p class="atfp-section-description">
-            <?php printf(esc_html__( 'Use %1$s built-in AI to translate strings. Configure and test it here.', 'automatic-translations-for-polylang' ), $browser_title); // translators: %1$s is the browser title ?>
-            </p>
             <div class="atfp-dashboard-chrome-ai-settings">
-                <!-- Chrome Local AI Notice -->
-                <div id="atfp-chrome-local-ai-notice" class="atfp-chrome-local-ai-notice atfp-dashboard-settings-card">
                 <?php if(empty($atfp_polylang_supported_languages)){ ?>
-                    <span class="atfp-chrome-no-languages-content"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" id="error"><g><rect fill="none"/></g><g><path d="M12 7c.55 0 1 .45 1 1v4c0 .55-.45 1-1 1s-1-.45-1-1V8c0-.55.45-1 1-1zm-.01-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm1-3h-2v-2h2v2z"></path></g></svg><?php
-                        printf(
-									wp_kses_post(
-										// translators: %s is a link to the Polylang languages page.
-										__( 'Add at least %1$s to use the %2$s AI translation test', 'automatic-translations-for-polylang' ) // translators: %1$s is the link to the Polylang languages page, %2$s is the browser title
-									),
-									'<a href="' . esc_url( admin_url( 'admin.php?page=mlang' ) ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'one language in Polylang', 'automatic-translations-for-polylang' ) . '</a>',
-									$browser_title
-								);
-                ?></span>
+                    <div class="atfp-dashboard-settings-card">
+                        <span class="atfp-chrome-no-languages-content"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" id="error"><g><rect fill="none"/></g><g><path d="M12 7c.55 0 1 .45 1 1v4c0 .55-.45 1-1 1s-1-.45-1-1V8c0-.55.45-1 1-1zm-.01-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm1-3h-2v-2h2v2z"></path></g></svg><?php
+                            printf(
+                                        wp_kses_post(
+                                            // translators: %s is a link to the Polylang languages page.
+                                            __( 'Add at least %1$s to use the %2$s AI translation test', 'automatic-translations-for-polylang' ) // translators: %1$s is the link to the Polylang languages page, %2$s is the browser title
+                                        ),
+                                        '<a href="' . esc_url( admin_url( 'admin.php?page=mlang' ) ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'one language in Polylang', 'automatic-translations-for-polylang' ) . '</a>',
+                                        $browser_title
+                                    );
+                            ?></span>
+                    </div>
                 <?php }else{ ?>
-                    <div class="atfp-chrome-local-ai-notice-content">
-                        <h3 id="atfp-chrome-notice-heading" class="atfp-chrome-notice-heading"></h3>
-                        <div id="atfp-chrome-notice-message" class="atfp-chrome-notice-message"></div>
-                    </div>
-
-                    <!-- Test Translation Section -->
-                    <div id="atfp-chrome-test-translation" class="atfp-chrome-test-translation">
-                        <h3 class="atfp-chrome-test-translation-heading"><?php printf(esc_html__( '%1$s AI Translation Test', 'automatic-translations-for-polylang' ), $browser_title); // translators: %1$s is the browser title ?></h3>
-                        <p class="atfp-chrome-test-translation-description"><?php printf(esc_html__( 'Check whether %1$s AI Translation is properly configured by translating a sample text.', 'automatic-translations-for-polylang' ), $browser_title); // translators: %1$s is the browser title ?></p>
-
-                        <div class="atfp-chrome-test-translation-language-pair">
-                            <label class="atfp-chrome-test-translation-label"><?php esc_html_e('Language Pair:', 'automatic-translations-for-polylang'); ?></label>
-                            <select id="atfp-test-translation-source" class="atfp-chrome-test-translation-source"></select>
-                            <span class="atfp-chrome-test-translation-arrow">→</span>
-                            <select id="atfp-test-translation-target" class="atfp-chrome-test-translation-target"></select>
-                        </div>
-                        
-                        <input type="text" id="atfp-test-translation-text" class="atfp-chrome-test-translation-text" placeholder="<?php esc_attr_e('Enter text to translate', 'automatic-translations-for-polylang'); ?>" value="Hello, this is a test translation."><br>
-                        <button id="atfp-test-translation-btn" class="atfp-dashboard-btn primary atfp-chrome-test-translation-btn">
-                            <?php esc_html_e('Test Translation', 'automatic-translations-for-polylang'); ?>
-                        </button>
-
-                        <div id="atfp-test-translation-result" class="atfp-chrome-test-translation-result"></div>
-                        <div id="atfp-test-translation-error" class="atfp-chrome-test-translation-error"></div>
-                    </div>
+                    <!-- Chrome AI Setup Framework Container -->
+                    <div id="cais-chrome-setup-container"></div>
                 <?php } ?>
-                </div>
             </div>
         <?php }
     ?>
