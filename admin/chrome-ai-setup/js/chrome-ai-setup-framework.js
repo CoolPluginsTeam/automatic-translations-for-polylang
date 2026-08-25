@@ -500,15 +500,28 @@ class ChromeAISetupFramework {
                 </ol>
             `;
         } else if (state === 'downloadable' || state === 'downloading') {
-            html = `
-                <p>Your browser needs language packs installed for translation to work. This is a one-time setup.</p>
-                <ol>
-                    <li>Open Settings → Languages: ${this.createCopyableSpan(langSettingsUrl)}</li>
-                    <li>Click <b>Add languages</b> and select the translation languages configured in your site.</li>
-                    <li>Manage, download, or check download progress manually at: ${this.createCopyableSpan(internalsUrl)}</li>
-                    <li>Relaunch the browser and refresh this page once done.</li>
-                </ol>
-            `;
+            if (this.isEdge) {
+                const playgroundUrl = 'https://microsoftedge.github.io/Demos/built-in-ai/playgrounds/translator-api/';
+                html = `
+                    <p>Your browser needs language packs installed for translation to work. This is a one-time setup.</p>
+                    <ol>
+                        <li>Test your required languages on the ${this.createCopyableSpan(playgroundUrl)}.</li>
+                        <li>Type any text, and click translate to automatically download the language packs.</li>
+                        <li>Wait until the translation works successfully in the playground.</li>
+                        <li>Come back here, refresh the page, and the packs will be ready.</li>
+                    </ol>
+                `;
+            } else {
+                html = `
+                    <p>Your browser needs language packs installed for translation to work. This is a one-time setup.</p>
+                    <ol>
+                        <li>Open Settings → Languages: ${this.createCopyableSpan(langSettingsUrl)}</li>
+                        <li>Click <b>Add languages</b> and select the translation languages configured in your site.</li>
+                        <li>Manage, download, or check download progress manually at: ${this.createCopyableSpan(internalsUrl)}</li>
+                        <li>Relaunch the browser and refresh this page once done.</li>
+                    </ol>
+                `;
+            }
         } else {
             // General troubleshooting fallback
             html = `
@@ -837,9 +850,15 @@ class ChromeAISetupFramework {
                 if (isDownloading) {
                     this.realDownload(); // Start monitoring the download
                 } else {
-                    const settingsUrl = this.isEdge ? 'edge://settings/languages' : 'chrome://settings/languages';
-                    const customDesc = `To translate, download the target language pack in your browser settings — <strong>${this.createCopyableSpan(settingsUrl)}</strong>, and click on the <strong>Needs download</strong> button below.`;
-                    this.renderState('downloadable', null, customDesc);
+                    if (this.isEdge) {
+                        const settingsUrl = 'https://microsoftedge.github.io/Demos/built-in-ai/playgrounds/translator-api/';
+                        const customDesc = `To translate in Edge, open the Edge Playground — <strong>${this.createCopyableSpan(settingsUrl)}</strong> — select your target language, and test a translation to trigger the download. Then return here and click <strong>Install Language Pack</strong>.`;
+                        this.renderState('downloadable', null, customDesc);
+                    } else {
+                        const settingsUrl = 'chrome://settings/languages';
+                        const customDesc = `To translate, download the target language pack in your browser settings — <strong>${this.createCopyableSpan(settingsUrl)}</strong>, and click on the 'Install Language Pack' button below.`;
+                        this.renderState('downloadable', null, customDesc);
+                    }
                 }
             } else if (this.downloadedLanguages.length > 0) {
                 this.renderState('available');
@@ -897,7 +916,7 @@ class ChromeAISetupFramework {
                 badgeHtml = `<span style="background: #dbeafe; color: #1e40af; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 500;">Downloading...</span>`;
             } else {
                 // downloadable / after-download / error
-                badgeHtml = `<span class="cais-needs-download-btn" data-lang="${item.lang.code}" style="background: #ffedd5; color: #9a3412; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 500; cursor: pointer; border: 1px solid #fdba74; transition: all 0.2s;">Needs download</span>`;
+                badgeHtml = `<span class="cais-needs-download-btn" data-lang="${item.lang.code}" style="background: #ffedd5; color: #9a3412; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 500; cursor: pointer; border: 1px solid #fdba74; transition: all 0.2s;">Install Language Pack</span>`;
             }
 
             html += `
@@ -916,7 +935,7 @@ class ChromeAISetupFramework {
         this.elLanguageStatusList.innerHTML = html;
         this.elLanguageStatusList.style.display = 'block';
 
-        // Bind clicks for Needs download pills
+        // Bind clicks for Install Language Pack pills
         const downloadBtns = this.elLanguageStatusList.querySelectorAll('.cais-needs-download-btn');
         downloadBtns.forEach(btn => {
             // Hover effects for the button
@@ -965,12 +984,18 @@ class ChromeAISetupFramework {
             };
 
             const initDownload = async () => {
+                const options = { sourceLanguage: source, targetLanguage: targetLang };
+                // Microsoft Edge rejects unknown options like monitor in older builds
+                if (!this.isEdge) {
+                    options.monitor = monitor;
+                }
+
                 if ('translation' in self && 'createTranslator' in self.translation) {
-                    return await self.translation.createTranslator({ sourceLanguage: source, targetLanguage: targetLang, monitor });
+                    return await self.translation.createTranslator(options);
                 } else if ('ai' in self && 'translator' in self.ai) {
-                    return await self.ai.translator.create({ sourceLanguage: source, targetLanguage: targetLang, monitor });
+                    return await self.ai.translator.create(options);
                 } else if ('Translator' in self && 'create' in self.Translator) {
-                    return await self.Translator.create({ sourceLanguage: source, targetLanguage: targetLang, monitor });
+                    return await self.Translator.create(options);
                 }
                 throw new Error('API missing');
             };
@@ -988,10 +1013,16 @@ class ChromeAISetupFramework {
             this.liveDetect();
         } catch (e) {
             console.error('ChromeAISetupFramework: Model download failed', e);
-            btnElement.textContent = 'Failed - Retry';
+            btnElement.textContent = 'Setup in Settings';
             btnElement.style.background = '#fee2e2';
             btnElement.style.color = '#991b1b';
             btnElement.style.cursor = 'pointer';
+            
+            // On click again, open settings tab
+            btnElement.onclick = () => {
+                const langUrl = this.isEdge ? 'https://microsoftedge.github.io/Demos/built-in-ai/playgrounds/translator-api/' : 'chrome://settings/languages';
+                window.open(langUrl, '_blank');
+            };
         }
     }
 
@@ -1013,19 +1044,32 @@ class ChromeAISetupFramework {
         try {
             const monitor = (m) => {
                 m.addEventListener('downloadprogress', (e) => {
-                    const pct = Math.round((e.loaded || 0) * 100);
+                    let pct = 0;
+                    if (e.total) {
+                        pct = Math.round((e.loaded / e.total) * 100);
+                    } else if (e.loaded && e.loaded <= 1) {
+                        pct = Math.round(e.loaded * 100);
+                    } else if (e.loaded > 1) {
+                        this.elDlPct.textContent = `Downloading…`;
+                        return;
+                    }
                     this.elDlFill.style.width = `${pct}%`;
                     this.elDlPct.textContent = `Downloading… ${pct}%`;
                 });
             };
 
             const initDownload = async () => {
+                const options = { sourceLanguage: source, targetLanguage: target };
+                if (!this.isEdge) {
+                    options.monitor = monitor;
+                }
+
                 if ('translation' in self && 'createTranslator' in self.translation) {
-                    return await self.translation.createTranslator({ sourceLanguage: source, targetLanguage: target, monitor });
+                    return await self.translation.createTranslator(options);
                 } else if ('ai' in self && 'translator' in self.ai) {
-                    return await self.ai.translator.create({ sourceLanguage: source, targetLanguage: target, monitor });
+                    return await self.ai.translator.create(options);
                 } else if ('Translator' in self && 'create' in self.Translator) {
-                    return await self.Translator.create({ sourceLanguage: source, targetLanguage: target, monitor });
+                    return await self.Translator.create(options);
                 }
                 throw new Error('API missing');
             };
@@ -1116,8 +1160,13 @@ class ChromeAISetupFramework {
             if (customDesc) {
                 this.elDesc.innerHTML = customDesc;
             } else if (hasTargetLanguage) {
-                const langUrl = this.isEdge ? 'edge://settings/languages' : 'chrome://settings/languages';
-                this.elDesc.innerHTML = `To translate, download the target language pack in your browser settings — ${this.createCopyableSpan(langUrl)}, and click on the <strong>Needs download</strong> button below.`;
+                if (this.isEdge) {
+                    const langUrl = 'https://microsoftedge.github.io/Demos/built-in-ai/playgrounds/translator-api/';
+                    this.elDesc.innerHTML = `To translate in Edge, open the Edge Playground — ${this.createCopyableSpan(langUrl)} — select your target language, and test a translation to trigger the download. Then return here and click <strong>Install Language Pack</strong>.`;
+                } else {
+                    const langUrl = 'chrome://settings/languages';
+                    this.elDesc.innerHTML = `To translate, download the target language pack in your browser settings — ${this.createCopyableSpan(langUrl)}, and click on the <strong>Install Language Pack</strong> button below.`;
+                }
             } else {
                 this.elDesc.textContent = 'Add a target language in Polylang settings before downloading a translation pack.';
             }
