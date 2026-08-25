@@ -183,7 +183,10 @@ const App = ({ onDestory, prefix, postIds }) => {
         } else if ('setup' === screen) {
             cls.push(`${prefix}-setting-modal-active`);
             cls.push(`${prefix}-setup-modal-active`);
-        } else if ('pro' === screen || 'error' === screen) {
+        } else if ('pro' === screen) {
+            cls.push(`${prefix}-setting-modal-active`);
+            cls.push(`${prefix}-pro-modal-active`);
+        } else if ('error' === screen) {
             cls.push(`${prefix}-setting-modal-active`);
         }
 

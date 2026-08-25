@@ -182,6 +182,13 @@ $modal-width: clamp(320px, 1040px, 94vw);
             max-height: 90vh;
         }
 
+        // Every Pro screen shares one width, so the bulk notice and the
+        // re-translation notice cannot come out different sizes just because
+        // their longest line differs.
+        &.#{$prefix}-pro-modal-active {
+            width: clamp(320px, 720px, 94vw);
+        }
+
         // The combined setup screen shows languages and engines side by side,
         // so it needs more room than the single column setting screens.
         &.#{$prefix}-setup-modal-active {

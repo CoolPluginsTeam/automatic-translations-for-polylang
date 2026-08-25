@@ -90,8 +90,8 @@ $atfp_video_title       = __( 'Automate the Translation Process with AutoPoly - 
 					<?php endforeach; ?>
 				</ol>
 				<div class="atfp-dashboard-btns-row">
-					<a href="<?php echo esc_url( admin_url( 'edit.php?post_type=page' ) ); ?>" class="atfp-dashboard-btn primary"><?php echo esc_html__( 'Page Translation', 'automatic-translations-for-polylang' ); ?></a>
-					<a href="<?php echo esc_url( admin_url( 'edit.php?post_type=post' ) ); ?>" class="atfp-dashboard-btn primary"><?php echo esc_html__( 'Post Translation', 'automatic-translations-for-polylang' ); ?></a>
+					<a href="<?php echo esc_url( admin_url( 'edit.php?post_type=page' ) ); ?>" class="atfp-dashboard-btn primary"><?php echo esc_html__( 'Translate Pages', 'automatic-translations-for-polylang' ); ?></a>
+					<a href="<?php echo esc_url( admin_url( 'edit.php?post_type=post' ) ); ?>" class="atfp-dashboard-btn primary"><?php echo esc_html__( 'Translate Posts', 'automatic-translations-for-polylang' ); ?></a>
 				</div>
 				<p>Choose the post status from <a href="<?php echo esc_url( admin_url( 'admin.php?page=polylang-atfp-dashboard&tab=settings' ) ); ?>">Settings</a> to set the default status for translated content.</p>
 			</div>
