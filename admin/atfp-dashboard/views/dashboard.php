@@ -137,7 +137,7 @@ $atfp_video_title       = __( 'Automate the Translation Process with AutoPoly - 
 					</label>
 					<a class="atfp-engine-docs" href="<?php echo esc_url( $atfp_provider['docs'] ); ?>" target="_blank" rel="noopener noreferrer"><?php echo esc_html__( 'Docs', 'automatic-translations-for-polylang' ); ?></a>
 					<?php if ( '' !== $atfp_provider['configure'] ) : ?>
-						<a href="<?php echo esc_url( admin_url( 'admin.php?page=polylang-atfp-dashboard&tab=settings' ) ); ?>" class="atfp-<?php echo esc_attr( $atfp_provider['configure'] ); ?>-configure-button atfp-dashboard-btn" style="display: none;"><?php echo esc_html__( 'Configure', 'automatic-translations-for-polylang' ); ?></a>
+						<a href="<?php echo esc_url( admin_url( 'admin.php?page=polylang-atfp-dashboard&tab=settings' ) ); ?>" class="atfp-<?php echo esc_attr( $atfp_provider['configure'] ); ?>-configure-button atfp-dashboard-btn primary" style="display: none;"><?php echo esc_html__( 'Configure', 'automatic-translations-for-polylang' ); ?></a>
 					<?php endif; ?>
 					<div class="atfp-provider-switch-container" data-provider="<?php echo esc_attr( $atfp_provider_key ); ?>">
 						<label class="atfp-provider-switch">
