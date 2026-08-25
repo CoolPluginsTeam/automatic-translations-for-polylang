@@ -225,8 +225,10 @@ Polylang Addon Dashboard - Admin Panel Styles
 /* ================================================
    Welcome Section
 ================================================ */
+/* Sits inside the start card, so it carries the same horizontal padding as
+   the grid below it rather than sitting flush against the card edge. */
 .atfp-dashboard-welcome {
-    margin-bottom: 20px;
+    padding: 20px 20px 0;
 }
 
 .atfp-dashboard-welcome h1 {
@@ -250,7 +252,7 @@ Polylang Addon Dashboard - Admin Panel Styles
     align-items: stretch;
     display: flex;
     gap: 24px;
-    padding: 20px
+    padding: 16px 20px 20px;
 }
 
 .atfp-dashboard-video {
@@ -260,6 +262,8 @@ Polylang Addon Dashboard - Admin Panel Styles
 
 .atfp-dashboard-video-frame {
     align-items: center;
+    /* The whole poster starts the video, not just the play control. */
+    cursor: pointer;
     aspect-ratio: 4 / 3;
     background-color: var(--background-color);
     background-position: center;
@@ -303,10 +307,15 @@ Polylang Addon Dashboard - Admin Panel Styles
     z-index: 1;
 }
 
+.atfp-dashboard-video-frame:hover .atfp-dashboard-video-play,
 .atfp-dashboard-video-play:hover,
 .atfp-dashboard-video-play:focus {
     background: #c81c13;
     transform: scale(1.06);
+}
+
+.atfp-dashboard-video-frame:has(iframe) {
+    cursor: default;
 }
 
 /* Injected in place of the poster once the viewer opts in. */

@@ -888,22 +888,11 @@ $modal-width: clamp(320px, 1040px, 94vw);
                 }
             }
 
-            .#{$prefix}-status-footer {
-                border: none;
-                display: flex;
-                justify-content: space-between;
-                margin-top: 0;
-                padding: 16px 22.4px;
-                border-top: 2px solid #00000012;
-
-                .#{$prefix}-progress-skeleton {
-                    height: 30px;
-                    width: 172px;
-                }
-
-                a {
-                    transition: all .3s ease-in-out;
-                }
+            // WordPress buttons default to a 3px radius; round the review action
+            // so it matches the rest of the modal.
+            .#{$prefix}-review-btn {
+                border-radius: 6px;
+                padding: 2px 14px;
             }
 
             .#{$prefix}-status-table-container {

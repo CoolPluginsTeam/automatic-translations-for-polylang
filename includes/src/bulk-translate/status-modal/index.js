@@ -440,18 +440,18 @@ const StatusModal = ({ postIds, selectedLanguages, prefix, onDestory, onProRequi
                                                                             href={info.postEditLink}
                                                                             target="_blank"
                                                                             rel="noopener noreferrer"
-                                                                            className="button button-primary"
+                                                                            className={`${prefix}-review-btn button button-primary`}
                                                                             title={sprintf(__('Open the translated %s for review', 'automatic-translations-for-polylang'), atfp_bulk_translate_object.post_label)}
                                                                         >
-                                                                            {__('Review', 'automatic-translations-for-polylang')}
+                                                                            {__('Review Translation', 'automatic-translations-for-polylang')}
                                                                         </a>
                                                                     ) : (
                                                                         <button
-                                                                            className="button disabled"
+                                                                            className={`${prefix}-review-btn button disabled`}
                                                                             disabled
                                                                             title={sprintf(__('Please wait until all translations for this %s are complete before reviewing.', 'automatic-translations-for-polylang'), atfp_bulk_translate_object.post_label)}
                                                                         >
-                                                                            {__('Review', 'automatic-translations-for-polylang')}
+                                                                            {__('Review Translation', 'automatic-translations-for-polylang')}
                                                                         </button>
                                                                     )}
                                                                 </span>
@@ -467,13 +467,6 @@ const StatusModal = ({ postIds, selectedLanguages, prefix, onDestory, onProRequi
                                     );
                                 })}
                             </div>
-                        </div>
-                        <div className={`${prefix}-status-footer`}>
-                            {isLoading ?
-                                <div className={`${prefix}-progress-skeleton`}></div> :
-                                (!(countInfo.postsTranslated > 0 && !pendingPosts.length)) ? <div className={`${prefix}-progress-button button button-primary`} disabled>{sprintf(__('Check Translated %s', 'automatic-translations-for-polylang'), atfp_bulk_translate_object.post_label)}</div> :
-                                    <a className={`${prefix}-progress-button button button-primary`} href={getTranslatedPostLink()}>{sprintf(__('Check Translated %s', 'automatic-translations-for-polylang'), atfp_bulk_translate_object.post_label)}</a>
-                            }
                         </div>
                     </>
                 }

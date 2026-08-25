@@ -61,12 +61,13 @@ $atfp_video_title       = __( 'Automate the Translation Process with AutoPoly - 
 ?>
 <div class="atfp-dashboard-left-section">
 
-	<div class="atfp-dashboard-welcome">
-		<h1><?php echo esc_html__( 'Welcome to AutoPoly 👋', 'automatic-translations-for-polylang' ); ?></h1>
-		<p><?php echo esc_html__( 'Translate your WordPress content with AI and make your website multilingual in minutes.', 'automatic-translations-for-polylang' ); ?></p>
-	</div>
 
 	<div class="atfp-dashboard-card atfp-dashboard-start">
+		<div class="atfp-dashboard-welcome">
+			<h1><?php echo esc_html__( 'Welcome to AutoPoly 👋', 'automatic-translations-for-polylang' ); ?></h1>
+			<p><?php echo esc_html__( 'Translate your WordPress content with AI and make your website multilingual in minutes.', 'automatic-translations-for-polylang' ); ?></p>
+		</div>
+
 		<div class="atfp-dashboard-start-grid">
 			<div class="atfp-dashboard-video" data-video-id="<?php echo esc_attr( $atfp_video_id ); ?>" data-video-title="<?php echo esc_attr( $atfp_video_title ); ?>">
 				<div class="atfp-dashboard-video-frame" style="background-image:url('<?php echo esc_url( ATFP_URL . 'admin/atfp-dashboard/images/polylang-addon-video.png' ); ?>');">

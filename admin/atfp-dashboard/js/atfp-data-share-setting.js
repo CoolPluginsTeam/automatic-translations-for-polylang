@@ -179,10 +179,15 @@ jQuery(function($) {
      * Load the walkthrough embed only once the viewer asks for it, so the
      * dashboard makes no third-party request on page load.
      */
-    $(document).on('click', '.atfp-dashboard-video-play', function () {
-        const $video = $(this).closest('.atfp-dashboard-video');
-        const $frame = $video.find('.atfp-dashboard-video-frame');
+    $(document).on('click', '.atfp-dashboard-video-frame', function () {
+        const $frame = $(this);
+        const $video = $frame.closest('.atfp-dashboard-video');
         const videoId = $video.data('video-id');
+
+        // Already swapped for the embed, so let the player handle the click.
+        if ($frame.find('iframe').length) {
+            return;
+        }
 
         if (!videoId || !$frame.length) {
             return;
