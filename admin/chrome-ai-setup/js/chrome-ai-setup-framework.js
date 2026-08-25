@@ -37,7 +37,7 @@ class ChromeAISetupFramework {
             cardDescription: 'Free on-device translation. We detect what your browser needs — usually just one click.',
             statusChecking: 'Checking your browser…',
             statusCheckingDesc: 'Give us a second while we detect Chrome AI support.',
-            statusReady: 'Chrome AI is ready ✓',
+            statusReady: 'Chrome AI is Ready',
             statusReadyDesc: 'On-device translation is set up. No API key, no cost.',
             statusDownloadable: 'One step left: download the language model',
             statusDownloadableDesc: 'A one-time ~1–2 GB download enables offline translation. Takes a couple of minutes.',
@@ -911,7 +911,7 @@ class ChromeAISetupFramework {
             if (item.status === 'unsupported') {
                 badgeHtml = `<span style="background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 500;">Unsupported</span>`;
             } else if (item.status === 'available') {
-                badgeHtml = `<span style="background: #dcfce7; color: #166534; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 500;">Ready ✓</span>`;
+                badgeHtml = `<span style="background: #dcfce7; color: #166534; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 500;">Ready</span>`;
             } else if (item.status === 'downloading') {
                 badgeHtml = `<span style="background: #dbeafe; color: #1e40af; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 500;">Downloading...</span>`;
             } else {

@@ -204,7 +204,7 @@ if (! class_exists('AutoPoly')) {
 						'cardDescription' => esc_html__( 'Free on-device translation. We detect what your browser needs — usually just one click.', 'automatic-translations-for-polylang' ),
 						'statusChecking' => esc_html__( 'Checking your browser…', 'automatic-translations-for-polylang' ),
 						'statusCheckingDesc' => esc_html__( 'Give us a second while we detect Chrome AI support.', 'automatic-translations-for-polylang' ),
-						'statusReady' => esc_html__( 'Chrome AI is ready ✓', 'automatic-translations-for-polylang' ),
+						'statusReady' => esc_html__( 'Chrome AI is Ready', 'automatic-translations-for-polylang' ),
 						'statusReadyDesc' => esc_html__( 'On-device translation is set up. No API key, no cost.', 'automatic-translations-for-polylang' ),
 						'statusDownloadable' => esc_html__( 'Language pack required', 'automatic-translations-for-polylang' ),
 						'statusDownloadableDesc' => esc_html__( 'Add the target translation language in your browser settings to download the translation model.', 'automatic-translations-for-polylang' ),
