@@ -69,7 +69,7 @@ $atfp_video_title       = __( 'Automate the Translation Process with AutoPoly - 
 			<div class="atfp-dashboard-video" data-video-id="<?php echo esc_attr( $atfp_video_id ); ?>" data-video-title="<?php echo esc_attr( $atfp_video_title ); ?>">
 				<div class="atfp-dashboard-video-frame" style="background-image:url('<?php echo esc_url( ATFP_URL . 'admin/atfp-dashboard/images/polylang-addon-video.png' ); ?>');">
 					<button type="button" class="atfp-dashboard-video-play" aria-label="<?php esc_attr_e( 'Play the AutoPoly walkthrough video', 'automatic-translations-for-polylang' ); ?>">
-						<svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
 							<path d="M6.5 5.5v13l11-6.5-11-6.5z" fill="currentColor" />
 						</svg>
 					</button>

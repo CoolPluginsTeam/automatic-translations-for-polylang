@@ -30,9 +30,13 @@ const App = ({ onDestory, prefix, postIds }) => {
     const [proRequiredReason, setProRequiredReason] = useState(postIds.length > 1 ? 'multiple' : false);
     const [localAiModalError, setLocalAiModalError] = useState(false);
     const [edgeAiModalError, setEdgeAiModalError] = useState(false);
-    const yandexSupport = selectedLanguages.some((language) => yandexLanguage().includes(language) || yandexLanguage().includes(language.replace('_', '-')));
+    // With nothing selected there is no language to check support against, and
+    // Array.some() on an empty array is false -- which would otherwise flag
+    // every engine as unsupported before the user has picked anything.
+    const hasSelectedLanguages = selectedLanguages.length > 0;
+    const yandexSupport = !hasSelectedLanguages || selectedLanguages.some((language) => yandexLanguage().includes(language) || yandexLanguage().includes(language.replace('_', '-')));
     const yandexDisabled = !yandexSupport ? sprintf(__("Yandex Translate does not support the selected target language(s).", 'automatic-translations-for-polylang')) : false;
-    const googleSupport = selectedLanguages.some((language) => {
+    const googleSupport = !hasSelectedLanguages || selectedLanguages.some((language) => {
         const googleLang = language === 'zh'
             ? (languageObject['zh']?.locale || '').replace('_', '-')
             : language;

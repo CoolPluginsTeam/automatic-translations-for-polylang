@@ -85,7 +85,7 @@ Polylang Addon Dashboard - Admin Panel Styles
 }
 
 .atfp-dashboard-wrapper h3 {
-    margin: 0 0 20px;
+    margin: 0 0 15px;
     padding: 0;
     font-size: 19px;
     line-height: 1.5em;
@@ -266,7 +266,7 @@ Polylang Addon Dashboard - Admin Panel Styles
        crop it rather than letting it read as a border inside the frame. */
     background-size: 125%;
     border: 1px solid var(--border-color);
-    border-radius: 8px;
+    border-radius: 4px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -284,25 +284,27 @@ Polylang Addon Dashboard - Admin Panel Styles
 
 .atfp-dashboard-video-play {
     align-items: center;
-    background: var(--primary-color);
-    border: none;
+    background: #e62117;
+    /* White ring plus a soft shadow lifts the control off the busy poster. */
+    border: 3px solid #f2f2f2;
     border-radius: 50%;
-    box-shadow: 0 4px 12px rgba(48, 178, 48, .35);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, .28);
+    box-sizing: content-box;
     color: #fff;
     cursor: pointer;
     display: flex;
-    height: 64px;
+    height: 48px;
     justify-content: center;
     padding: 0;
     position: relative;
     transition: transform .2s ease, background .2s ease;
-    width: 64px;
+    width: 48px;
     z-index: 1;
 }
 
 .atfp-dashboard-video-play:hover,
 .atfp-dashboard-video-play:focus {
-    background: var(--secondary-color);
+    background: #c81c13;
     transform: scale(1.06);
 }
 
@@ -347,7 +349,7 @@ ol.atfp-dashboard-step-list li {
     align-items: center;
     background: var(--primary-light-color);
     border-radius: 50%;
-    color: var(--secondary-color);
+    color: #30b230;
     display: inline-flex;
     flex-shrink: 0;
     font-size: 12px;
@@ -375,7 +377,7 @@ ol.atfp-dashboard-step-list li {
 
 ul.atfp-engine-list {
     list-style: none;
-    margin: 10px 0 0;
+    margin: 0px;
     padding: 0;
 }
 

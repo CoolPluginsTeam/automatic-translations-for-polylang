@@ -6,7 +6,7 @@ if(!defined('ABSPATH')){
 <!-- Right Sidebar -->
 <div class="atfp-dashboard-sidebar">
     <div class="atfp-dashboard-status atfp-dashboard-card">
-        <h3><?php esc_html_e('Auto Translation Status', 'automatic-translations-for-polylang'); ?></h3>
+        <h3><?php esc_html_e('Translation Statistics', 'automatic-translations-for-polylang'); ?></h3>
         <div class="atfp-dashboard-sts-top">
             <?php
 
@@ -49,11 +49,11 @@ if(!defined('ABSPATH')){
             $atfp_time_taken_str = atfp_format_time_taken($totals['time_taken']);
             ?>
               <span><?php echo esc_html(atfp_format_number($totals['character_count'])); ?></span>
-            <span><?php esc_html_e('Total Characters Translated!', 'automatic-translations-for-polylang'); ?></span>
+            <span><?php esc_html_e('Characters Translated!', 'automatic-translations-for-polylang'); ?></span>
         </div>
         <ul class="atfp-dashboard-sts-btm">
             <li><span><?php esc_html_e('Total Strings', 'automatic-translations-for-polylang'); ?></span> <span><?php echo esc_html(atfp_format_number($totals['string_count'])); ?></span></li>
-            <li><span><?php esc_html_e('Total Pages / Posts', 'automatic-translations-for-polylang'); ?></span> <span><?php echo esc_html($totals['translation_count']); ?></span></li>
+            <li><span><?php esc_html_e('Pages / Posts Translated', 'automatic-translations-for-polylang'); ?></span> <span><?php echo esc_html($totals['translation_count']); ?></span></li>
             <li><span><?php esc_html_e('Time Taken', 'automatic-translations-for-polylang'); ?></span> <span><?php echo esc_html($atfp_time_taken_str); ?></span></li>
         </ul>
         <?php

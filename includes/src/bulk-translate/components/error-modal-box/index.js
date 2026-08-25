@@ -65,16 +65,34 @@ const ErrorModalBox = ({ message, onClose, Title, prefix, children }) => {
     return (
         <div className={`${prefix}-error-modal-box-container`}>
             <div className={`${prefix}-error-modal-box`}>
-                <div className={`${prefix}-error-modal-box-header`}>
-                    {Title && <h3>{Title}</h3>}
-                    <button type="button" aria-label={__('Close', 'automatic-translations-for-polylang')} className={`${prefix}-error-modal-box-close`} onClick={onClose}>&times;</button>
+                <div className={`${prefix}-header`}>
+                    <div className={`${prefix}-modal-header-inner`}>
+                        {Title && <h2>{Title}</h2>}
+                    </div>
+                    <button
+                        type="button"
+                        className={`${prefix}-modal-close`}
+                        onClick={onClose}
+                        title={__('Close', 'automatic-translations-for-polylang')}
+                        aria-label={__('Close', 'automatic-translations-for-polylang')}
+                    >
+                        &times;
+                    </button>
                 </div>
+
                 <div className={`${prefix}-error-modal-box-body`}>
                     <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(stringifiedMessage) }} />
                     {children}
                 </div>
-                <div className={`${prefix}-error-modal-box-footer`}>
-                    <button className={`${prefix}-error-modal-box-close button button-primary`} onClick={onClose}>&#8592; {__('Back', 'automatic-translations-for-polylang')}</button>
+
+                <div className={`${prefix}-footer`}>
+                    <button
+                        type="button"
+                        className={`${prefix}-footer-button button button-primary`}
+                        onClick={onClose}
+                    >
+                        {__('Back', 'automatic-translations-for-polylang')}
+                    </button>
                 </div>
             </div>
         </div>
