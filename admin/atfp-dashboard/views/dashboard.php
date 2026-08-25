@@ -91,8 +91,9 @@ $atfp_video_title       = __( 'Automate the Translation Process with AutoPoly - 
 				</ol>
 				<div class="atfp-dashboard-btns-row">
 					<a href="<?php echo esc_url( admin_url( 'edit.php?post_type=page' ) ); ?>" class="atfp-dashboard-btn primary"><?php echo esc_html__( 'Page Translation', 'automatic-translations-for-polylang' ); ?></a>
-					<a href="<?php echo esc_url( 'https://docs.coolplugins.net/plugin/ai-translation-for-polylang/?' . sanitize_text_field( $atfp_utm_parameters ) . '&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_learn_more' ); ?>" class="atfp-dashboard-btn" target="_blank"><?php echo esc_html__( 'Learn More', 'automatic-translations-for-polylang' ); ?></a>
+					<a href="<?php echo esc_url( admin_url( 'edit.php?post_type=post' ) ); ?>" class="atfp-dashboard-btn primary"><?php echo esc_html__( 'Post Translation', 'automatic-translations-for-polylang' ); ?></a>
 				</div>
+				<p>Choose the post status from <a href="<?php echo esc_url( admin_url( 'admin.php?page=polylang-atfp-dashboard&tab=settings' ) ); ?>">Settings</a> to set the default status for translated content.</p>
 			</div>
 		</div>
 	</div>
