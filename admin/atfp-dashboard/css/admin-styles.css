@@ -250,23 +250,23 @@ Polylang Addon Dashboard - Admin Panel Styles
     align-items: stretch;
     display: flex;
     gap: 24px;
+    padding: 20px
 }
 
 .atfp-dashboard-video {
-    flex: 0 0 37%;
-    max-width: 37%;
+    flex: 0 0 45%;
+    max-width: 45%;
 }
 
 .atfp-dashboard-video-frame {
     align-items: center;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 5 / 3;
     background-color: var(--background-color);
     background-position: center;
     /* The poster ships with its own white margin, so zoom past `cover` to
        crop it rather than letting it read as a border inside the frame. */
-    background-size: 125%;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
+    background-size: 103%;
+    border-radius: 9px;
     display: flex;
     flex-direction: column;
     justify-content: center;
