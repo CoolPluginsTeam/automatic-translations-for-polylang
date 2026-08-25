@@ -295,7 +295,7 @@ const BulkPageChoice = ({ prefix, postIds, onDestory, onReasonChange, onTranslat
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            {__('Get Bulk Translation', 'automatic-translations-for-polylang')}
+                            {__('Upgrade for Bulk Translation', 'automatic-translations-for-polylang')}
                             <span className={`${prefix}-pro-upgrade-icon`} aria-hidden="true">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M14 4h6v6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
