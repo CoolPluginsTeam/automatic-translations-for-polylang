@@ -9,7 +9,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$atfp_active_providers = ATFP_Helper::get_active_providers();
+$atfp_active_providers  = ATFP_Helper::get_active_providers();
+$atfp_default_provider  = ATFP_Helper::get_default_provider();
+$atfp_default_nonce     = wp_create_nonce( 'atfp_update_enabled_providers' );
 
 /**
  * Translation engines shipped with the free version.
@@ -96,22 +98,55 @@ $atfp_video_title       = __( 'Automate the Translation Process with AutoPoly - 
 
 	<div class="atfp-dashboard-card atfp-dashboard-engines">
 		<h3><?php echo esc_html__( 'Translation engines', 'automatic-translations-for-polylang' ); ?></h3>
-		<ul class="atfp-engine-list">
+		<p class="atfp-engine-intro"><?php echo esc_html__( 'Select your default translation engine. This engine will be pre-selected when the translation modal opens.', 'automatic-translations-for-polylang' ); ?></p>
+
+		<div class="atfp-engine-note">
+			<span class="atfp-engine-note-icon" aria-hidden="true">
+				<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<circle cx="12" cy="12" r="10" fill="currentColor" />
+					<path d="M12 11v6" stroke="#fff" stroke-width="2" stroke-linecap="round" />
+					<circle cx="12" cy="7.8" r="1.2" fill="#fff" />
+				</svg>
+			</span>
+			<p><?php echo esc_html__( 'You can change the engine anytime from the translation modal.', 'automatic-translations-for-polylang' ); ?></p>
+		</div>
+
+		<ul class="atfp-engine-list" data-nonce="<?php echo esc_attr( $atfp_default_nonce ); ?>">
 			<?php foreach ( $atfp_providers as $atfp_provider_key => $atfp_provider ) : ?>
-				<li class="atfp-engine-row atfp-card-<?php echo esc_attr( $atfp_provider_key ); ?>">
+				<?php $atfp_is_default = ( $atfp_default_provider === $atfp_provider_key ); ?>
+				<li class="atfp-engine-row atfp-card-<?php echo esc_attr( $atfp_provider_key ); ?><?php echo $atfp_is_default ? ' is-default' : ''; ?>">
 					<img class="atfp-engine-logo" src="<?php echo esc_url( ATFP_URL . 'assets/images/' . $atfp_provider['logo'] ); ?>" alt="">
 					<span class="atfp-engine-name"><?php echo esc_html( $atfp_provider['name'] ); ?></span>
 					<span class="atfp-engine-status">
 						<span class="atfp-engine-status-ready"><?php echo esc_html__( 'Ready', 'automatic-translations-for-polylang' ); ?></span>
 						<span class="atfp-engine-status-setup"><?php echo esc_html__( 'Not ready', 'automatic-translations-for-polylang' ); ?></span>
 					</span>
+					<label class="atfp-engine-default">
+						<input
+							type="radio"
+							name="atfp_default_provider"
+							class="atfp-engine-default-input"
+							value="<?php echo esc_attr( $atfp_provider_key ); ?>"
+							<?php checked( $atfp_is_default, true ); ?>
+						/>
+						<span class="atfp-engine-default-mark" aria-hidden="true"></span>
+						<span class="atfp-engine-default-text"><?php echo esc_html__( 'Set as default', 'automatic-translations-for-polylang' ); ?></span>
+						<span class="atfp-engine-default-active"><?php echo esc_html__( 'Default engine', 'automatic-translations-for-polylang' ); ?></span>
+					</label>
 					<a class="atfp-engine-docs" href="<?php echo esc_url( $atfp_provider['docs'] ); ?>" target="_blank" rel="noopener noreferrer"><?php echo esc_html__( 'Docs', 'automatic-translations-for-polylang' ); ?></a>
 					<?php if ( '' !== $atfp_provider['configure'] ) : ?>
 						<a href="<?php echo esc_url( admin_url( 'admin.php?page=polylang-atfp-dashboard&tab=settings' ) ); ?>" class="atfp-<?php echo esc_attr( $atfp_provider['configure'] ); ?>-configure-button atfp-dashboard-btn primary" style="display: none;"><?php echo esc_html__( 'Configure', 'automatic-translations-for-polylang' ); ?></a>
 					<?php endif; ?>
 					<div class="atfp-provider-switch-container" data-provider="<?php echo esc_attr( $atfp_provider_key ); ?>">
 						<label class="atfp-provider-switch">
-							<input type="checkbox" class="atfp-provider-toggle" data-provider="<?php echo esc_attr( $atfp_provider_key ); ?>" <?php checked( in_array( $atfp_provider_key, $atfp_active_providers, true ), true ); ?>/>
+							<input
+								type="checkbox"
+								class="atfp-provider-toggle"
+								data-provider="<?php echo esc_attr( $atfp_provider_key ); ?>"
+								<?php checked( in_array( $atfp_provider_key, $atfp_active_providers, true ), true ); ?>
+								<?php disabled( $atfp_is_default, true ); ?>
+								title="<?php echo $atfp_is_default ? esc_attr__( 'The default engine stays enabled. Pick another default to turn this off.', 'automatic-translations-for-polylang' ) : ''; ?>"
+							/>
 							<span class="atfp-switch-slider"></span>
 							<span class="screen-reader-text">
 								<?php
@@ -127,6 +162,9 @@ $atfp_video_title       = __( 'Automate the Translation Process with AutoPoly - 
 				</li>
 			<?php endforeach; ?>
 		</ul>
+
+
+		<div class="atfp-engine-default-message" aria-live="polite"></div>
 	</div>
 
 	<?php require_once ATFP_DIR_PATH . $file_prefix . 'footer.php'; ?>

@@ -130,6 +130,52 @@ jQuery(function($) {
     });
 
     /**
+     * Persist the engine that should be pre-selected in the translation modal.
+     */
+    $(document).on('change', '.atfp-engine-default-input', function () {
+        const $input = $(this);
+        const provider = $input.val();
+        const $list = $input.closest('.atfp-engine-list');
+        const $message = $('.atfp-engine-default-message');
+
+        $message.text('').removeClass('is-error');
+
+        $.ajax({
+            url: atfpSettingsScriptData.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'atfp_update_default_provider',
+                default_provider: provider,
+                update_providers_key: $list.data('nonce')
+            },
+            success: function (response) {
+                if (response.success === true) {
+                    const $row = $input.closest('.atfp-engine-row');
+
+                    // Only one row can carry the default, so move the marker and
+                    // the toggle lock that keeps the default engine enabled.
+                    $('.atfp-engine-row').removeClass('is-default');
+                    $('.atfp-engine-row .atfp-provider-toggle').prop('disabled', false).attr('title', '');
+
+                    $row.addClass('is-default');
+                    $row.find('.atfp-provider-toggle').prop('disabled', true);
+                    return;
+                }
+
+                // Re-check whichever row the server still considers the default.
+                $input.prop('checked', false);
+                $message
+                    .addClass('is-error')
+                    .text(response.data && response.data.message ? response.data.message : response.data);
+            },
+            error: function () {
+                $input.prop('checked', false);
+                $message.addClass('is-error').text('Could not save the default translation engine.');
+            }
+        });
+    });
+
+    /**
      * Load the walkthrough embed only once the viewer asks for it, so the
      * dashboard makes no third-party request on page load.
      */

@@ -637,6 +637,23 @@ if (! class_exists('ATFP_Helper')) {
 			return array('chrome-built-in-ai', 'edge-built-in-ai', 'yandex-translate', 'google-translate');
 		}
 
+		/**
+		 * Engine pre-selected when the translation modal opens.
+		 *
+		 * Falls back to Google Translate when the site has not chosen one, and
+		 * returns an empty string when that engine is switched off, so callers
+		 * never get a default the modal could not actually use.
+		 *
+		 * @since 1.5.0
+		 *
+		 * @return string Provider key, or '' when there is no usable default.
+		 */
+		public static function get_default_provider(){
+			$default_provider = sanitize_key( get_option( 'atfp_default_provider', 'google-translate' ) );
+
+			return in_array( $default_provider, self::get_active_providers(), true ) ? $default_provider : '';
+		}
+
 		public static function get_active_providers(){
 			$active_providers = get_option('atfp_enabled_providers', array());
 

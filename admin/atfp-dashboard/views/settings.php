@@ -19,14 +19,6 @@ if(!current_user_can('manage_options')){
             update_option('atfp_bulk_post_status', $atfp_bulk_post_status);
         }
 
-        // Engine pre-selected in the bulk translation modal. An empty value
-        // means "no preference", so it is allowed alongside the provider list.
-        $atfp_default_provider = isset($_POST['atfp_default_provider']) ? sanitize_key(wp_unslash($_POST['atfp_default_provider'])) : '';
-
-        if ('' === $atfp_default_provider || in_array($atfp_default_provider, ATFP_Helper::get_supported_providers(), true)) {
-            update_option('atfp_default_provider', $atfp_default_provider);
-        }
-
         // Handle feedback checkbox
         $atfp_feedback_opt_in = isset($_POST['atfp-dashboard-feedback-checkbox']) ? 'yes' : 'no';
         
@@ -154,31 +146,6 @@ if(!current_user_can('manage_options')){
                 <?php esc_html_e('Defaults applied when you translate content with AI.', 'automatic-translations-for-polylang'); ?>
             </p>
             <div class="atfp-dashboard-bulk-settings atfp-dashboard-translation-settings atfp-dashboard-settings-card">
-            <?php
-            $atfp_provider_labels = array(
-                'chrome-built-in-ai' => __('Chrome Built-in AI', 'automatic-translations-for-polylang'),
-                'edge-built-in-ai'   => __('Edge Built-in AI', 'automatic-translations-for-polylang'),
-                'google-translate'   => __('Google Translate', 'automatic-translations-for-polylang'),
-                'yandex-translate'   => __('Yandex Translate', 'automatic-translations-for-polylang'),
-            );
-
-            $atfp_default_provider = get_option('atfp_default_provider', '');
-            ?>
-            <label for="atfp_default_provider">
-                <?php echo esc_html__('Default Translation Engine', 'automatic-translations-for-polylang'); ?>
-            </label>
-            <select name="atfp_default_provider" id="atfp_default_provider">
-                <option value="" <?php selected($atfp_default_provider, ''); ?>><?php echo esc_html__('No default', 'automatic-translations-for-polylang'); ?></option>
-                <?php foreach ($atfp_provider_labels as $atfp_provider_key => $atfp_provider_label) : ?>
-                    <option value="<?php echo esc_attr($atfp_provider_key); ?>" <?php selected($atfp_default_provider, $atfp_provider_key); ?>>
-                        <?php echo esc_html($atfp_provider_label); ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-            <p class="api-settings-description">
-                <?php echo esc_html__('This engine is pre-selected when the AI translation modal opens. Enable it on the Dashboard tab first, otherwise the selection is skipped.', 'automatic-translations-for-polylang'); ?>
-            </p>
-
             <!-- Add bulk translate post status -->
             <?php $atfp_bulk_post_status = get_option('atfp_bulk_post_status', 'draft'); ?>
             <label class="atfp-settings-group-label">

@@ -60,6 +60,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				add_action('wp_ajax_atfp_update_translate_data', array($this, 'atfp_update_translate_data'));
 				add_action( 'wp_ajax_atfp_update_elementor_data', array( $this, 'update_elementor_data' ) );
 				add_action( 'wp_ajax_atfp_update_enabled_providers', array( $this, 'update_enabled_providers' ) );
+				add_action( 'wp_ajax_atfp_update_default_provider', array( $this, 'update_default_provider' ) );
 				add_action( 'wp_ajax_atfp_install_plugin', array( $this, 'atfp_install_plugin' ) );
 
 			}
@@ -549,6 +550,17 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 
 			$enabled_providers=array_merge($default_providers, $updated_providers);
 
+			/*
+			 * The UI locks the default engine's toggle, but a disabled input is
+			 * only a client side guard. Keep the stored default enabled here so a
+			 * crafted request cannot leave a default the modal cannot pre-select.
+			 */
+			$atfp_default_provider = sanitize_key(get_option('atfp_default_provider', 'google-translate'));
+
+			if ('' !== $atfp_default_provider && isset($enabled_providers[$atfp_default_provider])) {
+				$enabled_providers[$atfp_default_provider] = true;
+			}
+
 			update_option('atfp_enabled_providers', $enabled_providers);
 
 			$enabled_providers=array_filter($enabled_providers, function($status){
@@ -557,6 +569,45 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 
 			wp_send_json_success( array( 'providers' => array_keys($enabled_providers), 'message' => __( 'Enabled providers updated successfully.', 'automatic-translations-for-polylang' ) ) );
         }
+
+		/**
+		 * Store the engine pre-selected when the translation modal opens.
+		 *
+		 * @since 1.5.0
+		 *
+		 * @return void
+		 */
+		public function update_default_provider() {
+			if ( ! check_ajax_referer( 'atfp_update_enabled_providers', 'update_providers_key', false ) ) {
+				return wp_send_json_error( __( 'Invalid security token sent.', 'automatic-translations-for-polylang' ) );
+			}
+
+			if ( ! current_user_can( 'manage_options' ) ) {
+				return wp_send_json_error( __( 'Unauthorized', 'automatic-translations-for-polylang' ), 403 );
+			}
+
+			$default_provider = isset( $_POST['default_provider'] ) ? sanitize_key( wp_unslash( $_POST['default_provider'] ) ) : '';
+
+			// An empty value clears the default, so it is valid alongside the list.
+			if ( '' !== $default_provider && ! in_array( $default_provider, ATFP_Helper::get_supported_providers(), true ) ) {
+				return wp_send_json_error( __( 'Invalid translation engine.', 'automatic-translations-for-polylang' ) );
+			}
+
+			// A disabled engine can never be pre-selected, so refuse rather than
+			// storing a default the translation modal would silently ignore.
+			if ( '' !== $default_provider && ! in_array( $default_provider, ATFP_Helper::get_active_providers(), true ) ) {
+				return wp_send_json_error( __( 'Enable this translation engine before making it the default.', 'automatic-translations-for-polylang' ) );
+			}
+
+			update_option( 'atfp_default_provider', $default_provider );
+
+			return wp_send_json_success(
+				array(
+					'default_provider' => $default_provider,
+					'message'          => __( 'Default translation engine updated successfully.', 'automatic-translations-for-polylang' ),
+				)
+			);
+		}
 
 		public function atfp_install_plugin()
         {

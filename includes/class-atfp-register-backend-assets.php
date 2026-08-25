@@ -150,7 +150,7 @@ class ATFP_Register_Backend_Assets
                 'default_language_slug' => $default_language_slug,
                 'active_providers' => $active_providers,
                 // Engine pre-selected in the bulk translation modal.
-                'default_provider' => sanitize_key( get_option( 'atfp_default_provider', '' ) ),
+                'default_provider' => ATFP_Helper::get_default_provider(),
                 'pro_version_url' => esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/'),
                 'refrence_text' => class_exists('ATFP_Helper') ? ATFP_Helper::utm_source_text() : 'utm_source=atfp_plugin',
             ), $extra_data)

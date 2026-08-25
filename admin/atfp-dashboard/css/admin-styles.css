@@ -260,7 +260,7 @@ Polylang Addon Dashboard - Admin Panel Styles
 
 .atfp-dashboard-video-frame {
     align-items: center;
-    aspect-ratio: 5 / 3;
+    aspect-ratio: 4 / 3;
     background-color: var(--background-color);
     background-position: center;
     /* The poster ships with its own white margin, so zoom past `cover` to
@@ -375,6 +375,126 @@ ol.atfp-dashboard-step-list li {
     margin-top: 20px;
 }
 
+.atfp-engine-intro {
+    color: var(--text-color-light);
+    font-size: 14px;
+    margin: -12px 0 16px;
+}
+
+/* Info strips above and below the engine list. */
+.atfp-engine-note {
+    align-items: center;
+    background: #eef4ff;
+    border: 1px solid #cfe0f5;
+    border-radius: 8px;
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding: 12px 14px;
+}
+
+.atfp-engine-note-icon {
+    color: #2271b1;
+    display: inline-flex;
+    flex-shrink: 0;
+}
+
+.atfp-engine-note p {
+    color: #2271b1;
+    font-size: 13px;
+    margin: 0;
+    padding: 0;
+}
+
+/* Default engine picker inside each row. */
+.atfp-engine-default {
+    align-items: center;
+    cursor: pointer;
+    display: inline-flex;
+    gap: 8px;
+    margin-left: auto;
+}
+
+.atfp-engine-default-input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.atfp-engine-default-mark {
+    border: 1px solid #8c8f94;
+    border-radius: 50%;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    height: 18px;
+    position: relative;
+    width: 18px;
+}
+
+.atfp-engine-default-text,
+.atfp-engine-default-active {
+    color: var(--text-color-light);
+    font-size: 13px;
+}
+
+/* The active state swaps the radio for a star and the label for a status. */
+.atfp-engine-default-active {
+    display: none;
+}
+
+.atfp-engine-row.is-default {
+    background: var(--primary-light-color);
+    border-color: var(--primary-color);
+}
+
+.atfp-engine-row.is-default .atfp-engine-default-text {
+    display: none;
+}
+
+.atfp-engine-row.is-default .atfp-engine-default-active {
+    color: var(--primary-color);
+    display: inline;
+    font-weight: 600;
+}
+
+.atfp-engine-row.is-default .atfp-engine-default-mark {
+    border: none;
+    color: var(--primary-color);
+}
+
+.atfp-engine-row.is-default .atfp-engine-default-mark::before {
+    content: "★";
+    font-size: 18px;
+    left: 50%;
+    line-height: 1;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.atfp-engine-default-input:focus-visible + .atfp-engine-default-mark {
+    box-shadow: 0 0 0 2px var(--primary-light-color), 0 0 0 4px var(--primary-color);
+}
+
+/* The default engine's toggle is locked on, so it must not inherit the greyed
+   out disabled styling that would make it look switched off. */
+.atfp-engine-row.is-default .atfp-provider-toggle:disabled + .atfp-switch-slider,
+.atfp-engine-row.is-default .atfp-provider-toggle:disabled:checked + .atfp-switch-slider {
+    background-color: var(--primary-color);
+    cursor: not-allowed;
+    opacity: 1;
+}
+
+.atfp-engine-default-message {
+    color: #d63638;
+    font-size: 13px;
+    margin-top: 10px;
+}
+
+.atfp-engine-default-message:empty {
+    display: none;
+}
+
 ul.atfp-engine-list {
     list-style: none;
     margin: 0px;
@@ -421,7 +541,6 @@ li.atfp-engine-row:last-child {
 .atfp-engine-docs {
     color: var(--text-color-light);
     font-size: 13px;
-    margin-left: auto;
     text-decoration: underline;
 }
 
