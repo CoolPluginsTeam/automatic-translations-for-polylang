@@ -94,7 +94,7 @@ $atfp_providers = [
 			<h3><?php echo esc_html__( 'AI Translation Providers', 'automatic-translations-for-polylang' ); ?></h3>
 			<div class="atfp-dashboard-providers-grid">
 				<?php foreach($atfp_providers as $provider_key => $provider_data): ?>
-					<div class="atfp-dashboard-provider-card atfp-card-<?php echo esc_attr( $provider_key ); ?>">
+					<div class="atfp-dashboard-provider-card atfp-card-<?php echo esc_attr( $provider_key ); ?> cais-card-<?php echo esc_attr( $provider_key ); ?>">
 						<div class="atfp-dashboard-provider-header">
 							<a href="<?php echo esc_url( $provider_data[4][0] ); ?>" target="_blank" rel="noopener noreferrer">
 								<img src="<?php echo esc_url( ATFP_URL . 'assets/images/' . $provider_data[1] ); ?>" alt="<?php echo esc_attr__( $provider_data[0], 'automatic-translations-for-polylang' ); ?>">
@@ -115,12 +115,12 @@ $atfp_providers = [
 							<?php endforeach; ?>
 						</ul>
 						<div class="atfp-dashboard-provider-buttons">
-							<a href="<?php echo esc_url( $provider_data[4][0] ); ?>" class="atfp-dashboard-btn" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Docs', 'automatic-translations-for-polylang' ); ?></a>
+							<a href="<?php echo esc_url( $provider_data[4] ); ?>" class="atfp-dashboard-btn" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Docs', 'automatic-translations-for-polylang' ); ?></a>
 							<?php if($provider_key === 'chrome-built-in-ai'){ ?>
-                                <a href="<?php echo esc_url(admin_url('admin.php?page=polylang-atfp-dashboard&tab=settings')); ?>" class="atfp-chrome-configure-button atfp-dashboard-btn primary" style="display: none;"><?php echo esc_html__('Configure', 'automatic-translations-for-polylang'); ?></a>
+                                <a href="<?php echo esc_url(admin_url('admin.php?page=polylang-atfp-dashboard&tab=settings')); ?>" class="cais-chrome-configure-button atfp-dashboard-btn primary" style="display: none;"><?php echo esc_html__('Configure', 'automatic-translations-for-polylang'); ?></a>
                             <?php }
                              if($provider_key === 'edge-built-in-ai'){ ?>
-                                <a href="<?php echo esc_url(admin_url('admin.php?page=polylang-atfp-dashboard&tab=settings')); ?>" class="atfp-edge-configure-button atfp-dashboard-btn primary" style="display: none;"><?php echo esc_html__('Configure', 'automatic-translations-for-polylang'); ?></a>
+                                <a href="<?php echo esc_url(admin_url('admin.php?page=polylang-atfp-dashboard&tab=settings')); ?>" class="cais-edge-configure-button atfp-dashboard-btn primary" style="display: none;"><?php echo esc_html__('Configure', 'automatic-translations-for-polylang'); ?></a>
                             <?php } ?>
 						</div>
 					</div>

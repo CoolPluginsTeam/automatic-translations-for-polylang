@@ -136,3 +136,16 @@ jQuery(function($) {
         e.preventDefault();
     });
 });
+
+// Initialize notice logic for this specific plugin (Polylang addon)
+jQuery(function ($) {
+    if (typeof ChromeAINoticeFramework !== 'undefined' && typeof caisNoticeData !== 'undefined') {
+        new ChromeAINoticeFramework({
+            container: '#cais-chrome-setup-container',
+            dataVar: 'caisNoticeData',
+            providerTypes: ['chrome', 'edge'],
+            // atfp-provider-toggle is used by admin-styles.css — keep plugin-specific class
+            toggleSelectorPattern: '.cais-card-{type}-built-in-ai .atfp-provider-toggle'
+        });
+    }
+});

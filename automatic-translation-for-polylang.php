@@ -175,17 +175,54 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 			}
 
 			if($page == 'polylang-atfp-dashboard' && (empty($active_tab) || in_array($active_tab, array('settings', 'dashboard')))){
-				wp_enqueue_script( 'atfp-dashboard-settings-script', ATFP_URL . 'admin/atfp-dashboard/js/atfp-chrome-ai-notice.min.js', array('jquery'), ATFP_V, true );
+				wp_enqueue_style( 'cais-framework-style', ATFP_URL . 'admin/chrome-ai-setup/css/chrome-ai-setup-framework.css', array(), time() );
+				wp_enqueue_script( 'cais-framework-script', ATFP_URL . 'admin/chrome-ai-setup/js/chrome-ai-setup-framework.js', array(), time(), true );
+				wp_enqueue_script( 'cais-notice-script', ATFP_URL . 'admin/chrome-ai-setup/js/chrome-ai-setup-notice.min.js', array('jquery', 'cais-framework-script'), time(), true );
 				
 				$atfp_langugages=array(
 					'source_language' => 'en',
 					'source_language_label' => 'English',
 					'target_language_label' => 'Hindi',
+					'chrome_icon_url' => esc_url( ATFP_URL . 'assets/images/chrome.png' ),
+					'edge_icon_url'   => esc_url( ATFP_URL . 'assets/images/edge.png' ),
 					'all_languages' => array(),
+					'alternative_url' => esc_url( admin_url( 'admin.php?page=polylang-atfp-dashboard' ) ),
 					'chrome_ai_bypass_api_check' => false,
 					'chrome_ai_bypass_language_check' => false,
 					'chrome_ai_bypass_browser_check' => false,
-					'enabled_providers' => ATFP_Helper::get_active_providers()
+					'enabled_providers' => ATFP_Helper::get_active_providers(),
+					'texts' => array(
+						'cardTitle' => esc_html__( 'Chrome AI Setup', 'automatic-translations-for-polylang' ),
+						'cardDescription' => esc_html__( 'Free on-device translation. We detect what your browser needs — usually just one click.', 'automatic-translations-for-polylang' ),
+						'statusChecking' => esc_html__( 'Checking your browser…', 'automatic-translations-for-polylang' ),
+						'statusCheckingDesc' => esc_html__( 'Give us a second while we detect Chrome AI support.', 'automatic-translations-for-polylang' ),
+						'statusReady' => esc_html__( 'Chrome AI is ready ✓', 'automatic-translations-for-polylang' ),
+						'statusReadyDesc' => esc_html__( 'On-device translation is set up. No API key, no cost.', 'automatic-translations-for-polylang' ),
+						'statusDownloadable' => esc_html__( 'Language pack required', 'automatic-translations-for-polylang' ),
+						'statusDownloadableDesc' => esc_html__( 'Add the target translation language in your browser settings to download the translation model.', 'automatic-translations-for-polylang' ),
+						'statusDownloading' => esc_html__( 'Downloading language model…', 'automatic-translations-for-polylang' ),
+						'statusDownloadingDesc' => esc_html__( 'Keep this tab open. This happens once.', 'automatic-translations-for-polylang' ),
+						'statusError' => esc_html__( 'Chrome AI is currently unavailable', 'automatic-translations-for-polylang' ),
+						'statusErrorDesc' => esc_html__( 'Something blocked the check. See advanced steps or use alternative options.', 'automatic-translations-for-polylang' ),
+						'statusHttpError' => esc_html__( 'Chrome AI needs a secure (HTTPS) connection', 'automatic-translations-for-polylang' ),
+						'statusHttpErrorDesc' => esc_html__( 'Serving wp-admin over HTTP prevents Chrome AI from launching. Serve pages over HTTPS or use an alternative engine.', 'automatic-translations-for-polylang' ),
+						'btnEnable' => esc_html__( 'Enable Chrome AI', 'automatic-translations-for-polylang' ),
+						'btnRetry' => esc_html__( 'Retry', 'automatic-translations-for-polylang' ),
+						'btnAlternative' => esc_html__( 'Use Another Provider', 'automatic-translations-for-polylang' ),
+						'previewTitle' => esc_html__( 'Try a real translation', 'automatic-translations-for-polylang' ),
+						'previewDesc' => esc_html__( 'Type anything and see the exact on-device result — no page needed.', 'automatic-translations-for-polylang' ),
+						'previewInputLabel' => esc_html__( 'Your text', 'automatic-translations-for-polylang' ),
+						'previewOutputLabel' => esc_html__( 'Translation', 'automatic-translations-for-polylang' ),
+						'previewPlaceholder' => esc_html__( 'Type or paste text to translate…', 'automatic-translations-for-polylang' ),
+						'previewOutPlaceholder' => esc_html__( 'Translation will appear here.', 'automatic-translations-for-polylang' ),
+						'btnTranslate' => esc_html__( 'Translate preview', 'automatic-translations-for-polylang' ),
+						'translatingText' => esc_html__( 'Translating…', 'automatic-translations-for-polylang' ),
+						'translationDone' => esc_html__( 'Done in {ms} ms · on-device · no data left your browser', 'automatic-translations-for-polylang' ),
+						'translationFailed' => esc_html__( '✗ Translation failed. This pair may need its own model, or see advanced steps below.', 'automatic-translations-for-polylang' ),
+						'advancedTitle' => esc_html__( 'Still not working? Advanced steps', 'automatic-translations-for-polylang' ),
+						'advancedBrowserRequirements' => esc_html__( 'Chrome AI translation needs Chrome or Edge on desktop (version 138+). It doesn’t run on mobile phones or tablets.', 'automatic-translations-for-polylang' ),
+						'openSetupGuide' => esc_html__( 'Open official setup guide →', 'automatic-translations-for-polylang' ),
+					)
 				);
 
 				$atfp_supported_langugages=ATFP_Helper::get_polylang_supported_languages();
@@ -200,8 +237,7 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 					}
 				}
 
-
-				wp_localize_script('atfp-dashboard-settings-script', 'atfpChromeAiNoticeData', $atfp_langugages);
+				wp_localize_script('cais-notice-script', 'caisNoticeData', $atfp_langugages);
 			}
 		}
 
