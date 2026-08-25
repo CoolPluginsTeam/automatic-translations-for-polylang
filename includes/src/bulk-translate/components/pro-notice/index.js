@@ -59,20 +59,19 @@ const ProNotice = ({ prefix, reason, onDestory }) => {
             ],
         },
         'retranslate': {
-            text: __('Re-translating existing content is a <accent>Pro</accent> feature.', 'automatic-translations-for-polylang'),
+            title: __('Unlock Re-Translation with AutoPoly Pro', 'automatic-translations-for-polylang'),
+            desc: __('Upgrade to Pro to re-translate existing content with AI.', 'automatic-translations-for-polylang'),
+            heading: __('Already translated this content?', 'automatic-translations-for-polylang'),
+            text: __('AutoPoly Pro lets you translate it again with AI whenever your original content changes.', 'automatic-translations-for-polylang'),
             utm: 'bulk_retranslate',
             benefits: [
                 {
                     title: __('Re-translate Existing Content', 'automatic-translations-for-polylang'),
-                    desc: __('Update translations with AI in one click.', 'automatic-translations-for-polylang'),
+                    desc: __('Translate previously translated pages again with AI.', 'automatic-translations-for-polylang'),
                 },
                 {
-                    title: __('Better Accuracy', 'automatic-translations-for-polylang'),
-                    desc: __('Improved context-aware translations.', 'automatic-translations-for-polylang'),
-                },
-                {
-                    title: __('Save Time & Effort', 'automatic-translations-for-polylang'),
-                    desc: __('No need to translate manually again.', 'automatic-translations-for-polylang'),
+                    title: __('Re-translate in One Click', 'automatic-translations-for-polylang'),
+                    desc: __('Start AI re-translation quickly without recreating translations manually.', 'automatic-translations-for-polylang'),
                 },
             ],
         },
@@ -96,9 +95,9 @@ const ProNotice = ({ prefix, reason, onDestory }) => {
                                 aria-hidden="true"
                             />
                             <div>
-                                <h2>{__('AutoPoly Pro Feature', 'automatic-translations-for-polylang')}</h2>
+                                <h2>{proMessage.title || __('AutoPoly Pro Feature', 'automatic-translations-for-polylang')}</h2>
                                 <p className={`${prefix}-modal-desc`}>
-                                    {__('Upgrade to Pro to unlock advanced AI translation capabilities.', 'automatic-translations-for-polylang')}
+                                    {proMessage.desc || __('Upgrade to Pro to unlock advanced AI translation capabilities.', 'automatic-translations-for-polylang')}
                                 </p>
                             </div>
                         </div>
@@ -128,10 +127,12 @@ const ProNotice = ({ prefix, reason, onDestory }) => {
                                 </svg>
                             </span>
                             <h3>
-                                {createInterpolateElement(
-                                    __('Unlock <accent>AutoPoly Pro</accent>', 'automatic-translations-for-polylang'),
-                                    { accent }
-                                )}
+                                {proMessage.heading
+                                    ? <span className={`${prefix}-pro-accent`}>{proMessage.heading}</span>
+                                    : createInterpolateElement(
+                                        __('Unlock <accent>AutoPoly Pro</accent>', 'automatic-translations-for-polylang'),
+                                        { accent }
+                                    )}
                             </h3>
                             {proMessage.text && (
                                 <p>{createInterpolateElement(proMessage.text, { accent })}</p>

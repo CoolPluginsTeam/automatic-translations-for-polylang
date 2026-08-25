@@ -280,8 +280,8 @@ const BulkPageChoice = ({ prefix, postIds, onDestory, onReasonChange, onTranslat
                         {sprintf(
                             /* translators: 1: number of selected items, 2: post type label. */
                             _n(
-                                'Upgrade to Pro to translate all %1$d %2$s at once with Bulk Translation.',
-                                'Upgrade to Pro to translate all %1$d %2$s at once with Bulk Translation.',
+                                'Upgrade to Pro to translate all %1$d %2$s at once.',
+                                'Upgrade to Pro to translate all %1$d %2$s at once.',
                                 selectedCount,
                                 'automatic-translations-for-polylang'
                             ),

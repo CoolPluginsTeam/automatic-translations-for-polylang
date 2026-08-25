@@ -271,6 +271,11 @@ const StatusModal = ({ postIds, selectedLanguages, prefix, onDestory, onProRequi
                                 <span className={`${prefix}-bulk-status-running`}></span>
                             )}
                         </h2>
+                        {bulkStatus === "running" && (
+                            <p className={`${prefix}-modal-desc`}>
+                                {__("Please keep this window open while your pages/posts are being translated.", 'automatic-translations-for-polylang')}
+                            </p>
+                        )}
                         {bulkStatus === "completed" &&
                             countInfo.errorPosts < 1 &&
                             !(translatePostInfo && Object.values(translatePostInfo).some((info) => info?.status === "error")) &&
