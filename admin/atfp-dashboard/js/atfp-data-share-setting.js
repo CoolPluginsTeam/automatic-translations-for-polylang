@@ -198,10 +198,7 @@ jQuery(function($) {
 
         $frame.empty().append($iframe);
     });
-});
 
-// Initialize notice logic for this specific plugin (Polylang addon)
-jQuery(function ($) {
     if (typeof ChromeAINoticeFramework !== 'undefined' && typeof caisNoticeData !== 'undefined') {
         new ChromeAINoticeFramework({
             container: '#cais-chrome-setup-container',
