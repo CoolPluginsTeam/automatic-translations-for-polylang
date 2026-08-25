@@ -389,6 +389,9 @@ class ChromeAISetupFramework {
                         <span id="cais-dl-pct">Preparing download…</span>
                     </div>
 
+                    <!-- Language Packs Status List -->
+                    <div id="cais-language-status-list" style="display:none; margin-top: 15px; margin-bottom: 20px;"></div>
+
                     <!-- Translation Preview Section -->
                     <div class="cais-preview-section" id="cais-test-ui" style="display:none;">
                         <div class="cais-preview-header">
@@ -400,7 +403,7 @@ class ChromeAISetupFramework {
                             <span class="cais-lang-fixed">${this.options.sourceLanguageLabel}</span>
                             <span class="cais-lang-arrow">→</span>
                             <select id="cais-tgt-select" class="cais-lang-select">
-                                ${langOptions}
+                                <option value="" disabled selected>Loading...</option>
                             </select>
                             <span class="cais-pair-state" id="cais-pair-state"></span>
                         </div>
@@ -449,6 +452,7 @@ class ChromeAISetupFramework {
         this.elRunBtn = this.container.querySelector('#cais-run-btn');
         this.elPreviewNote = this.container.querySelector('#cais-preview-note');
         this.elAccordion = this.container.querySelector('#cais-fallback-accordion');
+        this.elLanguageStatusList = this.container.querySelector('#cais-language-status-list');
     }
 
     /**
@@ -795,22 +799,199 @@ class ChromeAISetupFramework {
             return;
         }
 
-        // 5. Query overall availability (using source and first target pair as probe)
+        // 5. Query overall availability for all required languages
         try {
-            const defaultTarget = this.elTgtSelect.value || 'fr';
-            const status = await ChromeAISetupFramework.getLanguagePairStatus(this.options.sourceLanguage, defaultTarget);
+            this.downloadedLanguages = [];
+            this.missingLanguages = [];
+            this.allLanguageStatuses = [];
+            
+            let isDownloading = false;
 
-            if (status === 'available') {
+            for (const lang of this.options.availableLanguages) {
+                if (lang.code.toLowerCase() === this.options.sourceLanguage.toLowerCase()) continue;
+
+                if (!ChromeAISetupFramework.getSupportedLanguages().includes(lang.code.toLowerCase())) {
+                    this.allLanguageStatuses.push({ lang, status: 'unsupported' });
+                    continue;
+                }
+
+                try {
+                    const status = await ChromeAISetupFramework.getLanguagePairStatus(this.options.sourceLanguage, lang.code);
+                    this.allLanguageStatuses.push({ lang, status });
+
+                    if (status === 'available') {
+                        this.downloadedLanguages.push(lang);
+                    } else if (status === 'downloadable' || status === 'downloading' || status === 'after-download') {
+                        this.missingLanguages.push({ lang, status });
+                        if (status === 'downloading') isDownloading = true;
+                    }
+                } catch (e) {
+                    this.allLanguageStatuses.push({ lang, status: 'error' });
+                }
+            }
+
+            this.updateDropdownUI();
+            this.updateLanguageStatusList();
+
+            if (this.missingLanguages.length > 0) {
+                if (isDownloading) {
+                    this.realDownload(); // Start monitoring the download
+                } else {
+                    const settingsUrl = this.isEdge ? 'edge://settings/languages' : 'chrome://settings/languages';
+                    const customDesc = `To translate, download the target language pack in your browser settings — <strong>${this.createCopyableSpan(settingsUrl)}</strong>, and click on the <strong>Needs download</strong> button below.`;
+                    this.renderState('downloadable', null, customDesc);
+                }
+            } else if (this.downloadedLanguages.length > 0) {
                 this.renderState('available');
-            } else if (status === 'downloadable' || status === 'after-download') {
-                this.renderState('downloadable');
-            } else if (status === 'downloading') {
-                this.realDownload();
             } else {
-                this.renderState('error', 'Translation pair not supported', `Your browser reported the translator cannot translate from ${this.options.sourceLanguageLabel} to this language.`);
+                this.renderState('error', 'No supported languages', 'None of your site languages are supported by Chrome AI.');
             }
         } catch (e) {
             this.renderState('error', 'Browser check failed', `An error occurred while calling the Translator API: ${e.message || e}`);
+        }
+    }
+
+    /**
+     * Update the target language dropdown options
+     */
+    updateDropdownUI() {
+        if (!this.elTgtSelect) return;
+        
+        let html = '';
+        if (this.downloadedLanguages.length > 0) {
+            this.downloadedLanguages.forEach(lang => {
+                html += `<option value="${lang.code}">${lang.name}</option>`;
+            });
+            this.elTgtSelect.disabled = false;
+        } else {
+            html = `<option value="" disabled selected>No downloaded languages available</option>`;
+            this.elTgtSelect.disabled = true;
+            // Also disable test button
+            if (this.elRunBtn) this.elRunBtn.disabled = true;
+        }
+        this.elTgtSelect.innerHTML = html;
+        this.checkPairSupport();
+    }
+
+    /**
+     * Render the Language Packs Status list (All languages with their status pills)
+     */
+    updateLanguageStatusList() {
+        if (!this.elLanguageStatusList || this.allLanguageStatuses.length === 0) return;
+
+        let html = `
+            <div style="background: #fafafa; border: 1px solid #e5e7eb; border-radius: 6px; padding: 15px; margin-top: 20px;">
+                <h4 style="margin: 0 0 15px 0; font-size: 14px; color: #374151;">Language Packs Status</h4>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+        `;
+
+        this.allLanguageStatuses.forEach(item => {
+            const name = `${item.lang.name} (${item.lang.code.toUpperCase()})`;
+            let badgeHtml = '';
+            
+            if (item.status === 'unsupported') {
+                badgeHtml = `<span style="background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 500;">Unsupported</span>`;
+            } else if (item.status === 'available') {
+                badgeHtml = `<span style="background: #dcfce7; color: #166534; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 500;">Ready ✓</span>`;
+            } else if (item.status === 'downloading') {
+                badgeHtml = `<span style="background: #dbeafe; color: #1e40af; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 500;">Downloading...</span>`;
+            } else {
+                // downloadable / after-download / error
+                badgeHtml = `<span class="cais-needs-download-btn" data-lang="${item.lang.code}" style="background: #ffedd5; color: #9a3412; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 500; cursor: pointer; border: 1px solid #fdba74; transition: all 0.2s;">Needs download</span>`;
+            }
+
+            html += `
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f3f4f6; padding-bottom: 8px;">
+                    <span style="color: #4b5563; font-size: 13px;">${name}</span>
+                    ${badgeHtml}
+                </div>
+            `;
+        });
+
+        html += `
+                </div>
+            </div>
+        `;
+
+        this.elLanguageStatusList.innerHTML = html;
+        this.elLanguageStatusList.style.display = 'block';
+
+        // Bind clicks for Needs download pills
+        const downloadBtns = this.elLanguageStatusList.querySelectorAll('.cais-needs-download-btn');
+        downloadBtns.forEach(btn => {
+            // Hover effects for the button
+            btn.addEventListener('mouseenter', () => {
+                btn.style.background = '#fdba74';
+                btn.style.borderColor = '#fb923c';
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.style.background = '#ffedd5';
+                btn.style.borderColor = '#fdba74';
+            });
+            // Click to download
+            btn.addEventListener('click', () => {
+                const langCode = btn.getAttribute('data-lang');
+                // Trigger download for this specific language
+                this.realDownloadForLang(langCode, btn);
+            });
+        });
+    }
+
+    /**
+     * Start the real download process for a specific Chrome AI model
+     */
+    async realDownloadForLang(targetLang, btnElement) {
+        if (!ChromeAISetupFramework.isApiPresent()) {
+            this.renderState('unavailable');
+            return;
+        }
+
+        const source = this.options.sourceLanguage;
+        let downloader = null;
+
+        // Update button UI
+        btnElement.textContent = 'Downloading...';
+        btnElement.style.background = '#dbeafe';
+        btnElement.style.color = '#1e40af';
+        btnElement.style.borderColor = 'transparent';
+        btnElement.style.cursor = 'default';
+        
+        try {
+            const monitor = (m) => {
+                m.addEventListener('downloadprogress', (e) => {
+                    const pct = Math.round((e.loaded || 0) * 100);
+                    btnElement.textContent = `Downloading... ${pct}%`;
+                });
+            };
+
+            const initDownload = async () => {
+                if ('translation' in self && 'createTranslator' in self.translation) {
+                    return await self.translation.createTranslator({ sourceLanguage: source, targetLanguage: targetLang, monitor });
+                } else if ('ai' in self && 'translator' in self.ai) {
+                    return await self.ai.translator.create({ sourceLanguage: source, targetLanguage: targetLang, monitor });
+                } else if ('Translator' in self && 'create' in self.Translator) {
+                    return await self.Translator.create({ sourceLanguage: source, targetLanguage: targetLang, monitor });
+                }
+                throw new Error('API missing');
+            };
+
+            downloader = await initDownload();
+            if (downloader.ready) {
+                await downloader.ready;
+            }
+
+            if (downloader && typeof downloader.destroy === 'function') {
+                downloader.destroy();
+            }
+
+            // Re-run liveDetect to refresh the whole list and dropdown
+            this.liveDetect();
+        } catch (e) {
+            console.error('ChromeAISetupFramework: Model download failed', e);
+            btnElement.textContent = 'Failed - Retry';
+            btnElement.style.background = '#fee2e2';
+            btnElement.style.color = '#991b1b';
+            btnElement.style.cursor = 'pointer';
         }
     }
 
@@ -932,9 +1113,11 @@ class ChromeAISetupFramework {
             this.elDot.className = 'cais-status-dot action';
             this.elTitle.textContent = customTitle || this.texts.statusDownloadable || 'Language pack required';
 
-            if (hasTargetLanguage) {
+            if (customDesc) {
+                this.elDesc.innerHTML = customDesc;
+            } else if (hasTargetLanguage) {
                 const langUrl = this.isEdge ? 'edge://settings/languages' : 'chrome://settings/languages';
-                this.elDesc.innerHTML = `To translate, download the target language pack in your browser settings — ${this.createCopyableSpan(langUrl)}`;
+                this.elDesc.innerHTML = `To translate, download the target language pack in your browser settings — ${this.createCopyableSpan(langUrl)}, and click on the <strong>Needs download</strong> button below.`;
             } else {
                 this.elDesc.textContent = 'Add a target language in Polylang settings before downloading a translation pack.';
             }
