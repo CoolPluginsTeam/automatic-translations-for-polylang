@@ -121,7 +121,7 @@ $atfp_video_title       = __( 'Automate the Translation Process with AutoPoly - 
 					<span class="atfp-engine-name"><?php echo esc_html( $atfp_provider['name'] ); ?></span>
 					<span class="atfp-engine-status">
 						<span class="atfp-engine-status-ready"><?php echo esc_html__( 'Ready', 'automatic-translations-for-polylang' ); ?></span>
-						<span class="atfp-engine-status-setup"><?php echo esc_html__( 'Not ready', 'automatic-translations-for-polylang' ); ?></span>
+						<span class="atfp-engine-status-setup"><?php echo esc_html__( 'Not Configured', 'automatic-translations-for-polylang' ); ?></span>
 					</span>
 					<label class="atfp-engine-default">
 						<input
