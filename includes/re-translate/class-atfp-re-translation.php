@@ -4,16 +4,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! class_exists( 'ATFP_Re_Translation' ) ) {
+if ( ! class_exists( 'ATFPP_Re_Translation' ) ) {
 
 	/**
-	 * ATFP_Re_Translation class
+	 * ATFPP_Re_Translation class
 	 *
 	 * @package Autopoly
 	 * @subpackage Autopoly_Translation_For_Polylang_Pro
 	 * @since 1.0.0
 	 */
-	class ATFP_Re_Translation {
+	class ATFPP_Re_Translation {
 
 		/**
 		 * Current post id
@@ -137,5 +137,5 @@ if ( ! class_exists( 'ATFP_Re_Translation' ) ) {
 		}
 	}
 
-	new ATFP_Re_Translation();
+	new ATFPP_Re_Translation();
 }

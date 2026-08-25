@@ -648,6 +648,59 @@ if (! class_exists('ATFP_Helper')) {
 		 *
 		 * @return string Provider key, or '' when there is no usable default.
 		 */
+		/**
+		 * Translation status for the rows currently listed.
+		 *
+		 * Embedded in the page so the modal can suggest which single post to
+		 * translate without an admin-ajax round trip, which on a site with many
+		 * plugins costs far more than the lookup itself.
+		 *
+		 * @since 1.6.0
+		 *
+		 * @param int[] $post_ids Listed post IDs.
+		 *
+		 * @return array Map of post ID to title, translation counts and support flags.
+		 */
+		public static function get_posts_translation_meta( $post_ids ) {
+			$post_ids = array_values( array_filter( array_unique( array_map( 'absint', (array) $post_ids ) ) ) );
+			$post_ids = array_slice( $post_ids, 0, 200 );
+
+			$meta = array();
+
+			if ( empty( $post_ids ) || ! function_exists( 'pll_get_post_translations' ) ) {
+				return $meta;
+			}
+
+			// Single query for every row, so the lookups below are cache hits.
+			_prime_post_caches( $post_ids );
+
+			$language_count   = count( self::get_polylang_supported_languages() );
+			$default_language = function_exists( 'pll_default_language' ) ? pll_default_language( 'slug' ) : '';
+
+			foreach ( $post_ids as $post_id ) {
+				if ( ! current_user_can( 'edit_post', $post_id ) ) {
+					continue;
+				}
+
+				$editor_type = self::get_post_editor_type( $post_id );
+
+				// pll_get_post_translations() includes the post itself.
+				$translations  = pll_get_post_translations( $post_id );
+				$post_language = function_exists( 'pll_get_post_language' ) ? pll_get_post_language( $post_id, 'slug' ) : '';
+				$title         = get_the_title( $post_id );
+
+				$meta[ (string) $post_id ] = array(
+					'title'     => '' !== trim( $title ) ? $title : __( '(no title)', 'automatic-translations-for-polylang' ),
+					'done'      => max( 0, count( $translations ) - 1 ),
+					'complete'  => ( $language_count > 0 && count( $translations ) >= $language_count ),
+					'source'    => ( '' !== $default_language && $post_language === $default_language ),
+					'supported' => (bool) ( $editor_type && self::is_supported_editor_type( $editor_type ) ),
+				);
+			}
+
+			return $meta;
+		}
+
 		public static function get_default_provider(){
 			$default_provider = sanitize_key( get_option( 'atfp_default_provider', 'google-translate' ) );
 

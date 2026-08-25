@@ -800,11 +800,11 @@ if (! class_exists('AutoPoly')) {
 					return;
 				}
 
-				if (!class_exists('ATFP_Re_Translation')) {
+				if (!class_exists('ATFPP_Re_Translation')) {
 					return;
 				}
 
-				$old_untranslated_post = ATFP_Re_Translation::is_old_untranslated_post($post->ID);
+				$old_untranslated_post = ATFPP_Re_Translation::is_old_untranslated_post($post->ID);
 				if ($old_untranslated_post) {
 					$source_language = pll_get_post_language($post->ID, 'name');
 					$target_language = pll_get_post_language($old_untranslated_post, 'name');
@@ -816,7 +816,7 @@ if (! class_exists('AutoPoly')) {
 					return;
 				}
 
-				if (!ATFP_Re_Translation::retranslation_status($post->ID)) {
+				if (!ATFPP_Re_Translation::retranslation_status($post->ID)) {
 					return;
 				}
 
@@ -860,7 +860,7 @@ if (! class_exists('AutoPoly')) {
 				) {
 					$this->atfp_translate_button_new_post(false);
 				} else {
-					$re_translation_status = ATFP_Re_Translation::retranslation_status($post->ID);
+					$re_translation_status = ATFPP_Re_Translation::retranslation_status($post->ID);
 
 					if ($re_translation_status) {
 						$this->atfp_retranslation_text(false);

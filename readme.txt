@@ -4,27 +4,37 @@ Tags: Polylang, AI Translation, Content Translation, Translate
 Requires at least: 5.0
 Tested up to: 7.0
 Requires PHP: 5.6
-Stable tag: 1.6.0
+Stable tag: 1.5.0
 Author URI: https://coolplugins.net/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=author_page&utm_content=plugins_list
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 AI Translation For Polylang simplifies your translation process by automatically translating all pages/posts content from one language to another.
 
 == Description ==
+
 **Translate Your WordPress Website 10X Faster – Powered by AI, Built for Polylang**.
 
 https://youtu.be/QGOueushC8U?si=Q-fpZ98sv4hcC9o-
 
-[**AutoPoly - AI Translation For Polylang**](https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=top_description) reduces your translation **workload by 90%**. With this powerful addon, you can translate your **Gutenberg** and **Elementor pages**, sections, and widgets within a few clicks.
+[**AutoPoly - AI Translation For Polylang**](https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=top_description) reduces your translation **workload by 90%**. With this powerful addon, you can translate your sections, modules and widgets of **Gutenberg**, **Divi**, and **Elementor pages** within a few clicks.
 
-This addon duplicates and translates **page/post titles, content, images, galleries, and meta fields,** eliminating the need to manually adjust featured images, layouts, and other elements.
+This addon works by duplicating and translating **page/post titles, content, images, galleries, and meta fields,** eliminating the need to manually adjust featured images, layouts, and other elements.
 
-Whether you're using **Elementor** or **Gutenberg**, this addon makes the translation process easier, allowing you to focus on expanding your global audience effortlessly.
+== Compatibility ==
 
+**AutoPoly - AI Translation For Polylang** is compatible with popular WordPress editors, page builders, plugins, and custom fields, making it easier to create and manage multilingual websites.
+
+* **Elementor:** Translate Elementor pages, sections, widgets, templates, and supported content while preserving the original layout and styling.
+* **Gutenberg:** Translate WordPress block-based content, including core blocks and supported third-party blocks such as Spectra, Kadence Blocks, Stackable, Otter Blocks, and Essential Blocks.
+* **Divi:** Translate content created with the Divi Builder, including pages and layouts. 
+* **Classic Editor:** Translate content created with the WordPress Classic Editor. 
+* **WPBakery:** Translate supported content created using the WPBakery Page Builder.
+* **WooCommerce:** Translate WooCommerce content such as product titles, descriptions, and other supported product fields using Polylang's multilingual setup.
+* **ACF (Advanced Custom Fields):** Translate supported ACF fields, including **Text**, **Textarea**, and **WYSIWYG** fields in Gutenberg pages.
 
 == Key Features ==
 
-* **AI Automatic Translation** - Translate your Elementor & Gutenberg website content using Chrome built-in AI. This feature enables real-time translation directly within the browser, without any paid API services.
+* **AI Automatic Translation** - Translate your Elementor & Gutenberg website content using Chrome built-in AI or Edge built-in AI. This feature enables real-time translation directly within the browser, without any paid API services.
 * **Elementor Page Translation** - Translate entire Elementor pages, including all sections, widgets, and content, without losing styles or design.
 * **Gutenberg Block Compatibility** - Automatically translate content within Gutenberg blocks, including core blocks and popular third-party blocks like Spectra, Kadence, Stackable, Otter, and Essential.
 * **Automatic Content Translation** - Effortlessly translate post titles, content, images, galleries, and meta fields from one language to another using Machine & AI Translations.
@@ -41,6 +51,7 @@ Whether you're using **Elementor** or **Gutenberg**, this addon makes the transl
 
 * ✅ **Yandex Translate Widget Support:** Available
 * ✅ **Chrome Built-in AI Translation Support:** Available
+* ✅ **Edge Built-in AI Translation Support:** Available
 * ✅ **API Key Required:** Not Required (Yandex Widget & Chrome Built-in AI)
 * ✅ **Gutenberg Block Compatibility**
 * ✅ **Inline Translation**
@@ -65,6 +76,7 @@ Whether you're using **Elementor** or **Gutenberg**, this addon makes the transl
 * **✅ Inline Translation:** Translate specific text blocks or widgets directly on the front end.
 * ✅  **Gutenberg Block Compatibility:** Fully compatible with Gutenberg, this plugin allow you to translate block-based layouts.
 * ✅ **Chrome Built-in AI Translation Support:** Instantly translate content directly inside browser using Chrome’s built-in AI translator.
+* ✅ **Edge Built-in AI Translation Support:** Automatically translate content in real-time inside Microsoft Edge.
 * ✅ **Gemini Translation Support:** Use Gemini AI to generate high-quality, context-aware translations.
 * ✅ **Google Translate Widget Support:** Automate the translation process using the Google Translate Widget.
 * ✅ **OpenAI Translation Support:** Access OpenAI’s advanced language models for more natural translations.
@@ -73,13 +85,12 @@ Whether you're using **Elementor** or **Gutenberg**, this addon makes the transl
 
 &#x20;[**Upgrade to Pro!**](https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=get_pro)
 
-https://www.youtube.com/watch?v=M-3Miv_JTY4
-
 #### Our Advanced Language Switcher Plugins
 
-[Language Switcher – Polylang for Divi](https://wordpress.org/plugins/language-switcher-for-divi-polylang/): Add a customizable language switcher to your website inside the Divi Builder using Polylang.
+* **[Language Switcher for Polylang – Elementor, Gutenberg, & Divi](https://wordpress.org/plugins/language-switcher-for-divi-polylang/)**: Add a customizable language switcher block, widget or module to your **Gutenberg**, **Elementor**, or **Divi** Pages.
 
-[Language Switcher for Elementor & Polylang](https://go.coolplugins.net/language-switcher): Add a powerful language switcher to your website and easily translate Elementor Templates.
+The plugin also includes a Floating Language Switcher, allowing visitors to switch languages from anywhere on your website without adding a switcher to your header, menu, or page content.
+
 
 #### Check out our advanced Automatic Translate Addon for Loco Translate
 
@@ -169,7 +180,7 @@ This plugin provides automatic translation services for Polylang using the Yande
 
 == Frequently Asked Questions ==
 
-= What does the **AutoPoly - AI Translation For Polylang** plugin do? =
+= What does the AutoPoly - AI Translation For Polylang plugin do? =
 This plugin automatically copies and translates your posts, including titles, content, images, galleries, and meta fields, from one language to another using Chrome AI. It works with Elementor and Gutenberg blocks, replicating the original content and styles across different languages.
 
 = Is this plugin officially developed by Polylang? =
@@ -197,10 +208,45 @@ The translated content is managed within the WordPress editor, just like your or
 = Can I undo the automatic translations if needed? =
 Yes, you can manually edit or remove the translated content in the WordPress editor after it has been automatically translated.
 
-**=** Which editors and page builders are supported? =
+= Is AutoPoly compatible with Elementor? =
 
-AutoPoly fully supports Gutenberg blocks, Elementor pages, and several popular third-party block libraries such as Spectra, Kadence Blocks, Otter Blocks, Stackable, and Essential Blocks.
-The pro version of this addon supports the Classic Editor, allowing translation of standard content created without blocks.
+Yes. AutoPoly supports Elementor page translation, including Elementor pages, sections, widgets, and templates. It translates supported content while preserving the original layout and styling.
+
+= Does AutoPoly work with Gutenberg? =
+
+Yes. AutoPoly supports Gutenberg and can translate content within WordPress core blocks and supported third-party blocks, including Spectra, Kadence Blocks, Stackable, Otter Blocks, and Essential Blocks.
+
+= Does AutoPoly support Divi? =
+
+Yes. AutoPoly supports Divi page translation. Divi 5 Page Translation is available in the Pro version. Your translated content keeps the original Divi layout and styling.
+
+= Can I translate Classic Editor content with AutoPoly? =
+
+Yes. Classic Editor Translation is available in the Pro version. You can translate content created using the WordPress Classic Editor.
+
+= Is AutoPoly compatible with WPBakery Page Builder? =
+
+Yes. AutoPoly can translate supported WPBakery content. However, compatibility may vary depending on the elements and third-party addons used on your site. We recommend testing your WPBakery pages before translating your entire website.
+
+= Does AutoPoly support WooCommerce? =
+
+Yes. AutoPoly can translate supported WooCommerce content, including products, when used with Polylang. Bulk Translation Pro also allows you to translate multiple products at once.
+
+= Does AutoPoly support Advanced Custom Fields (ACF)? =
+
+Yes. AutoPoly supports ACF fields with Text, Textarea, and WYSIWYG field types in Gutenberg pages.
+
+= Does AutoPoly work with third-party Gutenberg blocks? =
+
+Yes. AutoPoly supports several popular third-party Gutenberg block libraries, including Spectra, Kadence Blocks, Stackable, Otter Blocks, and Essential Blocks. For custom or unsupported blocks, you can add them through the plugin's supported blocks settings.
+
+= Can I use AutoPoly with multiple page builders on the same website? =
+
+Yes. You can use AutoPoly on a WordPress website that contains content created with different supported editors and page builders, such as Gutenberg, Elementor, Divi, and Classic Editor. Some editor-specific features, such as Divi 5 and Classic Editor translation, are available only in the Pro version.
+
+= Does AutoPoly support custom blocks and custom content? =
+
+AutoPoly supports several third-party Gutenberg blocks and provides a Supported Blocks section for making unsupported custom blocks available for translation. However, compatibility with every custom block, widget, shortcode, or third-party plugin cannot be guaranteed. We recommend testing custom content before translating your complete website.
 
 = What if the translation quality is not accurate? =
 While the plugin uses Chrome AI for automatic translations, you can manually adjust the translated content within the WordPress editor to ensure accuracy.

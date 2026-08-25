@@ -268,7 +268,7 @@ class ATFP_Register_Backend_Assets
                 return;
             }
 
-            $old_untranslated_post=ATFP_Re_Translation::is_old_untranslated_post($post->ID);
+            $old_untranslated_post=ATFPP_Re_Translation::is_old_untranslated_post($post->ID);
             if($old_untranslated_post){
                 $data = array(
                     'action_fetch'       => 'atfp_fetch_post_content',
@@ -293,7 +293,7 @@ class ATFP_Register_Backend_Assets
 
         if ((!empty($page_translated) && $page_translated === 'true') || empty($parent_post_language_slug)) {
             if(function_exists('get_the_ID')){
-                $old_untranslated_post=ATFP_Re_Translation::is_old_untranslated_post(get_the_ID());
+                $old_untranslated_post=ATFPP_Re_Translation::is_old_untranslated_post(get_the_ID());
                 if($old_untranslated_post){
                     $current_post_id=get_the_ID();
                     $elementor_data = \Elementor\Plugin::$instance->documents->get( $old_untranslated_post )->get_elements_data();
@@ -611,7 +611,7 @@ class ATFP_Register_Backend_Assets
 	}
 
     private function enqueue_re_translation_assets($editor_type, $post_id){
-        if(!class_exists('ATFP_Re_Translation') || !ATFP_Re_Translation::retranslation_status($post_id)){
+        if(!class_exists('ATFPP_Re_Translation') || !ATFPP_Re_Translation::retranslation_status($post_id)){
             return;
         }
 

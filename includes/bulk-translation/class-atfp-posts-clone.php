@@ -132,7 +132,7 @@ class ATFPP_Posts_Clone {
 			foreach ( $post_data_keys as $key ) {
 				$valid_key = substr( $key, 5 );
 
-				$valid_fields = ATFP_Re_Translation::re_translate_fields();
+				$valid_fields = ATFPP_Re_Translation::re_translate_fields();
 
 				if ( isset( $key[0] ) && substr( $key, 0, 5 ) === 'post_' && ! in_array( $valid_key, $re_translate['fieldsType'] ) && ! in_array( $valid_key, $valid_fields ) ) {
 					unset( $post_data[ $key ] );

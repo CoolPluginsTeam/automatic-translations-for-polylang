@@ -9,6 +9,7 @@ import yandexLanguage from './components/translate-provider/yandex/yandex-langua
 import googleLanguage from './components/translate-provider/google/google-language';
 import SettingModal from './setting-modal';
 import ProNotice from './components/pro-notice';
+import BulkPageChoice from './components/pro-notice/bulk-choice';
 import Notice from './components/Notice';
 
 const App = ({ onDestory, prefix, postIds }) => {
@@ -20,7 +21,10 @@ const App = ({ onDestory, prefix, postIds }) => {
       atfp_bulk_translate_object.default_language_slug
     ];
 
-    const hasPosts = postIds.length > 0;
+    // Local copy so the Pro screen can narrow a multi row selection down to the
+    // single post the free version will translate.
+    const [activePostIds, setActivePostIds] = useState(postIds);
+    const hasPosts = activePostIds.length > 0;
     const errorMessage = hasPosts ? '' : emptyPostIdsErrorMessage;
 
     const [selectedLanguages, setSelectedLanguages] = useState(Object.keys(targetLanguages));
@@ -273,7 +277,18 @@ const App = ({ onDestory, prefix, postIds }) => {
     return <div
         id={`${prefix}-container`}
         className={containerCls(screen)}>
-        {'pro' === screen && <ProNotice prefix={prefix} reason={proRequiredReason} onDestory={destroyApp} />}
+        {'pro' === screen && ('multiple' === proRequiredReason
+            ? <BulkPageChoice
+                prefix={prefix}
+                postIds={activePostIds}
+                onDestory={destroyApp}
+                onReasonChange={setProRequiredReason}
+                onTranslateSingle={(postId) => {
+                    setActivePostIds([postId]);
+                    setProRequiredReason(false);
+                }}
+            />
+            : <ProNotice prefix={prefix} reason={proRequiredReason} onDestory={destroyApp} />)}
 
         {'error' === screen && <ErrorMessageScreen />}
 
@@ -281,7 +296,7 @@ const App = ({ onDestory, prefix, postIds }) => {
             <div
                 className={`${prefix}-skeleton-loader`}></div> :
             <StatusModal
-                postIds={postIds}
+                postIds={activePostIds}
                 selectedLanguages={selectedLanguages}
                 prefix={prefix}
                 onDestory={destroyApp}

@@ -120,9 +120,42 @@ if (!class_exists('ATFP_Bulk_Translation')):
             return $new_actions;
         }
 
+        /**
+         * Render the modal mount point and the data it needs.
+         *
+         * Translation status for the listed rows is embedded here rather than
+         * fetched over admin-ajax, so the modal can open immediately.
+         *
+         * @return void
+         */
         public function bulk_translate_container()
         {
             echo "<div id='atfp-bulk-translate-wrapper'></div>";
+
+            if ( ! class_exists( 'ATFP_Helper' ) ) {
+                return;
+            }
+
+            $atfp_listed_posts = array();
+
+            // admin_footer runs after the list table query, so the rows are known.
+            if ( isset( $GLOBALS['wp_query']->posts ) && is_array( $GLOBALS['wp_query']->posts ) ) {
+                foreach ( $GLOBALS['wp_query']->posts as $atfp_listed_post ) {
+                    $atfp_listed_posts[] = is_object( $atfp_listed_post ) ? $atfp_listed_post->ID : $atfp_listed_post;
+                }
+            }
+
+            if ( empty( $atfp_listed_posts ) ) {
+                return;
+            }
+
+            printf(
+                '<script type="application/json" id="atfp-bulk-posts-meta">%s</script>',
+                wp_json_encode(
+                    ATFP_Helper::get_posts_translation_meta( $atfp_listed_posts ),
+                    JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT
+                ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode with JSON_HEX_* escapes the payload.
+            );
         }
     }
 endif;

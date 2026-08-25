@@ -47,6 +47,27 @@ const SettingModalLanguages = ({
 
             {notice}
 
+            <div className={`${prefix}-select-all-languages${allSelected ? ' all-languages-selected' : ''}`}>
+                <label htmlFor={selectAllId}>
+                    <div className={`${prefix}-select-all-languages-inner`}>
+                        <input
+                            type="checkbox"
+                            name="select-all-languages"
+                            id={selectAllId}
+                            onChange={onSelectAllLanguages}
+                            disabled={disabled}
+                            checked={allSelected}
+                        />
+                        <span className={`${prefix}-select-all-languages-check-visual`} aria-hidden="true"></span>
+                        <span className={`${prefix}-language-label`}>
+                            {allSelected
+                                ? __('Unselect All', 'automatic-translations-for-polylang')
+                                : __('Select All', 'automatic-translations-for-polylang')}
+                        </span>
+                    </div>
+                </label>
+            </div>
+
             <div className={`${prefix}-languages`}>
                 {languageSlugs.map((slug) => {
                     const language = targetLanguages[slug];
@@ -83,26 +104,6 @@ const SettingModalLanguages = ({
                 })}
             </div>
 
-            <div className={`${prefix}-select-all-languages${allSelected ? ' all-languages-selected' : ''}`}>
-                <label htmlFor={selectAllId}>
-                    <div className={`${prefix}-select-all-languages-inner`}>
-                        <input
-                            type="checkbox"
-                            name="select-all-languages"
-                            id={selectAllId}
-                            onChange={onSelectAllLanguages}
-                            disabled={disabled}
-                            checked={allSelected}
-                        />
-                        <span className={`${prefix}-select-all-languages-check-visual`} aria-hidden="true"></span>
-                        <span className={`${prefix}-language-label`}>
-                            {allSelected
-                                ? __('Unselect All', 'automatic-translations-for-polylang')
-                                : __('Select All', 'automatic-translations-for-polylang')}
-                        </span>
-                    </div>
-                </label>
-            </div>
         </section>
     );
 }

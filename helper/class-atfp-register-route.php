@@ -186,7 +186,7 @@ if ( ! class_exists( 'ATFP_Register_Route' ) ) :
 				return false;
 			}
 
-			return class_exists( 'ATFP_Re_Translation' ) && ATFP_Re_Translation::is_pending_first_translation( (int) $translated_post_id );
+			return class_exists( 'ATFPP_Re_Translation' ) && ATFPP_Re_Translation::is_pending_first_translation( (int) $translated_post_id );
 		}
 
 		public function get_pending_posts_ids( $params ) {
