@@ -1095,17 +1095,24 @@ jQuery(function ($) {
 
         if (hasError) {
             const browerName=type.charAt(0).toUpperCase() + type.slice(1);
+            // Point "configure" at the setup guide for whichever browser engine
+            // raised the notice. Both values are fixed, so nothing user supplied
+            // reaches the markup below.
+            const docsUrl = type === 'edge'
+                ? 'https://docs.coolplugins.net/doc/edge-ai-translation-language-setup/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_configure'
+                : 'https://docs.coolplugins.net/doc/chrome-translation-api-language-setup/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_configure';
+            const configureLink = (label) => `<a href="${docsUrl}" target="_blank" rel="noopener noreferrer">${label}</a>`;
             // Create notice with specific message based on error type
-            let noticeMessage = `Please configure the ${browerName} settings to use ${browerName} AI Translator.`;
+            let noticeMessage = `Please ${configureLink('configure')} the ${browerName} settings to use ${browerName} AI Translator.`;
 
             if (errorType === 'browser') {
                 noticeMessage = `${browerName} browser is required.`;
             } else if (errorType === 'secure') {
-                noticeMessage = `Secure connection (HTTPS) is required. Please configure ${browerName} settings.`;
+                noticeMessage = `Secure connection (HTTPS) is required. Please ${configureLink('configure')} ${browerName} settings.`;
             } else if (errorType === 'api') {
-                noticeMessage = `${browerName} Translation API is not available. Please configure ${browerName} settings.`;
+                noticeMessage = `${browerName} Translation API is not available. Please ${configureLink('configure')} ${browerName} settings.`;
             } else if (errorType === 'language-pack') {
-                noticeMessage = `Language pack is required. Please configure ${browerName} settings.`;
+                noticeMessage = `A language pack is required. ${configureLink('Configure')} ${browerName} settings to use ${browerName} built-in AI.`;
             }
 
             const notice = $(`<div class="atfp-${type}-configure-notice" style="margin-top: 10px; font-size: 12px; color: #dc2626;" data-error-type="${errorType}">` + noticeMessage + '</div>');
