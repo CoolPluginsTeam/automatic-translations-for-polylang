@@ -332,7 +332,7 @@ class ChromeAISetupFramework {
     render() {
         const flagsUrl = this.isEdge ? 'edge://flags/#translation-api' : 'chrome://flags/#translation-api';
         const internalsUrl = this.isEdge ? 'edge://on-device-translation-internals' : 'chrome://on-device-translation-internals';
-        const docUrl = this.isEdge ? 'https://learn.microsoft.com/en-us/microsoft-edge/web-platform/translator-api' : 'https://developer.chrome.com/docs/ai/translator-api';
+        const docUrl = this.isEdge ? (this.options.edgeDocUrl || 'https://learn.microsoft.com/en-us/microsoft-edge/web-platform/translator-api') : (this.options.chromeDocUrl || 'https://developer.chrome.com/docs/ai/translator-api');
 
         const browserType = ChromeAISetupFramework.getBrowserType();
         let iconHtml = '';
@@ -461,7 +461,7 @@ class ChromeAISetupFramework {
 
         const flagsUrl = this.isEdge ? 'edge://flags/#translation-api' : 'chrome://flags/#translation-api';
         const internalsUrl = this.isEdge ? 'edge://on-device-translation-internals' : 'chrome://on-device-translation-internals';
-        const docUrl = this.isEdge ? 'https://learn.microsoft.com/en-us/microsoft-edge/web-platform/translator-api' : 'https://developer.chrome.com/docs/ai/translator-api';
+        const docUrl = this.isEdge ? (this.options.edgeDocUrl || 'https://learn.microsoft.com/en-us/microsoft-edge/web-platform/translator-api') : (this.options.chromeDocUrl || 'https://developer.chrome.com/docs/ai/translator-api');
         const secureBypassUrl = this.isEdge ? 'edge://flags/#unsafely-treat-insecure-origin-as-secure' : 'chrome://flags/#unsafely-treat-insecure-origin-as-secure';
         const langSettingsUrl = this.isEdge ? 'edge://settings/languages' : 'chrome://settings/languages';
 

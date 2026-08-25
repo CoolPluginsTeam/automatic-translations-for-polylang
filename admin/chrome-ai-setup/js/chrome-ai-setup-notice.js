@@ -49,6 +49,8 @@ class ChromeAINoticeFramework {
                 availableLanguages: availableLangs,
                 chromeIconUrl: this.data.chrome_icon_url || '',
                 edgeIconUrl: this.data.edge_icon_url || '',
+                chromeDocUrl: this.data.chrome_setup_doc_url || '',
+                edgeDocUrl: this.data.edge_setup_doc_url || '',
                 texts: this.data.texts || {},
                 // URL passed from PHP via localized data, avoiding hardcoded URLs
                 alternativeUrl: this.data.alternative_url || '',
@@ -162,9 +164,9 @@ class ChromeAINoticeFramework {
 
             const enabledProviders = this.data.enabled_providers || [];
             if (checkResult.errorType !== 'browser' && (
-                type !== 'edge' || 
-                browserType !== 'Other' || 
-                !enabledProviders.includes('chrome-built-in-ai') || 
+                type !== 'edge' ||
+                browserType !== 'Other' ||
+                !enabledProviders.includes('chrome-built-in-ai') ||
                 !enabledProviders.includes('edge-built-in-ai')
             )) {
                 $(configureBtnSelector).show();

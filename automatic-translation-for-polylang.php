@@ -191,6 +191,8 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 					'chrome_ai_bypass_language_check' => false,
 					'chrome_ai_bypass_browser_check' => false,
 					'enabled_providers' => ATFP_Helper::get_active_providers(),
+					'chrome_setup_doc_url' => esc_url('https://docs.coolplugins.net/doc/chrome-translation-api-language-setup/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=chrome_ai_setup&utm_content=settings'),
+					'edge_setup_doc_url' => esc_url('https://docs.coolplugins.net/doc/edge-ai-translation-language-setup/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=edge_ai_setup&utm_content=settings'),
 					'texts' => array(
 						'cardTitle' => esc_html__( 'Chrome AI Setup', 'automatic-translations-for-polylang' ),
 						'cardDescription' => esc_html__( 'Free on-device translation. We detect what your browser needs — usually just one click.', 'automatic-translations-for-polylang' ),
@@ -221,7 +223,7 @@ if ( ! class_exists( 'AutoPoly' ) ) {
 						'translationFailed' => esc_html__( '✗ Translation failed. This pair may need its own model, or see advanced steps below.', 'automatic-translations-for-polylang' ),
 						'advancedTitle' => esc_html__( 'Still not working? Advanced steps', 'automatic-translations-for-polylang' ),
 						'advancedBrowserRequirements' => esc_html__( 'Chrome AI translation needs Chrome or Edge on desktop (version 138+). It doesn’t run on mobile phones or tablets.', 'automatic-translations-for-polylang' ),
-						'openSetupGuide' => esc_html__( 'Open official setup guide →', 'automatic-translations-for-polylang' ),
+						'openSetupGuide' => esc_html__( 'Open official setup guide →', 'automatic-translations-for-polylang' )
 					)
 				);
 
