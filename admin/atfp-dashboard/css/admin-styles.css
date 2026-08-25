@@ -282,7 +282,6 @@ Polylang Addon Dashboard - Admin Panel Styles
        crop it rather than letting it read as a border inside the frame. */
     background-size: 103%;
     border-radius: 9px;
-    border: 1px solid #ddd;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -568,6 +567,8 @@ li.atfp-engine-row:last-child {
 .atfp-engine-docs {
     color: var(--text-color-light);
     font-size: 13px;
+    /* After the Configure button, before the toggle. */
+    order: 5;
     text-decoration: underline;
 }
 
@@ -589,16 +590,17 @@ li.atfp-engine-row:last-child {
    row is wide enough for that particular message, and the messages vary a lot
    in length, so the actions would otherwise get pushed down on their own at
    unpredictable widths. */
+/* The readiness script appends its own red notice to the row. Keep the element
+   (the status badge rules below key off it) but never render it -- the badge
+   and the Configure button already say everything the row needs to. The
+   !important is required because jQuery .show() writes an inline display. */
 .atfp-engine-row .atfp-chrome-configure-notice,
 .atfp-engine-row .atfp-edge-configure-notice {
-    margin-top: 2px !important;
-    order: 7;
-    flex: 1 0 100%;
-    line-height: 1.5;
+    display: none !important;
 }
 
 .atfp-engine-row .atfp-dashboard-btn {
-    order: 5;
+    order: 4;
     flex-shrink: 0;
     white-space: nowrap;
 }
