@@ -152,6 +152,85 @@ jQuery(function($) {
             .length > 0;
     };
 
+    /**
+     * Browser that provides each built-in AI engine.
+     *
+     * Mirrors resolveDefaultService() in the bulk translate modal: the default
+     * is stored once per site, but these two engines only run in their own
+     * browser.
+     */
+    const atfpBrowserAiOwner = {
+        'chrome-built-in-ai': 'Chrome',
+        'edge-built-in-ai': 'Edge'
+    };
+
+    /**
+     * Detects the current browser.
+     *
+     * The readiness script keeps its own copy inside a closure, so this cannot
+     * be shared without exposing a global.
+     *
+     * @return {string} Chrome, Edge or Other.
+     */
+    const atfpGetBrowserType = () => {
+        let type = 'Other';
+
+        if (navigator && navigator.userAgentData && navigator.userAgentData.brands) {
+            navigator.userAgentData.brands.forEach(function (data) {
+                if (data.brand === 'Google Chrome') {
+                    type = 'Chrome';
+                } else if (data.brand === 'Microsoft Edge') {
+                    type = 'Edge';
+                }
+            });
+        } else if (navigator.userAgent.indexOf('Edg') !== -1) {
+            type = 'Edge';
+        } else if (window.hasOwnProperty('chrome')) {
+            type = 'Chrome';
+        }
+
+        return type;
+    };
+
+    /**
+     * Shows the provider the modal would actually pre-select in this browser.
+     *
+     * The saved option is left untouched, so opening the dashboard back in the
+     * browser that owns the engine restores it.
+     *
+     * @return {void}
+     */
+    const atfpShowEffectiveDefault = () => {
+        const $saved = $('.atfp-engine-row.is-default');
+
+        if (!$saved.length) {
+            return;
+        }
+
+        const savedProvider = $saved.find('.atfp-engine-default-input').val();
+        const requiredBrowser = atfpBrowserAiOwner[savedProvider];
+
+        if (!requiredBrowser || requiredBrowser === atfpGetBrowserType()) {
+            return;
+        }
+
+        const $fallback = $('.atfp-engine-row.atfp-card-google-translate');
+
+        if (!$fallback.length) {
+            return;
+        }
+
+        $('.atfp-engine-row').removeClass('is-default');
+        $('.atfp-engine-row .atfp-provider-toggle').prop('disabled', false).attr('title', '');
+
+        $fallback.addClass('is-default');
+        // Same radio group, so this also clears the hidden provider's input.
+        $fallback.find('.atfp-engine-default-input').prop('checked', true);
+        $fallback.find('.atfp-provider-toggle').prop('disabled', true);
+    };
+
+    atfpShowEffectiveDefault();
+
     $(document).on('change', '.atfp-engine-default-input', function () {
         const $input = $(this);
         const provider = $input.val();

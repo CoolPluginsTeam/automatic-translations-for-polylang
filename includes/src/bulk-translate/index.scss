@@ -22,6 +22,47 @@ $modal-width: clamp(320px, 1040px, 94vw);
     gap: 6px;
 }
 
+/*
+ * Attention state, added by atfp-admin-views-link.js only when the visitor
+ * arrived from a dashboard translate button. A ripple rather than a plain zoom,
+ * so a wide button does not visibly jump while the page is being read.
+ */
+.wp-core-ui .button.#{$prefix}-btn.#{$prefix}-attention-btn {
+    animation: #{$prefix}-attention 2s ease-out infinite;
+    position: relative;
+    z-index: 1;
+}
+
+// Settle the moment the pointer arrives, so the click target stops moving.
+.wp-core-ui .button.#{$prefix}-btn.#{$prefix}-attention-btn:hover,
+.wp-core-ui .button.#{$prefix}-btn.#{$prefix}-attention-btn:focus {
+    animation: none;
+}
+
+@keyframes #{$prefix}-attention {
+    0% {
+        box-shadow: 0 0 0 0 rgba(34, 113, 177, .7);
+        transform: scale(1);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(34, 113, 177, 0);
+        transform: scale(1.02);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(34, 113, 177, 0);
+        transform: scale(1);
+    }
+}
+
+// A looping animation is what this preference exists to silence.
+@media (prefers-reduced-motion: reduce) {
+    .wp-core-ui .button.#{$prefix}-btn.#{$prefix}-attention-btn {
+        animation: none;
+    }
+}
+
 // The Pro upsell sits beside the primary action, so it stays borderless.
 .#{$prefix}-pro-btn {
     align-items: center;

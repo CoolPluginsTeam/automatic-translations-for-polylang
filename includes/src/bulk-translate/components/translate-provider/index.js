@@ -15,10 +15,32 @@ const freeProviders = Object.freeze({
 });
 
 /**
+ * Browser that provides each built-in AI engine.
+ *
+ * The default is stored once per site but the setup screen runs in whatever
+ * browser the user happens to open, so these two engines are only usable in
+ * their own browser.
+ */
+const BROWSER_AI_OWNER = Object.freeze({
+    'chrome-built-in-ai': 'Chrome',
+    'edge-built-in-ai': 'Edge',
+});
+
+/**
+ * Engine used when the saved default cannot run in the current browser.
+ */
+const FALLBACK_PROVIDER = 'google-translate';
+
+/**
  * Resolves the engine chosen as default in the plugin settings to the service
  * key used by this module.
  *
- * Returns null when no default is set, or when that engine is not currently
+ * A browser AI default only applies in the browser that provides it: Chrome's
+ * built-in AI is unavailable in Edge, Edge's is unavailable in Chrome, and
+ * neither runs anywhere else. In those cases this falls back to Google
+ * Translate rather than pre-selecting an engine the browser cannot run.
+ *
+ * Returns null when no default is set, or when the engine it settles on is not
  * enabled, so the modal simply opens with nothing pre-selected.
  *
  * @since 1.5.0
@@ -33,15 +55,20 @@ export const resolveDefaultService = () => {
         return null;
     }
 
-    // On Edge the built-in engine is served by localAiTranslator, so both
-    // browser AI provider keys resolve to it there.
     const browserType = ChromeAiTranslator.getBrowserType();
+    const requiredBrowser = BROWSER_AI_OWNER[defaultProvider];
+    const provider = requiredBrowser && requiredBrowser !== browserType
+        ? FALLBACK_PROVIDER
+        : defaultProvider;
+
+    // Past the check above, a browser AI provider can only be the one this
+    // browser serves through localAiTranslator.
     const serviceKey = {
         'chrome-built-in-ai': 'localAiTranslator',
-        'edge-built-in-ai': 'Edge' === browserType ? 'localAiTranslator' : 'edgeAiTranslator',
+        'edge-built-in-ai': 'localAiTranslator',
         'google-translate': 'google',
         'yandex-translate': 'yandex',
-    }[defaultProvider];
+    }[provider];
 
     if (!serviceKey) {
         return null;

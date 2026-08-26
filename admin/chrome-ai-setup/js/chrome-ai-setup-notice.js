@@ -162,15 +162,10 @@ class ChromeAINoticeFramework {
             $notice = $(`<div class="${noticeClass}" style="margin-top: 10px; font-size: 12px; color: #dc2626;" data-error-type="${checkResult.errorType}">${noticeMessage}</div>`);
             $card.append($notice);
 
-            const enabledProviders = this.data.enabled_providers || [];
-            if (checkResult.errorType !== 'browser' && (
-                type !== 'edge' ||
-                browserType !== 'Other' ||
-                !enabledProviders.includes('chrome-built-in-ai') ||
-                !enabledProviders.includes('edge-built-in-ai')
-            )) {
-                $(configureBtnSelector).show();
-            }
+            // Always offer the setup link. Even when the browser itself is the
+            // blocker, the row says the provider needs configuring, so leaving
+            // no action at all reads as a dead end.
+            $(configureBtnSelector).show();
         } else {
             $card.find(`.${noticeClass}`).hide();
             $(configureBtnSelector).hide();
