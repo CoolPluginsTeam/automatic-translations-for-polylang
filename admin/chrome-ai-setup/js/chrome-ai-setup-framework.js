@@ -30,6 +30,7 @@ class ChromeAISetupFramework {
             bypassSecureCheck: false,   // Skip HTTPS / secure context check
             bypassApiCheck: false,      // Skip Translator API availability check
             primaryBtnClass: '',        // Class to apply to primary actions like Install Pack
+            secondaryBtnClass: '',      // Class to apply to secondary actions like the guide link
             defaultProvider: 'chrome'   // Fallback provider when browser is 'Other'
         }, options);
 
@@ -427,7 +428,7 @@ class ChromeAISetupFramework {
                         </div>
 
                         <div class="cais-preview-actions">
-                            <button class="cais-btn cais-btn-primary" id="cais-run-btn">${this.texts.btnTranslate}</button>
+                            <button class="cais-btn cais-btn-primary${this.options.primaryBtnClass ? ' ' + this.options.primaryBtnClass : ''}" id="cais-run-btn">${this.texts.btnTranslate}</button>
                             <span class="cais-preview-note cais-muted" id="cais-preview-note"></span>
                         </div>
                     </div>
@@ -540,8 +541,9 @@ class ChromeAISetupFramework {
                 </ol>
             `;
         }
-
-        html += `<a href="${docUrl}" target="_blank" rel="noopener" class="cais-btn cais-guide-link">${this.texts.openSetupGuide}</a>`;
+        
+        const extraClass = this.options.secondaryBtnClass ? ` ${this.options.secondaryBtnClass}` : '';
+        html += `<a href="${docUrl}" target="_blank" rel="noopener" class="cais-btn cais-guide-link${extraClass}">${this.texts.openSetupGuide}</a>`;
         body.innerHTML = html;
     }
 

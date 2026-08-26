@@ -74,7 +74,8 @@ class ChromeAINoticeFramework {
                 bypassSecureCheck: this.data.chrome_ai_bypass_secure_check === '1' || this.data.chrome_ai_bypass_secure_check === true,
                 defaultProvider: (this.data.enabled_providers && !this.data.enabled_providers.includes('chrome-built-in-ai') && this.data.enabled_providers.includes('edge-built-in-ai')) ? 'edge' : 'chrome',
                 forceProvider: forceProvider,
-                primaryBtnClass: this.data.primary_btn_class || ''
+                primaryBtnClass: this.data.primary_btn_class || '',
+                secondaryBtnClass: this.data.secondary_btn_class || ''
             });
         }
 
