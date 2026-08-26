@@ -49,9 +49,9 @@ class ChromeAINoticeFramework {
             const edgeEnabled = enabledProviders.includes('edge-built-in-ai');
             
             let forceProvider = 'chrome';
-            if (detectedBrowser === 'Edge' && edgeEnabled) {
+            if (detectedBrowser === 'Edge') {
                 forceProvider = 'edge';
-            } else if (detectedBrowser === 'Chrome' && chromeEnabled) {
+            } else if (detectedBrowser === 'Chrome') {
                 forceProvider = 'chrome';
             } else {
                 if (chromeEnabled) forceProvider = 'chrome';
@@ -73,7 +73,8 @@ class ChromeAINoticeFramework {
                 bypassApiCheck: this.data.chrome_ai_bypass_api_check === '1' || this.data.chrome_ai_bypass_api_check === true,
                 bypassSecureCheck: this.data.chrome_ai_bypass_secure_check === '1' || this.data.chrome_ai_bypass_secure_check === true,
                 defaultProvider: (this.data.enabled_providers && !this.data.enabled_providers.includes('chrome-built-in-ai') && this.data.enabled_providers.includes('edge-built-in-ai')) ? 'edge' : 'chrome',
-                forceProvider: forceProvider
+                forceProvider: forceProvider,
+                primaryBtnClass: this.data.primary_btn_class || ''
             });
         }
 

@@ -206,6 +206,7 @@ if (! class_exists('AutoPoly')) {
 					'chrome_ai_bypass_language_check' => false,
 					'chrome_ai_bypass_browser_check' => false,
 					'enabled_providers' => ATFP_Helper::get_active_providers(),
+					'primary_btn_class' => 'atfp-dashboard-btn primary',
 					'chrome_setup_doc_url' => esc_url('https://docs.coolplugins.net/doc/chrome-translation-api-language-setup/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=chrome_ai_setup&utm_content=settings'),
 					'edge_setup_doc_url' => esc_url('https://docs.coolplugins.net/doc/edge-ai-translation-language-setup/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=edge_ai_setup&utm_content=settings'),
 					'texts' => array(

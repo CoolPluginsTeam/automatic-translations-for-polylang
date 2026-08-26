@@ -61,10 +61,10 @@ if(!current_user_can('manage_options')){
         $is_edge   = strpos($user_agent_info, 'Edg') !== false;
         $is_chrome = strpos($user_agent_info, 'Chrome') !== false && !$is_edge;
 
-        if ($is_edge && $edge_enabled) {
+        if ($is_edge) {
             $browserType   = 'edge';
             $browser_title = 'Edge';
-        } elseif ($is_chrome && $chrome_enabled) {
+        } elseif ($is_chrome) {
             $browserType   = 'chrome';
             $browser_title = 'Chrome';
         } else {

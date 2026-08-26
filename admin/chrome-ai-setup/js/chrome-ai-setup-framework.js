@@ -28,7 +28,9 @@ class ChromeAISetupFramework {
             alternativeUrl: '',     // URL to redirect when user clicks "Use Another Provider" — set from PHP
             bypassBrowserCheck: false,  // Skip desktop/browser brand check
             bypassSecureCheck: false,   // Skip HTTPS / secure context check
-            bypassApiCheck: false       // Skip Translator API availability check
+            bypassApiCheck: false,      // Skip Translator API availability check
+            primaryBtnClass: '',        // Class to apply to primary actions like Install Pack
+            defaultProvider: 'chrome'   // Fallback provider when browser is 'Other'
         }, options);
 
         // Merge default strings with options.texts
@@ -664,11 +666,13 @@ class ChromeAISetupFramework {
                 this.elPairState.style.cursor = '';
                 this.elPairState.title = '';
                 this.elPairState.onclick = null;
+                this.elRunBtn.disabled = false;
             } else if (status === 'downloadable' || status === 'downloading') {
                 this.elPairState.className = 'cais-pair-state cais-state-dl';
                 this.elPairState.textContent = 'Install Language Pack';
                 this.elPairState.style.cursor = 'pointer';
                 this.elPairState.title = 'Click to download this language model';
+                this.elRunBtn.disabled = true;
 
                 // Click to download this specific language pair
                 this.elPairState.onclick = async () => {
@@ -693,6 +697,7 @@ class ChromeAISetupFramework {
                         this.elPairState.className = 'cais-pair-state cais-state-ok';
                         this.elPairState.textContent = 'Ready';
                         this.elPairState.style.cursor = '';
+                        window.location.reload();
                     } catch (err) {
                         this.elPairState.className = 'cais-pair-state cais-state-error';
                         this.elPairState.textContent = 'Failed — retry';
@@ -707,12 +712,14 @@ class ChromeAISetupFramework {
                 this.elPairState.textContent = 'Pair unsupported';
                 this.elPairState.style.cursor = '';
                 this.elPairState.onclick = null;
+                this.elRunBtn.disabled = true;
             }
         } catch (e) {
             this.elPairState.className = 'cais-pair-state cais-state-error';
             this.elPairState.textContent = 'Check failed';
             this.elPairState.style.cursor = '';
             this.elPairState.onclick = null;
+            this.elRunBtn.disabled = true;
         }
     }
 
@@ -747,15 +754,14 @@ class ChromeAISetupFramework {
         try {
             // Check status first to see if a download is required
             const status = await ChromeAISetupFramework.getLanguagePairStatus(source, target);
+            if (status !== 'available' && status !== 'readily') {
+                this.elTestOut.className = 'cais-preview-out cais-out-error';
+                this.elTestOut.textContent = 'Please install the language pack first.';
+                this.elRunBtn.disabled = true;
+                return;
+            }
 
-            const monitor = (m) => {
-                m.addEventListener('downloadprogress', (e) => {
-                    const pct = Math.round((e.loaded || 0) * 100);
-                    this.elTestOut.textContent = `Downloading language pack… ${pct}%`;
-                });
-            };
-
-            translator = await ChromeAISetupFramework.createTranslator(source, target, monitor);
+            translator = await ChromeAISetupFramework.createTranslator(source, target);
             if (translator.ready) {
                 await translator.ready;
             }
@@ -920,7 +926,8 @@ class ChromeAISetupFramework {
                 badgeHtml = `<span style="background: #dbeafe; color: #1e40af; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 500;">Downloading...</span>`;
             } else {
                 // downloadable / after-download / error
-                badgeHtml = `<span class="cais-needs-download-btn" data-lang="${item.lang.code}" style="background: #ffedd5; color: #9a3412; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 500; cursor: pointer; border: 1px solid #fdba74; transition: all 0.2s;">Install Language Pack</span>`;
+                const extraClass = this.options.primaryBtnClass ? ` ${this.options.primaryBtnClass}` : '';
+                badgeHtml = `<button class="cais-needs-download-btn${extraClass}" data-lang="${item.lang.code}">Install Language Pack</button>`;
             }
 
             html += `
@@ -942,15 +949,6 @@ class ChromeAISetupFramework {
         // Bind clicks for Install Language Pack pills
         const downloadBtns = this.elLanguageStatusList.querySelectorAll('.cais-needs-download-btn');
         downloadBtns.forEach(btn => {
-            // Hover effects for the button
-            btn.addEventListener('mouseenter', () => {
-                btn.style.background = '#fdba74';
-                btn.style.borderColor = '#fb923c';
-            });
-            btn.addEventListener('mouseleave', () => {
-                btn.style.background = '#ffedd5';
-                btn.style.borderColor = '#fdba74';
-            });
             // Click to download
             btn.addEventListener('click', () => {
                 const langCode = btn.getAttribute('data-lang');
@@ -974,10 +972,7 @@ class ChromeAISetupFramework {
 
         // Update button UI
         btnElement.textContent = 'Downloading...';
-        btnElement.style.background = '#dbeafe';
-        btnElement.style.color = '#1e40af';
-        btnElement.style.borderColor = 'transparent';
-        btnElement.style.cursor = 'default';
+        btnElement.disabled = true;
         
         try {
             const monitor = (m) => {
@@ -1013,14 +1008,11 @@ class ChromeAISetupFramework {
                 downloader.destroy();
             }
 
-            // Re-run liveDetect to refresh the whole list and dropdown
-            this.liveDetect();
+            window.location.reload();
         } catch (e) {
             console.error('ChromeAISetupFramework: Model download failed', e);
             btnElement.textContent = 'Setup in Settings';
-            btnElement.style.background = '#fee2e2';
-            btnElement.style.color = '#991b1b';
-            btnElement.style.cursor = 'pointer';
+            btnElement.disabled = false;
             
             // On click again, open settings tab
             btnElement.onclick = () => {
@@ -1091,6 +1083,7 @@ class ChromeAISetupFramework {
             }
 
             this.renderState('available');
+            window.location.reload();
         } catch (e) {
             console.error('ChromeAISetupFramework: Model download failed', e);
             this.renderState('error', 'Download failed', 'Ensure your connection is stable and you have enough free disk space (~22 GB) to unpack the translation model, then retry.');
