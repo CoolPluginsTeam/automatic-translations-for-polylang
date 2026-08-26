@@ -272,7 +272,6 @@ jQuery(function($) {
             $label.toggleClass('atfp-engine-default-disabled', unconfigured);
             $label.find('.atfp-engine-default-input').prop('disabled', unconfigured);
             $row.toggleClass('atfp-engine-unconfigured', unconfigured);
-            $row.toggleClass('atfp-engine-toggle-off', !$toggle.prop('checked'));
 
             if (isDefault) {
                 $toggle.prop('disabled', true);
@@ -298,10 +297,6 @@ jQuery(function($) {
             subtree: true
         });
     }
-
-    $(document).on('change', '.atfp-provider-toggle', function () {
-        $(this).closest('.atfp-engine-row').toggleClass('atfp-engine-toggle-off', !this.checked);
-    });
 
     $(document).on('change', '.atfp-engine-default-input', function () {
         const $input = $(this);

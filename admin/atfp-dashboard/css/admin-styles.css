@@ -659,23 +659,6 @@ li.atfp-engine-row:last-child {
     display: inline;
 }
 
-/* Built-in AI off, or still waiting on Configure: show Not Configured. */
-.atfp-card-chrome-built-in-ai.atfp-engine-toggle-off .atfp-engine-status,
-.atfp-card-edge-built-in-ai.atfp-engine-toggle-off .atfp-engine-status {
-    background: #fff6ed;
-    color: #b45309;
-}
-
-.atfp-card-chrome-built-in-ai.atfp-engine-toggle-off .atfp-engine-status-ready,
-.atfp-card-edge-built-in-ai.atfp-engine-toggle-off .atfp-engine-status-ready {
-    display: none;
-}
-
-.atfp-card-chrome-built-in-ai.atfp-engine-toggle-off .atfp-engine-status-setup,
-.atfp-card-edge-built-in-ai.atfp-engine-toggle-off .atfp-engine-status-setup {
-    display: inline;
-}
-
 .atfp-engine-row.atfp-engine-unsupported .atfp-engine-status,
 .atfp-engine-row.atfp-engine-unsupported:has(.atfp-chrome-configure-notice:not([style*="display: none"])) .atfp-engine-status,
 .atfp-engine-row.atfp-engine-unsupported:has(.atfp-edge-configure-notice:not([style*="display: none"])) .atfp-engine-status {
