@@ -687,10 +687,12 @@ if (! class_exists('ATFP_Helper')) {
 				// pll_get_post_translations() includes the post itself.
 				$translations  = pll_get_post_translations( $post_id );
 				$post_language = function_exists( 'pll_get_post_language' ) ? pll_get_post_language( $post_id, 'slug' ) : '';
-				$title         = get_the_title( $post_id );
+				$title = get_the_title( $post_id );
+				$uri   = get_page_uri( $post_id );
 
 				$meta[ (string) $post_id ] = array(
 					'title'     => '' !== trim( $title ) ? $title : __( '(no title)', 'automatic-translations-for-polylang' ),
+					'slug'      => $uri ? '/' . $uri : '',
 					'done'      => max( 0, count( $translations ) - 1 ),
 					'complete'  => ( $language_count > 0 && count( $translations ) >= $language_count ),
 					'source'    => ( '' !== $default_language && $post_language === $default_language ),

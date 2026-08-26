@@ -77,13 +77,20 @@ class ATFP_Register_Backend_Assets
             return;
         }
 
-        $post_label=__("Pages", "automatic-translations-for-polylang");
+        $post_label = __( 'Pages', 'automatic-translations-for-polylang' );
+        $post_label_singular = __( 'Page', 'automatic-translations-for-polylang' );
 
-        if(isset($current_screen->post_type)){
-            $post_type = $current_screen->post_type;
+        if ( isset( $current_screen->post_type ) ) {
+            $post_type_object = get_post_type_object( $current_screen->post_type );
 
-            if(isset(get_post_type_object($post_type)->label) && !empty(get_post_type_object($post_type)->label)){
-                $post_label = get_post_type_object($post_type)->label;
+            if ( $post_type_object ) {
+                if ( ! empty( $post_type_object->label ) ) {
+                    $post_label = $post_type_object->label;
+                }
+
+                if ( ! empty( $post_type_object->labels->singular_name ) ) {
+                    $post_label_singular = $post_type_object->labels->singular_name;
+                }
             }
         }
         
@@ -145,6 +152,7 @@ class ATFP_Register_Backend_Assets
                 'atfp_url'           => esc_url(ATFP_URL),
                 'admin_url' => admin_url(),
                 'post_label' => $post_label,
+                'post_label_singular' => $post_label_singular,
                 'update_translate_data' => 'atfp_update_translate_data',
                 'pendingPostsIdsKey' => wp_create_nonce('atfp_pending_posts_ids_nonce'),
                 'default_language_slug' => $default_language_slug,

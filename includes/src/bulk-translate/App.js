@@ -186,6 +186,10 @@ const App = ({ onDestory, prefix, postIds }) => {
         } else if ('pro' === screen) {
             cls.push(`${prefix}-setting-modal-active`);
             cls.push(`${prefix}-pro-modal-active`);
+
+            if ('multiple' === proRequiredReason) {
+                cls.push(`${prefix}-choice-modal-active`);
+            }
         } else if ('error' === screen) {
             cls.push(`${prefix}-setting-modal-active`);
         }

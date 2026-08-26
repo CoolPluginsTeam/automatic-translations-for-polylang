@@ -230,6 +230,12 @@ $modal-width: clamp(320px, 1040px, 94vw);
             width: clamp(320px, 720px, 94vw);
         }
 
+        // Bulk page choice needs the two-column list + Pro panel, so it uses
+        // the same width as the setup screen instead of the narrower upsell.
+        &.#{$prefix}-choice-modal-active {
+            width: $modal-width;
+        }
+
         // The combined setup screen shows languages and engines side by side,
         // so it needs more room than the single column setting screens.
         &.#{$prefix}-setup-modal-active {
@@ -359,15 +365,19 @@ $modal-width: clamp(320px, 1040px, 94vw);
                         border-radius: 8px;
                         display: flex;
                         gap: 12px;
-                        margin: 20px 24px 0;
-                        padding: 14px 16px;
+                        margin: 14px 24px 0;
+                        padding: 12px 14px;
 
                         p {
                             color: #1d2327;
-                            font-size: 14px;
+                            font-size: 13px;
                             line-height: 1.5;
                             margin: 0;
                             padding: 0;
+                        }
+
+                        strong {
+                            color: #3858e9;
                         }
                     }
 
@@ -378,95 +388,310 @@ $modal-width: clamp(320px, 1040px, 94vw);
                         margin-top: 1px;
                     }
 
+                    .#{$prefix}-choice-help {
+                        color: #646970;
+                        font-size: 13px;
+                        line-height: 1.5;
+                        margin: 10px 24px 0 26px;
+                        padding: 0;
+
+                        strong {
+                            color: #1d2327;
+                        }
+                    }
+
                     .#{$prefix}-choice-heading {
+                        align-items: center;
                         color: #1d2327;
-                        font-size: 14px;
+                        display: flex;
+                        flex-wrap: wrap;
+                        font-size: 13px;
                         font-weight: 600;
-                        margin: 22px 24px 10px;
+                        gap: 8px;
+                        margin: 16px 24px 8px;
                         padding: 0;
                     }
 
-                    .#{$prefix}-choice-card {
-                        align-items: center;
-                        background: #f2f5fe;
-                        border: 1px solid #dce3fb;
-                        border-radius: 8px;
-                        display: flex;
-                        gap: 12px;
-                        margin: 0 24px;
-                        padding: 16px 18px;
-                    }
-
-                    .#{$prefix}-choice-card-icon {
-                        align-items: center;
+                    .#{$prefix}-choice-box,
+                    .#{$prefix}-choice-locked {
                         background: #fff;
                         border: 1px solid #dce3fb;
                         border-radius: 8px;
+                        margin: 0 24px;
+                        overflow: hidden;
+                    }
+
+                    .#{$prefix}-choice-row {
+                        align-items: center;
+                        display: flex;
+                        gap: 10px;
+                        min-width: 0;
+                        padding: 10px 14px;
+                    }
+
+                    .#{$prefix}-choice-box .#{$prefix}-choice-row {
+                        background: #f8faff;
+                        gap: 12px;
+                        padding: 12px 14px;
+                    }
+
+                    .#{$prefix}-choice-box .#{$prefix}-choice-file {
+                        background: #eef2fd;
+                        color: #3858e9;
+                    }
+
+                    .#{$prefix}-choice-locked-list .#{$prefix}-choice-row {
+                        border-bottom: 1px solid #eef1f8;
+
+                        &:last-child {
+                            border-bottom: 0;
+                        }
+                    }
+
+                    .#{$prefix}-choice-check {
+                        align-items: center;
                         color: #3858e9;
                         display: inline-flex;
                         flex-shrink: 0;
-                        height: 40px;
-                        justify-content: center;
-                        width: 40px;
                     }
 
-                    .#{$prefix}-choice-card-title {
+                    .#{$prefix}-choice-file {
+                        align-items: center;
+                        background: #f3f4f6;
+                        border-radius: 6px;
+                        color: #8c8f94;
+                        display: inline-flex;
+                        flex-shrink: 0;
+                        height: 32px;
+                        justify-content: center;
+                        width: 32px;
+                    }
+
+                    .#{$prefix}-choice-meta {
+                        display: flex;
+                        flex: 1;
+                        flex-direction: column;
+                        gap: 1px;
+                        min-width: 0;
+                    }
+
+                    .#{$prefix}-choice-title {
                         color: #1d2327;
-                        font-size: 15px;
+                        font-size: 14px;
                         font-weight: 600;
                         overflow: hidden;
                         text-overflow: ellipsis;
                         white-space: nowrap;
                     }
 
-                    .#{$prefix}-choice-actions {
-                        align-items: center;
-                        display: flex;
-                        flex-wrap: wrap;
-                        gap: 12px;
-                        margin: 22px 24px;
+                    .#{$prefix}-choice-slug {
+                        color: #8c8f94;
+                        font-size: 12px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
 
-                        // WordPress buttons default to a 3px radius; round them so
-                        // they match the cards and the upgrade button.
-                        .#{$prefix}-footer-button,
-                        .#{$prefix}-choice-secondary {
+                    .#{$prefix}-choice-pro-badge {
+                        background: #f5b301;
+                        border-radius: 4px;
+                        color: #1d2327;
+                        flex-shrink: 0;
+                        font-size: 10px;
+                        font-weight: 700;
+                        letter-spacing: .3px;
+                        line-height: 1;
+                        padding: 4px 7px;
+                        text-transform: uppercase;
+                    }
+
+                    .#{$prefix}-choice-inline-actions {
+                        align-items: center;
+                        display: inline-flex;
+                        flex-shrink: 0;
+                        flex-wrap: wrap;
+                        gap: 8px;
+                        justify-content: flex-end;
+
+                        .#{$prefix}-footer-button {
                             align-items: center;
                             border-radius: 8px;
                             display: inline-flex;
-                            gap: 8px;
-                            min-height: 36px;
-                            padding: 0 18px;
+                            gap: 6px;
+                            min-height: 34px;
+                            padding: 0 14px;
                         }
 
-                        // Inlined rather than loaded as an <img>, so the glyph
-                        // inherits the button colour instead of the green baked
-                        // into translate.svg.
                         .#{$prefix}-choice-translate-icon {
                             display: inline-flex;
                             flex-shrink: 0;
                         }
+
+                        @media (max-width: 780px) {
+                            width: 100%;
+
+                            .#{$prefix}-footer-button,
+                            .#{$prefix}-choice-secondary {
+                                flex: 1 1 auto;
+                                justify-content: center;
+                            }
+                        }
                     }
 
-                    // Outline twin of the primary action.
+                    // Compact outline control next to Translate This Page.
                     .#{$prefix}-choice-secondary {
                         align-items: center;
-                        background: none;
+                        background: #fff;
                         border: 1px solid var(--wp-admin-theme-color, #2271b1);
-                        border-radius: 8px;
+                        border-radius: 6px;
                         box-shadow: none;
                         color: var(--wp-admin-theme-color, #2271b1);
                         display: inline-flex;
-                        font-size: 13px;
+                        font-size: 12px;
                         font-weight: 500;
                         gap: 4px;
-                        min-height: 32px;
-                        padding: 0 14px;
+                        line-height: 1.2;
+                        min-height: 28px;
+                        padding: 0 10px;
 
                         &:hover,
                         &:focus {
-                            background: none;
+                            background: #fff;
                             border-color: var(--wp-admin-theme-color-darker-10, #135e96);
                             color: var(--wp-admin-theme-color-darker-10, #135e96);
+                        }
+                    }
+
+                    .#{$prefix}-choice-locked-heading {
+                        align-items: center;
+                        display: flex;
+                        gap: 12px;
+                        justify-content: space-between;
+                        margin: 16px 24px 8px;
+
+                        .#{$prefix}-choice-heading {
+                            margin: 0;
+                        }
+                    }
+
+                    .#{$prefix}-choice-select-all {
+                        align-items: center;
+                        color: #3858e9;
+                        display: inline-flex;
+                        flex-shrink: 0;
+                        font-size: 13px;
+                        font-weight: 600;
+                        gap: 6px;
+                        text-decoration: none;
+
+                        &:hover,
+                        &:focus {
+                            color: #2d46ba;
+                        }
+                    }
+
+                    .#{$prefix}-choice-locked {
+                        display: grid;
+                        grid-template-columns: minmax(0, 1.15fr) minmax(240px, .85fr);
+                        margin-bottom: 20px;
+
+                        @media (max-width: 700px) {
+                            display: block;
+                        }
+                    }
+
+                    .#{$prefix}-choice-locked-list {
+                        border-right: 1px solid #eef1f8;
+                        min-width: 0;
+
+                        @media (max-width: 700px) {
+                            border-right: 0;
+                        }
+                    }
+
+                    .#{$prefix}-choice-locked-more {
+                        align-items: center;
+                        color: #3858e9;
+                        display: flex;
+                        font-size: 13px;
+                        font-weight: 600;
+                        gap: 6px;
+                        justify-content: center;
+                        padding: 12px 14px;
+                        text-decoration: none;
+
+                        &:hover,
+                        &:focus {
+                            background: #f8faff;
+                            color: #2d46ba;
+                        }
+                    }
+
+                    .#{$prefix}-choice-locked-upsell {
+                        align-items: center;
+                        background:
+                            radial-gradient(circle at 50% 18%, rgba(245, 179, 1, .16), transparent 55%),
+                            #fffaf0;
+                        box-sizing: border-box;
+                        color: inherit;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 10px;
+                        justify-content: center;
+                        min-width: 0;
+                        
+                        text-align: center;
+
+                        strong {
+                            align-items: center;
+                            color: #1d2327;
+                            display: flex;
+                            flex-wrap: wrap;
+                            font-size: 16px;
+                            font-weight: 700;
+                            gap: 8px;
+                            justify-content: center;
+                            line-height: 1.3;
+                        }
+
+                        @media (max-width: 700px) {
+                            border-top: 1px solid #eef1f8;
+                            min-height: 220px;
+                        }
+                    }
+
+                    .#{$prefix}-choice-crown {
+                        align-items: center;
+                        background: #fff3d6;
+                        border-radius: 50%;
+                        display: inline-flex;
+                        
+                        justify-content: center;
+                        width: 64px;
+                    }
+
+                    .#{$prefix}-choice-upsell-button {
+                        align-items: center;
+                        background: #3858e9;
+                        border-radius: 8px;
+                        color: #fff;
+                        display: inline-flex;
+                        font-size: 13px;
+                        font-weight: 600;
+                        gap: 8px;
+                        margin-top: 4px;
+                        padding: 10px 16px;
+                        text-decoration: none;
+
+                        &:hover,
+                        &:focus,
+                        &:visited {
+                            color: #fff;
+                            text-decoration: none;
+                        }
+
+                        &:hover {
+                            filter: brightness(1.05);
                         }
                     }
 
@@ -1584,10 +1809,19 @@ $modal-width: clamp(320px, 1040px, 94vw);
             justify-content: space-between;
 
             p {
+                align-items: center;
                 color: #646970;
+                display: flex;
                 font-size: 13px;
+                gap: 8px;
                 margin: 0;
                 padding: 0;
+            }
+
+            .#{$prefix}-choice-sparkle {
+                color: #3858e9;
+                display: inline-flex;
+                flex-shrink: 0;
             }
         }
 
