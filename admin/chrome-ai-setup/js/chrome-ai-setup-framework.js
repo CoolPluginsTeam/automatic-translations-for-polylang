@@ -245,8 +245,10 @@ class ChromeAISetupFramework {
         const browser = this.getBrowserType();
         const browserTitle = browser === 'Edge' ? 'Edge' : 'Chrome';
 
+        const bypassDesktopCheck = options.bypassDesktopCheck === true;
+
         // 1. Check Platform
-        if (!this.isDesktop()) {
+        if (!bypassDesktopCheck && !this.isDesktop()) {
             return {
                 hasError: true,
                 errorType: 'browser',

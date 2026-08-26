@@ -110,11 +110,84 @@ class ChromeAINoticeFramework {
                         } else {
                             $card.find(`.${this.options.noticeClassPattern.replace('{type}', type)}`).hide();
                             $(this.options.configureBtnSelectorPattern.replace('{type}', type)).hide();
+                            this.clearUnsupportedState($card);
                         }
                     });
                 }
             });
         }
+    }
+
+    /**
+     * Browser that actually runs this built-in AI provider.
+     * @param {string} type - 'chrome' | 'edge'
+     * @return {string} Chrome or Edge
+     */
+    requiredBrowserName(type) {
+        return type.charAt(0).toUpperCase() + type.slice(1);
+    }
+
+    /**
+     * True when this provider cannot run in the current browser at all.
+     * @param {string} type - 'chrome' | 'edge'
+     * @return {boolean}
+     */
+    isUnsupportedBrowser(type) {
+        if (typeof ChromeAISetupFramework === 'undefined') {
+            return false;
+        }
+
+        return ChromeAISetupFramework.getBrowserType() !== this.requiredBrowserName(type);
+    }
+
+    /**
+     * Tooltip copy for a provider that the current browser cannot run.
+     * @param {string} providerName
+     * @param {string} browserName
+     * @return {string}
+     */
+    unsupportedTooltip(providerName, browserName) {
+        if (window.wp && wp.i18n && wp.i18n.sprintf && wp.i18n.__) {
+            return wp.i18n.sprintf(
+                /* translators: 1: translation provider name, 2: required browser name */
+                wp.i18n.__('%1$s Translation provider is not supported in your current browser. Please use %2$s browser to use this translation provider.', 'automatic-translations-for-polylang'),
+                providerName,
+                browserName
+            );
+        }
+
+        return `${providerName} Translation provider is not supported in your current browser. Please use ${browserName} browser to use this translation provider.`;
+    }
+
+    /**
+     * Mark the row as unsupported: no Configure button, Not supported badge.
+     * @param {Object} $card jQuery row
+     * @param {string} type - 'chrome' | 'edge'
+     */
+    applyUnsupportedState($card, type) {
+        const $ = jQuery;
+        const requiredBrowser = this.requiredBrowserName(type);
+        const providerName = $card.find('.atfp-engine-name').text().trim() || `${requiredBrowser} Built-in AI`;
+
+        $card.addClass('atfp-engine-unsupported');
+        const message = this.unsupportedTooltip(providerName, requiredBrowser);
+        $card.find('.atfp-default-tooltip').text(message);
+        $card.find('.atfp-engine-status').attr('title', message);
+        $(this.options.configureBtnSelectorPattern.replace('{type}', type)).hide();
+    }
+
+    /**
+     * Restore the row after the provider is turned off or becomes usable.
+     * @param {Object} $card jQuery row
+     */
+    clearUnsupportedState($card) {
+        $card.removeClass('atfp-engine-unsupported');
+        $card.find('.atfp-engine-status').removeAttr('title');
+        $card.find('.atfp-default-tooltip').text(
+            (window.wp && wp.i18n && wp.i18n.__)
+                ? wp.i18n.__('Configure this provider before setting it as default.', 'automatic-translations-for-polylang')
+                : 'Configure this provider before setting it as default.'
+        );
     }
 
     /**
@@ -125,7 +198,6 @@ class ChromeAINoticeFramework {
         const $ = jQuery;
         if (typeof ChromeAISetupFramework === 'undefined') return;
 
-        const browserType = ChromeAISetupFramework.getBrowserType();
         const cardSelector = this.options.cardSelectorPattern.replace('{type}', type);
         const $card = $(cardSelector);
         if (!$card.length) return;
@@ -133,11 +205,14 @@ class ChromeAINoticeFramework {
         const noticeClass = this.options.noticeClassPattern.replace('{type}', type);
         let $notice = $card.find(`.${noticeClass}`);
         const configureBtnSelector = this.options.configureBtnSelectorPattern.replace('{type}', type);
+        const isUnsupportedBrowser = this.isUnsupportedBrowser(type);
 
         if ($notice.length) {
             $notice.show();
-            const errorType = $notice.data("error-type");
-            if (errorType !== "browser") {
+            if (isUnsupportedBrowser) {
+                this.applyUnsupportedState($card, type);
+            } else {
+                this.clearUnsupportedState($card);
                 $(configureBtnSelector).show();
             }
             return;
@@ -159,11 +234,21 @@ class ChromeAINoticeFramework {
             availableLanguages: availableLangs,
             bypassBrowserCheck: this.data.chrome_ai_bypass_browser_check === '1' || this.data.chrome_ai_bypass_browser_check === true,
             bypassApiCheck: this.data.chrome_ai_bypass_api_check === '1' || this.data.chrome_ai_bypass_api_check === true,
-            bypassSecureCheck: this.data.chrome_ai_bypass_secure_check === '1' || this.data.chrome_ai_bypass_secure_check === true
+            bypassSecureCheck: this.data.chrome_ai_bypass_secure_check === '1' || this.data.chrome_ai_bypass_secure_check === true,
+            // Device toolbar spoofs a phone UA but this is still desktop Chrome/Edge,
+            // so the dashboard badge must follow the real API check, not isDesktop().
+            bypassDesktopCheck: true
         });
 
-        if (checkResult.hasError) {
-            const browserName = type.charAt(0).toUpperCase() + type.slice(1);
+        // A missing or still downloading language pack is not something the user
+        // has to set up: the browser fetches the pack on demand when the
+        // translation runs. Only real blockers -- wrong browser, insecure
+        // context, missing API -- mark the provider as needing configuration.
+        const packErrorTypes = ['language-pack', 'language-pack-downloading'];
+        const needsSetup = checkResult.hasError && !packErrorTypes.includes(checkResult.errorType);
+
+        if (needsSetup) {
+            const browserName = this.requiredBrowserName(type);
             let noticeMessage = `Please configure the ${browserName} settings to use ${browserName} AI Translator.`;
 
             if (checkResult.errorType === 'browser') {
@@ -172,22 +257,21 @@ class ChromeAINoticeFramework {
                 noticeMessage = `Secure connection (HTTPS) is required. Please configure ${browserName} settings.`;
             } else if (checkResult.errorType === 'api') {
                 noticeMessage = `${browserName} Translation API is not available. Please configure ${browserName} settings.`;
-            } else if (checkResult.errorType === 'language-pack') {
-                noticeMessage = `Language pack is required. Please configure ${browserName} settings.`;
-            } else if (checkResult.errorType === 'language-pack-downloading') {
-                noticeMessage = `Language pack is currently downloading.`;
             }
 
             $notice = $(`<div class="${noticeClass}" style="margin-top: 10px; font-size: 12px; color: #dc2626;" data-error-type="${checkResult.errorType}">${noticeMessage}</div>`);
             $card.append($notice);
 
-            // Always offer the setup link. Even when the browser itself is the
-            // blocker, the row says the provider needs configuring, so leaving
-            // no action at all reads as a dead end.
-            $(configureBtnSelector).show();
+            if (isUnsupportedBrowser) {
+                this.applyUnsupportedState($card, type);
+            } else {
+                this.clearUnsupportedState($card);
+                $(configureBtnSelector).show();
+            }
         } else {
             $card.find(`.${noticeClass}`).hide();
             $(configureBtnSelector).hide();
+            this.clearUnsupportedState($card);
         }
     }
 }

@@ -122,6 +122,7 @@ $atfp_video_title       = __( 'Automate the Translation Process with AutoPoly - 
 					<span class="atfp-engine-status">
 						<span class="atfp-engine-status-ready"><?php echo esc_html__( 'Ready', 'automatic-translations-for-polylang' ); ?></span>
 						<span class="atfp-engine-status-setup"><?php echo esc_html__( 'Not Configured', 'automatic-translations-for-polylang' ); ?></span>
+						<span class="atfp-engine-status-unsupported"><?php echo esc_html__( 'Not supported', 'automatic-translations-for-polylang' ); ?></span>
 					</span>
 					<label class="atfp-engine-default">
 						<input
@@ -134,10 +135,11 @@ $atfp_video_title       = __( 'Automate the Translation Process with AutoPoly - 
 						<span class="atfp-engine-default-mark" aria-hidden="true"></span>
 						<span class="atfp-engine-default-text"><?php echo esc_html__( 'Set as default', 'automatic-translations-for-polylang' ); ?></span>
 						<span class="atfp-engine-default-active"><?php echo esc_html__( 'Default provider', 'automatic-translations-for-polylang' ); ?></span>
+						<span class="atfp-default-tooltip"><?php echo esc_html__( 'Configure this provider before setting it as default.', 'automatic-translations-for-polylang' ); ?></span>
 					</label>
 					<a class="atfp-engine-docs" href="<?php echo esc_url( $atfp_provider['docs'] ); ?>" target="_blank" rel="noopener noreferrer"><?php echo esc_html__( 'Docs', 'automatic-translations-for-polylang' ); ?></a>
 					<?php if ( '' !== $atfp_provider['configure'] ) : ?>
-						<a href="<?php echo esc_url( admin_url( 'admin.php?page=polylang-atfp-dashboard&tab=settings' ) ); ?>" class="atfp-<?php echo esc_attr( $atfp_provider['configure'] ); ?>-configure-button atfp-dashboard-btn primary" style="display: none;"><?php echo esc_html__( 'Configure', 'automatic-translations-for-polylang' ); ?></a>
+						<a href="<?php echo esc_url( admin_url( 'admin.php?page=polylang-atfp-dashboard&tab=settings' ) ); ?>" class="atfp-<?php echo esc_attr( $atfp_provider['configure'] ); ?>-configure-button button button-primary" style="display: none;"><?php echo esc_html__( 'Configure', 'automatic-translations-for-polylang' ); ?></a>
 					<?php endif; ?>
 					<div class="atfp-provider-switch-container" data-provider="<?php echo esc_attr( $atfp_provider_key ); ?>">
 						<label class="atfp-provider-switch">
@@ -165,8 +167,6 @@ $atfp_video_title       = __( 'Automate the Translation Process with AutoPoly - 
 			<?php endforeach; ?>
 		</ul>
 
-
-		<div class="atfp-engine-default-message" aria-live="polite"></div>
 	</div>
 
 	<?php require_once ATFP_DIR_PATH . $file_prefix . 'footer.php'; ?>

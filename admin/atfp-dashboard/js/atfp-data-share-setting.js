@@ -144,6 +144,10 @@ jQuery(function($) {
      * @return {boolean} True when the provider is not configured yet.
      */
     const isProviderUnconfigured = ($row) => {
+        if ($row.hasClass('atfp-engine-unsupported')) {
+            return true;
+        }
+
         return $row
             .find('.atfp-chrome-configure-notice, .atfp-edge-configure-notice')
             .filter(function () {
@@ -231,25 +235,44 @@ jQuery(function($) {
 
     atfpShowEffectiveDefault();
 
+    /**
+     * Disables "Set as default" on providers the browser cannot run yet.
+     *
+     * The readiness script decides that asynchronously, so this is re-run
+     * whenever it touches a row rather than only on load.
+     *
+     * @return {void}
+     */
+    const atfpSyncDefaultAvailability = () => {
+        $('.atfp-engine-row').each(function () {
+            const $row = $(this);
+            const $label = $row.find('.atfp-engine-default');
+            const unconfigured = isProviderUnconfigured($row);
+
+            $label.toggleClass('atfp-engine-default-disabled', unconfigured);
+            $label.find('.atfp-engine-default-input').prop('disabled', unconfigured);
+        });
+    };
+
+    atfpSyncDefaultAvailability();
+
+    const $engineList = $('.atfp-engine-list');
+
+    if ($engineList.length && window.MutationObserver) {
+        // The notice is appended, then shown or hidden by inline style, so both
+        // kinds of change have to re-run the check.
+        new MutationObserver(atfpSyncDefaultAvailability).observe($engineList.get(0), {
+            attributeFilter: ['style', 'class'],
+            attributes: true,
+            childList: true,
+            subtree: true
+        });
+    }
+
     $(document).on('change', '.atfp-engine-default-input', function () {
         const $input = $(this);
         const provider = $input.val();
-        const $row = $input.closest('.atfp-engine-row');
         const $list = $input.closest('.atfp-engine-list');
-        const $message = $('.atfp-engine-default-message');
-
-        $message.text('').removeClass('is-error');
-
-        // A provider that still needs browser setup could never be used, so it
-        // must not become the default the modal pre-selects.
-        if (isProviderUnconfigured($row)) {
-            $input.prop('checked', false);
-            $('.atfp-engine-row.is-default').find('.atfp-engine-default-input').prop('checked', true);
-            $message
-                .addClass('is-error')
-                .text(atfpSettingsScriptData.unconfigured_default_message);
-            return;
-        }
 
         $.ajax({
             url: atfpSettingsScriptData.ajax_url,
@@ -273,15 +296,15 @@ jQuery(function($) {
                     return;
                 }
 
-                // Re-check whichever row the server still considers the default.
+                // Restore whichever row the server still considers the default.
                 $input.prop('checked', false);
-                $message
-                    .addClass('is-error')
-                    .text(response.data && response.data.message ? response.data.message : response.data);
+                $('.atfp-engine-row.is-default').find('.atfp-engine-default-input').prop('checked', true);
+                console.error(response.data && response.data.message ? response.data.message : response.data);
             },
             error: function () {
                 $input.prop('checked', false);
-                $message.addClass('is-error').text('Could not save the default translation provider.');
+                $('.atfp-engine-row.is-default').find('.atfp-engine-default-input').prop('checked', true);
+                console.error('Could not save the default translation provider.');
             }
         });
     });

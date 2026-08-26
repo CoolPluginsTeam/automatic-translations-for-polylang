@@ -230,6 +230,7 @@ Polylang Addon Dashboard - Admin Panel Styles
     width: auto;
     flex: 2;
     margin-top: 30px;
+    min-width: 0;
 }
 
 
@@ -426,23 +427,48 @@ ol.atfp-dashboard-step-list li {
     padding: 0;
 }
 
-/* Default engine picker inside each row. */
-/* Taken out of flow so it sits on the row's true centre line and lands in the
-   same place on every row, whatever the engine name length. */
+/* Default engine picker inside each row.
+   It grows into the space between the status badge and Docs so the control
+   stays centred without covering neighbouring labels. */
 .atfp-engine-default {
     align-items: center;
     cursor: pointer;
     display: inline-flex;
+    flex: 1 1 160px;
     gap: 8px;
-    left: 50%;
-    position: absolute;
-    transform: translateX(-50%);
+    justify-content: center;
+    min-width: 0;
+    position: relative;
 }
 
 .atfp-engine-default-input {
     position: absolute;
     opacity: 0;
     pointer-events: none;
+}
+
+/*
+ * Core sets opacity .7 and a dashicon ::before on disabled radios:
+ *   input[type=radio]:disabled
+ *   input[type=radio]:disabled:checked::before
+ * That makes the hidden native radio show through the custom mark.
+ */
+.atfp-dashboard-wrapper .atfp-engine-default input[type=radio].atfp-engine-default-input,
+.atfp-dashboard-wrapper .atfp-engine-default input[type=radio].atfp-engine-default-input:disabled,
+.atfp-dashboard-wrapper .atfp-engine-default input[type=radio].atfp-engine-default-input:checked,
+.atfp-dashboard-wrapper .atfp-engine-default input[type=radio].atfp-engine-default-input:disabled:checked {
+    height: 0;
+    margin: 0;
+    opacity: 0;
+    width: 0;
+}
+
+.atfp-dashboard-wrapper .atfp-engine-default input[type=radio].atfp-engine-default-input::before,
+.atfp-dashboard-wrapper .atfp-engine-default input[type=radio].atfp-engine-default-input:checked::before,
+.atfp-dashboard-wrapper .atfp-engine-default input[type=radio].atfp-engine-default-input:disabled::before,
+.atfp-dashboard-wrapper .atfp-engine-default input[type=radio].atfp-engine-default-input:disabled:checked::before {
+    content: none;
+    margin: 0;
 }
 
 .atfp-engine-default-mark {
@@ -459,6 +485,7 @@ ol.atfp-dashboard-step-list li {
 .atfp-engine-default-active {
     color: var(--text-color-light);
     font-size: 13px;
+    white-space: nowrap;
 }
 
 /* The active state swaps the radio for a star and the label for a status. */
@@ -509,16 +536,6 @@ ol.atfp-dashboard-step-list li {
     opacity: 1;
 }
 
-.atfp-engine-default-message {
-    color: #d63638;
-    font-size: 13px;
-    margin-top: 10px;
-}
-
-.atfp-engine-default-message:empty {
-    display: none;
-}
-
 ul.atfp-engine-list {
     list-style: none;
     margin: 0px;
@@ -550,15 +567,17 @@ li.atfp-engine-row:last-child {
 
 .atfp-engine-name {
     color: var(--text-color);
+    flex-shrink: 1;
     font-size: 14px;
     font-weight: 600;
+    min-width: 0;
 }
 
 .atfp-engine-status {
-    margin-right: auto;
     background: var(--primary-light-color);
     border-radius: 12px;
     color: var(--secondary-color);
+    flex-shrink: 0;
     font-size: 12px;
     font-weight: 600;
     padding: 2px 10px;
@@ -599,7 +618,9 @@ li.atfp-engine-row:last-child {
     display: none !important;
 }
 
-.atfp-engine-row .atfp-dashboard-btn {
+.atfp-engine-row .atfp-dashboard-btn,
+.atfp-engine-row .atfp-chrome-configure-button,
+.atfp-engine-row .atfp-edge-configure-button {
     order: 4;
     flex-shrink: 0;
     white-space: nowrap;
@@ -610,7 +631,8 @@ li.atfp-engine-row:last-child {
     flex-shrink: 0;
 }
 
-.atfp-engine-status-setup {
+.atfp-engine-status-setup,
+.atfp-engine-status-unsupported {
     display: none;
 }
 
@@ -630,6 +652,26 @@ li.atfp-engine-row:last-child {
     display: inline;
 }
 
+.atfp-engine-row.atfp-engine-unsupported .atfp-engine-status,
+.atfp-engine-row.atfp-engine-unsupported:has(.atfp-chrome-configure-notice:not([style*="display: none"])) .atfp-engine-status,
+.atfp-engine-row.atfp-engine-unsupported:has(.atfp-edge-configure-notice:not([style*="display: none"])) .atfp-engine-status {
+    background: #f3f4f6;
+    color: #6b7280;
+}
+
+.atfp-engine-row.atfp-engine-unsupported .atfp-engine-status-ready,
+.atfp-engine-row.atfp-engine-unsupported .atfp-engine-status-setup,
+.atfp-engine-row.atfp-engine-unsupported:has(.atfp-chrome-configure-notice:not([style*="display: none"])) .atfp-engine-status-ready,
+.atfp-engine-row.atfp-engine-unsupported:has(.atfp-edge-configure-notice:not([style*="display: none"])) .atfp-engine-status-ready,
+.atfp-engine-row.atfp-engine-unsupported:has(.atfp-chrome-configure-notice:not([style*="display: none"])) .atfp-engine-status-setup,
+.atfp-engine-row.atfp-engine-unsupported:has(.atfp-edge-configure-notice:not([style*="display: none"])) .atfp-engine-status-setup {
+    display: none;
+}
+
+.atfp-engine-row.atfp-engine-unsupported .atfp-engine-status-unsupported {
+    display: inline;
+}
+
 @media (max-width: 900px) {
     .atfp-dashboard-start-grid {
         display: block;
@@ -638,6 +680,11 @@ li.atfp-engine-row:last-child {
     .atfp-dashboard-video {
         margin-bottom: 20px;
         max-width: 100%;
+    }
+
+    .atfp-engine-default {
+        flex: 0 1 auto;
+        justify-content: flex-start;
     }
 }
 
@@ -719,6 +766,52 @@ li.atfp-engine-row:last-child {
     margin-bottom: 10px;
     font-size: 12px;
     color: #dc2626;
+}
+
+/* "Set as default" is locked until the browser can actually run the engine.
+   The reason rides in a tooltip on the label, since a disabled input cannot
+   carry a title reliably across browsers.
+
+   Do not set `position` here: .atfp-engine-default is already absolutely
+   positioned to centre it in the row, and overriding that drops the label out
+   of the row. Being absolute, it already anchors the tooltip below. */
+.atfp-engine-default-disabled {
+    cursor: not-allowed;
+    opacity: .55;
+}
+
+.atfp-engine-default-input:disabled {
+    cursor: not-allowed;
+}
+
+.atfp-engine-default-disabled .atfp-engine-default-text {
+    color: #757575;
+}
+
+.atfp-default-tooltip {
+    background: #1d2327;
+    border-radius: 4px;
+    bottom: calc(100% + 10px);
+    color: #fff;
+    font-size: 13px;
+    left: 50%;
+    line-height: 1.4;
+    max-width: 260px;
+    opacity: 0;
+    padding: 8px 12px;
+    pointer-events: none;
+    position: absolute;
+    transform: translateX(-50%);
+    transition: opacity .15s ease;
+    visibility: hidden;
+    width: max-content;
+    z-index: 5;
+}
+
+.atfp-engine-default-disabled:hover .atfp-default-tooltip,
+.atfp-engine-default-disabled:focus-within .atfp-default-tooltip {
+    opacity: 1;
+    visibility: visible;
 }
 
 /* ================================================
