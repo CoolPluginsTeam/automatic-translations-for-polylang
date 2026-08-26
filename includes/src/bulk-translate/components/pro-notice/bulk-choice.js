@@ -302,11 +302,7 @@ const BulkPageChoice = ({ prefix, postIds, onDestory, onReasonChange, onTranslat
                                                     onDestory(e);
                                                 }}
                                             >
-                                                &#8592; {sprintf(
-                                                    /* translators: %s: post type label, for example Pages. */
-                                                    __('Choose Another %s', 'automatic-translations-for-polylang'),
-                                                    postLabel
-                                                )}
+                                                &#8592; {__('Choose Another Page', 'automatic-translations-for-polylang')}
                                             </button>
                                         </span>
                                     )}
@@ -326,12 +322,7 @@ const BulkPageChoice = ({ prefix, postIds, onDestory, onReasonChange, onTranslat
                         <>
                             <div className={`${prefix}-choice-locked-heading`}>
                                 <h3 className={`${prefix}-choice-heading`}>
-                                    {sprintf(
-                                        /* translators: 1: number of remaining selected items, 2: post type label. */
-                                        __('Bulk Translate All %1$d %2$s (Pro)', 'automatic-translations-for-polylang'),
-                                        otherCount,
-                                        postLabel
-                                    )}
+                                    {__('Bulk Translate All Pages (Pro)', 'automatic-translations-for-polylang')}
                                 </h3>
                             </div>
                             <div className={`${prefix}-choice-locked`}>
@@ -373,7 +364,7 @@ const BulkPageChoice = ({ prefix, postIds, onDestory, onReasonChange, onTranslat
                                     <strong>
                                         {sprintf(
                                             /* translators: 1: total selected items, 2: post type label. */
-                                            __('Translate All %1$d %2$s', 'automatic-translations-for-polylang'),
+                                            __('Translate %1$d %2$s at Once', 'automatic-translations-for-polylang'),
                                             selectedCount,
                                             postLabel
                                         )}

@@ -371,6 +371,22 @@ $modal-width: clamp(320px, 1040px, 94vw);
                         padding: 0;
                     }
 
+                    .#{$prefix}-choice-heading-link {
+                        color: var(--wp-admin-theme-color, #2271b1);
+                        text-decoration: none;
+
+                        &:hover,
+                        &:focus,
+                        &:visited {
+                            color: var(--wp-admin-theme-color-darker-10, #135e96);
+                        }
+
+                        &:hover,
+                        &:focus {
+                            text-decoration: underline;
+                        }
+                    }
+
                     .#{$prefix}-choice-box,
                     .#{$prefix}-choice-locked {
                         background: #fff;
@@ -510,7 +526,6 @@ $modal-width: clamp(320px, 1040px, 94vw);
                         font-weight: 500;
                         gap: 4px;
                         line-height: 1.2;
-                        min-height: 28px;
                         padding: 0 10px;
 
                         &:hover,
@@ -598,7 +613,7 @@ $modal-width: clamp(320px, 1040px, 94vw);
                         gap: 10px;
                         justify-content: center;
                         min-width: 0;
-                        
+                        padding: 10px;
                         text-align: center;
 
                         strong {
