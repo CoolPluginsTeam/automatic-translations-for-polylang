@@ -43,6 +43,21 @@ class ChromeAINoticeFramework {
                 });
             }
 
+            const detectedBrowser = ChromeAISetupFramework.getBrowserType();
+            const enabledProviders = this.data.enabled_providers || [];
+            const chromeEnabled = enabledProviders.includes('chrome-built-in-ai');
+            const edgeEnabled = enabledProviders.includes('edge-built-in-ai');
+            
+            let forceProvider = 'chrome';
+            if (detectedBrowser === 'Edge' && edgeEnabled) {
+                forceProvider = 'edge';
+            } else if (detectedBrowser === 'Chrome' && chromeEnabled) {
+                forceProvider = 'chrome';
+            } else {
+                if (chromeEnabled) forceProvider = 'chrome';
+                else if (edgeEnabled) forceProvider = 'edge';
+            }
+
             new ChromeAISetupFramework(this.options.container, {
                 sourceLanguage: this.data.source_language || 'en',
                 sourceLanguageLabel: this.data.source_language_label || 'English',
@@ -56,7 +71,9 @@ class ChromeAINoticeFramework {
                 alternativeUrl: this.data.alternative_url || '',
                 bypassBrowserCheck: this.data.chrome_ai_bypass_browser_check === '1' || this.data.chrome_ai_bypass_browser_check === true,
                 bypassApiCheck: this.data.chrome_ai_bypass_api_check === '1' || this.data.chrome_ai_bypass_api_check === true,
-                bypassSecureCheck: this.data.chrome_ai_bypass_secure_check === '1' || this.data.chrome_ai_bypass_secure_check === true
+                bypassSecureCheck: this.data.chrome_ai_bypass_secure_check === '1' || this.data.chrome_ai_bypass_secure_check === true,
+                defaultProvider: (this.data.enabled_providers && !this.data.enabled_providers.includes('chrome-built-in-ai') && this.data.enabled_providers.includes('edge-built-in-ai')) ? 'edge' : 'chrome',
+                forceProvider: forceProvider
             });
         }
 

@@ -55,12 +55,30 @@ if(!current_user_can('manage_options')){
         $atfp_enabled_providers = ATFP_Helper::get_active_providers();
         $atfp_polylang_supported_languages=ATFP_Helper::get_polylang_supported_languages();
         $user_agent_info=sanitize_text_field(wp_unslash($_SERVER['HTTP_USER_AGENT']));
-        $browserType='chrome';
-        $browser_title='Chrome';
+        $chrome_enabled = is_array($atfp_enabled_providers) && in_array('chrome-built-in-ai', $atfp_enabled_providers);
+        $edge_enabled   = is_array($atfp_enabled_providers) && in_array('edge-built-in-ai', $atfp_enabled_providers);
 
-        if(strpos($user_agent_info, 'Edg') !== false || (!in_array('chrome-built-in-ai', $atfp_enabled_providers) && $browserType !== 'chrome')){
-            $browserType='edge';
-            $browser_title='Edge';
+        $is_edge   = strpos($user_agent_info, 'Edg') !== false;
+        $is_chrome = strpos($user_agent_info, 'Chrome') !== false && !$is_edge;
+
+        if ($is_edge && $edge_enabled) {
+            $browserType   = 'edge';
+            $browser_title = 'Edge';
+        } elseif ($is_chrome && $chrome_enabled) {
+            $browserType   = 'chrome';
+            $browser_title = 'Chrome';
+        } else {
+            // Other browsers or fallback
+            if ($chrome_enabled) {
+                $browserType   = 'chrome';
+                $browser_title = 'Chrome';
+            } elseif ($edge_enabled) {
+                $browserType   = 'edge';
+                $browser_title = 'Edge';
+            } else {
+                $browserType   = 'chrome';
+                $browser_title = 'Chrome';
+            }
         }
 
         if ( is_array( $atfp_enabled_providers ) && (($browserType === 'chrome' && in_array( 'chrome-built-in-ai', $atfp_enabled_providers )) || ($browserType === 'edge' && in_array('edge-built-in-ai', $atfp_enabled_providers))) ) {

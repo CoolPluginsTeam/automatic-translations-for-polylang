@@ -70,7 +70,11 @@ class ChromeAISetupFramework {
 
         // Setup environment variables
         this.browserType = ChromeAISetupFramework.getBrowserType(); // 'Chrome' | 'Edge' | 'Other'
-        this.isEdge = this.browserType === 'Edge';
+        if (this.options.forceProvider) {
+            this.isEdge = this.options.forceProvider === 'edge';
+        } else {
+            this.isEdge = this.browserType === 'Edge' || (this.browserType === 'Other' && this.options.defaultProvider === 'edge');
+        }
         this.browserTitle = this.isEdge ? 'Edge' : 'Chrome';
 
         // Dynamically replace browser name in standard strings
