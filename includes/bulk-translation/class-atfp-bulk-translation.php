@@ -55,26 +55,13 @@ if (!class_exists('ATFP_Bulk_Translation')):
          */
         public function atfp_bulk_translate_button($views)
         {
-            $atfp_utm_parameters = 'utm_source=atfp_plugin';
-
-            if ( class_exists( 'ATFP_Helper' ) ) {
-                $atfp_utm_parameters = ATFP_Helper::utm_source_text();
-            }
-
-            $atfp_pro_url = 'https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?' . sanitize_text_field( $atfp_utm_parameters ) . '&utm_medium=inside&utm_campaign=get_pro&utm_content=bulk_translate_button';
-
             printf(
                 '<span class="atfp-bulk-translate-btn-group" style="display:none;">'
                     . '<button type="button" class="button button-primary atfp-bulk-translate-btn">'
-                        . '<span class="dashicons dashicons-translation" aria-hidden="true"></span>%1$s'
+                        . '<span class="dashicons dashicons-translation" aria-hidden="true"></span>%s'
                     . '</button>'
-                    . '<a class="atfp-bulk-translate-pro-btn" href="%2$s" target="_blank" rel="noopener noreferrer">'
-                        . '<span class="dashicons dashicons-lock" aria-hidden="true"></span>%3$s'
-                    . '</a>'
                 . '</span>',
-                esc_html__( 'AI Translate', 'automatic-translations-for-polylang' ),
-                esc_url( $atfp_pro_url ),
-                esc_html__( 'Bulk Translate', 'automatic-translations-for-polylang' )
+                esc_html__( 'AI Translate', 'automatic-translations-for-polylang' )
             );
 
             return $views;
