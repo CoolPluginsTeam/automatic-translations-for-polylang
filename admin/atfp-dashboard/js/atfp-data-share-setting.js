@@ -200,7 +200,8 @@ jQuery(function($) {
      * Shows the provider the modal would actually pre-select in this browser.
      *
      * The saved option is left untouched, so opening the dashboard back in the
-     * browser that owns the engine restores it.
+     * browser that owns the engine restores it. Google Translate is switched
+     * on if it was off, the same as clicking Set as default.
      *
      * @return {void}
      */
@@ -230,7 +231,12 @@ jQuery(function($) {
         $fallback.addClass('is-default');
         // Same radio group, so this also clears the hidden provider's input.
         $fallback.find('.atfp-engine-default-input').prop('checked', true);
-        $fallback.find('.atfp-provider-toggle').prop('disabled', true);
+
+        const $googleToggle = $fallback.find('.atfp-provider-toggle');
+        if (!$googleToggle.prop('checked')) {
+            $googleToggle.prop('checked', true).trigger('change');
+        }
+        $googleToggle.prop('disabled', true);
     };
 
     atfpShowEffectiveDefault();
@@ -273,6 +279,15 @@ jQuery(function($) {
         const $input = $(this);
         const provider = $input.val();
         const $list = $input.closest('.atfp-engine-list');
+        const $row = $input.closest('.atfp-engine-row');
+        const $toggle = $row.find('.atfp-provider-toggle');
+
+        // Ready, supported providers can be made default in one click: turn
+        // the engine on if it was off. Unconfigured / unsupported rows stay
+        // locked by atfpSyncDefaultAvailability.
+        if (!$toggle.prop('checked') && !isProviderUnconfigured($row)) {
+            $toggle.prop('checked', true);
+        }
 
         $.ajax({
             url: atfpSettingsScriptData.ajax_url,
@@ -284,15 +299,13 @@ jQuery(function($) {
             },
             success: function (response) {
                 if (response.success === true) {
-                    const $row = $input.closest('.atfp-engine-row');
-
                     // Only one row can carry the default, so move the marker and
                     // the toggle lock that keeps the default provider enabled.
                     $('.atfp-engine-row').removeClass('is-default');
                     $('.atfp-engine-row .atfp-provider-toggle').prop('disabled', false).attr('title', '');
 
                     $row.addClass('is-default');
-                    $row.find('.atfp-provider-toggle').prop('disabled', true);
+                    $toggle.prop('checked', true).prop('disabled', true);
                     return;
                 }
 

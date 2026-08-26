@@ -593,10 +593,18 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				return wp_send_json_error( __( 'Invalid translation provider.', 'automatic-translations-for-polylang' ) );
 			}
 
-			// A disabled engine can never be pre-selected, so refuse rather than
-			// storing a default the translation modal would silently ignore.
+			// Making an engine the default also turns it on. The modal can only
+			// pre-select an enabled provider, so refusing here forced a second
+			// click on the toggle first.
 			if ( '' !== $default_provider && ! in_array( $default_provider, ATFP_Helper::get_active_providers(), true ) ) {
-				return wp_send_json_error( __( 'Enable this translation provider before making it the default.', 'automatic-translations-for-polylang' ) );
+				$enabled_providers = array_fill_keys( ATFP_Helper::get_supported_providers(), false );
+
+				foreach ( ATFP_Helper::get_active_providers() as $active_provider ) {
+					$enabled_providers[ $active_provider ] = true;
+				}
+
+				$enabled_providers[ $default_provider ] = true;
+				update_option( 'atfp_enabled_providers', $enabled_providers );
 			}
 
 			update_option( 'atfp_default_provider', $default_provider );
