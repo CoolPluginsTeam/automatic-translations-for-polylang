@@ -678,6 +678,28 @@ li.atfp-engine-row:last-child {
     display: inline;
 }
 
+.atfp-engine-unsupported-msg {
+    display: none;
+}
+
+.atfp-engine-row.atfp-engine-unsupported .atfp-engine-unsupported-msg {
+    color: #dc2626;
+    display: block;
+    flex: 1 1 240px;
+    font-size: 13px;
+    line-height: 1.45;
+    margin: 0;
+    min-width: 0;
+}
+
+.atfp-engine-row.atfp-engine-unsupported .atfp-engine-default,
+.atfp-engine-row.atfp-engine-unsupported .atfp-engine-docs,
+.atfp-engine-row.atfp-engine-unsupported .atfp-provider-switch-container,
+.atfp-engine-row.atfp-engine-unsupported .atfp-chrome-configure-button,
+.atfp-engine-row.atfp-engine-unsupported .atfp-edge-configure-button {
+    display: none !important;
+}
+
 @media (max-width: 900px) {
     .atfp-dashboard-start-grid {
         display: block;

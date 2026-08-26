@@ -171,7 +171,7 @@ class ATFP_Register_Backend_Assets
 		$current_screen = get_current_screen();
         
         if(class_exists('ATFP_Helper') && ATFP_Helper::is_translated_post_type($current_screen)){
-            wp_enqueue_script('atfp-views-link-admin', ATFP_URL . 'assets/js/atfp-admin-views-link.js', array('jquery'), ATFP_V, true);
+            wp_enqueue_script('atfp-views-link-admin', ATFP_URL . 'assets/js/atfp-admin-views-link.min.js', array('jquery'), ATFP_V, true);
         }
     }
 

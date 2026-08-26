@@ -43,3 +43,34 @@ node_modules/           export-ignore
 /src/                   export-ignore
 postcss.config.js       export-ignore
 .claude/                export-ignore
+includes/src/**         export-ignore
+*.map                   export-ignore
+*.scss                  export-ignore
+
+# Unminified sources — GitHub Download ZIP ships only .min.js / .min.css
+admin/atfp-dashboard/css/admin-styles.css export-ignore
+admin/atfp-dashboard/js/atfp-data-share-setting.js export-ignore
+admin/chrome-ai-setup/css/chrome-ai-setup-framework.css export-ignore
+admin/chrome-ai-setup/js/chrome-ai-setup-framework.js export-ignore
+admin/chrome-ai-setup/js/chrome-ai-setup-notice.js export-ignore
+admin/cpfm-feedback/css/cpfm-admin-feedback.css export-ignore
+admin/cpfm-feedback/js/cpfm-admin-feedback.js export-ignore
+admin/cpt_dashboard/assets/css/cpt-dashboard.css export-ignore
+admin/cpt_dashboard/assets/js/cpt-dashboard.js export-ignore
+admin/feedback/css/admin-feedback.css export-ignore
+admin/feedback/js/admin-feedback.js export-ignore
+assets/css/atfp-classic-translate.css export-ignore
+assets/css/atfp-custom.css export-ignore
+assets/css/atfp-elementor-translate-confirm-box.css export-ignore
+assets/css/atfp-elementor-translate.css export-ignore
+assets/css/atfp-re-translation.css export-ignore
+assets/css/atfp-supported-blocks.css export-ignore
+assets/css/atfp-update-custom-blocks.css export-ignore
+assets/js/atfp-add-new-block.js export-ignore
+assets/js/atfp-admin-views-link.js export-ignore
+assets/js/atfp-bulk-translate.js export-ignore
+assets/js/atfp-classic-translate.js export-ignore
+assets/js/atfp-elementor-translate-confirm-box.js export-ignore
+assets/js/atfp-re-translation.js export-ignore
+assets/js/atfp-supported-block.js export-ignore
+assets/js/atfp-update-custom-blocks.js export-ignore

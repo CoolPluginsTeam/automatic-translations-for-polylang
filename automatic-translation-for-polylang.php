@@ -174,8 +174,8 @@ if (! class_exists('AutoPoly')) {
 			$buy_pro_url = esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?' . sanitize_text_field($utm_parameters));
 
 			if ($page == 'polylang-atfp-dashboard') {
-				wp_enqueue_style('atfp-dashboard-style', ATFP_URL . 'admin/atfp-dashboard/css/admin-styles.css', null, ATFP_V, 'all');
-				wp_enqueue_script('atfp-dashboard-script', ATFP_URL . 'admin/atfp-dashboard/js/atfp-data-share-setting.js', array('jquery'), ATFP_V, true);
+				wp_enqueue_style('atfp-dashboard-style', ATFP_URL . 'admin/atfp-dashboard/css/admin-styles.min.css', null, ATFP_V, 'all');
+				wp_enqueue_script('atfp-dashboard-script', ATFP_URL . 'admin/atfp-dashboard/js/atfp-data-share-setting.min.js', array('jquery'), ATFP_V, true);
 
 				if (empty($active_tab) || $active_tab === 'dashboard') {
 					$dashboard_data = array(
@@ -189,8 +189,8 @@ if (! class_exists('AutoPoly')) {
 				}
 			}
 			if($page == 'polylang-atfp-dashboard' && (empty($active_tab) || in_array($active_tab, array('settings', 'dashboard')))){
-				wp_enqueue_style( 'cais-framework-style', ATFP_URL . 'admin/chrome-ai-setup/css/chrome-ai-setup-framework.css', array(), time() );
-				wp_enqueue_script( 'cais-framework-script', ATFP_URL . 'admin/chrome-ai-setup/js/chrome-ai-setup-framework.js', array(), time(), true );
+				wp_enqueue_style( 'cais-framework-style', ATFP_URL . 'admin/chrome-ai-setup/css/chrome-ai-setup-framework.min.css', array(), time() );
+				wp_enqueue_script( 'cais-framework-script', ATFP_URL . 'admin/chrome-ai-setup/js/chrome-ai-setup-framework.min.js', array(), time(), true );
 				wp_enqueue_script( 'cais-notice-script', ATFP_URL . 'admin/chrome-ai-setup/js/chrome-ai-setup-notice.min.js', array('jquery', 'cais-framework-script'), time(), true );
 				
 				$atfp_langugages=array(

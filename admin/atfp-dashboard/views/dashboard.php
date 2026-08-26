@@ -124,6 +124,18 @@ $atfp_video_title       = __( 'Automate the Translation Process with AutoPoly - 
 						<span class="atfp-engine-status-setup"><?php echo esc_html__( 'Not Configured', 'automatic-translations-for-polylang' ); ?></span>
 						<span class="atfp-engine-status-unsupported"><?php echo esc_html__( 'Not supported', 'automatic-translations-for-polylang' ); ?></span>
 					</span>
+					<?php if ( '' !== $atfp_provider['configure'] ) : ?>
+						<p class="atfp-engine-unsupported-msg">
+							<?php
+							printf(
+								/* translators: 1: translation provider name, 2: required browser name */
+								esc_html__( '%1$s Translation provider is not supported in your current browser. Please use %2$s browser to use this translation provider.', 'automatic-translations-for-polylang' ),
+								esc_html( $atfp_provider['name'] ),
+								esc_html( ucfirst( $atfp_provider['configure'] ) )
+							);
+							?>
+						</p>
+					<?php endif; ?>
 					<label class="atfp-engine-default">
 						<input
 							type="radio"

@@ -96,6 +96,11 @@ class ChromeAINoticeFramework {
                 const $card = $(cardSelector);
 
                 if ($card.length > 0) {
+                    if (this.isUnsupportedBrowser(type)) {
+                        this.applyUnsupportedState($card, type);
+                        return;
+                    }
+
                     const toggle = $(this.options.toggleSelectorPattern.replace('{type}', type));
                     const enabled = toggle.is(":checked");
 
@@ -160,7 +165,8 @@ class ChromeAINoticeFramework {
     }
 
     /**
-     * Mark the row as unsupported: no Configure button, Not supported badge.
+     * Mark the row as unsupported: hide Set as default / Docs / toggle,
+     * show the browser-support message, Not supported badge.
      * @param {Object} $card jQuery row
      * @param {string} type - 'chrome' | 'edge'
      */
@@ -168,11 +174,13 @@ class ChromeAINoticeFramework {
         const $ = jQuery;
         const requiredBrowser = this.requiredBrowserName(type);
         const providerName = $card.find('.atfp-engine-name').text().trim() || `${requiredBrowser} Built-in AI`;
+        const message = this.unsupportedTooltip(providerName, requiredBrowser);
+        const $msg = $card.find('.atfp-engine-unsupported-msg');
 
         $card.addClass('atfp-engine-unsupported');
-        const message = this.unsupportedTooltip(providerName, requiredBrowser);
-        $card.find('.atfp-default-tooltip').text(message);
-        $card.find('.atfp-engine-status').attr('title', message);
+        if ($msg.length) {
+            $msg.text(message);
+        }
         $(this.options.configureBtnSelectorPattern.replace('{type}', type)).hide();
     }
 
@@ -182,12 +190,6 @@ class ChromeAINoticeFramework {
      */
     clearUnsupportedState($card) {
         $card.removeClass('atfp-engine-unsupported');
-        $card.find('.atfp-engine-status').removeAttr('title');
-        $card.find('.atfp-default-tooltip').text(
-            (window.wp && wp.i18n && wp.i18n.__)
-                ? wp.i18n.__('Configure this provider before setting it as default.', 'automatic-translations-for-polylang')
-                : 'Configure this provider before setting it as default.'
-        );
     }
 
     /**
