@@ -182,7 +182,8 @@ if (! class_exists('AutoPoly')) {
 						'ajax_url' => esc_url(admin_url('admin-ajax.php')),
 						'nonce' => wp_create_nonce('atfp_update_enabled_providers'),
 						'buy_pro_url' => $buy_pro_url,
-						'dashboard_url' => esc_url(admin_url('admin.php?page=polylang-atfp-dashboard&tab=dashboard'))
+						'dashboard_url' => esc_url(admin_url('admin.php?page=polylang-atfp-dashboard&tab=dashboard')),
+						'unconfigured_default_message' => __('Configure this provider in your browser before making it the default.', 'automatic-translations-for-polylang')
 					);
 
 					wp_localize_script('atfp-dashboard-script', 'atfpSettingsScriptData', $dashboard_data);

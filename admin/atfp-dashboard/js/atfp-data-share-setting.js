@@ -132,13 +132,45 @@ jQuery(function($) {
     /**
      * Persist the provider that should be pre-selected in the translation modal.
      */
+    /**
+     * Whether a provider row is still waiting on browser setup.
+     *
+     * The readiness script appends its own notice to the row when the browser
+     * cannot run that engine, so the row's own markup is the source of truth --
+     * the server has no way to know this.
+     *
+     * @param {Object} $row Provider row.
+     *
+     * @return {boolean} True when the provider is not configured yet.
+     */
+    const isProviderUnconfigured = ($row) => {
+        return $row
+            .find('.atfp-chrome-configure-notice, .atfp-edge-configure-notice')
+            .filter(function () {
+                return 'none' !== this.style.display;
+            })
+            .length > 0;
+    };
+
     $(document).on('change', '.atfp-engine-default-input', function () {
         const $input = $(this);
         const provider = $input.val();
+        const $row = $input.closest('.atfp-engine-row');
         const $list = $input.closest('.atfp-engine-list');
         const $message = $('.atfp-engine-default-message');
 
         $message.text('').removeClass('is-error');
+
+        // A provider that still needs browser setup could never be used, so it
+        // must not become the default the modal pre-selects.
+        if (isProviderUnconfigured($row)) {
+            $input.prop('checked', false);
+            $('.atfp-engine-row.is-default').find('.atfp-engine-default-input').prop('checked', true);
+            $message
+                .addClass('is-error')
+                .text(atfpSettingsScriptData.unconfigured_default_message);
+            return;
+        }
 
         $.ajax({
             url: atfpSettingsScriptData.ajax_url,

@@ -22,12 +22,12 @@ if(!defined('ABSPATH')){
         <tbody>
             <?php
                 $atfp_features = [
+                    'Google Translate Widget Support' => [true, true],
                     'Yandex Translate Widget Support' => [true, true],
                     'Chrome Built-in AI Support' => [true, true],
                     'Edge Built-in AI Support' => [true, true],
                     'No API Key Required' => [true, true],
                     'Unlimited Translations' => [true, true],
-                    'Google Translate Widget Support' => [false, true],
                     'AI Translator (Gemini/OpenAI/DeepL) Support' => [false, true],
                     'Custom Fields Translation' => [false, true],
                     'Taxonomy Translation' => [false, true],
