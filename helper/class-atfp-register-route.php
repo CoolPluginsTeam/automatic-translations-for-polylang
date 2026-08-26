@@ -475,24 +475,25 @@ if ( ! class_exists( 'ATFP_Register_Route' ) ) :
 
 			$Object[ $postId ]['post_link'] = get_the_permalink( $postId );
 
-			if ( $elementor_enabled && 'builder' === $elementor_enabled && defined( 'ELEMENTOR_VERSION' ) && ATFP_Helper::has_elementor_data((int) $postId) ) {
-				$elementor_data = get_post_meta( $postId, '_elementor_data', true );
+			if ( $elementor_enabled && 'builder' === $elementor_enabled && defined( 'ELEMENTOR_VERSION' ) ) {
+				$Object[ $postId ]['editor_type'] = 'elementor';
 
-				if ( $elementor_data && '' !== $elementor_data ) {
-					$Object[ $postId ]['editor_type'] = 'elementor';
-					$elementor_data                   = array();
+				if ( $content_fetch ) {
+					$elementor_data = array();
 
-					if ( class_exists( '\Elementor\Plugin' ) && property_exists( '\Elementor\Plugin', 'instance' ) && $content_fetch ) {
-						$elementor_data = \Elementor\Plugin::$instance->documents->get( $postId )->get_elements_data();
+					if ( class_exists( '\Elementor\Plugin' ) && property_exists( '\Elementor\Plugin', 'instance' ) ) {
+						$document = \Elementor\Plugin::$instance->documents->get( $postId );
+
+						if ( $document ) {
+							$elementor_data = $document->get_elements_data();
+						}
 					}
 
-					if ( $content_fetch ) {
-						$Object[ $postId ]['content'] = $elementor_data;
-					}
+					$Object[ $postId ]['content'] = $elementor_data;
+				}
 
-					if ( $custom_fields_fetch ) {
-						unset( $Object[ $postId ]['metaFields']['_elementor_data'] );
-					}
+				if ( $custom_fields_fetch ) {
+					unset( $Object[ $postId ]['metaFields']['_elementor_data'] );
 				}
 			}
 

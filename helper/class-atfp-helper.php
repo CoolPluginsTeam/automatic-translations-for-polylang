@@ -946,6 +946,10 @@ if (! class_exists('ATFP_Helper')) {
 		/**
 		 * Resolve which editor a post's content belongs to.
 		 *
+		 * An Elementor page that was opened and published with an empty canvas
+		 * still has `_elementor_edit_mode` = builder but no widgets yet. That is
+		 * Elementor, not the classic editor.
+		 *
 		 * @since 1.5.0
 		 * @param int $post_id Post ID.
 		 * @return string|false One of 'elementor', 'block', 'classic', or false when the post is missing.
@@ -961,7 +965,6 @@ if (! class_exists('ATFP_Helper')) {
 			if (
 				'builder' === get_post_meta( $post_id, '_elementor_edit_mode', true )
 				&& defined( 'ELEMENTOR_VERSION' )
-				&& self::has_elementor_data( (int) $post_id )
 			) {
 				return 'elementor';
 			}
