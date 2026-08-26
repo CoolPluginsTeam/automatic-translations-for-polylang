@@ -520,7 +520,7 @@ ol.atfp-dashboard-step-list li {
 }
 
 .atfp-engine-row.is-default .atfp-engine-default-mark::before {
-    content: "★";
+    content: "\2605";
     font-size: 18px;
     left: 50%;
     line-height: 1;
