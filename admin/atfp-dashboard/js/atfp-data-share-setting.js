@@ -148,10 +148,22 @@ jQuery(function($) {
             return true;
         }
 
-        return $row
+        const hasSetupNotice = $row
             .find('.atfp-chrome-configure-notice, .atfp-edge-configure-notice')
             .filter(function () {
                 return 'none' !== this.style.display;
+            })
+            .length > 0;
+
+        if (hasSetupNotice) {
+            return true;
+        }
+
+        // The notice is CSS-hidden; the Configure button is the visible signal.
+        return $row
+            .find('.atfp-chrome-configure-button, .atfp-edge-configure-button')
+            .filter(function () {
+                return this.style.display && 'none' !== this.style.display;
             })
             .length > 0;
     };
@@ -237,43 +249,59 @@ jQuery(function($) {
             $googleToggle.prop('checked', true).trigger('change');
         }
         $googleToggle.prop('disabled', true);
+
+        atfpSyncProviderAvailability();
     };
 
-    atfpShowEffectiveDefault();
-
     /**
-     * Disables "Set as default" on providers the browser cannot run yet.
+     * Locks default radio and enable toggle until the browser can run the engine.
      *
      * The readiness script decides that asynchronously, so this is re-run
      * whenever it touches a row rather than only on load.
      *
      * @return {void}
      */
-    const atfpSyncDefaultAvailability = () => {
+    const atfpSyncProviderAvailability = () => {
         $('.atfp-engine-row').each(function () {
             const $row = $(this);
             const $label = $row.find('.atfp-engine-default');
+            const $toggle = $row.find('.atfp-provider-toggle');
             const unconfigured = isProviderUnconfigured($row);
+            const isDefault = $row.hasClass('is-default');
 
             $label.toggleClass('atfp-engine-default-disabled', unconfigured);
             $label.find('.atfp-engine-default-input').prop('disabled', unconfigured);
+            $row.toggleClass('atfp-engine-unconfigured', unconfigured);
+            $row.toggleClass('atfp-engine-toggle-off', !$toggle.prop('checked'));
+
+            if (isDefault) {
+                $toggle.prop('disabled', true);
+                return;
+            }
+
+            $toggle.prop('disabled', false).attr('title', '');
         });
     };
 
-    atfpSyncDefaultAvailability();
+    atfpShowEffectiveDefault();
+    atfpSyncProviderAvailability();
 
     const $engineList = $('.atfp-engine-list');
 
     if ($engineList.length && window.MutationObserver) {
         // The notice is appended, then shown or hidden by inline style, so both
         // kinds of change have to re-run the check.
-        new MutationObserver(atfpSyncDefaultAvailability).observe($engineList.get(0), {
+        new MutationObserver(atfpSyncProviderAvailability).observe($engineList.get(0), {
             attributeFilter: ['style', 'class'],
             attributes: true,
             childList: true,
             subtree: true
         });
     }
+
+    $(document).on('change', '.atfp-provider-toggle', function () {
+        $(this).closest('.atfp-engine-row').toggleClass('atfp-engine-toggle-off', !this.checked);
+    });
 
     $(document).on('change', '.atfp-engine-default-input', function () {
         const $input = $(this);
@@ -284,7 +312,7 @@ jQuery(function($) {
 
         // Ready, supported providers can be made default in one click: turn
         // the engine on if it was off. Unconfigured / unsupported rows stay
-        // locked by atfpSyncDefaultAvailability.
+        // locked by atfpSyncProviderAvailability.
         if (!$toggle.prop('checked') && !isProviderUnconfigured($row)) {
             $toggle.prop('checked', true);
         }
@@ -306,6 +334,7 @@ jQuery(function($) {
 
                     $row.addClass('is-default');
                     $toggle.prop('checked', true).prop('disabled', true);
+                    atfpSyncProviderAvailability();
                     return;
                 }
 

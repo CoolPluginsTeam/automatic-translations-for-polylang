@@ -102,21 +102,15 @@ class ChromeAINoticeFramework {
                     }
 
                     const toggle = $(this.options.toggleSelectorPattern.replace('{type}', type));
-                    const enabled = toggle.is(":checked");
 
-                    if (enabled) {
-                        this.showConfigurationNotice(type);
-                    }
+                    // Always check readiness on load so Configure stays visible
+                    // when setup is still required, even if the enable toggle is off.
+                    this.showConfigurationNotice(type);
 
                     toggle.on("change", () => {
-                        const isChecked = toggle.is(":checked");
-                        if (isChecked) {
-                            this.showConfigurationNotice(type);
-                        } else {
-                            $card.find(`.${this.options.noticeClassPattern.replace('{type}', type)}`).hide();
-                            $(this.options.configureBtnSelectorPattern.replace('{type}', type)).hide();
-                            this.clearUnsupportedState($card);
-                        }
+                        // Enable/disable is independent of setup status: re-run the
+                        // check instead of hiding Configure when the toggle turns off.
+                        this.showConfigurationNotice(type);
                     });
                 }
             });
