@@ -7,6 +7,14 @@ if(!defined('ABSPATH')){
     <div class="atfp-dashboard-free-vs-pro-container">
     <div class="header">
         <h1><?php esc_html_e('Free VS Pro', 'automatic-translations-for-polylang'); ?></h1>
+        <?php
+        $atfp_utm_parameters='utm_source=atfp_plugin';
+        if(class_exists('ATFP_Helper')){
+            $atfp_utm_parameters=ATFP_Helper::utm_source_text();
+        }
+        $atfp_buy_pro_url=esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?'.sanitize_text_field($atfp_utm_parameters).'&utm_medium=inside&utm_campaign=get_pro&utm_content=dashboard_free_vs_pro');
+        ?>
+        <a href="<?php echo esc_url($atfp_buy_pro_url); ?>" class="atfp-dashboard-btn primary" target="_blank"><?php esc_html_e('Buy Pro', 'automatic-translations-for-polylang'); ?></a>
     </div>
     
     <p><?php echo esc_html(__('Compare the Free and Pro versions to choose the best option for your translation needs.', 'automatic-translations-for-polylang')); ?></p>
@@ -14,7 +22,7 @@ if(!defined('ABSPATH')){
     <table>
         <thead>
             <tr>
-                <th><?php echo esc_html(__('Dynamic Content', 'automatic-translations-for-polylang')); ?></th>
+                <th><?php echo esc_html(__('Features', 'automatic-translations-for-polylang')); ?></th>
                 <th><?php echo esc_html(__('Free', 'automatic-translations-for-polylang')); ?></th>
                 <th><?php echo esc_html(__('Pro', 'automatic-translations-for-polylang')); ?></th>
             </tr>

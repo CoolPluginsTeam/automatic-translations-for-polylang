@@ -137,6 +137,12 @@ Polylang Addon Dashboard - Admin Panel Styles
 /* ================================================
    Header Section
 ================================================ */
+.atfp-dashboard-free-vs-pro-container .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .atfp-dashboard-header {
     display: flex;
     justify-content: space-between;
