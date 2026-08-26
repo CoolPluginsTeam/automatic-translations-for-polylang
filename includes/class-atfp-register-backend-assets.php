@@ -173,6 +173,20 @@ class ATFP_Register_Backend_Assets
         if(class_exists('ATFP_Helper') && ATFP_Helper::is_translated_post_type($current_screen)){
             wp_enqueue_script('atfp-views-link-admin', ATFP_URL . 'assets/js/atfp-admin-views-link.min.js', array('jquery'), ATFP_V, true);
         }
+
+        if(isset($_GET['page']) && $_GET['page'] === 'mlang_strings'){
+            wp_enqueue_script('atfp-mlang-strings', ATFP_URL . 'assets/js/atfp-mlang-strings.js', array('jquery'), ATFP_V, true);
+            
+            $atfp_utm_parameters = 'utm_source=atfp_plugin';
+            if (class_exists('ATFP_Helper')) {
+                $atfp_utm_parameters = ATFP_Helper::utm_source_text();
+            }
+            $atfp_buy_pro_url = esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?' . sanitize_text_field($atfp_utm_parameters) . '&utm_medium=inside&utm_campaign=get_pro&utm_content=string_translation_page');
+            
+            wp_localize_script('atfp-mlang-strings', 'atfp_mlang_strings_obj', array(
+                'pro_url' => $atfp_buy_pro_url
+            ));
+        }
     }
 
     public function enqueue_supported_block_scripts(){
