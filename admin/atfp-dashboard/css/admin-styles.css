@@ -629,6 +629,7 @@ li.atfp-engine-row:last-child {
 .atfp-engine-row .atfp-edge-configure-button {
     order: 4;
     flex-shrink: 0;
+    border-radius: 7px;
     white-space: nowrap;
 }
 
