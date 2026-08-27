@@ -514,7 +514,9 @@ ol.atfp-dashboard-step-list li {
 
 .atfp-engine-row.is-default .atfp-engine-default-mark::before {
     content: "\2605";
-    font-size: 18px;
+    /* Sized past the 18px mark it sits in; it is centred and absolutely
+       positioned, so it simply overflows rather than pushing the row around. */
+    font-size: 22px;
     left: 50%;
     line-height: 1;
     position: absolute;

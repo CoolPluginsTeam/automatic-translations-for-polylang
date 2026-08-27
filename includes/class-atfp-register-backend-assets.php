@@ -308,6 +308,36 @@ class ATFP_Register_Backend_Assets
         }
     }
 
+    /**
+     * Makes a JSON payload survive wp_localize_script().
+     *
+     * wp_localize_script() runs html_entity_decode() over every scalar value it
+     * is handed. A page holding an entity therefore arrives corrupted: content
+     * pasted from Google carries `font-family: &quot;Google Sans&quot;` inside an
+     * attribute, WordPress turns those into bare quotes, and JSON.parse() gives
+     * up part way through the document.
+     *
+     * Escaping every ampersand as \u0026 leaves html_entity_decode() with
+     * nothing to find, and JSON.parse() turns the escape back into `&`, so the
+     * data the browser ends up with is byte for byte what it always was. An
+     * ampersand can only ever appear inside a JSON string, never in its
+     * structure, which is what makes a blind replacement safe here.
+     *
+     * @since 1.6.1
+     *
+     * @param string $json Encoded payload bound for wp_localize_script().
+     *
+     * @return string Payload with ampersands escaped.
+     */
+    private static function atfp_shield_json_from_entity_decode($json)
+    {
+        if (!is_string($json)) {
+            return $json;
+        }
+
+        return str_replace('&', '\u0026', $json);
+    }
+
     public function enqueue_elementor_translate_assets()
     {
 
@@ -324,7 +354,7 @@ class ATFP_Register_Backend_Assets
                     $elementor_data = \Elementor\Plugin::$instance->documents->get( $old_untranslated_post )->get_elements_data();
                     $post_language_slug = pll_get_post_language($old_untranslated_post, 'slug');
 
-                    $elementor_data=ATFP_Helper::replace_links_with_translations(json_encode($elementor_data), $post_language_slug, $parent_post_language_slug);
+                    $elementor_data=self::atfp_shield_json_from_entity_decode(ATFP_Helper::replace_links_with_translations(json_encode($elementor_data), $post_language_slug, $parent_post_language_slug));
 
                     $meta_fields=get_post_meta($old_untranslated_post);
 
@@ -358,7 +388,7 @@ class ATFP_Register_Backend_Assets
             return;
         }
             
-        $elementor_data=ATFP_Helper::replace_links_with_translations(json_encode($elementor_data), $post_language_slug, $parent_post_language_slug);
+        $elementor_data=self::atfp_shield_json_from_entity_decode(ATFP_Helper::replace_links_with_translations(json_encode($elementor_data), $post_language_slug, $parent_post_language_slug));
         
         $parent_post_id = get_post_meta(get_the_ID(), '_atfp_parent_post_id', true);
 

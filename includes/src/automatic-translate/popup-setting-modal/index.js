@@ -9,7 +9,6 @@ import SettingModalBody from "./body";
 import SettingModalFooter from "./footer";
 import { __ , sprintf } from "@wordpress/i18n";
 import ErrorModalBox from "../component/error-modal-box";
-import BulkPromotionModal from "./bulkPromotion";
 
 const SettingModal = (props) => {
     const [activeProvider, setActiveProvider] = useState({});
@@ -26,8 +25,6 @@ const SettingModal = (props) => {
     const [errorModalVisibility, setErrorModalVisibility] = useState(false);
     const [chromeAiBtnDisabled, setChromeAiBtnDisabled] = useState(false);
     const [edgeAiBtnDisabled, setEdgeAiBtnDisabled] = useState(false);
-    const [showBulkPromotionModal, setShowBulkPromotionModal] = useState(false);
-    const characterCount = parseInt(window.atfp_global_object.translation_data.total_character_count);
 
     const openModalOnLoadHandler = (e) => {
         e.preventDefault();
@@ -102,11 +99,7 @@ const SettingModal = (props) => {
         if (metaFieldBtn) {
             metaFieldBtn.addEventListener('click', (e) => {
                 e.preventDefault();
-                if(characterCount > 100000){
-                    setShowBulkPromotionModal(true);
-                }else{
-                    setSettingVisibility(prev => !prev);
-                }
+                setSettingVisibility(prev => !prev);
             });
         }
 
@@ -276,16 +269,8 @@ const SettingModal = (props) => {
         setSettingVisibility(visibility);
     }
 
-    const handleBulkPromotionModal = (statue) => {
-        setShowBulkPromotionModal(false);
-        if(statue === true){
-            setSettingVisibility(true);
-        }
-    }
-
     return (
         <>
-        {characterCount > 100000 && showBulkPromotionModal && <BulkPromotionModal onClick={handleBulkPromotionModal} characterCount={characterCount} />}
             {errorModalVisibility && serviceModalErrors[errorModalVisibility] &&
                 <ErrorModalBox onClose={closeErrorModal} {...serviceModalErrors[errorModalVisibility]}/>
             }
