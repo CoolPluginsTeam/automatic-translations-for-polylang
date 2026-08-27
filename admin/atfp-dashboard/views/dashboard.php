@@ -58,6 +58,15 @@ $atfp_steps = array(
 
 $atfp_video_id          = 'ecHsOyIL_J4';
 $atfp_video_title       = __( 'Automate the Translation Process with AutoPoly - AI Translation For Polylang', 'automatic-translations-for-polylang' );
+
+/*
+ * Poster comes from YouTube itself, so it always matches the video being played.
+ * maxresdefault only exists for videos uploaded in HD, so hqdefault sits behind
+ * it as a second background layer: if the first image 404s, the one underneath
+ * shows through and the frame is never left blank.
+ */
+$atfp_video_poster      = 'https://i.ytimg.com/vi/' . $atfp_video_id . '/maxresdefault.jpg';
+$atfp_video_poster_alt  = 'https://i.ytimg.com/vi/' . $atfp_video_id . '/hqdefault.jpg';
 ?>
 <div class="atfp-dashboard-left-section">
 
@@ -70,7 +79,7 @@ $atfp_video_title       = __( 'Automate the Translation Process with AutoPoly - 
 
 		<div class="atfp-dashboard-start-grid">
 			<div class="atfp-dashboard-video" data-video-id="<?php echo esc_attr( $atfp_video_id ); ?>" data-video-title="<?php echo esc_attr( $atfp_video_title ); ?>">
-				<div class="atfp-dashboard-video-frame" style="background-image:url('<?php echo esc_url( ATFP_URL . 'admin/atfp-dashboard/images/polylang-addon-video.png' ); ?>');">
+				<div class="atfp-dashboard-video-frame" style="background-image:url('<?php echo esc_url( $atfp_video_poster ); ?>'), url('<?php echo esc_url( $atfp_video_poster_alt ); ?>');">
 					<button type="button" class="atfp-dashboard-video-play" aria-label="<?php esc_attr_e( 'Play the AutoPoly walkthrough video', 'automatic-translations-for-polylang' ); ?>">
 						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
 							<path d="M6.5 5.5v13l11-6.5-11-6.5z" fill="currentColor" />

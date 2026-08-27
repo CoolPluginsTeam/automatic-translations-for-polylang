@@ -282,12 +282,12 @@ Polylang Addon Dashboard - Admin Panel Styles
     align-items: center;
     /* The whole poster starts the video, not just the play control. */
     cursor: pointer;
-    aspect-ratio: 4 / 3;
+    /* Matches the YouTube poster, so it fills the frame with no letterboxing. */
+    aspect-ratio: 16 / 9;
     background-color: var(--background-color);
     background-position: center;
-    /* The poster ships with its own white margin, so zoom past `cover` to
-       crop it rather than letting it read as a border inside the frame. */
-    background-size: 103%;
+    /* hqdefault is 4:3 with black bars baked in; cropping to fill trims them off. */
+    background-size: cover;
     border-radius: 9px;
     display: flex;
     flex-direction: column;
@@ -296,13 +296,6 @@ Polylang Addon Dashboard - Admin Panel Styles
     position: relative;
 }
 
-/* Soften the poster so the play control stays legible over it. */
-.atfp-dashboard-video-frame::before {
-    background: rgba(255, 255, 255, .38);
-    content: "";
-    inset: 0;
-    position: absolute;
-}
 
 .atfp-dashboard-video-play {
     align-items: center;
