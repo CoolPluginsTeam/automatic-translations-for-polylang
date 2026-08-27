@@ -948,7 +948,8 @@ if (! class_exists('ATFP_Helper')) {
 		 *
 		 * An Elementor page that was opened and published with an empty canvas
 		 * still has `_elementor_edit_mode` = builder but no widgets yet. That is
-		 * Elementor, not the classic editor.
+		 * Elementor, not the classic editor. An empty block editor post is the
+		 * same story: no blocks to find, yet still a block editor post.
 		 *
 		 * @since 1.5.0
 		 * @param int $post_id Post ID.
@@ -969,7 +970,50 @@ if (! class_exists('ATFP_Helper')) {
 				return 'elementor';
 			}
 
-			return has_blocks( $post_data->post_content ) ? 'block' : 'classic';
+			if ( has_blocks( $post_data->post_content ) ) {
+				return 'block';
+			}
+
+			// A post with nothing written in it yet carries no blocks to detect,
+			// but it is not classic content either -- it is simply empty. Ask
+			// which editor would actually open it, so a blank block editor post
+			// is not reported as classic and refused.
+			if ( '' === trim( $post_data->post_content ) ) {
+				return self::post_uses_block_editor( $post_data ) ? 'block' : 'classic';
+			}
+
+			return 'classic';
+		}
+
+		/**
+		 * Whether WordPress would open this post in the block editor.
+		 *
+		 * The admin helper is preferred because it honours the per post filter
+		 * that plugins such as Classic Editor hook. It lives in wp-admin, which a
+		 * REST request never loads, so the post type rules it applies are
+		 * replicated as a fallback rather than pulling wp-admin in.
+		 *
+		 * @since 1.6.1
+		 *
+		 * @param WP_Post $post_data Post to test.
+		 * @return bool True when the block editor would be used for this post.
+		 */
+		private static function post_uses_block_editor( $post_data ) {
+			if ( function_exists( 'use_block_editor_for_post' ) ) {
+				return (bool) use_block_editor_for_post( $post_data );
+			}
+
+			$post_type        = $post_data->post_type;
+			$post_type_object = get_post_type_object( $post_type );
+
+			$use_block_editor = (
+				post_type_supports( $post_type, 'editor' )
+				&& $post_type_object
+				&& ! empty( $post_type_object->show_in_rest )
+			);
+
+			/** This filter is documented in wp-admin/includes/post.php */
+			return (bool) apply_filters( 'use_block_editor_for_post_type', $use_block_editor, $post_type );
 		}
 
 		public static function has_elementor_data(int $post_id): bool {

@@ -40,13 +40,16 @@ const ProNotice = ({ prefix, reason, onDestory }) => {
                 },
             ],
         },
+        // Reached by every editor the free version cannot read, not only the
+        // classic one -- page builders such as Divi or WPBakery land here too,
+        // because their content carries no blocks to detect.
         'unsupported-editor': {
-            text: __('Classic editor translation is a <accent>Pro</accent> feature.', 'automatic-translations-for-polylang'),
+            text: __('Translating this editor is a <accent>Pro</accent> feature.', 'automatic-translations-for-polylang'),
             utm: 'bulk_classic_editor',
             benefits: [
                 {
-                    title: __('Classic Editor Support', 'automatic-translations-for-polylang'),
-                    desc: __('Translate content built without blocks.', 'automatic-translations-for-polylang'),
+                    title: __('More Editor Support', 'automatic-translations-for-polylang'),
+                    desc: __('Translate content built without blocks, including the classic editor and page builders.', 'automatic-translations-for-polylang'),
                 },
                 {
                     title: __('Better Accuracy', 'automatic-translations-for-polylang'),

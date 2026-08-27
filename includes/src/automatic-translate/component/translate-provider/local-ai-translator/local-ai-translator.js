@@ -224,20 +224,31 @@ class ChromeAiTranslator {
         // that has to be healthy instead of repeating language pack steps that
         // cannot help here.
         if (status === "download-timeout") {
+            const browserName = browserType === 'Edge' ? 'Edge' : 'Chrome';
+
             const message = jQuery(`<span style="display: inline-block;">
-                <h4>Language Model Download Did Not Finish:</h4>
+                <h4>${browserName} Translation Model Could Not Be Loaded</h4>
+                <p>
+                    ${browserName} could not complete the download of the translation model required for <strong>${sourceLanguageLabel} (${sourceLanguage})</strong> to <strong>${targetLanguageLabel} (${targetLanguage})</strong>. Try these steps:
+                </p>
                 <ol>
                     <li>
-                        Your browser started preparing the model for <strong>${sourceLanguageLabel} (${sourceLanguage})</strong> to <strong>${targetLanguageLabel} (${targetLanguage})</strong>, but never finished.
+                        Open <strong><span data-clipboard-text="${browserUrl}://components" target="_blank" class="chrome-ai-translator-flags">${browserUrl}://components ${ChromeAiTranslator.svgIcons('copy')}</span></strong> in a new tab.
                     </li>
                     <li>
-                        Open <strong><span data-clipboard-text="${browserUrl}://components" target="_blank" class="chrome-ai-translator-flags">${browserUrl}://components ${ChromeAiTranslator.svgIcons('copy')}</span></strong> and look for <strong>Chrome TranslateKit</strong>. If its version is <strong>0.0.0.0</strong> or it shows an update error, your browser cannot fetch translation models. Click <strong>Check for update</strong> on it.
+                        Find <strong>Chrome TranslateKit</strong> and check its status.
                     </li>
                     <li>
-                        Turn off any VPN, proxy or antivirus web protection, then reload this page and try again.
+                        If the version shows <strong>0.0.0.0</strong> or an update error, click <strong>Check for update</strong>.
                     </li>
                     <li>
-                        Until that component installs, please pick a different translation engine.
+                        Make sure your internet connection is working, and disable any VPN, proxy or antivirus web protection that may block the download.
+                    </li>
+                    <li>
+                        Return to this page and click <strong>Reload Page</strong> to try the translation again.
+                    </li>
+                    <li>
+                        If ${browserName} still cannot load the translation model, choose a different translation engine.
                     </li>
                 </ol>
                 <div style="text-align: right;">
