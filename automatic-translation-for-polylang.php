@@ -103,8 +103,15 @@ if (! class_exists('AutoPoly')) {
 				$atfp_utm_parameters = ATFP_Helper::utm_source_text();
 			}
 
-			// Pro takes over this menu, so only link to it while the free dashboard exists.
-			if (! defined('ATFPP_V')) {
+			// Check Polylang plugin is installed and active
+			global $polylang;
+
+			/*
+			 * Pro takes over this menu, so only link to it while the free dashboard
+			 * exists. The dashboard is registered as a submenu of Polylang's own
+			 * menu, so without Polylang there is no page for this link to reach.
+			 */
+			if (! defined('ATFPP_V') && isset($polylang)) {
 				array_unshift(
 					$links,
 					'<a href="' . esc_url(admin_url('admin.php?page=polylang-atfp-dashboard&tab=dashboard')) . '">' . __('Settings', 'automatic-translations-for-polylang') . '</a>'
