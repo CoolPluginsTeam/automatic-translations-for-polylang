@@ -115,7 +115,10 @@ class ATFP_Register_Backend_Assets
         wp_enqueue_script('atfp-bulk-translate', ATFP_URL . 'assets/bulk-translate/index.js', $script_dependencies, $editor_script_asset['version'], true);
         wp_set_script_translations('atfp-bulk-translate', 'automatic-translations-for-polylang', ATFP_DIR_PATH . 'languages');
 
-        wp_enqueue_style('atfp-bulk-translate', ATFP_URL . 'assets/bulk-translate/'.$css_file, array(), $editor_script_asset['version']);
+        // The bundle hash only moves when the JavaScript is rebuilt, which leaves
+        // browsers on a stale stylesheet after a CSS only change, so the plugin
+        // version rides along to break the cache on every release.
+        wp_enqueue_style('atfp-bulk-translate', ATFP_URL . 'assets/bulk-translate/'.$css_file, array(), $editor_script_asset['version'] . '-' . ATFP_V);
 
         $languages = PLL()->model->get_languages_list();
 

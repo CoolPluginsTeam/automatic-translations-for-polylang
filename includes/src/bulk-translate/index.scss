@@ -63,10 +63,42 @@ $modal-width: clamp(320px, 1040px, 94vw);
     }
 }
 
+/*
+ * Elementor's editor-one stylesheet repaints core buttons on its own admin
+ * screens -- the Elementor Templates list among them -- with
+ * `#wpcontent .wp-core-ui .button.button-primary`, an ID selector that swaps
+ * the WordPress blue for a pale palette colour with near black text. That left
+ * this button looking like a secondary one and hid the white icon below
+ * against it.
+ *
+ * The declarations are core's own from wp-includes/css/buttons.css, marked
+ * important so the button keeps the WordPress primary look on any screen,
+ * whatever a page builder paints over it. The custom properties stay in front
+ * of the fallbacks so a non default admin colour scheme still leads.
+ */
+.wp-core-ui .button.button-primary.#{$prefix}-btn,
+.wp-core-ui .button.button-primary.#{$prefix}-btn:focus {
+    background: var(--wp-admin-theme-color, #3858e9) !important;
+    border-color: var(--wp-admin-theme-color, #3858e9) !important;
+    color: #fff !important;
+}
+
+.wp-core-ui .button.button-primary.#{$prefix}-btn:hover {
+    background: var(--wp-admin-theme-color-darker-10, #2145e6) !important;
+    border-color: var(--wp-admin-theme-color-darker-10, #2145e6) !important;
+    color: #fff !important;
+}
+
+.wp-core-ui .button.button-primary.#{$prefix}-btn:active {
+    background: var(--wp-admin-theme-color-darker-20, #183ad6) !important;
+    border-color: var(--wp-admin-theme-color-darker-20, #183ad6) !important;
+    color: #fff !important;
+}
+
 .wp-core-ui .button.button-primary.#{$prefix}-btn .dashicons,
 .wp-core-ui .button.button-primary.#{$prefix}-btn:hover .dashicons,
 .wp-core-ui .button.button-primary.#{$prefix}-btn:focus .dashicons {
-    color: #fff;
+    color: #fff !important;
     flex-shrink: 0;
     font-family: dashicons;
     font-size: 18px;
