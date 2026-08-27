@@ -124,7 +124,7 @@ if (! class_exists('AutoPoly')) {
 					$atfp_utm_parameters = ATFP_Helper::utm_source_text();
 				}
 
-				$plugin_meta[] = '<a href="' . esc_url('https://docs.coolplugins.net/doc/ai-translation-polylang-bulk-translation/?' . sanitize_text_field($atfp_utm_parameters) . '&utm_medium=inside&utm_campaign=docs&utm_content=plugins_list') . '" target="_blank" style="font-weight:bold;">' . __('Bulk Translation', 'automatic-translations-for-polylang') . '</a>';
+				$plugin_meta[] = '<a href="' . esc_url('https://docs.coolplugins.net/doc/ai-translation-polylang-bulk-translation/?' . sanitize_text_field($atfp_utm_parameters) . '&utm_medium=inside&utm_campaign=docs&utm_content=plugins_list') . '" target="_blank" style="font-weight:bold;">' . __('Bulk Translation Pro', 'automatic-translations-for-polylang') . '</a>';
 			}
 			return $plugin_meta;
 		}
@@ -207,7 +207,7 @@ if (! class_exists('AutoPoly')) {
 					'enabled_providers' => ATFP_Helper::get_active_providers(),
 					'primary_btn_class' => 'atfp-dashboard-btn primary',
 					'secondary_btn_class' => 'atfp-dashboard-btn',
-					'chrome_setup_doc_url' => esc_url('https://docs.coolplugins.net/doc/chrome-translation-api-language-setup/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=chrome_ai_setup&utm_content=settings'),
+					'chrome_setup_doc_url' => esc_url('https://docs.coolplugins.net/doc/chrome-translation-api-language-setup/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=chrome_ai_setup_settings'),
 					'edge_setup_doc_url' => esc_url('https://docs.coolplugins.net/doc/edge-ai-translation-language-setup/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=edge_ai_setup&utm_content=settings'),
 					'texts' => array(
 						'cardTitle' => esc_html__( 'Chrome AI Setup', 'automatic-translations-for-polylang' ),

@@ -32,7 +32,7 @@ $atfp_providers = array(
 	'chrome-built-in-ai' => array(
 		'name'      => __( 'Chrome Built-in AI', 'automatic-translations-for-polylang' ),
 		'logo'      => 'chrome.png',
-		'docs'      => 'https://docs.coolplugins.net/doc/chrome-ai-translation-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_chrome_pro',
+		'docs'      => 'https://docs.coolplugins.net/doc/chrome-ai-translation-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_chrome',
 		'configure' => 'chrome',
 	),
 	'edge-built-in-ai'   => array(
@@ -44,7 +44,7 @@ $atfp_providers = array(
 	'yandex-translate'   => array(
 		'name'      => __( 'Yandex Translate', 'automatic-translations-for-polylang' ),
 		'logo'      => 'yandex.png',
-		'docs'      => 'https://docs.coolplugins.net/doc/yandex-translate-for-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_yandex_pro',
+		'docs'      => 'https://docs.coolplugins.net/doc/yandex-translate-for-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_yandex',
 		'configure' => '',
 	),
 );
