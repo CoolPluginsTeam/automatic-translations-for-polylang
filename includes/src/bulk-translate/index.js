@@ -93,10 +93,12 @@ const normalizeEnabledProviders = (providers = [], browserType) => {
 
                 if(supportedLanguages.includes(targetLang)){
                     try {
-                        const status = await LocalAITranslate.languagePairAvality('en', targetLang);
-    
+                        // Probe only. This runs off mousemove, which carries no user
+                        // gesture, so asking it to prepare a model could only ever
+                        // throw -- and it threw on every single mouse move.
+                        const status = await LocalAITranslate.languagePairAvality('en', targetLang, () => {}, false);
+
                         if (['available', 'readily'].includes(status)) {
-                            delete languagesObj[targetLang] ;
                             savedLanguages.push(targetLang);
                             localStorage.setItem(
                                 'ATFPP_AVAILABLE_LOCAL_AI_TRANSLATOR_LANGUAGES',
@@ -106,9 +108,12 @@ const normalizeEnabledProviders = (providers = [], browserType) => {
                     } catch (err) {
                         console.error('Language availability check failed:', targetLang, err);
                     }
-                }else{
-                    delete languagesObj[targetLang];
                 }
+
+                // Drop the language whatever the answer was. Keeping the ones that
+                // are not ready meant this walked the same language again on every
+                // mouse move for the rest of the page's life.
+                delete languagesObj[targetLang];
 
                 localAiCheckInProgres = false;
 

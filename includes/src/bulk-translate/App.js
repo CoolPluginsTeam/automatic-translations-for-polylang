@@ -55,8 +55,23 @@ const App = ({ onDestory, prefix, postIds }) => {
 
 
     useEffect(() => {
+        // Whatever the support check decides, the loader has to come down. It is
+        // the only thing standing between the user and a screen they can act on.
         const checkStatus = async () => {
-            const status = await ChromeAiTranslator.languageSupportedStatus('en', 'hi', 'English', 'Hindi');
+            try {
+                await runSupportCheck();
+            } catch (error) {
+                console.warn('Built-in AI support check failed:', error);
+            } finally {
+                setIsLoading(false);
+            }
+        }
+
+        const runSupportCheck = async () => {
+            // Probe only: this asks whether the browser has the API at all, so it
+            // must not try to prepare a model. Doing so blocked the modal on a
+            // create() call that never settles, leaving the loader on screen.
+            const status = await ChromeAiTranslator.languageSupportedStatus('en', 'hi', 'English', 'Hindi', () => {}, false);
             const browserType = ChromeAiTranslator.getBrowserType();
             if (status.type === 'browser-not-supported' || status.type === 'translation-api-not-available' || status.type === 'browser-not-supported') {
                 if(browserType === 'Other'){
@@ -69,8 +84,6 @@ const App = ({ onDestory, prefix, postIds }) => {
                     setLocalAiModalError(status.html[0].outerHTML);
                 }
             }
-
-            setIsLoading(false);
         }
 
         checkStatus();

@@ -94,7 +94,7 @@ class ChromeAiTranslator {
      * @param {Function} downloadProgressCallback - The callback function to handle download progress.
      * @returns {Promise<boolean|jQuery>} - Returns true if the languages are supported, or a jQuery message if not.
      */
-    static languageSupportedStatus = async (sourceLanguage, targetLanguage, targetLanguageLabel, sourceLanguageLabel, downloadProgressCallback=()=>{}) => {
+    static languageSupportedStatus = async (sourceLanguage, targetLanguage, targetLanguageLabel, sourceLanguageLabel, downloadProgressCallback=()=>{}, attemptDownload = true) => {
         let supportedLanguages = ChromeAiTranslator.supportedLanguages;
         const browserType = ChromeAiTranslator.getBrowserType();
         const browserUrl = browserType === 'Edge' ? 'edge' : 'chrome';
@@ -188,9 +188,9 @@ class ChromeAiTranslator {
         }
 
         // Check if translation can be performed
-        const status = await ChromeAiTranslator.languagePairAvality(sourceLanguage, targetLanguage);
+        const status = await ChromeAiTranslator.languagePairAvality(sourceLanguage, targetLanguage, downloadProgressCallback, attemptDownload);
 
-        if (!["after-download", "downloadable", "available", "readily", "downloading"].includes(status)) {
+        if (!["after-download", "downloadable", "available", "readily", "downloading", "download-timeout", "requires-user-gesture"].includes(status)) {
             // Check if the target language is supported
             if (!supportedLanguages.includes(targetLanguage.toLowerCase()) && !supportedLanguages.includes(targetLanguage.split('-')[0])) {
                 const message = jQuery(`<span style="display: inline-block;">
@@ -218,6 +218,57 @@ class ChromeAiTranslator {
             }
         }
 
+
+        // The model never finished preparing. Point at the browser component
+        // that has to be healthy instead of repeating language pack steps that
+        // cannot help here.
+        if (status === "download-timeout") {
+            const message = jQuery(`<span style="display: inline-block;">
+                <h4>Language Model Download Did Not Finish:</h4>
+                <ol>
+                    <li>
+                        Your browser started preparing the model for <strong>${sourceLanguageLabel} (${sourceLanguage})</strong> to <strong>${targetLanguageLabel} (${targetLanguage})</strong>, but never finished.
+                    </li>
+                    <li>
+                        Open <strong><span data-clipboard-text="${browserUrl}://components" target="_blank" class="chrome-ai-translator-flags">${browserUrl}://components ${ChromeAiTranslator.svgIcons('copy')}</span></strong> and look for <strong>Chrome TranslateKit</strong>. If its version is <strong>0.0.0.0</strong> or it shows an update error, your browser cannot fetch translation models. Click <strong>Check for update</strong> on it.
+                    </li>
+                    <li>
+                        Turn off any VPN, proxy or antivirus web protection, then reload this page and try again.
+                    </li>
+                    <li>
+                        Until that component installs, please pick a different translation engine.
+                    </li>
+                </ol>
+                <div style="text-align: right;">
+                    <button class="atfp-bulk-translate-error-reload-btn button button-primary">Reload Page</button>
+                </div>
+            </span>`);
+            return { html: message, message: `Language model download timed out: ${targetLanguageLabel} (${targetLanguage})`, type: 'download-timeout' };
+        }
+
+        // The browser only starts a model download from a direct click, and the
+        // click that opened this modal was no longer counted by the time we got
+        // here.
+        if (status === "requires-user-gesture") {
+            const message = jQuery(`<span style="display: inline-block;">
+                <h4>Language Model Not Ready:</h4>
+                <ol>
+                    <li>
+                        The model for <strong>${targetLanguageLabel} (${targetLanguage})</strong> still has to be downloaded, and your browser only starts that from a direct click.
+                    </li>
+                    <li>
+                        Close this window and click <strong>AI Translate</strong> again. If the download still does not start, your browser is refusing it.
+                    </li>
+                    <li>
+                        Check <strong><span data-clipboard-text="${browserUrl}://components" target="_blank" class="chrome-ai-translator-flags">${browserUrl}://components ${ChromeAiTranslator.svgIcons('copy')}</span></strong> for <strong>Chrome TranslateKit</strong>, or pick a different translation engine.
+                    </li>
+                </ol>
+                <div style="text-align: right;">
+                    <button class="atfp-bulk-translate-error-reload-btn button button-primary">Reload Page</button>
+                </div>
+            </span>`);
+            return { html: message, message: `Language model needs a user gesture: ${targetLanguageLabel} (${targetLanguage})`, type: 'requires-user-gesture' };
+        }
 
         // Handle case for language pack after download
         if (status === "after-download" || status === "downloadable" || status === "unavailable") {
@@ -308,7 +359,84 @@ class ChromeAiTranslator {
         return true;
     }
 
-    static languagePairAvality = async (source, target, downloadProgressCallback=()=>{}) => {        
+    /**
+     * How long Translator.create() may go silent before it counts as stalled.
+     *
+     * @since 1.6.1
+     */
+    static CREATE_TIMEOUT_MS = 20000;
+
+    /**
+     * Guard a call that can stay pending forever.
+     *
+     * Translator.create() never settles when the browser cannot fetch the
+     * model: the monitor reports 0% then 100% and the promise is simply left
+     * hanging. Nothing throws and nothing resolves, so the modal keeps its
+     * loading state for the rest of the session.
+     *
+     * The clock measures silence, not total time: a real download that is
+     * still reporting progress keeps resetting it, so only a genuinely stuck
+     * call is cut off.
+     *
+     * @since 1.6.1
+     *
+     * @param {Function} run Receives a keepAlive callback to push the deadline
+     *                       back, and returns the promise to guard.
+     * @param {number}   ms  Milliseconds of silence before giving up.
+     *
+     * @return {Promise} Settles with the guarded promise, or rejects with a TimeoutError.
+     */
+    static withTimeout = (run, ms = ChromeAiTranslator.CREATE_TIMEOUT_MS) => {
+        let timer;
+        let onTimeout;
+
+        const deadline = new Promise((resolve, reject) => {
+            onTimeout = reject;
+        });
+
+        const keepAlive = () => {
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                const error = new Error('The browser did not finish preparing the translation model.');
+                error.name = 'TimeoutError';
+                onTimeout(error);
+            }, ms);
+        };
+
+        keepAlive();
+
+        return Promise.race([Promise.resolve(run(keepAlive)), deadline])
+            .finally(() => clearTimeout(timer));
+    }
+
+    /**
+     * Outcomes already settled this page load, keyed by source and target.
+     *
+     * A run asks about the same pair once per post and per language, and a pair
+     * the browser cannot prepare fails the same way every time. Without this the
+     * console filled with hundreds of identical errors, each one paying the full
+     * create() timeout again.
+     *
+     * @since 1.6.1
+     */
+    static pairStatusCache = new Map();
+
+    /**
+     * Report whether a language pair can be translated, preparing the model if asked.
+     *
+     * @since 1.6.1 Added attemptDownload and the per-pair cache.
+     *
+     * @param {string}   source                   Source language code.
+     * @param {string}   target                   Target language code.
+     * @param {Function} downloadProgressCallback Receives the download percentage.
+     * @param {boolean}  attemptDownload          Whether to prepare the model when it is not
+     *                                            ready yet. Pass false to probe only: create()
+     *                                            needs a user gesture, so any caller that is
+     *                                            not a click must never reach it.
+     *
+     * @return {Promise<string|boolean>} Availability status.
+     */
+    static languagePairAvality = async (source, target, downloadProgressCallback=()=>{}, attemptDownload = true) => {        
         if (('translation' in self && 'createTranslator' in self.translation)) {
             const status = await self.translation.canTranslate({
                 sourceLanguage: source,
@@ -328,35 +456,52 @@ class ChromeAiTranslator {
                 targetLanguage: target,
             });
         
-            if (status !== "available") {
-                try {
-                    // MUST be triggered by a user gesture (button click)
-                    const translator = await self.Translator.create({
-                        sourceLanguage: source,
-                        targetLanguage: target,
-                        monitor(monitor) {
-                            monitor.addEventListener("downloadprogress", (e) => {
-                                downloadProgressCallback(e.loaded * 100);
-                            });
-                        },
-                    });
-        
-                    // Re-check availability AFTER model creation
-                    status = await self.Translator.availability({
-                        sourceLanguage: source,
-                        targetLanguage: target,
-                    });
-        
-                } catch (err) {
-                    console.warn(`Translator init for ${source} to ${target} error:`, err);
+            // A probe only wants to know what is usable right now. Preparing a
+            // model needs a user gesture, so callers that are not a click say so
+            // and stop here rather than throwing NotAllowedError on every call.
+            if (!attemptDownload || status === "available") {
+                return status;
+            }
 
-                    if(status.includes('Requires a user gesture when availability')){
-                        return 'requires-user-gesture';
-                    }
+            const cacheKey = `${source}|${target}`;
 
-                   return status;
+            if (ChromeAiTranslator.pairStatusCache.has(cacheKey)) {
+                return ChromeAiTranslator.pairStatusCache.get(cacheKey);
+            }
+
+            try {
+                // MUST be triggered by a user gesture (button click)
+                await ChromeAiTranslator.withTimeout((keepAlive) => self.Translator.create({
+                    sourceLanguage: source,
+                    targetLanguage: target,
+                    monitor(monitor) {
+                        monitor.addEventListener("downloadprogress", (e) => {
+                            // Real progress, so the model is not stuck.
+                            keepAlive();
+                            downloadProgressCallback(e.loaded * 100);
+                        });
+                    },
+                }));
+
+                // Re-check availability AFTER model creation
+                status = await self.Translator.availability({
+                    sourceLanguage: source,
+                    targetLanguage: target,
+                });
+
+            } catch (err) {
+                console.warn(`Translator init for ${source} to ${target} error:`, err);
+
+                // The reason lives on the error, not on the availability string.
+                // Reading it off `status` meant this never matched.
+                if (err && 'TimeoutError' === err.name) {
+                    status = 'download-timeout';
+                } else if (err && err.message && err.message.includes('Requires a user gesture')) {
+                    status = 'requires-user-gesture';
                 }
             }
+
+            ChromeAiTranslator.pairStatusCache.set(cacheKey, status);
         
             return status;
         }
@@ -380,10 +525,12 @@ class ChromeAiTranslator {
 
             return translator;
         } else if ("Translator" in self && "create" in self.Translator) {
-            const translator = await self.Translator.create({
+            // Guarded for the same reason as the availability probe: a stalled
+            // create() here would freeze the translation run itself.
+            const translator = await ChromeAiTranslator.withTimeout(() => self.Translator.create({
                 sourceLanguage: this.sourceLanguage,
                 targetLanguage,
-            });
+            }));
 
             return translator;
         }
