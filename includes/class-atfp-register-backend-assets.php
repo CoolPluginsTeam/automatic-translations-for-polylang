@@ -448,13 +448,30 @@ class ATFP_Register_Backend_Assets
 
         $script_dependencies = $editor_script_asset['dependencies'];
 
-        // Only pull in the third party Google widget when Google Translate is actually enabled.
-        if (in_array('google-translate', $active_providers, true)) {
-            wp_register_script('atfp-google-api', 'https://translate.google.com/translate_a/element.js', array(), ATFP_V, true);
-            $script_dependencies[] = 'atfp-google-api';
-        }
-
         wp_register_script('atfp-automatic-translate', ATFP_URL . 'assets/automatic-translate/index.js', $script_dependencies, $editor_script_asset['version'], true);
+
+        /*
+         * Only pull in the third party Google widget when Google Translate is
+         * actually enabled, and inject it from JavaScript rather than enqueue it.
+         *
+         * WordPress 7.1 wraps the block editor screens in an output buffer that
+         * stamps crossorigin="anonymous" onto every cross origin <script> it
+         * renders (wp_add_crossorigin_attributes(), hooked from load-post.php and
+         * load-post-new.php). That puts this widget into CORS mode, and Google
+         * serves it with no Access-Control-Allow-Origin header, so the browser
+         * refuses it and the engine is dead on arrival. A tag created at runtime
+         * never passes through that buffer, so it loads the way it always did.
+         */
+        if (in_array('google-translate', $active_providers, true)) {
+            wp_add_inline_script(
+                'atfp-automatic-translate',
+                sprintf(
+                    '(function(){var s=document.createElement("script");s.src=%s;s.async=true;document.head.appendChild(s);})();',
+                    wp_json_encode('https://translate.google.com/translate_a/element.js')
+                ),
+                'before'
+            );
+        }
 
         $lang_object = array();
         foreach ($languages as $lang) {
