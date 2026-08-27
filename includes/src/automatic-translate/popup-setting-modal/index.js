@@ -76,12 +76,11 @@ const SettingModal = (props) => {
             progressElement.appendChild(progressTextElement);
         }
 
-        if(status === 100){
-            cardElement.classList.remove(prefix+'-provider-card-disabled')
-            setTimeout(() => {
-                actionElement.removeChild(progressElements.progressElement);
-            }, 5000);
-        }
+        // Progress reaching 100% only means the bytes arrived. The engine is
+        // usable only once the support check answers, and create() can still
+        // fail after a full download -- clearing the loading state here handed
+        // the user a card they could pick before that answer existed. The
+        // caller clears it instead, once it knows.
 
         return progressElements;
     }
@@ -130,10 +129,33 @@ const SettingModal = (props) => {
             progressButton = localAiUpdateStatus(status, progressButton, localAiCardElement, actionElement);
         }
 
+        // Takes the loading state back down once the support check has answered.
+        // Whether the engine turned out usable is then decided by the state below,
+        // so the card is never pickable while the answer is still unknown.
+        const clearLocalAiProgress = () => {
+            if (localAiCardElement) {
+                localAiCardElement.classList.remove('atfp-provider-card-disabled');
+            }
+
+            const progressElement = progressButton.progressElement;
+
+            if (actionElement && progressElement && progressElement.parentNode === actionElement) {
+                actionElement.removeChild(progressElement);
+            }
+
+            progressButton = {};
+        }
+
         const languageSupportedStatus = async () => {
             let errors = {};
             const browserType = ChromeLocalAiTranslator.getBrowserType();
-            const localAiTranslatorSupport = await ChromeLocalAiTranslator.languageSupportedStatus(sourceLang, targetLang, targetLangName, sourceLangName, localAiUpdateStatusHandler);
+            let localAiTranslatorSupport;
+
+            try {
+                localAiTranslatorSupport = await ChromeLocalAiTranslator.languageSupportedStatus(sourceLang, targetLang, targetLangName, sourceLangName, localAiUpdateStatusHandler);
+            } finally {
+                clearLocalAiProgress();
+            }
 
             if (localAiTranslatorSupport !== true && typeof localAiTranslatorSupport === 'object') {
                 setChromeAiBtnDisabled(true);
@@ -221,19 +243,21 @@ const SettingModal = (props) => {
     }, [props.postDataFetchStatus, modalRender]);
 
     /**
-     * Function to handle fetching content based on the target button clicked.
-     * Sets the target button and updates the fetch status to true.
-     * @param {Event} e - The event object representing the button click.
+     * Marks the picked engine as the active one.
+     *
+     * Selection stays synchronous on purpose. This used to await a support check
+     * before accepting the click, so the card only lit up once the browser had
+     * answered -- and on a browser that answers slowly, or not at all, the click
+     * looked like it had done nothing. The check the effect above runs when the
+     * modal opens already disables an engine that cannot be used, so a card the
+     * user can still click is a card they are allowed to pick.
+     *
+     * @param {string} service      Engine key that was clicked.
+     * @param {string} serviceLabel Human readable name of that engine.
+     *
+     * @return {void}
      */
-    const updateActiveProviderHandler = async (service, serviceLabel) => {
-
-        if (service === 'localAiTranslator') {
-            const localAiTranslatorSupport = await ChromeLocalAiTranslator.languageSupportedStatus(sourceLang, targetLang, targetLangName, sourceLangName);
-            if (localAiTranslatorSupport !== true && typeof localAiTranslatorSupport === 'object') {
-                return;
-            }
-        }
-
+    const updateActiveProviderHandler = (service, serviceLabel) => {
         setActiveProvider({ service, serviceLabel });
     };
     
