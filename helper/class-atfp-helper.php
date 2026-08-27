@@ -1013,6 +1013,7 @@ if (! class_exists('ATFP_Helper')) {
 			);
 
 			/** This filter is documented in wp-admin/includes/post.php */
+			// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Core filter, applied so plugins such as Classic Editor still decide.
 			return (bool) apply_filters( 'use_block_editor_for_post_type', $use_block_editor, $post_type );
 		}
 

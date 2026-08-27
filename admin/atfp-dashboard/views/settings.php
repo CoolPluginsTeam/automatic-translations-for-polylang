@@ -54,7 +54,9 @@ if(!current_user_can('manage_options')){
     <?php
         $atfp_enabled_providers = ATFP_Helper::get_active_providers();
         $atfp_polylang_supported_languages=ATFP_Helper::get_polylang_supported_languages();
-        $user_agent_info=sanitize_text_field(wp_unslash($_SERVER['HTTP_USER_AGENT']));
+        // Some requests arrive without a user agent, and the checks below simply
+        // fall through to the enabled provider when the string is empty.
+        $user_agent_info=isset($_SERVER['HTTP_USER_AGENT']) ? sanitize_text_field(wp_unslash($_SERVER['HTTP_USER_AGENT'])) : '';
         $chrome_enabled = is_array($atfp_enabled_providers) && in_array('chrome-built-in-ai', $atfp_enabled_providers);
         $edge_enabled   = is_array($atfp_enabled_providers) && in_array('edge-built-in-ai', $atfp_enabled_providers);
 
@@ -94,7 +96,7 @@ if(!current_user_can('manage_options')){
                                             __( 'Add at least %1$s to use the %2$s AI translation test', 'automatic-translations-for-polylang' ) // translators: %1$s is the link to the Polylang languages page, %2$s is the browser title
                                         ),
                                         '<a href="' . esc_url( admin_url( 'admin.php?page=mlang' ) ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'one language in Polylang', 'automatic-translations-for-polylang' ) . '</a>',
-                                        $browser_title
+                                        esc_html( $browser_title )
                                     );
                             ?></span>
                     </div>

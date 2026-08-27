@@ -185,7 +185,8 @@ class ATFP_Register_Backend_Assets
             wp_enqueue_script('atfp-views-link-admin', ATFP_URL . 'assets/js/atfp-admin-views-link.min.js', array('jquery'), ATFP_V, true);
         }
 
-        if(isset($_GET['page']) && $_GET['page'] === 'mlang_strings'){
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Reading which admin page is open to decide what to enqueue, no data is processed.
+        if(isset($_GET['page']) && sanitize_text_field(wp_unslash($_GET['page'])) === 'mlang_strings'){
             wp_enqueue_script('atfp-mlang-strings', ATFP_URL . 'assets/js/atfp-mlang-strings.js', array('jquery'), ATFP_V, true);
             
             $atfp_utm_parameters = 'utm_source=atfp_plugin';

@@ -1,10 +1,10 @@
 ﻿=== AutoPoly - AI Translation For Polylang ===
 Contributors: narinder-singh,satindersingh,coolplugins
 Tags: Polylang, AI Translation, Content Translation, Translate
-Requires at least: 5.0
-Tested up to: 7.0
+Requires at least: 5.3.1
+Tested up to: 7.1
 Requires PHP: 5.6
-Stable tag: 1.5.0
+Stable tag: 1.6.0
 Author URI: https://coolplugins.net/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=author_page&utm_content=plugins_list
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -268,6 +268,16 @@ Yes, this plugin supports automatic translations for content created with the Cl
 You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities.[Report a security vulnerability](https://patchstack.com/database/wordpress/plugin/automatic-translations-for-polylang/vdp)
 
 == Changelog ==
+
+= Version 1.6.0 | 31 August 2026 =
+* **Added:** AI Translate button on the posts and pages list to start a translation without opening the editor.
+* **Added:** Translate row action next to Edit and Quick Edit for translating a single page.
+* **Added:** Chrome and Edge built-in AI setup guide with language pack installation inside the AutoPoly dashboard.
+* **Added:** Default translation provider setting in the AutoPoly dashboard.
+* **Fixed:** Google Translate widget blocked from loading on the post editor screen in newer WordPress versions.
+* **Fixed:** Translation setting modal not loading in Microsoft Edge.
+* **Improved:** Error handling for Chrome and Edge built-in AI when a language model cannot be downloaded.
+* **Improved:** Redesigned AutoPoly dashboard, translation provider selection, and translation modals.
 
 = Version 1.5.0 | 28 July 2026 =
 * **Added:** Edge local built-in AI translator API support.

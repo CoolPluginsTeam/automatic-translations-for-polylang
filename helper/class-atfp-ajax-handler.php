@@ -526,7 +526,10 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				return wp_send_json_error( __( 'Unauthorized', 'automatic-translations-for-polylang' ), 403 );
 			}
 
-			// Get the JSON string directly, unslashing but not sanitizing as text
+			// Get the JSON string directly, unslashing but not sanitizing as text.
+			// Sanitizing here would mangle the JSON before it can be decoded; every
+			// key is checked against the hardcoded provider list below instead.
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Decoded as JSON and validated against an allow-list below.
 			$enabled_providers = isset($_POST['enabled_providers']) ? wp_unslash($_POST['enabled_providers']) : '';
 			$enabled_providers = json_decode($enabled_providers, true);
 
