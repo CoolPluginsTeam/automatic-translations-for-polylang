@@ -224,13 +224,72 @@ class ChromeAISetupFramework {
         if (monitor) options.monitor = monitor;
 
         if ('translation' in self && 'createTranslator' in self.translation) {
-            return await self.translation.createTranslator(options);
+            return await ChromeAISetupFramework.withTimeout((keepAlive) => {
+                if (options.monitor) {
+                    const originalMonitor = options.monitor;
+                    options.monitor = (m) => {
+                        m.addEventListener('downloadprogress', () => keepAlive());
+                        originalMonitor(m);
+                    };
+                } else {
+                    keepAlive();
+                }
+                return self.translation.createTranslator(options);
+            });
         } else if ('ai' in self && 'translator' in self.ai) {
-            return await self.ai.translator.create(options);
+            return await ChromeAISetupFramework.withTimeout((keepAlive) => {
+                if (options.monitor) {
+                    const originalMonitor = options.monitor;
+                    options.monitor = (m) => {
+                        m.addEventListener('downloadprogress', () => keepAlive());
+                        originalMonitor(m);
+                    };
+                } else {
+                    keepAlive();
+                }
+                return self.ai.translator.create(options);
+            });
         } else if ('Translator' in self && 'create' in self.Translator) {
-            return await self.Translator.create(options);
+            return await ChromeAISetupFramework.withTimeout((keepAlive) => {
+                if (options.monitor) {
+                    const originalMonitor = options.monitor;
+                    options.monitor = (m) => {
+                        m.addEventListener('downloadprogress', () => keepAlive());
+                        originalMonitor(m);
+                    };
+                } else {
+                    keepAlive();
+                }
+                return self.Translator.create(options);
+            });
         }
         throw new Error('Chrome AI Translator API is missing or disabled');
+    }
+
+    /**
+     * Guard a call that can stay pending forever.
+     */
+    static withTimeout(run, ms = 20000) {
+        let timer;
+        let onTimeout;
+
+        const deadline = new Promise((resolve, reject) => {
+            onTimeout = reject;
+        });
+
+        const keepAlive = () => {
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                const error = new Error('The browser did not finish preparing the translation model.');
+                error.name = 'TimeoutError';
+                onTimeout(error);
+            }, ms);
+        };
+
+        keepAlive();
+
+        return Promise.race([Promise.resolve(run(keepAlive)), deadline])
+            .finally(() => clearTimeout(timer));
     }
 
     /**
@@ -709,6 +768,12 @@ class ChromeAISetupFramework {
                         this.elPairState.title = 'Click to retry download';
                         // Re-enable onclick so user can retry
                         this.checkPairSupport();
+
+                        let errorType = 'download-timeout';
+                        if (err && err.name === 'NotAllowedError') {
+                            errorType = 'requires-user-gesture';
+                        }
+                        this.showErrorModal(errorType, target);
                     }
                 };
             } else {
@@ -994,11 +1059,45 @@ class ChromeAISetupFramework {
                 }
 
                 if ('translation' in self && 'createTranslator' in self.translation) {
-                    return await self.translation.createTranslator(options);
+                    return await ChromeAISetupFramework.withTimeout((keepAlive) => {
+                        if (options.monitor) {
+                            const originalMonitor = options.monitor;
+                            options.monitor = (m) => {
+                                m.addEventListener('downloadprogress', () => keepAlive());
+                                originalMonitor(m);
+                            };
+                        } else {
+                            // If no monitor, trigger keepAlive once to prevent timeout if we don't have progress events
+                            keepAlive(); 
+                        }
+                        return self.translation.createTranslator(options);
+                    });
                 } else if ('ai' in self && 'translator' in self.ai) {
-                    return await self.ai.translator.create(options);
+                    return await ChromeAISetupFramework.withTimeout((keepAlive) => {
+                        if (options.monitor) {
+                            const originalMonitor = options.monitor;
+                            options.monitor = (m) => {
+                                m.addEventListener('downloadprogress', () => keepAlive());
+                                originalMonitor(m);
+                            };
+                        } else {
+                            keepAlive();
+                        }
+                        return self.ai.translator.create(options);
+                    });
                 } else if ('Translator' in self && 'create' in self.Translator) {
-                    return await self.Translator.create(options);
+                    return await ChromeAISetupFramework.withTimeout((keepAlive) => {
+                        if (options.monitor) {
+                            const originalMonitor = options.monitor;
+                            options.monitor = (m) => {
+                                m.addEventListener('downloadprogress', () => keepAlive());
+                                originalMonitor(m);
+                            };
+                        } else {
+                            keepAlive(); // Avoid aborting if monitor isn't supported
+                        }
+                        return self.Translator.create(options);
+                    });
                 }
                 throw new Error('API missing');
             };
@@ -1023,6 +1122,12 @@ class ChromeAISetupFramework {
                 const langUrl = this.isEdge ? 'https://microsoftedge.github.io/Demos/built-in-ai/playgrounds/translator-api/' : 'chrome://settings/languages';
                 window.open(langUrl, '_blank');
             };
+
+            let errorType = 'download-timeout';
+            if (e && e.name === 'NotAllowedError') {
+                errorType = 'requires-user-gesture';
+            }
+            this.showErrorModal(errorType, targetLang);
         }
     }
 
@@ -1065,11 +1170,44 @@ class ChromeAISetupFramework {
                 }
 
                 if ('translation' in self && 'createTranslator' in self.translation) {
-                    return await self.translation.createTranslator(options);
+                    return await ChromeAISetupFramework.withTimeout((keepAlive) => {
+                        if (options.monitor) {
+                            const originalMonitor = options.monitor;
+                            options.monitor = (m) => {
+                                m.addEventListener('downloadprogress', () => keepAlive());
+                                originalMonitor(m);
+                            };
+                        } else {
+                            keepAlive(); 
+                        }
+                        return self.translation.createTranslator(options);
+                    });
                 } else if ('ai' in self && 'translator' in self.ai) {
-                    return await self.ai.translator.create(options);
+                    return await ChromeAISetupFramework.withTimeout((keepAlive) => {
+                        if (options.monitor) {
+                            const originalMonitor = options.monitor;
+                            options.monitor = (m) => {
+                                m.addEventListener('downloadprogress', () => keepAlive());
+                                originalMonitor(m);
+                            };
+                        } else {
+                            keepAlive();
+                        }
+                        return self.ai.translator.create(options);
+                    });
                 } else if ('Translator' in self && 'create' in self.Translator) {
-                    return await self.Translator.create(options);
+                    return await ChromeAISetupFramework.withTimeout((keepAlive) => {
+                        if (options.monitor) {
+                            const originalMonitor = options.monitor;
+                            options.monitor = (m) => {
+                                m.addEventListener('downloadprogress', () => keepAlive());
+                                originalMonitor(m);
+                            };
+                        } else {
+                            keepAlive(); 
+                        }
+                        return self.Translator.create(options);
+                    });
                 }
                 throw new Error('API missing');
             };
@@ -1096,6 +1234,12 @@ class ChromeAISetupFramework {
             this.elActionBtn.style.display = 'inline-flex';
             this.elActionBtn.textContent = this.texts.btnRetry;
             this.elActionBtn.onclick = () => this.realDownload();
+
+            let errorType = 'download-timeout';
+            if (e && e.name === 'NotAllowedError') {
+                errorType = 'requires-user-gesture';
+            }
+            this.showErrorModal(errorType, target);
         }
     }
 
@@ -1221,6 +1365,91 @@ class ChromeAISetupFramework {
                 desc: this.elDesc.textContent
             });
         }
+    }
+
+    /**
+     * Show modal for specific download errors
+     * @param {string} type 
+     * @param {string} targetLanguageCode 
+     */
+    showErrorModal(type, targetLanguageCode) {
+        // Find language labels
+        const sourceLanguageLabel = this.options.sourceLanguageLabel;
+        const sourceLanguage = this.options.sourceLanguage;
+        
+        let targetLanguageLabel = targetLanguageCode;
+        const targetLangObj = this.options.availableLanguages.find(l => l.code === targetLanguageCode);
+        if (targetLangObj) {
+            targetLanguageLabel = targetLangObj.name;
+        }
+
+        const browserUrl = this.isEdge ? 'edge' : 'chrome';
+        
+        let html = '';
+        if (type === 'download-timeout') {
+            html = `<span style="display: inline-block;">
+                <h4 style="margin-top: 0;">Language Model Download Did Not Finish:</h4>
+                <ol style="padding-left: 20px;">
+                    <li style="margin-bottom: 8px;">
+                        Your browser started preparing the model for <strong>${sourceLanguageLabel} (${sourceLanguage})</strong> to <strong>${targetLanguageLabel} (${targetLanguageCode})</strong>, but never finished.
+                    </li>
+                    <li style="margin-bottom: 8px;">
+                        Open <strong><span data-copy="${browserUrl}://components" class="cais-copyable-link" style="color: #2563eb; cursor: pointer;">${browserUrl}://components <svg class="cais-copy-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: text-bottom;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></span></strong> and look for <strong>Chrome TranslateKit</strong>. If its version is <strong>0.0.0.0</strong> or it shows an update error, your browser cannot fetch translation models. Click <strong>Check for update</strong> on it.
+                    </li>
+                    <li style="margin-bottom: 8px;">
+                        Turn off any VPN, proxy or antivirus web protection, then reload this page and try again.
+                    </li>
+                    <li style="margin-bottom: 8px;">
+                        Until that component installs, please pick a different translation engine.
+                    </li>
+                </ol>
+                <div style="text-align: right; margin-top: 20px;">
+                    <button class="cais-btn cais-btn-primary${this.options.primaryBtnClass ? ' ' + this.options.primaryBtnClass : ''}" onclick="window.location.reload()">Reload Page</button>
+                    <button class="cais-btn" onclick="this.closest('.cais-modal-overlay').remove()" style="margin-left: 10px;">Close</button>
+                </div>
+            </span>`;
+        } else if (type === 'requires-user-gesture') {
+            html = `<span style="display: inline-block;">
+                <h4 style="margin-top: 0;">Language Model Not Ready:</h4>
+                <ol>
+                    <li style="margin-bottom: 8px;">
+                        The model for <strong>${targetLanguageLabel} (${targetLanguageCode})</strong> still has to be downloaded, and your browser only starts that from a direct click.
+                    </li>
+                    <li style="margin-bottom: 8px;">
+                        Close this window and click <strong>AI Translate</strong> again. If the download still does not start, your browser is refusing it.
+                    </li>
+                    <li style="margin-bottom: 8px;">
+                        Check <strong><span data-copy="${browserUrl}://components" class="cais-copyable-link" style="color: #2563eb; cursor: pointer;">${browserUrl}://components <svg class="cais-copy-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: text-bottom;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></span></strong> for <strong>Chrome TranslateKit</strong>, or pick a different translation engine.
+                    </li>
+                </ol>
+                <div style="text-align: right; margin-top: 20px;">
+                    <button class="cais-btn cais-btn-primary${this.options.primaryBtnClass ? ' ' + this.options.primaryBtnClass : ''}" onclick="window.location.reload()">Reload Page</button>
+                    <button class="cais-btn" onclick="this.closest('.cais-modal-overlay').remove()" style="margin-left: 10px;">Close</button>
+                </div>
+            </span>`;
+        }
+
+        // Create modal overlay
+        const modal = document.createElement('div');
+        modal.className = 'cais-modal-overlay';
+        modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 999999; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px);';
+        
+        const modalContent = document.createElement('div');
+        modalContent.className = 'cais-modal-content';
+        modalContent.style.cssText = 'background: #fff; padding: 25px; border-radius: 8px; max-width: 550px; width: 90%; box-shadow: 0 10px 25px rgba(0,0,0,0.2); font-family: system-ui, -apple-system, sans-serif; font-size: 14px; line-height: 1.5; color: #374151;';
+        
+        modalContent.innerHTML = html;
+        modal.appendChild(modalContent);
+        document.body.appendChild(modal);
+        
+        // Ensure copyable links in modal work
+        modalContent.addEventListener('click', (e) => {
+            const copySpan = e.target.closest('.cais-copyable-link');
+            if (copySpan) {
+                const text = copySpan.getAttribute('data-copy');
+                this.copyTextToClipboard(text, copySpan);
+            }
+        });
     }
 }
 
