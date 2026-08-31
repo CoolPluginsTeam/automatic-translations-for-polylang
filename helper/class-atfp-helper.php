@@ -953,7 +953,7 @@ if (! class_exists('ATFP_Helper')) {
 		 *
 		 * @since 1.5.0
 		 * @param int $post_id Post ID.
-		 * @return string|false One of 'elementor', 'block', 'classic', or false when the post is missing.
+		 * @return string|false One of 'elementor', 'divi', 'block', 'classic', or false when the post is missing.
 		 */
 		public static function get_post_editor_type( $post_id ) {
 			$post_id   = absint( $post_id );
@@ -968,6 +968,10 @@ if (! class_exists('ATFP_Helper')) {
 				&& defined( 'ELEMENTOR_VERSION' )
 			) {
 				return 'elementor';
+			}
+
+			if ( 'on' === get_post_meta( $post_id, '_et_pb_use_builder', true ) ) {
+				return 'divi';
 			}
 
 			if ( has_blocks( $post_data->post_content ) ) {

@@ -73,7 +73,7 @@ $atfp_video_poster_alt  = 'https://i.ytimg.com/vi/' . $atfp_video_id . '/hqdefau
 
 	<div class="atfp-dashboard-card atfp-dashboard-start">
 		<div class="atfp-dashboard-welcome">
-			<h1><?php echo esc_html__( 'Welcome to AutoPoly 👋', 'automatic-translations-for-polylang' ); ?></h1>
+			<h1><?php echo esc_html__( 'Welcome to AutoPoly', 'automatic-translations-for-polylang' ); ?></h1>
 			<p><?php echo esc_html__( 'Translate your WordPress content with AI and make your website multilingual in minutes.', 'automatic-translations-for-polylang' ); ?></p>
 		</div>
 

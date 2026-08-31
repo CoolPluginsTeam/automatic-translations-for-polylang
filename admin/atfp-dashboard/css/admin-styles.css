@@ -191,12 +191,6 @@ Polylang Addon Dashboard - Admin Panel Styles
     line-height: 1;
 }
 
-.atfp-dashboard-tab-title {
-    display: flex;
-    gap: 5px;
-    font-size: 14px;
-    line-height: 1;
-}
 
 .atfp-dashboard-header-right {
     display: flex;

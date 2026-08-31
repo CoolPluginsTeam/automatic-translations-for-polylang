@@ -110,12 +110,12 @@ if(!defined('ABSPATH')){
         </div>
     </div>
     <div class="atfp-dashboard-translate-support atfp-dashboard-card">
-        <h3><?php esc_html_e('Need Help? 🤝', 'automatic-translations-for-polylang'); ?></h3>
+        <h3><?php esc_html_e('Need Help?', 'automatic-translations-for-polylang'); ?></h3>
         <p><?php esc_html_e('Facing any issue with AI translation? Create a support thread and our team will assist you.', 'automatic-translations-for-polylang'); ?></p>
         <a href="<?php echo esc_url('https://wordpress.org/support/plugin/automatic-translations-for-polylang/'); ?>" class="atfp-dashboard-btn primary" target="_blank"><?php esc_html_e('Get Support →', 'automatic-translations-for-polylang'); ?></a>
     </div>
     <div class="atfp-dashboard-rate-us atfp-dashboard-card">
-        <h3><?php esc_html_e('Enjoying AutoPoly? ✨', 'automatic-translations-for-polylang'); ?></h3>
+        <h3><?php esc_html_e('Enjoying AutoPoly?', 'automatic-translations-for-polylang'); ?></h3>
         <p><?php esc_html_e('We’d love to hear your feedback! If AutoPoly makes translation easier for you, please leave us a review.', 'automatic-translations-for-polylang'); ?></p>
         <a href="https://wordpress.org/support/plugin/automatic-translations-for-polylang/reviews/#new-post" class="atfp-dashboard-btn" target="_blank"><?php esc_html_e('Leave a Review ★★★★★', 'automatic-translations-for-polylang'); ?></a>
     </div>

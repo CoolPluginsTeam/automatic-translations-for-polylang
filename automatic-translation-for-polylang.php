@@ -510,12 +510,8 @@ if (! class_exists('AutoPoly')) {
 							<img src="<?php echo esc_url(ATFP_URL . 'assets/images/ai-translation-for-Polylang.svg'); ?>" alt="<?php esc_attr_e('Polylang Addon Logo', 'automatic-translations-for-polylang'); ?>">
 						</a>
 						<h2 class="atfp-dashboard-logo-text">AutoPoly</h2>
-						<div class="atfp-dashboard-tab-title">
-							<span>↳</span> <?php echo esc_html($valid_tabs[$current_tab]); ?>
-						</div>
 					</div>
 					<div class="atfp-dashboard-header-right">
-						<span><?php echo esc_html('AutoPoly - AI Translation For Polylang'); ?></span>
 						<?php foreach ($buttons as $button): ?>
 							<a href="<?php echo esc_url($button['url']); ?>"
 								class="<?php echo esc_attr(isset($button['class']) ? $button['class'] : 'atfp-dashboard-btn'); ?>"
