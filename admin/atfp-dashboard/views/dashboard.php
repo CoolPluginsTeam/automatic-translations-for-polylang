@@ -56,7 +56,7 @@ $atfp_steps = array(
 	__( 'Start the translation and update the page to save it.', 'automatic-translations-for-polylang' ),
 );
 
-$atfp_video_id          = 'ecHsOyIL_J4';
+$atfp_video_id          = 'ubDSMP2qjpY';
 $atfp_video_title       = __( 'Automate the Translation Process with AutoPoly - AI Translation For Polylang', 'automatic-translations-for-polylang' );
 
 /*
