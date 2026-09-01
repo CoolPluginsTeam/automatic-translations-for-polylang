@@ -131,7 +131,7 @@ if (! class_exists('AutoPoly')) {
 					$atfp_utm_parameters = ATFP_Helper::utm_source_text();
 				}
 
-				$plugin_meta[] = '<a href="' . esc_url('https://docs.coolplugins.net/doc/ai-translation-polylang-bulk-translation/?' . sanitize_text_field($atfp_utm_parameters) . '&utm_medium=inside&utm_campaign=docs&utm_content=plugins_list') . '" target="_blank" style="font-weight:bold;">' . __('Bulk Translation Pro', 'automatic-translations-for-polylang') . '</a>';
+				$plugin_meta[] = '<a href="' . esc_url('https://docs.coolplugins.net/doc/ai-translation-polylang-bulk-translation/?' . sanitize_text_field($atfp_utm_parameters) . '&utm_medium=inside&utm_campaign=docs&utm_content=plugins_list') . '" target="_blank" style="font-weight:bold;">' . __('Bulk Translation (Pro)', 'automatic-translations-for-polylang') . '</a>';
 			}
 			return $plugin_meta;
 		}
