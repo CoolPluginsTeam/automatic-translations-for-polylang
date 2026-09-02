@@ -196,8 +196,18 @@ if (! class_exists('ATFP_Helper')) {
 		private function parse_single_wpml_config($file_path) {
 			$rules = array();
 			
-			// Suppress warnings in case of malformed XML
-			$xml = @simplexml_load_file($file_path);
+			// Prevent XXE attacks by disabling external entities
+			$old_disable_entity_loader = null;
+			if ( function_exists( 'libxml_disable_entity_loader' ) && \PHP_VERSION_ID < 80000 ) {
+				$old_disable_entity_loader = libxml_disable_entity_loader( true );
+			}
+
+			// Suppress warnings in case of malformed XML and prevent network entity loading
+			$xml = @simplexml_load_file( $file_path, 'SimpleXMLElement', LIBXML_NONET );
+
+			if ( null !== $old_disable_entity_loader && function_exists( 'libxml_disable_entity_loader' ) ) {
+				libxml_disable_entity_loader( $old_disable_entity_loader );
+			}
 			if (!$xml) {
 				error_log( sprintf( 'ATFP Error: Failed to parse XML file at %s', $file_path ) );
 				return $rules;
