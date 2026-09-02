@@ -85,48 +85,16 @@ if (! class_exists('ATFP_Helper')) {
 
 		public function get_block_parse_rules()
 		{
-			$block_rules = '';
-			$local_path  = ATFP_DIR_PATH . 'includes/block-translation-rules/block-rules.json';
+			$local_path = ATFP_DIR_PATH . 'includes/block-translation-rules/wpml-config.xml';
+			$block_translation_rules = array();
 
-			// Prefer local file first (remote should be unnecessary in normal cases).
-			global $wp_filesystem;
-			if ( ! function_exists( 'WP_Filesystem' ) ) {
-				require_once ABSPATH . 'wp-admin/includes/file.php';
+			if (file_exists($local_path)) {
+				$block_translation_rules['AtfpBlockParseRules'] = $this->parse_single_wpml_config($local_path);
+			} else {
+				$block_translation_rules['AtfpBlockParseRules'] = array();
 			}
 
-			WP_Filesystem();
-
-			if ( $wp_filesystem && $wp_filesystem->exists( $local_path ) && $wp_filesystem->is_readable( $local_path ) ) {
-				$block_rules = (string) $wp_filesystem->get_contents( $local_path );
-			}
-
-			// Fallback to remote only if local rules are missing/empty.
-			if ( empty( $block_rules ) ) {
-				$response = wp_remote_get(
-					esc_url_raw( ATFP_URL . 'includes/block-translation-rules/block-rules.json' ),
-					array(
-						'timeout' => 15,
-					)
-				);
-
-				if ( ! is_wp_error( $response ) && 200 === (int) wp_remote_retrieve_response_code( $response ) ) {
-					$remote_body = wp_remote_retrieve_body( $response );
-					if ( ! empty( $remote_body ) ) {
-						$block_rules = (string) $remote_body;
-					}
-				}
-			}
-
-			if ( empty( $block_rules ) ) {
-				return array();
-			}
-
-			$block_translation_rules = json_decode( $block_rules, true );
-			if ( ! is_array( $block_translation_rules ) ) {
-				return array();
-			}
-
-			$this->custom_block_data_array = isset($block_translation_rules['AtfpBlockParseRules']) ? $block_translation_rules['AtfpBlockParseRules'] : null;
+			$this->custom_block_data_array = $block_translation_rules['AtfpBlockParseRules'];
 
 			$custom_block_translation = get_option('atfp_custom_block_translation', false);
 
@@ -240,9 +208,7 @@ if (! class_exists('ATFP_Helper')) {
 
 					$attributes = $this->parse_wpml_keys($block);
 
-					if (!empty($attributes)) {
-						$rules[$block_type] = $attributes;
-					}
+					$rules[$block_type] = !empty($attributes) ? $attributes : array();
 				}
 			}
 

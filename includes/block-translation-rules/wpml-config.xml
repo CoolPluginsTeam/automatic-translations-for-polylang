@@ -1,0 +1,724 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wpml-config>
+  <gutenberg-blocks>
+    <gutenberg-block type="core/paragraph" translate="1">
+      <key name="content"/>
+      <xpath>//p</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core/image" translate="1">
+      <key name="alt"/>
+      <key name="caption"/>
+      <xpath>//figure/figcaption</xpath>
+      <xpath>//figure//img/@alt</xpath>
+      <xpath>//figure//img/@title</xpath>
+      <xpath type="link">//figure/a/@href</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core/heading" translate="1">
+      <key name="content"/>
+      <xpath>//*[self::h1 or self::h2 or self::h3 or self::h4 or self::h5 or self::h6]</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core/list-item" translate="1">
+      <key name="content"/>
+      <xpath>//li</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core/quote" translate="1">
+      <key name="citation"/>
+      <xpath>//blockquote/p</xpath>
+      <xpath>//blockquote/cite</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core/details" translate="1">
+      <key name="summary"/>
+      <xpath>//summary</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core/preformatted" translate="1">
+      <key name="content"/>
+      <xpath>//pre</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core/pullquote" translate="1">
+      <key name="citation"/>
+      <key name="value"/>
+      <xpath>//blockquote/p</xpath>
+      <xpath>//blockquote/cite</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core/table" translate="1">
+      <key name="caption"/>
+      <key name="body">
+        <key name="*">
+          <key name="*">
+            <key name="cells">
+              <key name="*">
+                <key name="content"/>
+              </key>
+            </key>
+          </key>
+        </key>
+      </key>
+      <key name="head">
+        <key name="*">
+          <key name="cells">
+            <key name="*">
+              <key name="content"/>
+            </key>
+          </key>
+        </key>
+      </key>
+      <key name="foot">
+        <key name="*">
+          <key name="cells">
+            <key name="*">
+              <key name="content"/>
+            </key>
+          </key>
+        </key>
+      </key>
+      <xpath>//th</xpath>
+      <xpath>//td</xpath>
+      <xpath>//figure/figcaption</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core/verse" translate="1">
+      <key name="content"/>
+      <xpath>//pre</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core/freeform" translate="1">
+      <key name="content"/>
+    </gutenberg-block>
+    <gutenberg-block type="core/media-text" translate="1">
+      <key name="mediaAlt"/>
+      <xpath>//figure/img/@alt</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core/button" translate="1">
+      <key name="text"/>
+      <xpath>//a</xpath>
+      <xpath type="link">//a/@href</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core/more" translate="1">
+      <key name="customText"/>
+    </gutenberg-block>
+    <gutenberg-block type="core/search" translate="1">
+      <key name="label"/>
+      <key name="buttonText"/>
+      <key name="placeholder"/>
+    </gutenberg-block>
+    <gutenberg-block type="core/post-terms" translate="1">
+      <key name="prefix"/>
+      <key name="suffix"/>
+    </gutenberg-block>
+    <gutenberg-block type="core/read-more" translate="1">
+      <key name="content"/>
+    </gutenberg-block>
+    <gutenberg-block type="core/text-columns" translate="1">
+      <key name="content">
+        <key name="*">
+          <key name="children"/>
+        </key>
+      </key>
+    </gutenberg-block>
+    <gutenberg-block type="core/accordion-heading" translate="1">
+      <key name="title"/>
+    </gutenberg-block>
+    <gutenberg-block type="core/file" translate="1">
+      <key name="downloadButtonText"/>
+      <xpath>//div/a</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core/icon" translate="1">
+      <key name="ariaLabel"/>
+    </gutenberg-block>
+    <gutenberg-block type="core/navigation-link" translate="1">
+      <key name="label"/>
+      <key name="url" type="link"/>
+      <key name="title"/>
+      <key name="description"/>
+    </gutenberg-block>
+    <gutenberg-block type="core/navigation-submenu" translate="1">
+      <key name="label"/>
+      <key name="url" type="link"/>
+    </gutenberg-block>
+    <gutenberg-block type="core/post-excerpt" translate="1">
+      <key name="moreText"/>
+      <xpath>//p/a</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core/social-link" translate="1">
+      <key name="url" type="link"/>
+    </gutenberg-block>
+    <gutenberg-block type="core/query-pagination-previous" translate="1">
+      <key name="label"/>
+    </gutenberg-block>
+    <gutenberg-block type="core/query-pagination-next" translate="1">
+      <key name="label"/>
+    </gutenberg-block>
+    <gutenberg-block type="core/column" translate="0"/>
+    <gutenberg-block type="core/columns" translate="0"/>
+    <gutenberg-block type="core/code" translate="0"/>
+    <gutenberg-block type="core/nextpage" translate="0"/>
+    <gutenberg-block type="core/separator" translate="0"/>
+    <gutenberg-block type="core/spacer" translate="0"/>
+    <gutenberg-block type="core/shortcode" translate="0"/>
+    <gutenberg-block type="core/page-list" translate="0">
+      <key name="parentPageID" type="post-ids" sub-type="page"/>
+    </gutenberg-block>
+    <gutenberg-block type="core/gallery" translate="1">
+      <xpath>//figure/figcaption</xpath>
+      <xpath>//figure/img/@alt</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core/list" translate="1">
+      <xpath>//ul/li|//ol/li</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core/audio" translate="1">
+      <xpath>//figure/figcaption</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core/video" translate="1">
+      <xpath>//figure/figcaption</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core/cover" translate="1">
+      <xpath>//div/p</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core/cover-image" translate="1">
+      <xpath>//div/p</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core/subhead" translate="1">
+      <xpath>//p</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core/html" translate="1">
+      <xpath>/*</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core/block" translate="1">
+      <key name="content">
+        <key name="/^.+$/" search-method="regex">
+          <key name="content"/>
+        </key>
+      </key>
+    </gutenberg-block>
+    <gutenberg-block type="core-embed/twitter" translate="1">
+      <xpath>//figure/figcaption</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core-embed/youtube" translate="1">
+      <xpath>//figure/figcaption</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core-embed/facebook" translate="1">
+      <xpath>//figure/figcaption</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core-embed/instagram" translate="1">
+      <xpath>//figure/figcaption</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core-embed/vimeo" translate="1">
+      <xpath>//figure/figcaption</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core-embed/soundcloud" translate="1">
+      <xpath>//figure/figcaption</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core-embed/spotify" translate="1">
+      <xpath>//figure/figcaption</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core-embed/flickr" translate="1">
+      <xpath>//figure/figcaption</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core-embed/animoto" translate="1">
+      <xpath>//figure/figcaption</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core-embed/collegehumor" translate="1">
+      <xpath>//figure/figcaption</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core-embed/dailymotion" translate="1">
+      <xpath>//figure/figcaption</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core-embed/funnyordie" translate="1">
+      <xpath>//figure/figcaption</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core-embed/hulu" translate="1">
+      <xpath>//figure/figcaption</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core-embed/imgur" translate="1">
+      <xpath>//figure/figcaption</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core-embed/issuu" translate="1">
+      <xpath>//figure/figcaption</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core-embed/kickstarter" translate="1">
+      <xpath>//figure/figcaption</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core-embed/meetup-com" translate="1">
+      <xpath>//figure/figcaption</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core-embed/mixcloud" translate="1">
+      <xpath>//figure/figcaption</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core-embed/photobucket" translate="1">
+      <xpath>//figure/figcaption</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core-embed/polldaddy" translate="1">
+      <xpath>//figure/figcaption</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core-embed/reddit" translate="1">
+      <xpath>//figure/figcaption</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core-embed/reverbnation" translate="1">
+      <xpath>//figure/figcaption</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core-embed/screencast" translate="1">
+      <xpath>//figure/figcaption</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core-embed/scribd" translate="1">
+      <xpath>//figure/figcaption</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core-embed/slideshare" translate="1">
+      <xpath>//figure/figcaption</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core-embed/smugmug" translate="1">
+      <xpath>//figure/figcaption</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core-embed/speaker" translate="1">
+      <xpath>//figure/figcaption</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core-embed/ted" translate="1">
+      <xpath>//figure/figcaption</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core-embed/tumblr" translate="1">
+      <xpath>//figure/figcaption</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core-embed/videopress" translate="1">
+      <xpath>//figure/figcaption</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core-embed/wordpress" translate="1">
+      <xpath>//figure/figcaption</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="core-embed/wordpress-tv" translate="1">
+      <xpath>//figure/figcaption</xpath>
+    </gutenberg-block>
+    <gutenberg-block type="tadv/classic-paragraph" translate="1">
+      <key name="content"/>
+    </gutenberg-block>
+    <gutenberg-block type="cp-timeline/content-timeline-child" translate="1">
+      <key name="t_date"/>
+      <key name="time_desc"/>
+      <key name="time_heading"/>
+    </gutenberg-block>
+    <gutenberg-block type="uagb/content-timeline-child" translate="1">
+      <key name="time_desc"/>
+      <key name="time_heading"/>
+    </gutenberg-block>
+    <gutenberg-block type="uagb/faq-child" translate="1">
+      <key name="question"/>
+      <key name="answer"/>
+    </gutenberg-block>
+    <gutenberg-block type="uagb/forms-name" translate="1">
+      <key name="placeholder"/>
+      <key name="name"/>
+    </gutenberg-block>
+    <gutenberg-block type="uagb/forms-email" translate="1">
+      <key name="placeholder"/>
+      <key name="name"/>
+    </gutenberg-block>
+    <gutenberg-block type="uagb/forms-textarea" translate="1">
+      <key name="placeholder"/>
+      <key name="textareaName"/>
+    </gutenberg-block>
+    <gutenberg-block type="uagb/inline-notice" translate="1">
+      <key name="noticeTitle"/>
+    </gutenberg-block>
+    <gutenberg-block type="uagb/restaurant-menu-child" translate="1">
+      <key name="description"/>
+      <key name="title"/>
+    </gutenberg-block>
+    <gutenberg-block type="uagb/star-rating" translate="1">
+      <key name="title"/>
+    </gutenberg-block>
+    <gutenberg-block type="uagb/review" translate="1">
+      <key name="summaryDescription"/>
+      <key name="summaryTitle"/>
+      <key name="parts">
+        <key name="*">
+          <key name="label"/>
+        </key>
+      </key>
+      <key name="rAuthor"/>
+      <key name="rContent"/>
+      <key name="rTitle"/>
+      <key name="schema"/>
+    </gutenberg-block>
+    <gutenberg-block type="essential-blocks/button" translate="1">
+      <key name="buttonText"/>
+    </gutenberg-block>
+    <gutenberg-block type="essential-blocks/number-counter" translate="1">
+      <key name="counterTitle"/>
+      <key name="hoursLabel"/>
+    </gutenberg-block>
+    <gutenberg-block type="essential-blocks/dual-button" translate="1">
+      <key name="buttonTextOne"/>
+      <key name="buttonTextTwo"/>
+    </gutenberg-block>
+    <gutenberg-block type="essential-blocks/flipbox" translate="1">
+      <key name="backContent"/>
+      <key name="backTitle"/>
+      <key name="buttonText"/>
+      <key name="frontContent"/>
+      <key name="frontTitle"/>
+    </gutenberg-block>
+    <gutenberg-block type="essential-blocks/interactive-promo" translate="1">
+      <key name="content"/>
+      <key name="header"/>
+      <key name="imageAltTag"/>
+    </gutenberg-block>
+    <gutenberg-block type="essential-blocks/notice" translate="1">
+      <key name="text"/>
+      <key name="title"/>
+    </gutenberg-block>
+    <gutenberg-block type="essential-blocks/pricing-table" translate="1">
+      <key name="buttonText"/>
+      <key name="mainPrice"/>
+      <key name="pricePeriod"/>
+      <key name="subtitle"/>
+      <key name="title"/>
+      <key name="features">
+        <key name="*">
+          <key name="text"/>
+        </key>
+      </key>
+    </gutenberg-block>
+    <gutenberg-block type="essential-blocks/progress-bar" translate="1">
+      <key name="title"/>
+      <key name="suffix"/>
+      <key name="prefix"/>
+    </gutenberg-block>
+    <gutenberg-block type="essential-blocks/slider" translate="1">
+      <key name="images">
+        <key name="*">
+          <key name="alt"/>
+          <key name="buttonText"/>
+          <key name="subtitle"/>
+          <key name="title"/>
+        </key>
+      </key>
+    </gutenberg-block>
+    <gutenberg-block type="essential-blocks/team-member" translate="1">
+      <key name="description"/>
+      <key name="jobTitle"/>
+      <key name="name"/>
+      <key name="profilesOnly">
+        <key name="*">
+          <key name="title"/>
+        </key>
+      </key>
+      <key name="socialDetails">
+        <key name="*">
+          <key name="title"/>
+        </key>
+      </key>
+    </gutenberg-block>
+    <gutenberg-block type="essential-blocks/testimonial" translate="1">
+      <key name="companyName"/>
+      <key name="description"/>
+      <key name="userName"/>
+    </gutenberg-block>
+    <gutenberg-block type="essential-blocks/typing-text" translate="1">
+      <key name="prefix"/>
+      <key name="suffix"/>
+      <key name="typedText">
+        <key name="*">
+          <key name="text"/>
+        </key>
+      </key>
+    </gutenberg-block>
+    <gutenberg-block type="essential-blocks/feature-list" translate="1">
+      <key name="features">
+        <key name="*">
+          <key name="content"/>
+          <key name="title"/>
+        </key>
+      </key>
+    </gutenberg-block>
+    <gutenberg-block type="essential-blocks/advanced-image" translate="1">
+      <key name="image">
+        <key name="alt"/>
+      </key>
+    </gutenberg-block>
+    <gutenberg-block type="essential-blocks/form-text-field" translate="1">
+      <key name="labelText"/>
+      <key name="placeholderText"/>
+    </gutenberg-block>
+    <gutenberg-block type="essential-blocks/form-email-field" translate="1">
+      <key name="labelText"/>
+      <key name="placeholderText"/>
+    </gutenberg-block>
+    <gutenberg-block type="essential-blocks/form-textarea-field" translate="1">
+      <key name="labelText"/>
+      <key name="placeholderText"/>
+    </gutenberg-block>
+    <gutenberg-block type="essential-blocks/form-number-field" translate="1">
+      <key name="labelText"/>
+      <key name="placeholderText"/>
+    </gutenberg-block>
+    <gutenberg-block type="essential-blocks/form-select-field" translate="1">
+      <key name="options">
+        <key name="*">
+          <key name="name"/>
+        </key>
+      </key>
+      <key name="labelText"/>
+    </gutenberg-block>
+    <gutenberg-block type="essential-blocks/form-checkbox-field" translate="1">
+      <key name="options">
+        <key name="*">
+          <key name="name"/>
+        </key>
+      </key>
+      <key name="labelText"/>
+    </gutenberg-block>
+    <gutenberg-block type="themeisle-blocks/accordion-item" translate="1">
+      <key name="title"/>
+    </gutenberg-block>
+    <gutenberg-block type="themeisle-blocks/form-input" translate="1">
+      <key name="helpText"/>
+      <key name="placeholder"/>
+      <key name="label"/>
+    </gutenberg-block>
+    <gutenberg-block type="themeisle-blocks/form-textarea" translate="1">
+      <key name="helpText"/>
+      <key name="placeholder"/>
+      <key name="label"/>
+    </gutenberg-block>
+    <gutenberg-block type="themeisle-blocks/icon-list-item" translate="1">
+      <key name="content"/>
+    </gutenberg-block>
+    <gutenberg-block type="themeisle-blocks/advanced-heading" translate="1">
+      <key name="content"/>
+    </gutenberg-block>
+    <gutenberg-block type="themeisle-blocks/circle-counter" translate="1">
+      <key name="title"/>
+    </gutenberg-block>
+    <gutenberg-block type="themeisle-blocks/flip" translate="1">
+      <key name="description"/>
+      <key name="title"/>
+    </gutenberg-block>
+    <gutenberg-block type="themeisle-blocks/review" translate="1">
+      <key name="links">
+        <key name="*">
+          <key name="label"/>
+        </key>
+      </key>
+      <key name="cons">
+        <key name="*"/>
+      </key>
+      <key name="pros">
+        <key name="*"/>
+      </key>
+      <key name="features">
+        <key name="*">
+          <key name="description"/>
+          <key name="title"/>
+        </key>
+      </key>
+      <key name="description"/>
+      <key name="title"/>
+    </gutenberg-block>
+    <gutenberg-block type="themeisle-blocks/slider" translate="1">
+      <key name="images">
+        <key name="*">
+          <key name="caption"/>
+        </key>
+      </key>
+    </gutenberg-block>
+    <gutenberg-block type="themeisle-blocks/progress-bar" translate="1">
+      <key name="title"/>
+    </gutenberg-block>
+    <gutenberg-block type="themeisle-blocks/button" translate="1">
+      <key name="text"/>
+    </gutenberg-block>
+    <gutenberg-block type="themeisle-blocks/tabs-item" translate="1">
+      <key name="title"/>
+    </gutenberg-block>
+    <gutenberg-block type="kadence/listitem" translate="1">
+      <key name="iconTitle"/>
+      <key name="text"/>
+    </gutenberg-block>
+    <gutenberg-block type="kadence/lottie" translate="1">
+      <key name="label"/>
+    </gutenberg-block>
+    <gutenberg-block type="kadence/tableofcontents" translate="1">
+      <key name="title"/>
+    </gutenberg-block>
+    <gutenberg-block type="stackable/heading" translate="1">
+      <key name="text"/>
+    </gutenberg-block>
+    <gutenberg-block type="stackable/text" translate="1">
+      <key name="text"/>
+    </gutenberg-block>
+    <gutenberg-block type="stackable/button" translate="1">
+      <key name="text"/>
+    </gutenberg-block>
+    <gutenberg-block type="stackable/subtitle" translate="1">
+      <key name="text"/>
+    </gutenberg-block>
+    <gutenberg-block type="stackable/image" translate="1">
+      <key name="imageAlt"/>
+    </gutenberg-block>
+    <gutenberg-block type="stackable/icon-list-item" translate="1">
+      <key name="text"/>
+    </gutenberg-block>
+    <gutenberg-block type="stackable/tab-labels" translate="1">
+      <key name="tabLabels">
+        <key name="*">
+          <key name="label"/>
+        </key>
+      </key>
+      <key name="tabText"/>
+    </gutenberg-block>
+    <gutenberg-block type="stackable/count-up" translate="1">
+      <key name="text"/>
+    </gutenberg-block>
+    <gutenberg-block type="stackable/countdown" translate="1">
+      <key name="secondText"/>
+      <key name="minuteText"/>
+      <key name="hourText"/>
+      <key name="dayText"/>
+    </gutenberg-block>
+    <gutenberg-block type="stackable/number-box" translate="1">
+      <key name="text"/>
+    </gutenberg-block>
+    <gutenberg-block type="stackable/posts" translate="1">
+      <key name="readmoreText"/>
+    </gutenberg-block>
+    <gutenberg-block type="stackable/progress-bar" translate="1">
+      <key name="text"/>
+    </gutenberg-block>
+    <gutenberg-block type="stackable/table-of-contents" translate="1">
+      <key name="titleText"/>
+      <key name="headings">
+        <key name="*">
+          <key name="content"/>
+        </key>
+      </key>
+      <key name="text"/>
+    </gutenberg-block>
+    <gutenberg-block type="stackable/timeline" translate="1">
+      <key name="text"/>
+    </gutenberg-block>
+    <gutenberg-block type="gutenverse/accordion" translate="1">
+      <key name="title"/>
+    </gutenberg-block>
+    <gutenberg-block type="gutenverse/button" translate="1">
+      <key name="content"/>
+    </gutenberg-block>
+    <gutenberg-block type="gutenverse/icon-list-item" translate="1">
+      <key name="text"/>
+    </gutenberg-block>
+    <gutenberg-block type="gutenverse/advanced-heading" translate="1">
+      <key name="subText"/>
+      <key name="focusText"/>
+    </gutenberg-block>
+    <gutenberg-block type="gutenverse/heading" translate="1">
+      <key name="content"/>
+    </gutenberg-block>
+    <gutenberg-block type="gutenverse/icon-box" translate="1">
+      <key name="description"/>
+      <key name="title"/>
+    </gutenberg-block>
+    <gutenberg-block type="gutenverse/image-box" translate="1">
+      <key name="description"/>
+      <key name="title"/>
+    </gutenberg-block>
+    <gutenberg-block type="gutenverse/tabs" translate="1">
+      <key name="tabs">
+        <key name="*">
+          <key name="text"/>
+        </key>
+      </key>
+    </gutenberg-block>
+    <gutenberg-block type="gutenverse/team" translate="1">
+      <key name="job"/>
+      <key name="name"/>
+    </gutenberg-block>
+    <gutenberg-block type="gutenverse/testimonials" translate="1">
+      <key name="testimonialDataRichText">
+        <key name="*">
+          <key name="description"/>
+          <key name="name"/>
+          <key name="comment"/>
+        </key>
+      </key>
+    </gutenberg-block>
+    <gutenberg-block type="ub/content-toggle-panel-block" translate="1">
+      <key name="panelTitle"/>
+    </gutenberg-block>
+    <gutenberg-block type="ub/button" translate="1">
+      <key name="buttons">
+        <key name="*">
+          <key name="buttonText"/>
+        </key>
+      </key>
+    </gutenberg-block>
+    <gutenberg-block type="ub/expand-portion" translate="1">
+      <key name="clickText"/>
+    </gutenberg-block>
+    <gutenberg-block type="ub/testimonial" translate="1">
+      <key name="ub_testimonial_author_role"/>
+      <key name="ub_testimonial_author"/>
+      <key name="ub_testimonial_text"/>
+    </gutenberg-block>
+    <gutenberg-block type="ub/call-to-action-block" translate="1">
+      <key name="ub_cta_button_text"/>
+      <key name="ub_cta_content_text"/>
+      <key name="ub_call_to_action_headline_text"/>
+    </gutenberg-block>
+    <gutenberg-block type="ub/click-to-tweet" translate="1">
+      <key name="ubTweet"/>
+    </gutenberg-block>
+    <gutenberg-block type="ub/tabbed-content-block" translate="1">
+      <key name="tabsTitle">
+        <key name="*"/>
+      </key>
+    </gutenberg-block>
+    <gutenberg-block type="ub/star-rating-block" translate="1">
+      <key name="reviewText"/>
+    </gutenberg-block>
+    <gutenberg-block type="ub/table-of-contents-block" translate="1">
+      <key name="title"/>
+    </gutenberg-block>
+    <gutenberg-block type="ub/progress-bar" translate="1">
+      <key name="detail"/>
+    </gutenberg-block>
+    <gutenberg-block type="ub/review" translate="1">
+      <key name="parts">
+        <key name="*">
+          <key name="label"/>
+        </key>
+      </key>
+      <key name="summaryDescription"/>
+      <key name="summaryTitle"/>
+      <key name="itemName"/>
+      <key name="authorName"/>
+    </gutenberg-block>
+    <gutenberg-block type="ub/content-filter-block" translate="1">
+      <key name="filterArray">
+        <key name="*">
+          <key name="category"/>
+        </key>
+      </key>
+    </gutenberg-block>
+    <gutenberg-block type="ub/how-to" translate="1">
+      <key name="resultIntro"/>
+      <key name="howToYield"/>
+      <key name="section">
+        <key name="*">
+          <key name="steps">
+            <key name="*">
+              <key name="title"/>
+              <key name="tip"/>
+              <key name="direction"/>
+            </key>
+          </key>
+        </key>
+      </key>
+      <key name="introduction"/>
+      <key name="title"/>
+    </gutenberg-block>
+    <gutenberg-block type="ub/advanced-heading" translate="1">
+      <key name="content"/>
+    </gutenberg-block>
+    <gutenberg-block type="ub/counter" translate="1">
+      <key name="label"/>
+    </gutenberg-block>
+    <gutenberg-block type="rank-math/toc-block" translate="1">
+      <key name="title"/>
+    </gutenberg-block>
+  </gutenberg-blocks>
+</wpml-config>
