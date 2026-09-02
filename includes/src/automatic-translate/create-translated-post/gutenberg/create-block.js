@@ -29,7 +29,6 @@ const filterTranslateAttr = (block, blockParseRules, service) => {
     
     const { select } = wp.data;
 
-    const filterAttrArr = Object.values(blockParseRules);
     const blockAttr = block.attributes;
     const blockId = block.clientId;
 
@@ -103,12 +102,72 @@ const filterTranslateAttr = (block, blockParseRules, service) => {
         FilterBlockNestedAttr(idArr, filterAttrObj, blockAttr, updateTranslatedAttr);
     }
 
-    filterAttrArr.forEach(data => {
-        Object.keys(data).forEach(key => {
-            const idArr = new Array(key);
-            updateTranslatedAttr(idArr, data[key]);
+    if (Array.isArray(blockParseRules)) {
+        blockParseRules.forEach(data => {
+            if (typeof data === 'object' && data !== null) {
+                Object.keys(data).forEach(key => {
+                    const idArr = new Array(key);
+                    updateTranslatedAttr(idArr, data[key]);
+                });
+            }
         });
-    });
+    } else if (typeof blockParseRules === 'object' && blockParseRules !== null) {
+        Object.keys(blockParseRules).forEach(key => {
+            const idArr = new Array(key);
+            updateTranslatedAttr(idArr, blockParseRules[key]);
+        });
+    }
+
+    if (blockParseRules && blockParseRules['xpaths'] && wp && wp.blocks) {
+        try {
+            const htmlString = wp.blocks.serialize(block);
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(htmlString, 'text/html');
+
+            const findAttributePathByValue = (obj, targetValue, currentPath = []) => {
+                let foundPath = null;
+                for (let key in obj) {
+                    if (obj.hasOwnProperty(key)) {
+                        let val = obj[key];
+                        if (val && val.originalHTML !== undefined) {
+                            val = val.originalHTML;
+                        }
+                        
+                        if (typeof val === 'string' && val.trim() !== '') {
+                            const div = document.createElement('div');
+                            div.innerHTML = val;
+                            if (div.textContent.trim() === targetValue.trim()) {
+                                return [...currentPath, key];
+                            }
+                        } else if (typeof val === 'object' && val !== null) {
+                            foundPath = findAttributePathByValue(val, targetValue, [...currentPath, key]);
+                            if (foundPath) return foundPath;
+                        }
+                    }
+                }
+                return null;
+            };
+
+            blockParseRules['xpaths'].forEach(xpath => {
+                try {
+                    const result = doc.evaluate(xpath, doc, null, XPathResult.ANY_TYPE, null);
+                    let node = result.iterateNext();
+                    while (node) {
+                        let sourceString = (node.nodeType === Node.ATTRIBUTE_NODE) ? node.value : node.textContent;
+                        sourceString = sourceString.trim();
+
+                        if (sourceString && sourceString !== '') {
+                            const attrPath = findAttributePathByValue(blockAttr, sourceString);
+                            if (attrPath) {
+                                updateTranslatedAttr(attrPath, true);
+                            }
+                        }
+                        node = result.iterateNext();
+                    }
+                } catch (e) {}
+            });
+        } catch (err) {}
+    }
 
     return block;
 }

@@ -152,7 +152,7 @@ if (! class_exists('ATFP_Helper')) {
 
 			// Generate a fingerprint based on the active plugins and themes
 			$fingerprint = md5(serialize($plugin_dirs));
-			$transient_key = 'atfp_wpml_blocks_rules';
+			$transient_key = 'atfp_wpml_blocks_rules_v11';
 			$cached_data = get_transient($transient_key);
 
 			// If the cached fingerprint matches the current fingerprint, return the cached rules
@@ -167,9 +167,9 @@ if (! class_exists('ATFP_Helper')) {
 					if (!empty($parsed)) {
 						foreach ($parsed as $block_name => $attributes) {
 							if (!isset($wpml_rules[$block_name])) {
-								$wpml_rules[$block_name] = array('attributes' => array());
+								$wpml_rules[$block_name] = array();
 							}
-							$wpml_rules[$block_name]['attributes'] = array_merge($wpml_rules[$block_name]['attributes'], $attributes);
+							$wpml_rules[$block_name] = array_merge($wpml_rules[$block_name], $attributes);
 						}
 					}
 				}
@@ -207,8 +207,17 @@ if (! class_exists('ATFP_Helper')) {
 					}
 
 					$attributes = $this->parse_wpml_keys($block);
-
 					$rules[$block_type] = !empty($attributes) ? $attributes : array();
+					
+					if (isset($block->xpath)) {
+						$xpaths = array();
+						foreach ($block->xpath as $xpath_node) {
+							$xpaths[] = (string) $xpath_node;
+						}
+						if (!empty($xpaths)) {
+							$rules[$block_type]['xpaths'] = $xpaths;
+						}
+					}
 				}
 			}
 
