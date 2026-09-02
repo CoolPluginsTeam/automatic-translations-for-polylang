@@ -121,6 +121,8 @@ if (! class_exists('ATFP_Helper')) {
 
 		/**
 		 * Parse wpml-config.xml files from active plugins and theme for Gutenberg blocks.
+		 *
+		 * @return array Multi-dimensional array of block translation rules.
 		 */
 		private function parse_wpml_config_blocks() {
 			$wpml_rules = array();
@@ -137,7 +139,7 @@ if (! class_exists('ATFP_Helper')) {
 			$plugin_dirs = array();
 
 			foreach ($active_plugins as $plugin) {
-				$plugin_dir = dirname(WP_PLUGIN_DIR . '/' . $plugin);
+				$plugin_dir = WP_PLUGIN_DIR . '/' . dirname($plugin);
 				if (!in_array($plugin_dir, $plugin_dirs)) {
 					$plugin_dirs[] = $plugin_dir;
 				}
@@ -152,7 +154,7 @@ if (! class_exists('ATFP_Helper')) {
 
 			// Generate a fingerprint based on the active plugins and themes
 			$fingerprint = md5(serialize($plugin_dirs));
-			$transient_key = 'atfp_wpml_blocks_rules_v11';
+			$transient_key = 'atfp_wpml_blocks_rules';
 			$cached_data = get_transient($transient_key);
 
 			// If the cached fingerprint matches the current fingerprint, return the cached rules
@@ -185,12 +187,23 @@ if (! class_exists('ATFP_Helper')) {
 			return $wpml_rules;
 		}
 
+		/**
+		 * Parses a single wpml-config.xml file to extract Gutenberg block translation rules.
+		 *
+		 * @param string $file_path Absolute path to the wpml-config.xml file.
+		 * @return array Extracted block translation rules.
+		 */
 		private function parse_single_wpml_config($file_path) {
 			$rules = array();
 			
 			// Suppress warnings in case of malformed XML
 			$xml = @simplexml_load_file($file_path);
-			if (!$xml || !isset($xml->{'gutenberg-blocks'})) {
+			if (!$xml) {
+				error_log( sprintf( 'ATFP Error: Failed to parse XML file at %s', $file_path ) );
+				return $rules;
+			}
+			
+			if (!isset($xml->{'gutenberg-blocks'})) {
 				return $rules;
 			}
 
@@ -224,6 +237,12 @@ if (! class_exists('ATFP_Helper')) {
 			return $rules;
 		}
 
+		/**
+		 * Recursively parses key nodes from a wpml-config.xml block element.
+		 *
+		 * @param SimpleXMLElement $xml_node The XML node containing key elements.
+		 * @return array Extracted attributes and their translation settings.
+		 */
 		private function parse_wpml_keys($xml_node) {
 			$attributes = array();
 			if (isset($xml_node->key)) {

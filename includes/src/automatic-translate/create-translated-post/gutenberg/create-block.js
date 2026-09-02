@@ -106,15 +106,19 @@ const filterTranslateAttr = (block, blockParseRules, service) => {
         blockParseRules.forEach(data => {
             if (typeof data === 'object' && data !== null) {
                 Object.keys(data).forEach(key => {
-                    const idArr = new Array(key);
-                    updateTranslatedAttr(idArr, data[key]);
+                    if (key !== 'xpaths') {
+                        const idArr = new Array(key);
+                        updateTranslatedAttr(idArr, data[key]);
+                    }
                 });
             }
         });
     } else if (typeof blockParseRules === 'object' && blockParseRules !== null) {
         Object.keys(blockParseRules).forEach(key => {
-            const idArr = new Array(key);
-            updateTranslatedAttr(idArr, blockParseRules[key]);
+            if (key !== 'xpaths') {
+                const idArr = new Array(key);
+                updateTranslatedAttr(idArr, blockParseRules[key]);
+            }
         });
     }
 
@@ -164,9 +168,13 @@ const filterTranslateAttr = (block, blockParseRules, service) => {
                         }
                         node = result.iterateNext();
                     }
-                } catch (e) {}
+                } catch (e) {
+                    console.error('ATFP: XPath evaluation error for ' + xpath + ':', e);
+                }
             });
-        } catch (err) {}
+        } catch (err) {
+            console.error('ATFP: Error processing block xpaths:', err);
+        }
     }
 
     return block;
