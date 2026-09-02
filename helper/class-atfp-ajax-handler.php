@@ -60,6 +60,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				add_action('wp_ajax_atfp_update_translate_data', array($this, 'atfp_update_translate_data'));
 				add_action( 'wp_ajax_atfp_update_elementor_data', array( $this, 'update_elementor_data' ) );
 				add_action( 'wp_ajax_atfp_update_enabled_providers', array( $this, 'update_enabled_providers' ) );
+				add_action( 'wp_ajax_atfp_update_default_provider', array( $this, 'update_default_provider' ) );
 				add_action( 'wp_ajax_atfp_install_plugin', array( $this, 'atfp_install_plugin' ) );
 
 			}
@@ -143,9 +144,9 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 			$this->seo_fields_data($atfp_meta_fields, $post_id);
 
 			$data    = array(
-				'title'   => $post_data->post_title,
-				'excerpt' => $post_data->post_excerpt,
-				'content' => $content,
+				'title'   => is_string( $post_data->post_title ) ? $post_data->post_title : '',
+				'excerpt' => is_string( $post_data->post_excerpt ) ? $post_data->post_excerpt : '',
+				'content' => is_string( $content ) ? $content : '',
 				'metaFields' => $atfp_meta_fields
 			);
 
@@ -170,6 +171,10 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 					$acf_repeater_key=$acf_key . $acf_values['name'].'_'.$repeater_item_index.'_';
 
 					foreach($repeater_item_value as $repeater_item_value_key => $repeater_item_value_value){
+						if(!is_string($repeater_item_value_value) || '' === trim($repeater_item_value_value)){
+							continue;
+						}
+
 						$meta_fields_arr[$acf_repeater_key .$repeater_item_value_key][] = $repeater_item_value_value;
 					}
 				}
@@ -179,12 +184,16 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 
 			if(is_array($acf_values['value'])){
 				foreach($acf_values['value'] as $acf_value_key => $acf_value_value){
+					if(!is_string($acf_value_value) || '' === trim($acf_value_value)){
+						continue;
+					}
+
 					$meta_fields_arr[$acf_key . $acf_values['name'] . '_' . $acf_value_key][] = $acf_value_value;
 				}
 				return;
 			}
 
-			if(gettype($acf_values['value']) !== 'string'){
+			if(gettype($acf_values['value']) !== 'string' || '' === trim($acf_values['value'])){
 				return;
 			}
 
@@ -224,7 +233,12 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 
 			foreach($all_post_meta as $meta_key => $meta_value){
 				if(in_array($meta_key, $atfp_allowed_seo_fields)){
-					$meta_fields_arr[$meta_key] = $meta_value;
+					$seo_value = isset($meta_value[0]) ? $meta_value[0] : '';
+					if(!is_string($seo_value) || '' === trim($seo_value)){
+						continue;
+					}
+
+					$meta_fields_arr[$meta_key] = array($seo_value);
 				}
 			}
 		}
@@ -512,7 +526,10 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				return wp_send_json_error( __( 'Unauthorized', 'automatic-translations-for-polylang' ), 403 );
 			}
 
-			// Get the JSON string directly, unslashing but not sanitizing as text
+			// Get the JSON string directly, unslashing but not sanitizing as text.
+			// Sanitizing here would mangle the JSON before it can be decoded; every
+			// key is checked against the hardcoded provider list below instead.
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Decoded as JSON and validated against an allow-list below.
 			$enabled_providers = isset($_POST['enabled_providers']) ? wp_unslash($_POST['enabled_providers']) : '';
 			$enabled_providers = json_decode($enabled_providers, true);
 
@@ -524,7 +541,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 				return wp_send_json_error( __( 'Invalid enabled providers.', 'automatic-translations-for-polylang' ) );
 			}
 			
-			$default_providers = array('chrome-built-in-ai'=>false, 'edge-built-in-ai'=>false, 'yandex-translate'=>false);
+			$default_providers = array('chrome-built-in-ai'=>false, 'edge-built-in-ai'=>false, 'yandex-translate'=>false, 'google-translate'=>false);
 
 			$updated_providers=array();
 			
@@ -536,6 +553,17 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 
 			$enabled_providers=array_merge($default_providers, $updated_providers);
 
+			/*
+			 * The UI locks the default engine's toggle, but a disabled input is
+			 * only a client side guard. Keep the stored default enabled here so a
+			 * crafted request cannot leave a default the modal cannot pre-select.
+			 */
+			$atfp_default_provider = sanitize_key(get_option('atfp_default_provider', 'google-translate'));
+
+			if ('' !== $atfp_default_provider && isset($enabled_providers[$atfp_default_provider])) {
+				$enabled_providers[$atfp_default_provider] = true;
+			}
+
 			update_option('atfp_enabled_providers', $enabled_providers);
 
 			$enabled_providers=array_filter($enabled_providers, function($status){
@@ -544,6 +572,53 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 
 			wp_send_json_success( array( 'providers' => array_keys($enabled_providers), 'message' => __( 'Enabled providers updated successfully.', 'automatic-translations-for-polylang' ) ) );
         }
+
+		/**
+		 * Store the engine pre-selected when the translation modal opens.
+		 *
+		 * @since 1.5.0
+		 *
+		 * @return void
+		 */
+		public function update_default_provider() {
+			if ( ! check_ajax_referer( 'atfp_update_enabled_providers', 'update_providers_key', false ) ) {
+				return wp_send_json_error( __( 'Invalid security token sent.', 'automatic-translations-for-polylang' ) );
+			}
+
+			if ( ! current_user_can( 'manage_options' ) ) {
+				return wp_send_json_error( __( 'Unauthorized', 'automatic-translations-for-polylang' ), 403 );
+			}
+
+			$default_provider = isset( $_POST['default_provider'] ) ? sanitize_key( wp_unslash( $_POST['default_provider'] ) ) : '';
+
+			// An empty value clears the default, so it is valid alongside the list.
+			if ( '' !== $default_provider && ! in_array( $default_provider, ATFP_Helper::get_supported_providers(), true ) ) {
+				return wp_send_json_error( __( 'Invalid translation provider.', 'automatic-translations-for-polylang' ) );
+			}
+
+			// Making an engine the default also turns it on. The modal can only
+			// pre-select an enabled provider, so refusing here forced a second
+			// click on the toggle first.
+			if ( '' !== $default_provider && ! in_array( $default_provider, ATFP_Helper::get_active_providers(), true ) ) {
+				$enabled_providers = array_fill_keys( ATFP_Helper::get_supported_providers(), false );
+
+				foreach ( ATFP_Helper::get_active_providers() as $active_provider ) {
+					$enabled_providers[ $active_provider ] = true;
+				}
+
+				$enabled_providers[ $default_provider ] = true;
+				update_option( 'atfp_enabled_providers', $enabled_providers );
+			}
+
+			update_option( 'atfp_default_provider', $default_provider );
+
+			return wp_send_json_success(
+				array(
+					'default_provider' => $default_provider,
+					'message'          => __( 'Default translation provider updated successfully.', 'automatic-translations-for-polylang' ),
+				)
+			);
+		}
 
 		public function atfp_install_plugin()
         {

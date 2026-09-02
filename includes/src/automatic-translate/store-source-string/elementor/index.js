@@ -13,7 +13,7 @@ const ElementorSaveSource = (content) => {
     const storeMetaFields = (metaFields) => {
         Object.keys(metaFields).forEach(metaKey => {
             if(Object.keys(AllowedMetaFields).includes(metaKey) && AllowedMetaFields[metaKey].inputType === 'string'){
-                if('' !== metaFields[metaKey][0] && undefined !== metaFields[metaKey][0]){
+                if(typeof metaFields[metaKey][0] === 'string' && metaFields[metaKey][0].trim() !== ''){
                     dispatch('block-atfp/translate').metaFieldsSaveSource(metaKey, metaFields[metaKey][0]);
                 }
             }

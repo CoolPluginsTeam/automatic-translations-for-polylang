@@ -13,7 +13,7 @@ const StringPopUpBody = (props) => {
 
     useEffect(() => {
 
-        if (['yandex'].includes(props.service)) {
+        if (['yandex', 'google'].includes(props.service)) {
             document.documentElement.setAttribute('translate', 'no');
             document.body.classList.add('notranslate');
         }
@@ -67,7 +67,7 @@ const StringPopUpBody = (props) => {
                                         {translateContent.map((data, index) => {
                                             return (
                                                 <Fragment key={index + props.translatePendingStatus}>
-                                                    {undefined !== data.source && data.source.trim() !== '' &&
+                                                    {typeof data.source === 'string' && data.source.trim() !== '' &&
                                                         <>
                                                             <tr key={index + 'tr' + props.translatePendingStatus}>
                                                                 <td>{index + 1}</td>

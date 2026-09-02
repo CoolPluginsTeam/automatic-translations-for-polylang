@@ -50,10 +50,25 @@ Polylang Addon Dashboard - Admin Panel Styles
     line-height: 1;
 }
 
+/* Icons ship at whatever size they were drawn at, so pin them to the button
+   rather than relying on each SVG's intrinsic width. */
+.atfp-dashboard-btn img{
+    flex-shrink: 0;
+    height: 16px;
+    object-fit: contain;
+    width: 16px;
+}
+
+/* An <img> renders an SVG as a separate document, so its fill="currentColor"
+   never picks up the button's white. Force it instead of editing the asset. */
+.atfp-dashboard-btn.primary img{
+    filter: brightness(0) invert(1);
+}
+
 .atfp-dashboard-btn:hover{
     background: var(--primary-light-color);
     color: var(--primary-color);
-    border-color: var(--border-color);
+    border-color: var(--primary-color);
 }
 
 /* General Wrapper */
@@ -70,7 +85,7 @@ Polylang Addon Dashboard - Admin Panel Styles
 }
 
 .atfp-dashboard-wrapper h3 {
-    margin: 0 0 20px;
+    margin: 0 0 15px;
     padding: 0;
     font-size: 19px;
     line-height: 1.5em;
@@ -89,8 +104,12 @@ Polylang Addon Dashboard - Admin Panel Styles
     gap: 10px;
 }
 
-.atfp-dashboard-btn:focus {
-   box-shadow: none;
+.atfp-dashboard-btn:focus{
+    background: var(--primary-light-color);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px var(--primary-light-color);
+    color: var(--primary-color);
+    outline: none;
 }
 
 .atfp-dashboard-btn.primary {
@@ -99,18 +118,31 @@ Polylang Addon Dashboard - Admin Panel Styles
     border-color: var(--secondary-color);
 }
 
-.atfp-dashboard-btn:focus{
-    box-shadow: none;
-    border-radius: 6px;
-    background: var(--primary-light-color);
-    color: var(--primary-color);
+/*
+ * Declared after the base :hover/:focus above, which carry the same
+ * specificity -- without this the solid buttons stayed inert on hover while
+ * every other button responded.
+ */
+.atfp-dashboard-btn.primary:hover,
+.atfp-dashboard-btn.primary:focus {
+    background: var(--secondary-color);
     border-color: var(--secondary-color);
-    box-shadow: 0 0 0px 3px var(--primary-light-color);
+    color: #fff;
+}
+
+.atfp-dashboard-btn.primary:focus {
+    box-shadow: 0 0 0 3px var(--primary-light-color);
 }
 
 /* ================================================
    Header Section
 ================================================ */
+.atfp-dashboard-free-vs-pro-container .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .atfp-dashboard-header {
     display: flex;
     justify-content: space-between;
@@ -159,12 +191,6 @@ Polylang Addon Dashboard - Admin Panel Styles
     line-height: 1;
 }
 
-.atfp-dashboard-tab-title {
-    display: flex;
-    gap: 5px;
-    font-size: 14px;
-    line-height: 1;
-}
 
 .atfp-dashboard-header-right {
     display: flex;
@@ -204,94 +230,480 @@ Polylang Addon Dashboard - Admin Panel Styles
     width: auto;
     flex: 2;
     margin-top: 30px;
+    min-width: 0;
 }
 
 
 /* ================================================
    Welcome Section
 ================================================ */
-.atfp-dashboard-get-started{
-    padding: 20px;
-    background: #fff;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow);
+/* Sits inside the start card, so it carries the same horizontal padding as
+   the grid below it rather than sitting flush against the card edge. */
+.atfp-dashboard-welcome {
+    padding: 20px 20px 0;
 }
 
-.atfp-dashboard-get-started-grid{
-    display: flex;
-    justify-content: center;
-    background: white;
-    border-radius: 14px;
-    margin-top: 20px;
-    gap: 20px;
-}
-
-.atfp-dashboard-get-started-grid .atfp-dashboard-get-started-grid-content{
-    width: 50%;
+.atfp-dashboard-welcome h1 {
+    color: var(--text-color);
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
     padding: 0;
 }
 
-.atfp-dashboard-get-started-grid-content h2{
-    font-size: 16px;
-    font-weight: bold;
-    margin: 10px 0;
-    line-height: 25px;
-    margin-top: 0;
-}
-
-.atfp-dashboard-get-started-grid-content p{
-    font-size: 0.875rem;
-    color: var(--text-color-light);
-    margin: 10px 0 20px;
-}
-
-.atfp-dashboard-get-started-grid div ul{
-    list-style: disc;
-    padding-block: 0;
-    margin-block: 0;
-    padding-right: 20px;
-}
-
-.atfp-dashboard-get-started-grid div:nth-child(2){
-    display: flex;
-    border: 1px solid var(--border-color);
-    padding: 15px;
-    border-radius: 8px;
-}
-
-.atfp-dashboard-get-started-grid iframe{
-    max-width: 100%;
-    width: 100%;
-    aspect-ratio: 2/1;
-}
-
-.atfp-dashboard-get-started-grid:nth-child(3){
-    margin-block: 24px;
-}
-
-.atfp-dashboard-translation-providers{
-    margin-top: 24px;
-}
-a.atfp-dashboard-docs {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    margin-top: 30px;
+.atfp-dashboard-welcome p {
+    color: #222;
     font-size: 14px;
-    color: var(--text-color);
-    font-weight: 500;
-    text-decoration: underline;
+    margin: 8px 0 0;
 }
 
-a.atfp-dashboard-docs:hover {
+/* ================================================
+   Get Started card
+================================================ */
+.atfp-dashboard-start-grid {
+    align-items: stretch;
+    display: flex;
+    gap: 24px;
+    padding: 16px 20px 20px;
+}
+
+.atfp-dashboard-video {
+    flex: 0 0 45%;
+    max-width: 45%;
+}
+
+.atfp-dashboard-video-frame {
+    align-items: center;
+    /* The whole poster starts the video, not just the play control. */
+    cursor: pointer;
+    /* Matches the YouTube poster, so it fills the frame with no letterboxing. */
+    aspect-ratio: 16 / 9;
+    background-color: var(--background-color);
+    background-position: center;
+    /* hqdefault is 4:3 with black bars baked in; cropping to fill trims them off. */
+    background-size: cover;
+    border-radius: 9px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+
+.atfp-dashboard-video-play {
+    align-items: center;
+    background: #e62117;
+    /* White ring plus a soft shadow lifts the control off the busy poster. */
+    border: 3px solid #f2f2f2;
+    border-radius: 50%;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, .28);
+    box-sizing: content-box;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    height: 48px;
+    justify-content: center;
+    padding: 0;
+    position: relative;
+    transition: transform .2s ease, background .2s ease;
+    width: 48px;
+    z-index: 1;
+}
+
+.atfp-dashboard-video-frame:hover .atfp-dashboard-video-play,
+.atfp-dashboard-video-play:hover,
+.atfp-dashboard-video-play:focus {
+    background: #c81c13;
+    transform: scale(1.06);
+}
+
+.atfp-dashboard-video-frame:has(iframe) {
+    cursor: default;
+}
+
+/* Injected in place of the poster once the viewer opts in. */
+.atfp-dashboard-video-frame iframe {
+    border: 0;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+}
+
+.atfp-dashboard-steps {
+    flex: 1;
+    min-width: 0;
+    padding: 8px 15px;
+}
+
+.atfp-dashboard-steps h2 {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0 0 14px;
+    padding: 0;
+}
+
+ol.atfp-dashboard-step-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+ol.atfp-dashboard-step-list li {
+    align-items: center;
+    display: flex;
+    gap: 10px;
+    margin: 0 0 10px;
+}
+
+.atfp-dashboard-step-num {
+    align-items: center;
+    background: var(--primary-light-color);
+    border-radius: 50%;
+    color: #30b230;
+    display: inline-flex;
+    flex-shrink: 0;
+    font-size: 12px;
+    font-weight: 700;
+    height: 24px;
+    justify-content: center;
+    width: 24px;
+}
+
+.atfp-dashboard-step-text {
+    color: #222;
+    font-size: 14px;
+}
+
+.atfp-dashboard-start .atfp-dashboard-btns-row {
+    margin-top: 18px;
+}
+
+/* ================================================
+   Translation Engines
+================================================ */
+.atfp-dashboard-engines {
+    margin-top: 20px;
+}
+
+.atfp-engine-intro {
+    color: var(--text-color-light);
+    font-size: 14px;
+    margin: -12px 0 16px;
+}
+
+/* Info strips above and below the engine list. */
+.atfp-engine-note {
+    align-items: center;
+    background: #eef4ff;
+    border: 1px solid #cfe0f5;
+    border-radius: 8px;
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding: 12px 14px;
+}
+
+.atfp-engine-note-icon {
+    color: #2271b1;
+    display: inline-flex;
+    flex-shrink: 0;
+}
+
+.atfp-engine-note p {
+    color: #2271b1;
+    font-size: 13px;
+    margin: 0;
+    padding: 0;
+}
+
+/* Default engine picker inside each row.
+   It grows into the space between the status badge and Docs so the control
+   stays centred without covering neighbouring labels. */
+.atfp-engine-default {
+    align-items: center;
+    cursor: pointer;
+    display: inline-flex;
+    flex: 1 1 160px;
+    gap: 8px;
+    justify-content: center;
+    min-width: 0;
+    position: relative;
+}
+
+.atfp-engine-default-input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/*
+ * Core sets opacity .7 and a dashicon ::before on disabled radios:
+ *   input[type=radio]:disabled
+ *   input[type=radio]:disabled:checked::before
+ * That makes the hidden native radio show through the custom mark.
+ */
+.atfp-dashboard-wrapper .atfp-engine-default input[type=radio].atfp-engine-default-input,
+.atfp-dashboard-wrapper .atfp-engine-default input[type=radio].atfp-engine-default-input:disabled,
+.atfp-dashboard-wrapper .atfp-engine-default input[type=radio].atfp-engine-default-input:checked,
+.atfp-dashboard-wrapper .atfp-engine-default input[type=radio].atfp-engine-default-input:disabled:checked {
+    height: 0;
+    margin: 0;
+    opacity: 0;
+    width: 0;
+}
+
+.atfp-dashboard-wrapper .atfp-engine-default input[type=radio].atfp-engine-default-input::before,
+.atfp-dashboard-wrapper .atfp-engine-default input[type=radio].atfp-engine-default-input:checked::before,
+.atfp-dashboard-wrapper .atfp-engine-default input[type=radio].atfp-engine-default-input:disabled::before,
+.atfp-dashboard-wrapper .atfp-engine-default input[type=radio].atfp-engine-default-input:disabled:checked::before {
+    content: none;
+    margin: 0;
+}
+
+.atfp-engine-default-mark {
+    border: 1px solid #8c8f94;
+    border-radius: 50%;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    height: 18px;
+    position: relative;
+    width: 18px;
+}
+
+.atfp-engine-default-text,
+.atfp-engine-default-active {
+    color: var(--text-color-light);
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+/* The active state swaps the radio for a star and the label for a status. */
+.atfp-engine-default-active {
+    display: none;
+}
+
+.atfp-engine-row.is-default {
+    background: var(--primary-light-color);
+    border-color: var(--primary-color);
+}
+
+.atfp-engine-row.is-default .atfp-engine-default-text {
+    display: none;
+}
+
+.atfp-engine-row.is-default .atfp-engine-default-active {
+    color: var(--primary-color);
+    display: inline;
+    font-weight: 600;
+}
+
+.atfp-engine-row.is-default .atfp-engine-default-mark {
+    border: none;
     color: var(--primary-color);
 }
 
-a.atfp-dashboard-docs:focus{
-    border: none;
+.atfp-engine-row.is-default .atfp-engine-default-mark::before {
+    content: "\2605";
+    /* Sized past the 18px mark it sits in; it is centred and absolutely
+       positioned, so it simply overflows rather than pushing the row around. */
+    font-size: 22px;
+    left: 50%;
+    line-height: 1;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.atfp-engine-default-input:focus-visible + .atfp-engine-default-mark {
+    box-shadow: 0 0 0 2px var(--primary-light-color), 0 0 0 4px var(--primary-color);
+}
+
+/* The default engine's toggle is locked on, so it must not inherit the greyed
+   out disabled styling that would make it look switched off. */
+.atfp-engine-row.is-default .atfp-provider-toggle:disabled + .atfp-switch-slider,
+.atfp-engine-row.is-default .atfp-provider-toggle:disabled:checked + .atfp-switch-slider {
+    background-color: var(--primary-color);
+    cursor: not-allowed;
+    opacity: 1;
+}
+
+ul.atfp-engine-list {
+    list-style: none;
+    margin: 0px;
+    padding: 0;
+}
+
+li.atfp-engine-row {
+    align-items: center;
+    position: relative;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 0 0 10px;
+    padding: 12px 16px;
+}
+
+li.atfp-engine-row:last-child {
+    margin-bottom: 0;
+}
+
+.atfp-engine-logo {
+    flex-shrink: 0;
+    height: 26px;
+    object-fit: contain;
+    width: 26px;
+}
+
+.atfp-engine-name {
+    color: var(--text-color);
+    flex-shrink: 1;
+    font-size: 14px;
+    font-weight: 600;
+    min-width: 0;
+}
+
+.atfp-engine-status {
+    background: var(--primary-light-color);
+    border-radius: 12px;
+    color: var(--secondary-color);
+    flex-shrink: 0;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 2px 10px;
+}
+
+.atfp-engine-docs {
+    color: var(--text-color-light);
+    font-size: 13px;
+    /* After the Configure button, before the toggle. */
+    order: 5;
+    text-decoration: underline;
+}
+
+.atfp-engine-docs:hover {
+    color: var(--primary-color);
+}
+
+.atfp-engine-docs:focus {
     box-shadow: none;
     outline: none;
+}
+
+/* The readiness script appends its own notice to the row and reveals the
+   Configure link, so the badge follows that check rather than repeating the
+   browser detection here. The margin override counters its inline style.
+
+   The notice is ordered last and given a full-width basis so it always drops
+   to a line of its own beneath the row. Keeping it inline only works while the
+   row is wide enough for that particular message, and the messages vary a lot
+   in length, so the actions would otherwise get pushed down on their own at
+   unpredictable widths. */
+/* The readiness script appends its own red notice to the row. Keep the element
+   (the status badge rules below key off it) but never render it -- the badge
+   and the Configure button already say everything the row needs to. The
+   !important is required because jQuery .show() writes an inline display. */
+.atfp-engine-row .atfp-chrome-configure-notice,
+.atfp-engine-row .atfp-edge-configure-notice {
+    display: none !important;
+}
+
+.atfp-engine-row .atfp-dashboard-btn,
+.atfp-engine-row .atfp-chrome-configure-button,
+.atfp-engine-row .atfp-edge-configure-button {
+    order: 4;
+    flex-shrink: 0;
+    border-radius: 7px;
+    white-space: nowrap;
+}
+
+.atfp-engine-row .atfp-provider-switch-container {
+    order: 6;
+    flex-shrink: 0;
+}
+
+.atfp-engine-status-setup,
+.atfp-engine-status-unsupported {
+    display: none;
+}
+
+.atfp-engine-row:has(.atfp-chrome-configure-notice:not([style*="display: none"])) .atfp-engine-status,
+.atfp-engine-row:has(.atfp-edge-configure-notice:not([style*="display: none"])) .atfp-engine-status {
+    background: #fff6ed;
+    color: #b45309;
+}
+
+.atfp-engine-row:has(.atfp-chrome-configure-notice:not([style*="display: none"])) .atfp-engine-status-ready,
+.atfp-engine-row:has(.atfp-edge-configure-notice:not([style*="display: none"])) .atfp-engine-status-ready {
+    display: none;
+}
+
+.atfp-engine-row:has(.atfp-chrome-configure-notice:not([style*="display: none"])) .atfp-engine-status-setup,
+.atfp-engine-row:has(.atfp-edge-configure-notice:not([style*="display: none"])) .atfp-engine-status-setup {
+    display: inline;
+}
+
+.atfp-engine-row.atfp-engine-unsupported .atfp-engine-status,
+.atfp-engine-row.atfp-engine-unsupported:has(.atfp-chrome-configure-notice:not([style*="display: none"])) .atfp-engine-status,
+.atfp-engine-row.atfp-engine-unsupported:has(.atfp-edge-configure-notice:not([style*="display: none"])) .atfp-engine-status {
+    background: #f3f4f6;
+    color: #6b7280;
+}
+
+.atfp-engine-row.atfp-engine-unsupported .atfp-engine-status-ready,
+.atfp-engine-row.atfp-engine-unsupported .atfp-engine-status-setup,
+.atfp-engine-row.atfp-engine-unsupported:has(.atfp-chrome-configure-notice:not([style*="display: none"])) .atfp-engine-status-ready,
+.atfp-engine-row.atfp-engine-unsupported:has(.atfp-edge-configure-notice:not([style*="display: none"])) .atfp-engine-status-ready,
+.atfp-engine-row.atfp-engine-unsupported:has(.atfp-chrome-configure-notice:not([style*="display: none"])) .atfp-engine-status-setup,
+.atfp-engine-row.atfp-engine-unsupported:has(.atfp-edge-configure-notice:not([style*="display: none"])) .atfp-engine-status-setup {
+    display: none;
+}
+
+.atfp-engine-row.atfp-engine-unsupported .atfp-engine-status-unsupported {
+    display: inline;
+}
+
+.atfp-engine-unsupported-msg {
+    display: none;
+}
+
+.atfp-engine-row.atfp-engine-unsupported .atfp-engine-unsupported-msg {
+    color: #dc2626;
+    display: block;
+    flex: 1 1 240px;
+    font-size: 13px;
+    line-height: 1.45;
+    margin: 0;
+    min-width: 0;
+}
+
+.atfp-engine-row.atfp-engine-unsupported .atfp-engine-default,
+.atfp-engine-row.atfp-engine-unsupported .atfp-engine-docs,
+.atfp-engine-row.atfp-engine-unsupported .atfp-provider-switch-container,
+.atfp-engine-row.atfp-engine-unsupported .atfp-chrome-configure-button,
+.atfp-engine-row.atfp-engine-unsupported .atfp-edge-configure-button {
+    display: none !important;
+}
+
+@media (max-width: 900px) {
+    .atfp-dashboard-start-grid {
+        display: block;
+    }
+
+    .atfp-dashboard-video {
+        margin-bottom: 20px;
+        max-width: 100%;
+    }
+
+    .atfp-engine-default {
+        flex: 0 1 auto;
+        justify-content: flex-start;
+    }
 }
 
 /* Provider Toggle Switch */
@@ -303,10 +715,24 @@ a.atfp-dashboard-docs:focus{
     margin: 0;
 }
 
-.atfp-provider-switch .atfp-provider-toggle {
+/*
+ * Core outranks a plain class selector here, so both rules below carry the
+ * wrapper, the type attribute and the class to stay ahead of it:
+ *   input[type=checkbox]:disabled                 (0,2,1) -> opacity .7
+ *   .wp-core-ui input[type=checkbox]:checked::before (0,3,2) -> dashicon check
+ * Without that the disabled toggle on the default row becomes visible and its
+ * checkmark spills out of the 0x0 input.
+ */
+.atfp-dashboard-wrapper .atfp-provider-switch input[type=checkbox].atfp-provider-toggle {
+    height: 0;
     opacity: 0;
     width: 0;
-    height: 0;
+}
+
+.atfp-dashboard-wrapper .atfp-provider-switch input[type=checkbox].atfp-provider-toggle::before,
+.atfp-dashboard-wrapper .atfp-provider-switch input[type=checkbox].atfp-provider-toggle:checked::before {
+    content: none;
+    margin: 0;
 }
 
 .atfp-switch-slider {
@@ -354,111 +780,56 @@ a.atfp-dashboard-docs:focus{
     box-shadow: 0 0 1px var(--primary-color);
 }
 
-/* Pro Tag on Hover */
-.atfp-pro-provider .atfp-provider-switch{
-    position: relative;
-}
-
-.atfp-pro-provider .atfp-provider-switch:hover::after {
-    content: "Pro";
-    position: absolute;
-    top: -30px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--primary-color);
-    color: #fff;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 11px;
-    font-weight: 600;
-    z-index: 10;
-    white-space: nowrap;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    pointer-events: none;
-}
-
-.atfp-pro-provider .atfp-provider-switch:hover::before {
-    content: "";
-    position: absolute;
-    top: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    border: 6px solid transparent;
-    border-top-color: var(--primary-color);
-    z-index: 10;
-    pointer-events: none;
-}
-
-.atfp-dashboard-provider-buttons {
-    display: flex;
-    gap: 10px;
-    font-size: 11px;
-}
-
 #chrome-local-ai-error-message{
     margin-bottom: 10px;
     font-size: 12px;
     color: #dc2626;
 }
 
-/* ================================================
-   Translation Providers
-================================================ */
-.atfp-dashboard-providers-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 20px;
+/* "Set as default" is locked until the browser can actually run the engine.
+   The reason rides in a tooltip on the label, since a disabled input cannot
+   carry a title reliably across browsers.
+
+   Do not set `position` here: .atfp-engine-default is already absolutely
+   positioned to centre it in the row, and overriding that drops the label out
+   of the row. Being absolute, it already anchors the tooltip below. */
+.atfp-engine-default-disabled {
+    cursor: not-allowed;
+    opacity: .55;
 }
 
-.atfp-dashboard-provider-card {
-    background: #fff;
-    padding: 21px;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow);
+.atfp-engine-default-input:disabled {
+    cursor: not-allowed;
 }
 
-.atfp-dashboard-provider-card li{
-    margin: 0;
-    padding-block: 13px;
-    border-bottom: 1px solid #e9e9e9b0;
-    display: flex;
-    align-items: center;
-    gap: 5px;
+.atfp-engine-default-disabled .atfp-engine-default-text {
+    color: #757575;
 }
 
-.atfp-dashboard-provider-card li:last-child{
-    border-bottom: none;
-}
-
-.atfp-dashboard-provider-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 15px;
-}
-
-.atfp-dashboard-provider-header img {
-    height: 25px;
-}
-
-.atfp-dashboard-badge {
-    background: #131413;
+.atfp-default-tooltip {
+    background: #1d2327;
+    border-radius: 4px;
+    bottom: calc(100% + 10px);
     color: #fff;
-    padding: 2px 8px;
-    font-size: 12px;
-    border-radius: 12px;
+    font-size: 13px;
+    left: 50%;
+    line-height: 1.4;
+    max-width: 260px;
+    opacity: 0;
+    padding: 8px 12px;
+    pointer-events: none;
+    position: absolute;
+    transform: translateX(-50%);
+    transition: opacity .15s ease;
+    visibility: hidden;
+    width: max-content;
+    z-index: 5;
 }
 
-.atfp-dashboard-badge.free {
-    background: var(--primary-color);
-}
-
-.atfp-dashboard-provider-buttons {
-    display: flex;
-    gap: 10px;
-    font-size: 11px;
+.atfp-engine-default-disabled:hover .atfp-default-tooltip,
+.atfp-engine-default-disabled:focus-within .atfp-default-tooltip {
+    opacity: 1;
+    visibility: visible;
 }
 
 /* ================================================
@@ -599,15 +970,6 @@ ul.atfp-dashboard-sts-btm li:last-child {
     font-weight: bold;
 }
 
-/* ================================================
-   Animations
-================================================ */
-@keyframes play-icon {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
-}
-
 /*===============================================
     Tab Content
 ================================================ */
@@ -617,31 +979,14 @@ ul.atfp-dashboard-sts-btm li:last-child {
     padding: 0 30px;
 }
 
-.atfp-dashboard-get-started .header,
 .atfp-dashboard-free-vs-pro .header,
-.atfp-dashboard-license .header ,
-.atfp-dashboard-settings .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-}
 
-:where(.atfp-dashboard-get-started,.atfp-dashboard-free-vs-pro ,.atfp-dashboard-license,.atfp-dashboard-settings) h1{
+:where(.atfp-dashboard-free-vs-pro,.atfp-dashboard-settings) h1{
     margin-top: 8px;
 }
 
-:where(.atfp-dashboard-get-started,.atfp-dashboard-free-vs-pro ,.atfp-dashboard-license,.atfp-dashboard-settings) .atfp-dashboard-status {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
 
 
-:where(.atfp-dashboard-get-started,.atfp-dashboard-free-vs-pro ,.atfp-dashboard-license,.atfp-dashboard-settings) .atfp-dashboard-status span{
-    font-size: 15px;
-    font-weight: 600;
-}
 
 /* ================================================
    Free vs Pro
@@ -705,60 +1050,13 @@ ul.atfp-dashboard-sts-btm li:last-child {
     }
 }
 
-/* ================================================
-   License
-================================================ */
-.atfp-dashboard-license {
-    width: 100%;
-    margin-top: 25px;
-    flex: 2;
-}
 
-.atfp-dashboard-license-container{
-    background: white;
-    font-family: Arial, sans-serif;
-    color: #333;
-    border: 1px solid #ddd;
-    padding: 24px;
-    border-radius: 5px;
-}
 
-.atfp-dashboard-license h1 {
-    font-weight: 600;
-    color: #000;
-    margin: 14px 0px 22px 0px;
-    font-size: 22px;
-}
 
-.atfp-dashboard-license p {
-    margin: 5px 0;
-    font-size: 14px;
-}
 
-.atfp-dashboard-upgrade-box {
-    background-color: #f3fcf3;
-    padding: 10px;
-    border-radius: 5px;
-    margin-top: 10px;
-    border-left: 4px solid #30b230;
-}
 
-.atfp-dashboard-upgrade-box a {
-    color: #0073aa;
-    text-decoration: none;
-    font-weight: bold;
-}
 
-.atfp-dashboard-upgrade-box a:hover {
-    text-decoration: underline;
-}
 
-.atfp-dashboard-upgrade-box em {
-    display: block;
-    margin-top: 5px;
-    font-size: 13px;
-    color: #555;
-}
 
 /* ================================================
    Settings Section
@@ -825,7 +1123,7 @@ ul.atfp-dashboard-sts-btm li:last-child {
     background: var(--atfp-ald-bg, #f8f9fa);
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    padding: 20px 24px;
+    padding: 20px 0px 4px 20px;
     margin-top: 12px;
 }
 
@@ -1123,13 +1421,24 @@ ul.atfp-dashboard-sts-btm li:last-child {
     margin-bottom: 28px;
 }
 
-.atfp-dashboard-translation-settings :where(label[for="bulk-translate-post-status"], label[for="slug-translation-settings"]){
+.atfp-dashboard-translation-settings label[for="slug-translation-settings"]{
     margin-bottom: 15px !important;
 }
 
-.atfp-dashboard-translation-settings label[for="bulk-translate-post-status"] + .atfp-bulk-translation-post-status-options{
-    margin-bottom: 25px !important;
+/* The editable AI translation defaults reuse .atfp-dashboard-translation-settings
+   so they render exactly like the cards above; only the select is new here. */
+.atfp-dashboard-bulk-settings select{
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    max-width: 320px;
+    padding: 6px 10px;
+    width: 100%;
 }
+
+.atfp-dashboard-translation-settings label.atfp-settings-group-label{
+    margin-bottom: 15px !important;
+}
+
 
 .atfp-dashboard-translation-settings textarea{
     width: 100%;
@@ -1180,7 +1489,6 @@ ul.atfp-dashboard-sts-btm li:last-child {
 .atfp-bulk-translation-post-status-options{
     display: flex;
     align-items: center;
-    gap: 10px;
 }
 
 .atfp-bulk-translation-post-status-options input{
@@ -1227,8 +1535,7 @@ ul.atfp-dashboard-sts-btm li:last-child {
 }
 @media (max-width: 488px) and  (min-width:100px){
 	.atfp-dashboard-free-vs-pro-container .header,
-	.atfp-dashboard-settings-container .header,
-	.atfp-dashboard-license-container .header{
+	.atfp-dashboard-settings-container .header{
     flex-direction: column;
     align-items: start;
 	padding-bottom: 10px;
@@ -1257,8 +1564,7 @@ ul.atfp-dashboard-sts-btm li:last-child {
         gap: 6px;
     }
     .atfp-dashboard-free-vs-pro-container .header,
-    .atfp-dashboard-settings-container .header,
-    .atfp-dashboard-license-container .header {
+    .atfp-dashboard-settings-container .header {
         flex-direction: column;
         align-items: start;
         padding-bottom: 10px;
