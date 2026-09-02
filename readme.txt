@@ -269,15 +269,15 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 == Changelog ==
 
-= Version 1.6.0 | 31 August 2026 =
-* **Added:** AI Translate button on the posts and pages list to start a translation without opening the editor.
-* **Added:** Translate row action next to Edit and Quick Edit for translating a single page.
-* **Added:** Chrome and Edge built-in AI setup guide with language pack installation inside the AutoPoly dashboard.
-* **Added:** Default translation provider setting in the AutoPoly dashboard.
-* **Fixed:** Google Translate widget blocked from loading on the post editor screen in newer WordPress versions.
-* **Fixed:** Translation setting modal not loading in Microsoft Edge.
-* **Improved:** Error handling for Chrome and Edge built-in AI when a language model cannot be downloaded.
-* **Improved:** Redesigned AutoPoly dashboard, translation provider selection, and translation modals.
+= Version 1.6.0 | 02 September 2026 =
+* **Added:** AI Translate button to the Posts and Pages list for starting translations directly without opening the editor.
+* **Added:** Translate row action alongside Edit and Quick Edit for quickly translating individual posts and pages.
+* **Added:** Setup guide for Chrome and Edge built-in AI, including language pack installation instructions within the AutoPoly dashboard.
+* **Added:** Option to select and configure a default translation provider from the AutoPoly dashboard.
+* **Improved:** Error handling for Chrome and Edge built-in AI when required language models are unavailable or cannot be downloaded.
+* **Improved:** AutoPoly dashboard with a redesigned interface for translation provider selection, configuration, and translation modals.
+* **Fixed:** Google Translate widget not loading on the post editor screen in newer WordPress versions.
+* **Fixed:** Translation Settings modal not loading correctly in Microsoft Edge.
 
 = Version 1.5.0 | 28 July 2026 =
 * **Added:** Edge local built-in AI translator API support.
