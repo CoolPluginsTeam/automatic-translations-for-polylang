@@ -31,44 +31,6 @@ button.atfp-setting-close:hover {
     opacity: 1;
 }
 
-/* ******Popup***** */
-
-#atfp-limit-notice-wrapper .bulk-notice-buttons button.button-secondary{
-    display: inline-block;
-    text-decoration: none;
-    font-size: 13px;
-    line-height: 2.15384615;
-    min-height: 30px;
-    margin: 0;
-    padding: 0 10px;
-    cursor: pointer;
-    border-width: 1px;
-    border-style: solid;
-    -webkit-appearance: none;
-    border-radius: 3px;
-    white-space: nowrap;
-    box-sizing: border-box;
-    color: #2271b1;
-    border-color: #2271b1;
-    background: #f6f7f7;
-    vertical-align: top;
-}
-
-#atfp-limit-notice-wrapper .bulk-notice-buttons button.button-secondary:hover{
-    background: #f0f0f1;
-    border-color: #0a4b78;
-    color: #0a4b78;
-}
-
-#atfp-limit-notice-wrapper .bulk-notice-buttons button.button-secondary:focus{
-    background: #f6f7f7;
-    border-color: #3582c4;
-    color: #0a4b78;
-    box-shadow: 0 0 0 1px #3582c4;
-    outline: 2px solid transparent;
-    outline-offset: 0;
-}
-
 .save_it.button-primary[disabled],.setting-start-translation.button-primary[disabled] {
     color: #a7aaad !important;
     background: #f6f7f7 !important;

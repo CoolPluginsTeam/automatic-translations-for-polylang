@@ -319,10 +319,18 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
 
     const translatorObject = new Translator(sourceLang, targetLang, languages[targetLang], languages[sourceLang]);
 
+    // The support check can take a while -- it may have to prepare a model --
+    // so the skeleton goes up first. Without it the modal sat unchanged and the
+    // click looked like it had done nothing. The old error goes with it, since
+    // the skeleton is hidden while one is on screen.
+    setLangError("");
+    setIsLoading(true);
+
     const status = await translatorObject.LanguagePairStatus();
 
 
     if (status !== true && status.hasOwnProperty('error') && status.error !== "") {
+      setIsLoading(false);
       setLangError(status.error);
       setShortLangError("");
       return;
@@ -332,10 +340,9 @@ const TranslatorModal: React.FC<TranslateModalProps> = ({value, onUpdate, pageLa
     }
 
     if (!translatorObject || !translatorObject.hasOwnProperty('startTranslation')) {
+      setIsLoading(false);
       return;
     }
-
-    setIsLoading(true);
 
     let element: HTMLDivElement | null = document.createElement('div');
     

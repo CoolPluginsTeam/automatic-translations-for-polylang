@@ -186,8 +186,9 @@ const GutenbergBlockSaveSource = (block, blockRules) => {
             Object.keys(block[key]).forEach(metaKey => {
                 // Store meta fields
                 if(Object.keys(AllowedMetaFields).includes(metaKey) && AllowedMetaFields[metaKey].inputType === 'string'){
-                    if('' !== block[key][metaKey][0] && undefined !== block[key][metaKey][0]){
-                        dispatch('block-atfp/translate').metaFieldsSaveSource(metaKey, block[key][metaKey][0]);
+                    const metaValue = block[key][metaKey][0];
+                    if(typeof metaValue === 'string' && metaValue.trim() !== ''){
+                        dispatch('block-atfp/translate').metaFieldsSaveSource(metaKey, metaValue);
                     }
                 }
             });
@@ -216,7 +217,9 @@ const GutenbergBlockSaveSource = (block, blockRules) => {
                             value = block[key][fieldName][0];
                         }
     
-                       dispatch('block-atfp/translate').metaFieldsSaveSource(fieldName, value);
+                       if(typeof value === 'string' && value.trim() !== ''){
+                           dispatch('block-atfp/translate').metaFieldsSaveSource(fieldName, value);
+                       }
                    }
                 });
             }

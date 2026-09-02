@@ -26,8 +26,22 @@ const Providers = (props) => {
   }
 
   const handleCardClick = () => {
+    // localAiUpdateStatus() appends the loading element straight to the DOM
+    // while the engine is still being prepared, so React holds no state for it
+    // and this is where the click has to look. Selecting now would carry the
+    // user to the next step with an engine that may still turn out unusable.
+    const cardElement = document.getElementById(`atfp-provider-card-${service}`);
+
+    if (cardElement && cardElement.querySelector('.atfp-provider-card-loading')) {
+      return;
+    }
+
     if(isDisabled && 'localAiTranslator' === service) {
       props.openErrorModalHandler("localAiTranslator");
+      return;
+    }
+    if(isDisabled && 'google' === service) {
+      props.openErrorModalHandler("google");
       return;
     }
     if (!isDisabled && props.onSelectProvider) {

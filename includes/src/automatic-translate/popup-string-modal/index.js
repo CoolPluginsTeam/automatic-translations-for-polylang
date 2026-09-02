@@ -80,6 +80,16 @@ const popStringModal = (props) => {
             document.querySelector('#atfp_yandex_translate_element #yt-widget .yt-button__icon.yt-button__icon_type_right')?.click();
         }
 
+        if(props.service === 'google'){
+            const iframe = document.querySelector('.skiptranslate iframe[id=":1.container"]');
+            if (iframe) {
+                const closeButton = iframe.contentDocument.querySelector('a[id=":1.close"][title="Close"] img');
+                if (closeButton) {
+                    closeButton.click();
+                }
+            }
+        }
+
         setTranslatePending(true);
         setPopupVisibility(false);
     }

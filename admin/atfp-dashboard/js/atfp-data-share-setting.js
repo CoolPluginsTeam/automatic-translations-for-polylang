@@ -93,7 +93,7 @@ jQuery(function($) {
         });
     });
 
-    $('.atfp-provider-switch-container:not(.atfp-pro-provider) .atfp-provider-toggle').on('change', function() {
+    $('.atfp-provider-switch-container .atfp-provider-toggle').on('change', function() {
         const checkedProviders = $('.atfp-provider-toggle:checked');
         const enabledProviders={};
 
@@ -129,10 +129,261 @@ jQuery(function($) {
         });
     });
 
-    $('.atfp-provider-switch-container.atfp-pro-provider').on('click', function(e) {
-        const provider = $(this).data('provider');
-        const utm_link=atfpSettingsScriptData.buy_pro_url + '&utm_campaign=get_pro&utm_content=dashboard_'+provider;
-        window.open(utm_link, '_blank');
-        e.preventDefault();
+    /**
+     * Persist the provider that should be pre-selected in the translation modal.
+     */
+    /**
+     * Whether a provider row is still waiting on browser setup.
+     *
+     * The readiness script appends its own notice to the row when the browser
+     * cannot run that engine, so the row's own markup is the source of truth --
+     * the server has no way to know this.
+     *
+     * @param {Object} $row Provider row.
+     *
+     * @return {boolean} True when the provider is not configured yet.
+     */
+    const isProviderUnconfigured = ($row) => {
+        if ($row.hasClass('atfp-engine-unsupported')) {
+            return true;
+        }
+
+        const hasSetupNotice = $row
+            .find('.atfp-chrome-configure-notice, .atfp-edge-configure-notice')
+            .filter(function () {
+                return 'none' !== this.style.display;
+            })
+            .length > 0;
+
+        if (hasSetupNotice) {
+            return true;
+        }
+
+        // The notice is CSS-hidden; the Configure button is the visible signal.
+        return $row
+            .find('.atfp-chrome-configure-button, .atfp-edge-configure-button')
+            .filter(function () {
+                return this.style.display && 'none' !== this.style.display;
+            })
+            .length > 0;
+    };
+
+    /**
+     * Browser that provides each built-in AI engine.
+     *
+     * Mirrors resolveDefaultService() in the bulk translate modal: the default
+     * is stored once per site, but these two engines only run in their own
+     * browser.
+     */
+    const atfpBrowserAiOwner = {
+        'chrome-built-in-ai': 'Chrome',
+        'edge-built-in-ai': 'Edge'
+    };
+
+    /**
+     * Detects the current browser.
+     *
+     * The readiness script keeps its own copy inside a closure, so this cannot
+     * be shared without exposing a global.
+     *
+     * @return {string} Chrome, Edge or Other.
+     */
+    const atfpGetBrowserType = () => {
+        let type = 'Other';
+
+        if (navigator && navigator.userAgentData && navigator.userAgentData.brands) {
+            navigator.userAgentData.brands.forEach(function (data) {
+                if (data.brand === 'Google Chrome') {
+                    type = 'Chrome';
+                } else if (data.brand === 'Microsoft Edge') {
+                    type = 'Edge';
+                }
+            });
+        } else if (navigator.userAgent.indexOf('Edg') !== -1) {
+            type = 'Edge';
+        } else if (window.hasOwnProperty('chrome')) {
+            type = 'Chrome';
+        }
+
+        return type;
+    };
+
+    /**
+     * Shows the provider the modal would actually pre-select in this browser.
+     *
+     * The saved option is left untouched, so opening the dashboard back in the
+     * browser that owns the engine restores it. Google Translate is switched
+     * on if it was off, the same as clicking Set as default.
+     *
+     * @return {void}
+     */
+    const atfpShowEffectiveDefault = () => {
+        const $saved = $('.atfp-engine-row.is-default');
+
+        if (!$saved.length) {
+            return;
+        }
+
+        const savedProvider = $saved.find('.atfp-engine-default-input').val();
+        const requiredBrowser = atfpBrowserAiOwner[savedProvider];
+
+        if (!requiredBrowser || requiredBrowser === atfpGetBrowserType()) {
+            return;
+        }
+
+        const $fallback = $('.atfp-engine-row.atfp-card-google-translate');
+
+        if (!$fallback.length) {
+            return;
+        }
+
+        $('.atfp-engine-row').removeClass('is-default');
+        $('.atfp-engine-row .atfp-provider-toggle').prop('disabled', false).attr('title', '');
+
+        $fallback.addClass('is-default');
+        // Same radio group, so this also clears the hidden provider's input.
+        $fallback.find('.atfp-engine-default-input').prop('checked', true);
+
+        const $googleToggle = $fallback.find('.atfp-provider-toggle');
+        if (!$googleToggle.prop('checked')) {
+            $googleToggle.prop('checked', true).trigger('change');
+        }
+        $googleToggle.prop('disabled', true);
+
+        atfpSyncProviderAvailability();
+    };
+
+    /**
+     * Locks default radio and enable toggle until the browser can run the engine.
+     *
+     * The readiness script decides that asynchronously, so this is re-run
+     * whenever it touches a row rather than only on load.
+     *
+     * @return {void}
+     */
+    const atfpSyncProviderAvailability = () => {
+        $('.atfp-engine-row').each(function () {
+            const $row = $(this);
+            const $label = $row.find('.atfp-engine-default');
+            const $toggle = $row.find('.atfp-provider-toggle');
+            const unconfigured = isProviderUnconfigured($row);
+            const isDefault = $row.hasClass('is-default');
+
+            $label.toggleClass('atfp-engine-default-disabled', unconfigured);
+            $label.find('.atfp-engine-default-input').prop('disabled', unconfigured);
+            $row.toggleClass('atfp-engine-unconfigured', unconfigured);
+
+            if (isDefault) {
+                $toggle.prop('disabled', true);
+                return;
+            }
+
+            $toggle.prop('disabled', false).attr('title', '');
+        });
+    };
+
+    atfpShowEffectiveDefault();
+    atfpSyncProviderAvailability();
+
+    const $engineList = $('.atfp-engine-list');
+
+    if ($engineList.length && window.MutationObserver) {
+        // The notice is appended, then shown or hidden by inline style, so both
+        // kinds of change have to re-run the check.
+        new MutationObserver(atfpSyncProviderAvailability).observe($engineList.get(0), {
+            attributeFilter: ['style', 'class'],
+            attributes: true,
+            childList: true,
+            subtree: true
+        });
+    }
+
+    $(document).on('change', '.atfp-engine-default-input', function () {
+        const $input = $(this);
+        const provider = $input.val();
+        const $list = $input.closest('.atfp-engine-list');
+        const $row = $input.closest('.atfp-engine-row');
+        const $toggle = $row.find('.atfp-provider-toggle');
+
+        // Ready, supported providers can be made default in one click: turn
+        // the engine on if it was off. Unconfigured / unsupported rows stay
+        // locked by atfpSyncProviderAvailability.
+        if (!$toggle.prop('checked') && !isProviderUnconfigured($row)) {
+            $toggle.prop('checked', true);
+        }
+
+        $.ajax({
+            url: atfpSettingsScriptData.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'atfp_update_default_provider',
+                default_provider: provider,
+                update_providers_key: $list.data('nonce')
+            },
+            success: function (response) {
+                if (response.success === true) {
+                    // Only one row can carry the default, so move the marker and
+                    // the toggle lock that keeps the default provider enabled.
+                    $('.atfp-engine-row').removeClass('is-default');
+                    $('.atfp-engine-row .atfp-provider-toggle').prop('disabled', false).attr('title', '');
+
+                    $row.addClass('is-default');
+                    $toggle.prop('checked', true).prop('disabled', true);
+                    atfpSyncProviderAvailability();
+                    return;
+                }
+
+                // Restore whichever row the server still considers the default.
+                $input.prop('checked', false);
+                $('.atfp-engine-row.is-default').find('.atfp-engine-default-input').prop('checked', true);
+                console.error(response.data && response.data.message ? response.data.message : response.data);
+            },
+            error: function () {
+                $input.prop('checked', false);
+                $('.atfp-engine-row.is-default').find('.atfp-engine-default-input').prop('checked', true);
+                console.error('Could not save the default translation provider.');
+            }
+        });
     });
+
+    /**
+     * Load the walkthrough embed only once the viewer asks for it, so the
+     * dashboard makes no third-party request on page load.
+     */
+    $(document).on('click', '.atfp-dashboard-video-frame', function () {
+        const $frame = $(this);
+        const $video = $frame.closest('.atfp-dashboard-video');
+        const videoId = $video.data('video-id');
+
+        // Already swapped for the embed, so let the player handle the click.
+        if ($frame.find('iframe').length) {
+            return;
+        }
+
+        if (!videoId || !$frame.length) {
+            return;
+        }
+
+        const $iframe = $('<iframe></iframe>', {
+            src: 'https://www.youtube.com/embed/' + encodeURIComponent(videoId) + '?autoplay=1',
+            title: $video.data('video-title') || '',
+            allow: 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share',
+            allowfullscreen: 'allowfullscreen',
+            referrerpolicy: 'strict-origin-when-cross-origin'
+        });
+
+        $frame.empty().append($iframe);
+    });
+
+    if (typeof ChromeAINoticeFramework !== 'undefined' && typeof caisNoticeData !== 'undefined') {
+        new ChromeAINoticeFramework({
+            container: '#cais-chrome-setup-container',
+            dataVar: 'caisNoticeData',
+            providerTypes: ['chrome', 'edge'],
+            cardSelectorPattern: '.atfp-card-{type}-built-in-ai',
+            toggleSelectorPattern: '.atfp-card-{type}-built-in-ai .atfp-provider-toggle',
+            configureBtnSelectorPattern: '.atfp-{type}-configure-button',
+            noticeClassPattern: 'atfp-{type}-configure-notice'
+        });
+    }
 });
