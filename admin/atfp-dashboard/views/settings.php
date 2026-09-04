@@ -19,6 +19,9 @@ if(!current_user_can('manage_options')){
             update_option('atfp_bulk_post_status', $atfp_bulk_post_status);
         }
 
+        $atfp_menu_sync_enabled = isset($_POST['atfp_menu_sync_enabled']) ? 'yes' : 'no';
+        update_option(ATFP_Menu_Sync::OPTION_NAME, $atfp_menu_sync_enabled);
+
         // Handle feedback checkbox
         $atfp_feedback_opt_in = isset($_POST['atfp-dashboard-feedback-checkbox']) ? 'yes' : 'no';
         
@@ -140,6 +143,50 @@ if(!current_user_can('manage_options')){
             <p class="api-settings-description">
                 <?php echo esc_html__('Select the status automatically applied to posts after translation is completed.', 'automatic-translations-for-polylang'); ?>
             </p>
+            </div>
+
+            <h2 class="atfp-section-title atfp-section-title-with-icon">
+                <span class="atfp-section-icon atfp-icon-translate" aria-hidden="true">
+                    <img
+                        src="<?php echo esc_url( ATFP_URL . 'assets/images/translate.svg' ); ?>"
+                        alt=""
+                        width="20"
+                        height="20"
+                        loading="lazy"
+                        decoding="async"
+                    />
+                </span>
+                <?php esc_html_e('Menu Sync', 'automatic-translations-for-polylang'); ?>
+            </h2>
+            <p class="atfp-section-description">
+                <?php esc_html_e('Enable or disable the Menu Sync feature. This feature allows you to synchronize menu structures across different language versions of your site.', 'automatic-translations-for-polylang'); ?>
+            </p>
+            <div class="atfp-dashboard-bulk-settings atfp-dashboard-translation-settings atfp-dashboard-settings-card">
+                <?php $atfp_menu_sync_enabled = get_option(ATFP_Menu_Sync::OPTION_NAME, 'no'); ?>
+                <label class="atfp-settings-group-label" for="atfp_menu_sync_enabled">
+                    <?php esc_html_e('Menu Sync', 'automatic-translations-for-polylang'); ?>
+                </label>
+                <div class="atfp-menu-sync-setting-row">
+                    <span class="atfp-menu-sync-setting-text">
+                        <?php esc_html_e('Show a Sync Menu button on Appearance > Menus.', 'automatic-translations-for-polylang'); ?>
+                    </span>
+                    <span class="atfp-provider-switch-container">
+                        <label class="atfp-provider-switch" for="atfp_menu_sync_enabled">
+                            <input
+                                type="checkbox"
+                                class="atfp-provider-toggle"
+                                name="atfp_menu_sync_enabled"
+                                id="atfp_menu_sync_enabled"
+                                value="yes"
+                                <?php checked($atfp_menu_sync_enabled, 'yes'); ?>
+                            >
+                            <span class="atfp-switch-slider"></span>
+                        </label>
+                    </span>
+                </div>
+                <p class="api-settings-description">
+                    <?php esc_html_e('After enabling, open Appearance > Menus and use Sync Menu to copy this menu structure to selected languages.', 'automatic-translations-for-polylang'); ?>
+                </p>
             </div>
 
         <div class="atfp-dashboard-settings-pro-features">

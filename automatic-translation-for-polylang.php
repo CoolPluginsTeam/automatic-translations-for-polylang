@@ -645,11 +645,15 @@ if (! class_exists('AutoPoly')) {
 			require_once ATFP_DIR_PATH . '/includes/bulk-translation/class-atfp-sync-post.php';
 			require_once ATFP_DIR_PATH . '/includes/bulk-translation/class-atfp-posts-clone.php';
 			require_once ATFP_DIR_PATH . '/includes/bulk-translation/class-atfp-bulk-translation.php';
+			require_once ATFP_DIR_PATH . 'includes/menu-sync/class-atfp-menu-sync.php';
 			require_once ATFP_DIR_PATH . 'includes/elementor-translate/class-atfp-elementor-translate.php';
 			require_once ATFP_DIR_PATH . 'helper/class-atfp-register-route.php';
 			require_once ATFP_DIR_PATH . 'helper/class-atfp-sanitized-content.php';
 
 			new ATFP_Register_Route('atfp-translate');
+			if ( is_admin() && class_exists( 'ATFP_Menu_Sync' ) && ATFP_Menu_Sync::is_enabled() ) {
+				ATFP_Menu_Sync::get_instance();
+			}
 		}
 		/**
 		 * Initialize the Automatic Translation for Polylang plugin.

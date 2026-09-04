@@ -103,13 +103,12 @@ class ChromeAINoticeFramework {
 
                     const toggle = $(this.options.toggleSelectorPattern.replace('{type}', type));
 
-                    // Always check readiness on load so Configure stays visible
-                    // when setup is still required, even if the enable toggle is off.
+                    // Always run the readiness check so the Ready / Not Configured
+                    // badge stays accurate. The Configure button is gated separately
+                    // inside showConfigurationNotice based on the enable toggle.
                     this.showConfigurationNotice(type);
 
                     toggle.on("change", () => {
-                        // Enable/disable is independent of setup status: re-run the
-                        // check instead of hiding Configure when the toggle turns off.
                         this.showConfigurationNotice(type);
                     });
                 }
@@ -201,7 +200,11 @@ class ChromeAINoticeFramework {
         const noticeClass = this.options.noticeClassPattern.replace('{type}', type);
         let $notice = $card.find(`.${noticeClass}`);
         const configureBtnSelector = this.options.configureBtnSelectorPattern.replace('{type}', type);
+        const toggleSelector = this.options.toggleSelectorPattern.replace('{type}', type);
         const isUnsupportedBrowser = this.isUnsupportedBrowser(type);
+        // Badge status keys off the notice's inline display. Keep that in sync with
+        // real readiness. Only the Configure button follows the enable toggle.
+        const isEnabled = !$(toggleSelector).length || $(toggleSelector).is(':checked');
 
         if ($notice.length) {
             $notice.show();
@@ -209,7 +212,7 @@ class ChromeAINoticeFramework {
                 this.applyUnsupportedState($card, type);
             } else {
                 this.clearUnsupportedState($card);
-                $(configureBtnSelector).show();
+                $(configureBtnSelector).toggle(isEnabled);
             }
             return;
         }
@@ -262,7 +265,7 @@ class ChromeAINoticeFramework {
                 this.applyUnsupportedState($card, type);
             } else {
                 this.clearUnsupportedState($card);
-                $(configureBtnSelector).show();
+                $(configureBtnSelector).toggle(isEnabled);
             }
         } else {
             $card.find(`.${noticeClass}`).hide();

@@ -1439,6 +1439,20 @@ ul.atfp-dashboard-sts-btm li:last-child {
     margin-bottom: 15px !important;
 }
 
+.atfp-menu-sync-setting-row {
+    align-items: center;
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+    padding-right: 20px;
+}
+
+.atfp-menu-sync-setting-text {
+    color: var(--text-color);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
 
 .atfp-dashboard-translation-settings textarea{
     width: 100%;
