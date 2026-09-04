@@ -651,7 +651,9 @@ if (! class_exists('AutoPoly')) {
 			require_once ATFP_DIR_PATH . 'helper/class-atfp-sanitized-content.php';
 
 			new ATFP_Register_Route('atfp-translate');
-			ATFP_Menu_Sync::get_instance();
+			if ( is_admin() && class_exists( 'ATFP_Menu_Sync' ) && ATFP_Menu_Sync::is_enabled() ) {
+				ATFP_Menu_Sync::get_instance();
+			}
 		}
 		/**
 		 * Initialize the Automatic Translation for Polylang plugin.
