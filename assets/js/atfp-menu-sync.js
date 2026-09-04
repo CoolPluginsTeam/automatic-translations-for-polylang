@@ -245,10 +245,9 @@
 				}
 			}).done(function (response) {
 				if (response && response.success) {
-					self.showResult('success', response.data.message, response.data.details);
 					setTimeout(function () {
 						window.location.reload();
-					}, 1500);
+					}, 500);
 					return;
 				}
 

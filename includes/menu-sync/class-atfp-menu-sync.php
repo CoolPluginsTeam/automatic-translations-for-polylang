@@ -340,11 +340,6 @@ if ( ! class_exists( 'ATFP_Menu_Sync' ) ) {
 
 			return array(
 				'success' => true,
-				'message' => sprintf(
-					/* translators: %s: comma-separated language names. */
-					__( 'Menu synced to: %s', 'automatic-translations-for-polylang' ),
-					implode( ', ', $synced_languages )
-				),
 				'details' => $details,
 			);
 		}
