@@ -63,6 +63,7 @@ assets/css/atfp-classic-translate.css export-ignore
 assets/css/atfp-custom.css export-ignore
 assets/css/atfp-elementor-translate-confirm-box.css export-ignore
 assets/css/atfp-elementor-translate.css export-ignore
+assets/css/atfp-menu-sync.css export-ignore
 assets/css/atfp-re-translation.css export-ignore
 assets/css/atfp-supported-blocks.css export-ignore
 assets/css/atfp-update-custom-blocks.css export-ignore
@@ -71,6 +72,7 @@ assets/js/atfp-admin-views-link.js export-ignore
 assets/js/atfp-bulk-translate.js export-ignore
 assets/js/atfp-classic-translate.js export-ignore
 assets/js/atfp-elementor-translate-confirm-box.js export-ignore
+assets/js/atfp-menu-sync.js export-ignore
 assets/js/atfp-re-translation.js export-ignore
 assets/js/atfp-supported-block.js export-ignore
 assets/js/atfp-update-custom-blocks.js export-ignore
