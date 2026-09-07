@@ -93,8 +93,8 @@ jQuery(function($) {
         });
     });
 
-    $('.atfp-provider-switch-container .atfp-provider-toggle').on('change', function() {
-        const checkedProviders = $('.atfp-provider-toggle:checked');
+    $('.atfp-provider-switch-container .atfp-provider-toggle[data-provider]').on('change', function() {
+        const checkedProviders = $('.atfp-provider-toggle[data-provider]:checked');
         const enabledProviders={};
 
         checkedProviders.each(function() {
