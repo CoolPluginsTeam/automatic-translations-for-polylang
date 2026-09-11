@@ -85,61 +85,198 @@ if (! class_exists('ATFP_Helper')) {
 
 		public function get_block_parse_rules()
 		{
-			$block_rules = '';
-			$local_path  = ATFP_DIR_PATH . 'includes/block-translation-rules/block-rules.json';
+			$local_path = ATFP_DIR_PATH . 'includes/block-translation-rules/wpml-config.xml';
+			$block_translation_rules = array();
 
-			// Prefer local file first (remote should be unnecessary in normal cases).
-			global $wp_filesystem;
-			if ( ! function_exists( 'WP_Filesystem' ) ) {
-				require_once ABSPATH . 'wp-admin/includes/file.php';
+			if (file_exists($local_path)) {
+				$block_translation_rules['AtfpBlockParseRules'] = $this->parse_single_wpml_config($local_path);
+			} else {
+				$block_translation_rules['AtfpBlockParseRules'] = array();
 			}
 
-			WP_Filesystem();
-
-			if ( $wp_filesystem && $wp_filesystem->exists( $local_path ) && $wp_filesystem->is_readable( $local_path ) ) {
-				$block_rules = (string) $wp_filesystem->get_contents( $local_path );
-			}
-
-			// Fallback to remote only if local rules are missing/empty.
-			if ( empty( $block_rules ) ) {
-				$response = wp_remote_get(
-					esc_url_raw( ATFP_URL . 'includes/block-translation-rules/block-rules.json' ),
-					array(
-						'timeout' => 15,
-					)
-				);
-
-				if ( ! is_wp_error( $response ) && 200 === (int) wp_remote_retrieve_response_code( $response ) ) {
-					$remote_body = wp_remote_retrieve_body( $response );
-					if ( ! empty( $remote_body ) ) {
-						$block_rules = (string) $remote_body;
-					}
-				}
-			}
-
-			if ( empty( $block_rules ) ) {
-				return array();
-			}
-
-			$block_translation_rules = json_decode( $block_rules, true );
-			if ( ! is_array( $block_translation_rules ) ) {
-				return array();
-			}
-
-			$this->custom_block_data_array = isset($block_translation_rules['AtfpBlockParseRules']) ? $block_translation_rules['AtfpBlockParseRules'] : null;
+			$this->custom_block_data_array = $block_translation_rules['AtfpBlockParseRules'];
 
 			$custom_block_translation = get_option('atfp_custom_block_translation', false);
 
 			if (! empty($custom_block_translation) && is_array($custom_block_translation)) {
 				foreach ($custom_block_translation as $key => $block_data) {
-					$block_rules = isset($block_translation_rules['AtfpBlockParseRules'][$key]) ? $block_translation_rules['AtfpBlockParseRules'][$key] : null;
-					$this->filter_custom_block_rules(array($key), $block_data, $block_rules);
+					$block_rules_existing = isset($block_translation_rules['AtfpBlockParseRules'][$key]) ? $block_translation_rules['AtfpBlockParseRules'][$key] : null;
+					$this->filter_custom_block_rules(array($key), $block_data, $block_rules_existing);
+				}
+			}
+
+			$wpml_blocks = $this->parse_wpml_config_blocks();
+			if (!empty($wpml_blocks) && is_array($wpml_blocks)) {
+				foreach ($wpml_blocks as $key => $block_data) {
+					$block_rules_existing = isset($block_translation_rules['AtfpBlockParseRules'][$key]) ? $block_translation_rules['AtfpBlockParseRules'][$key] : null;
+					// filter_custom_block_rules expects an object for nested merging
+					$this->filter_custom_block_rules(array($key), json_decode(json_encode($block_data)), $block_rules_existing);
 				}
 			}
 
 			$block_translation_rules['AtfpBlockParseRules'] = $this->custom_block_data_array ? $this->custom_block_data_array : array();
 
 			return $block_translation_rules;
+		}
+
+		/**
+		 * Parse wpml-config.xml files from active plugins and theme for Gutenberg blocks.
+		 *
+		 * @return array Multi-dimensional array of block translation rules.
+		 */
+		private function parse_wpml_config_blocks() {
+			$wpml_rules = array();
+
+			if (!defined('ABSPATH')) {
+				return $wpml_rules;
+			}
+
+			if (!function_exists('get_plugins')) {
+				require_once ABSPATH . 'wp-admin/includes/plugin.php';
+			}
+
+			$active_plugins = get_option('active_plugins', array());
+			$plugin_dirs = array();
+
+			foreach ($active_plugins as $plugin) {
+				$plugin_dir = WP_PLUGIN_DIR . '/' . dirname($plugin);
+				if (!in_array($plugin_dir, $plugin_dirs)) {
+					$plugin_dirs[] = $plugin_dir;
+				}
+			}
+
+			$theme_dir = get_stylesheet_directory();
+			$plugin_dirs[] = $theme_dir;
+			
+			if ( get_template_directory() !== get_stylesheet_directory() ) {
+				$plugin_dirs[] = get_template_directory();
+			}
+
+			// Generate a fingerprint based on the active plugins and themes
+			$fingerprint = md5(serialize($plugin_dirs));
+			$transient_key = 'atfp_wpml_blocks_rules';
+			$cached_data = get_transient($transient_key);
+
+			// If the cached fingerprint matches the current fingerprint, return the cached rules
+			if (is_array($cached_data) && isset($cached_data['fingerprint']) && $cached_data['fingerprint'] === $fingerprint && isset($cached_data['rules'])) {
+				return $cached_data['rules'];
+			}
+
+			foreach ($plugin_dirs as $dir) {
+				$xml_file = $dir . '/wpml-config.xml';
+				if (file_exists($xml_file) && is_readable($xml_file)) {
+					$parsed = $this->parse_single_wpml_config($xml_file);
+					if (!empty($parsed)) {
+						foreach ($parsed as $block_name => $attributes) {
+							if (!isset($wpml_rules[$block_name])) {
+								$wpml_rules[$block_name] = array();
+							}
+							$wpml_rules[$block_name] = array_merge($wpml_rules[$block_name], $attributes);
+						}
+					}
+				}
+			}
+
+			// Cache the new rules along with the fingerprint
+			$cache_payload = array(
+				'fingerprint' => $fingerprint,
+				'rules' => $wpml_rules,
+			);
+			set_transient($transient_key, $cache_payload, 12 * HOUR_IN_SECONDS);
+
+			return $wpml_rules;
+		}
+
+		/**
+		 * Parses a single wpml-config.xml file to extract Gutenberg block translation rules.
+		 *
+		 * @param string $file_path Absolute path to the wpml-config.xml file.
+		 * @return array Extracted block translation rules.
+		 */
+		private function parse_single_wpml_config($file_path) {
+			$rules = array();
+			
+			// Prevent XXE attacks by disabling external entities
+			$old_disable_entity_loader = null;
+			if ( function_exists( 'libxml_disable_entity_loader' ) && \PHP_VERSION_ID < 80000 ) {
+				$old_disable_entity_loader = libxml_disable_entity_loader( true );
+			}
+
+			// Suppress warnings in case of malformed XML and prevent network entity loading
+			$xml = @simplexml_load_file( $file_path, 'SimpleXMLElement', LIBXML_NONET );
+
+			if ( null !== $old_disable_entity_loader && function_exists( 'libxml_disable_entity_loader' ) ) {
+				libxml_disable_entity_loader( $old_disable_entity_loader );
+			}
+			if (!$xml) {
+				error_log( sprintf( 'ATFP Error: Failed to parse XML file at %s', $file_path ) );
+				return $rules;
+			}
+			
+			if (!isset($xml->{'gutenberg-blocks'})) {
+				return $rules;
+			}
+
+			if (isset($xml->{'gutenberg-blocks'}->{'gutenberg-block'})) {
+				foreach ($xml->{'gutenberg-blocks'}->{'gutenberg-block'} as $block) {
+					$block_type = (string) $block['type'];
+					if (empty($block_type)) {
+						continue;
+					}
+
+					$translate = (string) $block['translate'];
+					if ($translate === '0') {
+						continue;
+					}
+
+					$attributes = $this->parse_wpml_keys($block);
+					$rules[$block_type] = !empty($attributes) ? $attributes : array();
+					
+					if (isset($block->xpath)) {
+						$xpaths = array();
+						foreach ($block->xpath as $xpath_node) {
+							$xpaths[] = (string) $xpath_node;
+						}
+						if (!empty($xpaths)) {
+							$rules[$block_type]['xpaths'] = $xpaths;
+						}
+					}
+				}
+			}
+
+			return $rules;
+		}
+
+		/**
+		 * Recursively parses key nodes from a wpml-config.xml block element.
+		 *
+		 * @param SimpleXMLElement $xml_node The XML node containing key elements.
+		 * @return array Extracted attributes and their translation settings.
+		 */
+		private function parse_wpml_keys($xml_node) {
+			$attributes = array();
+			if (isset($xml_node->key)) {
+				foreach ($xml_node->key as $key_node) {
+					$key_name = (string) $key_node['name'];
+					if (empty($key_name)) {
+						continue;
+					}
+
+					if (isset($key_node->key) && count($key_node->key) > 0) {
+						$nested = $this->parse_wpml_keys($key_node);
+						if ($key_name === '*') {
+							return array($nested);
+						}
+						$attributes[$key_name] = $nested;
+					} else {
+						if ($key_name === '*') {
+							return array(true);
+						}
+						$attributes[$key_name] = true;
+					}
+				}
+			}
+			return $attributes;
 		}
 
 		private function filter_custom_block_rules(array $id_keys, $value, $block_rules, $attr_key = false)
