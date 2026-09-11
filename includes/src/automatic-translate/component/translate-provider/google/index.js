@@ -1,4 +1,5 @@
 import ModalStringScroll from "../../string-modal-scroll";
+import { __ } from "@wordpress/i18n";
 
 /**
  * Clears Google Translate persistence so a previously used target is not re-applied.
@@ -34,11 +35,63 @@ const resetGoogleLanguageCombo = (widgetElement) => {
     return combo;
 };
 
+// Shows why the widget could not start, in its own container.
+const showGoogleApiError = (ID, translateStatusHandler) => {
+    const container = document.querySelector(`#${ID}`);
+
+    if (container) {
+        container.innerHTML = '';
+        const notice = document.createElement('div');
+        notice.className = 'notice inline notice-warning';
+        notice.textContent = __('Google Translate could not load. This is usually caused by an ad blocker or privacy extension blocking translate.google.com - please disable it for this site and reload the page.', 'automatic-translations-for-polylang');
+        container.appendChild(notice);
+    }
+
+    if (typeof translateStatusHandler === 'function') {
+        translateStatusHandler(false);
+    }
+};
+
+// Polls for window.google.translate since the script loads asynchronously (see backend-assets.php); onTimeout means it never showed up (blocked/failed).
+const waitForGoogleTranslateApi = (onReady, onTimeout) => {
+    const pollIntervalMs = 200;
+    const maxAttempts = 40; // 8s total - generous for a slow connection, short enough to still feel responsive.
+    let attempts = 0;
+
+    const check = () => {
+        if (typeof google !== 'undefined' && google?.translate?.TranslateElement) {
+            onReady();
+            return;
+        }
+
+        attempts += 1;
+
+        if (attempts >= maxAttempts) {
+            onTimeout();
+            return;
+        }
+
+        setTimeout(check, pollIntervalMs);
+    };
+
+    check();
+};
+
 /**
  * Initializes Google Translate functionality on specific elements based on provided data.
  * @param {Object} data - The data containing source and target languages.
  */
 const GoogleTranslater = (data) => {
+
+    const { sourceLang, targetLang, ID, translateStatusHandler, modalRenderId } = data;
+
+    waitForGoogleTranslateApi(
+        () => startGoogleTranslateWidget(data),
+        () => showGoogleApiError(ID, translateStatusHandler)
+    );
+}
+
+const startGoogleTranslateWidget = (data) => {
 
     const { sourceLang, targetLang, ID, translateStatusHandler, modalRenderId } = data;
 
