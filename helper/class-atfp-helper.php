@@ -195,7 +195,22 @@ if (! class_exists('ATFP_Helper')) {
 		 */
 		private function parse_single_wpml_config($file_path) {
 			$rules = array();
-			
+
+			if ( ! function_exists( 'WP_Filesystem' ) ) {
+				require_once ABSPATH . 'wp-admin/includes/file.php';
+			}
+
+			global $wp_filesystem;
+			WP_Filesystem();
+
+			$xml_contents = $wp_filesystem && $wp_filesystem->is_readable( $file_path ) ? $wp_filesystem->get_contents( $file_path ) : false;
+
+			if ( false === $xml_contents || '' === trim( $xml_contents ) ) {
+				// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Genuine failure diagnostic, mirrors the parse-failure log below.
+				error_log( sprintf( 'ATFP Error: Failed to read XML file at %s', $file_path ) );
+				return $rules;
+			}
+
 			// Prevent XXE attacks by disabling external entities
 			$old_disable_entity_loader = null;
 			if ( function_exists( 'libxml_disable_entity_loader' ) && \PHP_VERSION_ID < 80000 ) {
@@ -203,7 +218,8 @@ if (! class_exists('ATFP_Helper')) {
 			}
 
 			// Suppress warnings in case of malformed XML and prevent network entity loading
-			$xml = @simplexml_load_file( $file_path, 'SimpleXMLElement', LIBXML_NONET );
+			// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- Malformed XML is an expected, handled case (checked via $xml below), not swallowed silently.
+			$xml = @simplexml_load_string( $xml_contents, 'SimpleXMLElement', LIBXML_NONET );
 
 			if ( null !== $old_disable_entity_loader && function_exists( 'libxml_disable_entity_loader' ) ) {
 				libxml_disable_entity_loader( $old_disable_entity_loader );
@@ -212,7 +228,7 @@ if (! class_exists('ATFP_Helper')) {
 				error_log( sprintf( 'ATFP Error: Failed to parse XML file at %s', $file_path ) );
 				return $rules;
 			}
-			
+
 			if (!isset($xml->{'gutenberg-blocks'})) {
 				return $rules;
 			}
