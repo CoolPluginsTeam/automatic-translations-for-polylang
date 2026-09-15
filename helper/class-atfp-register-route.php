@@ -615,7 +615,7 @@ if ( ! class_exists( 'ATFP_Register_Route' ) ) :
 
 				$post_link      = html_entity_decode( get_the_permalink( $post_id ) );
 				$post_title     = html_entity_decode( get_the_title( $post_id ) );
-				$post_edit_link = html_entity_decode( get_edit_post_link( $post_id ) );
+				$post_edit_link = ATFP_Helper::get_post_review_edit_link( $post_id, $editor_type );
 
 				wp_send_json_success(
 					array(

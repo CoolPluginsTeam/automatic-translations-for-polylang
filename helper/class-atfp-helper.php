@@ -1158,6 +1158,45 @@ if (! class_exists('ATFP_Helper')) {
 			return (bool) apply_filters( 'use_block_editor_for_post_type', $use_block_editor, $post_type );
 		}
 
+		/**
+		 * Edit link to open a translated post for review in the editor it was
+		 * actually built with, instead of always the default post editor.
+		 *
+		 * @since 1.6.1
+		 *
+		 * @param int    $post_id     Post ID.
+		 * @param string $editor_type Editor type slug, as returned by get_post_editor_type(). Detected when empty.
+		 * @return string Edit URL, or an empty string when the post does not exist.
+		 */
+		public static function get_post_review_edit_link( $post_id, $editor_type = '' ) {
+			$post_id = absint( $post_id );
+
+			if ( ! $post_id ) {
+				return '';
+			}
+
+			$editor_type = sanitize_key( $editor_type );
+
+			if ( '' === $editor_type ) {
+				$detected    = self::get_post_editor_type( $post_id );
+				$editor_type = false === $detected ? '' : $detected;
+			}
+
+			if ( 'elementor' === $editor_type && class_exists( '\Elementor\Plugin' ) && property_exists( '\Elementor\Plugin', 'instance' ) ) {
+				$document = \Elementor\Plugin::$instance->documents->get( $post_id, false );
+
+				if ( $document && method_exists( $document, 'get_edit_url' ) ) {
+					return $document->get_edit_url();
+				}
+
+				return admin_url( 'post.php?post=' . $post_id . '&action=elementor' );
+			}
+
+			$edit_link = get_edit_post_link( $post_id, 'raw' );
+
+			return $edit_link ? html_entity_decode( $edit_link ) : '';
+		}
+
 		public static function has_elementor_data(int $post_id): bool {
 			$elementor_data = get_post_meta($post_id, '_elementor_data', true);
 
