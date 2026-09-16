@@ -300,7 +300,7 @@ if ( ! class_exists( 'ATFP_Register_Route' ) ) :
 			}
 
 			if ( $gutenberg_block ) {
-				$block_parse_rules       = ATFP_Helper::get_instance()->get_block_parse_rules();
+				$block_parse_rules       = ATFP_Helper::get_instance()->get_translatable_block_parse_rules();
 				$data['blockParseRules'] = json_encode( $block_parse_rules );
 			}
 
@@ -390,7 +390,7 @@ if ( ! class_exists( 'ATFP_Register_Route' ) ) :
 			}
 
 			if ( $gutenberg_block ) {
-				$block_parse_rules       = ATFP_Helper::get_instance()->get_block_parse_rules();
+				$block_parse_rules       = ATFP_Helper::get_instance()->get_translatable_block_parse_rules();
 				$data['blockParseRules'] = json_encode( $block_parse_rules );
 			}
 
@@ -585,8 +585,8 @@ if ( ! class_exists( 'ATFP_Register_Route' ) ) :
 					$blocks = json_decode( $post_data['post_content'], true );
 
 					$atfp_sanitized_content = new ATFP_Sanitized_Content( $source_post_content );
-					$post_data['post_content'] = $atfp_sanitized_content->get_sanitized_content(serialize_blocks( $blocks ));
-					
+					$post_data['post_content'] = $atfp_sanitized_content->get_sanitized_blocks( is_array( $blocks ) ? $blocks : array() );
+
 				} elseif ( $editor_type === 'classic' ) {
 					$class_editor_content = json_decode( $params['post_content'], true );
 

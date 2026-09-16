@@ -193,18 +193,24 @@ const filterTranslateAttr = (block, blockParseRules, service) => {
 const createTranslatedBlock = (block, childBlock, blockRules, service) => {
     const { createBlock } = wp.blocks;
     const { name: blockName, attributes } = block;
-    const blockTranslateName = Object.keys(blockRules.AtfpBlockParseRules);
+    const blockTranslateName = Object.keys(blockRules.AtfpBlockParseRules || {});
 
     let attribute = { ...attributes };
     let translatedBlock = block;
     let newBlock = '';
 
-    if (blockTranslateName.includes(block.name)) {
-        translatedBlock = filterTranslateAttr(block, blockRules['AtfpBlockParseRules'][block.name], service);
-
-        attribute = translatedBlock.attributes;
+    // Only recreate blocks we know how to translate. Blind createBlock() on
+    // Essential Blocks regenerates save() HTML from partial attrs and triggers
+    // Attempt Block Recovery then English defaults in the editor.
+    if (!blockTranslateName.includes(block.name)) {
+        return {
+            ...block,
+            innerBlocks: Array.isArray(childBlock) ? childBlock : (block.innerBlocks || []),
+        };
     }
 
+    translatedBlock = filterTranslateAttr(block, blockRules['AtfpBlockParseRules'][block.name], service);
+    attribute = translatedBlock.attributes;
     newBlock = createBlock(blockName, attribute, childBlock);
 
     return newBlock;

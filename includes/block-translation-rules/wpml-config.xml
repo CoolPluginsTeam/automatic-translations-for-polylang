@@ -340,7 +340,8 @@
     </gutenberg-block>
     <gutenberg-block type="essential-blocks/number-counter" translate="1">
       <key name="counterTitle"/>
-      <key name="hoursLabel"/>
+      <key name="counterPrefix"/>
+      <key name="counterSuffix"/>
     </gutenberg-block>
     <gutenberg-block type="essential-blocks/dual-button" translate="1">
       <key name="buttonTextOne"/>
@@ -418,6 +419,56 @@
         </key>
       </key>
     </gutenberg-block>
+    <gutenberg-block type="essential-blocks/text" translate="1">
+      <key name="text"/>
+    </gutenberg-block>
+    <gutenberg-block type="essential-blocks/advanced-heading" translate="1">
+      <key name="titleText"/>
+      <key name="title2Text"/>
+      <key name="title3Text"/>
+      <key name="subtitleText"/>
+    </gutenberg-block>
+    <gutenberg-block type="essential-blocks/advanced-tabs" translate="1">
+      <key name="tabTitles">
+        <key name="*">
+          <key name="text"/>
+          <key name="subtitle"/>
+        </key>
+      </key>
+    </gutenberg-block>
+    <gutenberg-block type="essential-blocks/infobox" translate="1">
+      <key name="title"/>
+      <key name="subTitle"/>
+      <key name="description"/>
+      <key name="buttonText"/>
+    </gutenberg-block>
+    <gutenberg-block type="essential-blocks/call-to-action" translate="1">
+      <key name="title"/>
+      <key name="subtitle"/>
+      <key name="description"/>
+      <key name="buttonText"/>
+    </gutenberg-block>
+    <gutenberg-block type="essential-blocks/timeline" translate="1">
+      <key name="timelines">
+        <key name="*">
+          <key name="title"/>
+          <key name="content"/>
+          <key name="richContent"/>
+          <key name="readmoreText"/>
+          <key name="date"/>
+          <key name="subheading"/>
+        </key>
+      </key>
+      <key name="timelineLabels">
+        <key name="*">
+          <key name="label"/>
+        </key>
+      </key>
+    </gutenberg-block>
+    <gutenberg-block type="essential-blocks/form" translate="1">
+      <key name="formTitle"/>
+      <key name="buttonText"/>
+    </gutenberg-block>
     <gutenberg-block type="essential-blocks/feature-list" translate="1">
       <key name="features">
         <key name="*">
@@ -434,18 +485,50 @@
     <gutenberg-block type="essential-blocks/form-text-field" translate="1">
       <key name="labelText"/>
       <key name="placeholderText"/>
+      <key name="validationMessage"/>
+      <key name="validationRules">
+        <key name="*">
+          <key name="*">
+            <key name="message"/>
+          </key>
+        </key>
+      </key>
     </gutenberg-block>
     <gutenberg-block type="essential-blocks/form-email-field" translate="1">
       <key name="labelText"/>
       <key name="placeholderText"/>
+      <key name="validationMessage"/>
+      <key name="emailValidationMessage"/>
+      <key name="validationRules">
+        <key name="*">
+          <key name="*">
+            <key name="message"/>
+          </key>
+        </key>
+      </key>
     </gutenberg-block>
     <gutenberg-block type="essential-blocks/form-textarea-field" translate="1">
       <key name="labelText"/>
       <key name="placeholderText"/>
+      <key name="validationMessage"/>
+      <key name="validationRules">
+        <key name="*">
+          <key name="*">
+            <key name="message"/>
+          </key>
+        </key>
+      </key>
     </gutenberg-block>
     <gutenberg-block type="essential-blocks/form-number-field" translate="1">
       <key name="labelText"/>
       <key name="placeholderText"/>
+      <key name="validationRules">
+        <key name="*">
+          <key name="*">
+            <key name="message"/>
+          </key>
+        </key>
+      </key>
     </gutenberg-block>
     <gutenberg-block type="essential-blocks/form-select-field" translate="1">
       <key name="options">

@@ -29,6 +29,11 @@ const updateGutenbergContent=async ({source, lang, translatedContent, servicePro
     }
 
     const loopCallback=async (callback, loop, index)=>{
+        // Guard: nested/wildcard rules or missing attrs can pass a non-array.
+        if(!loop || typeof loop.length === 'undefined' || index >= loop.length){
+            return;
+        }
+
         await callback(loop[index], index);
 
         index++;
@@ -304,7 +309,92 @@ const updateGutenbergContent=async ({source, lang, translatedContent, servicePro
         }
     }
 
+    const buildSourceTranslationMap=()=>{
+        const map={};
+        Object.keys(sourceEntries || {}).forEach((uniqueKey)=>{
+            const sourceString=selectSourceContent(store.getState(), postId, uniqueKey);
+            const translatedString=selectTranslatedContent(store.getState(), postId, uniqueKey, lang, serviceProvider);
+            if(sourceString && translatedString && sourceString !== translatedString){
+                map[sourceString]=translatedString;
+            }
+        });
+        return map;
+    }
+
+    const syncAttrsBySourceTranslation=(blocks)=>{
+        const map=buildSourceTranslationMap();
+        const sources=Object.keys(map);
+        if(!blocks || sources.length < 1){
+            return;
+        }
+
+        // Longer sources first so partial overlaps do not eat longer phrases.
+        sources.sort((a,b)=>b.length-a.length);
+
+        // Which attrs are actually translatable for this block type - same
+        // rule shape the read-side filter uses, so this never touches a
+        // technical attribute (blockId, resOption, colors, etc.) just because
+        // its value happens to match some other translated string on the page.
+        const getTranslatableAttrKeys=(blockName)=>{
+            const rule=blockParseRules?.AtfpBlockParseRules?.[blockName];
+            if(!rule || typeof rule !== 'object'){
+                return [];
+            }
+            const ruleSource=(rule.attributes && typeof rule.attributes === 'object' && !Array.isArray(rule.attributes)) ? rule.attributes : rule;
+            return Object.keys(ruleSource).filter((key)=>key !== 'xpaths');
+        }
+
+        const walkAttrValue=(value)=>{
+            if(typeof value === 'string'){
+                return value.trim() !== '' && map[value] ? map[value] : value;
+            }
+            if(Array.isArray(value)){
+                return value.map(walkAttrValue);
+            }
+            if(value && typeof value === 'object'){
+                const out={...value};
+                Object.keys(out).forEach((key)=>{
+                    out[key]=walkAttrValue(out[key]);
+                });
+                return out;
+            }
+            return value;
+        }
+
+        const walkBlocks=(list)=>{
+            if(!Array.isArray(list)){
+                return;
+            }
+            list.forEach((block)=>{
+                if(!block || typeof block !== 'object'){
+                    return;
+                }
+
+                const translatableKeys=getTranslatableAttrKeys(block.blockName);
+
+                if(block.attrs && translatableKeys.length > 0){
+                    translatableKeys.forEach((key)=>{
+                        if(Object.prototype.hasOwnProperty.call(block.attrs, key)){
+                            block.attrs[key]=walkAttrValue(block.attrs[key]);
+                        }
+                    });
+                }
+
+                if(Array.isArray(block.innerBlocks) && block.innerBlocks.length > 0){
+                    walkBlocks(block.innerBlocks);
+                }
+            });
+        }
+
+        walkBlocks(blocks);
+    }
+
     updateContent(source, translatedContent);
+
+    // Duplicate source strings (e.g. three tabs with the same label) can leave
+    // some attr paths untranslated while HTML was fully replaced. Sync every
+    // string attr that still equals a known source to its translation.
+    syncAttrsBySourceTranslation(source.content);
 
     if("false" === atfp_bulk_translate_object.postMetaSync && source.metaFields && Object.keys(source.metaFields).length > 0){
         source.metaFields=updateMetaFields(source.metaFields, lang, serviceProvider, postId);

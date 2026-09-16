@@ -83,6 +83,47 @@ if (! class_exists('ATFP_Helper')) {
 			return $first_post_id;
 		}
 
+		/**
+		 * Flatten a Gutenberg rule "attributes" wrapper for the translate UI.
+		 *
+		 * Built-in wpml-config rules are flat keys matched against block.attributes.
+		 * Custom Add/Edit (and free-style JSON) often wrap those keys under "attributes".
+		 * The automatic-translate walker applies rules directly to block.attributes, so a
+		 * nested "attributes" key would look up block.attributes.attributes and miss content.
+		 * Only unwrap when "attributes" is an array/map of child rules (not attributes => true).
+		 *
+		 * @param array $rules AtfpBlockParseRules map.
+		 * @return array
+		 */
+		private function normalize_block_parse_rules_for_translate( $rules ) {
+			if ( ! is_array( $rules ) ) {
+				return $rules;
+			}
+
+			foreach ( $rules as $block_name => $rule ) {
+				if ( ! is_array( $rule ) ) {
+					continue;
+				}
+
+				if ( ! isset( $rule['attributes'] ) || ! is_array( $rule['attributes'] ) ) {
+					continue;
+				}
+
+				$wrapped = $rule['attributes'];
+				unset( $rule['attributes'] );
+
+				foreach ( $wrapped as $attr_key => $attr_rule ) {
+					if ( ! array_key_exists( $attr_key, $rule ) ) {
+						$rule[ $attr_key ] = $attr_rule;
+					}
+				}
+
+				$rules[ $block_name ] = $rule;
+			}
+
+			return $rules;
+		}
+
 		public function get_block_parse_rules()
 		{
 			$local_path = ATFP_DIR_PATH . 'includes/block-translation-rules/wpml-config.xml';
@@ -117,6 +158,96 @@ if (! class_exists('ATFP_Helper')) {
 			$block_translation_rules['AtfpBlockParseRules'] = $this->custom_block_data_array ? $this->custom_block_data_array : array();
 
 			return $block_translation_rules;
+		}
+
+		/**
+		 * Same as get_block_parse_rules(), but flattened for translate-time consumers
+		 * (the automatic-translate/bulk-translate JS walkers and the supported-blocks
+		 * dashboard listing).
+		 *
+		 * The plain get_block_parse_rules() must keep returning the raw, un-normalized shape:
+		 * update_custom_blocks_content() compares against it with isset( $rule['attributes'] )
+		 * to tell an already-known custom attribute from a new one, and the "Add/Edit Block"
+		 * admin UI always submits new attributes wrapped as { attributes: { key: true } }.
+		 * Normalizing inside get_block_parse_rules() made every previously-saved custom
+		 * attribute look "new" on the next save, so create_nested_attribute() overwrote the
+		 * whole attributes sub-array instead of merging into it, silently dropping earlier
+		 * custom rules for that block.
+		 *
+		 * @return array
+		 */
+		public function get_translatable_block_parse_rules() {
+			$block_translation_rules = $this->get_block_parse_rules();
+
+			if ( isset( $block_translation_rules['AtfpBlockParseRules'] ) ) {
+				$block_translation_rules['AtfpBlockParseRules'] = $this->normalize_block_parse_rules_for_translate(
+					$block_translation_rules['AtfpBlockParseRules']
+				);
+
+				$block_translation_rules['AtfpBlockDefaults'] = $this->build_block_attribute_defaults(
+					$block_translation_rules['AtfpBlockParseRules']
+				);
+			}
+
+			return $block_translation_rules;
+		}
+
+		/**
+		 * Read each translatable attribute's registered block.json default from the
+		 * PHP block type registry.
+		 *
+		 * Gutenberg omits an attribute from a block's saved comment JSON whenever its
+		 * current value still equals the registered default, so a block using its
+		 * default label/placeholder/validation text has no value at all to translate.
+		 * The registry is populated on every request (via block.json registration on
+		 * `init`), unlike the JS block registry which is only populated once the block
+		 * editor itself has loaded - unusable from the bulk-translate admin screen.
+		 *
+		 * @param array $rules Normalized AtfpBlockParseRules map (flat attrKey => true).
+		 * @return array blockName => [ attrKey => defaultValue ]
+		 */
+		private function build_block_attribute_defaults( $rules ) {
+			$defaults = array();
+
+			if ( ! is_array( $rules ) || ! class_exists( 'WP_Block_Type_Registry' ) ) {
+				return $defaults;
+			}
+
+			$registry = WP_Block_Type_Registry::get_instance();
+
+			foreach ( $rules as $block_name => $rule ) {
+				if ( ! is_array( $rule ) ) {
+					continue;
+				}
+
+				$block_type = $registry->get_registered( $block_name );
+				if ( ! $block_type || empty( $block_type->attributes ) ) {
+					continue;
+				}
+
+				foreach ( $rule as $attr_key => $attr_rule ) {
+					if ( true !== $attr_rule ) {
+						continue;
+					}
+
+					if ( ! isset( $block_type->attributes[ $attr_key ]['default'] ) ) {
+						continue;
+					}
+
+					$default_value = $block_type->attributes[ $attr_key ]['default'];
+					if ( ! is_string( $default_value ) || '' === $default_value ) {
+						continue;
+					}
+
+					if ( ! isset( $defaults[ $block_name ] ) ) {
+						$defaults[ $block_name ] = array();
+					}
+
+					$defaults[ $block_name ][ $attr_key ] = $default_value;
+				}
+			}
+
+			return $defaults;
 		}
 
 		/**
