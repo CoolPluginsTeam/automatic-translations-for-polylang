@@ -171,7 +171,7 @@ if ( ! class_exists( 'ATFP_Supported_Blocks' ) ) {
 		public function atfp_get_supported_blocks_table() {
 
 			if ( class_exists( 'WP_Block_Type_Registry' ) && method_exists( 'WP_Block_Type_Registry', 'get_all_registered' ) ) {
-				$atfp_block_parse_rules      = ATFP_Helper::get_instance()->get_block_parse_rules();
+				$atfp_block_parse_rules = ATFP_Helper::get_instance()->get_translatable_block_parse_rules();
 
 				$blocks_data                 = WP_Block_Type_Registry::get_instance()->get_all_registered();
 

@@ -8,9 +8,8 @@ import { dispatch, select } from "@wordpress/data";
  * @param {Object} blockAttr - The attributes of the block.
  * @param {Object} filterAttr - The attributes to filter.
  */
-const filterTranslateAttr = (blockId, blockAttr, filterAttr) => {
+const filterTranslateAttr = (blockId, blockAttr, filterAttr, blockFullObject) => {
 
-    const filterAttrArr = Object.values(filterAttr);
 
     /**
      * Saves translated attributes based on the provided ID array and filter attribute object.
@@ -57,12 +56,72 @@ const filterTranslateAttr = (blockId, blockAttr, filterAttr) => {
         FilterBlockNestedAttr(idArr,filterAttrObj,blockAttr,saveTranslatedAttr);
     }
 
-    filterAttrArr.forEach(data => {
-        Object.keys(data).forEach(key => {
-            const idArr = new Array(key);
-            saveTranslatedAttr(idArr, data[key]);
+    if (Array.isArray(filterAttr)) {
+        filterAttr.forEach(data => {
+            if (typeof data === 'object' && data !== null) {
+                Object.keys(data).forEach(key => {
+                    const idArr = new Array(key);
+                    saveTranslatedAttr(idArr, data[key]);
+                });
+            }
         });
-    });
+    } else if (typeof filterAttr === 'object' && filterAttr !== null) {
+        Object.keys(filterAttr).forEach(key => {
+            const idArr = new Array(key);
+            saveTranslatedAttr(idArr, filterAttr[key]);
+        });
+    }
+
+    if (filterAttr && filterAttr['xpaths'] && blockFullObject && wp && wp.blocks) {
+        try {
+            const htmlString = wp.blocks.serialize(blockFullObject);
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(htmlString, 'text/html');
+
+            const findAttributePathByValue = (obj, targetValue, currentPath = []) => {
+                let foundPath = null;
+                for (let key in obj) {
+                    if (obj.hasOwnProperty(key)) {
+                        let val = obj[key];
+                        if (val && val.originalHTML !== undefined) {
+                            val = val.originalHTML;
+                        }
+                        
+                        if (typeof val === 'string' && val.trim() !== '') {
+                            const div = document.createElement('div');
+                            div.innerHTML = val;
+                            if (div.textContent.trim() === targetValue.trim()) {
+                                return [...currentPath, key];
+                            }
+                        } else if (typeof val === 'object' && val !== null) {
+                            foundPath = findAttributePathByValue(val, targetValue, [...currentPath, key]);
+                            if (foundPath) return foundPath;
+                        }
+                    }
+                }
+                return null;
+            };
+
+            filterAttr['xpaths'].forEach(xpath => {
+                try {
+                    const result = doc.evaluate(xpath, doc, null, XPathResult.ANY_TYPE, null);
+                    let node = result.iterateNext();
+                    while (node) {
+                        let sourceString = (node.nodeType === Node.ATTRIBUTE_NODE) ? node.value : node.textContent;
+                        sourceString = sourceString.trim();
+
+                        if (sourceString && sourceString !== '') {
+                            const attrPath = findAttributePathByValue(blockAttr, sourceString);
+                            if (attrPath) {
+                                saveTranslatedAttr(attrPath, true);
+                            }
+                        }
+                        node = result.iterateNext();
+                    }
+                } catch (e) {}
+            });
+        } catch (err) {}
+    }
 }
 /**
  * Retrieves the translation string for a block based on block rules and applies translation.
@@ -77,7 +136,7 @@ const getTranslateString = (block, blockRules) => {
         return;
     }
 
-    filterTranslateAttr(block.clientId, block.attributes, blockRules['AtfpBlockParseRules'][block.name]);
+    filterTranslateAttr(block.clientId, block.attributes, blockRules['AtfpBlockParseRules'][block.name], block);
 }
 
 /**

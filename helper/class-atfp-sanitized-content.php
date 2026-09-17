@@ -246,6 +246,98 @@ if ( ! class_exists( 'ATFP_Sanitized_Content' ) ) :
 		return $allowed_styles;
 	}	
 
+		/**
+		 * Sanitize a parsed block tree and serialize it.
+		 *
+		 * Sanitizing the serialized document means handing block delimiters to
+		 * `wp_kses()`, which rewrites the inside of HTML comments: it normalizes
+		 * entities and collapses runs of dashes. `serialize_blocks()` escapes `&`,
+		 * `<` and `--` as unicode sequences, so core's own output survives that
+		 * intact -- but nothing guarantees it for delimiters written by hand, by a
+		 * migration, or by another tool, and a rewritten delimiter means the block
+		 * no longer matches what its `save()` regenerates.
+		 *
+		 * Sanitizing per fragment removes the exposure entirely: the HTML that
+		 * actually lands in the document -- `innerHTML` and the `innerContent`
+		 * chunks -- gets the same allow-list it always did, and the delimiters are
+		 * never passed to kses at all.
+		 *
+		 * Block attributes are deliberately left alone. `serialize_blocks()` writes
+		 * them as JSON rather than as markup, and sanitizing them is precisely what
+		 * broke the delimiters; blocks that render an attribute escape it themselves.
+		 *
+		 * @param array $blocks Parsed blocks, as returned by `parse_blocks()`.
+		 * @return string Serialized, sanitized block markup.
+		 */
+		public function get_sanitized_blocks( array $blocks ): string {
+
+			if ( ! isset( $this->allowed_styles ) || empty( $this->allowed_styles ) ) {
+				$this->allowed_styles = $this->extract_allowed_styles_from_string( $this->source_html );
+			}
+
+			add_filter( 'safe_style_css', array( $this, 'autopoly_allow_flex_styles' ), 10, 1 );
+
+			$allowed_html_tags    = $this->extract_allowed_html_from_string( $this->source_html );
+			$boolean_attrs_to_fix = $this->get_boolean_attrs_without_value( $this->source_html );
+
+			$sanitized = $this->sanitize_block_list( $blocks, $allowed_html_tags, $boolean_attrs_to_fix );
+
+			remove_filter( 'safe_style_css', array( $this, 'autopoly_allow_flex_styles' ), 10 );
+
+			return serialize_blocks( $sanitized );
+		}
+
+		/**
+		 * Sanitize the markup carried by each block, innerBlocks included.
+		 *
+		 * @param array $blocks               Parsed blocks.
+		 * @param array $allowed_html_tags    Allow-list derived from the source post.
+		 * @param array $boolean_attrs_to_fix Boolean attributes written without a value.
+		 * @return array The blocks, with their markup sanitized.
+		 */
+		private function sanitize_block_list( array $blocks, array $allowed_html_tags, array $boolean_attrs_to_fix ): array {
+
+			foreach ( $blocks as $index => $block ) {
+
+				if ( ! is_array( $block ) ) {
+					continue;
+				}
+
+				if ( isset( $block['innerHTML'] ) && is_string( $block['innerHTML'] ) && '' !== $block['innerHTML'] ) {
+					$blocks[ $index ]['innerHTML'] = $this->sanitize_fragment( $block['innerHTML'], $allowed_html_tags, $boolean_attrs_to_fix );
+				}
+
+				if ( isset( $block['innerContent'] ) && is_array( $block['innerContent'] ) ) {
+					foreach ( $block['innerContent'] as $chunk_index => $chunk ) {
+						// A null entry marks where an inner block belongs and has to stay null.
+						if ( is_string( $chunk ) && '' !== $chunk ) {
+							$blocks[ $index ]['innerContent'][ $chunk_index ] = $this->sanitize_fragment( $chunk, $allowed_html_tags, $boolean_attrs_to_fix );
+						}
+					}
+				}
+
+				if ( isset( $block['innerBlocks'] ) && is_array( $block['innerBlocks'] ) && ! empty( $block['innerBlocks'] ) ) {
+					$blocks[ $index ]['innerBlocks'] = $this->sanitize_block_list( $block['innerBlocks'], $allowed_html_tags, $boolean_attrs_to_fix );
+				}
+			}
+
+			return $blocks;
+		}
+
+		/**
+		 * Sanitize one piece of block markup.
+		 *
+		 * @param string $html                 Markup fragment.
+		 * @param array  $allowed_html_tags    Allow-list derived from the source post.
+		 * @param array  $boolean_attrs_to_fix Boolean attributes written without a value.
+		 * @return string
+		 */
+		private function sanitize_fragment( string $html, array $allowed_html_tags, array $boolean_attrs_to_fix ): string {
+			$sanitized = wp_kses( $html, $allowed_html_tags );
+
+			return $this->normalize_boolean_attributes_conditionally( $sanitized, $boolean_attrs_to_fix );
+		}
+
 	/**
 	 * Sanitizes the HTML.
 	 *

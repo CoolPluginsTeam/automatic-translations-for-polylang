@@ -262,16 +262,19 @@ class ChromeAiTranslator {
         // here.
         if (status === "requires-user-gesture") {
             const message = jQuery(`<span style="display: inline-block;">
-                <h4>Language Model Not Ready:</h4>
+                <p>The translation model for <strong>${targetLanguageLabel} (${targetLanguage})</strong> could not be loaded. Check the following before trying again:</p>
                 <ol>
                     <li>
-                        The model for <strong>${targetLanguageLabel} (${targetLanguage})</strong> still has to be downloaded, and your browser only starts that from a direct click.
+                        Make sure you are using the latest version of Google Chrome.
                     </li>
                     <li>
-                        Close this window and click <strong>AI Translate</strong> again. If the download still does not start, your browser is refusing it.
+                        Next, visit <strong><span data-clipboard-text="chrome://on-device-translation-internals/" target="_blank" class="chrome-ai-translator-flags">chrome://on-device-translation-internals/ ${ChromeAiTranslator.svgIcons('copy')}</span></strong> and check whether the required language pack is installed.
                     </li>
                     <li>
-                        Check <strong><span data-clipboard-text="${browserUrl}://components" target="_blank" class="chrome-ai-translator-flags">${browserUrl}://components ${ChromeAiTranslator.svgIcons('copy')}</span></strong> for <strong>Chrome TranslateKit</strong>, or pick a different translation engine.
+                        After installing the language pack, reload or restart your browser, then click <strong>AI Translate</strong> again.
+                    </li>
+                    <li>
+                        If the language pack is unavailable or unsupported, choose a different translation provider.
                     </li>
                 </ol>
                 <div style="text-align: right;">

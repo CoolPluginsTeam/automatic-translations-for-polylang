@@ -17,6 +17,11 @@ const FilterGutenbergContent = async ({content, service, blockParseRules, postId
     const allowedBlocks=Object.keys(blockParseRules?.AtfpBlockParseRules);
 
     const loopCallback=async (callback, loop, index)=>{
+        // Guard: nested/wildcard rules or missing attrs can pass a non-array.
+        if(!loop || typeof loop.length === 'undefined' || index >= loop.length){
+            return;
+        }
+
         await callback(loop[index], index);
 
         index++;
@@ -52,8 +57,31 @@ const FilterGutenbergContent = async ({content, service, blockParseRules, postId
         let innerContentTransalted=false;
 
         let transltedStrings=[];
+        // Gutenberg omits attrs that still equal the block default. Fill those
+        // back in from the block's own registered block.json default (read
+        // server-side via WP_Block_Type_Registry into AtfpBlockDefaults) so
+        // translate + save persist a real value instead of nothing.
         if(allowedBlocks.includes(blockContent.blockName)){
-            if(blockContent.attrs && Object.keys(blockContent.attrs).length > 0){
+            if(!blockContent.attrs || typeof blockContent.attrs !== 'object'){
+                blockContent.attrs={};
+            }
+            const resolvedRules=resolveBlockAttributeRules(blockParseRules?.AtfpBlockParseRules[blockContent.blockName]);
+            const blockDefaults=blockParseRules?.AtfpBlockDefaults?.[blockContent.blockName];
+            if(resolvedRules && blockDefaults){
+                Object.keys(resolvedRules).forEach((attrKey)=>{
+                    if(true !== resolvedRules[attrKey]){
+                        return;
+                    }
+                    if(blockContent.attrs[attrKey] !== undefined && blockContent.attrs[attrKey] !== null && blockContent.attrs[attrKey] !== ''){
+                        return;
+                    }
+                    const defaultValue=blockDefaults[attrKey];
+                    if(defaultValue){
+                        blockContent.attrs[attrKey]=defaultValue;
+                    }
+                });
+            }
+            if(Object.keys(blockContent.attrs).length > 0){
                 transltedStrings = await filterBlockAttr([...keys, 'attrs'], blockContent, blockParseRules?.AtfpBlockParseRules[blockContent.blockName]);
             }
         }
@@ -148,6 +176,10 @@ const FilterGutenbergContent = async ({content, service, blockParseRules, postId
      */
     const filterBlockObjectAttr=async (blockRule, keys, currentBlock, translatedKeys=[])=>{
 
+        if(!blockRule || currentBlock === null || currentBlock === undefined){
+            return translatedKeys;
+        }
+
         if(Object.getPrototypeOf(blockRule) === Object.prototype){
             const blockRuleKeys=Object.keys(blockRule);
 
@@ -167,9 +199,20 @@ const FilterGutenbergContent = async ({content, service, blockParseRules, postId
 
             await loopCallback(runLoopAsyncInner, blockRuleKeys, 0);
         }else if(Object.getPrototypeOf(blockRule) === Array.prototype){
-            const runLoopAsyncInner=async(item, index)=>{
+            if(!blockRule[0]){
+                return translatedKeys;
+            }
+            // Array rules (* in wpml-config) apply to arrays; also support object maps safely.
+            const isList=Array.isArray(currentBlock);
+            const list=isList ? currentBlock : (currentBlock && typeof currentBlock === 'object' ? Object.keys(currentBlock) : []);
+            const runLoopAsyncInner=async(itemOrKey, index)=>{
+                const item=isList ? itemOrKey : currentBlock[itemOrKey];
+                const pathKey=isList ? index : itemOrKey;
+                if(item === null || item === undefined){
+                    return;
+                }
                 if(typeof blockRule[0] === 'boolean' && true === blockRule[0]){
-                    const uniqueKey=[...keys, index].join('_atfp_');
+                    const uniqueKey=[...keys, pathKey].join('_atfp_');
 
                     const stringContent=await getStringContent(item, uniqueKey);
 
@@ -178,11 +221,11 @@ const FilterGutenbergContent = async ({content, service, blockParseRules, postId
                         storeSourceString(uniqueKey, item, stringContent);
                     }
                 }else if(Object.getPrototypeOf(blockRule[0]) === Object.prototype || Object.getPrototypeOf(blockRule[0]) === Array.prototype){
-                    await filterBlockObjectAttr(blockRule[0], [...keys, index], item, translatedKeys);
+                    await filterBlockObjectAttr(blockRule[0], [...keys, pathKey], item, translatedKeys);
                 }
             }
 
-            await loopCallback(runLoopAsyncInner, currentBlock, 0);
+            await loopCallback(runLoopAsyncInner, list, 0);
         }
     }
 
@@ -191,19 +234,46 @@ const FilterGutenbergContent = async ({content, service, blockParseRules, postId
      * @param {Object} block
      * @param {Object} blockRule
      */
+    /**
+     * @param {Object} blockRule
+     */
+    const resolveBlockAttributeRules=(blockRule)=>{
+        if(!blockRule || typeof blockRule !== 'object'){
+            return {};
+        }
+        // Free-style / custom Add rules: { attributes: { titleText: true } }
+        if(blockRule.attributes && typeof blockRule.attributes === 'object' && !Array.isArray(blockRule.attributes)){
+            return blockRule.attributes;
+        }
+        // Flat rules: { titleText: true, xpaths: [...] }
+        const flat={};
+        Object.keys(blockRule).forEach((key)=>{
+            if(key === 'xpaths'){
+                return;
+            }
+            flat[key]=blockRule[key];
+        });
+        return flat;
+    }
+
     const filterBlockAttr=async (keys, block, blockRule)=>{
 
         const translatedKeys = [];
 
         let currentBlock=block?.attrs;
 
-        const attributeKeys=Object.keys(currentBlock);
-        const blockRules=Object.keys(blockRule?.attributes);
+        const attributeKeys=Object.keys(currentBlock || {});
+        const resolvedRules=resolveBlockAttributeRules(blockRule);
+        const blockRules=Object.keys(resolvedRules);
 
         const allowedAttributeKeys=blockRules.filter(key=>attributeKeys.includes(key));
 
+        if(allowedAttributeKeys.length < 1){
+            return translatedKeys;
+        }
+
         const runLoopAsyncAttr=async(key, index)=>{
-            const activeBlockRule=blockRule?.attributes[key];
+            const activeBlockRule=resolvedRules[key];
             const currentKey = JSON.parse(JSON.stringify(keys));
 
             if(true === activeBlockRule){
@@ -218,7 +288,9 @@ const FilterGutenbergContent = async ({content, service, blockParseRules, postId
                     }
                 }
             }else if(typeof activeBlockRule === 'object'){
-                await filterBlockObjectAttr(activeBlockRule, [...keys, key], currentBlock[key], translatedKeys);
+                if(currentBlock[key] !== null && currentBlock[key] !== undefined){
+                    await filterBlockObjectAttr(activeBlockRule, [...keys, key], currentBlock[key], translatedKeys);
+                }
             }
         }
 
