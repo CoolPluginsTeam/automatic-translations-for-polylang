@@ -32,7 +32,10 @@
 
         const BulkTranslationLinkText = document.createElement('span');
         BulkTranslationLinkText.classList.add('atfp-btn-text');
-        BulkTranslationLinkText.textContent = 'Get Pro for Classic Editor Translation';
+        // This modal is shown for every editor the free version cannot read, not
+        // only the classic one -- page builders such as Divi or WPBakery land
+        // here too, because their content carries no blocks to detect.
+        BulkTranslationLinkText.textContent = 'Get Pro to Translate This Content';
 
         BulkTranslationLink.append(AiIconImg);
         BulkTranslationLink.append(BulkTranslationLinkText);
@@ -51,7 +54,7 @@
                     </div>
                     <div class="modal-body atfp-modal-body">
                         <p>
-                            If you want to translate classic editor content, you can try our pro version to unlock all advanced features.
+                            This content was not built with the block editor or Elementor, so the free version cannot read it. Upgrade to Pro to translate content from the classic editor and other page builders.
                         </p>
                     </div>
                     <div class="modal-footer-notice">

@@ -12,6 +12,13 @@ if(!current_user_can('manage_options')){
 
             check_admin_referer( 'atfp_save_optin_settings', 'atfp_optin_nonce' );
 
+        // Default post status applied to posts created by bulk translation.
+        $atfp_bulk_post_status = isset($_POST['atfp_bulk_post_status']) ? sanitize_key(wp_unslash($_POST['atfp_bulk_post_status'])) : '';
+
+        if (in_array($atfp_bulk_post_status, array('publish', 'draft'), true)) {
+            update_option('atfp_bulk_post_status', $atfp_bulk_post_status);
+        }
+
         // Handle feedback checkbox
         $atfp_feedback_opt_in = isset($_POST['atfp-dashboard-feedback-checkbox']) ? 'yes' : 'no';
         
@@ -42,34 +49,70 @@ if(!current_user_can('manage_options')){
     <div class="atfp-dashboard-settings-container">
     <div class="header">
         <h1><?php echo esc_html__('Settings', 'automatic-translations-for-polylang'); ?></h1>
-        <div class="atfp-dashboard-status">
-            <span><?php echo esc_html__('Inactive', 'automatic-translations-for-polylang'); ?></span>
-            <a href="<?php echo esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?'.sanitize_text_field($atfp_utm_parameters).'&utm_medium=inside&utm_campaign=get_pro&utm_content=settings'); ?>" class='atfp-dashboard-btn' target="_blank">
-                <img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/upgrade-now.svg'); ?>" alt="<?php esc_attr_e('Upgrade Now', 'automatic-translations-for-polylang'); ?>">
-                <?php echo esc_html__('Upgrade Now', 'automatic-translations-for-polylang'); ?>
-            </a>
-        </div>
     </div>
 
     <?php
         $atfp_enabled_providers = ATFP_Helper::get_active_providers();
         $atfp_polylang_supported_languages=ATFP_Helper::get_polylang_supported_languages();
-        $user_agent_info=sanitize_text_field(wp_unslash($_SERVER['HTTP_USER_AGENT']));
-        $browserType='chrome';
-        $browser_title='Chrome';
+        // Some requests arrive without a user agent, and the checks below simply
+        // fall through to the enabled provider when the string is empty.
+        $user_agent_info=isset($_SERVER['HTTP_USER_AGENT']) ? sanitize_text_field(wp_unslash($_SERVER['HTTP_USER_AGENT'])) : '';
+        $chrome_enabled = is_array($atfp_enabled_providers) && in_array('chrome-built-in-ai', $atfp_enabled_providers);
+        $edge_enabled   = is_array($atfp_enabled_providers) && in_array('edge-built-in-ai', $atfp_enabled_providers);
 
-        if(strpos($user_agent_info, 'Edg') !== false || (!in_array('chrome-built-in-ai', $atfp_enabled_providers) && $browserType !== 'chrome')){
-            $browserType='edge';
-            $browser_title='Edge';
+        $is_edge   = strpos($user_agent_info, 'Edg') !== false;
+        $is_chrome = strpos($user_agent_info, 'Chrome') !== false && !$is_edge;
+
+        if ($is_edge) {
+            $browserType   = 'edge';
+            $browser_title = 'Edge';
+        } elseif ($is_chrome) {
+            $browserType   = 'chrome';
+            $browser_title = 'Chrome';
+        } else {
+            // Other browsers or fallback
+            if ($chrome_enabled) {
+                $browserType   = 'chrome';
+                $browser_title = 'Chrome';
+            } elseif ($edge_enabled) {
+                $browserType   = 'edge';
+                $browser_title = 'Edge';
+            } else {
+                $browserType   = 'chrome';
+                $browser_title = 'Chrome';
+            }
         }
 
         if ( is_array( $atfp_enabled_providers ) && (($browserType === 'chrome' && in_array( 'chrome-built-in-ai', $atfp_enabled_providers )) || ($browserType === 'edge' && in_array('edge-built-in-ai', $atfp_enabled_providers))) ) {
 			$logo_base_url=ATFP_URL . 'assets/images/';
         ?>
+            <div class="atfp-dashboard-chrome-ai-settings">
+                <?php if(empty($atfp_polylang_supported_languages)){ ?>
+                    <div class="atfp-dashboard-settings-card">
+                        <span class="atfp-chrome-no-languages-content"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" id="error"><g><rect fill="none"/></g><g><path d="M12 7c.55 0 1 .45 1 1v4c0 .55-.45 1-1 1s-1-.45-1-1V8c0-.55.45-1 1-1zm-.01-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm1-3h-2v-2h2v2z"></path></g></svg><?php
+                            printf(
+                                        wp_kses_post(
+                                            // translators: %s is a link to the Polylang languages page.
+                                            __( 'Add at least %1$s to use the %2$s AI translation test', 'automatic-translations-for-polylang' ) // translators: %1$s is the link to the Polylang languages page, %2$s is the browser title
+                                        ),
+                                        '<a href="' . esc_url( admin_url( 'admin.php?page=mlang' ) ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'one language in Polylang', 'automatic-translations-for-polylang' ) . '</a>',
+                                        esc_html( $browser_title )
+                                    );
+                            ?></span>
+                    </div>
+                <?php }else{ ?>
+                    <!-- Chrome AI Setup Framework Container -->
+                    <div id="cais-chrome-setup-container"></div>
+                <?php } ?>
+            </div>
+        <?php }
+    ?>
+
+    <form method="post">
             <h2 class="atfp-section-title atfp-section-title-with-icon">
-                <span class="atfp-section-icon atfp-icon-sparkle" aria-hidden="true">
+                <span class="atfp-section-icon atfp-icon-translate" aria-hidden="true">
                     <img
-                        src="<?php echo esc_url( $logo_base_url . $browserType . '.png' ); ?>"
+                        src="<?php echo esc_url( ATFP_URL . 'assets/images/translate.svg' ); ?>"
                         alt=""
                         width="20"
                         height="20"
@@ -77,58 +120,28 @@ if(!current_user_can('manage_options')){
                         decoding="async"
                     />
                 </span>
-                <?php printf(esc_html__( '%1$s AI Configuration', 'automatic-translations-for-polylang' ), $browser_title); // translators: %1$s is the browser title ?>
+                <?php esc_html_e('Translated Posts Status', 'automatic-translations-for-polylang'); ?>
             </h2>
             <p class="atfp-section-description">
-            <?php printf(esc_html__( 'Use %1$s built-in AI to translate strings. Configure and test it here.', 'automatic-translations-for-polylang' ), $browser_title); // translators: %1$s is the browser title ?>
+                <?php esc_html_e('Choose the default status for Translated posts', 'automatic-translations-for-polylang'); ?>
             </p>
-            <div class="atfp-dashboard-chrome-ai-settings">
-                <!-- Chrome Local AI Notice -->
-                <div id="atfp-chrome-local-ai-notice" class="atfp-chrome-local-ai-notice atfp-dashboard-settings-card">
-                <?php if(empty($atfp_polylang_supported_languages)){ ?>
-                    <span class="atfp-chrome-no-languages-content"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" id="error"><g><rect fill="none"/></g><g><path d="M12 7c.55 0 1 .45 1 1v4c0 .55-.45 1-1 1s-1-.45-1-1V8c0-.55.45-1 1-1zm-.01-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm1-3h-2v-2h2v2z"></path></g></svg><?php
-                        printf(
-									wp_kses_post(
-										// translators: %s is a link to the Polylang languages page.
-										__( 'Add at least %1$s to use the %2$s AI translation test', 'automatic-translations-for-polylang' ) // translators: %1$s is the link to the Polylang languages page, %2$s is the browser title
-									),
-									'<a href="' . esc_url( admin_url( 'admin.php?page=mlang' ) ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'one language in Polylang', 'automatic-translations-for-polylang' ) . '</a>',
-									$browser_title
-								);
-                ?></span>
-                <?php }else{ ?>
-                    <div class="atfp-chrome-local-ai-notice-content">
-                        <h3 id="atfp-chrome-notice-heading" class="atfp-chrome-notice-heading"></h3>
-                        <div id="atfp-chrome-notice-message" class="atfp-chrome-notice-message"></div>
-                    </div>
-
-                    <!-- Test Translation Section -->
-                    <div id="atfp-chrome-test-translation" class="atfp-chrome-test-translation">
-                        <h3 class="atfp-chrome-test-translation-heading"><?php printf(esc_html__( '%1$s AI Translation Test', 'automatic-translations-for-polylang' ), $browser_title); // translators: %1$s is the browser title ?></h3>
-                        <p class="atfp-chrome-test-translation-description"><?php printf(esc_html__( 'Check whether %1$s AI Translation is properly configured by translating a sample text.', 'automatic-translations-for-polylang' ), $browser_title); // translators: %1$s is the browser title ?></p>
-
-                        <div class="atfp-chrome-test-translation-language-pair">
-                            <label class="atfp-chrome-test-translation-label"><?php esc_html_e('Language Pair:', 'automatic-translations-for-polylang'); ?></label>
-                            <select id="atfp-test-translation-source" class="atfp-chrome-test-translation-source"></select>
-                            <span class="atfp-chrome-test-translation-arrow">→</span>
-                            <select id="atfp-test-translation-target" class="atfp-chrome-test-translation-target"></select>
-                        </div>
-                        
-                        <input type="text" id="atfp-test-translation-text" class="atfp-chrome-test-translation-text" placeholder="<?php esc_attr_e('Enter text to translate', 'automatic-translations-for-polylang'); ?>" value="Hello, this is a test translation."><br>
-                        <button id="atfp-test-translation-btn" class="atfp-dashboard-btn primary atfp-chrome-test-translation-btn">
-                            <?php esc_html_e('Test Translation', 'automatic-translations-for-polylang'); ?>
-                        </button>
-
-                        <div id="atfp-test-translation-result" class="atfp-chrome-test-translation-result"></div>
-                        <div id="atfp-test-translation-error" class="atfp-chrome-test-translation-error"></div>
-                    </div>
-                <?php } ?>
-                </div>
+            <div class="atfp-dashboard-bulk-settings atfp-dashboard-translation-settings atfp-dashboard-settings-card">
+            <!-- Add bulk translate post status -->
+            <?php $atfp_bulk_post_status = get_option('atfp_bulk_post_status', 'draft'); ?>
+            <label class="atfp-settings-group-label">
+                <?php echo esc_html__('Default Post Status', 'automatic-translations-for-polylang'); ?>
+            </label>
+            <div class="atfp-bulk-translation-post-status-options">
+                <input type="radio" name="atfp_bulk_post_status" id="atfp_bulk_post_status_publish" value="publish" <?php checked($atfp_bulk_post_status, 'publish'); ?>>
+                <label for="atfp_bulk_post_status_publish"><?php echo esc_html__('Publish', 'automatic-translations-for-polylang'); ?></label>
+                <input type="radio" name="atfp_bulk_post_status" id="atfp_bulk_post_status_draft" value="draft" <?php checked($atfp_bulk_post_status, 'draft'); ?>>
+                <label for="atfp_bulk_post_status_draft"><?php echo esc_html__('Draft', 'automatic-translations-for-polylang'); ?></label>
             </div>
-        <?php }
-    ?>
+            <p class="api-settings-description">
+                <?php echo esc_html__('Select the status automatically applied to posts after translation is completed.', 'automatic-translations-for-polylang'); ?>
+            </p>
+            </div>
 
-    <form method="post">
         <div class="atfp-dashboard-settings-pro-features">
         <a href="<?php echo esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?'.sanitize_text_field($atfp_utm_parameters).'&utm_medium=inside&utm_campaign=get_pro&utm_content=settings'); ?>" class='atfp-dashboard-btn' target="_blank">
             <img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/upgrade-now.svg'); ?>" alt="<?php esc_attr_e('Upgrade Now', 'automatic-translations-for-polylang'); ?>">
@@ -229,16 +242,6 @@ if(!current_user_can('manage_options')){
                 <?php echo esc_html__('This setting only works with Gemini AI and OpenAI.', 'automatic-translations-for-polylang'); ?>
             </p>
                                 
-            <!-- Add bulk translate post status -->
-            <label for="bulk-translate-post-status">
-                <?php echo esc_html__('Bulk Translation default Post Status', 'automatic-translations-for-polylang'); ?>
-            </label>
-            <div class="atfp-bulk-translation-post-status-options">
-                <input type="radio" name="publish" id="publish" value="publish" disabled>
-                <label for="publish"><?php echo esc_html__('Publish', 'automatic-translations-for-polylang'); ?></label>
-                <input type="radio" name="draft" id="draft" value="draft" checked disabled>
-                <label for="draft"><?php echo esc_html__('Draft', 'automatic-translations-for-polylang'); ?></label>
-            </div>
             <!-- Add slug translation -->
             <label for="slug-translation-settings">
                 <?php echo esc_html__('Slug Translation Settings', 'automatic-translations-for-polylang'); ?>
@@ -303,6 +306,7 @@ if(!current_user_can('manage_options')){
             </div>
             </div>
             </div>
+
             <?php if (get_option('cpfm_opt_in_choice_cool_translations')) : ?>
                 <h3 class="atfp-section-title">
                     <?php esc_html_e('Usage Data Sharing', 'automatic-translations-for-polylang'); ?>
@@ -326,7 +330,7 @@ if(!current_user_can('manage_options')){
                 </div>
             <?php endif; ?>
             <div class="atfp-dashboard-save-btn-container ">
-                <button <?php echo get_option('cpfm_opt_in_choice_cool_translations') ? '' : 'disabled'; ?> class="atfp-dashboard-btn primary"><?php echo esc_html__('Save Changes', 'automatic-translations-for-polylang'); ?></button>
+                <button class="atfp-dashboard-btn primary"><?php echo esc_html__('Save Changes', 'automatic-translations-for-polylang'); ?></button>
             </div>
             </form>
     </div>

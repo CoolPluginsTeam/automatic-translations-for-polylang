@@ -45,6 +45,43 @@ class Translator {
 
     const status = await this.languagePairAvality(this.sourceLang, this.targetLang);
 
+    // The model never finished preparing. Point at the browser component that
+    // has to be healthy instead of repeating language pack steps that cannot
+    // help here.
+    if (status === "download-timeout") {
+      const browserName = Translator.getBrowserType() === 'Edge' ? 'Edge' : 'Chrome';
+      const browser = Translator.getBrowserType() === 'Edge' ? 'edge' : 'chrome';
+
+      return {
+        error: `<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">
+          <h4>${browserName} Translation Model Could Not Be Loaded</h4>
+          <p>${browserName} could not complete the download of the translation model required for <strong>${this.sourceLangLabel} (${this.sourceLang})</strong> to <strong>${this.targetLangLabel} (${this.targetLang})</strong>. Try these steps:</p>
+          <ol>
+              <li>Open <strong><span data-clipboard-text="${browser}://components" target="_blank" class="chrome-ai-translator-flags">${browser}://components ${svgIcons({ iconName: 'copy' })}</span></strong> in a new tab.</li>
+              <li>Find <strong>Chrome TranslateKit</strong> and check its status.</li>
+              <li>If the version shows <strong>0.0.0.0</strong> or an update error, click <strong>Check for update</strong>.</li>
+              <li>Make sure your internet connection is working, and disable any VPN, proxy or antivirus web protection that may block the download.</li>
+              <li>Reload this page and try the translation again.</li>
+              <li>If ${browserName} still cannot load the translation model, choose a different translation engine.</li>
+          </ol>
+      </span>` };
+    }
+
+    // The browser only starts a model download from a direct click.
+    if (status === "requires-user-gesture") {
+      const browser = Translator.getBrowserType() === 'Edge' ? 'edge' : 'chrome';
+
+      return {
+        error: `<span style="color: #ff4646; margin-top: .5rem; display: inline-block;">
+          <h4>Language Model Not Ready:</h4>
+          <ol>
+              <li>The model for <strong>${this.targetLangLabel} (${this.targetLang})</strong> still has to be downloaded, and your browser only starts that from a direct click.</li>
+              <li>Please click <strong>Translate</strong> again to start the download.</li>
+              <li>If this keeps coming back, your browser is refusing the download. Check <strong><span data-clipboard-text="${browser}://components" target="_blank" class="chrome-ai-translator-flags">${browser}://components ${svgIcons({ iconName: 'copy' })}</span></strong> for <strong>Chrome TranslateKit</strong>, or pick a different translation engine.</li>
+          </ol>
+      </span>` };
+    }
+
     // Handle case for language pack after download
     if (status === "after-download" || status === "downloadable" || status === "unavailable") {
       return {
@@ -131,6 +168,63 @@ class Translator {
     return true;
   }
 
+  /**
+   * How long Translator.create() may go silent before it counts as stalled.
+   *
+   * @since 1.6.1
+   */
+  private static CREATE_TIMEOUT_MS = 20000;
+
+  /**
+   * Outcomes already settled this page load, keyed by source and target.
+   *
+   * A pair the browser cannot prepare fails the same way every time, and each
+   * retry paid the full create() timeout again.
+   *
+   * @since 1.6.1
+   */
+  private static pairStatusCache = new Map<string, string>();
+
+  /**
+   * Guard a call that can stay pending forever.
+   *
+   * Translator.create() never settles when the browser cannot fetch the model:
+   * the monitor reports 0% then 100% and the promise is simply left hanging.
+   * Nothing throws and nothing resolves, so the modal keeps its loading state
+   * for the rest of the session.
+   *
+   * The clock measures silence, not total time: a real download that is still
+   * reporting progress keeps resetting it, so only a genuinely stuck call is
+   * cut off.
+   *
+   * @since 1.6.1
+   */
+  private static withTimeout = <T>(
+    run: (keepAlive: () => void) => Promise<T>,
+    ms = Translator.CREATE_TIMEOUT_MS
+  ): Promise<T> => {
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    let onTimeout: (reason: Error) => void = () => { };
+
+    const deadline = new Promise<never>((_resolve, reject) => {
+      onTimeout = reject;
+    });
+
+    const keepAlive = () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        const error = new Error('The browser did not finish preparing the translation model.');
+        error.name = 'TimeoutError';
+        onTimeout(error);
+      }, ms);
+    };
+
+    keepAlive();
+
+    return Promise.race([Promise.resolve(run(keepAlive)), deadline])
+      .finally(() => clearTimeout(timer));
+  }
+
   private languagePairAvality = async (source: string, target: string) => {
     let status = "unavailable";
 
@@ -161,24 +255,45 @@ class Translator {
 
     // @ts-ignore
     if (['unavailable', 'downloading', 'after-download', 'downloadable'].includes(status) && window?.self?.Translator) {
+      const cacheKey = `${source}|${target}`;
+
+      if (Translator.pairStatusCache.has(cacheKey)) {
+        return Translator.pairStatusCache.get(cacheKey) as string;
+      }
+
       try {
+        // Guarded by the condition above, so the API is present here.
         // @ts-ignore
-        const translator = await window?.self?.Translator?.create({
+        const translatorApi: any = window?.self?.Translator;
+
+        await Translator.withTimeout((keepAlive) => translatorApi.create({
           sourceLanguage: source,
           targetLanguage: target,
           monitor(m) {
             m.addEventListener('downloadprogress', (e) => {
+              // Real progress, so the model is not stuck.
+              keepAlive();
               console.log(`Downloaded ${e.loaded * 100}%`);
             });
           },
-        });
+        }));
 
         // @ts-ignore
         status = await window?.self?.Translator?.availability({
           sourceLanguage: source,
           targetLanguage: target,
         });
-      } catch (err) { console.log('err', err) }
+      } catch (err) {
+        console.warn('Translator init error:', err);
+
+        if (err && 'TimeoutError' === (err as Error).name) {
+          status = 'download-timeout';
+        } else if (err && (err as Error).message && (err as Error).message.includes('Requires a user gesture')) {
+          status = 'requires-user-gesture';
+        }
+      }
+
+      Translator.pairStatusCache.set(cacheKey, status);
     }
 
     return status;
@@ -209,11 +324,15 @@ class Translator {
 
     // @ts-ignore
     if ("Translator" in window?.self && "create" in window?.self?.Translator) {
+      // Guarded for the same reason as the availability probe: a stalled
+      // create() here would freeze the translation itself.
       // @ts-ignore
-      const translator = await window.self.Translator.create({
+      const translatorApi: any = window.self.Translator;
+
+      const translator = await Translator.withTimeout(() => translatorApi.create({
         sourceLanguage: this.sourceLang,
         targetLanguage: this.targetLang,
-      });
+      }));
 
       return translator;
     }

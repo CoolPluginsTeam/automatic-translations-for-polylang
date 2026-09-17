@@ -7,7 +7,9 @@
     "build:at": "wp-scripts build src/automatic-translate/index.js --output-path=../assets/automatic-translate/",
     "start:at": "wp-scripts start src/automatic-translate/index.js --output-path=../assets/automatic-translate/",
     "build:inline-translate": "webpack --mode production --env inlineTranslate=true",
-    "start:inline-translate": "webpack --mode development --env inlineTranslate=true --watch"
+    "start:inline-translate": "webpack --mode development --env inlineTranslate=true --watch",
+    "build:bulk-translate": "wp-scripts build src/bulk-translate/index.js --output-path=../assets/bulk-translate/",
+    "start:bulk-translate": "wp-scripts start src/bulk-translate/index.js --output-path=../assets/bulk-translate/"
   },
   "repository": {
     "type": "git",
@@ -35,11 +37,15 @@
     "@wordpress/plugins": "^7.11.0",
     "@wordpress/rich-text": "^7.14.0",
     "@wordpress/scripts": "^30.5.0",
+    "@reduxjs/toolkit": "^2.9.0",
     "dompurify": "^3.3.0",
+    "lodash": "^4.17.21",
+    "p-limit": "^7.1.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.4.0",
     "react-loading-skeleton": "^3.5.0",
+    "react-redux": "^9.2.0",
     "showdown": "^2.1.0"
   },
   "devDependencies": {

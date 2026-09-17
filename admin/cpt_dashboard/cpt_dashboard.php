@@ -243,8 +243,8 @@ if(!class_exists('Atfp_Dashboard')){
         public static function ctp_enqueue_assets(){
             if(function_exists('wp_style_is') && !wp_style_is('atfp-review-style', 'enqueued')){
                 $plugin_url = plugin_dir_url(__FILE__);
-                wp_enqueue_style('atfp-review-style', esc_url($plugin_url.'assets/css/cpt-dashboard.css'), array(), '1.0.0', 'all');
-                wp_enqueue_script('atfp-review-script', esc_url($plugin_url.'assets/js/cpt-dashboard.js'), array('jquery'), '1.0.0', true);
+                wp_enqueue_style('atfp-review-style', esc_url($plugin_url.'assets/css/cpt-dashboard.min.css'), array(), '1.0.0', 'all');
+                wp_enqueue_script('atfp-review-script', esc_url($plugin_url.'assets/js/cpt-dashboard.min.js'), array('jquery'), '1.0.0', true);
             }
         }
 

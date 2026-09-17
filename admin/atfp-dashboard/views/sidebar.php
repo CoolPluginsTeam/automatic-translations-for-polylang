@@ -6,7 +6,7 @@ if(!defined('ABSPATH')){
 <!-- Right Sidebar -->
 <div class="atfp-dashboard-sidebar">
     <div class="atfp-dashboard-status atfp-dashboard-card">
-        <h3><?php esc_html_e('Auto Translation Status', 'automatic-translations-for-polylang'); ?></h3>
+        <h3><?php esc_html_e('Translation Statistics', 'automatic-translations-for-polylang'); ?></h3>
         <div class="atfp-dashboard-sts-top">
             <?php
 
@@ -49,11 +49,11 @@ if(!defined('ABSPATH')){
             $atfp_time_taken_str = atfp_format_time_taken($totals['time_taken']);
             ?>
               <span><?php echo esc_html(atfp_format_number($totals['character_count'])); ?></span>
-            <span><?php esc_html_e('Total Characters Translated!', 'automatic-translations-for-polylang'); ?></span>
+            <span><?php esc_html_e('Characters Translated!', 'automatic-translations-for-polylang'); ?></span>
         </div>
         <ul class="atfp-dashboard-sts-btm">
             <li><span><?php esc_html_e('Total Strings', 'automatic-translations-for-polylang'); ?></span> <span><?php echo esc_html(atfp_format_number($totals['string_count'])); ?></span></li>
-            <li><span><?php esc_html_e('Total Pages / Posts', 'automatic-translations-for-polylang'); ?></span> <span><?php echo esc_html($totals['translation_count']); ?></span></li>
+            <li><span><?php esc_html_e('Pages / Posts Translated', 'automatic-translations-for-polylang'); ?></span> <span><?php echo esc_html($totals['translation_count']); ?></span></li>
             <li><span><?php esc_html_e('Time Taken', 'automatic-translations-for-polylang'); ?></span> <span><?php echo esc_html($atfp_time_taken_str); ?></span></li>
         </ul>
         <?php
@@ -75,7 +75,7 @@ if(!defined('ABSPATH')){
             <?php } ?>
     </div>
     <div class="atfp-dashboard-translate-full atfp-dashboard-card">
-        <h3><?php esc_html_e('Automatically Translate Plugins & Themes', 'automatic-translations-for-polylang'); ?></h3>
+        <h3><?php esc_html_e('Translate Plugins & Themes Automatically', 'automatic-translations-for-polylang'); ?></h3>
         <div class="atfp-dashboard-addon first">
             <div class="atfp-dashboard-addon-l">
                 <strong><?php echo esc_html(atfp_get_plugin_display_name('automatic-translator-addon-for-loco-translate')); ?></strong>
@@ -110,13 +110,13 @@ if(!defined('ABSPATH')){
         </div>
     </div>
     <div class="atfp-dashboard-translate-support atfp-dashboard-card">
-        <h3><?php esc_html_e('Need Help? 🤝', 'automatic-translations-for-polylang'); ?></h3>
+        <h3><?php esc_html_e('Need Help?', 'automatic-translations-for-polylang'); ?></h3>
         <p><?php esc_html_e('Facing any issue with AI translation? Create a support thread and our team will assist you.', 'automatic-translations-for-polylang'); ?></p>
         <a href="<?php echo esc_url('https://wordpress.org/support/plugin/automatic-translations-for-polylang/'); ?>" class="atfp-dashboard-btn primary" target="_blank"><?php esc_html_e('Get Support →', 'automatic-translations-for-polylang'); ?></a>
     </div>
     <div class="atfp-dashboard-rate-us atfp-dashboard-card">
-        <h3><?php esc_html_e('Happy with AutoPoly? ✨', 'automatic-translations-for-polylang'); ?></h3>
-        <p><?php esc_html_e('We\'d love your feedback! Hope this addon made auto-translations easier for you.', 'automatic-translations-for-polylang'); ?></p>
+        <h3><?php esc_html_e('Enjoying AutoPoly?', 'automatic-translations-for-polylang'); ?></h3>
+        <p><?php esc_html_e('We’d love to hear your feedback! If AutoPoly makes translation easier for you, please leave us a review.', 'automatic-translations-for-polylang'); ?></p>
         <a href="https://wordpress.org/support/plugin/automatic-translations-for-polylang/reviews/#new-post" class="atfp-dashboard-btn" target="_blank"><?php esc_html_e('Leave a Review ★★★★★', 'automatic-translations-for-polylang'); ?></a>
     </div>
 </div>

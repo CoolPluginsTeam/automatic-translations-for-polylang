@@ -1,0 +1,2233 @@
+$prefix: atfp-bulk-translate;
+
+// Shared by the setup and the translating screens so the modal keeps one width
+// for the whole flow instead of resizing between steps.
+$modal-width: clamp(320px, 1040px, 94vw);
+
+// Bulk action group shown above the posts table.
+.#{$prefix}-btn-group {
+    align-items: center;
+    display: inline-flex;
+    gap: 6px;
+    vertical-align: middle;
+}
+
+// Core styles .wp-core-ui .button (0,2,0) and a branch scoped rule paints
+// button icons with --wp-admin-theme-color (0,4,0) -- the same blue as the
+// primary button, which made the icon invisible. Both selectors below are
+// deliberately more specific than those so the layout and colour stick.
+.wp-core-ui .button.#{$prefix}-btn {
+    align-items: center;
+    display: inline-flex;
+    gap: 6px;
+}
+
+/*
+ * Attention state, added by atfp-admin-views-link.js only when the visitor
+ * arrived from a dashboard translate button. A ripple rather than a plain zoom,
+ * so a wide button does not visibly jump while the page is being read.
+ */
+.wp-core-ui .button.#{$prefix}-btn.#{$prefix}-attention-btn {
+    animation: #{$prefix}-attention 2s ease-out infinite;
+    position: relative;
+    z-index: 1;
+}
+
+// Settle the moment the pointer arrives, so the click target stops moving.
+.wp-core-ui .button.#{$prefix}-btn.#{$prefix}-attention-btn:hover,
+.wp-core-ui .button.#{$prefix}-btn.#{$prefix}-attention-btn:focus {
+    animation: none;
+}
+
+@keyframes #{$prefix}-attention {
+    0% {
+        box-shadow: 0 0 0 0 rgba(34, 113, 177, .7);
+        transform: scale(1);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(34, 113, 177, 0);
+        transform: scale(1.02);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(34, 113, 177, 0);
+        transform: scale(1);
+    }
+}
+
+// A looping animation is what this preference exists to silence.
+@media (prefers-reduced-motion: reduce) {
+    .wp-core-ui .button.#{$prefix}-btn.#{$prefix}-attention-btn {
+        animation: none;
+    }
+}
+
+/*
+ * Elementor's editor-one stylesheet repaints core buttons on its own admin
+ * screens -- the Elementor Templates list among them -- with
+ * `#wpcontent .wp-core-ui .button.button-primary`, an ID selector that swaps
+ * the WordPress blue for a pale palette colour with near black text. That left
+ * this button looking like a secondary one and hid the white icon below
+ * against it.
+ *
+ * The declarations are core's own from wp-includes/css/buttons.css, marked
+ * important so the button keeps the WordPress primary look on any screen,
+ * whatever a page builder paints over it. The custom properties stay in front
+ * of the fallbacks so a non default admin colour scheme still leads.
+ */
+.wp-core-ui .button.button-primary.#{$prefix}-btn,
+.wp-core-ui .button.button-primary.#{$prefix}-btn:focus {
+    background: var(--wp-admin-theme-color, #3858e9) !important;
+    border-color: var(--wp-admin-theme-color, #3858e9) !important;
+    color: #fff !important;
+}
+
+.wp-core-ui .button.button-primary.#{$prefix}-btn:hover {
+    background: var(--wp-admin-theme-color-darker-10, #2145e6) !important;
+    border-color: var(--wp-admin-theme-color-darker-10, #2145e6) !important;
+    color: #fff !important;
+}
+
+.wp-core-ui .button.button-primary.#{$prefix}-btn:active {
+    background: var(--wp-admin-theme-color-darker-20, #183ad6) !important;
+    border-color: var(--wp-admin-theme-color-darker-20, #183ad6) !important;
+    color: #fff !important;
+}
+
+.wp-core-ui .button.button-primary.#{$prefix}-btn .dashicons,
+.wp-core-ui .button.button-primary.#{$prefix}-btn:hover .dashicons,
+.wp-core-ui .button.button-primary.#{$prefix}-btn:focus .dashicons {
+    color: #fff !important;
+    flex-shrink: 0;
+    font-family: dashicons;
+    font-size: 18px;
+    height: 18px;
+    line-height: 1;
+    margin: 0;
+    vertical-align: middle;
+    width: 18px;
+}
+
+.#{$prefix}-btn_re_translation {
+
+    margin-left: 10px !important;
+}
+
+.#{$prefix}-notice {
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+    border: 1px solid #c3c4c7;
+    border-left-width: 4px;
+    padding: 4.8px;
+    margin-top: 8px;
+
+    p {
+        padding: 0;
+        margin: 0;
+        font-size: 14px;
+    }
+
+    &-warning {
+        border-left-color: #f0ad4e;
+    }
+
+    &-error {
+        border-left-color: #d9534f;
+    }
+
+    &-success {
+        border-left-color: #5cb85c;
+    }
+}
+
+##{$prefix}-wrapper {
+    display: none;
+    font-family: Inter, Figtree, sans-serif;
+
+    &.#{$prefix}-active {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(2px);
+        z-index: 100000;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.3s ease;
+        display: flex !important;
+        opacity: 1;
+        visibility: visible;
+        flex-direction: column;
+    }
+
+    ##{$prefix}-container {
+        background: white;
+        position: relative;
+        border-radius: 8px;
+        max-width: 100vw;
+        overflow: hidden;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+
+        /*
+         * Stands in for the status screen while the browser support check runs.
+         * It used to be an empty div with no styles, and the container collapses
+         * to its content, so the modal opened as a zero height white box -- from
+         * the user's side, clicking AI Translate simply did nothing.
+         */
+        .#{$prefix}-skeleton-loader {
+            padding: 24px;
+            box-sizing: border-box;
+
+            &::before,
+            &::after {
+                content: '';
+                display: block;
+                background: linear-gradient(90deg,
+                        #e0e0e0 25%,
+                        #f5f5f5 50%,
+                        #e0e0e0 75%);
+                background-size: 200% 100%;
+                animation: shimmer 1.2s infinite linear;
+                border-radius: 4px;
+            }
+
+            &::before {
+                height: 26px;
+                width: 45%;
+                margin-bottom: 20px;
+            }
+
+            &::after {
+                height: 160px;
+                width: 100%;
+            }
+        }
+
+        &.#{$prefix}-status-modal-active {
+            width: $modal-width;
+            height: auto;
+            max-height: 70vh;
+
+            &.#{$prefix}-empty-posts {
+                height: auto;
+
+                .#{$prefix}-modal-desc {
+                    margin-bottom: 10px;
+                }
+
+                p {
+                    font-size: 1rem;
+                    color: #1d2327;
+                    font-weight: 500;
+                    text-align: center;
+                    padding: 0;
+                    margin-inline: 22px;
+                    margin-block: 15px;
+                }
+            }
+
+            .#{$prefix}-progress-skeleton {
+                background: linear-gradient(90deg,
+                        #e0e0e0 25%,
+                        #f5f5f5 50%,
+                        #e0e0e0 75%);
+                background-size: 200% 100%;
+                height: 19px;
+                padding: 9px;
+                box-sizing: border-box;
+                width: 100%;
+                border-radius: 3px;
+                animation: shimmer 1.2s infinite linear;
+                margin-bottom: .5rem;
+            }
+        }
+
+        &.#{$prefix}-setting-modal-active {
+            height: auto;
+            max-height: 90vh;
+        }
+
+        // Every Pro screen shares one width, so the bulk notice and the
+        // re-translation notice cannot come out different sizes just because
+        // their longest line differs.
+        &.#{$prefix}-pro-modal-active {
+            width: clamp(320px, 720px, 94vw);
+        }
+
+        // Bulk page choice needs the two-column list + Pro panel, so it uses
+        // the same width as the setup screen instead of the narrower upsell.
+        &.#{$prefix}-choice-modal-active {
+            width: $modal-width;
+        }
+
+        // The combined setup screen shows languages and engines side by side,
+        // so it needs more room than the single column setting screens.
+        &.#{$prefix}-setup-modal-active {
+            width: $modal-width;
+        }
+
+        /* Setting Modal CSS Start */
+        ##{$prefix}-setting-modal-container {
+            height: 100%;
+
+            .#{$prefix}-setting-modal-content {
+                border-radius: 0px;
+                padding: 0px;
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                max-height: 90vh;
+
+                .#{$prefix}-setting-modal-body {
+                    max-width: 100vw;
+                    overflow-x: auto;
+                    overflow-y: auto;
+                    flex: 1;
+
+                    .#{$prefix}-provider-cards {
+                        display: grid;
+                        grid-template-columns: repeat(2, 1fr);
+                        gap: 16px;
+                        padding: 16px 24px;
+                        max-width: 560px;
+                        min-width: 500px;
+                    }
+
+                    /* Combined setup layout: languages (step 1) and engines (step 2). */
+                    .#{$prefix}-setup-layout {
+                        display: flex;
+                        align-items: stretch;
+                        gap: 0;
+                        padding: 20px 24px;
+                        box-sizing: border-box;
+
+                        .#{$prefix}-setup-column {
+                            display: flex;
+                            flex-direction: column;
+                            flex: 1 1 50%;
+                            min-width: 0;
+                        }
+
+                        .#{$prefix}-setup-column-head {
+                            align-items: center;
+                            display: flex;
+                            gap: 8px;
+
+                            h3 {
+                                color: #1d2327;
+                                font-size: 15px;
+                                font-weight: 600;
+                                margin: 0;
+                                padding: 0;
+                            }
+                        }
+
+                        .#{$prefix}-setup-step-badge {
+                            align-items: center;
+                            background: var(--wp-admin-theme-color, #2271b1);
+                            border-radius: 50%;
+                            box-sizing: border-box;
+                            color: #fff;
+                            display: inline-flex;
+                            flex-shrink: 0;
+                            font-size: 12px;
+                            font-weight: 700;
+                            height: 22px;
+                            justify-content: center;
+                            line-height: 1;
+                            width: 22px;
+                        }
+
+                        .#{$prefix}-setup-column-desc {
+                            color: #888;
+                            font-size: 12px;
+                            font-weight: 500;
+                            margin: 6px 0 12px;
+                            padding: 0;
+                        }
+
+                        .#{$prefix}-setup-divider {
+                            background: #00000012;
+                            flex: 0 0 1px;
+                            margin-inline: 28px;
+                            position: relative;
+                            width: 1px;
+                        }
+
+                        .#{$prefix}-setup-divider-arrow {
+                            align-items: center;
+                            background: #fff;
+                            border: 1px solid #00000012;
+                            border-radius: 50%;
+                            color: #64748b;
+                            display: inline-flex;
+                            font-size: 14px;
+                            height: 32px;
+                            justify-content: center;
+                            left: 50%;
+                            line-height: 1;
+                            position: absolute;
+                            top: 50%;
+                            transform: translate(-50%, -50%);
+                            width: 32px;
+                        }
+
+                        .#{$prefix}-provider-cards {
+                            gap: 12px;
+                            max-width: none;
+                            min-width: 0;
+                            padding: 0;
+                        }
+                    }
+
+/* Multi row selection: suggest one post to translate. */
+                    .#{$prefix}-choice-note {
+                        align-items: flex-start;
+                        background: #f2f5fe;
+                        border: 1px solid #dce3fb;
+                        border-left: 4px solid #3858e9;
+                        border-radius: 8px;
+                        display: flex;
+                        gap: 12px;
+                        margin: 14px 24px 0;
+                        padding: 12px 14px;
+
+                        p {
+                            color: #1d2327;
+                            font-size: 13px;
+                            line-height: 1.5;
+                            margin: 0;
+                            padding: 0;
+                        }
+
+                        strong {
+                            color: #3858e9;
+                        }
+                    }
+
+                    .#{$prefix}-choice-note-icon {
+                        color: #3858e9;
+                        display: inline-flex;
+                        flex-shrink: 0;
+                        margin-top: 1px;
+                    }
+
+                    .#{$prefix}-choice-help {
+                        color: #646970;
+                        font-size: 13px;
+                        line-height: 1.5;
+                        margin: 10px 24px 0 26px;
+                        padding: 0;
+
+                        strong {
+                            color: #1d2327;
+                        }
+                    }
+
+                    .#{$prefix}-choice-heading {
+                        align-items: center;
+                        color: #1d2327;
+                        display: flex;
+                        flex-wrap: wrap;
+                        font-size: 13px;
+                        font-weight: 600;
+                        gap: 8px;
+                        margin: 16px 24px 8px;
+                        padding: 0;
+                    }
+
+                    .#{$prefix}-choice-heading-link {
+                        color: var(--wp-admin-theme-color, #2271b1);
+                        text-decoration: none;
+
+                        &:hover,
+                        &:focus,
+                        &:visited {
+                            color: var(--wp-admin-theme-color-darker-10, #135e96);
+                        }
+
+                        &:hover,
+                        &:focus {
+                            text-decoration: underline;
+                        }
+                    }
+
+                    .#{$prefix}-choice-box,
+                    .#{$prefix}-choice-locked {
+                        background: #fff;
+                        border: 1px solid #dce3fb;
+                        border-radius: 8px;
+                        margin: 0 24px;
+                        overflow: hidden;
+                    }
+
+                    .#{$prefix}-choice-row {
+                        align-items: center;
+                        display: flex;
+                        gap: 10px;
+                        min-width: 0;
+                        padding: 10px 14px;
+                    }
+
+                    .#{$prefix}-choice-box .#{$prefix}-choice-row {
+                        background: #f8faff;
+                        gap: 12px;
+                        padding: 12px 14px;
+                    }
+
+                    .#{$prefix}-choice-box .#{$prefix}-choice-file {
+                        background: #eef2fd;
+                        color: #3858e9;
+                    }
+
+                    .#{$prefix}-choice-locked-list .#{$prefix}-choice-row {
+                        border-bottom: 1px solid #eef1f8;
+
+                        &:last-child {
+                            border-bottom: 0;
+                        }
+                    }
+
+                    .#{$prefix}-choice-check {
+                        align-items: center;
+                        color: #3858e9;
+                        display: inline-flex;
+                        flex-shrink: 0;
+                    }
+
+                    .#{$prefix}-choice-file {
+                        align-items: center;
+                        background: #f3f4f6;
+                        border-radius: 6px;
+                        color: #8c8f94;
+                        display: inline-flex;
+                        flex-shrink: 0;
+                        height: 32px;
+                        justify-content: center;
+                        width: 32px;
+                    }
+
+                    .#{$prefix}-choice-meta {
+                        display: flex;
+                        flex: 1;
+                        flex-direction: column;
+                        gap: 1px;
+                        min-width: 0;
+                    }
+
+                    .#{$prefix}-choice-title {
+                        color: #1d2327;
+                        font-size: 14px;
+                        font-weight: 600;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+
+                    .#{$prefix}-choice-slug {
+                        color: #8c8f94;
+                        font-size: 12px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+
+                    .#{$prefix}-choice-pro-badge {
+                        background: #f5b301;
+                        border-radius: 4px;
+                        color: #1d2327;
+                        flex-shrink: 0;
+                        font-size: 10px;
+                        font-weight: 700;
+                        letter-spacing: .3px;
+                        line-height: 1;
+                        padding: 4px 7px;
+                        text-transform: uppercase;
+                    }
+
+                    .#{$prefix}-choice-inline-actions {
+                        align-items: center;
+                        display: inline-flex;
+                        flex-shrink: 0;
+                        flex-wrap: wrap;
+                        gap: 8px;
+                        justify-content: flex-end;
+
+                        .#{$prefix}-footer-button {
+                            align-items: center;
+                            border-radius: 8px;
+                            display: inline-flex;
+                            gap: 6px;
+                            min-height: 34px;
+                            padding: 0 14px;
+                        }
+
+                        .#{$prefix}-choice-translate-icon {
+                            display: inline-flex;
+                            flex-shrink: 0;
+                        }
+
+                        @media (max-width: 780px) {
+                            width: 100%;
+
+                            .#{$prefix}-footer-button,
+                            .#{$prefix}-choice-secondary {
+                                flex: 1 1 auto;
+                                justify-content: center;
+                            }
+                        }
+                    }
+
+                    // Compact outline control next to Translate This Page.
+                    .#{$prefix}-choice-secondary {
+                        align-items: center;
+                        background: #fff;
+                        border: 1px solid var(--wp-admin-theme-color, #2271b1);
+                        border-radius: 6px;
+                        box-shadow: none;
+                        color: var(--wp-admin-theme-color, #2271b1);
+                        display: inline-flex;
+                        font-size: 12px;
+                        font-weight: 500;
+                        gap: 4px;
+                        line-height: 1.2;
+                        padding: 0 10px;
+
+                        &:hover,
+                        &:focus {
+                            background: #fff;
+                            border-color: var(--wp-admin-theme-color-darker-10, #135e96);
+                            color: var(--wp-admin-theme-color-darker-10, #135e96);
+                        }
+                    }
+
+                    .#{$prefix}-choice-locked-heading {
+                        align-items: center;
+                        display: flex;
+                        gap: 12px;
+                        justify-content: space-between;
+                        margin: 16px 24px 8px;
+
+                        .#{$prefix}-choice-heading {
+                            margin: 0;
+                        }
+                    }
+
+                    .#{$prefix}-choice-select-all {
+                        align-items: center;
+                        color: #3858e9;
+                        display: inline-flex;
+                        flex-shrink: 0;
+                        font-size: 13px;
+                        font-weight: 600;
+                        gap: 6px;
+                        text-decoration: none;
+
+                        &:hover,
+                        &:focus {
+                            color: #2d46ba;
+                        }
+                    }
+
+                    .#{$prefix}-choice-locked {
+                        display: grid;
+                        grid-template-columns: minmax(0, 1.15fr) minmax(240px, .85fr);
+                        margin-bottom: 20px;
+
+                        @media (max-width: 700px) {
+                            display: block;
+                        }
+                    }
+
+                    .#{$prefix}-choice-locked-list {
+                        border-right: 1px solid #eef1f8;
+                        min-width: 0;
+
+                        @media (max-width: 700px) {
+                            border-right: 0;
+                        }
+                    }
+
+                    .#{$prefix}-choice-locked-more {
+                        align-items: center;
+                        color: #3858e9;
+                        display: flex;
+                        font-size: 13px;
+                        font-weight: 600;
+                        gap: 6px;
+                        justify-content: center;
+                        margin: 4px;
+                        padding: 12px 14px;
+                        text-decoration: none;
+
+                        &:hover,
+                        &:focus {
+                            background: #f8faff;
+                            color: #2d46ba;
+                        }
+                    }
+
+                    .#{$prefix}-choice-locked-upsell {
+                        align-items: center;
+                        background:
+                            radial-gradient(circle at 50% 18%, rgba(245, 179, 1, .16), transparent 55%),
+                            #fffaf0;
+                        box-sizing: border-box;
+                        color: inherit;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 10px;
+                        justify-content: center;
+                        min-width: 0;
+                        padding: 10px;
+                        text-align: center;
+
+                        strong {
+                            align-items: center;
+                            color: #1d2327;
+                            display: flex;
+                            flex-wrap: wrap;
+                            font-size: 16px;
+                            font-weight: 700;
+                            gap: 8px;
+                            justify-content: center;
+                            line-height: 1.3;
+                        }
+
+                        @media (max-width: 700px) {
+                            border-top: 1px solid #eef1f8;
+                            min-height: 220px;
+                        }
+                    }
+
+                    .#{$prefix}-choice-crown {
+                        align-items: center;
+                        background: #fff3d6;
+                        border-radius: 50%;
+                        display: inline-flex;
+                        
+                        justify-content: center;
+                        width: 64px;
+                    }
+
+                    .#{$prefix}-choice-upsell-button {
+                        align-items: center;
+                        background: #3858e9;
+                        border-radius: 8px;
+                        color: #fff;
+                        display: inline-flex;
+                        font-size: 13px;
+                        font-weight: 600;
+                        gap: 8px;
+                        margin-top: 4px;
+                        padding: 10px 16px;
+                        text-decoration: none;
+
+                        &:hover,
+                        &:focus,
+                        &:visited {
+                            color: #fff;
+                            text-decoration: none;
+                        }
+
+                        &:hover {
+                            filter: brightness(1.05);
+                        }
+                    }
+
+/* Shown when the modal opens with nothing selected. */
+                    .#{$prefix}-empty-state {
+                        align-items: center;
+                        display: flex;
+                        flex-direction: column;
+                        padding: 34px 24px 38px;
+                        text-align: center;
+
+                        h3 {
+                            color: #1d2327;
+                            font-size: 20px;
+                            font-weight: 700;
+                            margin: 20px 0 0;
+                            padding: 0;
+                        }
+
+                        p {
+                            color: #646970;
+                            font-size: 14px;
+                            margin: 8px 0 0;
+                            max-width: 42ch;
+                            padding: 0;
+                        }
+                    }
+
+                    // Dashed tile echoing the "nothing here" illustration.
+                    .#{$prefix}-empty-state-art {
+                        align-items: center;
+                        background: #f6f7f7;
+                        border: 2px dashed #c3c4c7;
+                        border-radius: 16px;
+                        color: #8c8f94;
+                        display: inline-flex;
+                        height: 120px;
+                        justify-content: center;
+                        width: 120px;
+                    }
+
+                    /* Pro upsell panel. Purple accent matches the badge artwork. */
+                    .#{$prefix}-pro-panel {
+                        background:
+                            radial-gradient(circle at 88% 16%, rgba(56, 88, 233, .08), transparent 42%),
+                            radial-gradient(circle at 8% 88%, rgba(56, 88, 233, .06), transparent 38%),
+                            linear-gradient(135deg, #f2f5fe 0%, #fbfcff 100%);
+                        border: 1px solid #dce3fb;
+                        border-radius: 12px;
+                        box-sizing: border-box;
+                        margin: 14px 24px;
+                        padding: 14px 32px 18px;
+
+                        &-head {
+                            text-align: center;
+
+                            h3 {
+                                color: #1f2937;
+                                font-size: 21px;
+                                font-weight: 700;
+                                line-height: 1.25;
+                                margin: 0;
+                                padding: 0;
+                            }
+
+                            p {
+                                color: #4b5563;
+                                font-size: 14px;
+                                line-height: 1.45;
+                                margin: 4px 0 0;
+                                padding: 0;
+                            }
+                        }
+
+                        // Centre the art and benefits as one group so the panel
+                        // does not leave a wide empty gutter on the right.
+                        &-body {
+                            display: flex;
+                            justify-content: center;
+                            margin: 16px 0 0;
+                        }
+                    }
+
+                    // Sits under the subtitle as a badge, so it reads as a claim
+                    // rather than another paragraph competing with the heading.
+                    .#{$prefix}-pro-highlight {
+                        border-radius: 999px;
+                        color: #3858e9;
+                        display: inline-block;
+                        font-size: 13px;
+                        font-weight: 600;
+                        line-height: 1.4;
+                        margin: 12px 0 0;
+                        padding: 6px 16px;
+                    }
+
+                    .#{$prefix}-pro-crown {
+                        display: inline-flex;
+                    }
+
+                    .#{$prefix}-pro-accent {
+                        color: #3858e9;
+                        font-weight: 700;
+                    }
+
+                    .#{$prefix}-pro-benefits {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 12px;
+                        list-style: none;
+                        margin: 0;
+                        min-width: 0;
+                        padding: 0;
+
+                        li {
+                            align-items: flex-start;
+                            display: flex;
+                            gap: 12px;
+                            margin: 0;
+                        }
+                    }
+
+                    .#{$prefix}-pro-benefit-icon {
+                        color: #3858e9;
+                        display: inline-flex;
+                        flex-shrink: 0;
+                        margin-top: 1px;
+                    }
+
+                    .#{$prefix}-pro-benefit-text {
+                        display: flex;
+                        flex-direction: column;
+                        min-width: 0;
+
+                        strong {
+                            color: #1f2937;
+                            font-size: 15px;
+                            font-weight: 600;
+                        }
+
+                        span {
+                            color: #6b7280;
+                            font-size: 13px;
+                            margin-top: 2px;
+                        }
+                    }
+
+                    .#{$prefix}-bulk-translate-empty {
+                        padding: 20px;
+                        background: #fff1f2;
+                        border: 1px solid #fecdd3;
+                        color: #be123c;
+                        border-radius: 8px;
+                        font-size: 0.9rem;
+                        text-align: center;
+                        grid-column: 1 / -1;
+
+                        .#{$prefix}-provider-empty-actions a {
+                            font-weight: 700;
+                            text-decoration: underline;
+                        }
+                    }
+                }
+
+                .#{$prefix}-provider-card {
+                    position: relative;
+                    padding: 12px;
+                    border: 2px solid #e2e8f0;
+                    border-radius: 10px;
+                    background: #fff;
+                    transition: border-color 0.2s, box-shadow 0.2s;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    text-align: left;
+                    cursor: pointer;
+
+                    &-body {
+                        display: flex;
+                        align-items: center;
+                        width: 100%;
+                        gap: 10px;
+                    }
+
+                    &:hover {
+                        border-color: #cbd5e1;
+                        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+                    }
+
+                    &-disabled {
+                        opacity: 0.7;
+                        cursor: not-allowed;
+
+                        // A built-in AI card stays actionable so its setup error can be opened,
+                        // except on browsers that have no built-in AI at all.
+                        &##{$prefix}-provider-card-localAiTranslator:not(.#{$prefix}-provider-browser-other),
+                        &##{$prefix}-provider-card-edgeAiTranslator:not(.#{$prefix}-provider-browser-other) {
+                            opacity: 1;
+                            cursor: pointer;
+                        }
+
+                        .#{$prefix}-provider-error {
+                            color: var(--wp-admin-theme-color, #2271b1);
+                            display: inline-flex;
+                            cursor: pointer;
+
+                            &:hover {
+                                color: var(--wp-admin-theme-color-darker-20, #1c5788);
+                            }
+                        }
+                    }
+
+                    &-selected {
+                        border-color: var(--wp-admin-theme-color, #2271b1) !important;
+                        background: #eff6ff;
+
+                        .#{$prefix}-provider-card-check {
+                            border-color: var(--wp-admin-theme-color, #2271b1);
+                            background: var(--wp-admin-theme-color, #2271b1);
+
+                            &::after {
+                                content: '';
+                                position: absolute;
+                                left: 6px;
+                                top: 1px;
+                                width: 6px;
+                                height: 11px;
+                                border: solid #fff;
+                                border-width: 0 2px 2px 0;
+                                transform: rotate(45deg);
+                            }
+                        }
+                    }
+
+                    &-body {
+                        align-items: center;
+                        display: flex;
+                        gap: 10px;
+                        width: 100%;
+                    }
+
+                    &-icon {
+                        width: 25px;
+                        height: 25px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        img {
+                            width: 24px;
+                            height: 24px;
+                            object-fit: contain;
+                        }
+                    }
+
+                    &-name {
+                        font-weight: 700;
+                        font-size: 14px;
+                        color: #0f172a;
+                        display: block;
+                    }
+
+                    &-actions {
+                        display: flex;
+                        align-items: center;
+                        margin-top: 7px;
+                        flex-wrap: wrap;
+                        width: 100%;
+                    }
+
+                    &-docs {
+                        color: var(--wp-admin-theme-color, #2271b1);
+                        display: inline-flex;
+                        margin-right: auto;
+
+                        &:hover {
+                            color: var(--wp-admin-theme-color-darker-20, #1c5788);
+                        }
+                    }
+
+                    &-check {
+                        position: relative;
+                        display: block;
+                        width: 22px;
+                        height: 22px;
+                        border: 2px solid #cbd5e1;
+                        border-radius: 50%;
+                        box-sizing: border-box;
+                        margin-left: auto;
+                    }
+
+                    &-error {
+                        font-size: 0.8125rem;
+                    }
+                }
+
+                .#{$prefix}-setting-modal-footer {
+                    border: none;
+                    display: flex;
+                    justify-content: space-between;
+                    margin-top: 0;
+                    padding: 16px 22.4px;
+                    border-top: 2px solid #00000012;
+
+                    .#{$prefix}-setting-close {
+                        background-color: #ffffff;
+                        border: none;
+                        color: #000000;
+
+                        &:hover {
+                            background-color: #fff;
+                            border-color: #fff;
+                        }
+                    }
+
+                    .#{$prefix}-setting-start-translation:disabled {
+                        cursor: not-allowed;
+                        opacity: .6;
+                    }
+                }
+            }
+        }
+
+        // Setting Modal CSS End
+
+        ##{$prefix}-status-modal-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            justify-content: center;
+            max-width: 100%;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+
+            .#{$prefix}-header+div {
+                margin-top: 16px;
+            }
+
+            .#{$prefix}-status-modal-close {
+                background: none;
+                border: none;
+                cursor: pointer;
+                font-size: 24px;
+                height: 24px;
+                margin: 0;
+                padding: 0;
+                width: 24px;
+            }
+
+            h2 {
+                margin: 0;
+                padding: 0;
+
+                &.running {
+                    span {
+                        width: 18px;
+                        aspect-ratio: 3;
+                        background: radial-gradient(circle closest-side, #1d2327 50%, #0000 80%) 0/calc(100%/3) 100% space;
+                        clip-path: inset(0 100% 0 0);
+                        animation: atfp-blink 1s steps(4) infinite;
+                        display: inline-flex;
+                        line-height: 1;
+                        padding: 0px;
+                        margin: 0px;
+                        margin-bottom: -1px;
+                        margin-left: 1px;
+                    }
+
+                    @keyframes atfp-blink {
+                        to {
+                            clip-path: inset(0 -34% 0 0)
+                        }
+                    }
+                }
+            }
+
+            .#{$prefix}-modal-desc {
+                font-size: 12px !important;
+                font-weight: 500;
+                margin-top: 0 !important;
+                color: #888;
+            }
+
+            .#{$prefix}-overall-progress .#{$prefix}-progress-bar {
+                width: calc(100% - 48px);
+                margin-inline: 24px;
+                background: #ddd;
+                height: 19px;
+                border-radius: 5px;
+                overflow: hidden;
+                text-align: center;
+                color: white;
+                background-size: 30px 30px;
+                margin-bottom: 10px;
+                background-image: linear-gradient(135deg,
+                        rgba(255, 255, 255, .15) 25%,
+                        transparent 25%,
+                        transparent 50%,
+                        rgba(255, 255, 255, .15) 50%,
+                        rgba(255, 255, 255, .15) 75%,
+                        transparent 75%,
+                        transparent);
+                animation: animate-stripes 0.6s linear infinite;
+                animation-duration: 1.25s;
+                animation-direction: reverse;
+
+                .#{$prefix}-progress {
+                    height: 100%;
+                    background: #2271b1;
+                    width: 0%;
+                    transition: width 0.3s ease;
+                    max-width: 100%;
+                    border-radius: 5px;
+                }
+
+                @keyframes animate-stripes {
+                    0% {
+                        background-position: 0 0;
+                    }
+
+                    100% {
+                        background-position: 60px 0;
+                    }
+                }
+            }
+
+            .#{$prefix}-translator-strings-count {
+                // color: #4caf50;
+                text-align: center;
+                font-size: 1rem;
+                margin-bottom: 10px;
+                margin-top: 5px;
+                margin-inline: 24px;
+            }
+
+            .#{$prefix}-count-container {
+                display: grid;
+                grid-template-columns: auto auto auto;
+                gap: .8rem .3rem;
+                padding: .7rem 1rem;
+                font-size: 1rem;
+                justify-content: space-between;
+                margin-inline: 24px;
+                border-radius: 13px;
+                margin-bottom: 15px;
+                background: #00000008;
+                border: 1px solid #00000012;
+
+                .#{$prefix}-count-text-heading {
+                    color: #8c8585;
+                    font-size: 12px;
+                    font-weight: 500;
+
+                    ~span {
+                        font-weight: 700;
+                    }
+                }
+            }
+
+            .#{$prefix}-status-header-container {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+                padding: .8rem 1rem;
+                background: #0000000a;
+                border-radius: 13px 13px 0 0;
+                border: 1px solid #00000012;
+                font-weight: 600;
+                text-transform: uppercase;
+                border-bottom: 0px;
+
+                .#{$prefix}-status-flag-th,
+                .#{$prefix}-status-status-th,
+                .#{$prefix}-status-title-th,
+                .#{$prefix}-status-actions-th {
+                    grid-column: span 1;
+                }
+
+                .#{$prefix}-status-status-th {
+                    text-align: center;
+                    display: flex;
+                    justify-content: center;
+                }
+
+                .#{$prefix}-status-title-th {
+                    grid-column: span 2;
+                    text-align: center;
+                    display: flex;
+                    justify-content: center;
+                }
+
+                .#{$prefix}-status-actions-th {
+                    text-align: right;
+                    padding-right: 5px;
+                    display: flex;
+                    justify-content: flex-end;
+
+                    .#{$prefix}-progress-skeleton {
+                        width: 172px;
+                        margin-right: -5px;
+                    }
+                }
+            }
+
+            // WordPress buttons default to a 3px radius; round the review action
+            // so it matches the rest of the modal.
+            .#{$prefix}-review-btn {
+                border-radius: 6px;
+                padding: 2px 14px;
+            }
+
+            .#{$prefix}-status-table-container {
+                height: 100%;
+                overflow: hidden;
+                margin-top: 8px;
+                margin-inline: 22px;
+                margin-bottom: 16px;
+
+                &>div {
+                    height: 100%;
+                    overflow-y: auto;
+                }
+
+                .#{$prefix}-status-inner-item {
+                    border: 1px solid #00000012;
+                    border-bottom-width: 0px;
+                    border-top-color: #00000017;
+
+                    &:last-child {
+                        border-bottom-width: 1px;
+                        border-radius: 0 0 13px 13px;
+                    }
+
+                    &.#{$prefix}-status-target-post-error {
+                        background: #ff000014;
+
+                        .#{$prefix}-status-target-post-error {
+                            color: #1d2327;
+                            font-size: .8rem;
+                            font-weight: 500;
+                            text-align: center;
+                        }
+                    }
+                }
+
+                .#{$prefix}-progress-bar-circular {
+                    position: relative;
+                    width: 40px;
+                    height: 40px;
+                    display: inline-block;
+
+                    .#{$prefix}-circle {
+                        width: 100%;
+                        height: 100%;
+                        transform: rotate(-90deg);
+                    }
+
+                    .#{$prefix}-bg {
+                        fill: none;
+                        stroke: #eee;
+                        stroke-width: 3;
+                    }
+
+                    .#{$prefix}-progress {
+                        fill: none;
+                        stroke: #2271b1;
+                        stroke-width: 3;
+                        stroke-linecap: round;
+                        transition: stroke-dasharray 0.6s ease;
+                    }
+
+                    .#{$prefix}-percentage {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        font-size: 11px;
+                        font-weight: bold;
+                        color: #333;
+                    }
+
+                }
+
+                .#{$prefix}-group-title {
+                    border-block: 1px solid #ebebeb;
+
+                    td {
+                        font-weight: bold;
+                        background: #f7f7f7;
+                        padding-top: 15px;
+                    }
+                }
+
+                .#{$prefix}-status-error-button {
+                    padding: 0.2rem 0.5rem;
+                    border-radius: 3px;
+                    cursor: pointer;
+                    border: 1px solid transparent;
+                    transition: all .4s ease-in-out;
+                    border-color: #ff2f44;
+                    color: white;
+                    background: #ff3e51;
+
+                    &:hover {
+                        background: #ff2037;
+                        border-color: #ff152d;
+                    }
+                }
+
+                .#{$prefix}-retranslate {
+                    padding: 4px 8px;
+                    font-size: 12px;
+                    border-radius: 30px;
+                    font-weight: 600;
+                    color: #3db63d;
+                    background: #3db63d26;
+                    margin-left: 7px;
+                }
+
+                .#{$prefix}-status-parent-post-title {
+                    font-weight: 600;
+                    font-size: 14px;
+                    padding: .8rem 1rem;
+                    background: #00000008;
+                }
+
+                .#{$prefix}-status-target-post {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+                    align-items: center;
+                    padding-inline: 1rem;
+
+                    &-flag {
+                        display: flex;
+                        align-items: center;
+                        white-space: nowrap;
+
+                        img {
+                            margin-right: 8px;
+                        }
+                    }
+
+                    &-status {
+                        span {
+                            padding: 4px 8px;
+                            border-radius: 5px;
+                            font-size: 12px;
+                            color: #fff;
+                            border-radius: 30px;
+                            font-weight: 600;
+
+                            &.success {
+                                color: #3db63d;
+                                background: #3db63d26;
+                            }
+
+                            &.error {
+                                color: #ee4237;
+                                background: #ee423726;
+                            }
+
+                            &.warning {
+                                color: #6e6e6e;
+                                background: #fff297ab;
+                            }
+
+                            &.primary {
+                                color: #2271b1;
+                                background: #2271b126;
+                            }
+                        }
+
+                    }
+
+                    &-title {
+                        text-align: center;
+
+                        a {
+                            width: 100%;
+                            overflow: hidden;
+                            display: inline-block;
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
+                        }
+                    }
+
+                    &-actions,
+                    &-error-button {
+                        text-align: right;
+                        display: flex;
+                        align-items: center;
+                        justify-content: flex-end;
+                    }
+
+                    &>div {
+                        grid-column: span 1;
+
+                        &:nth-child(2) {
+                            height: 55px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+                    }
+                }
+
+                .#{$prefix}-progress-skeleton {
+                    background: linear-gradient(90deg,
+                            #e0e0e0 25%,
+                            #f5f5f5 50%,
+                            #e0e0e0 75%);
+                    background-size: 200% 100%;
+                    height: 10px;
+                    border-radius: 3px;
+                    animation: shimmer 1.2s infinite linear;
+
+                    &.short {
+                        padding: 0;
+                        width: 30px;
+                    }
+                }
+
+                .#{$prefix}-in-progress-text {
+                    color: #2271b1;
+                    background: #2271b126;
+                    border-color: #2271b1;
+                    display: inline-flex;
+                    align-items: end;
+                    font-weight: 500;
+                    width: auto;
+                    padding: .1rem .5rem;
+                    border-radius: 27px;
+
+                    span {
+                        width: 15px;
+                        aspect-ratio: 3;
+                        background: radial-gradient(circle closest-side, #2271b1 40%, #0000 90%) 0/calc(100%/3) 100% space;
+                        clip-path: inset(0 100% 0 0);
+                        animation: #{$prefix}-blink 1s steps(4) infinite;
+                        display: inline-flex;
+                        line-height: 1;
+                        padding: 0px;
+                        margin: 0px;
+                        margin-bottom: 3px;
+                        margin-left: 1px;
+                    }
+
+                    @keyframes #{$prefix}-blink {
+                        to {
+                            clip-path: inset(0 -34% 0 0)
+                        }
+                    }
+                }
+            }
+
+            .#{$prefix}-progress-footer {
+                text-align: center;
+
+                a {
+                    padding: 2px 11px;
+                    margin-top: 1.2rem;
+                }
+            }
+        }
+
+        .#{$prefix}-header {
+            align-items: flex-start;
+            display: flex;
+            gap: 16px;
+            justify-content: space-between;
+            padding: 10px 24px 8px;
+            border-bottom: 2px solid #00000012;
+
+            &+.#{$prefix}-progress-skeleton {
+                margin-inline: 24px;
+                width: calc(100% - 48px);
+            }
+
+            .close {
+                background: none;
+                border: none;
+                cursor: pointer;
+                font-size: 24px;
+                height: 24px;
+                margin: 0;
+                padding: 0;
+                width: 24px;
+            }
+
+            h2 {
+                background: 0 0;
+                border: none;
+                font-size: 18px;
+                font-weight: 600;
+                height: unset;
+                line-height: 2;
+                margin: 0;
+            }
+
+            .#{$prefix}-modal-header-inner {
+                .#{$prefix}-modal-header-left {
+                    align-items: center;
+                    display: flex;
+                    gap: 1px;
+                    padding-block: 10px;
+
+                    .#{$prefix}-pro-header-badge {
+                        flex-shrink: 0;
+                        height: 56px;
+                        margin-right: 14px;
+                        width: 56px;
+                    }
+
+                    h3{
+                        margin: 0;
+                        font-size: 13px;
+                        font-weight: 700;
+                        text-transform: uppercase;
+                        letter-spacing: .5px;
+                        color: #1d2327;
+                    }
+                }
+
+                .#{$prefix}-step-label {
+                    font-size: 10px;
+                    font-weight: 600;
+                    color: #3737e7;
+                }
+
+                .#{$prefix}-modal-desc {
+                    font-size: 12px !important;
+                    font-weight: 500;
+                    margin: 0;
+                    margin-bottom: 4px;
+                    color: #888;
+                }
+            }
+
+            .#{$prefix}-modal-close {
+                border: none;
+                background: none;
+                cursor: pointer;
+                font-size: 24px;
+                padding: 0;
+                margin: 0;
+                width: 24px;
+                height: 24px;
+            }
+        }
+
+        .#{$prefix}-error-message {
+            color: #1d2327;
+            padding: 15px 22px;
+            font-weight: 600;
+            font-size: 16px;
+            text-align: center;
+            height: unset !important;
+
+            span {
+                font-weight: 500;
+                font-size: 16px;
+
+                ol {
+                    margin-block: 16px;
+                    list-style-type: decimal;
+                    margin-left: 32px;
+                    box-sizing: border-box;
+                    padding: 0;
+
+                    li {
+                        margin-bottom: 12px;
+                        list-style: decimal;
+                        line-height: 1.2;
+                    }
+                }
+
+                p {
+                    margin: 0;
+                    padding: 0;
+
+                    * {
+                        font-size: 15px;
+                        box-shadow: unset;
+                        outline: unset;
+                        border: unset;
+                        line-height: 1.5;
+                    }
+
+                    a {
+                        color: #2271b1 !important;
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+
+        .#{$prefix}-setup-languages {
+
+            .#{$prefix}-notice {
+                margin-top: 0;
+                margin-bottom: 12px;
+            }
+
+            .#{$prefix}-loading {
+                color: #000;
+                padding: 1rem;
+            }
+
+            .#{$prefix}-languages {
+                display: grid;
+                gap: 10px;
+                grid-template-columns: repeat(2, 1fr);
+                padding: 0;
+                max-height: 320px;
+                overflow-y: auto;
+
+                // A 2px border in both states keeps the outline crisp and the chip
+                // size stable, matching how the provider cards are drawn.
+                .#{$prefix}-language {
+                    border: 2px solid #e2e8f0;
+                    border-radius: 8px;
+                    box-sizing: border-box;
+                    display: inline-flex;
+                    min-width: 0;
+                    padding: 7px;
+
+                    &.language-selected {
+                        background-color: #f0f6ff;
+                        border-color: var(--wp-admin-theme-color, #2271b1);
+
+                        .#{$prefix}-language-check-visual {
+                            background-color: var(--wp-admin-theme-color, #2271b1);
+                            border-color: var(--wp-admin-theme-color, #2271b1);
+                        }
+                    }
+
+                    &-item {
+                        align-items: center;
+                        display: flex;
+                        gap: 8px;
+                        min-height: 22px;
+                        min-width: 0;
+                        position: relative;
+                        width: 100%;
+                    }
+
+                    &-check-visual {
+                        background: #fff;
+                        border: 2px solid #cbd5e1;
+                        border-radius: 50%;
+                        box-sizing: border-box;
+                        display: inline-block;
+                        flex-shrink: 0;
+                        height: 22px;
+                        min-width: 22px;
+                        pointer-events: none;
+                        position: relative;
+                        width: 22px;
+
+                        &:before {
+                            border: solid #fff;
+                            border-width: 0 2px 2px 0;
+                            box-sizing: border-box;
+                            content: "";
+                            height: 12px;
+                            left: 6px;
+                            position: absolute;
+                            top: 2px;
+                            transform: rotate(45deg);
+                            width: 6px;
+                        }
+                    }
+
+                    &-label {
+                        align-items: center;
+                        display: inline-flex;
+                        margin-left: 7px;
+                        min-width: 0;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+
+                        img {
+                            flex-shrink: 0;
+                        }
+                    }
+
+                    input[type="checkbox"] {
+                        -webkit-appearance: none;
+                        -moz-appearance: none;
+                        appearance: none;
+                        background: transparent;
+                        border: none;
+                        border-radius: 0;
+                        cursor: pointer;
+                        height: 22px;
+                        left: 7px;
+                        margin: 0;
+                        opacity: 0;
+                        position: absolute;
+                        width: 22px;
+                        z-index: 2;
+                    }
+                }
+            }
+
+            // Sits above the grid, aligned to the right edge of the column.
+            .#{$prefix}-select-all-languages {
+                display: flex;
+                justify-content: flex-end;
+                padding: 0 0 12px;
+
+                // Keep the toggle as a compact pill instead of a full width bar.
+                label {
+                    display: inline-block;
+                }
+
+                &.all-languages-selected {
+                    .#{$prefix}-select-all-languages-inner {
+                        background-color: #f0f6ff;
+                        border-color: var(--wp-admin-theme-color, #2271b1);
+                    }
+                }
+
+                &-inner {
+                    align-items: center;
+                    border: 2px solid #e2e8f0;
+                    border-radius: 8px;
+                    box-sizing: border-box;
+                    display: inline-flex;
+                    gap: 8px;
+                    min-height: 22px;
+                    padding: 7px 12px 7px 7px;
+                    position: relative;
+                }
+
+                input[type="checkbox"] {
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+                    appearance: none;
+                    background: transparent;
+                    border: none;
+                    border-radius: 0;
+                    cursor: pointer;
+                    height: 22px;
+                    left: 7px;
+                    margin: 0;
+                    opacity: 0;
+                    position: absolute;
+                    width: 22px;
+                    z-index: 2;
+
+                    &:checked+.#{$prefix}-select-all-languages-check-visual {
+                        background-color: var(--wp-admin-theme-color, #2271b1);
+                        border-color: var(--wp-admin-theme-color, #2271b1);
+                    }
+                }
+
+                &-check-visual {
+                    background: #fff;
+                    border: 2px solid #cbd5e1;
+                    border-radius: 50%;
+                    box-sizing: border-box;
+                    display: inline-block;
+                    flex-shrink: 0;
+                    height: 22px;
+                    min-width: 22px;
+                    pointer-events: none;
+                    position: relative;
+                    width: 22px;
+
+                    &:before {
+                        border: solid #fff;
+                        border-width: 0 2px 2px 0;
+                        box-sizing: border-box;
+                        content: "";
+                        height: 12px;
+                        left: 6px;
+                        position: absolute;
+                        top: 2px;
+                        transform: rotate(45deg);
+                        width: 6px;
+                    }
+                }
+
+                span.#{$prefix}-language-label {
+                    color: var(--wp-admin-theme-color, #2271b1);
+                    font-weight: 500;
+                    margin-left: 7px;
+                }
+            }
+        }
+
+        .#{$prefix}-footer {
+            align-items: center;
+            background: #f8fafc;
+            border: none;
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 0;
+            padding: 16px 22.4px;
+            border-top: 2px solid #00000012;
+
+            .#{$prefix}-footer-button:disabled {
+                cursor: not-allowed;
+                opacity: .6;
+            }
+        }
+
+        .#{$prefix}-choice-footer {
+            gap: 16px;
+            justify-content: space-between;
+
+            p {
+                align-items: center;
+                color: #646970;
+                display: flex;
+                font-size: 13px;
+                gap: 8px;
+                margin: 0;
+                padding: 0;
+            }
+
+            .#{$prefix}-choice-sparkle {
+                color: #3858e9;
+                display: inline-flex;
+                flex-shrink: 0;
+            }
+        }
+
+        // Lives outside the modal body because the Pro screen renders it in the
+        // footer, next to the disabled Start Translation button.
+        .#{$prefix}-pro-upgrade-button {
+            align-items: center;
+            background: linear-gradient(135deg, #3858e9 0%, #2d46ba 100%);
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 6px 14px rgba(56, 88, 233, .25);
+            box-sizing: border-box;
+            color: #fff;
+            display: inline-flex;
+            font-size: 15px;
+            font-weight: 600;
+            gap: 8px;
+            line-height: 1.2;
+            padding: 12px 22px;
+            text-decoration: none;
+            white-space: nowrap;
+
+            &:hover,
+            &:focus,
+            &:active,
+            &:visited {
+                color: #fff;
+                text-decoration: none;
+            }
+
+            &:hover {
+                filter: brightness(1.06);
+            }
+
+            &:focus {
+                box-shadow: 0 0 0 2px #fff, 0 0 0 4px #3858e9;
+                outline: none;
+            }
+
+            .#{$prefix}-pro-upgrade-icon {
+                display: inline-flex;
+            }
+        }
+
+        /* Setting Modal CSS Start */
+        .#{$prefix}-error-modal-box-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.75);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+            z-index: 99999;
+
+            .#{$prefix}-error-reload-btn {
+                margin-top: 10px;
+            }
+
+            .#{$prefix}-tooltip-element {
+                position: relative;
+                overflow: visible;
+                cursor: pointer;
+                white-space: nowrap;
+                color: #2271b1;
+
+                svg {
+                    color: #3c434a;
+                }
+
+                .#{$prefix}-tooltip {
+                    display: block;
+                    font-size: 12.8px;
+                    position: absolute;
+                    background: #0073aa;
+                    color: #fff !important;
+                    padding: 3.2px 8px;
+                    border-radius: 4px;
+                    top: 0;
+                    left: 20px;
+                    right: 20px;
+                    margin: auto;
+                    opacity: 0;
+                    width: 121px;
+                    white-space: nowrap;
+
+                    &:after {
+                        content: "";
+                        position: absolute;
+                        top: 98%;
+                        left: 50%;
+                        margin-left: -8px;
+                        width: 0;
+                        height: 0;
+                        border-top: 8px solid #0073aa;
+                        border-right: 8px solid transparent;
+                        border-left: 8px solid transparent;
+                    }
+                }
+
+                .#{$prefix}-tooltip.#{$prefix}-tooltip-active {
+                    -webkit-animation: slide-up 0.15s cubic-bezier(0.51, 0.92, 0.265, 1.55) both;
+                    animation: slide-up 0.15s cubic-bezier(0.51, 0.92, 0.265, 1.55) both;
+                }
+            }
+
+            .#{$prefix}-error-modal-box {
+                background-color: #fefefe;
+                width: clamp(200px, 500px, 80%);
+                height: auto;
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                border-radius: 8px;
+                overflow: hidden;
+            }
+
+            .#{$prefix}-error-modal-box-body {
+                min-height: 0px;
+                max-height: 65vh;
+                height: auto;
+                padding: 15px 24px;
+                overflow: auto;
+
+                h4 {
+                    margin: 0;
+                    margin-top: 0;
+                    margin-bottom: 24px;
+                    display: block;
+                    font-weight: 600;
+                    padding: 0;
+                    box-sizing: border-box;
+                }
+
+                ol {
+                    margin-top: 16px;
+                    margin-bottom: 0px;
+                    list-style-type: decimal;
+                    margin-left: 32px;
+                    box-sizing: border-box;
+                    padding: 0;
+
+                    li {
+                        margin-bottom: 6px;
+                        list-style: decimal;
+                    }
+                }
+
+                p {
+                    margin: 0;
+                    padding: 0;
+
+                    * {
+                        font-size: 15px;
+                        box-shadow: unset;
+                        outline: unset;
+                        border: unset;
+                        line-height: 1.5;
+                    }
+
+                    a {
+                        color: #2271b1 !important;
+                        text-decoration: underline;
+                    }
+                }
+            }
+
+            .#{$prefix}-ai-pending-request {
+                text-align: center;
+
+                .#{$prefix}-ai-pending-request-heading {
+                    font-size: 1.2rem;
+                    font-weight: 600;
+                    margin-bottom: .4rem !important;
+                }
+
+                p {
+                    margin-block: .4rem !important;
+                }
+
+            }
+
+            .#{$prefix}-ai-error-buttons {
+                display: flex;
+                gap: 1rem;
+                justify-content: center;
+                margin-top: 1rem;
+
+                button {
+                    &[data-status="translateAgain"] {
+                        background: #30b230 !important;
+                        color: #fff !important;
+                        border-color: #239d23 !important;
+                        transition: all .3s ease-in-out;
+
+                        &:hover {
+                            background: #2da52d !important;
+                            border-color: #209120 !important;
+                        }
+                    }
+
+                    &[data-status="continue"] {
+                        background: #0073aa !important;
+                        color: #fff !important;
+                        border-color: #2271b1 !important;
+                        transition: all .3s ease-in-out;
+
+                        &:hover {
+                            background: #005682 !important;
+                            border-color: #004466 !important;
+                        }
+                    }
+                }
+            }
+        }
+
+        /* Setting Modal CSS End */
+
+        @keyframes shimmer {
+            0% {
+                background-position: 100%;
+            }
+
+            100% {
+                background-position: -100%;
+            }
+        }
+
+        @keyframes slide-up {
+            0% {
+                transform: translateY(0) scale(0.8);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateY(-35px) scale(1);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 992px) {
+            &.#{$prefix}-translation-active {
+                ##{$prefix}-status-modal-container {
+                    .#{$prefix}-count-container {
+                        display: grid;
+                        grid-template-columns: 1fr 1fr;
+                        grid-template-rows: auto auto;
+
+                        &>div:nth-child(1) {
+                            grid-column: 1/3;
+                        }
+
+                        &>div:nth-child(2) {
+                            grid-column: 1;
+                            grid-row: 2;
+                        }
+
+                        &>div:nth-child(3) {
+                            grid-column: 2;
+                            grid-row: 2;
+                        }
+                    }
+                }
+            }
+        }
+
+        @media (max-width: 576px) {
+            &.#{$prefix}-translation-active {
+                width: clamp(200px, 800px, 80%);
+            }
+        }
+
+        // Stack the two setup steps once there is no room for two columns.
+        @media (max-width: 900px) {
+            ##{$prefix}-setting-modal-container {
+                .#{$prefix}-setting-modal-content {
+                    .#{$prefix}-setting-modal-body {
+                        .#{$prefix}-setup-layout {
+                            display: block;
+                            padding: 16px;
+
+                            .#{$prefix}-setup-divider {
+                                height: 1px;
+                                margin: 20px 0;
+                                width: auto;
+                            }
+
+                            // The flow reads top to bottom once the columns stack.
+                            .#{$prefix}-setup-divider-arrow {
+                                transform: translate(-50%, -50%) rotate(90deg);
+                            }
+
+                            .#{$prefix}-provider-cards {
+                                grid-template-columns: 1fr;
+                            }
+                        }
+
+                        .#{$prefix}-pro-panel {
+                            margin: 16px;
+                            padding: 20px;
+                        }
+                    }
+                }
+            }
+
+            .#{$prefix}-setup-languages {
+                .#{$prefix}-languages {
+                    grid-template-columns: 1fr;
+                }
+            }
+        }
+    }
+}
+
+/* Yandex Translate table sits behind the status UI so PageTranslator can still read it. */
+##{$prefix}-yandex-table-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    overflow: auto;
+    z-index: 0;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: none;
+    white-space: pre-wrap;
+}
+
+/* Google Translate CSS Start */
+
+body>div.skiptranslate iframe.skiptranslate[frameborder][src][style="visibility:visible"] {
+    display: none !important;
+}
+
+##{$prefix}-google-table-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    color: #fff;
+    max-height: 100%;
+    overflow: auto;
+    z-index: -999;
+    opacity: 0 !important;
+    white-space: pre-wrap;
+
+    ##{$prefix}-google-translate-btn {
+        display: none;
+    }
+}
+
+body.#{$prefix}-google-translate {
+    top: 0px !important;
+}
+
+/* Google Translate CSS End */

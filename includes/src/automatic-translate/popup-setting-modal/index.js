@@ -2,13 +2,13 @@ import ReactDOM from "react-dom/client";
 import { useEffect, useState } from "@wordpress/element";
 import PopStringModal from "../popup-string-modal";
 import yandexLanguage from "../component/translate-provider/yandex/yandex-language";
+import googleLanguage from "../component/translate-provider/google/google-language";
 import ChromeLocalAiTranslator from "../component/translate-provider/local-ai-translator/local-ai-translator";
 import SettingModalHeader from "./header";
 import SettingModalBody from "./body";
 import SettingModalFooter from "./footer";
 import { __ , sprintf } from "@wordpress/i18n";
 import ErrorModalBox from "../component/error-modal-box";
-import BulkPromotionModal from "./bulkPromotion";
 
 const SettingModal = (props) => {
     const [activeProvider, setActiveProvider] = useState({});
@@ -20,12 +20,11 @@ const SettingModal = (props) => {
     const targetLangName = atfp_global_object.languageObject[targetLang]['name'];
     const imgFolder = atfp_global_object.atfp_url + 'assets/images/';
     const yandexSupport = yandexLanguage().includes(targetLang);
+    const googleSupport = googleLanguage().includes(targetLang === 'zh' ? atfp_global_object.languageObject['zh']?.locale.replace('_', '-') : targetLang);
     const [serviceModalErrors, setServiceModalErrors] = useState({});
     const [errorModalVisibility, setErrorModalVisibility] = useState(false);
     const [chromeAiBtnDisabled, setChromeAiBtnDisabled] = useState(false);
     const [edgeAiBtnDisabled, setEdgeAiBtnDisabled] = useState(false);
-    const [showBulkPromotionModal, setShowBulkPromotionModal] = useState(false);
-    const characterCount = parseInt(window.atfp_global_object.translation_data.total_character_count);
 
     const openModalOnLoadHandler = (e) => {
         e.preventDefault();
@@ -74,12 +73,11 @@ const SettingModal = (props) => {
             progressElement.appendChild(progressTextElement);
         }
 
-        if(status === 100){
-            cardElement.classList.remove(prefix+'-provider-card-disabled')
-            setTimeout(() => {
-                actionElement.removeChild(progressElements.progressElement);
-            }, 5000);
-        }
+        // Progress reaching 100% only means the bytes arrived. The engine is
+        // usable only once the support check answers, and create() can still
+        // fail after a full download -- clearing the loading state here handed
+        // the user a card they could pick before that answer existed. The
+        // caller clears it instead, once it knows.
 
         return progressElements;
     }
@@ -101,11 +99,7 @@ const SettingModal = (props) => {
         if (metaFieldBtn) {
             metaFieldBtn.addEventListener('click', (e) => {
                 e.preventDefault();
-                if(characterCount > 100000){
-                    setShowBulkPromotionModal(true);
-                }else{
-                    setSettingVisibility(prev => !prev);
-                }
+                setSettingVisibility(prev => !prev);
             });
         }
 
@@ -128,10 +122,33 @@ const SettingModal = (props) => {
             progressButton = localAiUpdateStatus(status, progressButton, localAiCardElement, actionElement);
         }
 
+        // Takes the loading state back down once the support check has answered.
+        // Whether the engine turned out usable is then decided by the state below,
+        // so the card is never pickable while the answer is still unknown.
+        const clearLocalAiProgress = () => {
+            if (localAiCardElement) {
+                localAiCardElement.classList.remove('atfp-provider-card-disabled');
+            }
+
+            const progressElement = progressButton.progressElement;
+
+            if (actionElement && progressElement && progressElement.parentNode === actionElement) {
+                actionElement.removeChild(progressElement);
+            }
+
+            progressButton = {};
+        }
+
         const languageSupportedStatus = async () => {
             let errors = {};
             const browserType = ChromeLocalAiTranslator.getBrowserType();
-            const localAiTranslatorSupport = await ChromeLocalAiTranslator.languageSupportedStatus(sourceLang, targetLang, targetLangName, sourceLangName, localAiUpdateStatusHandler);
+            let localAiTranslatorSupport;
+
+            try {
+                localAiTranslatorSupport = await ChromeLocalAiTranslator.languageSupportedStatus(sourceLang, targetLang, targetLangName, sourceLangName, localAiUpdateStatusHandler);
+            } finally {
+                clearLocalAiProgress();
+            }
 
             if (localAiTranslatorSupport !== true && typeof localAiTranslatorSupport === 'object') {
                 setChromeAiBtnDisabled(true);
@@ -160,6 +177,19 @@ const SettingModal = (props) => {
                             "<strong>"+targetLangName + " ("+targetLang+")</strong>"
                         )+"</p>",
                         Title: __("Yandex Translate", 'automatic-translations-for-polylang')
+                    }
+                }));
+            };
+
+            if (!googleSupport) {
+                setServiceModalErrors(prev => ({
+                    ...prev,
+                    google: {
+                        message: "<p style={{ fontSize: '1rem', color: '#ff4646' }}>" + sprintf(
+                            __("Google Translate does not support the target language: %s.", 'automatic-translations-for-polylang'),
+                            "<strong>" + targetLangName + "</strong>"
+                        ) + "</p>",
+                        Title: __("Google Translate", 'automatic-translations-for-polylang')
                     }
                 }));
             };
@@ -206,19 +236,21 @@ const SettingModal = (props) => {
     }, [props.postDataFetchStatus, modalRender]);
 
     /**
-     * Function to handle fetching content based on the target button clicked.
-     * Sets the target button and updates the fetch status to true.
-     * @param {Event} e - The event object representing the button click.
+     * Marks the picked engine as the active one.
+     *
+     * Selection stays synchronous on purpose. This used to await a support check
+     * before accepting the click, so the card only lit up once the browser had
+     * answered -- and on a browser that answers slowly, or not at all, the click
+     * looked like it had done nothing. The check the effect above runs when the
+     * modal opens already disables an engine that cannot be used, so a card the
+     * user can still click is a card they are allowed to pick.
+     *
+     * @param {string} service      Engine key that was clicked.
+     * @param {string} serviceLabel Human readable name of that engine.
+     *
+     * @return {void}
      */
-    const updateActiveProviderHandler = async (service, serviceLabel) => {
-
-        if (service === 'localAiTranslator') {
-            const localAiTranslatorSupport = await ChromeLocalAiTranslator.languageSupportedStatus(sourceLang, targetLang, targetLangName, sourceLangName);
-            if (localAiTranslatorSupport !== true && typeof localAiTranslatorSupport === 'object') {
-                return;
-            }
-        }
-
+    const updateActiveProviderHandler = (service, serviceLabel) => {
         setActiveProvider({ service, serviceLabel });
     };
     
@@ -237,16 +269,8 @@ const SettingModal = (props) => {
         setSettingVisibility(visibility);
     }
 
-    const handleBulkPromotionModal = (statue) => {
-        setShowBulkPromotionModal(false);
-        if(statue === true){
-            setSettingVisibility(true);
-        }
-    }
-
     return (
         <>
-        {characterCount > 100000 && showBulkPromotionModal && <BulkPromotionModal onClick={handleBulkPromotionModal} characterCount={characterCount} />}
             {errorModalVisibility && serviceModalErrors[errorModalVisibility] &&
                 <ErrorModalBox onClose={closeErrorModal} {...serviceModalErrors[errorModalVisibility]}/>
             }
@@ -261,6 +285,7 @@ const SettingModal = (props) => {
                         />
                         <SettingModalBody
                             yandexDisabled={!yandexSupport}
+                            googleDisabled={!googleSupport}
                             imgFolder={imgFolder}
                             targetLangName={targetLangName}
                             postType={props.postType}

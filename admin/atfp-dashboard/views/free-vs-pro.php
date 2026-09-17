@@ -7,13 +7,14 @@ if(!defined('ABSPATH')){
     <div class="atfp-dashboard-free-vs-pro-container">
     <div class="header">
         <h1><?php esc_html_e('Free VS Pro', 'automatic-translations-for-polylang'); ?></h1>
-        <div class="atfp-dashboard-status">
-            <span class="status"><?php esc_html_e('Inactive', 'automatic-translations-for-polylang'); ?></span>
-            <a href="<?php echo esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?'.sanitize_text_field($atfp_utm_parameters).'&utm_medium=inside&utm_campaign=get_pro&utm_content=freevspro'); ?>" class='atfp-dashboard-btn' target="_blank">
-              <img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/upgrade-now.svg'); ?>" alt="<?php esc_attr_e('Upgrade Now', 'automatic-translations-for-polylang'); ?>">
-                <?php esc_html_e('Upgrade Now', 'automatic-translations-for-polylang'); ?>
-            </a>
-        </div>
+        <?php
+        $atfp_utm_parameters='utm_source=atfp_plugin';
+        if(class_exists('ATFP_Helper')){
+            $atfp_utm_parameters=ATFP_Helper::utm_source_text();
+        }
+        $atfp_buy_pro_url=esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?'.sanitize_text_field($atfp_utm_parameters).'&utm_medium=inside&utm_campaign=get_pro&utm_content=dashboard_free_vs_pro');
+        ?>
+        <a href="<?php echo esc_url($atfp_buy_pro_url); ?>" class="atfp-dashboard-btn primary" target="_blank"><?php esc_html_e('Buy Pro', 'automatic-translations-for-polylang'); ?></a>
     </div>
     
     <p><?php echo esc_html(__('Compare the Free and Pro versions to choose the best option for your translation needs.', 'automatic-translations-for-polylang')); ?></p>
@@ -21,7 +22,7 @@ if(!defined('ABSPATH')){
     <table>
         <thead>
             <tr>
-                <th><?php echo esc_html(__('Dynamic Content', 'automatic-translations-for-polylang')); ?></th>
+                <th><?php echo esc_html(__('Features', 'automatic-translations-for-polylang')); ?></th>
                 <th><?php echo esc_html(__('Free', 'automatic-translations-for-polylang')); ?></th>
                 <th><?php echo esc_html(__('Pro', 'automatic-translations-for-polylang')); ?></th>
             </tr>
@@ -29,12 +30,12 @@ if(!defined('ABSPATH')){
         <tbody>
             <?php
                 $atfp_features = [
+                    'Google Translate Widget Support' => [true, true],
                     'Yandex Translate Widget Support' => [true, true],
                     'Chrome Built-in AI Support' => [true, true],
                     'Edge Built-in AI Support' => [true, true],
                     'No API Key Required' => [true, true],
                     'Unlimited Translations' => [true, true],
-                    'Google Translate Widget Support' => [false, true],
                     'AI Translator (Gemini/OpenAI/DeepL) Support' => [false, true],
                     'Custom Fields Translation' => [false, true],
                     'Taxonomy Translation' => [false, true],

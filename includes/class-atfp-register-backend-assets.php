@@ -40,24 +40,132 @@ class ATFP_Register_Backend_Assets
         add_action('admin_enqueue_scripts', array($this, 'enqueue_bulk_translation_assets'));
     }
 
+    /**
+     * Translation providers bundled with the free plugin.
+     *
+     * Shared by the automatic (single post) and bulk translation flows so both
+     * always offer exactly the same set of services.
+     *
+     * @since 1.5.0
+     * @return string[] List of valid provider slugs.
+     */
+    private static function get_valid_providers(){
+        return ATFP_Helper::get_supported_providers();
+    }
+
     public function enqueue_bulk_translation_assets(){
-        if(!function_exists('get_current_screen') || !class_exists('ATFP_Helper') || !ATFP_Helper::bulk_translation_render(get_current_screen())){
+        global $polylang;
+        
+        if(!$polylang || !property_exists($polylang, 'model')){
             return;
         }
 
-        $atfp_utm_parameters='utm_source=atfp_plugin';
-        if(class_exists('ATFP_Helper')){
-            $atfp_utm_parameters=ATFP_Helper::utm_source_text();
+        $current_screen = function_exists('get_current_screen') ? get_current_screen() : false;
+
+        if(!$current_screen){
+            return;
+        }
+        
+        if(!class_exists('ATFP_Helper') || !ATFP_Helper::bulk_translation_render($current_screen)){
+            return;
         }
 
-        $atfp_bulk_data=array(
-            'atfp_utm_parameters' => sanitize_text_field($atfp_utm_parameters),
-            'pro_version_url' => esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/'),
-            'bulk_doc_url' => esc_url('https://docs.coolplugins.net/doc/ai-translation-polylang-bulk-translation/'),
-        );
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce verification is not required here
+        $post_status=isset($_GET['post_status']) ? sanitize_text_field(wp_unslash($_GET['post_status'])) : '';
 
-        wp_enqueue_script('atfp-bulk-translation', ATFP_URL . 'assets/js/atfp-bulk-translate.min.js', array('jquery'), ATFP_V, true);
-        wp_localize_script('atfp-bulk-translation', 'atfpBulkTranslationData', $atfp_bulk_data);
+        if('trash' === $post_status){
+            return;
+        }
+
+        $post_label = __( 'Pages', 'automatic-translations-for-polylang' );
+        $post_label_singular = __( 'Page', 'automatic-translations-for-polylang' );
+
+        if ( isset( $current_screen->post_type ) ) {
+            $post_type_object = get_post_type_object( $current_screen->post_type );
+
+            if ( $post_type_object ) {
+                if ( ! empty( $post_type_object->label ) ) {
+                    $post_label = $post_type_object->label;
+                }
+
+                if ( ! empty( $post_type_object->labels->singular_name ) ) {
+                    $post_label_singular = $post_type_object->labels->singular_name;
+                }
+            }
+        }
+        
+        $editor_script_asset = include ATFP_DIR_PATH . 'assets/bulk-translate/index.asset.php';
+
+        $rtl=function_exists('is_rtl') ? is_rtl() : false;
+        $css_file=$rtl ? 'index-rtl.css' : 'index.css';
+
+        // Same provider allow-list as the automatic translation flow, so both offer identical services.
+        $active_providers = array_values(array_filter(ATFP_Helper::get_active_providers(), function($provider_name){
+            return in_array($provider_name, self::get_valid_providers(), true);
+        }));
+
+        $script_dependencies = $editor_script_asset['dependencies'];
+
+        // Only pull in the third party Google widget when Google Translate is actually enabled.
+        if (in_array('google-translate', $active_providers, true)) {
+            wp_enqueue_script('atfp-google-api', 'https://translate.google.com/translate_a/element.js', array(), ATFP_V, true);
+            $script_dependencies[] = 'atfp-google-api';
+        }
+
+        wp_enqueue_script('atfp-bulk-translate', ATFP_URL . 'assets/bulk-translate/index.js', $script_dependencies, $editor_script_asset['version'], true);
+        wp_set_script_translations('atfp-bulk-translate', 'automatic-translations-for-polylang', ATFP_DIR_PATH . 'languages');
+
+        // The bundle hash only moves when the JavaScript is rebuilt, which leaves
+        // browsers on a stale stylesheet after a CSS only change, so the plugin
+        // version rides along to break the cache on every release.
+        wp_enqueue_style('atfp-bulk-translate', ATFP_URL . 'assets/bulk-translate/'.$css_file, array(), $editor_script_asset['version'] . '-' . ATFP_V);
+
+        $languages = PLL()->model->get_languages_list();
+
+        $lang_object = array();
+
+        $default_language=PLL()->model->get_default_language();
+		$default_language_slug=false;
+
+		if(isset($default_language->slug) && !empty($default_language->slug)){
+			$default_language_slug=$default_language->slug;
+		}
+
+        foreach ($languages as $lang) {
+            $lang_object[$lang->slug] = array('name' => $lang->name, 'flag' => $lang->flag_url, 'locale' => $lang->locale);
+        }
+
+        $extra_data = array();
+
+        if (!isset(PLL()->options['sync']) || (isset(PLL()->options['sync']) && !in_array('post_meta', PLL()->options['sync']))) {
+            $extra_data['postMetaSync'] = 'false';
+        } else {
+            $extra_data['postMetaSync'] = 'true';
+        }
+
+        wp_localize_script(
+            'atfp-bulk-translate',
+            'atfp_bulk_translate_object',
+            array_merge(array(
+                'ajax_url' => admin_url('admin-ajax.php'),
+                'languageObject' => $lang_object,
+                'nonce' => wp_create_nonce('wp_rest'),
+                'bulkTranslateRouteUrl' => get_rest_url(null, 'atfp-translate'),
+                'bulkTranslatePrivateKey' => wp_create_nonce('atfp_bulk_translate_entries_nonce'),
+                'atfp_url'           => esc_url(ATFP_URL),
+                'admin_url' => admin_url(),
+                'post_label' => $post_label,
+                'post_label_singular' => $post_label_singular,
+                'update_translate_data' => 'atfp_update_translate_data',
+                'pendingPostsIdsKey' => wp_create_nonce('atfp_pending_posts_ids_nonce'),
+                'default_language_slug' => $default_language_slug,
+                'active_providers' => $active_providers,
+                // Engine pre-selected in the bulk translation modal.
+                'default_provider' => ATFP_Helper::get_default_provider(),
+                'pro_version_url' => esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/'),
+                'refrence_text' => class_exists('ATFP_Helper') ? ATFP_Helper::utm_source_text() : 'utm_source=atfp_plugin',
+            ), $extra_data)
+        );
     }
 
     public function atfp_enqueue_admin_assets(){
@@ -74,7 +182,22 @@ class ATFP_Register_Backend_Assets
 		$current_screen = get_current_screen();
         
         if(class_exists('ATFP_Helper') && ATFP_Helper::is_translated_post_type($current_screen)){
-            wp_enqueue_script('atfp-views-link-admin', ATFP_URL . 'assets/js/atfp-admin-views-link.js', array('jquery'), ATFP_V, true);
+            wp_enqueue_script('atfp-views-link-admin', ATFP_URL . 'assets/js/atfp-admin-views-link.min.js', array('jquery'), ATFP_V, true);
+        }
+
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Reading which admin page is open to decide what to enqueue, no data is processed.
+        if(isset($_GET['page']) && sanitize_text_field(wp_unslash($_GET['page'])) === 'mlang_strings'){
+            wp_enqueue_script('atfp-mlang-strings', ATFP_URL . 'assets/js/atfp-mlang-strings.js', array('jquery'), ATFP_V, true);
+            
+            $atfp_utm_parameters = 'utm_source=atfp_plugin';
+            if (class_exists('ATFP_Helper')) {
+                $atfp_utm_parameters = ATFP_Helper::utm_source_text();
+            }
+            $atfp_buy_pro_url = esc_url('https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?' . sanitize_text_field($atfp_utm_parameters) . '&utm_medium=inside&utm_campaign=get_pro&utm_content=string_translation_page');
+            
+            wp_localize_script('atfp-mlang-strings', 'atfp_mlang_strings_obj', array(
+                'pro_url' => $atfp_buy_pro_url
+            ));
         }
     }
 
@@ -171,7 +294,7 @@ class ATFP_Register_Backend_Assets
                 return;
             }
 
-            $old_untranslated_post=ATFP_Re_Translation::is_old_untranslated_post($post->ID);
+            $old_untranslated_post=ATFPP_Re_Translation::is_old_untranslated_post($post->ID);
             if($old_untranslated_post){
                 $data = array(
                     'action_fetch'       => 'atfp_fetch_post_content',
@@ -186,6 +309,36 @@ class ATFP_Register_Backend_Assets
         }
     }
 
+    /**
+     * Makes a JSON payload survive wp_localize_script().
+     *
+     * wp_localize_script() runs html_entity_decode() over every scalar value it
+     * is handed. A page holding an entity therefore arrives corrupted: content
+     * pasted from Google carries `font-family: &quot;Google Sans&quot;` inside an
+     * attribute, WordPress turns those into bare quotes, and JSON.parse() gives
+     * up part way through the document.
+     *
+     * Escaping every ampersand as \u0026 leaves html_entity_decode() with
+     * nothing to find, and JSON.parse() turns the escape back into `&`, so the
+     * data the browser ends up with is byte for byte what it always was. An
+     * ampersand can only ever appear inside a JSON string, never in its
+     * structure, which is what makes a blind replacement safe here.
+     *
+     * @since 1.6.1
+     *
+     * @param string $json Encoded payload bound for wp_localize_script().
+     *
+     * @return string Payload with ampersands escaped.
+     */
+    private static function atfp_shield_json_from_entity_decode($json)
+    {
+        if (!is_string($json)) {
+            return $json;
+        }
+
+        return str_replace('&', '\u0026', $json);
+    }
+
     public function enqueue_elementor_translate_assets()
     {
 
@@ -196,13 +349,13 @@ class ATFP_Register_Backend_Assets
 
         if ((!empty($page_translated) && $page_translated === 'true') || empty($parent_post_language_slug)) {
             if(function_exists('get_the_ID')){
-                $old_untranslated_post=ATFP_Re_Translation::is_old_untranslated_post(get_the_ID());
+                $old_untranslated_post=ATFPP_Re_Translation::is_old_untranslated_post(get_the_ID());
                 if($old_untranslated_post){
                     $current_post_id=get_the_ID();
                     $elementor_data = \Elementor\Plugin::$instance->documents->get( $old_untranslated_post )->get_elements_data();
                     $post_language_slug = pll_get_post_language($old_untranslated_post, 'slug');
 
-                    $elementor_data=ATFP_Helper::replace_links_with_translations(json_encode($elementor_data), $post_language_slug, $parent_post_language_slug);
+                    $elementor_data=self::atfp_shield_json_from_entity_decode(ATFP_Helper::replace_links_with_translations(json_encode($elementor_data), $post_language_slug, $parent_post_language_slug));
 
                     $meta_fields=get_post_meta($old_untranslated_post);
 
@@ -236,7 +389,7 @@ class ATFP_Register_Backend_Assets
             return;
         }
             
-        $elementor_data=ATFP_Helper::replace_links_with_translations(json_encode($elementor_data), $post_language_slug, $parent_post_language_slug);
+        $elementor_data=self::atfp_shield_json_from_entity_decode(ATFP_Helper::replace_links_with_translations(json_encode($elementor_data), $post_language_slug, $parent_post_language_slug));
         
         $parent_post_id = get_post_meta(get_the_ID(), '_atfp_parent_post_id', true);
 
@@ -315,18 +468,41 @@ class ATFP_Register_Backend_Assets
         wp_register_style('atfp-automatic-translate-custom', ATFP_URL . 'assets/css/atfp-custom.min.css', array(), ATFP_V);
 
         $editor_script_asset = include ATFP_DIR_PATH . 'assets/automatic-translate/index.asset.php';
-        wp_register_script('atfp-automatic-translate', ATFP_URL . 'assets/automatic-translate/index.js', $editor_script_asset['dependencies'], $editor_script_asset['version'], true);
 
         $post_type = get_post_type();
 
         $languages = PLL()->model->get_languages_list();
-        $active_providers = ATFP_Helper::get_active_providers();
 
-        $valid_providers = array('chrome-built-in-ai', 'yandex-translate', 'edge-built-in-ai');
-
-        $active_providers = array_values(array_filter($active_providers, function($provider_name) use ($valid_providers) {
-            return in_array($provider_name, $valid_providers);
+        $active_providers = array_values(array_filter(ATFP_Helper::get_active_providers(), function($provider_name){
+            return in_array($provider_name, self::get_valid_providers(), true);
         }));
+
+        $script_dependencies = $editor_script_asset['dependencies'];
+
+        wp_register_script('atfp-automatic-translate', ATFP_URL . 'assets/automatic-translate/index.js', $script_dependencies, $editor_script_asset['version'], true);
+
+        /*
+         * Only pull in the third party Google widget when Google Translate is
+         * actually enabled, and inject it from JavaScript rather than enqueue it.
+         *
+         * WordPress 7.1 wraps the block editor screens in an output buffer that
+         * stamps crossorigin="anonymous" onto every cross origin <script> it
+         * renders (wp_add_crossorigin_attributes(), hooked from load-post.php and
+         * load-post-new.php). That puts this widget into CORS mode, and Google
+         * serves it with no Access-Control-Allow-Origin header, so the browser
+         * refuses it and the engine is dead on arrival. A tag created at runtime
+         * never passes through that buffer, so it loads the way it always did.
+         */
+        if (in_array('google-translate', $active_providers, true)) {
+            wp_add_inline_script(
+                'atfp-automatic-translate',
+                sprintf(
+                    '(function(){var s=document.createElement("script");s.src=%s;s.async=true;document.head.appendChild(s);})();',
+                    wp_json_encode('https://translate.google.com/translate_a/element.js')
+                ),
+                'before'
+            );
+        }
 
         $lang_object = array();
         foreach ($languages as $lang) {
@@ -508,7 +684,7 @@ class ATFP_Register_Backend_Assets
 	}
 
     private function enqueue_re_translation_assets($editor_type, $post_id){
-        if(!class_exists('ATFP_Re_Translation') || !ATFP_Re_Translation::retranslation_status($post_id)){
+        if(!class_exists('ATFPP_Re_Translation') || !ATFPP_Re_Translation::retranslation_status($post_id)){
             return;
         }
 
