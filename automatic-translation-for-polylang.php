@@ -71,6 +71,7 @@ if (! class_exists('AutoPoly')) {
 			add_action('admin_menu', array($this, 'atfp_add_submenu_page'), 11);
 			add_action('admin_enqueue_scripts', array($this, 'atfp_set_dashboard_style'));
 			add_action('admin_init', array($this, 'atfp_admin_init'));
+			add_action('admin_init', array($this, 'atfp_language_switcher_admin_notice'));
 			add_action('admin_notices', array($this, 'atfp_admin_notice'));
 			add_action('init', array($this, 'atfp_translation_string_migration'));
 			add_action('activated_plugin', array($this, 'atfp_plugin_redirection'));
@@ -673,8 +674,16 @@ if (! class_exists('AutoPoly')) {
 			}
 		}
 
-		public function atfp_admin_init()
-		{
+		public function atfp_language_switcher_admin_notice(){
+			if ( is_plugin_active('duplicate-content-addon-for-polylang/duplicate-content-addon-for-polylang.php')){
+				return;
+			}
+			if ( get_option( 'dupcap-lsdp-notice' ) !== 'yes' || get_option( 'dupcap-lsdp-sidebar-notice' ) !== 'yes' ) {
+				require_once ATFP_DIR_PATH . '/admin/notice/atfp-notice.php';
+			}
+		}
+
+		public function atfp_admin_init(){
 			// Check Polylang plugin is installed and active
 			global $polylang;
 			$atfp_polylang = $polylang;

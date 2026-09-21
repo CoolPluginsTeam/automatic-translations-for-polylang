@@ -270,8 +270,8 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 == Changelog ==
 
 = Version 1.6.1 | 17 September 2026 =
-* **Added:** Support for parsing `wpml-config.xml` translation rules.
-* **Improved:** Block translation.
+* **Added:** Support for translation rules defined in wpml-config.xml files.
+* **Improved:** Block content translation for more reliable and accurate handling of WordPress blocks.
 
 = Version 1.6.0 | 02 September 2026 =
 * **Added:** AI Translate button to the Posts and Pages list for starting translations directly without opening the editor.
