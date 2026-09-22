@@ -145,9 +145,10 @@
 					}
 
 					$text.text( 'Activated!' );
+					var goTo = ( response.data && response.data.redirect ) ? response.data.redirect : redirect;
 					setTimeout( function () {
-						if ( redirect ) {
-							window.location.href = redirect;
+						if ( goTo ) {
+							window.location.href = goTo;
 						} else {
 							window.location.reload();
 						}

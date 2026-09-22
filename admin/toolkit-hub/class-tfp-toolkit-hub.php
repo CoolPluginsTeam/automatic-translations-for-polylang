@@ -403,6 +403,7 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 					array(
 						'message'   => __( 'Plugin activated successfully.', self::$loader['text_domain'] ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
 						'activated' => true,
+						'redirect'  => self::redirect_url_for_slug( $slug ),
 					)
 				);
 			}
@@ -477,6 +478,7 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 						? __( 'Plugin installed and activated successfully.', self::$loader['text_domain'] ) // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
 						: __( 'Plugin installed successfully.', self::$loader['text_domain'] ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
 					'activated' => $activated,
+					'redirect'  => self::redirect_url_for_slug( $slug ),
 				)
 			);
 		}
@@ -705,10 +707,28 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 		 * @param string $tool 'autopoly' | 'inspector' | 'switcher'.
 		 * @return string
 		 */
+
+		/**
+		 * Dashboard URL after installing/activating a Toolkit slug.
+		 * AutoPoly prefers the Pro dashboard when Pro is active.
+		 *
+		 * @param string $slug WordPress.org / plugin directory slug.
+		 * @return string
+		 */
+		public static function redirect_url_for_slug( $slug ) {
+			$map = array(
+				self::SLUG_AUTOPOLY  => 'autopoly',
+				self::SLUG_INSPECTOR => 'inspector',
+				self::SLUG_SWITCHER  => 'switcher',
+			);
+			$tool = isset( $map[ $slug ] ) ? $map[ $slug ] : '';
+			return $tool ? self::tool_url( $tool ) : admin_url( 'admin.php?page=' . self::PAGE );
+		}
+
 		public static function tool_url( $tool ) {
 			switch ( $tool ) {
 				case 'autopoly':
-					// Pro dashboard when Pro is active; Free page otherwise.
+					// Pro dashboard when Pro is active (or present+active after activate); Free otherwise.
 					if ( ! function_exists( 'is_plugin_active' ) ) {
 						require_once ABSPATH . 'wp-admin/includes/plugin.php';
 					}
