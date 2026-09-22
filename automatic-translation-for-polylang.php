@@ -81,6 +81,9 @@ if (! class_exists('AutoPoly')) {
 
 			// Initialize feedback notice.
 			$this->init_feedback_notice();
+
+			// Initialize the shared "Toolkit for Polylang" hub.
+			$this->init_toolkit_hub();
 			add_filter('plugin_action_links_' . plugin_basename(__FILE__), array($this, 'atfp_plugin_action_links'));
 			add_filter('plugin_row_meta', array($this, 'atfp_plugin_row_links'), 10, 2);
 
@@ -325,6 +328,35 @@ if (! class_exists('AutoPoly')) {
 			}
 		}
 
+		/**
+		 * Load the shared "Toolkit for Polylang" hub.
+		 *
+		 * This file ships identically in AutoPoly, Translation Inspector /
+		 * Duplicate Content, and Language Switcher. The class_exists() guard
+		 * means only the copy that loads first actually runs — whichever of
+		 * the three plugins happens to boot first on a given site — so having
+		 * more than one of these plugins active never registers the hub twice.
+		 */
+		public function init_toolkit_hub() {
+			if ( ! is_admin() ) {
+				return;
+			}
+
+			if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
+				require_once ATFP_DIR_PATH . 'admin/toolkit-hub/class-tfp-toolkit-hub.php';
+			}
+
+			if ( class_exists( 'TFP_Toolkit_Hub' ) ) {
+				TFP_Toolkit_Hub::instance(
+					array(
+						'text_domain' => 'automatic-translations-for-polylang',
+						'support_url' => 'https://wordpress.org/support/plugin/automatic-translations-for-polylang/',
+						'docs_url'    => 'https://docs.coolplugins.net/plugin/ai-translation-for-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=toolkit_hub_header',
+					)
+				);
+			}
+		}
+
 		/*
 		|------------------------------------------------------------------------
 		|  Hide unrelated notices
@@ -491,40 +523,38 @@ if (! class_exists('AutoPoly')) {
 				$atfp_utm_parameters = ATFP_Helper::utm_source_text();
 			}
 
-			// Action buttons configuration
-			$buttons = [
-				[
-					'url' => 'https://docs.coolplugins.net/plugin/ai-translation-for-polylang/?' . sanitize_text_field($atfp_utm_parameters) . '&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_header',
-					'img' => 'docs.svg',
-					'alt' => __('Read Docs', 'automatic-translations-for-polylang'),
-					'text' => __('Read Docs', 'automatic-translations-for-polylang'),
-					'class' => 'atfp-dashboard-btn primary'
-				]
-			];
+			// Header-right action links — same "Get Support" + "Check Docs" pair
+			// as Translation Inspector's own header, so both plugins' dashboards
+			// match. Docs URL is AutoPoly's existing one; support is new.
+			$atfp_support_url = 'https://wordpress.org/support/plugin/automatic-translations-for-polylang/';
+			$atfp_docs_url    = 'https://docs.coolplugins.net/plugin/ai-translation-for-polylang/?' . sanitize_text_field( $atfp_utm_parameters ) . '&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_header';
 
 			// Start HTML output
 ?>
 			<div class="atfp-dashboard-wrapper">
 				<div class="atfp-dashboard-header">
+					<?php
+					$atfp_toolkit_hub_url = class_exists( 'TFP_Toolkit_Hub' )
+						? admin_url( 'admin.php?page=' . TFP_Toolkit_Hub::PAGE )
+						: admin_url( 'admin.php?page=toolkit-for-polylang' );
+					?>
 					<div class="atfp-dashboard-header-left">
-						<a href="?page=polylang-atfp-dashboard&tab=dashboard" class="atfp-dashboard-logo-link">
+						<a href="<?php echo esc_url( $atfp_toolkit_hub_url ); ?>" class="atfp-dashboard-logo-link">
 							<img src="<?php echo esc_url(ATFP_URL . 'assets/images/ai-translation-for-Polylang.svg'); ?>" alt="<?php esc_attr_e('Polylang Addon Logo', 'automatic-translations-for-polylang'); ?>">
+							<h2 class="atfp-dashboard-logo-text"><?php esc_html_e( 'Toolkit for Polylang', 'automatic-translations-for-polylang' ); ?></h2>
 						</a>
-						<h2 class="atfp-dashboard-logo-text">AutoPoly</h2>
 					</div>
+					<?php if ( class_exists( 'TFP_Toolkit_Hub' ) ) : ?>
+						<?php TFP_Toolkit_Hub::render_nav( 'autopoly' ); ?>
+					<?php endif; ?>
 					<div class="atfp-dashboard-header-right">
-						<?php foreach ($buttons as $button): ?>
-							<a href="<?php echo esc_url($button['url']); ?>"
-								class="<?php echo esc_attr(isset($button['class']) ? $button['class'] : 'atfp-dashboard-btn'); ?>"
-								target="_blank"
-								aria-label="<?php echo isset($button['alt']) ? esc_attr($button['alt']) : ''; ?>">
-								<img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/' . $button['img']); ?>"
-									alt="<?php echo esc_attr($button['alt']); ?>">
-								<?php if (isset($button['text'])): ?>
-									<span><?php echo esc_html($button['text']); ?></span>
-								<?php endif; ?>
-							</a>
-						<?php endforeach; ?>
+						<a href="<?php echo esc_url( $atfp_support_url ); ?>" class="tfp-header-btn tfp-header-btn-support" target="_blank" rel="noopener noreferrer">
+							<?php esc_html_e( 'Get Support', 'automatic-translations-for-polylang' ); ?>
+						</a>
+						<a href="<?php echo esc_url( $atfp_docs_url ); ?>" class="tfp-header-btn tfp-header-btn-docs" target="_blank" rel="noopener noreferrer">
+							<span class="dashicons dashicons-media-document tfp-header-btn-icon" aria-hidden="true"></span>
+							<?php esc_html_e( 'Check Docs', 'automatic-translations-for-polylang' ); ?>
+						</a>
 					</div>
 				</div>
 

@@ -1,0 +1,1052 @@
+/**
+ * Toolkit for Polylang — shared hub + cross-plugin header styles.
+ * Loaded on the hub page and on each tool's own dashboard page.
+ *
+ * The hub page reuses AutoPoly's own .atfp-dashboard-header, which is
+ * absolutely positioned and expects #wpbody-content to be pushed down to
+ * make room for it — AutoPoly's own CSS does this only for its own screen
+ * (.languages_page_polylang-atfp-dashboard), so the hub's screen needs the
+ * same rule here.
+ */
+:is(.languages_page_toolkit-for-polylang) #wpbody #wpbody-content {
+	margin-top: 80px !important;
+}
+
+/*
+ * AutoPoly's own .atfp-dashboard-logo-link has no display rule (it used to
+ * wrap only the logo image). Now that the title lives inside the same link
+ * (both go to the hub), it needs its own flex layout or the <h2> drops to a
+ * new line under the image.
+ */
+.atfp-dashboard-logo-link {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	text-decoration: none;
+}
+
+/*
+ * Same "Get Support" / "Check Docs" pair as Translation Inspector's own
+ * header (admin/inspector/css/admin.css .dupcap-topbar-btn*) — matching
+ * colours, own class names so this doesn't depend on that plugin's CSS
+ * actually being loaded.
+ */
+.tfp-header-btn {
+	align-items: center;
+	border-radius: 6px;
+	box-sizing: border-box;
+	display: inline-flex;
+	font-size: 14px;
+	font-weight: 600;
+	gap: 6px;
+	line-height: 1;
+	min-height: 36px;
+	padding: 10px 18px;
+	text-decoration: none;
+	transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.tfp-header-btn-icon.dashicons {
+	/*
+	 * AutoPoly's own admin-styles.css sets ".atfp-dashboard-wrapper * { font-family: Inter... }",
+	 * a same-specificity universal selector that loads after dashicons.css and
+	 * wins on source order — silently replacing the icon font so the glyph
+	 * falls back to a missing-character box. Reassert it here.
+	 */
+	font-family: dashicons !important;
+	font-size: 16px;
+	height: 16px;
+	width: 16px;
+	line-height: 1;
+	margin: 0;
+	flex-shrink: 0;
+}
+
+.tfp-header-btn-support {
+	background: #fff;
+	border: 1px solid #2563eb;
+	color: #2563eb;
+}
+
+.tfp-header-btn-support:hover,
+.tfp-header-btn-support:focus {
+	background: #eff6ff;
+	border-color: #1d4ed8;
+	color: #1d4ed8;
+}
+
+.tfp-header-btn-docs {
+	background: #2563eb;
+	border: 1px solid #2563eb;
+	color: #fff;
+}
+
+.tfp-header-btn-docs:hover,
+.tfp-header-btn-docs:focus {
+	background: #1d4ed8;
+	border-color: #1d4ed8;
+	color: #fff;
+}
+
+.tfp-logo {
+	width: 28px;
+	height: 28px;
+	border-radius: 7px;
+	background: #ef4444;
+	flex-shrink: 0;
+	position: relative;
+}
+
+.tfp-logo::after {
+	content: "A";
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #fff;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 1;
+}
+
+/* ---------- Hub body (mockup layout; header above stays unchanged) ---------- */
+
+/*
+ * Keep WP #wpcontent left padding as-is (do not bleed left smaller).
+ * Mirror that 20px on the right so right spacing matches left.
+ */
+:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-wrapper {
+	margin-left: 0;
+	margin-right: 0;
+	width: 100%;
+	max-width: 100%;
+	overflow-x: hidden;
+	box-sizing: border-box;
+	padding-left: 20px;
+	padding-right: 40px; /* 20px hub inset + 20px to match WP left pad */
+}
+
+.tfp-hub-body {
+	box-sizing: border-box;
+	width: 100%;
+	max-width: 100%;
+	margin: 0 0 40px;
+	padding: 0;
+}
+
+/* Folded admin menu drops #wpcontent left pad — keep left/right equal. */
+:is(.folded.languages_page_toolkit-for-polylang) .atfp-dashboard-wrapper {
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.tfp-hub-body *,
+.tfp-hub-body *::before,
+.tfp-hub-body *::after {
+	box-sizing: border-box;
+}
+
+.tfp-section-head {
+	margin: 0 0 18px;
+}
+
+.tfp-section-title {
+	margin: 0 0 6px;
+	font-size: 18px;
+	font-weight: 700;
+	color: #111827;
+	line-height: 1.3;
+}
+
+.tfp-section-sub {
+	margin: 0;
+	font-size: 13.5px;
+	line-height: 1.5;
+	color: #6b7280;
+}
+
+/* Hero */
+.tfp-hero {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(240px, 34%);
+	gap: 28px;
+	align-items: center;
+	padding: 20px 24px;
+	border-radius: 12px;
+	background: linear-gradient(120deg, rgba(90, 57, 189) 0%, rgba(69, 60, 196) 32%, rgba(77, 72, 217) 66%, rgba(68, 67, 198) 100%);
+	color: #fff;
+	margin-bottom: 24px;
+	overflow: hidden;
+	width: 100%;
+	min-width: 0;
+	box-shadow: 0 6px 18px rgba(90, 57, 189, 0.28);
+	position: relative;
+}
+
+/* Soft glow on the right so the media column feels filled, not empty purple. */
+.tfp-hero::after {
+	content: "";
+	position: absolute;
+	inset: -20% -10% -30% 55%;
+	background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 70%);
+	pointer-events: none;
+	z-index: 0;
+}
+
+.tfp-hero-copy,
+.tfp-hero-video {
+	position: relative;
+	z-index: 1;
+	min-width: 0;
+}
+
+.tfp-hero-copy {
+	max-width: 40rem;
+}
+
+.tfp-hero-badge {
+	display: inline-flex;
+	align-items: center;
+	padding: 4px 10px;
+	border-radius: 999px;
+	background: rgba(255, 255, 255, 0.16);
+	border: 1px solid rgba(255, 255, 255, 0.22);
+	font-size: 10px;
+	font-weight: 700;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	margin-bottom: 10px;
+}
+
+.tfp-hero-title {
+	margin: 0 0 8px;
+	font-size: clamp(18px, 1.7vw, 22px);
+	line-height: 1.3;
+	font-weight: 700;
+	color: #fff;
+	max-width: none;
+}
+
+.tfp-hero-desc {
+	margin: 0;
+	font-size: 13px;
+	line-height: 1.5;
+	color: rgba(255, 255, 255, 0.9);
+	max-width: none;
+}
+
+.tfp-hero-video {
+	width: 100%;
+	min-width: 0;
+}
+
+.tfp-hero-video-frame {
+	align-items: center;
+	aspect-ratio: 16 / 9;
+	background-color: #0f172a;
+	background-position: center;
+	background-size: cover;
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	border-radius: 10px;
+	box-shadow: 0 8px 24px rgba(15, 23, 42, 0.28);
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+}
+
+.tfp-hero-video-frame:has(iframe) {
+	cursor: default;
+}
+
+.tfp-hero-video-frame iframe {
+	border: 0;
+	height: 100%;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	z-index: 2;
+}
+
+.tfp-hero-play {
+	align-items: center;
+	background: #e62117;
+	border: 3px solid #f2f2f2;
+	border-radius: 50%;
+	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28);
+	box-sizing: content-box;
+	color: #fff;
+	cursor: pointer;
+	display: flex;
+	height: 44px;
+	justify-content: center;
+	margin: 0;
+	padding: 0;
+	position: relative;
+	transition: transform 0.2s ease, background 0.2s ease;
+	width: 44px;
+	z-index: 1;
+}
+
+.tfp-hero-video-frame:hover .tfp-hero-play,
+.tfp-hero-play:hover,
+.tfp-hero-play:focus {
+	background: #c81c13;
+	transform: scale(1.06);
+}
+
+.tfp-hero-play svg {
+	height: 18px;
+	margin-left: 2px;
+	width: 18px;
+}
+
+/* Tools grid */
+.tfp-tools-section {
+	margin-bottom: 28px;
+}
+
+.tfp-grid {
+	display: grid;
+	/* 3 across when room; 2 then 1 as the admin content column shrinks. */
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+	gap: 18px;
+	width: 100%;
+	min-width: 0;
+}
+
+.tfp-card {
+	background: #fff;
+	border: 1px solid #e5e7eb;
+	border-radius: 12px;
+	padding: 24px;
+	display: flex;
+	flex-direction: column;
+	box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+	min-height: 100%;
+	min-width: 0;
+	width: 100%;
+}
+
+.tfp-card-top {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 12px;
+	margin-bottom: 16px;
+}
+
+/* Rounded-square icon tiles on tool cards (mockup). */
+.tfp-icon-tile {
+	width: 44px;
+	height: 44px;
+	border-radius: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+}
+
+.tfp-icon-tile svg {
+	width: 22px;
+	height: 22px;
+}
+
+.tfp-icon-tile.purple {
+	background: #f3e8ff;
+	color: #7c3aed;
+}
+
+.tfp-icon-tile.green {
+	background: #dcfce7;
+	color: #16a34a;
+}
+
+.tfp-icon-tile.blue {
+	background: #dbeafe;
+	color: #2271b1;
+}
+
+/* Circular icons still used in Toolkit controls rows. */
+.tfp-icon-circle {
+	width: 44px;
+	height: 44px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+}
+
+.tfp-icon-circle.sm {
+	width: 40px;
+	height: 40px;
+}
+
+.tfp-icon-circle svg {
+	width: 22px;
+	height: 22px;
+}
+
+.tfp-icon-circle.sm svg {
+	width: 20px;
+	height: 20px;
+}
+
+.tfp-icon-circle.blue {
+	background: #dbeafe;
+	color: #2271b1;
+}
+
+.tfp-icon-circle.green {
+	background: #dcfce7;
+	color: #15803d;
+}
+
+.tfp-icon-circle.purple {
+	background: #f3e8ff;
+	color: #7e22ce;
+}
+
+.tfp-icon-circle.amber {
+	background: #fef3c7;
+	color: #b45309;
+}
+
+.tfp-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 5px 11px;
+	border-radius: 999px;
+	font-size: 11.5px;
+	font-weight: 650;
+	line-height: 1.2;
+	white-space: nowrap;
+}
+
+.tfp-badge-dot {
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: currentColor;
+	flex-shrink: 0;
+}
+
+.tfp-badge.active,
+.tfp-badge.enabled,
+.tfp-badge.installed {
+	background: #dcfce7;
+	color: #15803d;
+}
+
+.tfp-badge.addon {
+	background: #eef2f7;
+	color: #334155;
+}
+
+.tfp-badge.not-installed,
+.tfp-badge.inactive {
+	background: #eef2f7;
+	color: #334155;
+}
+
+.tfp-badge.disabled {
+	background: #f3f4f6;
+	color: #6b7280;
+}
+
+.tfp-card-title {
+	margin: 0 0 8px;
+	font-size: 18px;
+	font-weight: 700;
+	color: #0f172a;
+	line-height: 1.3;
+}
+
+.tfp-card-desc {
+	margin: 0 0 20px;
+	font-size: 13.5px;
+	line-height: 1.55;
+	color: #64748b;
+	flex: 1 1 auto;
+}
+
+.tfp-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	min-height: 44px;
+	padding: 10px 16px;
+	border-radius: 10px;
+	border: 1px solid transparent;
+	font-size: 13.5px;
+	font-weight: 650;
+	text-decoration: none;
+	cursor: pointer;
+	margin-top: auto;
+	transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
+.tfp-btn-block {
+	width: 100%;
+}
+
+.tfp-btn-icon {
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+}
+
+.tfp-btn-icon-end {
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+}
+
+/* Open / active: core .button.button-primary for colors; layout only here. */
+.tfp-btn.button,
+.tfp-btn.button-primary {
+	display: inline-flex !important;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	box-sizing: border-box;
+	width: 100%;
+	min-height: 44px;
+	height: auto !important;
+	margin: 0;
+	padding: 10px 16px !important;
+	float: none !important;
+	line-height: 1.25 !important;
+	text-align: center;
+	text-decoration: none;
+	vertical-align: middle;
+	white-space: nowrap;
+}
+
+.tfp-btn.button .tfp-btn-text,
+.tfp-btn.button-primary .tfp-btn-text {
+	display: inline;
+	line-height: inherit;
+}
+
+.tfp-btn.button .tfp-btn-icon,
+.tfp-btn.button-primary .tfp-btn-icon,
+.tfp-btn.button .tfp-btn-icon-end,
+.tfp-btn.button-primary .tfp-btn-icon-end {
+	display: block;
+	flex-shrink: 0;
+}
+
+
+/* Cross-plugin header menu (Translation Inspector | AutoPoly | Language Switcher).
+ * Plain text links — no button chrome / no segmented box.
+ * Active: WordPress admin primary blue (#2271b1).
+ * Inactive / not-installed: #0f172a.
+ */
+.tfp-nav {
+	align-items: center;
+	background: transparent;
+	border: 0;
+	display: flex;
+	flex: 1 1 auto;
+	flex-wrap: wrap;
+	gap: 4px 18px;
+	justify-content: center;
+	margin: 0;
+	max-width: 100%;
+	min-width: 0;
+	padding: 0 12px;
+}
+
+.atfp-dashboard-header .tfp-nav .tfp-nav-item {
+	background: transparent !important;
+	border: 0 !important;
+	border-radius: 0;
+	box-shadow: none !important;
+	color: #0f172a;
+	display: inline;
+	font-size: 14px;
+	font-weight: 600;
+	height: auto;
+	line-height: 1.3;
+	margin: 0;
+	min-height: 0;
+	padding: 0;
+	text-decoration: none;
+	white-space: nowrap;
+}
+
+.atfp-dashboard-header .tfp-nav .tfp-nav-item:hover,
+.atfp-dashboard-header .tfp-nav .tfp-nav-item:focus {
+	background: transparent !important;
+	box-shadow: none !important;
+	color: #2271b1;
+	outline: none;
+	text-decoration: none;
+}
+
+/* Active menu item — WP primary blue (same hue as .button-primary). */
+.atfp-dashboard-header .tfp-nav .tfp-nav-item.active {
+	color: #2271b1;
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.atfp-dashboard-header .tfp-nav .tfp-nav-item.active:hover,
+.atfp-dashboard-header .tfp-nav .tfp-nav-item.active:focus {
+	color: #135e96;
+	text-decoration: none;
+}
+
+/* Not-installed still reads as the dark menu color; goes to Toolkit Hub. */
+.atfp-dashboard-header .tfp-nav .tfp-nav-item.not-installed {
+	color: #0f172a;
+	opacity: 0.85;
+}
+
+/* Pulse Install/Activate when arriving from header menu (tfp_install=…). */
+@keyframes tfp-install-pulse {
+	0%, 100% {
+		box-shadow: 0 0 0 0 rgba(15, 23, 42, 0.55);
+		transform: scale(1);
+	}
+	50% {
+		box-shadow: 0 0 0 10px rgba(15, 23, 42, 0);
+		transform: scale(1.03);
+	}
+}
+
+.tfp-btn.tfp-install-pulse {
+	animation: tfp-install-pulse 1.25s ease-in-out infinite;
+	position: relative;
+	z-index: 1;
+}
+
+.tfp-card.tfp-install-focus {
+	outline: 2px solid #0f172a;
+	outline-offset: 4px;
+}
+
+/* Dark navy for Install / Activate (mockup). */
+.tfp-btn.dark {
+	background: #0f172a;
+	border-color: #0f172a;
+	color: #fff;
+}
+
+.tfp-btn.dark:hover,
+.tfp-btn.dark:focus {
+	background: #1e293b;
+	border-color: #1e293b;
+	color: #fff;
+}
+
+.tfp-btn.is-disabled,
+.tfp-btn[aria-disabled="true"] {
+	opacity: 0.45;
+	pointer-events: none;
+	cursor: not-allowed;
+	box-shadow: none;
+}
+
+.tfp-btn-wrap {
+	position: relative;
+	width: 100%;
+	margin-top: auto;
+}
+
+.tfp-btn-wrap .tfp-btn {
+	margin-top: 0;
+}
+
+.tfp-btn-tip {
+	display: none;
+	position: absolute;
+	left: 50%;
+	bottom: calc(100% + 10px);
+	transform: translateX(-50%);
+	z-index: 20;
+	width: max-content;
+	max-width: 240px;
+	padding: 8px 10px;
+	border-radius: 8px;
+	background: #0f172a;
+	color: #fff;
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 1.4;
+	text-align: center;
+	box-shadow: 0 8px 20px rgba(15, 23, 42, 0.25);
+	pointer-events: none;
+	white-space: normal;
+}
+
+.tfp-btn-tip::after {
+	content: "";
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	margin-left: -6px;
+	border: 6px solid transparent;
+	border-top-color: #0f172a;
+}
+
+.tfp-btn-wrap.is-disabled:hover .tfp-btn-tip,
+.tfp-btn-wrap.is-disabled:focus-within .tfp-btn-tip {
+	display: block;
+}
+
+
+.tfp-install-message {
+	margin: 8px 0 0;
+	font-size: 12.5px;
+	color: #dc2626;
+	min-height: 0;
+}
+
+/* Bottom two-column layout */
+.tfp-bottom-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+	gap: 18px;
+	align-items: start;
+	width: 100%;
+	min-width: 0;
+}
+
+.tfp-panel {
+	background: #fff;
+	border: 1px solid #e5e7eb;
+	border-radius: 14px;
+	padding: 22px 24px;
+	box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+}
+
+.tfp-control-row {
+	margin-bottom: 16px;
+}
+
+.tfp-control-row:last-of-type {
+	margin-bottom: 12px;
+}
+
+.tfp-control-main {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+}
+
+.tfp-control-left {
+	display: flex;
+	align-items: flex-start;
+	gap: 12px;
+	min-width: 0;
+}
+
+.tfp-row-text-title {
+	margin: 0 0 4px;
+	font-size: 14.5px;
+	font-weight: 700;
+	color: #111827;
+}
+
+.tfp-row-text-desc {
+	margin: 0;
+	font-size: 12.5px;
+	line-height: 1.45;
+	color: #6b7280;
+}
+
+.tfp-row-right {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	flex-shrink: 0;
+}
+
+.tfp-control-status {
+	margin-top: 10px;
+	padding: 9px 12px;
+	border-radius: 8px;
+	font-size: 12.5px;
+	line-height: 1.4;
+	font-weight: 600;
+}
+
+.tfp-control-status.is-on {
+	background: #ecfdf5;
+	color: #047857;
+	border: 1px solid #a7f3d0;
+}
+
+.tfp-control-status.is-off {
+	background: #f3f4f6;
+	color: #4b5563;
+	border: 1px solid #e5e7eb;
+}
+
+.tfp-controls-note {
+	margin: 4px 0 0;
+	font-size: 12px;
+	line-height: 1.45;
+	color: #9ca3af;
+}
+
+.tfp-toggle {
+	position: relative;
+	display: inline-block;
+	width: 44px;
+	height: 24px;
+	flex-shrink: 0;
+}
+
+/*
+ * WordPress admin forms.css paints input[type=checkbox]:checked:before /
+ * :disabled:checked:before as a blue dash. Hide every WP chrome on our
+ * custom switch — visual state lives only on .tfp-toggle-track.
+ */
+.tfp-toggle input[type="checkbox"],
+.tfp-toggle input[type="checkbox"]:checked,
+.tfp-toggle input[type="checkbox"]:disabled,
+.tfp-toggle input[type="checkbox"]:disabled:checked,
+.tfp-toggle input[type="checkbox"]:focus {
+	position: absolute !important;
+	inset: 0 !important;
+	width: 100% !important;
+	height: 100% !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	opacity: 0 !important;
+	border: 0 !important;
+	background: transparent !important;
+	box-shadow: none !important;
+	appearance: none !important;
+	-webkit-appearance: none !important;
+	z-index: 2;
+	cursor: pointer;
+}
+
+.tfp-toggle input[type="checkbox"]::before,
+.tfp-toggle input[type="checkbox"]::after,
+.tfp-toggle input[type="checkbox"]:checked::before,
+.tfp-toggle input[type="checkbox"]:checked::after,
+.tfp-toggle input[type="checkbox"]:disabled::before,
+.tfp-toggle input[type="checkbox"]:disabled::after,
+.tfp-toggle input[type="checkbox"]:disabled:checked::before,
+.tfp-toggle input[type="checkbox"]:disabled:checked::after,
+.tfp-toggle input[type="checkbox"]:checked:before,
+.tfp-toggle input[type="checkbox"]:disabled:checked:before {
+	content: none !important;
+	display: none !important;
+	width: 0 !important;
+	height: 0 !important;
+	border: 0 !important;
+	background: none !important;
+	box-shadow: none !important;
+}
+
+.tfp-toggle-track {
+	position: absolute;
+	inset: 0;
+	background: #d1d5db;
+	border-radius: 999px;
+	cursor: pointer;
+	transition: background-color 0.15s ease;
+	z-index: 1;
+	pointer-events: none;
+}
+
+.tfp-toggle-track::before {
+	content: "" !important;
+	display: block !important;
+	position: absolute;
+	width: 18px;
+	height: 18px;
+	left: 3px;
+	top: 3px;
+	background: #fff !important;
+	border: 0 !important;
+	border-radius: 50%;
+	transition: transform 0.15s ease;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.tfp-toggle input:checked + .tfp-toggle-track {
+	background: #7c3aed;
+}
+
+.tfp-toggle input:checked + .tfp-toggle-track::before {
+	transform: translateX(20px);
+}
+
+.tfp-toggle input:disabled + .tfp-toggle-track,
+.tfp-toggle.is-locked .tfp-toggle-track {
+	opacity: 0.55;
+	cursor: not-allowed;
+}
+
+.tfp-toggle input:disabled {
+	cursor: not-allowed;
+}
+
+.tfp-toggle.is-locked {
+	cursor: not-allowed;
+}
+
+.tfp-toggle-tip {
+	display: none;
+	position: absolute;
+	right: 0;
+	bottom: calc(100% + 10px);
+	z-index: 20;
+	width: max-content;
+	max-width: 220px;
+	padding: 8px 10px;
+	border-radius: 8px;
+	background: #0f172a;
+	color: #fff;
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 1.4;
+	text-align: left;
+	box-shadow: 0 8px 20px rgba(15, 23, 42, 0.25);
+	pointer-events: none;
+	white-space: normal;
+}
+
+.tfp-toggle-tip::after {
+	content: "";
+	position: absolute;
+	top: 100%;
+	right: 14px;
+	border: 6px solid transparent;
+	border-top-color: #0f172a;
+}
+
+.tfp-toggle.is-locked:hover .tfp-toggle-tip,
+.tfp-toggle.is-locked:focus-within .tfp-toggle-tip {
+	display: block;
+}
+
+/* Workflow */
+.tfp-workflow-list {
+	list-style: none;
+	margin: 0 0 18px;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.tfp-workflow-list li {
+	display: flex;
+	gap: 12px;
+	align-items: flex-start;
+	padding: 12px 14px;
+	border: 1px solid #eef2f7;
+	background: #f8fafc;
+	border-radius: 10px;
+}
+
+.tfp-step-num {
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	background: #eef2ff;
+	color: #4338ca;
+	font-size: 12px;
+	font-weight: 750;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	margin-top: 1px;
+}
+
+.tfp-step-title {
+	margin: 0 0 3px;
+	font-size: 13.5px;
+	font-weight: 700;
+	color: #111827;
+}
+
+.tfp-step-desc {
+	margin: 0;
+	font-size: 12.5px;
+	line-height: 1.45;
+	color: #6b7280;
+}
+
+.tfp-compat-tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.tfp-compat-tags span {
+	display: inline-flex;
+	align-items: center;
+	padding: 5px 10px;
+	border-radius: 999px;
+	background: #f3f4f6;
+	border: 1px solid #e5e7eb;
+	font-size: 11.5px;
+	font-weight: 600;
+	color: #4b5563;
+}
+
+/* Folded WP admin menu ≈ 960px content; auto-fit already wraps earlier.
+ * These only tighten spacing / force single column on very small windows.
+ */
+@media (max-width: 960px) {
+	.tfp-hero-title {
+		max-width: none;
+	}
+
+	.tfp-card-desc {
+		min-height: 0;
+	}
+}
+
+@media (max-width: 782px) {
+	.tfp-hub-body {
+		padding: 0 12px 28px;
+		margin: 0 0 28px;
+	}
+
+
+	.tfp-hero {
+		grid-template-columns: 1fr;
+		padding: 16px;
+		gap: 16px;
+	}
+
+	.tfp-hero::after {
+		inset: 40% -10% -40% -10%;
+	}
+
+	.tfp-hero-copy {
+		max-width: none;
+	}
+
+	.tfp-hero-title {
+		font-size: 17px;
+	}
+
+	.tfp-grid,
+	.tfp-bottom-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.tfp-control-main {
+		flex-wrap: wrap;
+	}
+}
