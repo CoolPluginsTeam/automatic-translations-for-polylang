@@ -47,10 +47,11 @@ $tfp_tools = array(
 	),
 );
 
-$tfp_icons = array(
-	'inspector' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" /></svg>',
-	'autopoly'  => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h7M7.5 7v10M14 17l6-10M20 17l-6-10" /></svg>',
-	'switcher'  => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18z" /><path stroke-linecap="round" stroke-linejoin="round" d="M3.6 9h16.8M3.6 15h16.8M12 3c2.5 2.7 3.75 5.7 3.75 9S14.5 18.3 12 21c-2.5-2.7-3.75-5.7-3.75-9S9.5 5.7 12 3z" /></svg>',
+$tfp_hub_asset = dirname( __DIR__ ) . '/class-tfp-toolkit-hub.php';
+$tfp_icons     = array(
+	'inspector' => '<img class="tfp-icon-logo" src="' . esc_url( plugins_url( 'images/inspector-logo.png', $tfp_hub_asset ) ) . '" alt="" width="48" height="48" />',
+	'autopoly'  => '<img class="tfp-icon-logo" src="' . esc_url( plugins_url( 'images/autopoly-logo.png', $tfp_hub_asset ) ) . '" alt="" width="48" height="48" />',
+	'switcher'  => '<img class="tfp-icon-logo" src="' . esc_url( plugins_url( 'images/switcher-logo.png', $tfp_hub_asset ) ) . '" alt="" width="48" height="48" />',
 );
 
 $tfp_download_icon = '<svg class="tfp-btn-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10.75 2.75a.75.75 0 00-1.5 0v8.69L6.3 8.49a.75.75 0 10-1.1 1.02l4.25 4.5a.75.75 0 001.1 0l4.25-4.5a.75.75 0 00-1.1-1.02l-2.95 3.12V2.75z"/><path d="M3.5 15.25a.75.75 0 000 1.5h13a.75.75 0 000-1.5h-13z"/></svg>';
@@ -157,7 +158,7 @@ $tfp_video_poster_alt = 'https://i.ytimg.com/vi/' . $tfp_video_id . '/hqdefault.
 					<article class="tfp-card" data-tool="<?php echo esc_attr( $tfp_key ); ?>">
 						<div class="tfp-card-top">
 							<div class="tfp-icon-tile <?php echo esc_attr( $tfp_tool['icon'] ); ?>">
-								<?php echo $tfp_icons[ $tfp_key ]; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG markup above. ?>
+								<?php echo $tfp_icons[ $tfp_key ]; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped URL built above. ?>
 							</div>
 							<span class="tfp-badge <?php echo esc_attr( $tfp_badge_class ); ?>">
 								<?php if ( 'active' === $tfp_badge_class ) : ?>
@@ -172,8 +173,9 @@ $tfp_video_poster_alt = 'https://i.ytimg.com/vi/' . $tfp_video_id . '/hqdefault.
 							<a href="<?php echo esc_url( $tfp_btn_url ); ?>" class="tfp-btn <?php echo esc_attr( $tfp_btn_class ); ?> tfp-btn-block tfp-ajax-install"
 								data-slug="<?php echo esc_attr( $tfp_ajax_slug ); ?>"
 								data-action="<?php echo esc_attr( $tfp_ajax_action ); ?>"
+								data-redirect="<?php echo esc_url( TFP_Toolkit_Hub::tool_url( $tfp_key ) ); ?>"
 								data-nonce="<?php echo esc_attr( wp_create_nonce( 'atfp_install_nonce' ) ); ?>">
-								<?php echo $tfp_btn_icon_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG. ?>
+								<?php echo $tfp_btn_icon_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped URL built above. ?>
 								<span class="tfp-btn-text"><?php echo esc_html( $tfp_btn_text ); ?></span>
 							</a>
 							<p class="tfp-install-message"></p>
@@ -185,20 +187,20 @@ $tfp_video_poster_alt = 'https://i.ytimg.com/vi/' . $tfp_video_id . '/hqdefault.
 							<?php if ( $tfp_is_open_inspector ) : ?>
 								<div class="tfp-btn-wrap<?php echo $tfp_open_disabled ? ' is-disabled' : ''; ?>">
 									<a href="<?php echo esc_url( $tfp_btn_url ); ?>" class="tfp-btn <?php echo esc_attr( $tfp_btn_class ); ?> tfp-btn-block<?php echo esc_attr( $tfp_btn_extra_class . $tfp_open_inspector_class ); ?>"<?php echo $tfp_open_inspector_attrs; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static aria/tabindex only. ?>>
-										<?php echo $tfp_btn_icon_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG. ?>
+										<?php echo $tfp_btn_icon_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped URL built above. ?>
 										<span class="tfp-btn-text"><?php echo esc_html( $tfp_btn_text ); ?></span>
 										<?php if ( $tfp_show_arrow ) : ?>
-											<?php echo $tfp_arrow_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG. ?>
+											<?php echo $tfp_arrow_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped URL built above. ?>
 										<?php endif; ?>
 									</a>
 									<span class="tfp-btn-tip" <?php echo $tfp_open_disabled ? '' : 'hidden'; ?>><?php echo esc_html__( 'Translation Inspector is disabled. Enable it in Toolkit controls below.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></span>
 								</div>
 							<?php else : ?>
 								<a href="<?php echo esc_url( $tfp_btn_url ); ?>" class="tfp-btn <?php echo esc_attr( $tfp_btn_class ); ?> tfp-btn-block<?php echo esc_attr( $tfp_btn_extra_class . $tfp_open_inspector_class ); ?>"<?php echo $tfp_open_inspector_attrs; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static aria/tabindex only. ?>>
-									<?php echo $tfp_btn_icon_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG. ?>
+									<?php echo $tfp_btn_icon_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped URL built above. ?>
 									<span class="tfp-btn-text"><?php echo esc_html( $tfp_btn_text ); ?></span>
 									<?php if ( $tfp_show_arrow ) : ?>
-										<?php echo $tfp_arrow_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG. ?>
+										<?php echo $tfp_arrow_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped URL built above. ?>
 									<?php endif; ?>
 								</a>
 							<?php endif; ?>
@@ -220,7 +222,7 @@ $tfp_video_poster_alt = 'https://i.ytimg.com/vi/' . $tfp_video_id . '/hqdefault.
 						<div class="tfp-control-main">
 							<div class="tfp-control-left">
 								<div class="tfp-icon-circle blue sm">
-									<?php echo $tfp_icons['inspector']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG. ?>
+									<?php echo $tfp_icons['inspector']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped URL built above. ?>
 								</div>
 								<div>
 									<p class="tfp-row-text-title"><?php echo esc_html__( 'Translation Inspector', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>

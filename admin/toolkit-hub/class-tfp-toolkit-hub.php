@@ -55,9 +55,10 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 		 * Plugin basenames (folder/file.php), exactly as WordPress identifies
 		 * them for is_plugin_active() — same shape as get_option('active_plugins').
 		 */
-		const PLUGIN_AUTOPOLY  = 'automatic-translations-for-polylang/automatic-translation-for-polylang.php';
-		const PLUGIN_INSPECTOR = 'duplicate-content-addon-for-polylang/duplicate-content-addon-for-polylang.php';
-		const PLUGIN_SWITCHER  = 'language-switcher-for-divi-polylang/language-switcher-for-divi-polylang.php';
+		const PLUGIN_AUTOPOLY     = 'automatic-translations-for-polylang/automatic-translation-for-polylang.php';
+		const PLUGIN_AUTOPOLY_PRO = 'autopoly-ai-translation-for-polylang-pro/autopoly-ai-translation-for-polylang-pro.php';
+		const PLUGIN_INSPECTOR    = 'duplicate-content-addon-for-polylang/duplicate-content-addon-for-polylang.php';
+		const PLUGIN_SWITCHER     = 'language-switcher-for-divi-polylang/language-switcher-for-divi-polylang.php';
 
 		/**
 		 * WordPress.org slugs, for the "Install" link (plugin-information popup).
@@ -91,6 +92,52 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 			add_action( 'activated_plugin', array( $this, 'redirect_to_tool_dashboard' ) );
 			add_action( 'wp_ajax_tfp_toggle_duplicate_content', array( $this, 'ajax_toggle_duplicate_content' ) );
 			add_action( 'wp_ajax_tfp_toggle_language_inspector', array( $this, 'ajax_toggle_language_inspector' ) );
+			// Strip third-party admin notices on the hub page only.
+			add_action( 'in_admin_header', array( $this, 'suppress_foreign_notices' ), 1000 );
+		}
+
+		/**
+		 * Whether the current request is the Toolkit hub screen.
+		 *
+		 * @return bool
+		 */
+		private function is_hub_page() {
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only screen check.
+			$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+			return self::PAGE === $page;
+		}
+
+		/**
+		 * On page=toolkit-for-polylang, remove every admin notice callback,
+		 * then re-open two dedicated hooks so only notices registered there
+		 * can render (e.g. add_action( 'tfp_toolkit_admin_notices', ... )).
+		 */
+		public function suppress_foreign_notices() {
+			if ( ! $this->is_hub_page() ) {
+				return;
+			}
+
+			remove_all_actions( 'admin_notices' );
+			remove_all_actions( 'all_admin_notices' );
+			remove_all_actions( 'user_admin_notices' );
+			remove_all_actions( 'network_admin_notices' );
+
+			add_action( 'admin_notices', array( $this, 'render_hub_admin_notices' ) );
+			add_action( 'all_admin_notices', array( $this, 'render_hub_all_admin_notices' ) );
+		}
+
+		/**
+		 * Allowed notices for the hub: hook with tfp_toolkit_admin_notices.
+		 */
+		public function render_hub_admin_notices() {
+			do_action( 'tfp_toolkit_admin_notices' );
+		}
+
+		/**
+		 * Allowed "all" notices for the hub: hook with tfp_toolkit_all_admin_notices.
+		 */
+		public function render_hub_all_admin_notices() {
+			do_action( 'tfp_toolkit_all_admin_notices' );
 		}
 
 		/**
@@ -210,6 +257,17 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 				require_once ABSPATH . 'wp-admin/includes/plugin.php';
 			}
 
+			// AutoPoly free + pro: either counts as installed/active for the card.
+			if ( self::PLUGIN_AUTOPOLY === $plugin_basename ) {
+				if ( is_plugin_active( self::PLUGIN_AUTOPOLY_PRO ) || is_plugin_active( self::PLUGIN_AUTOPOLY ) ) {
+					return 'active';
+				}
+				if ( file_exists( WP_PLUGIN_DIR . '/' . self::PLUGIN_AUTOPOLY_PRO ) || file_exists( WP_PLUGIN_DIR . '/' . self::PLUGIN_AUTOPOLY ) ) {
+					return 'inactive';
+				}
+				return 'not_installed';
+			}
+
 			if ( is_plugin_active( $plugin_basename ) ) {
 				return 'active';
 			}
@@ -219,6 +277,25 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 			}
 
 			return 'not_installed';
+		}
+
+		/**
+		 * Basename to activate for the AutoPoly card.
+		 * Prefer Pro when both Free and Pro are available on disk.
+		 *
+		 * @return string
+		 */
+		public static function autopoly_activate_basename() {
+			if ( ! function_exists( 'is_plugin_active' ) ) {
+				require_once ABSPATH . 'wp-admin/includes/plugin.php';
+			}
+
+			$pro_path = WP_PLUGIN_DIR . '/' . self::PLUGIN_AUTOPOLY_PRO;
+			if ( file_exists( $pro_path ) && ! is_plugin_active( self::PLUGIN_AUTOPOLY_PRO ) ) {
+				return self::PLUGIN_AUTOPOLY_PRO;
+			}
+
+			return self::PLUGIN_AUTOPOLY;
 		}
 
 		/**
@@ -232,18 +309,51 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 		 * @param string $plugin Basename of the plugin that was just activated.
 		 */
 		public function redirect_to_tool_dashboard( $plugin ) {
+			// AJAX activate (hub Install/Activate) returns JSON — JS handles redirect.
+			if ( function_exists( 'wp_doing_ajax' ) && wp_doing_ajax() ) {
+				return;
+			}
+
 			$map = array(
-				self::PLUGIN_AUTOPOLY  => 'autopoly',
-				self::PLUGIN_INSPECTOR => 'inspector',
-				self::PLUGIN_SWITCHER  => 'switcher',
+				self::PLUGIN_AUTOPOLY     => 'autopoly',
+				self::PLUGIN_AUTOPOLY_PRO => 'autopoly',
+				self::PLUGIN_INSPECTOR    => 'inspector',
+				self::PLUGIN_SWITCHER     => 'switcher',
 			);
 
 			if ( ! isset( $map[ $plugin ] ) ) {
 				return;
 			}
 
-			wp_safe_redirect( self::tool_url( $map[ $plugin ] ) );
+			$tool = $map[ $plugin ];
+
+			// Language Inspector feature off: do not open Inspector dashboard.
+			if ( 'inspector' === $tool && ! self::is_language_inspector_feature_enabled() ) {
+				wp_safe_redirect(
+					add_query_arg(
+						array(
+							'page'      => self::PAGE,
+							'tfp_focus' => 'inspector',
+						),
+						admin_url( 'admin.php' )
+					)
+				);
+				exit;
+			}
+
+			wp_safe_redirect( self::tool_url( $tool ) );
 			exit;
+		}
+
+		/**
+		 * Whether the Language Inspector feature is enabled in Translation Inspector
+		 * onboarding data (same default as the hub toggle: missing key = enabled).
+		 *
+		 * @return bool
+		 */
+		public static function is_language_inspector_feature_enabled() {
+			$data = get_option( 'dupcap_onboarding_data', array() );
+			return ! isset( $data['translation_inspector'] ) || ! empty( $data['translation_inspector'] );
 		}
 
 		/**
@@ -329,6 +439,7 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 					font-weight: 600;
 				}
 				#toplevel_page_mlang .wp-submenu a[href*="page=polylang-atfp-dashboard"],
+					#toplevel_page_mlang .wp-submenu a[href*="page=polylang-atfpp-dashboard"],
 				#toplevel_page_mlang .wp-submenu a[href*="page=translation-inspector-polylang"],
 				#toplevel_page_mlang .wp-submenu a[href*="page=lsdp-get-started"] {
 					padding-left: 22px;
@@ -347,7 +458,7 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
 
-			$toolkit_pages = array( self::PAGE, 'polylang-atfp-dashboard', 'translation-inspector-polylang', 'lsdp-get-started' );
+			$toolkit_pages = array( self::PAGE, 'polylang-atfp-dashboard', 'polylang-atfpp-dashboard', 'translation-inspector-polylang', 'lsdp-get-started' );
 
 			if ( ! in_array( $page, $toolkit_pages, true ) ) {
 				return;
@@ -420,8 +531,29 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 		public static function tool_url( $tool ) {
 			switch ( $tool ) {
 				case 'autopoly':
+					// Pro dashboard when Pro is active; Free page otherwise.
+					if ( ! function_exists( 'is_plugin_active' ) ) {
+						require_once ABSPATH . 'wp-admin/includes/plugin.php';
+					}
+					if ( is_plugin_active( self::PLUGIN_AUTOPOLY_PRO ) ) {
+						return admin_url( 'admin.php?page=polylang-atfpp-dashboard&tab=dashboard' );
+					}
 					return admin_url( 'admin.php?page=polylang-atfp-dashboard&tab=dashboard' );
 				case 'inspector':
+					// Feature off in Toolkit controls -> hub + pulse the toggle.
+					$inspector_on = self::is_language_inspector_feature_enabled();
+					if ( function_exists( 'dupcap_is_tool_enabled' ) ) {
+						$inspector_on = dupcap_is_tool_enabled( 'inspector' );
+					}
+					if ( ! $inspector_on ) {
+						return add_query_arg(
+							array(
+								'page'      => self::PAGE,
+								'tfp_focus' => 'inspector',
+							),
+							admin_url( 'admin.php' )
+						);
+					}
 					if ( class_exists( 'DUPCAP_Admin' ) ) {
 						return DUPCAP_Admin::page_url();
 					}
@@ -451,6 +583,10 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 		 * @return string
 		 */
 		public static function activate_url( $plugin_basename ) {
+			if ( self::PLUGIN_AUTOPOLY === $plugin_basename ) {
+				$plugin_basename = self::autopoly_activate_basename();
+			}
+
 			return wp_nonce_url(
 				admin_url( 'plugins.php?action=activate&plugin=' . rawurlencode( $plugin_basename ) ),
 				'activate-plugin_' . $plugin_basename

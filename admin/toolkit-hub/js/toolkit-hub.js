@@ -119,6 +119,7 @@
 		var slug = $btn.data( 'slug' );
 		var action = $btn.data( 'action' ) || 'install';
 		var nonce = $btn.data( 'nonce' );
+		var redirect = $btn.data( 'redirect' ) || '';
 		var originalText = $text.text();
 
 		$msg.text( '' );
@@ -142,8 +143,12 @@
 
 					$text.text( 'Activated!' );
 					setTimeout( function () {
-						window.location.reload();
-					}, 1000 );
+						if ( redirect ) {
+							window.location.href = redirect;
+						} else {
+							window.location.reload();
+						}
+					}, 600 );
 					return;
 				}
 
@@ -303,7 +308,48 @@
 		} );
 	}
 
+
+		/**
+	 * When ?tfp_focus=inspector (etc.) lands on the hub — e.g. menu click while
+	 * Translation Inspector is Disabled — scroll to that Toolkit controls row,
+	 * highlight it, and show a clear "Turn this on" cue until the user flips it.
+	 */
+	function focusControlFromQuery() {
+		var params = new URLSearchParams( window.location.search );
+		var control = params.get( 'tfp_focus' );
+		if ( ! control || ! /^(inspector|duplicate)$/.test( control ) ) {
+			return;
+		}
+
+		var $row = $( '.tfp-control-row[data-control="' + control + '"]' );
+		if ( ! $row.length ) {
+			return;
+		}
+
+		var $right = $row.find( '.tfp-row-right' ).first();
+		$row.find( '.tfp-focus-cue' ).remove();
+		var $cue = $( '<p class="tfp-focus-cue" role="status"></p>' ).text( 'Turn this on' );
+		if ( $right.length ) {
+			$right.prepend( $cue );
+		} else {
+			$row.append( $cue );
+		}
+
+		$row.addClass( 'tfp-control-focus' );
+
+		if ( $row[0] && typeof $row[0].scrollIntoView === 'function' ) {
+			$row[0].scrollIntoView( { behavior: 'smooth', block: 'center' } );
+		}
+
+		$row.find( 'input[type="checkbox"]' ).one( 'change', function () {
+			$row.removeClass( 'tfp-control-focus' );
+			$row.find( '.tfp-focus-cue' ).remove();
+		} );
+	}
+
+
 	syncProtectionLocks();
 	focusInstallFromQuery();
+	focusControlFromQuery();
 	bindHeroVideo();
 } )( jQuery );
