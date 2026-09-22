@@ -66,7 +66,6 @@ $tfp_video_title      = __( 'Automate the Translation Process with AutoPoly - AI
 $tfp_video_poster     = 'https://i.ytimg.com/vi/' . $tfp_video_id . '/maxresdefault.jpg';
 $tfp_video_poster_alt = 'https://i.ytimg.com/vi/' . $tfp_video_id . '/hqdefault.jpg';
 
-
 ?>
 <div class="atfp-dashboard-wrapper">
 
@@ -79,6 +78,29 @@ $tfp_video_poster_alt = 'https://i.ytimg.com/vi/' . $tfp_video_id . '/hqdefault.
 				<span class="tfp-hero-badge"><?php echo esc_html__( 'All-in-one translation workflow', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></span>
 				<h2 class="tfp-hero-title"><?php echo esc_html__( 'Translate, inspect and switch languages from one elegant toolkit.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></h2>
 				<p class="tfp-hero-desc"><?php echo esc_html__( 'Translation Inspector, AutoPoly and Language Switcher work together so you can install, translate, review and switch languages without leaving this hub.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
+				<div class="tfp-hero-highlights" aria-label="<?php echo esc_attr__( 'Toolkit highlights', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?>">
+					<div class="tfp-hero-chip">
+						<span class="tfp-hero-chip-icon tfp-hero-chip-icon--tools" aria-hidden="true">
+							<svg class="tfp-hero-chip-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6.5" cy="7" r="2.2"/><circle cx="17.5" cy="7" r="2.2"/><circle cx="12" cy="17" r="2.2"/><path d="M8.4 8.4l2.4 6.2M15.6 8.4l-2.4 6.2M8.7 7h6.6"/></svg>
+							<span class="tfp-hero-chip-badge">3</span>
+						</span>
+						<span class="tfp-hero-chip-text">
+							<strong><?php echo esc_html__( '3 Connected Tools', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></strong>
+							<span><?php echo esc_html__( 'One unified workflow & sync', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></span>
+						</span>
+					</div>
+					<div class="tfp-hero-chip">
+						<span class="tfp-hero-chip-icon tfp-hero-chip-icon--ai" aria-hidden="true"><svg class="tfp-hero-chip-svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3.2l1.1 3.4c.2.6.7 1.1 1.3 1.3L18 9l-3.4 1.1c-.6.2-1.1.7-1.3 1.3L12 14.8l-1.1-3.4c-.2-.6-.7-1.1-1.3-1.3L6.2 9l3.4-1.1c.6-.2 1.1-.7 1.3-1.3L12 3.2z"/><path d="M18.2 14.2l.7 2.1c.1.4.4.7.8.8l2.1.7-2.1.7c-.4.1-.7.4-.8.8l-.7 2.1-.7-2.1c-.1-.4-.4-.7-.8-.8l-2.1-.7 2.1-.7c.4-.1.7-.4.8-.8l.7-2.1z"/><path d="M6.4 15.5l.5 1.5c.1.3.3.5.6.6l1.5.5-1.5.5c-.3.1-.5.3-.6.6l-.5 1.5-.5-1.5c-.1-.3-.3-.5-.6-.6L4.3 18l1.5-.5c.3-.1.5-.3.6-.6l.5-1.5z"/></svg></span>
+						<span class="tfp-hero-chip-text">
+							<strong><?php echo esc_html__( 'AI Translation', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></strong>
+							<span><?php echo esc_html__( 'Instant batch pages & posts', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></span>
+						</span>
+					</div>
+														</div>
+
+
+				
+
 			</div>
 			<div class="tfp-hero-video" data-video-id="<?php echo esc_attr( $tfp_video_id ); ?>" data-video-title="<?php echo esc_attr( $tfp_video_title ); ?>">
 				<div class="tfp-hero-video-frame" style="background-image:url('<?php echo esc_url( $tfp_video_poster ); ?>'), url('<?php echo esc_url( $tfp_video_poster_alt ); ?>');" role="button" tabindex="0" aria-label="<?php echo esc_attr__( 'Play the AutoPoly walkthrough video', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?>">
@@ -86,7 +108,13 @@ $tfp_video_poster_alt = 'https://i.ytimg.com/vi/' . $tfp_video_id . '/hqdefault.
 						<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.5 5.5v13l11-6.5-11-6.5z"/></svg>
 					</button>
 				</div>
+
+			
+
 			</div>
+
+			
+
 		</section>
 
 		<section class="tfp-tools-section" aria-labelledby="tfp-tools-heading">
@@ -144,14 +172,19 @@ $tfp_video_poster_alt = 'https://i.ytimg.com/vi/' . $tfp_video_id . '/hqdefault.
 
 					$tfp_open_inspector_class = '';
 					$tfp_open_inspector_attrs = '';
+					$tfp_open_label           = '';
+					$tfp_enable_label         = '';
 					if ( 'inspector' === $tfp_key && 'active' === $tfp_status ) {
 						$tfp_open_inspector_class = ' tfp-open-inspector-btn';
+						$tfp_open_label           = $tfp_btn_text;
+						$tfp_enable_label         = __( 'Enable inspector', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
 						if ( ! $tfp_inspector_enabled ) {
-							$tfp_badge_class           = 'disabled';
-							$tfp_badge_text            = __( 'Disabled', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
-							$tfp_open_inspector_class .= ' is-disabled';
-							$tfp_btn_url               = '#';
-							$tfp_open_inspector_attrs  = ' aria-disabled="true" tabindex="-1"';
+							$tfp_badge_class            = 'disabled';
+							$tfp_badge_text             = __( 'Disabled', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
+							$tfp_open_inspector_class  .= ' tfp-enable-inspector-btn';
+							$tfp_btn_url                = '#';
+							$tfp_btn_text               = $tfp_enable_label;
+							$tfp_show_arrow             = false;
 						}
 					}
 					?>
@@ -182,18 +215,18 @@ $tfp_video_poster_alt = 'https://i.ytimg.com/vi/' . $tfp_video_id . '/hqdefault.
 						<?php else : ?>
 							<?php
 							$tfp_is_open_inspector = ( false !== strpos( $tfp_open_inspector_class, 'tfp-open-inspector-btn' ) );
-							$tfp_open_disabled     = ( false !== strpos( $tfp_open_inspector_class, 'is-disabled' ) );
 							?>
 							<?php if ( $tfp_is_open_inspector ) : ?>
-								<div class="tfp-btn-wrap<?php echo $tfp_open_disabled ? ' is-disabled' : ''; ?>">
-									<a href="<?php echo esc_url( $tfp_btn_url ); ?>" class="tfp-btn <?php echo esc_attr( $tfp_btn_class ); ?> tfp-btn-block<?php echo esc_attr( $tfp_btn_extra_class . $tfp_open_inspector_class ); ?>"<?php echo $tfp_open_inspector_attrs; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static aria/tabindex only. ?>>
+								<div class="tfp-btn-wrap">
+									<a href="<?php echo esc_url( $tfp_btn_url ); ?>"
+										class="tfp-btn <?php echo esc_attr( $tfp_btn_class ); ?> tfp-btn-block<?php echo esc_attr( $tfp_btn_extra_class . $tfp_open_inspector_class ); ?>"
+										data-open-label="<?php echo esc_attr( $tfp_open_label ); ?>"
+										data-enable-label="<?php echo esc_attr( $tfp_enable_label ); ?>"
+										<?php echo $tfp_open_inspector_attrs; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static attrs only. ?>>
 										<?php echo $tfp_btn_icon_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped URL built above. ?>
 										<span class="tfp-btn-text"><?php echo esc_html( $tfp_btn_text ); ?></span>
-										<?php if ( $tfp_show_arrow ) : ?>
-											<?php echo $tfp_arrow_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped URL built above. ?>
-										<?php endif; ?>
+										<?php echo $tfp_arrow_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- always in DOM; hidden while Enable mode. ?>
 									</a>
-									<span class="tfp-btn-tip" <?php echo $tfp_open_disabled ? '' : 'hidden'; ?>><?php echo esc_html__( 'Translation Inspector is disabled. Enable it in Toolkit controls below.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></span>
 								</div>
 							<?php else : ?>
 								<a href="<?php echo esc_url( $tfp_btn_url ); ?>" class="tfp-btn <?php echo esc_attr( $tfp_btn_class ); ?> tfp-btn-block<?php echo esc_attr( $tfp_btn_extra_class . $tfp_open_inspector_class ); ?>"<?php echo $tfp_open_inspector_attrs; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static aria/tabindex only. ?>>

@@ -14,29 +14,32 @@
 	function setOpenInspectorButton( enabled ) {
 		var $btn = $( '.tfp-open-inspector-btn' );
 		var $wrap = $btn.closest( '.tfp-btn-wrap' );
-		var $tip = $wrap.find( '.tfp-btn-tip' );
 		var $card = $( '.tfp-card[data-tool="inspector"]' );
 		var $badge = $card.find( '.tfp-badge' );
-		var tipText = strings.inspectorDisabledCard || 'Translation Inspector is disabled. Enable it in Toolkit controls below.';
+		var $text = $btn.find( '.tfp-btn-text' );
+		var openLabel = $btn.data( 'open-label' ) || 'Open Inspector';
+		var enableLabel = $btn.data( 'enable-label' ) || 'Enable inspector';
 
 		if ( $btn.length ) {
 			if ( enabled ) {
-				$btn.removeClass( 'is-disabled' )
+				$btn.removeClass( 'is-disabled tfp-enable-inspector-btn' )
 					.removeAttr( 'aria-disabled' )
 					.removeAttr( 'tabindex' )
 					.attr( 'href', tfpToolkitHub.inspectorUrl || '#' );
 				$wrap.removeClass( 'is-disabled' );
-				if ( $tip.length ) {
-					$tip.prop( 'hidden', true );
+				if ( $text.length ) {
+					$text.text( openLabel );
 				}
 			} else {
-				$btn.addClass( 'is-disabled' )
-					.attr( 'aria-disabled', 'true' )
-					.attr( 'tabindex', '-1' )
+				// Clickable Enable control — not a faded disabled Open button.
+				$btn.removeClass( 'is-disabled' )
+					.addClass( 'tfp-enable-inspector-btn' )
+					.removeAttr( 'aria-disabled' )
+					.removeAttr( 'tabindex' )
 					.attr( 'href', '#' );
-				$wrap.addClass( 'is-disabled' );
-				if ( $tip.length ) {
-					$tip.text( tipText ).prop( 'hidden', false );
+				$wrap.removeClass( 'is-disabled' );
+				if ( $text.length ) {
+					$text.text( enableLabel );
 				}
 			}
 		}
@@ -211,6 +214,16 @@
 				} );
 		} );
 	}
+
+
+	$( document ).on( 'click', '.tfp-enable-inspector-btn', function ( e ) {
+		e.preventDefault();
+		var $toggle = $( '.tfp-inspector-toggle' );
+		if ( ! $toggle.length || $toggle.is( ':checked' ) || $toggle.prop( 'disabled' ) ) {
+			return;
+		}
+		$toggle.prop( 'checked', true ).trigger( 'change' );
+	} );
 
 	bindToolToggle(
 		'.tfp-inspector-toggle',

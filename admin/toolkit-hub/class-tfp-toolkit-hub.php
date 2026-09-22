@@ -507,7 +507,10 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 					'ajaxUrl'        => admin_url( 'admin-ajax.php' ),
 					'nonce'          => wp_create_nonce( 'tfp_toggle_duplicate_content' ),
 					'inspectorNonce' => wp_create_nonce( 'tfp_toggle_language_inspector' ),
-					'inspectorUrl'   => self::tool_url( 'inspector' ),
+					// Always the Inspector dashboard (not hub focus URL) so Enable → Open works after toggle.
+					'inspectorUrl'   => class_exists( 'DUPCAP_Admin' )
+						? DUPCAP_Admin::page_url()
+						: admin_url( 'admin.php?page=translation-inspector-polylang' ),
 					'disabledText'   => __( 'Disabled', $domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
 					'i18n'           => array(
 						'activeText'            => __( 'Active', $domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
