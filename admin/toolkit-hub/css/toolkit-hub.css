@@ -2,21 +2,74 @@
  * Toolkit for Polylang — shared hub + cross-plugin header styles.
  * Loaded on the hub page and on each tool's own dashboard page.
  *
- * The hub page reuses AutoPoly's own .atfp-dashboard-header, which is
- * absolutely positioned and expects #wpbody-content to be pushed down to
- * make room for it — AutoPoly's own CSS does this only for its own screen
- * (.languages_page_polylang-atfp-dashboard), so the hub's screen needs the
- * same rule here.
+ * The hub page's own header uses the same ".atfp-dashboard-header" class
+ * names AutoPoly's real dashboard uses, but this stylesheet styles them
+ * itself, scoped to the hub's own screen — it never depends on AutoPoly's
+ * admin-styles.css being loaded. Whichever plugin's copy of the shared class
+ * wins the class_exists() race (AutoPoly, Inspector, or Switcher), the hub
+ * page looks identical, even on a site where AutoPoly isn't installed.
  */
 :is(.languages_page_toolkit-for-polylang) #wpbody #wpbody-content {
 	margin-top: 80px !important;
 }
 
+/* Same base font as AutoPoly's real .atfp-dashboard-wrapper (admin-styles.css),
+ * scoped to the hub's own screen — the hub's whole page uses AutoPoly's
+ * typography, not just its header.
+ */
+:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-wrapper * {
+	box-sizing: border-box;
+	font-family: Inter, Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Self-sufficient copy of AutoPoly's real .atfp-dashboard-header rules
+ * (admin/atfp-dashboard/css/admin-styles.css), scoped to the hub's own
+ * screen only — every tool's own dashboard keeps using its own plugin's
+ * real stylesheet for this, unchanged.
+ */
+:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background: #f8f9fa;
+	padding: 5px 30px;
+	border-bottom: 1px solid #ddd;
+	border-radius: 6px 6px 0 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: calc(100% + 20px);
+	margin: 0 0 0 -20px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+	height: 70px;
+}
+
+:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-header-left {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-header-right {
+	display: flex;
+	align-items: center;
+	gap: 15px;
+}
+
+:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-logo-text {
+	font-size: 18px;
+	font-weight: 700;
+	color: #000;
+	margin: 0;
+	padding: 0;
+	line-height: 1;
+}
+
 /*
- * AutoPoly's own .atfp-dashboard-logo-link has no display rule (it used to
- * wrap only the logo image). Now that the title lives inside the same link
- * (both go to the hub), it needs its own flex layout or the <h2> drops to a
- * new line under the image.
+ * AutoPoly's own .atfp-dashboard-logo-link (its own header, not the hub's)
+ * has no display rule of its own — it wraps the logo image and the title
+ * together, so it needs its own flex layout or the <h2> drops to a new line
+ * under the image.
  */
 .atfp-dashboard-logo-link {
 	display: flex;
@@ -546,6 +599,10 @@
 
 
 /* Cross-plugin header menu (Translation Inspector | AutoPoly | Language Switcher).
+ * Embedded inside whichever plugin's own header happens to render it
+ * (AutoPoly's .atfp-dashboard-header, Inspector's .dupcap-plugin-topbar-inner,
+ * Switcher's own header) — so these rules target .tfp-nav itself, never a
+ * specific host header class.
  * Plain text links — no button chrome / no segmented box.
  * Active: WordPress admin primary blue (#2271b1).
  * Inactive / not-installed: #0f172a.
@@ -565,7 +622,7 @@
 	padding: 0 12px;
 }
 
-.atfp-dashboard-header .tfp-nav .tfp-nav-item {
+.tfp-nav .tfp-nav-item {
 	background: transparent !important;
 	border: 0 !important;
 	border-radius: 0;
@@ -583,8 +640,8 @@
 	white-space: nowrap;
 }
 
-.atfp-dashboard-header .tfp-nav .tfp-nav-item:hover,
-.atfp-dashboard-header .tfp-nav .tfp-nav-item:focus {
+.tfp-nav .tfp-nav-item:hover,
+.tfp-nav .tfp-nav-item:focus {
 	background: transparent !important;
 	box-shadow: none !important;
 	color: #2271b1;
@@ -593,20 +650,20 @@
 }
 
 /* Active menu item — WP primary blue (same hue as .button-primary). */
-.atfp-dashboard-header .tfp-nav .tfp-nav-item.active {
+.tfp-nav .tfp-nav-item.active {
 	color: #2271b1;
 	font-weight: 700;
 	text-decoration: none;
 }
 
-.atfp-dashboard-header .tfp-nav .tfp-nav-item.active:hover,
-.atfp-dashboard-header .tfp-nav .tfp-nav-item.active:focus {
+.tfp-nav .tfp-nav-item.active:hover,
+.tfp-nav .tfp-nav-item.active:focus {
 	color: #135e96;
 	text-decoration: none;
 }
 
 /* Not-installed still reads as the dark menu color; goes to Toolkit Hub. */
-.atfp-dashboard-header .tfp-nav .tfp-nav-item.not-installed {
+.tfp-nav .tfp-nav-item.not-installed {
 	color: #0f172a;
 	opacity: 0.85;
 }

@@ -358,19 +358,18 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 			// icon uses it, so don't rely on load order to get it there.
 			$tfp_deps = array( 'dashicons' );
 
-			// The hub page reuses AutoPoly's own dashboard header markup/CSS
-			// (.atfp-dashboard-header etc.) so it looks identical to every
-			// tool's own dashboard instead of inventing a second design.
-			if ( self::PAGE === $page && defined( 'ATFP_URL' ) && defined( 'ATFP_V' ) ) {
-				wp_enqueue_style( 'atfp-dashboard-style', ATFP_URL . 'admin/atfp-dashboard/css/admin-styles.min.css', array(), ATFP_V, 'all' );
-				$tfp_deps[] = 'atfp-dashboard-style';
-			}
+			// Version by the file's own mtime, not a host plugin's version
+			// constant: ATFP_V (or any tool's own version) does not change
+			// when this shared file is edited, so the browser would keep
+			// serving a stale cached copy across every change otherwise.
+			$tfp_css_path = __DIR__ . '/css/toolkit-hub.css';
+			$tfp_css_ver  = file_exists( $tfp_css_path ) ? filemtime( $tfp_css_path ) : false;
 
 			wp_enqueue_style(
 				'tfp-toolkit-hub',
 				plugins_url( 'css/toolkit-hub.css', __FILE__ ),
 				$tfp_deps,
-				defined( 'ATFP_V' ) ? ATFP_V : false
+				$tfp_css_ver
 			);
 
 			// The duplicate-content toggle only exists on the hub page itself.
@@ -378,11 +377,14 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 				return;
 			}
 
+			$tfp_js_path = __DIR__ . '/js/toolkit-hub.js';
+			$tfp_js_ver  = file_exists( $tfp_js_path ) ? filemtime( $tfp_js_path ) : false;
+
 			wp_enqueue_script(
 				'tfp-toolkit-hub',
 				plugins_url( 'js/toolkit-hub.js', __FILE__ ),
 				array( 'jquery' ),
-				defined( 'ATFP_V' ) ? ATFP_V : false,
+				$tfp_js_ver,
 				true
 			);
 
@@ -549,11 +551,14 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 		}
 
 		/**
-		 * The hub page's own header. Deliberately reuses AutoPoly's real
-		 * ".atfp-dashboard-header" markup and CSS (enqueue_assets() loads
-		 * that same stylesheet on the hub page) rather than a second,
-		 * invented design — so the hub looks like the plugins it lists,
-		 * not like a separate product.
+		 * The hub page's own header. Uses the same ".atfp-dashboard-header"
+		 * class names as every tool's own dashboard, but toolkit-hub.css
+		 * styles them itself — it does not depend on AutoPoly's
+		 * admin-styles.css being loaded, so the hub still looks right on a
+		 * site where AutoPoly isn't installed (whichever plugin's copy of
+		 * this class loads, the hub looks the same). Title/logo are plain
+		 * text here, not a link — this already is "home"; every tool's own
+		 * header links here instead.
 		 */
 		public static function render_header() {
 			$domain = self::$loader['text_domain'];
