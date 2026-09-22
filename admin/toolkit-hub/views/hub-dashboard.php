@@ -237,18 +237,10 @@ $tfp_video_poster_alt = 'https://i.ytimg.com/vi/' . $tfp_video_id . '/hqdefault.
 									<span class="tfp-toggle-track"></span>
 									<span class="tfp-toggle-tip" <?php echo $tfp_inspector_locked ? '' : 'hidden'; ?>><?php echo esc_html__( 'Both features cannot be disabled at the same time.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></span>
 								</label>
+								<span class="tfp-toggle-state <?php echo $tfp_inspector_enabled ? 'is-on' : 'is-off'; ?>"><?php echo $tfp_inspector_enabled ? esc_html__( 'Enabled', $tfp_domain ) : esc_html__( 'Disabled', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></span>
 							</div>
 						</div>
-						<div class="tfp-control-status <?php echo $tfp_inspector_enabled ? 'is-on' : 'is-off'; ?>">
-							<span class="tfp-control-status-text">
-							<?php
-							echo $tfp_inspector_enabled
-								? esc_html__( 'Translation Inspector is enabled.', $tfp_domain ) // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
-								: esc_html__( 'Translation Inspector is disabled.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction 
-							?>
-								</span>
 						</div>
-					</div>
 
 					<div class="tfp-control-row" data-control="duplicate">
 						<div class="tfp-control-main">
@@ -271,18 +263,10 @@ $tfp_video_poster_alt = 'https://i.ytimg.com/vi/' . $tfp_video_id . '/hqdefault.
 									<span class="tfp-toggle-track"></span>
 									<span class="tfp-toggle-tip" <?php echo $tfp_duplicate_locked ? '' : 'hidden'; ?>><?php echo esc_html__( 'Both features cannot be disabled at the same time.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></span>
 								</label>
+								<span class="tfp-toggle-state <?php echo $tfp_duplicate_enabled ? 'is-on' : 'is-off'; ?>"><?php echo $tfp_duplicate_enabled ? esc_html__( 'Enabled', $tfp_domain ) : esc_html__( 'Disabled', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></span>
 							</div>
 						</div>
-						<div class="tfp-control-status <?php echo $tfp_duplicate_enabled ? 'is-on' : 'is-off'; ?>">
-							<span class="tfp-control-status-text">
-							<?php
-							echo $tfp_duplicate_enabled
-								? esc_html__( 'Duplicate Content Check is enabled.', $tfp_domain ) // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
-								: esc_html__( 'Duplicate Content Check is disabled.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction 
-							?>
-								</span>
 						</div>
-					</div>
 
 					<p class="tfp-controls-note"><?php echo esc_html__( 'Protection rule: both features cannot be disabled at the same time.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
 				</section>
@@ -318,25 +302,18 @@ $tfp_video_poster_alt = 'https://i.ytimg.com/vi/' . $tfp_video_id . '/hqdefault.
 					<li>
 						<span class="tfp-step-num">3</span>
 						<div>
-							<p class="tfp-step-title"><?php echo esc_html__( 'Inspect the site', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
-							<p class="tfp-step-desc"><?php echo esc_html__( 'Run Translation Inspector to catch missing or duplicate content early.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
+							<p class="tfp-step-title"><?php echo esc_html__( 'Add language switching', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
+							<p class="tfp-step-desc"><?php echo esc_html__( 'Place a Language Switcher with Elementor, Divi, Gutenberg or a shortcode.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
 						</div>
 					</li>
 					<li>
 						<span class="tfp-step-num">4</span>
 						<div>
-							<p class="tfp-step-title"><?php echo esc_html__( 'Add language switching', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
-							<p class="tfp-step-desc"><?php echo esc_html__( 'Place a Language Switcher with Elementor, Divi, Gutenberg or a shortcode.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
+							<p class="tfp-step-title"><?php echo esc_html__( 'Inspect the site', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
+							<p class="tfp-step-desc"><?php echo esc_html__( 'Run Translation Inspector to catch missing or duplicate content early.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
 						</div>
 					</li>
 				</ol>
-				<div class="tfp-compat-tags">
-					<span><?php echo esc_html__( 'Polylang', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></span>
-					<span><?php echo esc_html__( 'Elementor', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></span>
-					<span><?php echo esc_html__( 'Divi', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></span>
-					<span><?php echo esc_html__( 'Gutenberg', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></span>
-					<span><?php echo esc_html__( 'WordPress', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></span>
-				</div>
 			</section>
 		</div>
 

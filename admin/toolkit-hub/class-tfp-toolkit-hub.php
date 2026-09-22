@@ -401,10 +401,10 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 					'i18n'           => array(
 						'activeText'            => __( 'Active', $domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
 						'protectionRule'        => __( 'Both features cannot be disabled at the same time.', $domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
-						'inspectorOn'           => __( 'Translation Inspector is enabled.', $domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
-						'inspectorOff'          => __( 'Translation Inspector is disabled.', $domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
-						'duplicateOn'           => __( 'Duplicate Content Check is enabled.', $domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
-						'duplicateOff'          => __( 'Duplicate Content Check is disabled.', $domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
+						'inspectorOn'           => __( 'Enabled', $domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
+						'inspectorOff'          => __( 'Disabled', $domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
+						'duplicateOn'           => __( 'Enabled', $domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
+						'duplicateOff'          => __( 'Disabled', $domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
 						'inspectorDisabledCard' => __( 'Translation Inspector is disabled. Enable it in Toolkit controls below.', $domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
 					),
 				)

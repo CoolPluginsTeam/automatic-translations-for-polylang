@@ -56,11 +56,13 @@
 	}
 
 	function setControlStatus( $row, enabled, onText, offText ) {
-		var $status = $row.find( '.tfp-control-status' );
-		$status
+		var $state = $row.find( '.tfp-toggle-state' );
+		if ( ! $state.length ) {
+			return;
+		}
+		$state
 			.toggleClass( 'is-on', !! enabled )
 			.toggleClass( 'is-off', ! enabled )
-			.find( '.tfp-control-status-text' )
 			.text( enabled ? onText : offText );
 	}
 
@@ -211,8 +213,8 @@
 		tfpToolkitHub.inspectorNonce,
 		{
 			onEnabledChange: setOpenInspectorButton,
-			onText: strings.inspectorOn || 'Translation Inspector is enabled.',
-			offText: strings.inspectorOff || 'Translation Inspector is disabled.'
+			onText: strings.inspectorOn || 'Enabled',
+			offText: strings.inspectorOff || 'Disabled'
 		}
 	);
 
@@ -221,8 +223,8 @@
 		'tfp_toggle_duplicate_content',
 		tfpToolkitHub.nonce,
 		{
-			onText: strings.duplicateOn || 'Duplicate Content Check is enabled.',
-			offText: strings.duplicateOff || 'Duplicate Content Check is disabled.'
+			onText: strings.duplicateOn || 'Enabled',
+			offText: strings.duplicateOff || 'Disabled'
 		}
 	);
 
