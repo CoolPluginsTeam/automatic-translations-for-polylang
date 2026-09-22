@@ -344,7 +344,7 @@ if (! class_exists('AutoPoly')) {
 
 			require_once ATFP_DIR_PATH . 'admin/toolkit-hub/load-tfp-toolkit-hub.php';
 			tfp_toolkit_hub_register(
-				'1.2.1',
+				'1.0.0',
 				ATFP_DIR_PATH . 'admin/toolkit-hub/class-tfp-toolkit-hub.php',
 				array(
 					'text_domain' => 'automatic-translations-for-polylang',

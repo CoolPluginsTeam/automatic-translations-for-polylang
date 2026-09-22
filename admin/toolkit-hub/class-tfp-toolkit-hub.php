@@ -52,7 +52,7 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 		 * Shared hub schema/API version. Bump when this file's behaviour
 		 * changes so load-tfp-toolkit-hub.php can prefer a newer sibling copy.
 		 */
-		const VERSION = '1.2.1';
+		const VERSION = '1.0.0';
 
 		const PAGE = 'toolkit-for-polylang';
 
@@ -847,16 +847,21 @@ for(i=0;i<list.length;i++){root=document.querySelector(list[i].root);if(root){pr
 if(!profile||!root||root.querySelector(".tfp-nav")){return;}
 var titleEl=root.querySelector(profile.title);if(titleEl){titleEl.textContent=titleText;}
 var logoLink=root.querySelector(profile.logoLink);
-if(logoLink&&cfg.hubUrl){logoLink.setAttribute("href",cfg.hubUrl);}
-else if(cfg.hubUrl&&profile.logo){
-var logo=root.querySelector(profile.logo);
-if(logo&&!logo.querySelector("a")){
+var logoBox=profile.logo?root.querySelector(profile.logo):null;
+if(logoLink&&cfg.hubUrl){
+logoLink.setAttribute("href",cfg.hubUrl);
+logoLink.style.display="flex";
+logoLink.style.alignItems="center";
+logoLink.style.gap="10px";
+logoLink.style.textDecoration="none";
+logoLink.style.color="inherit";
+if(titleEl&&!logoLink.contains(titleEl)){logoLink.appendChild(titleEl);}
+}else if(cfg.hubUrl&&logoBox&&!logoBox.querySelector("a")){
 var aWrap=document.createElement("a");
-aWrap.href=cfg.hubUrl;aWrap.className="lsdp-header-logo-link atfp-dashboard-logo-link";
+aWrap.href=cfg.hubUrl;aWrap.className="lsdp-header-logo-link atfp-dashboard-logo-link atfpp-dashboard-logo-link";
 aWrap.style.cssText="display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit";
-while(logo.firstChild){aWrap.appendChild(logo.firstChild);}
-logo.appendChild(aWrap);
-}
+while(logoBox.firstChild){aWrap.appendChild(logoBox.firstChild);}
+logoBox.appendChild(aWrap);
 }
 var nav=document.createElement("nav");
 nav.className="tfp-nav";nav.setAttribute("aria-label","Toolkit tools");
