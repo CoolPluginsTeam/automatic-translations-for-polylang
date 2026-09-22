@@ -342,19 +342,16 @@ if (! class_exists('AutoPoly')) {
 				return;
 			}
 
-			if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
-				require_once ATFP_DIR_PATH . 'admin/toolkit-hub/class-tfp-toolkit-hub.php';
-			}
-
-			if ( class_exists( 'TFP_Toolkit_Hub' ) ) {
-				TFP_Toolkit_Hub::instance(
-					array(
-						'text_domain' => 'automatic-translations-for-polylang',
-						'support_url' => 'https://wordpress.org/support/plugin/automatic-translations-for-polylang/',
-						'docs_url'    => 'https://docs.coolplugins.net/plugin/ai-translation-for-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=toolkit_hub_header',
-					)
-				);
-			}
+			require_once ATFP_DIR_PATH . 'admin/toolkit-hub/load-tfp-toolkit-hub.php';
+			tfp_toolkit_hub_register(
+				'1.2.1',
+				ATFP_DIR_PATH . 'admin/toolkit-hub/class-tfp-toolkit-hub.php',
+				array(
+					'text_domain' => 'automatic-translations-for-polylang',
+					'support_url' => 'https://wordpress.org/support/plugin/automatic-translations-for-polylang/',
+					'docs_url'    => 'https://docs.coolplugins.net/plugin/ai-translation-for-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=toolkit_hub_header',
+				)
+			);
 		}
 
 		/*

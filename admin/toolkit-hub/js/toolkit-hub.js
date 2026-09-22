@@ -211,7 +211,147 @@
 					$checkbox.prop( 'checked', ! wanted );
 				} )
 				.always( function () {
-					syncProtectionLocks();
+					
+	/**
+	 * When a newer Toolkit Hub is active beside an older sibling plugin,
+	 * that older dashboard still prints its pre-Toolkit header (no .tfp-nav).
+	 * Upgrade it in place: title, shared nav, Get Support / Check Docs.
+	 */
+	function migrateOldHeaders() {
+		var cfg = ( typeof tfpToolkitHub !== 'undefined' && tfpToolkitHub.headerMigrate )
+			? tfpToolkitHub.headerMigrate
+			: null;
+
+		if ( ! cfg || ! cfg.items || ! cfg.items.length ) {
+			return;
+		}
+
+		if ( document.querySelector( '.tfp-nav' ) ) {
+			return;
+		}
+
+		var i18n = ( tfpToolkitHub.i18n ) ? tfpToolkitHub.i18n : {};
+		var titleText = i18n.title || 'Toolkit for Polylang';
+		var supportText = i18n.support || 'Get Support';
+		var docsText = i18n.docs || 'Check Docs';
+
+		var profiles = {
+			switcher: [
+				{
+					root: '.lsdp-header-content',
+					title: '.lsdp-header-title',
+					actions: '.lsdp-header-actions',
+					logoLink: '.lsdp-header-logo-link'
+				},
+				{
+					root: '.lsdp-dashboard-header',
+					title: '.lsdp-header-title, h1',
+					actions: '.lsdp-header-actions',
+					logoLink: '.lsdp-header-logo a, .lsdp-header-logo-link, a'
+				}
+			],
+			inspector: [
+				{
+					root: '.dupcap-plugin-topbar-inner',
+					title: '.dupcap-plugin-topbar-name',
+					actions: '.dupcap-plugin-topbar-actions',
+					logoLink: '.dupcap-plugin-topbar-link'
+				}
+			],
+			autopoly: [
+				{
+					root: '.atfpp-dashboard-header',
+					title: '.atfpp-dashboard-logo-text',
+					actions: '.atfpp-dashboard-header-right',
+					logoLink: '.atfpp-dashboard-logo-link, .atfpp-dashboard-header-left a'
+				},
+				{
+					root: '.atfp-dashboard-header',
+					title: '.atfp-dashboard-logo-text',
+					actions: '.atfp-dashboard-header-right',
+					logoLink: '.atfp-dashboard-logo-link, .atfp-dashboard-header-left a'
+				}
+			]
+		};
+
+		var list = profiles[ cfg.activeTool ] || [];
+		var profile = null;
+		var root = null;
+		var p;
+
+		for ( p = 0; p < list.length; p++ ) {
+			root = document.querySelector( list[ p ].root );
+			if ( root ) {
+				profile = list[ p ];
+				break;
+			}
+		}
+
+		if ( ! profile || ! root || root.querySelector( '.tfp-nav' ) ) {
+			return;
+		}
+
+		var titleEl = root.querySelector( profile.title );
+		if ( titleEl ) {
+			titleEl.textContent = titleText;
+		}
+
+		var logoLink = root.querySelector( profile.logoLink );
+		if ( logoLink && cfg.hubUrl ) {
+			logoLink.setAttribute( 'href', cfg.hubUrl );
+		}
+
+		var nav = document.createElement( 'nav' );
+		nav.className = 'tfp-nav';
+		nav.setAttribute( 'aria-label', 'Toolkit tools' );
+
+		cfg.items.forEach( function ( item ) {
+			var a = document.createElement( 'a' );
+			a.href = item.href;
+			a.textContent = item.label;
+			a.className = 'tfp-nav-item';
+			if ( item.here ) {
+				a.className += ' active';
+			} else if ( ! item.active ) {
+				a.className += ' not-installed';
+			}
+			nav.appendChild( a );
+		} );
+
+		var actions = root.querySelector( profile.actions );
+		if ( actions ) {
+			root.insertBefore( nav, actions );
+
+			actions.innerHTML = '';
+
+			var support = document.createElement( 'a' );
+			support.href = cfg.supportUrl;
+			support.className = 'tfp-header-btn tfp-header-btn-support';
+			support.target = '_blank';
+			support.rel = 'noopener noreferrer';
+			support.textContent = supportText;
+			actions.appendChild( support );
+
+			var docs = document.createElement( 'a' );
+			docs.href = cfg.docsUrl;
+			docs.className = 'tfp-header-btn tfp-header-btn-docs';
+			docs.target = '_blank';
+			docs.rel = 'noopener noreferrer';
+
+			var icon = document.createElement( 'span' );
+			icon.className = 'dashicons dashicons-media-document tfp-header-btn-icon';
+			icon.setAttribute( 'aria-hidden', 'true' );
+			docs.appendChild( icon );
+			docs.appendChild( document.createTextNode( ' ' + docsText ) );
+			actions.appendChild( docs );
+		} else {
+			root.appendChild( nav );
+		}
+	}
+
+
+	migrateOldHeaders();
+	syncProtectionLocks();
 				} );
 		} );
 	}

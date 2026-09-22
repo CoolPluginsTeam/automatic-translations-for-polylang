@@ -3,11 +3,10 @@
  * Toolkit for Polylang — shared hub loaded once across all three sibling plugins
  * (AutoPoly, Translation Inspector / Duplicate Content, Language Switcher).
  *
- * Ships as an identical copy in each plugin. Whichever plugin's bootstrap
- * requires this file first wins: the `class_exists()` guard at the require
- * site (not in this file) stops every other copy from loading, so only one
- * menu item and one set of hooks ever get registered no matter how many of
- * the three plugins are active together.
+ * Ships as an identical copy in each plugin. Each plugin registers its copy via
+ * load-tfp-toolkit-hub.php; the highest TFP_Toolkit_Hub::VERSION wins and only
+ * that file is required, so a newer hub upgrades older siblings instead of the
+ * old class_exists()-first race.
  *
  * @package ToolkitForPolylang
  */
@@ -49,6 +48,12 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 		/**
 		 * Hub menu slug, under Polylang's "Languages" (mlang) menu.
 		 */
+		/**
+		 * Shared hub schema/API version. Bump when this file's behaviour
+		 * changes so load-tfp-toolkit-hub.php can prefer a newer sibling copy.
+		 */
+		const VERSION = '1.2.1';
+
 		const PAGE = 'toolkit-for-polylang';
 
 		/**
@@ -88,6 +93,7 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 			add_action( 'admin_menu', array( $this, 'register_menu' ), 20 );
 			add_action( 'admin_menu', array( $this, 'reorder_submenu' ), 9999 );
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
+			add_action( 'admin_footer', array( $this, 'print_header_migrate_script' ), 5 );
 			add_action( 'admin_head', array( $this, 'print_submenu_style' ) );
 			add_action( 'activated_plugin', array( $this, 'redirect_to_tool_dashboard' ) );
 			add_action( 'wp_ajax_tfp_toggle_duplicate_content', array( $this, 'ajax_toggle_duplicate_content' ) );
@@ -658,11 +664,6 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 				$tfp_css_ver
 			);
 
-			// The duplicate-content toggle only exists on the hub page itself.
-			if ( self::PAGE !== $page ) {
-				return;
-			}
-
 			$tfp_js_path = __DIR__ . '/js/toolkit-hub.js';
 			$tfp_js_ver  = file_exists( $tfp_js_path ) ? filemtime( $tfp_js_path ) : false;
 
@@ -675,31 +676,215 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 			);
 
 			$domain = self::$loader['text_domain'];
-			wp_localize_script(
-				'tfp-toolkit-hub',
-				'tfpToolkitHub',
-				array(
-					'ajaxUrl'        => admin_url( 'admin-ajax.php' ),
-					'nonce'          => wp_create_nonce( 'tfp_toggle_duplicate_content' ),
-					'inspectorNonce' => wp_create_nonce( 'tfp_toggle_language_inspector' ),
-					'installNonce'   => wp_create_nonce( 'tfp_install_nonce' ),
-					// Always the Inspector dashboard (not hub focus URL) so Enable -> Open works after toggle.
-					'inspectorUrl'   => class_exists( 'DUPCAP_Admin' )
-						? DUPCAP_Admin::page_url()
-						: admin_url( 'admin.php?page=translation-inspector-polylang' ),
-					'disabledText'   => __( 'Disabled', $domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
-					'i18n'           => array(
-						'activeText'            => __( 'Active', $domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
-						'protectionRule'        => __( 'Both features cannot be disabled at the same time.', $domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
-						'inspectorOn'           => __( 'Enabled', $domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
-						'inspectorOff'          => __( 'Disabled', $domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
-						'duplicateOn'           => __( 'Enabled', $domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
-						'duplicateOff'          => __( 'Disabled', $domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
-						'inspectorDisabledCard' => __( 'Translation Inspector is disabled. Enable it in Toolkit controls below.', $domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
-					),
-				)
+
+			// Hub page: toggles / install AJAX. Tool dashboards: header migrate
+			// for older sibling plugins that still render a pre-Toolkit header.
+			$localize = array(
+				'ajaxUrl'        => admin_url( 'admin-ajax.php' ),
+				'nonce'          => wp_create_nonce( 'tfp_toggle_duplicate_content' ),
+				'inspectorNonce' => wp_create_nonce( 'tfp_toggle_language_inspector' ),
+				'installNonce'   => wp_create_nonce( 'tfp_install_nonce' ),
+				'inspectorUrl'   => class_exists( 'DUPCAP_Admin' )
+					? DUPCAP_Admin::page_url()
+					: admin_url( 'admin.php?page=translation-inspector-polylang' ),
+				'disabledText'   => __( 'Disabled', $domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
+				'i18n'           => array(
+					'activeText'            => __( 'Active', $domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
+					'protectionRule'        => __( 'Both features cannot be disabled at the same time.', $domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
+					'inspectorOn'           => __( 'Enabled', $domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
+					'inspectorOff'          => __( 'Disabled', $domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
+					'duplicateOn'           => __( 'Enabled', $domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
+					'duplicateOff'          => __( 'Disabled', $domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
+					'inspectorDisabledCard' => __( 'Translation Inspector is disabled. Enable it in Toolkit controls below.', $domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
+					'support'               => __( 'Get Support', $domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
+					'docs'                  => __( 'Check Docs', $domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
+					'title'                 => __( 'Toolkit for Polylang', $domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
+				),
+				'headerMigrate'  => self::header_migrate_config( $page ),
+			);
+
+			wp_localize_script( 'tfp-toolkit-hub', 'tfpToolkitHub', $localize );
+		}
+
+		/**
+		 * Config for upgrading an older sibling plugin's dashboard header when
+		 * that plugin has not yet been updated to call render_nav() itself.
+		 * No-op on the hub page, or when the page already printed .tfp-nav.
+		 *
+		 * @param string $page Current admin page slug.
+		 * @return array<string, mixed>|null
+		 */
+		public static function header_migrate_config( $page ) {
+			$page_tool = array(
+				'polylang-atfp-dashboard'      => 'autopoly',
+				'polylang-atfpp-dashboard'     => 'autopoly',
+				'translation-inspector-polylang' => 'inspector',
+				'lsdp-get-started'             => 'switcher',
+			);
+
+			if ( ! isset( $page_tool[ $page ] ) ) {
+				return null;
+			}
+
+			$active_tool = $page_tool[ $page ];
+			$links       = self::header_migrate_links( $active_tool );
+			$items       = array();
+
+			foreach ( self::nav_tools() as $key => $tool ) {
+				$is_active = ( 'active' === self::tool_status( $tool['plugin'] ) );
+				if ( $is_active ) {
+					$href = self::tool_url( $key );
+				} else {
+					$href = add_query_arg(
+						array(
+							'page'        => self::PAGE,
+							'tfp_install' => $key,
+						),
+						admin_url( 'admin.php' )
+					);
+				}
+				$items[] = array(
+					'key'     => $key,
+					'label'   => $tool['label'],
+					'href'    => $href,
+					'here'    => ( $key === $active_tool ),
+					'active'  => $is_active,
+				);
+			}
+
+			return array(
+				'activeTool' => $active_tool,
+				'hubUrl'     => admin_url( 'admin.php?page=' . self::PAGE ),
+				'supportUrl' => $links['support'],
+				'docsUrl'    => $links['docs'],
+				'items'      => $items,
 			);
 		}
+
+		/**
+		 * Support / docs URLs for the tool whose older header we are upgrading.
+		 *
+		 * @param string $tool autopoly|inspector|switcher.
+		 * @return array{support: string, docs: string}
+		 */
+		private static function header_migrate_links( $tool ) {
+			switch ( $tool ) {
+				case 'inspector':
+					return array(
+						'support' => 'https://wordpress.org/support/plugin/duplicate-content-addon-for-polylang/',
+						'docs'    => 'https://wordpress.org/plugins/duplicate-content-addon-for-polylang/',
+					);
+				case 'switcher':
+					return array(
+						'support' => 'https://wordpress.org/support/plugin/language-switcher-for-divi-polylang/#new-topic-0',
+						'docs'    => 'https://docs.coolplugins.net/doc/language-switcher-for-elementor-polylang/?utm_source=lsdp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_header',
+					);
+				case 'autopoly':
+				default:
+					return array(
+						'support' => 'https://coolplugins.net/support/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=support&utm_content=dashboard_header',
+						'docs'    => 'https://docs.coolplugins.net/plugin/ai-translation-for-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_header',
+					);
+			}
+		}
+
+
+		/**
+		 * Inline header upgrade for older sibling dashboards that still print
+		 * a pre-Toolkit header (no .tfp-nav). Runs in admin_footer so the DOM
+		 * is already there — does not depend on toolkit-hub.js loading.
+		 *
+		 * @return void
+		 */
+		public function print_header_migrate_script() {
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+			$cfg  = self::header_migrate_config( $page );
+
+			if ( empty( $cfg ) || empty( $cfg['items'] ) ) {
+				return;
+			}
+
+			$domain = self::$loader['text_domain'];
+			$payload = array(
+				'cfg'  => $cfg,
+				'i18n' => array(
+					'title'   => __( 'Toolkit for Polylang', $domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
+					'support' => __( 'Get Support', $domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
+					'docs'    => __( 'Check Docs', $domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
+				),
+			);
+
+			$json = wp_json_encode( $payload );
+			if ( ! $json ) {
+				return;
+			}
+
+			echo '<script id="tfp-header-migrate">(function(){';
+			echo 'var data=' . $json . ';'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- JSON from wp_json_encode.
+			echo <<<'JS'
+if(!data||!data.cfg||!data.cfg.items||!data.cfg.items.length){return;}
+if(document.querySelector(".tfp-nav")){return;}
+var cfg=data.cfg,i18n=data.i18n||{};
+var titleText=i18n.title||"Toolkit for Polylang";
+var supportText=i18n.support||"Get Support";
+var docsText=i18n.docs||"Check Docs";
+var profiles={
+switcher:[
+{root:".lsdp-header-content",title:".lsdp-header-title",actions:".lsdp-header-actions",logo:".lsdp-header-logo",logoLink:".lsdp-header-logo-link"},
+{root:".lsdp-dashboard-header",title:".lsdp-header-title,h1",actions:".lsdp-header-actions",logo:".lsdp-header-logo",logoLink:".lsdp-header-logo-link"}
+],
+inspector:[
+{root:".dupcap-plugin-topbar-inner",title:".dupcap-plugin-topbar-name",actions:".dupcap-plugin-topbar-actions",logo:".dupcap-plugin-topbar-brand",logoLink:".dupcap-plugin-topbar-link"}
+],
+autopoly:[
+{root:".atfpp-dashboard-header",title:".atfpp-dashboard-logo-text",actions:".atfpp-dashboard-header-right",logo:".atfpp-dashboard-header-left",logoLink:".atfpp-dashboard-logo-link,.atfpp-dashboard-header-left a"},
+{root:".atfp-dashboard-header",title:".atfp-dashboard-logo-text",actions:".atfp-dashboard-header-right",logo:".atfp-dashboard-header-left",logoLink:".atfp-dashboard-logo-link,.atfp-dashboard-header-left a"}
+]
+};
+var list=profiles[cfg.activeTool]||[],profile=null,root=null,i;
+for(i=0;i<list.length;i++){root=document.querySelector(list[i].root);if(root){profile=list[i];break;}}
+if(!profile||!root||root.querySelector(".tfp-nav")){return;}
+var titleEl=root.querySelector(profile.title);if(titleEl){titleEl.textContent=titleText;}
+var logoLink=root.querySelector(profile.logoLink);
+if(logoLink&&cfg.hubUrl){logoLink.setAttribute("href",cfg.hubUrl);}
+else if(cfg.hubUrl&&profile.logo){
+var logo=root.querySelector(profile.logo);
+if(logo&&!logo.querySelector("a")){
+var aWrap=document.createElement("a");
+aWrap.href=cfg.hubUrl;aWrap.className="lsdp-header-logo-link atfp-dashboard-logo-link";
+aWrap.style.cssText="display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit";
+while(logo.firstChild){aWrap.appendChild(logo.firstChild);}
+logo.appendChild(aWrap);
+}
+}
+var nav=document.createElement("nav");
+nav.className="tfp-nav";nav.setAttribute("aria-label","Toolkit tools");
+cfg.items.forEach(function(item){
+var a=document.createElement("a");a.href=item.href;a.textContent=item.label;a.className="tfp-nav-item";
+if(item.here){a.className+=" active";}else if(!item.active){a.className+=" not-installed";}
+nav.appendChild(a);
+});
+var actions=root.querySelector(profile.actions);
+if(actions){
+root.insertBefore(nav,actions);
+actions.innerHTML="";
+var support=document.createElement("a");
+support.href=cfg.supportUrl;support.className="tfp-header-btn tfp-header-btn-support";
+support.target="_blank";support.rel="noopener noreferrer";support.textContent=supportText;
+actions.appendChild(support);
+var docs=document.createElement("a");
+docs.href=cfg.docsUrl;docs.className="tfp-header-btn tfp-header-btn-docs";
+docs.target="_blank";docs.rel="noopener noreferrer";
+var icon=document.createElement("span");
+icon.className="dashicons dashicons-media-document tfp-header-btn-icon";icon.setAttribute("aria-hidden","true");
+docs.appendChild(icon);docs.appendChild(document.createTextNode(" "+docsText));
+actions.appendChild(docs);
+}else{root.appendChild(nav);}
+})();</script>
+JS;
+		}
+
 
 		/**
 		 * Real dashboard URL for one of the three tools.

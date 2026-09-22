@@ -77,6 +77,48 @@
 	gap: 10px;
 	text-decoration: none;
 }
+/*
+ * Pro dashboard uses .atfpp-dashboard-logo-link (double p) for the same
+ * logo+title wrap Free styles as .atfp-dashboard-logo-link.
+ */
+.atfpp-dashboard-logo-link {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	text-decoration: none;
+}
+
+/*
+ * WP admin sets a global a:focus box-shadow (theme-color ring). Toolkit
+ * headers already restyle logo / nav / action links; kill that core ring so
+ * older host dashboards (e.g. pre-Toolkit Language Switcher) match the new
+ * headers after migration. Nav/buttons still change colour on :focus.
+ */
+.lsdp-dashboard-header a:focus,
+.lsdp-dashboard-header a:focus-visible,
+.lsdp-header-logo-link:focus,
+.lsdp-header-logo-link:focus-visible,
+.dupcap-plugin-topbar a:focus,
+.dupcap-plugin-topbar a:focus-visible,
+.dupcap-plugin-topbar-link:focus,
+.dupcap-plugin-topbar-link:focus-visible,
+.atfp-dashboard-header a:focus,
+.atfp-dashboard-header a:focus-visible,
+.atfpp-dashboard-header a:focus,
+.atfpp-dashboard-header a:focus-visible,
+.atfp-dashboard-logo-link:focus,
+.atfp-dashboard-logo-link:focus-visible,
+.atfpp-dashboard-logo-link:focus,
+.atfpp-dashboard-logo-link:focus-visible,
+.tfp-header-btn:focus,
+.tfp-header-btn:focus-visible,
+.tfp-nav .tfp-nav-item:focus,
+.tfp-nav .tfp-nav-item:focus-visible {
+	box-shadow: none !important;
+	outline: none;
+}
+
+
 
 /*
  * Same "Get Support" / "Check Docs" pair as Translation Inspector's own
