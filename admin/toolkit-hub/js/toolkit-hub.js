@@ -4,7 +4,7 @@
  * - Saves Translation Inspector / Duplicate Content Check toggles via AJAX.
  * - Locks the last enabled toggle (no alert) so both cannot be off at once.
  * - Syncs Open Translation Inspector button + card badge with the toggle.
- * - Installs/activates tools via AutoPoly's atfp_install_plugin endpoint.
+ * - Installs/activates tools via AutoPoly's tfp_install_plugin endpoint.
  */
 ( function ( $ ) {
 	'use strict';
@@ -121,7 +121,7 @@
 		var $msg = $btn.next( '.tfp-install-message' );
 		var slug = $btn.data( 'slug' );
 		var action = $btn.data( 'action' ) || 'install';
-		var nonce = $btn.data( 'nonce' );
+		var nonce = $btn.data( 'nonce' ) || ( window.tfpToolkitHub && tfpToolkitHub.installNonce ) || '';
 		var redirect = $btn.data( 'redirect' ) || '';
 		var originalText = $text.text();
 
@@ -129,8 +129,8 @@
 		$btn.addClass( 'tfp-ajax-busy' ).css( 'opacity', 0.7 );
 		$text.text( 'activate' === action ? 'Activating…' : 'Installing…' );
 
-		$.post( ajaxurl, {
-			action: 'atfp_install_plugin',
+		$.post( ( window.tfpToolkitHub && tfpToolkitHub.ajaxUrl ) ? tfpToolkitHub.ajaxUrl : ajaxurl, {
+			action: 'tfp_install_plugin',
 			slug: slug,
 			plugin_action: action,
 			_wpnonce: nonce

@@ -159,16 +159,22 @@ $tfp_video_poster_alt = 'https://i.ytimg.com/vi/' . $tfp_video_id . '/hqdefault.
 					$tfp_btn_extra_class = ( 'not_installed' === $tfp_status ) ? ' thickbox' : '';
 
 					/*
-					 * AutoPoly's own AJAX plugin installer (ATFP_Ajax_Handler::atfp_install_plugin(),
-					 * action "atfp_install_plugin", nonce "atfp_install_nonce") already knows how to
-					 * install/activate Language Switcher — reuse that real endpoint.
+					 * Hub AJAX installer (TFP_Toolkit_Hub::ajax_install_plugin) — works for
+					 * AutoPoly, Translation Inspector and Language Switcher from any host plugin.
 					 */
-					$tfp_ajax_supported_slugs = array( 'language-switcher-for-divi-polylang' );
-					$tfp_ajax_slug            = null;
-					if ( 'active' !== $tfp_status && class_exists( 'ATFP_Ajax_Handler' ) && in_array( $tfp_tool['slug'], $tfp_ajax_supported_slugs, true ) ) {
+					$tfp_ajax_supported_slugs = array(
+						TFP_Toolkit_Hub::SLUG_AUTOPOLY,
+						TFP_Toolkit_Hub::SLUG_INSPECTOR,
+						TFP_Toolkit_Hub::SLUG_SWITCHER,
+					);
+					$tfp_ajax_slug = null;
+					if ( 'active' !== $tfp_status && in_array( $tfp_tool['slug'], $tfp_ajax_supported_slugs, true ) ) {
 						$tfp_ajax_slug = $tfp_tool['slug'];
 					}
 					$tfp_ajax_action = ( 'inactive' === $tfp_status ) ? 'activate' : 'install';
+					if ( $tfp_ajax_slug ) {
+						$tfp_btn_extra_class = '';
+					}
 
 					$tfp_open_inspector_class = '';
 					$tfp_open_inspector_attrs = '';
@@ -207,7 +213,7 @@ $tfp_video_poster_alt = 'https://i.ytimg.com/vi/' . $tfp_video_id . '/hqdefault.
 								data-slug="<?php echo esc_attr( $tfp_ajax_slug ); ?>"
 								data-action="<?php echo esc_attr( $tfp_ajax_action ); ?>"
 								data-redirect="<?php echo esc_url( TFP_Toolkit_Hub::tool_url( $tfp_key ) ); ?>"
-								data-nonce="<?php echo esc_attr( wp_create_nonce( 'atfp_install_nonce' ) ); ?>">
+								data-nonce="<?php echo esc_attr( wp_create_nonce( 'tfp_install_nonce' ) ); ?>">
 								<?php echo $tfp_btn_icon_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped URL built above. ?>
 								<span class="tfp-btn-text"><?php echo esc_html( $tfp_btn_text ); ?></span>
 							</a>

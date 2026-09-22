@@ -92,6 +92,7 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 			add_action( 'activated_plugin', array( $this, 'redirect_to_tool_dashboard' ) );
 			add_action( 'wp_ajax_tfp_toggle_duplicate_content', array( $this, 'ajax_toggle_duplicate_content' ) );
 			add_action( 'wp_ajax_tfp_toggle_language_inspector', array( $this, 'ajax_toggle_language_inspector' ) );
+			add_action( 'wp_ajax_tfp_install_plugin', array( $this, 'ajax_install_plugin' ) );
 			// Strip third-party admin notices on the hub page only.
 			add_action( 'in_admin_header', array( $this, 'suppress_foreign_notices' ), 1000 );
 		}
@@ -308,6 +309,178 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 		 *
 		 * @param string $plugin Basename of the plugin that was just activated.
 		 */
+
+		/**
+		 * AJAX: install or activate a Toolkit tool from the hub cards.
+		 * Works from whichever plugin loaded the hub (does not need AutoPoly).
+		 *
+		 * @return void
+		 */
+		public function ajax_install_plugin() {
+			$plugin_action = isset( $_POST['plugin_action'] ) ? sanitize_text_field( wp_unslash( $_POST['plugin_action'] ) ) : 'install';
+			if ( ! in_array( $plugin_action, array( 'install', 'activate' ), true ) ) {
+				$plugin_action = 'install';
+			}
+
+			if ( 'install' === $plugin_action && ! current_user_can( 'install_plugins' ) ) {
+				wp_send_json_error(
+					array(
+						'errorMessage' => __( 'Sorry, you are not allowed to install plugins on this site.', self::$loader['text_domain'] ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
+					)
+				);
+			}
+
+			if ( 'activate' === $plugin_action && ! current_user_can( 'activate_plugins' ) ) {
+				wp_send_json_error(
+					array(
+						'errorMessage' => __( 'Sorry, you are not allowed to activate plugins on this site.', self::$loader['text_domain'] ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
+					)
+				);
+			}
+
+			if ( ! check_ajax_referer( 'tfp_install_nonce', '_wpnonce', false ) ) {
+				wp_send_json_error(
+					array(
+						'errorMessage' => __( 'Security check failed.', self::$loader['text_domain'] ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
+					)
+				);
+			}
+
+			if ( empty( $_POST['slug'] ) ) {
+				wp_send_json_error(
+					array(
+						'errorMessage' => __( 'No plugin specified.', self::$loader['text_domain'] ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
+					)
+				);
+			}
+
+			$slug = sanitize_key( wp_unslash( $_POST['slug'] ) );
+
+			$plugins_config = array(
+				self::SLUG_AUTOPOLY  => array(
+					'files' => array(
+						self::PLUGIN_AUTOPOLY_PRO,
+						self::PLUGIN_AUTOPOLY,
+					),
+				),
+				self::SLUG_INSPECTOR => array(
+					'files' => array(
+						self::PLUGIN_INSPECTOR,
+					),
+				),
+				self::SLUG_SWITCHER  => array(
+					'files' => array(
+						self::PLUGIN_SWITCHER,
+					),
+				),
+			);
+
+			if ( ! isset( $plugins_config[ $slug ] ) ) {
+				wp_send_json_error(
+					array(
+						'errorMessage' => __( 'Invalid plugin slug.', self::$loader['text_domain'] ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
+					)
+				);
+			}
+
+			$config = $plugins_config[ $slug ];
+
+			if ( ! function_exists( 'is_plugin_active' ) ) {
+				require_once ABSPATH . 'wp-admin/includes/plugin.php';
+			}
+
+			foreach ( $config['files'] as $file ) {
+				if ( ! file_exists( WP_PLUGIN_DIR . '/' . $file ) ) {
+					continue;
+				}
+
+				$result = activate_plugin( $file, '', is_multisite(), true );
+				if ( is_wp_error( $result ) ) {
+					wp_send_json_error( array( 'message' => $result->get_error_message() ) );
+				}
+
+				wp_send_json_success(
+					array(
+						'message'   => __( 'Plugin activated successfully.', self::$loader['text_domain'] ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
+						'activated' => true,
+					)
+				);
+			}
+
+			if ( 'activate' === $plugin_action ) {
+				wp_send_json_error(
+					array(
+						'message' => __( 'Plugin is not installed.', self::$loader['text_domain'] ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
+					)
+				);
+			}
+
+			$this->install_plugin_from_repo( $slug );
+		}
+
+		/**
+		 * Install a Toolkit plugin from WordPress.org, then activate it.
+		 *
+		 * @param string $slug Plugin directory slug on wordpress.org.
+		 * @return void
+		 */
+		private function install_plugin_from_repo( $slug ) {
+			require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
+			require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+			require_once ABSPATH . 'wp-admin/includes/file.php';
+
+			$api = plugins_api(
+				'plugin_information',
+				array(
+					'slug'   => $slug,
+					'fields' => array( 'sections' => false ),
+				)
+			);
+
+			if ( is_wp_error( $api ) ) {
+				wp_send_json_error( array( 'message' => $api->get_error_message() ) );
+			}
+
+			$skin     = new WP_Ajax_Upgrader_Skin();
+			$upgrader = new Plugin_Upgrader( $skin );
+			$result   = $upgrader->install( $api->download_link );
+
+			if ( is_wp_error( $result ) ) {
+				wp_send_json_error( array( 'message' => $result->get_error_message() ) );
+			}
+
+			if ( is_wp_error( $skin->get_errors() ) && $skin->get_errors()->has_errors() ) {
+				wp_send_json_error( array( 'message' => $skin->get_errors()->get_error_message() ) );
+			}
+
+			$plugin_file = $upgrader->plugin_info();
+			if ( ! $plugin_file ) {
+				// Fall back to known basenames for this slug.
+				$map = array(
+					self::SLUG_AUTOPOLY  => self::PLUGIN_AUTOPOLY,
+					self::SLUG_INSPECTOR => self::PLUGIN_INSPECTOR,
+					self::SLUG_SWITCHER  => self::PLUGIN_SWITCHER,
+				);
+				$plugin_file = isset( $map[ $slug ] ) ? $map[ $slug ] : '';
+			}
+
+			$activated = false;
+			if ( $plugin_file && current_user_can( 'activate_plugins' ) ) {
+				$activate = activate_plugin( $plugin_file, '', is_multisite(), true );
+				$activated = ! is_wp_error( $activate );
+			}
+
+			wp_send_json_success(
+				array(
+					'message'   => $activated
+						? __( 'Plugin installed and activated successfully.', self::$loader['text_domain'] ) // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
+						: __( 'Plugin installed successfully.', self::$loader['text_domain'] ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
+					'activated' => $activated,
+				)
+			);
+		}
+
 		public function redirect_to_tool_dashboard( $plugin ) {
 			// AJAX activate (hub Install/Activate) returns JSON — JS handles redirect.
 			if ( function_exists( 'wp_doing_ajax' ) && wp_doing_ajax() ) {
@@ -507,7 +680,8 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 					'ajaxUrl'        => admin_url( 'admin-ajax.php' ),
 					'nonce'          => wp_create_nonce( 'tfp_toggle_duplicate_content' ),
 					'inspectorNonce' => wp_create_nonce( 'tfp_toggle_language_inspector' ),
-					// Always the Inspector dashboard (not hub focus URL) so Enable → Open works after toggle.
+					'installNonce'   => wp_create_nonce( 'tfp_install_nonce' ),
+					// Always the Inspector dashboard (not hub focus URL) so Enable -> Open works after toggle.
 					'inspectorUrl'   => class_exists( 'DUPCAP_Admin' )
 						? DUPCAP_Admin::page_url()
 						: admin_url( 'admin.php?page=translation-inspector-polylang' ),
