@@ -76,8 +76,7 @@ if (! class_exists('ATFP_Helper')) {
 					)
 				);
 			} elseif ($query->have_posts()) {
-				$query->the_post();
-				$first_post_id = get_the_ID();
+				$first_post_id = (int) $existing_post->ID;
 			}
 
 			return $first_post_id;
