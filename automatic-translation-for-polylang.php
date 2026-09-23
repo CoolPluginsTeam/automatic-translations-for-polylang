@@ -344,7 +344,7 @@ if (! class_exists('AutoPoly')) {
 
 			require_once ATFP_DIR_PATH . 'admin/toolkit-hub/load-tfp-toolkit-hub.php';
 			tfp_toolkit_hub_register(
-				'1.0.0',
+				'1.0.2',
 				ATFP_DIR_PATH . 'admin/toolkit-hub/class-tfp-toolkit-hub.php',
 				array(
 					'text_domain' => 'automatic-translations-for-polylang',
@@ -674,6 +674,10 @@ if (! class_exists('AutoPoly')) {
 			require_once ATFP_DIR_PATH . '/includes/bulk-translation/class-atfp-posts-clone.php';
 			require_once ATFP_DIR_PATH . '/includes/bulk-translation/class-atfp-bulk-translation.php';
 			require_once ATFP_DIR_PATH . 'includes/elementor-translate/class-atfp-elementor-translate.php';
+			require_once ATFP_DIR_PATH . 'includes/menu-sync/class-atfp-menu-sync-promo.php';
+			if ( class_exists( 'ATFP_Menu_Sync_Promo' ) ) {
+				ATFP_Menu_Sync_Promo::get_instance();
+			}
 			require_once ATFP_DIR_PATH . 'helper/class-atfp-register-route.php';
 			require_once ATFP_DIR_PATH . 'helper/class-atfp-sanitized-content.php';
 
@@ -1016,3 +1020,21 @@ function ATFP_AutoPoly()
 // AutoPoly is our plugin name and it is used to call the plugin instance
 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $ATFP_AutoPoly = ATFP_AutoPoly();
+
+// Register Toolkit Hub as early as file load so a newer copy boots before
+// older siblings that still require the class on plugins_loaded 10/20.
+if ( is_admin() && defined( 'ATFP_DIR_PATH' ) ) {
+	$tfp_hub_load = ATFP_DIR_PATH . 'admin/toolkit-hub/load-tfp-toolkit-hub.php';
+	if ( file_exists( $tfp_hub_load ) ) {
+		require_once $tfp_hub_load;
+		tfp_toolkit_hub_register(
+			'1.0.2',
+			ATFP_DIR_PATH . 'admin/toolkit-hub/class-tfp-toolkit-hub.php',
+			array(
+				'text_domain' => 'automatic-translations-for-polylang',
+				'support_url' => 'https://wordpress.org/support/plugin/automatic-translations-for-polylang/',
+				'docs_url'    => 'https://docs.coolplugins.net/plugin/ai-translation-for-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=toolkit_hub_header',
+			)
+		);
+	}
+}

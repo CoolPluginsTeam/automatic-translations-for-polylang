@@ -17,7 +17,7 @@
 		var $card = $( '.tfp-card[data-tool="inspector"]' );
 		var $badge = $card.find( '.tfp-badge' );
 		var $text = $btn.find( '.tfp-btn-text' );
-		var openLabel = $btn.data( 'open-label' ) || 'Open Inspector';
+		var openLabel = $btn.data( 'open-label' ) || 'Open Settings';
 		var enableLabel = $btn.data( 'enable-label' ) || 'Enable inspector';
 
 		if ( $btn.length ) {

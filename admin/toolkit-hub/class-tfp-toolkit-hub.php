@@ -52,7 +52,7 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 		 * Shared hub schema/API version. Bump when this file's behaviour
 		 * changes so load-tfp-toolkit-hub.php can prefer a newer sibling copy.
 		 */
-		const VERSION = '1.0.0';
+		const VERSION = '1.0.2';
 
 		const PAGE = 'toolkit-for-polylang';
 
@@ -256,6 +256,11 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 		/**
 		 * Real install/activation state of one of the three tools.
 		 *
+		 * Prefers runtime markers (the sibling plugin already loaded this
+		 * request) over a single hardcoded basename so zip installs, folder
+		 * renames, or hosting the hub from the same plugin never show a false
+		 * "Install" button.
+		 *
 		 * @param string $plugin_basename One of the PLUGIN_* constants above.
 		 * @return string 'active' | 'inactive' | 'not_installed'
 		 */
@@ -263,27 +268,166 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 			if ( ! function_exists( 'is_plugin_active' ) ) {
 				require_once ABSPATH . 'wp-admin/includes/plugin.php';
 			}
-
-			// AutoPoly free + pro: either counts as installed/active for the card.
-			if ( self::PLUGIN_AUTOPOLY === $plugin_basename ) {
-				if ( is_plugin_active( self::PLUGIN_AUTOPOLY_PRO ) || is_plugin_active( self::PLUGIN_AUTOPOLY ) ) {
-					return 'active';
-				}
-				if ( file_exists( WP_PLUGIN_DIR . '/' . self::PLUGIN_AUTOPOLY_PRO ) || file_exists( WP_PLUGIN_DIR . '/' . self::PLUGIN_AUTOPOLY ) ) {
-					return 'inactive';
-				}
-				return 'not_installed';
-			}
-
-			if ( is_plugin_active( $plugin_basename ) ) {
+			
+			$tool = self::tool_key_for_basename( $plugin_basename );
+			if ( '' !== $tool && self::tool_is_loaded( $tool ) ) {
 				return 'active';
 			}
+			
+			$candidates = self::basename_candidates( $plugin_basename );
+			foreach ( $candidates as $candidate ) {
+				if ( is_plugin_active( $candidate ) ) {
+					return 'active';
+				}
+			}
+			foreach ( $candidates as $candidate ) {
+				if ( file_exists( WP_PLUGIN_DIR . '/' . $candidate ) ) {
+					return 'inactive';
+				}
+			}
+			
+			return 'not_installed';
+		}
+		
 
-			if ( file_exists( WP_PLUGIN_DIR . '/' . $plugin_basename ) ) {
-				return 'inactive';
+		/**
+		 * Which AutoPoly edition is present for the hub card badge.
+		 *
+		 * Prefers Pro when Pro is loaded or is the installed candidate; Free when
+		 * only Free is loaded/installed. Empty when AutoPoly is not on disk.
+		 *
+		 * @return string 'pro'|'free'|''
+		 */
+		public static function autopoly_edition() {
+			if ( defined( 'ATFPP_V' ) || defined( 'ATFPP_FILE' ) ) {
+				return 'pro';
+			}
+			if ( defined( 'ATFP_V' ) || defined( 'ATFP_FILE' ) ) {
+				return 'free';
 			}
 
-			return 'not_installed';
+			if ( ! function_exists( 'is_plugin_active' ) ) {
+				return '';
+			}
+
+			if ( is_plugin_active( self::PLUGIN_AUTOPOLY_PRO ) ) {
+				return 'pro';
+			}
+			if ( is_plugin_active( self::PLUGIN_AUTOPOLY ) ) {
+				return 'free';
+			}
+
+			$pro_path  = WP_PLUGIN_DIR . '/' . self::PLUGIN_AUTOPOLY_PRO;
+			$free_path = WP_PLUGIN_DIR . '/' . self::PLUGIN_AUTOPOLY;
+			if ( file_exists( $pro_path ) ) {
+				return 'pro';
+			}
+			if ( file_exists( $free_path ) ) {
+				return 'free';
+			}
+
+			return '';
+		}
+
+		/**
+		 * Map a PLUGIN_* basename to the hub tool key.
+		 *
+		 * @param string $plugin_basename Plugin basename.
+		 * @return string 'autopoly'|'inspector'|'switcher'|''
+		 */
+		private static function tool_key_for_basename( $plugin_basename ) {
+			if ( self::PLUGIN_AUTOPOLY === $plugin_basename || self::PLUGIN_AUTOPOLY_PRO === $plugin_basename ) {
+				return 'autopoly';
+			}
+			if ( self::PLUGIN_INSPECTOR === $plugin_basename ) {
+				return 'inspector';
+			}
+			if ( self::PLUGIN_SWITCHER === $plugin_basename ) {
+				return 'switcher';
+			}
+			return '';
+		}
+		
+		/**
+		 * Whether this request already loaded the sibling plugin's PHP.
+		 *
+		 * @param string $tool Tool key.
+		 * @return bool
+		 */
+		private static function tool_is_loaded( $tool ) {
+			switch ( $tool ) {
+				case 'inspector':
+					return defined( 'DUPCAP_FILE' ) || defined( 'DUPCAP_VERSION' ) || class_exists( 'duplicateContentAddon', false );
+				case 'autopoly':
+					return defined( 'ATFP_V' ) || defined( 'ATFP_FILE' ) || defined( 'ATFPP_V' );
+				case 'switcher':
+					return defined( 'LSDP' ) || defined( 'LSDP_DIR' );
+				default:
+					return false;
+			}
+		}
+		
+		/**
+		 * Candidate basenames for status / activate (constant + live file).
+		 *
+		 * @param string $plugin_basename Primary PLUGIN_* constant.
+		 * @return string[]
+		 */
+		private static function basename_candidates( $plugin_basename ) {
+			$candidates = array();
+			
+			if ( self::PLUGIN_AUTOPOLY === $plugin_basename || self::PLUGIN_AUTOPOLY_PRO === $plugin_basename ) {
+				$candidates[] = self::PLUGIN_AUTOPOLY_PRO;
+				$candidates[] = self::PLUGIN_AUTOPOLY;
+				if ( defined( 'ATFP_FILE' ) && ATFP_FILE ) {
+					$candidates[] = plugin_basename( ATFP_FILE );
+				}
+			} elseif ( self::PLUGIN_INSPECTOR === $plugin_basename ) {
+				$candidates[] = self::PLUGIN_INSPECTOR;
+				if ( defined( 'DUPCAP_FILE' ) && DUPCAP_FILE ) {
+					$candidates[] = plugin_basename( DUPCAP_FILE );
+				}
+				// Zip/folder drift: any root PHP under the known slug folder.
+				$dir = WP_PLUGIN_DIR . '/duplicate-content-addon-for-polylang';
+				if ( is_dir( $dir ) ) {
+					$php_files = glob( $dir . '/*.php' );
+					if ( is_array( $php_files ) ) {
+						foreach ( $php_files as $php_file ) {
+							$candidates[] = 'duplicate-content-addon-for-polylang/' . basename( $php_file );
+						}
+					}
+				}
+			} elseif ( self::PLUGIN_SWITCHER === $plugin_basename ) {
+				$candidates[] = self::PLUGIN_SWITCHER;
+				if ( defined( 'LSDP_DIR' ) && LSDP_DIR ) {
+					$main = trailingslashit( LSDP_DIR ) . 'language-switcher-for-divi-polylang.php';
+					if ( file_exists( $main ) ) {
+						$candidates[] = plugin_basename( $main );
+					}
+				}
+			} else {
+				$candidates[] = $plugin_basename;
+			}
+			
+			return array_values( array_unique( array_filter( $candidates ) ) );
+		}
+		
+		/**
+		 * First basename on disk for activate links / AJAX.
+		 *
+		 * @param string $plugin_basename Primary PLUGIN_* constant.
+		 * @return string
+		 */
+		public static function resolve_basename( $plugin_basename ) {
+			if ( self::PLUGIN_AUTOPOLY === $plugin_basename ) {
+				return self::autopoly_activate_basename();
+			}
+			foreach ( self::basename_candidates( $plugin_basename ) as $candidate ) {
+				if ( file_exists( WP_PLUGIN_DIR . '/' . $candidate ) ) {
+					return $candidate;
+				}
+			}
+			return $plugin_basename;
 		}
 
 		/**
@@ -394,6 +538,41 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 			if ( ! function_exists( 'is_plugin_active' ) ) {
 				require_once ABSPATH . 'wp-admin/includes/plugin.php';
 			}
+
+			// Prefer live/resolved basenames (zip drift) ahead of hardcoded constants.
+			$primary = $config['files'][0];
+			if ( self::SLUG_AUTOPOLY === $slug ) {
+				$config['files'] = array_values(
+					array_unique(
+						array_merge(
+							array( self::autopoly_activate_basename() ),
+							self::basename_candidates( self::PLUGIN_AUTOPOLY ),
+							$config['files']
+						)
+					)
+				);
+			} elseif ( self::SLUG_INSPECTOR === $slug ) {
+				$config['files'] = array_values(
+					array_unique(
+						array_merge(
+							array( self::resolve_basename( self::PLUGIN_INSPECTOR ) ),
+							self::basename_candidates( self::PLUGIN_INSPECTOR ),
+							$config['files']
+						)
+					)
+				);
+			} elseif ( self::SLUG_SWITCHER === $slug ) {
+				$config['files'] = array_values(
+					array_unique(
+						array_merge(
+							array( self::resolve_basename( self::PLUGIN_SWITCHER ) ),
+							self::basename_candidates( self::PLUGIN_SWITCHER ),
+							$config['files']
+						)
+					)
+				);
+			}
+			unset( $primary );
 
 			foreach ( $config['files'] as $file ) {
 				if ( ! file_exists( WP_PLUGIN_DIR . '/' . $file ) ) {
@@ -970,9 +1149,7 @@ JS;
 		 * @return string
 		 */
 		public static function activate_url( $plugin_basename ) {
-			if ( self::PLUGIN_AUTOPOLY === $plugin_basename ) {
-				$plugin_basename = self::autopoly_activate_basename();
-			}
+			$plugin_basename = self::resolve_basename( $plugin_basename );
 
 			return wp_nonce_url(
 				admin_url( 'plugins.php?action=activate&plugin=' . rawurlencode( $plugin_basename ) ),

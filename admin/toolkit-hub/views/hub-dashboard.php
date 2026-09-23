@@ -26,7 +26,7 @@ $tfp_tools = array(
 		'desc'   => __( 'Deep-scan taxonomies, posts, pages, and meta strings to pinpoint missing translations and sync errors.', $tfp_domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction, WordPress.WP.I18n.MissingTranslatorsComment
 		'plugin' => TFP_Toolkit_Hub::PLUGIN_INSPECTOR,
 		'slug'   => TFP_Toolkit_Hub::SLUG_INSPECTOR,
-		'icon'   => 'purple',
+		'icon'   => 'blue',
 		'short'  => __( 'Inspector', $tfp_domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
 	),
 	'autopoly'  => array(
@@ -42,7 +42,7 @@ $tfp_tools = array(
 		'desc'   => __( 'Embed lightweight, accessible flag or text switchers directly inside Elementor, Divi, and Gutenberg.', $tfp_domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction, WordPress.WP.I18n.MissingTranslatorsComment
 		'plugin' => TFP_Toolkit_Hub::PLUGIN_SWITCHER,
 		'slug'   => TFP_Toolkit_Hub::SLUG_SWITCHER,
-		'icon'   => 'purple',
+		'icon'   => 'blue',
 		'short'  => __( 'Switcher', $tfp_domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
 	),
 );
@@ -118,10 +118,7 @@ $tfp_video_poster_alt = 'https://i.ytimg.com/vi/' . $tfp_video_id . '/hqdefault.
 		</section>
 
 		<section class="tfp-tools-section" aria-labelledby="tfp-tools-heading">
-			<div class="tfp-section-head">
-				<h3 id="tfp-tools-heading" class="tfp-section-title"><?php echo esc_html__( 'Your translation tools', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></h3>
-				<p class="tfp-section-sub"><?php echo esc_html__( 'Install and open the tools that power your multilingual site.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
-			</div>
+			
 
 			<div class="tfp-grid">
 				<?php foreach ( $tfp_tools as $tfp_key => $tfp_tool ) : ?>
@@ -133,9 +130,8 @@ $tfp_video_poster_alt = 'https://i.ytimg.com/vi/' . $tfp_video_id . '/hqdefault.
 					if ( 'active' === $tfp_status ) {
 						$tfp_badge_class = 'active';
 						$tfp_badge_text  = __( 'Active', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
-						$tfp_btn_url     = TFP_Toolkit_Hub::tool_url( $tfp_key );
-						// translators: %s is a short tool label, e.g. "Inspector".
-						$tfp_btn_text   = sprintf( __( 'Open %s', $tfp_domain ), $tfp_tool['short'] ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
+						$tfp_btn_url    = TFP_Toolkit_Hub::tool_url( $tfp_key );
+						$tfp_btn_text   = __( 'Open Settings', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
 						$tfp_btn_class  = 'button button-primary';
 						$tfp_show_arrow = true;
 					} elseif ( 'inactive' === $tfp_status ) {
@@ -143,7 +139,7 @@ $tfp_video_poster_alt = 'https://i.ytimg.com/vi/' . $tfp_video_id . '/hqdefault.
 						$tfp_badge_text  = __( 'Inactive', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
 						$tfp_btn_url     = TFP_Toolkit_Hub::activate_url( $tfp_tool['plugin'] );
 						// translators: %s is a short tool label, e.g. "AutoPoly".
-						$tfp_btn_text      = sprintf( __( 'Activate %s', $tfp_domain ), $tfp_tool['short'] ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
+						$tfp_btn_text      =__( 'Activate', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
 						$tfp_btn_class     = 'dark';
 						$tfp_btn_icon_html = $tfp_download_icon;
 					} else {
@@ -151,7 +147,7 @@ $tfp_video_poster_alt = 'https://i.ytimg.com/vi/' . $tfp_video_id . '/hqdefault.
 						$tfp_badge_text  = __( 'Available Add-on', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
 						$tfp_btn_url     = TFP_Toolkit_Hub::install_url( $tfp_tool['slug'] );
 						// translators: %s is a short tool label, e.g. "AutoPoly".
-						$tfp_btn_text      = sprintf( __( 'Install %s', $tfp_domain ), $tfp_tool['short'] ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
+						$tfp_btn_text      = __( 'Install', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
 						$tfp_btn_class     = 'dark';
 						$tfp_btn_icon_html = $tfp_download_icon;
 					}
@@ -199,12 +195,30 @@ $tfp_video_poster_alt = 'https://i.ytimg.com/vi/' . $tfp_video_id . '/hqdefault.
 							<div class="tfp-icon-tile <?php echo esc_attr( $tfp_tool['icon'] ); ?>">
 								<?php echo $tfp_icons[ $tfp_key ]; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped URL built above. ?>
 							</div>
-							<span class="tfp-badge <?php echo esc_attr( $tfp_badge_class ); ?>">
-								<?php if ( 'active' === $tfp_badge_class ) : ?>
-									<span class="tfp-badge-dot" aria-hidden="true"></span>
-								<?php endif; ?>
-								<?php echo esc_html( $tfp_badge_text ); ?>
-							</span>
+							<div class="tfp-card-badges">
+								<span class="tfp-badge <?php echo esc_attr( $tfp_badge_class ); ?>">
+									<?php if ( 'active' === $tfp_badge_class ) : ?>
+										<span class="tfp-badge-dot" aria-hidden="true"></span>
+									<?php endif; ?>
+									<?php echo esc_html( $tfp_badge_text ); ?>
+								</span>
+								<?php
+								if ( 'autopoly' === $tfp_key ) {
+									$tfp_edition = TFP_Toolkit_Hub::autopoly_edition();
+									if ( 'pro' === $tfp_edition || 'free' === $tfp_edition ) {
+										$tfp_edition_label = ( 'pro' === $tfp_edition )
+											? __( 'Pro', $tfp_domain ) // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
+											: __( 'Free', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
+										?>
+										<span class="tfp-badge edition <?php echo esc_attr( $tfp_edition ); ?>">
+											<span class="tfp-badge-dot" aria-hidden="true"></span>
+											<?php echo esc_html( $tfp_edition_label ); ?>
+										</span>
+										<?php
+									}
+								}
+								?>
+							</div>
 						</div>
 						<h4 class="tfp-card-title"><?php echo esc_html( $tfp_tool['name'] ); ?></h4>
 						<p class="tfp-card-desc"><?php echo esc_html( $tfp_tool['desc'] ); ?></p>
@@ -278,7 +292,6 @@ $tfp_video_poster_alt = 'https://i.ytimg.com/vi/' . $tfp_video_id . '/hqdefault.
 									<span class="tfp-toggle-track"></span>
 									<span class="tfp-toggle-tip" <?php echo $tfp_inspector_locked ? '' : 'hidden'; ?>><?php echo esc_html__( 'Both features cannot be disabled at the same time.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></span>
 								</label>
-								<span class="tfp-toggle-state <?php echo $tfp_inspector_enabled ? 'is-on' : 'is-off'; ?>"><?php echo $tfp_inspector_enabled ? esc_html__( 'Enabled', $tfp_domain ) : esc_html__( 'Disabled', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></span>
 							</div>
 						</div>
 						</div>
@@ -304,7 +317,6 @@ $tfp_video_poster_alt = 'https://i.ytimg.com/vi/' . $tfp_video_id . '/hqdefault.
 									<span class="tfp-toggle-track"></span>
 									<span class="tfp-toggle-tip" <?php echo $tfp_duplicate_locked ? '' : 'hidden'; ?>><?php echo esc_html__( 'Both features cannot be disabled at the same time.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></span>
 								</label>
-								<span class="tfp-toggle-state <?php echo $tfp_duplicate_enabled ? 'is-on' : 'is-off'; ?>"><?php echo $tfp_duplicate_enabled ? esc_html__( 'Enabled', $tfp_domain ) : esc_html__( 'Disabled', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></span>
 							</div>
 						</div>
 						</div>

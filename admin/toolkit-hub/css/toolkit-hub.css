@@ -212,13 +212,13 @@
  * Mirror that 20px on the right so right spacing matches left.
  */
 :is(.languages_page_toolkit-for-polylang) .atfp-dashboard-wrapper {
-	margin-left: 0;
-	margin-right: 0;
-	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	width: 85%;
 	overflow-x: hidden;
 	box-sizing: border-box;
 	padding-left: 20px;
-	padding-right: 40px; /* 20px hub inset + 20px to match WP left pad */
+	padding-right: 20px;
 }
 
 .tfp-hub-body {
@@ -266,22 +266,22 @@
 	gap: 28px;
 	padding: 33px;
 	border-radius: 12px;
-	background: linear-gradient(120deg, rgba(90, 57, 189) 0%, rgba(69, 60, 196) 32%, rgba(77, 72, 217) 66%, rgba(68, 67, 198) 100%);
-	color: #fff;
+	background-color: rgb(243 243 248 / 1);
+	color: #0f172a;
 	margin-bottom: 24px;
 	overflow: hidden;
 	width: 100%;
 	min-width: 0;
-	box-shadow: 0 6px 18px rgba(90, 57, 189, 0.28);
+	box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
 	position: relative;
 }
 
-/* Soft glow on the right so the media column feels filled, not empty purple. */
+/* Soft fill glow on the right (subtle on light hero). */
 .tfp-hero::after {
 	content: "";
 	position: absolute;
 	inset: -20% -10% -30% 55%;
-	background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 70%);
+	background: radial-gradient(ellipse at center, rgba(15, 23, 42, 0.04) 0%, rgba(15, 23, 42, 0) 70%);
 	pointer-events: none;
 	z-index: 0;
 }
@@ -312,14 +312,12 @@
 	min-width: 0;
 	padding: 12px 14px;
 	border-radius: 14px;
-	background: rgba(255, 255, 255, 0.10);
-	border: 1px solid rgba(255, 255, 255, 0.22);
-	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
-	backdrop-filter: blur(8px);
-	-webkit-backdrop-filter: blur(8px);
+	background-color: rgb(243 243 248 / 1);
+	border: 1px solid rgba(15, 23, 42, 0.08);
+	box-shadow: none;
 	box-sizing: border-box;
 	height: auto;
-	color: #fff;
+	color: #0f172a;
 }
 
 .tfp-hero-chip-icon {
@@ -388,14 +386,14 @@
 	font-size: 13px;
 	font-weight: 700;
 	line-height: 1.25;
-	color: #fff;
+	color: #0f172a;
 }
 
 .tfp-hero-chip-text span {
 	font-size: 11.5px;
 	font-weight: 500;
 	line-height: 1.3;
-	color: rgba(255, 255, 255, 0.78);
+	color: #64748b;
 }
 
 @media screen and (max-width: 1100px) {
@@ -415,8 +413,9 @@
 	align-items: center;
 	padding: 4px 10px;
 	border-radius: 999px;
-	background: rgba(255, 255, 255, 0.16);
-	border: 1px solid rgba(255, 255, 255, 0.22);
+	background: rgba(15, 23, 42, 0.06);
+	border: 1px solid rgba(15, 23, 42, 0.10);
+	color: #475569;
 	font-size: 10px;
 	font-weight: 700;
 	letter-spacing: 0.05em;
@@ -429,7 +428,7 @@
 	font-size: clamp(18px, 1.7vw, 22px);
 	line-height: 1.3;
 	font-weight: 700;
-	color: #fff;
+	color: #0f172a;
 	max-width: none;
 }
 
@@ -437,7 +436,7 @@
 	margin: 0;
 	font-size: 13px;
 	line-height: 1.5;
-	color: rgba(255, 255, 255, 0.9);
+	color: #64748b;
 	max-width: none;
 }
 
@@ -710,13 +709,17 @@
 	font-size: 13.5px;
 	font-weight: 650;
 	text-decoration: none;
+	width: 50%;
 	cursor: pointer;
 	margin-top: auto;
+	box-sizing: border-box;
+	white-space: normal;
+	overflow: visible;
 	transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
 }
 
 .tfp-btn-block {
-	width: 100%;
+	width: 50%;
 }
 
 .tfp-btn-icon {
@@ -731,48 +734,70 @@
 	flex-shrink: 0;
 }
 
-/* Open / active: core .button.button-primary for colors; layout only here. */
+/* Card CTAs: Open Settings (.button-primary) and Install/Activate (.dark)
+ * share the same layout + type — only background/border/color differ.
+ * Typography mirrors WP admin .button / .button-primary.
+ */
 .tfp-btn.button,
-.tfp-btn.button-primary {
+.tfp-btn.button-primary,
+.tfp-btn.dark {
 	display: inline-flex !important;
 	align-items: center;
 	justify-content: center;
+	flex-wrap: nowrap;
 	gap: 8px;
 	box-sizing: border-box;
-	width: 100%;
+	width: 40%;
 	min-height: 44px;
 	height: auto !important;
-	margin: 0;
+	margin-top: auto;
+	margin-left: 0;
+	margin-right: 0;
+	margin-bottom: 0;
+	align-self: flex-start;
 	padding: 10px 16px !important;
 	float: none !important;
+	font-size: 13px !important;
+	font-weight: 400 !important;
+	letter-spacing: normal;
 	line-height: 1.25 !important;
 	text-align: center;
 	text-decoration: none;
 	vertical-align: middle;
 	white-space: nowrap;
+	overflow: visible;
 }
 
 .tfp-btn.button .tfp-btn-text,
-.tfp-btn.button-primary .tfp-btn-text {
+.tfp-btn.button-primary .tfp-btn-text,
+.tfp-btn.dark .tfp-btn-text {
 	display: inline;
+	font-size: inherit;
+	font-weight: inherit;
+	letter-spacing: inherit;
 	line-height: inherit;
+	white-space: nowrap;
 }
 
 .tfp-btn.button .tfp-btn-icon,
 .tfp-btn.button-primary .tfp-btn-icon,
 .tfp-btn.button .tfp-btn-icon-end,
-.tfp-btn.button-primary .tfp-btn-icon-end {
+.tfp-btn.button-primary .tfp-btn-icon-end,
+.tfp-btn.dark .tfp-btn-icon,
+.tfp-btn.dark .tfp-btn-icon-end {
 	display: block;
 	flex-shrink: 0;
+	width: 16px;
+	height: 16px;
 }
 
 
 /* Cross-plugin header menu (Translation Inspector | AutoPoly | Language Switcher).
  * Embedded inside whichever plugin's own header happens to render it
  * (AutoPoly's .atfp-dashboard-header, Inspector's .dupcap-plugin-topbar-inner,
- * Switcher's own header) — so these rules target .tfp-nav itself, never a
+ * Switcher's own header) â€” so these rules target .tfp-nav itself, never a
  * specific host header class.
- * Plain text links — no button chrome / no segmented box.
+ * Plain text links â€” no button chrome / no segmented box.
  * Active: WordPress admin primary blue (#2271b1).
  * Inactive / not-installed: #0f172a.
  */
@@ -817,7 +842,7 @@
 	text-decoration: none;
 }
 
-/* Active menu item — WP primary blue (same hue as .button-primary). */
+/* Active menu item â€” WP primary blue (same hue as .button-primary). */
 .tfp-nav .tfp-nav-item.active {
 	color: #2271b1;
 	font-weight: 700;
@@ -836,7 +861,7 @@
 	opacity: 0.85;
 }
 
-/* Pulse Install/Activate when arriving from header menu (tfp_install=…). */
+/* Pulse Install/Activate when arriving from header menu (tfp_install=â€¦). */
 @keyframes tfp-install-pulse {
 	0%, 100% {
 		box-shadow: 0 0 0 0 rgba(15, 23, 42, 0.55);
@@ -859,7 +884,7 @@
 	outline-offset: 4px;
 }
 
-/* Focus Toolkit controls when arriving with ?tfp_focus=inspector — do NOT
+/* Focus Toolkit controls when arriving with ?tfp_focus=inspector â€” do NOT
  * scale the toggle (that breaks the knob). Highlight the row + show a cue. */
 @keyframes tfp-control-glow {
 	0%, 100% {
@@ -923,7 +948,7 @@
 
 
 
-/* Dark navy for Install / Activate (mockup). */
+/* Dark navy for Install / Activate — color only; type/layout match Open Settings. */
 .tfp-btn.dark {
 	background: #0f172a;
 	border-color: #0f172a;
@@ -953,12 +978,15 @@
 
 .tfp-btn-wrap {
 	position: relative;
-	width: 100%;
+	width: 40%;
 	margin-top: auto;
+	align-self: flex-start;
 }
 
 .tfp-btn-wrap .tfp-btn {
 	margin-top: 0;
+	width: 100%;
+	align-self: stretch;
 }
 
 .tfp-btn-tip {
@@ -1100,7 +1128,7 @@
 /*
  * WordPress admin forms.css paints input[type=checkbox]:checked:before /
  * :disabled:checked:before as a blue dash. Hide every WP chrome on our
- * custom switch — visual state lives only on .tfp-toggle-track.
+ * custom switch â€” visual state lives only on .tfp-toggle-track.
  */
 .tfp-toggle input[type="checkbox"],
 .tfp-toggle input[type="checkbox"]:checked,
@@ -1292,7 +1320,7 @@
 	color: #4b5563;
 }
 
-/* Folded WP admin menu ≈ 960px content; auto-fit already wraps earlier.
+/* Folded WP admin menu â‰ˆ 960px content; auto-fit already wraps earlier.
  * These only tighten spacing / force single column on very small windows.
  */
 @media (max-width: 960px) {
