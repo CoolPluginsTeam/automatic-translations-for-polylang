@@ -796,13 +796,7 @@
 
 
 /* Cross-plugin header menu (Translation Inspector | AutoPoly | Language Switcher).
- * Embedded inside whichever plugin's own header happens to render it
- * (AutoPoly's .atfp-dashboard-header, Inspector's .dupcap-plugin-topbar-inner,
- * Switcher's own header) — so these rules target .tfp-nav itself, never a
- * specific host header class.
- * Plain text links — no button chrome / no segmented box.
- * Active: WordPress admin primary blue (#2271b1).
- * Inactive / not-installed: #0f172a.
+ * Inactive: dark text. Active: blue text + underline — simple but clear.
  */
 .tfp-nav {
 	align-items: center;
@@ -811,7 +805,7 @@
 	display: flex;
 	flex: 1 1 auto;
 	flex-wrap: wrap;
-	gap: 4px 18px;
+	gap: 4px 20px;
 	justify-content: center;
 	margin: 0;
 	min-width: 0;
@@ -819,49 +813,74 @@
 }
 
 .tfp-nav .tfp-nav-item {
+	position: relative;
 	background: transparent !important;
 	border: 0 !important;
 	border-radius: 0;
 	box-shadow: none !important;
-	color: #0f172a;
-	display: inline;
+	color: #334155 !important;
+	display: inline-flex;
+	align-items: center;
 	font-size: 14px;
 	font-weight: 600;
 	height: auto;
 	line-height: 1.3;
 	margin: 0;
 	min-height: 0;
-	padding: 0;
-	text-decoration: none;
+	padding: 6px 0 8px !important;
+	text-decoration: none !important;
 	white-space: nowrap;
+	transition: color 0.15s ease;
 }
 
 .tfp-nav .tfp-nav-item:hover,
-.tfp-nav .tfp-nav-item:focus {
+.tfp-nav .tfp-nav-item:focus,
+.tfp-nav .tfp-nav-item:focus-visible {
 	background: transparent !important;
 	box-shadow: none !important;
-	color: #2271b1;
+	color: #2563eb !important;
 	outline: none;
-	text-decoration: none;
+	text-decoration: none !important;
 }
 
-/* Active menu item — WP primary blue (same hue as .button-primary). */
+/* Active — blue text + underline only. */
 .tfp-nav .tfp-nav-item.active {
-	color: #2271b1;
-	font-weight: 700;
-	text-decoration: none;
+	color: #2563eb !important;
+	font-weight: 700 !important;
+	text-decoration: none !important;
+}
+
+.tfp-nav .tfp-nav-item.active::after {
+	content: "";
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 2px;
+	border-radius: 1px;
+	background: #2563eb;
 }
 
 .tfp-nav .tfp-nav-item.active:hover,
-.tfp-nav .tfp-nav-item.active:focus {
-	color: #135e96;
-	text-decoration: none;
+.tfp-nav .tfp-nav-item.active:focus,
+.tfp-nav .tfp-nav-item.active:focus-visible {
+	color: #1d4ed8 !important;
+	text-decoration: none !important;
 }
 
-/* Not-installed still reads as the dark menu color; goes to Toolkit Hub. */
+.tfp-nav .tfp-nav-item.active:hover::after,
+.tfp-nav .tfp-nav-item.active:focus::after {
+	background: #1d4ed8;
+}
+
+/* Not-installed: muted; still goes to Toolkit Hub. */
 .tfp-nav .tfp-nav-item.not-installed {
-	color: #0f172a;
-	opacity: 0.85;
+	color: #94a3b8 !important;
+}
+
+.tfp-nav .tfp-nav-item.not-installed:hover,
+.tfp-nav .tfp-nav-item.not-installed:focus {
+	color: #2563eb !important;
 }
 
 /* Pulse Install/Activate when arriving from header menu (tfp_install=…). */
