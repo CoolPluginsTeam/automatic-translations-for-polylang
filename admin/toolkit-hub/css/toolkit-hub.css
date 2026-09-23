@@ -9,7 +9,7 @@
  * wins the class_exists() race (AutoPoly, Inspector, or Switcher), the hub
  * page looks identical, even on a site where AutoPoly isn't installed.
  */
-:is(.languages_page_toolkit-for-polylang) #wpbody #wpbody-content {
+ :is(.languages_page_toolkit-for-polylang) #wpbody #wpbody-content {
 	margin-top: 80px !important;
 }
 
@@ -187,7 +187,7 @@
 	width: 28px;
 	height: 28px;
 	border-radius: 7px;
-	background: #ef4444;
+	background: #2563eb;
 	flex-shrink: 0;
 	position: relative;
 }
@@ -212,13 +212,14 @@
  * Mirror that 20px on the right so right spacing matches left.
  */
 :is(.languages_page_toolkit-for-polylang) .atfp-dashboard-wrapper {
-	margin-left: auto;
-	margin-right: auto;
+	margin-left: 0;
+	margin-right: 0;
 	width: 85%;
+	margin:auto;
 	overflow-x: hidden;
 	box-sizing: border-box;
 	padding-left: 20px;
-	padding-right: 20px;
+	padding-right: 40px; /* 20px hub inset + 20px to match WP left pad */
 }
 
 .tfp-hub-body {
@@ -272,16 +273,17 @@
 	overflow: hidden;
 	width: 100%;
 	min-width: 0;
-	box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+	box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+	border: 1px solid #e5e7eb;
 	position: relative;
 }
 
-/* Soft fill glow on the right (subtle on light hero). */
+/* Soft lift on the right media column against the light hero. */
 .tfp-hero::after {
 	content: "";
 	position: absolute;
 	inset: -20% -10% -30% 55%;
-	background: radial-gradient(ellipse at center, rgba(15, 23, 42, 0.04) 0%, rgba(15, 23, 42, 0) 70%);
+	background: radial-gradient(ellipse at center, rgba(99, 102, 241, 0.06) 0%, rgba(243, 243, 248, 0) 70%);
 	pointer-events: none;
 	z-index: 0;
 }
@@ -312,9 +314,9 @@
 	min-width: 0;
 	padding: 12px 14px;
 	border-radius: 14px;
-	background-color: rgb(243 243 248 / 1);
-	border: 1px solid rgba(15, 23, 42, 0.08);
-	box-shadow: none;
+	background: #fff;
+	border: 1px solid #e5e7eb;
+	box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
 	box-sizing: border-box;
 	height: auto;
 	color: #0f172a;
@@ -335,11 +337,11 @@
 }
 
 .tfp-hero-chip-icon--tools {
-	background: linear-gradient(145deg, #8b5cf6 0%, #6d28d9 100%);
+	background: linear-gradient(145deg, #3b82f6 0%, #2563eb 100%);
 }
 
 .tfp-hero-chip-icon--ai {
-	background: linear-gradient(145deg, #a78bfa 0%, #7c3aed 100%);
+	background: linear-gradient(145deg, #60a5fa 0%, #2563eb 100%);
 }
 
 .tfp-hero-chip-icon--inspect {
@@ -361,7 +363,7 @@
 	height: 16px;
 	padding: 0 4px;
 	border-radius: 999px;
-	background: #3b82f6;
+	background: #2563eb;
 	border: 1.5px solid rgba(255, 255, 255, 0.85);
 	color: #fff;
 	font-size: 9px;
@@ -413,9 +415,9 @@
 	align-items: center;
 	padding: 4px 10px;
 	border-radius: 999px;
-	background: rgba(15, 23, 42, 0.06);
-	border: 1px solid rgba(15, 23, 42, 0.10);
-	color: #475569;
+	background: #eff6ff;
+	border: 1px solid #bfdbfe;
+	color: #1d4ed8;
 	font-size: 10px;
 	font-weight: 700;
 	letter-spacing: 0.05em;
@@ -436,7 +438,7 @@
 	margin: 0;
 	font-size: 13px;
 	line-height: 1.5;
-	color: #64748b;
+	color: #475569;
 	max-width: none;
 }
 
@@ -451,9 +453,9 @@
 	background-color: #0f172a;
 	background-position: center;
 	background-size: cover;
-	border: 1px solid rgba(255, 255, 255, 0.2);
-	border-radius: 10px;
-	box-shadow: 0 8px 24px rgba(15, 23, 42, 0.28);
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	box-shadow: 0 8px 24px rgba(37, 99, 235, 0.12);
 	cursor: pointer;
 	display: flex;
 	justify-content: center;
@@ -478,35 +480,36 @@
 
 .tfp-hero-play {
 	align-items: center;
-	background: #e62117;
-	border: 3px solid #f2f2f2;
+	background: #2563eb;
+	border: 3px solid #fff;
 	border-radius: 50%;
-	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28);
+	box-shadow: 0 6px 18px rgba(37, 99, 235, 0.4);
 	box-sizing: content-box;
 	color: #fff;
 	cursor: pointer;
 	display: flex;
-	height: 44px;
+	height: 48px;
 	justify-content: center;
 	margin: 0;
 	padding: 0;
 	position: relative;
-	transition: transform 0.2s ease, background 0.2s ease;
-	width: 44px;
+	transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+	width: 48px;
 	z-index: 1;
 }
 
 .tfp-hero-video-frame:hover .tfp-hero-play,
 .tfp-hero-play:hover,
 .tfp-hero-play:focus {
-	background: #c81c13;
+	background: #1d4ed8;
 	transform: scale(1.06);
+	box-shadow: 0 8px 22px rgba(37, 99, 235, 0.5);
 }
 
 .tfp-hero-play svg {
-	height: 18px;
-	margin-left: 2px;
-	width: 18px;
+	height: 20px;
+	margin-left: 3px;
+	width: 20px;
 }
 
 /* Tools grid */
@@ -544,32 +547,32 @@
 	margin-bottom: 16px;
 }
 
-/* Rounded-square icon tiles on tool cards (mockup). */
+/* Rounded-square icon tiles on tool cards (dashboard palette). */
 .tfp-icon-tile {
-	width: 48px;
-	height: 48px;
-	border: 0;
-	border-radius: 0;
-	background: transparent;
+	width: 52px;
+	height: 52px;
+	border: 1px solid #e8edf5;
+	border-radius: 12px;
+	background: #f8fafc;
 	box-shadow: none;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	flex-shrink: 0;
-	overflow: visible;
-	padding: 0;
+	overflow: hidden;
+	padding: 4px;
 }
 
 .tfp-icon-tile svg,
 .tfp-icon-tile .tfp-icon-logo {
-	width: 48px;
-	height: 48px;
+	width: 40px;
+	height: 40px;
 	display: block;
 	object-fit: contain;
 	border: 0;
-	border-radius: 0;
+	/* border-radius: 8px; */
 	box-shadow: none;
-	background: transparent;
+	/* background: transparent; */
 }
 
 .tfp-icon-circle {
@@ -583,13 +586,19 @@
 	object-fit: contain;
 }
 
-.tfp-icon-tile.purple,
-.tfp-icon-tile.green,
+.tfp-icon-tile.purple {
+	/* background: #f5f3ff;
+	border-color: #e9e5ff; */
+}
+
+.tfp-icon-tile.green {
+	/* background: #ecfdf5;
+	border-color: #d1fae5; */
+}
+
 .tfp-icon-tile.blue {
-	background: transparent;
-	border: 0;
-	box-shadow: none;
-	color: inherit;
+	/* background: #eff6ff;
+	border-color: #dbeafe; */
 }
 
 /* Circular icons still used in Toolkit controls rows. */
@@ -712,9 +721,6 @@
 	width: 50%;
 	cursor: pointer;
 	margin-top: auto;
-	box-sizing: border-box;
-	white-space: normal;
-	overflow: visible;
 	transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
 }
 
@@ -734,70 +740,67 @@
 	flex-shrink: 0;
 }
 
-/* Card CTAs: Open Settings (.button-primary) and Install/Activate (.dark)
- * share the same layout + type — only background/border/color differ.
- * Typography mirrors WP admin .button / .button-primary.
- */
+/* Open / active: dashboard blue (#2563eb) — ignore WP admin color scheme. */
 .tfp-btn.button,
-.tfp-btn.button-primary,
-.tfp-btn.dark {
+.tfp-btn.button-primary {
 	display: inline-flex !important;
 	align-items: center;
 	justify-content: center;
-	flex-wrap: nowrap;
 	gap: 8px;
 	box-sizing: border-box;
-	width: 40%;
+	width: 50%;
 	min-height: 44px;
 	height: auto !important;
-	margin-top: auto;
-	margin-left: 0;
-	margin-right: 0;
-	margin-bottom: 0;
-	align-self: flex-start;
+	margin: 0;
 	padding: 10px 16px !important;
 	float: none !important;
-	font-size: 13px !important;
-	font-weight: 400 !important;
-	letter-spacing: normal;
 	line-height: 1.25 !important;
 	text-align: center;
 	text-decoration: none;
 	vertical-align: middle;
 	white-space: nowrap;
-	overflow: visible;
+	background: #2563eb !important;
+	border: 1px solid #2563eb !important;
+	border-radius: 10px !important;
+	color: #fff !important;
+	box-shadow: 0 1px 2px rgba(37, 99, 235, 0.2);
+	text-shadow: none !important;
+}
+
+.tfp-btn.button:hover,
+.tfp-btn.button:focus,
+.tfp-btn.button-primary:hover,
+.tfp-btn.button-primary:focus {
+	background: #1d4ed8 !important;
+	border-color: #1d4ed8 !important;
+	color: #fff !important;
+	box-shadow: 0 4px 12px rgba(37, 99, 235, 0.28);
 }
 
 .tfp-btn.button .tfp-btn-text,
-.tfp-btn.button-primary .tfp-btn-text,
-.tfp-btn.dark .tfp-btn-text {
+.tfp-btn.button-primary .tfp-btn-text {
 	display: inline;
-	font-size: inherit;
-	font-weight: inherit;
-	letter-spacing: inherit;
 	line-height: inherit;
-	white-space: nowrap;
+	color: inherit;
 }
 
 .tfp-btn.button .tfp-btn-icon,
 .tfp-btn.button-primary .tfp-btn-icon,
 .tfp-btn.button .tfp-btn-icon-end,
-.tfp-btn.button-primary .tfp-btn-icon-end,
-.tfp-btn.dark .tfp-btn-icon,
-.tfp-btn.dark .tfp-btn-icon-end {
+.tfp-btn.button-primary .tfp-btn-icon-end {
 	display: block;
 	flex-shrink: 0;
-	width: 16px;
-	height: 16px;
+	color: inherit;
+	fill: currentColor;
 }
 
 
 /* Cross-plugin header menu (Translation Inspector | AutoPoly | Language Switcher).
  * Embedded inside whichever plugin's own header happens to render it
  * (AutoPoly's .atfp-dashboard-header, Inspector's .dupcap-plugin-topbar-inner,
- * Switcher's own header) â€” so these rules target .tfp-nav itself, never a
+ * Switcher's own header) — so these rules target .tfp-nav itself, never a
  * specific host header class.
- * Plain text links â€” no button chrome / no segmented box.
+ * Plain text links — no button chrome / no segmented box.
  * Active: WordPress admin primary blue (#2271b1).
  * Inactive / not-installed: #0f172a.
  */
@@ -842,7 +845,7 @@
 	text-decoration: none;
 }
 
-/* Active menu item â€” WP primary blue (same hue as .button-primary). */
+/* Active menu item — WP primary blue (same hue as .button-primary). */
 .tfp-nav .tfp-nav-item.active {
 	color: #2271b1;
 	font-weight: 700;
@@ -861,7 +864,7 @@
 	opacity: 0.85;
 }
 
-/* Pulse Install/Activate when arriving from header menu (tfp_install=â€¦). */
+/* Pulse Install/Activate when arriving from header menu (tfp_install=…). */
 @keyframes tfp-install-pulse {
 	0%, 100% {
 		box-shadow: 0 0 0 0 rgba(15, 23, 42, 0.55);
@@ -884,7 +887,7 @@
 	outline-offset: 4px;
 }
 
-/* Focus Toolkit controls when arriving with ?tfp_focus=inspector â€” do NOT
+/* Focus Toolkit controls when arriving with ?tfp_focus=inspector — do NOT
  * scale the toggle (that breaks the knob). Highlight the row + show a cue. */
 @keyframes tfp-control-glow {
 	0%, 100% {
@@ -948,18 +951,20 @@
 
 
 
-/* Dark navy for Install / Activate — color only; type/layout match Open Settings. */
+/* Install / Activate — same dashboard blue as Open CTAs. */
 .tfp-btn.dark {
-	background: #0f172a;
-	border-color: #0f172a;
+	background: #2563eb;
+	border-color: #2563eb;
 	color: #fff;
+	box-shadow: 0 1px 2px rgba(37, 99, 235, 0.2);
 }
 
 .tfp-btn.dark:hover,
 .tfp-btn.dark:focus {
-	background: #1e293b;
-	border-color: #1e293b;
+	background: #1d4ed8;
+	border-color: #1d4ed8;
 	color: #fff;
+	box-shadow: 0 4px 12px rgba(37, 99, 235, 0.28);
 }
 
 .tfp-btn.is-disabled,
@@ -978,15 +983,12 @@
 
 .tfp-btn-wrap {
 	position: relative;
-	width: 40%;
+	width: 100%;
 	margin-top: auto;
-	align-self: flex-start;
 }
 
 .tfp-btn-wrap .tfp-btn {
 	margin-top: 0;
-	width: 100%;
-	align-self: stretch;
 }
 
 .tfp-btn-tip {
@@ -1095,21 +1097,6 @@
 	flex-shrink: 0;
 }
 
-.tfp-toggle-state {
-	font-size: 13px;
-	font-weight: 600;
-	line-height: 1.2;
-	white-space: nowrap;
-}
-
-.tfp-toggle-state.is-on {
-	color: #047857;
-}
-
-.tfp-toggle-state.is-off {
-	color: #6b7280;
-}
-
 .tfp-controls-note {
 	margin: 4px 0 0;
 	font-size: 12px;
@@ -1128,7 +1115,7 @@
 /*
  * WordPress admin forms.css paints input[type=checkbox]:checked:before /
  * :disabled:checked:before as a blue dash. Hide every WP chrome on our
- * custom switch â€” visual state lives only on .tfp-toggle-track.
+ * custom switch — visual state lives only on .tfp-toggle-track.
  */
 .tfp-toggle input[type="checkbox"],
 .tfp-toggle input[type="checkbox"]:checked,
@@ -1197,7 +1184,7 @@
 }
 
 .tfp-toggle input:checked + .tfp-toggle-track {
-	background: #7c3aed;
+	background: #2563eb;
 }
 
 .tfp-toggle input:checked + .tfp-toggle-track::before {
@@ -1277,8 +1264,8 @@
 	width: 24px;
 	height: 24px;
 	border-radius: 50%;
-	background: #eef2ff;
-	color: #4338ca;
+	background: #eff6ff;
+	color: #2563eb;
 	font-size: 12px;
 	font-weight: 750;
 	display: inline-flex;
@@ -1320,7 +1307,7 @@
 	color: #4b5563;
 }
 
-/* Folded WP admin menu â‰ˆ 960px content; auto-fit already wraps earlier.
+/* Folded WP admin menu ≈ 960px content; auto-fit already wraps earlier.
  * These only tighten spacing / force single column on very small windows.
  */
 @media (max-width: 960px) {

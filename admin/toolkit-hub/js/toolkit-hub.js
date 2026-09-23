@@ -119,6 +119,10 @@
 
 		var $text = $btn.find( '.tfp-btn-text' );
 		var $msg = $btn.next( '.tfp-install-message' );
+		if ( ! $msg.length ) {
+			$msg = $( '<p class="tfp-install-message"></p>' );
+			$btn.after( $msg );
+		}
 		var slug = $btn.data( 'slug' );
 		var action = $btn.data( 'action' ) || 'install';
 		var nonce = $btn.data( 'nonce' ) || ( window.tfpToolkitHub && tfpToolkitHub.installNonce ) || '';

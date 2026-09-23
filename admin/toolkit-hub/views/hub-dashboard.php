@@ -231,7 +231,6 @@ $tfp_video_poster_alt = 'https://i.ytimg.com/vi/' . $tfp_video_id . '/hqdefault.
 								<?php echo $tfp_btn_icon_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped URL built above. ?>
 								<span class="tfp-btn-text"><?php echo esc_html( $tfp_btn_text ); ?></span>
 							</a>
-							<p class="tfp-install-message"></p>
 						<?php else : ?>
 							<?php
 							$tfp_is_open_inspector = ( false !== strpos( $tfp_open_inspector_class, 'tfp-open-inspector-btn' ) );
