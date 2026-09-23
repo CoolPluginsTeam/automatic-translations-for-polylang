@@ -23,15 +23,15 @@ $tfp_duplicate_enabled = ! isset( $tfp_onboarding_data['duplicate_content'] ) ||
 $tfp_tools = array(
 	'inspector' => array(
 		'name'   => __( 'Translation Inspector', $tfp_domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction, WordPress.WP.I18n.MissingTranslatorsComment
-		'desc'   => __( 'Deep-scan taxonomies, posts, pages, and meta strings to pinpoint missing translations and sync errors.', $tfp_domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction, WordPress.WP.I18n.MissingTranslatorsComment
+		'desc'   => __( 'Scan and find missing translations, duplicate content, and other translation issues on your multilingual site', $tfp_domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction, WordPress.WP.I18n.MissingTranslatorsComment
 		'plugin' => TFP_Toolkit_Hub::PLUGIN_INSPECTOR,
 		'slug'   => TFP_Toolkit_Hub::SLUG_INSPECTOR,
 		'icon'   => 'blue',
 		'short'  => __( 'Inspector', $tfp_domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
 	),
 	'autopoly'  => array(
-		'name'   => __( 'AutoPoly (AI Engine)', $tfp_domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction, WordPress.WP.I18n.MissingTranslatorsComment
-		'desc'   => __( 'Automate WordPress batch translations while faithfully preserving Elementor and Gutenberg layouts.', $tfp_domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction, WordPress.WP.I18n.MissingTranslatorsComment
+		'name'   => __( 'AutoPoly (AI Translation Engine)', $tfp_domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction, WordPress.WP.I18n.MissingTranslatorsComment
+		'desc'   => __( 'AI translate your Elementor, Gutenberg, or Divi sites automatically while keeping existing content and layouts intact.', $tfp_domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction, WordPress.WP.I18n.MissingTranslatorsComment
 		'plugin' => TFP_Toolkit_Hub::PLUGIN_AUTOPOLY,
 		'slug'   => TFP_Toolkit_Hub::SLUG_AUTOPOLY,
 		'icon'   => 'green',
@@ -39,7 +39,7 @@ $tfp_tools = array(
 	),
 	'switcher'  => array(
 		'name'   => __( 'Language Switcher', $tfp_domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction, WordPress.WP.I18n.MissingTranslatorsComment
-		'desc'   => __( 'Embed lightweight, accessible flag or text switchers directly inside Elementor, Divi, and Gutenberg.', $tfp_domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction, WordPress.WP.I18n.MissingTranslatorsComment
+		'desc'   => __( 'Add a customizable language switcher in Elementor, Gutenberg, or Divi pages, including a floating language switcher for Polylang.', $tfp_domain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction, WordPress.WP.I18n.MissingTranslatorsComment
 		'plugin' => TFP_Toolkit_Hub::PLUGIN_SWITCHER,
 		'slug'   => TFP_Toolkit_Hub::SLUG_SWITCHER,
 		'icon'   => 'blue',
@@ -75,9 +75,9 @@ $tfp_video_poster_alt = 'https://i.ytimg.com/vi/' . $tfp_video_id . '/hqdefault.
 
 		<section class="tfp-hero" aria-label="<?php echo esc_attr__( 'Toolkit overview', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?>">
 			<div class="tfp-hero-copy">
-				<span class="tfp-hero-badge"><?php echo esc_html__( 'All-in-one translation workflow', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></span>
-				<h2 class="tfp-hero-title"><?php echo esc_html__( 'Translate, inspect and switch languages from one elegant toolkit.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></h2>
-				<p class="tfp-hero-desc"><?php echo esc_html__( 'Translation Inspector, AutoPoly and Language Switcher work together so you can install, translate, review and switch languages without leaving this hub.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
+				<span class="tfp-hero-badge"><?php echo esc_html__( 'Translation Toolkit', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></span>
+				<h2 class="tfp-hero-title"><?php echo esc_html__( 'Translate, Inspect, & Switch Languages', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></h2>
+				<p class="tfp-hero-desc"><?php echo esc_html__( 'Use AutoPoly, Translation Inspector, and Language Switcher together to translate content, find issues, and switch languages easily.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
 				<div class="tfp-hero-highlights" aria-label="<?php echo esc_attr__( 'Toolkit highlights', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?>">
 					<div class="tfp-hero-chip">
 						<span class="tfp-hero-chip-icon tfp-hero-chip-icon--tools" aria-hidden="true">
@@ -86,7 +86,7 @@ $tfp_video_poster_alt = 'https://i.ytimg.com/vi/' . $tfp_video_id . '/hqdefault.
 						</span>
 						<span class="tfp-hero-chip-text">
 							<strong><?php echo esc_html__( '3 Connected Tools', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></strong>
-							<span><?php echo esc_html__( 'One unified workflow & sync', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></span>
+							<span><?php echo esc_html__( 'All-in-one-Polylang Toolkit', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></span>
 						</span>
 					</div>
 					<div class="tfp-hero-chip">
@@ -144,7 +144,7 @@ $tfp_video_poster_alt = 'https://i.ytimg.com/vi/' . $tfp_video_id . '/hqdefault.
 						$tfp_btn_icon_html = $tfp_download_icon;
 					} else {
 						$tfp_badge_class = 'addon';
-						$tfp_badge_text  = __( 'Available Add-on', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
+						$tfp_badge_text  = __( 'Available Addon', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
 						$tfp_btn_url     = TFP_Toolkit_Hub::install_url( $tfp_tool['slug'] );
 						// translators: %s is a short tool label, e.g. "AutoPoly".
 						$tfp_btn_text      = __( 'Install', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
@@ -266,8 +266,8 @@ $tfp_video_poster_alt = 'https://i.ytimg.com/vi/' . $tfp_video_id . '/hqdefault.
 			<?php if ( 'active' === TFP_Toolkit_Hub::tool_status( TFP_Toolkit_Hub::PLUGIN_INSPECTOR ) ) : ?>
 				<section class="tfp-panel tfp-controls-panel" aria-labelledby="tfp-controls-heading">
 					<div class="tfp-section-head">
-						<h3 id="tfp-controls-heading" class="tfp-section-title"><?php echo esc_html__( 'Toolkit controls', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></h3>
-						<p class="tfp-section-sub"><?php echo esc_html__( 'Choose which built-in Translation Inspector features stay active on your site.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
+						<h3 id="tfp-controls-heading" class="tfp-section-title"><?php echo esc_html__( 'Toolkit Controls', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></h3>
+						<p class="tfp-section-sub"><?php echo esc_html__( 'Choose which checks you want to keep active on your multilingual site.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
 					</div>
 
 					<div class="tfp-control-row" data-control="inspector">
@@ -320,12 +320,12 @@ $tfp_video_poster_alt = 'https://i.ytimg.com/vi/' . $tfp_video_id . '/hqdefault.
 						</div>
 						</div>
 
-					<p class="tfp-controls-note"><?php echo esc_html__( 'Protection rule: both features cannot be disabled at the same time.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
+					<!-- <p class="tfp-controls-note"><?php echo esc_html__( 'Protection rule: both features cannot be disabled at the same time.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p> -->
 				</section>
 			<?php else : ?>
 				<section class="tfp-panel tfp-controls-panel tfp-controls-empty" aria-labelledby="tfp-controls-heading">
 					<div class="tfp-section-head">
-						<h3 id="tfp-controls-heading" class="tfp-section-title"><?php echo esc_html__( 'Toolkit controls', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></h3>
+						<h3 id="tfp-controls-heading" class="tfp-section-title"><?php echo esc_html__( 'Toolkit Controls', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></h3>
 						<p class="tfp-section-sub"><?php echo esc_html__( 'Install and activate Translation Inspector to manage Language Inspector and Duplicate Content Check here.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
 					</div>
 				</section>
@@ -333,36 +333,36 @@ $tfp_video_poster_alt = 'https://i.ytimg.com/vi/' . $tfp_video_id . '/hqdefault.
 
 			<section class="tfp-panel tfp-workflow-panel" aria-labelledby="tfp-workflow-heading">
 				<div class="tfp-section-head">
-					<h3 id="tfp-workflow-heading" class="tfp-section-title"><?php echo esc_html__( 'Recommended workflow', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></h3>
-					<p class="tfp-section-sub"><?php echo esc_html__( 'A simple path from install to a polished multilingual site.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
+					<h3 id="tfp-workflow-heading" class="tfp-section-title"><?php echo esc_html__( 'Recommended Workflow', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></h3>
+					<p class="tfp-section-sub"><?php echo esc_html__( 'Follow these steps to set up and manage your multilingual website.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
 				</div>
 				<ol class="tfp-workflow-list">
 					<li>
 						<span class="tfp-step-num">1</span>
 						<div>
-							<p class="tfp-step-title"><?php echo esc_html__( 'Install your tools', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
-							<p class="tfp-step-desc"><?php echo esc_html__( 'Add AutoPoly, Translation Inspector and Language Switcher from the cards above.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
+							<p class="tfp-step-title"><?php echo esc_html__( 'Set Up Tools', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
+							<p class="tfp-step-desc"><?php echo esc_html__( 'Install and activate the tools you want to use.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
 						</div>
 					</li>
 					<li>
 						<span class="tfp-step-num">2</span>
 						<div>
-							<p class="tfp-step-title"><?php echo esc_html__( 'Translate your content', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
-							<p class="tfp-step-desc"><?php echo esc_html__( 'Use AutoPoly to create AI translations for posts, pages and more.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
+							<p class="tfp-step-title"><?php echo esc_html__( 'Translate Content', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
+							<p class="tfp-step-desc"><?php echo esc_html__( 'Use AutoPoly to automatically translate pages, posts, and other supported content.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
 						</div>
 					</li>
 					<li>
 						<span class="tfp-step-num">3</span>
 						<div>
-							<p class="tfp-step-title"><?php echo esc_html__( 'Add language switching', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
-							<p class="tfp-step-desc"><?php echo esc_html__( 'Place a Language Switcher with Elementor, Divi, Gutenberg or a shortcode.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
+							<p class="tfp-step-title"><?php echo esc_html__( 'Add a Language Switcher', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
+							<p class="tfp-step-desc"><?php echo esc_html__( 'Add a floating or customizable language switcher using a dedicated block, widget, or module.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
 						</div>
 					</li>
 					<li>
 						<span class="tfp-step-num">4</span>
 						<div>
-							<p class="tfp-step-title"><?php echo esc_html__( 'Inspect the site', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
-							<p class="tfp-step-desc"><?php echo esc_html__( 'Run Translation Inspector to catch missing or duplicate content early.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
+							<p class="tfp-step-title"><?php echo esc_html__( 'Check Your Translations', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
+							<p class="tfp-step-desc"><?php echo esc_html__( 'Use Translation Inspector to find missing translations, duplicate content, and other multilingual issues.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
 						</div>
 					</li>
 				</ol>
