@@ -34,13 +34,11 @@ if(!current_user_can('manage_options')){
         }
 
         if ($atfp_feedback_opt_in === 'yes' && !wp_next_scheduled('atfp_extra_data_update')) {
-
-                wp_schedule_event(time(), 'every_30_days', 'atfp_extra_data_update');   
-
-                if (class_exists('ATFP_cronjob')) {
-
-                    ATFP_cronjob::atfp_send_data();
-                } 
+            if (class_exists('CPFM_Usage_Cron')) {
+                CPFM_Usage_Cron::cpfm_schedule_event('atfp_extra_data_update');
+            } else {
+                wp_schedule_event(time(), 'every_30_days', 'atfp_extra_data_update');
+            }
         }
         
     }
