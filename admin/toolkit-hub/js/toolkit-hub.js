@@ -1,7 +1,7 @@
 /**
  * Toolkit for Polylang — hub page behaviour.
  *
- * - Saves Translation Inspector / Duplicate Content Check toggles via AJAX.
+ * - Saves Translation Inspector / Duplicate Content toggles via AJAX.
  * - Locks the last enabled toggle (no alert) so both cannot be off at once.
  * - Syncs Open Translation Inspector button + card badge with the toggle.
  * - Installs/activates tools via AutoPoly's tfp_install_plugin endpoint.
