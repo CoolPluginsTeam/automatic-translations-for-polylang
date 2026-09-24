@@ -941,19 +941,6 @@ ul.atfp-dashboard-sts-btm li:last-child {
 }
 
 /* ================================================
-   Need Help Section
-================================================ */
-.atfp-dashboard-translate-support{
-    align-items: flex-start;
-}
-
-.atfp-dashboard-translate-support h3{
-    margin-bottom: 0;
-}
-.atfp-dashboard-translate-support .atfp-dashboard-support-link {
-    margin-right: auto;
-}
-/* ================================================
    Rate Us Section
 ================================================ */
 .atfp-dashboard-rate-us{

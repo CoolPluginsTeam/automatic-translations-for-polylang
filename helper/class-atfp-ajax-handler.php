@@ -664,7 +664,12 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
                     'files' => [
                         'language-switcher-for-divi-polylang/language-switcher-for-divi-polylang.php',
                     ],
-                ]
+                ],
+                'duplicate-content-addon-for-polylang' => [
+                    'files' => [
+                        'duplicate-content-addon-for-polylang/duplicate-content-addon-for-polylang.php',
+                    ],
+                ],
             ];
 
             if (!isset($plugins_config[$slug])) {

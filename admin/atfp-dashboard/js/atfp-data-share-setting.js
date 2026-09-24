@@ -25,7 +25,12 @@ jQuery(function($) {
         let nonce    = button.data('nonce');
         const originalText = button.text().trim();
 
-        if(slug !== 'automatic-translator-addon-for-loco-translate'){
+        const allowedSlugs = [
+            'automatic-translator-addon-for-loco-translate',
+            'language-switcher-for-divi-polylang',
+            'duplicate-content-addon-for-polylang'
+        ];
+        if (allowedSlugs.indexOf(slug) === -1) {
             return;
         }
         
