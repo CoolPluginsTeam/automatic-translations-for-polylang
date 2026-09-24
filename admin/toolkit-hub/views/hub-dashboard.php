@@ -302,8 +302,8 @@ $tfp_video_poster_alt = 'https://i.ytimg.com/vi/' . $tfp_video_id . '/hqdefault.
 									<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h9a2 2 0 002-2v-3M8 7V5a2 2 0 012-2h9a2 2 0 012 2v9a2 2 0 01-2 2h-3M8 7h6a2 2 0 012 2v6" /></svg>
 								</div>
 								<div>
-									<p class="tfp-row-text-title"><?php echo esc_html__( 'Duplicate Content Check', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
-									<p class="tfp-row-text-desc"><?php echo esc_html__( 'Detect duplicate content across your languages to improve SEO and avoid issues with search engines.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
+									<p class="tfp-row-text-title"><?php echo esc_html__( 'Duplicate Content', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
+									<p class="tfp-row-text-desc"><?php echo esc_html__( 'Duplicate your pages/posts and make them available for translation via Polylang.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
 								</div>
 							</div>
 							<div class="tfp-row-right">
@@ -326,7 +326,7 @@ $tfp_video_poster_alt = 'https://i.ytimg.com/vi/' . $tfp_video_id . '/hqdefault.
 				<section class="tfp-panel tfp-controls-panel tfp-controls-empty" aria-labelledby="tfp-controls-heading">
 					<div class="tfp-section-head">
 						<h3 id="tfp-controls-heading" class="tfp-section-title"><?php echo esc_html__( 'Toolkit Controls', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></h3>
-						<p class="tfp-section-sub"><?php echo esc_html__( 'Install and activate Translation Inspector to manage Language Inspector and Duplicate Content Check here.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
+						<p class="tfp-section-sub"><?php echo esc_html__( 'Install and activate Translation Inspector to manage Language Inspector and Duplicate Content here.', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></p>
 					</div>
 				</section>
 			<?php endif; ?>
