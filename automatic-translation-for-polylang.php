@@ -222,14 +222,14 @@ if (! class_exists('AutoPoly')) {
 					'edge_setup_doc_url' => esc_url('https://docs.coolplugins.net/doc/edge-ai-translation-language-setup/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=edge_ai_setup&utm_content=settings'),
 					'texts' => array(
 						'cardTitle' => esc_html__( 'Chrome AI Setup', 'automatic-translations-for-polylang' ),
-						'cardDescription' => esc_html__( 'Free on-device translation. We detect what your browser needs — usually just one click.', 'automatic-translations-for-polylang' ),
-						'statusChecking' => esc_html__( 'Checking your browser…', 'automatic-translations-for-polylang' ),
+						'cardDescription' => esc_html__( 'Free on-device translation. We detect what your browser needs â€” usually just one click.', 'automatic-translations-for-polylang' ),
+						'statusChecking' => esc_html__( 'Checking your browserâ€¦', 'automatic-translations-for-polylang' ),
 						'statusCheckingDesc' => esc_html__( 'Give us a second while we detect Chrome AI support.', 'automatic-translations-for-polylang' ),
 						'statusReady' => esc_html__( 'Chrome AI is Ready', 'automatic-translations-for-polylang' ),
 						'statusReadyDesc' => esc_html__( 'On-device translation is set up. No API key, no cost.', 'automatic-translations-for-polylang' ),
 						'statusDownloadable' => esc_html__( 'Language pack required', 'automatic-translations-for-polylang' ),
 						'statusDownloadableDesc' => esc_html__( 'Add the target translation language in your browser settings to download the translation model.', 'automatic-translations-for-polylang' ),
-						'statusDownloading' => esc_html__( 'Downloading language model…', 'automatic-translations-for-polylang' ),
+						'statusDownloading' => esc_html__( 'Downloading language modelâ€¦', 'automatic-translations-for-polylang' ),
 						'statusDownloadingDesc' => esc_html__( 'Keep this tab open. This happens once.', 'automatic-translations-for-polylang' ),
 						'statusError' => esc_html__( 'Chrome AI is currently unavailable', 'automatic-translations-for-polylang' ),
 						'statusErrorDesc' => esc_html__( 'Something blocked the check. See advanced steps or use alternative options.', 'automatic-translations-for-polylang' ),
@@ -239,18 +239,18 @@ if (! class_exists('AutoPoly')) {
 						'btnRetry' => esc_html__( 'Retry', 'automatic-translations-for-polylang' ),
 						'btnAlternative' => esc_html__( 'Use Another Provider', 'automatic-translations-for-polylang' ),
 						'previewTitle' => esc_html__( 'Try a real translation', 'automatic-translations-for-polylang' ),
-						'previewDesc' => esc_html__( 'Type anything and see the exact on-device result — no page needed.', 'automatic-translations-for-polylang' ),
+						'previewDesc' => esc_html__( 'Type anything and see the exact on-device result â€” no page needed.', 'automatic-translations-for-polylang' ),
 						'previewInputLabel' => esc_html__( 'Your text', 'automatic-translations-for-polylang' ),
 						'previewOutputLabel' => esc_html__( 'Translation', 'automatic-translations-for-polylang' ),
-						'previewPlaceholder' => esc_html__( 'Type or paste text to translate…', 'automatic-translations-for-polylang' ),
+						'previewPlaceholder' => esc_html__( 'Type or paste text to translateâ€¦', 'automatic-translations-for-polylang' ),
 						'previewOutPlaceholder' => esc_html__( 'Translation will appear here.', 'automatic-translations-for-polylang' ),
 						'btnTranslate' => esc_html__( 'Translate preview', 'automatic-translations-for-polylang' ),
-						'translatingText' => esc_html__( 'Translating…', 'automatic-translations-for-polylang' ),
-						'translationDone' => esc_html__( 'Done in {ms} ms · on-device · no data left your browser', 'automatic-translations-for-polylang' ),
-						'translationFailed' => esc_html__( '✗ Translation failed. This pair may need its own model, or see advanced steps below.', 'automatic-translations-for-polylang' ),
+						'translatingText' => esc_html__( 'Translatingâ€¦', 'automatic-translations-for-polylang' ),
+						'translationDone' => esc_html__( 'Done in {ms} ms Â· on-device Â· no data left your browser', 'automatic-translations-for-polylang' ),
+						'translationFailed' => esc_html__( 'âœ— Translation failed. This pair may need its own model, or see advanced steps below.', 'automatic-translations-for-polylang' ),
 						'advancedTitle' => esc_html__( 'Still not working? Advanced steps', 'automatic-translations-for-polylang' ),
-						'advancedBrowserRequirements' => esc_html__( 'Chrome AI translation needs Chrome or Edge on desktop (version 138+). It doesn’t run on mobile phones or tablets.', 'automatic-translations-for-polylang' ),
-						'openSetupGuide' => esc_html__( 'Open Official Setup Guide →', 'automatic-translations-for-polylang' )
+						'advancedBrowserRequirements' => esc_html__( 'Chrome AI translation needs Chrome or Edge on desktop (version 138+). It doesnâ€™t run on mobile phones or tablets.', 'automatic-translations-for-polylang' ),
+						'openSetupGuide' => esc_html__( 'Open Official Setup Guide â†’', 'automatic-translations-for-polylang' )
 					)
 				);
 
@@ -333,8 +333,8 @@ if (! class_exists('AutoPoly')) {
 		 *
 		 * This file ships identically in AutoPoly, Translation Inspector /
 		 * Duplicate Content, and Language Switcher. The class_exists() guard
-		 * means only the copy that loads first actually runs — whichever of
-		 * the three plugins happens to boot first on a given site — so having
+		 * means only the copy that loads first actually runs â€” whichever of
+		 * the three plugins happens to boot first on a given site â€” so having
 		 * more than one of these plugins active never registers the hub twice.
 		 */
 		public function init_toolkit_hub() {
@@ -520,7 +520,7 @@ if (! class_exists('AutoPoly')) {
 				$atfp_utm_parameters = ATFP_Helper::utm_source_text();
 			}
 
-			// Header-right action links — same "Get Support" + "Check Docs" pair
+			// Header-right action links â€” same "Get Support" + "Check Docs" pair
 			// as Translation Inspector's own header, so both plugins' dashboards
 			// match. Docs URL is AutoPoly's existing one; support is new.
 			$atfp_support_url = 'https://wordpress.org/support/plugin/automatic-translations-for-polylang/';
@@ -537,7 +537,7 @@ if (! class_exists('AutoPoly')) {
 					?>
 					<div class="atfp-dashboard-header-left">
 						<a href="<?php echo esc_url( $atfp_toolkit_hub_url ); ?>" class="atfp-dashboard-logo-link">
-							<img src="<?php echo esc_url(ATFP_URL . 'assets/images/ai-translation-for-Polylang.svg'); ?>" alt="<?php esc_attr_e('Polylang Addon Logo', 'automatic-translations-for-polylang'); ?>">
+							<img src="<?php echo esc_url(ATFP_URL . 'assets/images/toolkit-for-polylang-logo.svg'); ?>" alt="<?php esc_attr_e('Polylang Addon Logo', 'automatic-translations-for-polylang'); ?>">
 							<h2 class="atfp-dashboard-logo-text"><?php esc_html_e( 'Toolkit for Polylang', 'automatic-translations-for-polylang' ); ?></h2>
 						</a>
 					</div>

@@ -52,7 +52,7 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 		 * Shared hub schema/API version. Bump when this file's behaviour
 		 * changes so load-tfp-toolkit-hub.php can prefer a newer sibling copy.
 		 */
-		const VERSION = '1.0.2';
+		const VERSION = '1.0.0';
 
 		const PAGE = 'toolkit-for-polylang';
 
@@ -1216,8 +1216,15 @@ JS;
 		 * @param string $active_tool 'autopoly' | 'inspector' | 'switcher'.
 		 */
 		public static function render_nav( $active_tool ) {
+			$domain = self::$loader['text_domain'];
+			$icons  = array(
+				'inspector' => '<svg class="tfp-nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><circle cx="6.5" cy="6.5" r="4.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M9.75 9.75L13.5 13.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
+				'autopoly'  => '<svg class="tfp-nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 1l1 4.5L13.5 6.5 9 7.5 8 12 7 7.5 2.5 6.5 7 5.5z"/><path fill="currentColor" d="M12.5 1.5l.45 1.9 1.9.45-1.9.45-.45 1.9-.45-1.9-1.9-.45 1.9-.45z"/><path fill="currentColor" d="M4 10l.35 1.45L5.8 11.8l-1.45.35L4 13.6l-.35-1.45L2.2 11.8l1.45-.35z"/></svg>',
+				'switcher'  => '<svg class="tfp-nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M2 8h12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M8 2c1.7 1.9 2.6 3.9 2.6 6S9.7 12.1 8 14C6.3 12.1 5.4 10.1 5.4 8S6.3 3.9 8 2z" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>',
+			);
 			?>
-			<nav class="tfp-nav" aria-label="<?php echo esc_attr__( 'Toolkit tools', self::$loader['text_domain'] ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?>">
+			<nav class="tfp-nav" aria-label="<?php echo esc_attr__( 'Toolkit tools', $domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?>">
+				<div class="tfp-nav-track">
 				<?php foreach ( self::nav_tools() as $tfp_key => $tfp_nav_tool ) : ?>
 					<?php
 					$tfp_is_active = ( 'active' === self::tool_status( $tfp_nav_tool['plugin'] ) );
@@ -1225,7 +1232,6 @@ JS;
 					if ( $tfp_is_active ) {
 						$tfp_href = self::tool_url( $tfp_key );
 					} else {
-						// Hub + focus so Install/Activate on that card pulses until clicked.
 						$tfp_href = add_query_arg(
 							array(
 								'page'        => self::PAGE,
@@ -1234,8 +1240,6 @@ JS;
 							admin_url( 'admin.php' )
 						);
 					}
-					// Plain text menu links (not buttons). Active uses WP primary blue;
-					// inactive (and not-installed) use #0f172a.
 					if ( $tfp_is_here ) {
 						$tfp_nav_class = 'tfp-nav-item active';
 					} elseif ( ! $tfp_is_active ) {
@@ -1243,30 +1247,40 @@ JS;
 					} else {
 						$tfp_nav_class = 'tfp-nav-item';
 					}
+					$tfp_icon = isset( $icons[ $tfp_key ] ) ? $icons[ $tfp_key ] : '';
 					?>
-					<a href="<?php echo esc_url( $tfp_href ); ?>" class="<?php echo esc_attr( $tfp_nav_class ); ?>"><?php echo esc_html( $tfp_nav_tool['label'] ); ?></a>
+					<a href="<?php echo esc_url( $tfp_href ); ?>" class="<?php echo esc_attr( $tfp_nav_class ); ?>">
+						<span class="tfp-nav-icon-wrap" aria-hidden="true"><?php echo $tfp_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted inline SVG. ?></span>
+						<span class="tfp-nav-label"><?php echo esc_html( $tfp_nav_tool['label'] ); ?></span>
+						<?php if ( $tfp_is_here ) : ?>
+							<span class="tfp-nav-status" aria-hidden="true"></span>
+						<?php endif; ?>
+					</a>
 				<?php endforeach; ?>
+				</div>
 			</nav>
 			<?php
 		}
 
+
 		/**
-		 * The hub page's own header. Uses the same ".atfp-dashboard-header"
-		 * class names as every tool's own dashboard, but toolkit-hub.css
-		 * styles them itself — it does not depend on AutoPoly's
-		 * admin-styles.css being loaded, so the hub still looks right on a
-		 * site where AutoPoly isn't installed (whichever plugin's copy of
-		 * this class loads, the hub looks the same). Title/logo are plain
-		 * text here, not a link — this already is "home"; every tool's own
-		 * header links here instead.
+		 * The hub page's own header. Same markup shape as every tool dashboard
+		 * header (logo link + shared tfp-nav + Get Support / Check Docs), so
+		 * page=toolkit-for-polylang matches Free/Pro/Inspector/Switcher.
+		 * toolkit-hub.css styles the classes itself — it does not depend on
+		 * AutoPoly's admin-styles.css being loaded.
 		 */
 		public static function render_header() {
 			$domain = self::$loader['text_domain'];
+			$hub_url = admin_url( 'admin.php?page=' . self::PAGE );
+			$logo_url = plugins_url( 'images/toolkit-for-polylang-logo.svg', __FILE__ );
 			?>
 			<div class="atfp-dashboard-header">
 				<div class="atfp-dashboard-header-left">
-					<span class="tfp-logo" aria-hidden="true"></span>
-					<h2 class="atfp-dashboard-logo-text"><?php echo esc_html__( 'Toolkit for Polylang', $domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></h2>
+					<a href="<?php echo esc_url( $hub_url ); ?>" class="atfp-dashboard-logo-link">
+						<img src="<?php echo esc_url( $logo_url ); ?>" alt="<?php echo esc_attr__( 'Toolkit for Polylang', $domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?>" decoding="async">
+						<h2 class="atfp-dashboard-logo-text"><?php echo esc_html__( 'Toolkit for Polylang', $domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?></h2>
+					</a>
 				</div>
 				<div class="atfp-dashboard-header-right">
 					<a href="<?php echo esc_url( self::support_url() ); ?>" class="tfp-header-btn tfp-header-btn-support" target="_blank" rel="noopener noreferrer">
