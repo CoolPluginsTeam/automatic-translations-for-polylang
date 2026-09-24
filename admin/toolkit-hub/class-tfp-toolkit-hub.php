@@ -738,12 +738,11 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 		}
 
 		/**
-		 * Move "Toolkit for Polylang" to sit right after
-		 * Polylang's own four items (Languages, Translations, Settings,
-		 * Setup) and directly above the three tools, so the list reads as
-		 * "Toolkit" followed by "its" tools instead of four flat, unordered
-		 * entries. Same array_splice technique Translation Inspector's own
-		 * admin class already uses to position itself in this menu.
+		 * Move "Toolkit for Polylang" and its tool dashboards into one
+		 * contiguous block right after Polylang's own items (Languages,
+		 * Translations, Settings, Setup). Third-party submenu entries such as
+		 * Connect Polylang stay after the block so tree-connector CSS on the
+		 * tools cannot appear nested under them.
 		 */
 		public function reorder_submenu() {
 			global $submenu;
@@ -752,34 +751,66 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 				return;
 			}
 
-			$our_index = null;
-			$our_item  = null;
+			// Known Toolkit tool dashboards. Keep these contiguous under the
+			// hub so third-party items (e.g. Connect Polylang / cpel-get-started)
+			// cannot sit between Toolkit and its tools and break the tree CSS.
+			$tool_slugs = array(
+				'lsdp-get-started',
+				'polylang-atfp-dashboard',
+				'polylang-atfpp-dashboard',
+				'translation-inspector-polylang',
+			);
 
-			foreach ( $submenu['mlang'] as $index => $item ) {
-				if ( is_array( $item ) && isset( $item[2] ) && self::PAGE === (string) $item[2] ) {
-					$our_index = $index;
-					$our_item  = $item;
-					break;
+			$toolkit_item = null;
+			$tool_items   = array();
+			$rest         = array();
+
+			foreach ( $submenu['mlang'] as $item ) {
+				if ( ! is_array( $item ) || ! isset( $item[2] ) ) {
+					$rest[] = $item;
+					continue;
 				}
+
+				$slug = (string) $item[2];
+
+				if ( self::PAGE === $slug ) {
+					$toolkit_item = $item;
+					continue;
+				}
+
+				if ( in_array( $slug, $tool_slugs, true ) ) {
+					$tool_items[ $slug ] = $item;
+					continue;
+				}
+
+				$rest[] = $item;
 			}
 
-			if ( null === $our_index ) {
+			if ( null === $toolkit_item ) {
 				return;
 			}
 
-			array_splice( $submenu['mlang'], $our_index, 1 );
+			$ordered_tools = array();
+			foreach ( $tool_slugs as $slug ) {
+				if ( isset( $tool_items[ $slug ] ) ) {
+					$ordered_tools[] = $tool_items[ $slug ];
+				}
+			}
 
-			// Polylang's own items use its mlang_* slugs; insert right after
-			// the last one of those (or at the top if none are found).
+			// Polylang's own items use its mlang_* slugs; insert the Toolkit
+			// block right after the last one of those (or at the top if none).
 			$insert_at = 0;
-			foreach ( $submenu['mlang'] as $index => $item ) {
+			foreach ( $rest as $index => $item ) {
 				$slug = ( is_array( $item ) && isset( $item[2] ) ) ? (string) $item[2] : '';
 				if ( 'mlang' === $slug || 0 === strpos( $slug, 'mlang_' ) ) {
 					$insert_at = $index + 1;
 				}
 			}
 
-			array_splice( $submenu['mlang'], $insert_at, 0, array( $our_item ) );
+			$block = array_merge( array( $toolkit_item ), $ordered_tools );
+			array_splice( $rest, $insert_at, 0, $block );
+
+			$submenu['mlang'] = array_values( $rest );
 		}
 
 		/**
@@ -794,31 +825,31 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 				return;
 			}
 			?>
-			<style>
-				#toplevel_page_mlang .wp-submenu a[href*="page=<?php echo esc_js( self::PAGE ); ?>"] {
-					font-weight: 600;
-				}
-				#toplevel_page_mlang .wp-submenu a[href*="page=polylang-atfp-dashboard"],
-				#toplevel_page_mlang .wp-submenu a[href*="page=polylang-atfpp-dashboard"],
-				#toplevel_page_mlang .wp-submenu a[href*="page=translation-inspector-polylang"],
-				#toplevel_page_mlang .wp-submenu a[href*="page=lsdp-get-started"] {
-					padding-left: 18px;
-				}
-				#toplevel_page_mlang .wp-submenu a[href*="page=polylang-atfp-dashboard"]::before,
-				#toplevel_page_mlang .wp-submenu a[href*="page=polylang-atfpp-dashboard"]::before,
-				#toplevel_page_mlang .wp-submenu a[href*="page=translation-inspector-polylang"]::before,
-				#toplevel_page_mlang .wp-submenu a[href*="page=lsdp-get-started"]::before {
-					content: "";
-					display: inline-block;
-					width: 7px;
-					height: 7px;
-					margin-right: 8px;
-					border-left: 1.5px solid currentColor;
-					border-bottom: 1.5px solid currentColor;
-					opacity: 0.55;
-					vertical-align: 0.05em;
-					box-sizing: border-box;
-				}
+			<style>
+				#toplevel_page_mlang .wp-submenu a[href*="page=<?php echo esc_js( self::PAGE ); ?>"] {
+					font-weight: 600;
+				}
+				#toplevel_page_mlang .wp-submenu a[href*="page=polylang-atfp-dashboard"],
+				#toplevel_page_mlang .wp-submenu a[href*="page=polylang-atfpp-dashboard"],
+				#toplevel_page_mlang .wp-submenu a[href*="page=translation-inspector-polylang"],
+				#toplevel_page_mlang .wp-submenu a[href*="page=lsdp-get-started"] {
+					padding-left: 18px;
+				}
+				#toplevel_page_mlang .wp-submenu a[href*="page=polylang-atfp-dashboard"]::before,
+				#toplevel_page_mlang .wp-submenu a[href*="page=polylang-atfpp-dashboard"]::before,
+				#toplevel_page_mlang .wp-submenu a[href*="page=translation-inspector-polylang"]::before,
+				#toplevel_page_mlang .wp-submenu a[href*="page=lsdp-get-started"]::before {
+					content: "";
+					display: inline-block;
+					width: 7px;
+					height: 7px;
+					margin-right: 8px;
+					border-left: 1.5px solid currentColor;
+					border-bottom: 1.5px solid currentColor;
+					opacity: 0.55;
+					vertical-align: 0.05em;
+					box-sizing: border-box;
+				}
 			</style>
 			<?php
 		}
