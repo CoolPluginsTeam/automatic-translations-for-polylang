@@ -831,7 +831,7 @@ if (! class_exists('AutoPoly')) {
 				CPFM_Feedback_Notice::cpfm_register_notice(
 					'cool_translations',
 					array(
-						'title'          => __( 'Translation Plugins by Cool Plugins', 'automatic-translations-for-polylang' ),
+						'title'          => __( 'AutoPoly - AI Translation For Polylang', 'automatic-translations-for-polylang' ),
 						'message'        => __( 'Help us make this plugin more compatible with your site by sharing non-sensitive site data.', 'automatic-translations-for-polylang' ),
 						'plugin_name'    => 'atfp',
 						'pages'          => array( $page ),
