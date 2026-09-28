@@ -1519,7 +1519,6 @@
 		gap: 10px !important;
 		overflow: visible !important;
 		box-sizing: border-box !important;
-		background: #fff !important;
 	}
 
 	.lsdp-dashboard-header:has(.tfp-nav),
