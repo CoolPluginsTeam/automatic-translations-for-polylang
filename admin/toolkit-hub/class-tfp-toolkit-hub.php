@@ -92,7 +92,7 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 		private function __construct() {
 			add_action( 'admin_menu', array( $this, 'register_menu' ), 20 );
 			add_action( 'admin_menu', array( $this, 'reorder_submenu' ), 9999 );
-			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
+			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ), 20 );
 			add_action( 'admin_footer', array( $this, 'print_header_migrate_script' ), 5 );
 			add_action( 'admin_head', array( $this, 'print_submenu_style' ) );
 			add_action( 'activated_plugin', array( $this, 'redirect_to_tool_dashboard' ) );
@@ -873,7 +873,15 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 			// Explicit dependency (belt-and-braces): 'dashicons' is normally
 			// enqueued on every wp-admin screen already, but the "Check Docs"
 			// icon uses it, so don't rely on load order to get it there.
+			// Also depend on each host dashboard stylesheet when present so
+			// toolkit-hub.css always loads AFTER Free/Pro/Inspector/Switcher
+			// admin CSS and can neutralize their header overrides.
 			$tfp_deps = array( 'dashicons' );
+			foreach ( array( 'atfp-dashboard-style', 'atfpp-dashboard-style', 'dupcap-admin', 'cool-lsdp-plugins-polylang-addon' ) as $tfp_host_style ) {
+				if ( wp_style_is( $tfp_host_style, 'registered' ) || wp_style_is( $tfp_host_style, 'enqueued' ) ) {
+					$tfp_deps[] = $tfp_host_style;
+				}
+			}
 
 			// Version by the file's own mtime, not a host plugin's version
 			// constant: ATFP_V (or any tool's own version) does not change
@@ -1321,11 +1329,11 @@ JS;
 
 
 		/**
-		 * The hub page's own header. Same markup shape as every tool dashboard
-		 * header (logo link + shared tfp-nav + Get Support / Check Docs), so
-		 * page=toolkit-for-polylang matches Free/Pro/Inspector/Switcher.
-		 * toolkit-hub.css styles the classes itself — it does not depend on
-		 * AutoPoly's admin-styles.css being loaded.
+		 * The hub page's own header: logo + Get Support / Check Docs only.
+		 * Tool dashboards render the shared tfp-nav themselves; the hub page
+		 * intentionally does not show the Translation Inspector / AutoPoly /
+		 * Language Switcher track. toolkit-hub.css styles these classes itself
+		 * — it does not depend on AutoPoly's admin-styles.css being loaded.
 		 */
 		public static function render_header() {
 			$domain = self::$loader['text_domain'];

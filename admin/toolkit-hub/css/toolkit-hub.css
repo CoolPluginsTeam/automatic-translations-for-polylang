@@ -1,4 +1,5 @@
 /**
+ * Version: 1.0.0
  * Toolkit for Polylang — shared hub + cross-plugin header styles.
  * Loaded on the hub page and on each tool's own dashboard page.
  *
@@ -809,7 +810,8 @@
 	background: #eef1f6;
 	border-radius: 999px;
 	display: inline-flex;
-	flex-wrap: wrap;
+	flex-wrap: nowrap; /* never orphan Language Switcher onto its own row */
+	flex-shrink: 0;
 	gap: 2px;
 	justify-content: center;
 	max-width: 100%;
@@ -994,7 +996,9 @@
 .tfp-control-row.tfp-control-focus .tfp-row-right {
 	display: flex;
 	align-items: center;
+	align-self: center;
 	gap: 10px;
+	flex: 0 0 auto;
 	flex-shrink: 0;
 }
 
@@ -1113,6 +1117,8 @@
 
 .tfp-control-main {
 	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
 	align-items: center;
 	justify-content: space-between;
 	gap: 16px;
@@ -1123,6 +1129,7 @@
 	align-items: flex-start;
 	gap: 12px;
 	min-width: 0;
+	flex: 1 1 auto;
 }
 
 .tfp-row-text-title {
@@ -1142,7 +1149,9 @@
 .tfp-row-right {
 	display: flex;
 	align-items: center;
+	align-self: center;
 	gap: 10px;
+	flex: 0 0 auto;
 	flex-shrink: 0;
 }
 
@@ -1307,6 +1316,145 @@
 	color: #4b5563;
 }
 
+/* ---------- Canonical shared header (identical on Free / Pro / Inspector / Switcher) ----------
+ * Host dashboards use different shells (.atfp- / .atfpp- / .lsdp- / .dupcap-) and each
+ * ships its own admin CSS that fights width / wrap / ellipsis / height. When .tfp-nav is
+ * present, these rules own the header so every plugin shows the SAME layout.
+ * -------------------------------------------------------------------------- */
+
+/* Desktop shell: single row — logo | centered nav track | Support+Docs */
+.atfp-dashboard-header:has(.tfp-nav),
+.atfpp-dashboard-header:has(.tfp-nav),
+.lsdp-header-content:has(.tfp-nav),
+.dupcap-plugin-topbar-inner:has(.tfp-nav) {
+	display: flex !important;
+	flex-direction: row !important;
+	flex-wrap: nowrap;
+	align-items: center !important;
+	justify-content: space-between;
+	gap: 12px;
+	box-sizing: border-box;
+	overflow: visible !important;
+}
+
+/* Absolute/fixed host headers (Free/Pro 70px, Switcher 70px) must not clip the track */
+.atfp-dashboard-header:has(.tfp-nav),
+.atfpp-dashboard-header:has(.tfp-nav) {
+	height: 70px;
+	min-height: 70px;
+}
+
+.lsdp-dashboard-header:has(.tfp-nav) {
+	height: auto !important;
+	min-height: 70px;
+	box-sizing: border-box;
+	overflow: visible !important;
+}
+
+.lsdp-header-content:has(.tfp-nav) {
+	height: auto !important;
+	min-height: 60px;
+}
+
+.dupcap-plugin-topbar:has(.tfp-nav) {
+	overflow: visible;
+}
+
+.dupcap-plugin-topbar-inner:has(.tfp-nav) {
+	min-height: 56px;
+	padding: 10px 0;
+	height: auto !important;
+}
+
+/* Logo cluster — do not flex-shrink:0 so hard that nav is crushed (Switcher) */
+.atfp-dashboard-header:has(.tfp-nav) .atfp-dashboard-header-left,
+.atfpp-dashboard-header:has(.tfp-nav) .atfpp-dashboard-header-left,
+.lsdp-header-content:has(.tfp-nav) .lsdp-header-logo,
+.dupcap-plugin-topbar-inner:has(.tfp-nav) .dupcap-plugin-topbar-brand {
+	display: flex !important;
+	align-items: center;
+	flex: 0 1 auto;
+	flex-shrink: 1;
+	min-width: 0;
+	max-width: 42%;
+	gap: 10px;
+}
+
+/* Title: never "Toolkit for Pol..." ellipsis; allow wrap / slightly smaller mid */
+.atfp-dashboard-header:has(.tfp-nav) .atfp-dashboard-logo-text,
+.atfpp-dashboard-header:has(.tfp-nav) .atfpp-dashboard-logo-text,
+.lsdp-header-content:has(.tfp-nav) .lsdp-header-title,
+.dupcap-plugin-topbar-inner:has(.tfp-nav) .dupcap-plugin-topbar-name {
+	overflow: visible !important;
+	text-overflow: clip !important;
+	white-space: normal !important;
+	line-height: 1.2 !important;
+	font-size: 18px !important;
+	font-weight: 700 !important;
+	color: #000 !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	max-width: none !important;
+}
+
+/* Logo image size locked — kill Free/Pro ≤1024 max-width:125px blow-up */
+.atfp-dashboard-header:has(.tfp-nav) .atfp-dashboard-header-left img,
+.atfp-dashboard-header:has(.tfp-nav) .atfp-dashboard-logo-link img,
+.atfpp-dashboard-header:has(.tfp-nav) .atfpp-dashboard-header-left img,
+.atfpp-dashboard-header:has(.tfp-nav) .atfpp-dashboard-logo-link img,
+.lsdp-header-content:has(.tfp-nav) .lsdp-header-logo img,
+.dupcap-plugin-topbar-inner:has(.tfp-nav) .dupcap-plugin-topbar-logo {
+	width: 42px !important;
+	max-width: 42px !important;
+	height: auto !important;
+	flex-shrink: 0;
+}
+
+.atfp-dashboard-header:has(.tfp-nav) .atfp-dashboard-header-left svg,
+.atfpp-dashboard-header:has(.tfp-nav) .atfpp-dashboard-header-left svg {
+	width: 42px !important;
+	height: 42px !important;
+	max-width: 42px !important;
+	flex-shrink: 0;
+}
+
+/* Nav sits in the middle and can take remaining space as a unit */
+.atfp-dashboard-header:has(.tfp-nav) > .tfp-nav,
+.atfpp-dashboard-header:has(.tfp-nav) > .tfp-nav,
+.lsdp-header-content:has(.tfp-nav) > .tfp-nav,
+.dupcap-plugin-topbar-inner:has(.tfp-nav) > .tfp-nav {
+	flex: 1 1 auto;
+	min-width: 0;
+	justify-content: center;
+	padding: 0 8px;
+}
+
+/* Actions — Support + Docs side-by-side; don't flex-shrink:0 crush the nav */
+.atfp-dashboard-header:has(.tfp-nav) .atfp-dashboard-header-right,
+.atfpp-dashboard-header:has(.tfp-nav) .atfpp-dashboard-header-right,
+.lsdp-header-content:has(.tfp-nav) .lsdp-header-actions,
+.dupcap-plugin-topbar-inner:has(.tfp-nav) .dupcap-plugin-topbar-actions {
+	display: flex !important;
+	flex: 0 1 auto;
+	flex-wrap: nowrap !important;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 10px !important;
+	min-width: 0;
+	/* Override Switcher flex-shrink:0 / Inspector flex-wrap:wrap */
+	flex-shrink: 1 !important;
+}
+
+/* Inspector still ships dupcap-topbar-btn — mirror .tfp-header-btn sizing here */
+.dupcap-plugin-topbar-inner:has(.tfp-nav) .dupcap-topbar-btn,
+.dupcap-plugin-topbar-inner:has(.tfp-nav) .tfp-header-btn,
+.atfp-dashboard-header:has(.tfp-nav) .tfp-header-btn,
+.atfpp-dashboard-header:has(.tfp-nav) .tfp-header-btn,
+.lsdp-header-content:has(.tfp-nav) .tfp-header-btn {
+	flex: 0 0 auto;
+	white-space: nowrap;
+}
+
 /* ---------- Responsive: hub + shared header (cards, buttons, menus) ---------- */
 
 @media screen and (max-width: 1280px) {
@@ -1317,41 +1465,181 @@
 	}
 }
 
+/*
+ * ≤1100px (tablet + mobile): ONE continuous white header — column stack.
+ * Tool pages (with .tfp-nav): logo → full-width grey nav track → Support/Docs.
+ * Hub page (no .tfp-nav): logo → Support/Docs only — same relative/auto shell
+ * via :is(.languages_page_toolkit-for-polylang), so no absolute overflow,
+ * no ghost 80px spacer, buttons wrap cleanly inside the white bar.
+ */
 @media screen and (max-width: 1100px) {
+	body:is(.languages_page_toolkit-for-polylang) #wpbody #wpbody-content,
+	body:is(.languages_page_polylang-atfp-dashboard, .toplevel_page_loco-addon, .languages_page_polylang-atfpp-dashboard) #wpbody #wpbody-content {
+		margin-top: 0 !important;
+		margin-block-start: 0 !important;
+	}
+
 	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-wrapper {
 		width: 100%;
 		padding-left: 12px;
 		padding-right: 16px;
 	}
 
-	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-header {
-		height: auto;
-		min-height: 70px;
-		padding: 10px 16px;
-		flex-wrap: wrap;
-		gap: 10px;
+	/* Drop host/hub padding that compensated for the old absolute header */
+	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-wrapper,
+	.atfp-dashboard-wrapper:has(.tfp-nav),
+	.atfpp-dashboard-wrapper:has(.tfp-nav) {
+		padding-top: 0 !important;
 	}
 
+	/* Hub header (scoped) + every host shell with .tfp-nav */
+	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-header,
+	.atfp-dashboard-header:has(.tfp-nav),
+	.atfpp-dashboard-header:has(.tfp-nav),
+	.lsdp-header-content:has(.tfp-nav),
+	.dupcap-plugin-topbar-inner:has(.tfp-nav) {
+		position: relative !important;
+		top: auto !important;
+		left: auto !important;
+		right: auto !important;
+		bottom: auto !important;
+		width: 100% !important;
+		max-width: 100% !important;
+		margin: 0 0 12px !important;
+		border-radius: 8px;
+		height: auto !important;
+		min-height: 0 !important;
+		max-height: none !important;
+		padding: 12px 16px !important;
+		display: flex !important;
+		flex-direction: column !important;
+		flex-wrap: nowrap !important;
+		align-items: stretch !important;
+		justify-content: flex-start !important;
+		gap: 10px !important;
+		overflow: visible !important;
+		box-sizing: border-box !important;
+		background: #fff !important;
+	}
+
+	.lsdp-dashboard-header:has(.tfp-nav),
+	.dupcap-plugin-topbar:has(.tfp-nav) {
+		height: auto !important;
+		min-height: 0 !important;
+		overflow: visible !important;
+	}
+
+	/* 1) Logo row */
 	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-header-left,
-	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-header-right {
-		flex-wrap: wrap;
-		gap: 10px;
+	.atfp-dashboard-header:has(.tfp-nav) .atfp-dashboard-header-left,
+	.atfpp-dashboard-header:has(.tfp-nav) .atfpp-dashboard-header-left,
+	.lsdp-header-content:has(.tfp-nav) .lsdp-header-logo,
+	.dupcap-plugin-topbar-inner:has(.tfp-nav) .dupcap-plugin-topbar-brand {
+		order: 1 !important;
+		flex: 0 0 auto !important;
+		flex-shrink: 1 !important;
+		width: 100% !important;
+		max-width: none !important;
+		min-width: 0 !important;
+		display: flex !important;
+		align-items: center !important;
+		gap: 10px !important;
 	}
 
-	.tfp-nav {
-		padding: 0;
-		flex: 1 1 100%;
-		order: 3;
-		justify-content: flex-start;
+	.atfp-dashboard-header:has(.tfp-nav) .atfp-dashboard-logo-text,
+	.atfpp-dashboard-header:has(.tfp-nav) .atfpp-dashboard-logo-text,
+	.lsdp-header-content:has(.tfp-nav) .lsdp-header-title,
+	.dupcap-plugin-topbar-inner:has(.tfp-nav) .dupcap-plugin-topbar-name,
+	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-logo-text {
+		font-size: 16px !important;
+		white-space: normal !important;
+		overflow: visible !important;
+		text-overflow: clip !important;
+		line-height: 1.25 !important;
+		margin: 0 !important;
+	}
+
+	/* 2) Nav — full width of header; grey track spans content, pills wrap inside */
+	.tfp-nav,
+	.atfp-dashboard-header:has(.tfp-nav) > .tfp-nav,
+	.atfpp-dashboard-header:has(.tfp-nav) > .tfp-nav,
+	.lsdp-header-content:has(.tfp-nav) > .tfp-nav,
+	.dupcap-plugin-topbar-inner:has(.tfp-nav) > .tfp-nav {
+		order: 2 !important;
+		flex: 0 0 auto !important;
+		width: 100% !important;
+		max-width: 100% !important;
+		min-width: 0 !important;
+		padding: 0 !important;
+		margin: 0 !important;
+		justify-content: stretch !important;
+		align-self: stretch !important;
 	}
 
 	.tfp-nav-track {
-		width: 100%;
-		justify-content: flex-start;
+		display: flex !important;
+		flex-direction: row !important;
+		flex-wrap: wrap !important;
+		align-items: center !important;
+		justify-content: center !important;
+		gap: 4px !important;
+		width: 100% !important;
+		max-width: 100% !important;
+		box-sizing: border-box !important;
+		background: #eef1f6 !important;
+		border: 0 !important;
+		border-radius: 12px !important;
+		box-shadow: none !important;
+		padding: 4px !important;
+		flex-shrink: 1 !important;
 	}
 
 	.tfp-nav .tfp-nav-item {
+		flex: 0 1 auto !important;
+		width: auto !important;
+		max-width: 100% !important;
 		padding: 7px 12px !important;
+		font-size: 12.5px;
+		box-sizing: border-box;
+		justify-content: center;
+	}
+
+	.tfp-nav .tfp-nav-item.active {
+		width: fit-content !important;
+		max-width: 100% !important;
+		flex: 0 0 auto !important;
+	}
+
+	/* 3) Support + Docs — immediately under nav, still inside header */
+	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-header-right,
+	.atfp-dashboard-header:has(.tfp-nav) .atfp-dashboard-header-right,
+	.atfpp-dashboard-header:has(.tfp-nav) .atfpp-dashboard-header-right,
+	.lsdp-header-content:has(.tfp-nav) .lsdp-header-actions,
+	.dupcap-plugin-topbar-inner:has(.tfp-nav) .dupcap-plugin-topbar-actions {
+		order: 3 !important;
+		flex: 0 0 auto !important;
+		width: 100% !important;
+		max-width: none !important;
+		min-width: 0 !important;
+		display: flex !important;
+		flex-wrap: nowrap !important;
+		align-items: center !important;
+		justify-content: flex-start !important;
+		gap: 8px !important;
+		margin: 0 !important;
+	}
+
+	.atfp-dashboard-header:has(.tfp-nav) .tfp-header-btn,
+	.atfpp-dashboard-header:has(.tfp-nav) .tfp-header-btn,
+	.lsdp-header-content:has(.tfp-nav) .tfp-header-btn,
+	.dupcap-plugin-topbar-inner:has(.tfp-nav) .tfp-header-btn,
+	.dupcap-plugin-topbar-inner:has(.tfp-nav) .dupcap-topbar-btn,
+	:is(.languages_page_toolkit-for-polylang) .tfp-header-btn {
+		flex: 1 1 0 !important;
+		justify-content: center;
+		text-align: center;
+		white-space: nowrap;
+		padding: 7px 12px;
 		font-size: 12.5px;
 	}
 
@@ -1368,13 +1656,12 @@
 }
 
 @media screen and (max-width: 960px) {
-	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-logo-text {
-		font-size: 16px;
-	}
-
-	.tfp-header-btn {
-		padding: 7px 12px;
-		font-size: 12.5px;
+	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-logo-text,
+	.atfp-dashboard-header:has(.tfp-nav) .atfp-dashboard-logo-text,
+	.atfpp-dashboard-header:has(.tfp-nav) .atfpp-dashboard-logo-text,
+	.lsdp-header-content:has(.tfp-nav) .lsdp-header-title,
+	.dupcap-plugin-topbar-inner:has(.tfp-nav) .dupcap-plugin-topbar-name {
+		font-size: 15px !important;
 	}
 
 	.tfp-panel {
@@ -1405,84 +1692,66 @@
 }
 
 @media screen and (max-width: 782px) {
-	:is(.languages_page_toolkit-for-polylang) #wpbody #wpbody-content {
-		margin-top: 0 !important;
-	}
-
-	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-wrapper {
-		width: 100%;
-		padding-left: 10px;
-		padding-right: 10px;
-	}
-
+	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-wrapper,
 	:is(.folded.languages_page_toolkit-for-polylang) .atfp-dashboard-wrapper {
+		width: 100%;
 		padding-left: 10px;
 		padding-right: 10px;
 	}
 
-	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-header {
-		position: relative;
-		top: auto;
-		left: auto;
-		width: 100%;
-		margin: 0 0 12px;
-		border-radius: 8px;
-		height: auto;
-		padding: 12px;
-		flex-direction: column;
-		align-items: stretch;
-		gap: 12px;
-	}
-
-	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-header-left,
-	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-header-right {
-		width: 100%;
-		justify-content: space-between;
-	}
-
-	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-header-right {
-		flex-wrap: wrap;
+	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-header,
+	.atfp-dashboard-header:has(.tfp-nav),
+	.atfpp-dashboard-header:has(.tfp-nav),
+	.lsdp-header-content:has(.tfp-nav),
+	.dupcap-plugin-topbar-inner:has(.tfp-nav) {
+		padding: 12px !important;
+		gap: 10px !important;
 	}
 
 	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-header-left img,
 	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-logo-link img,
 	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-header-left svg,
-	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-logo-link svg {
-		width: 36px;
-		max-width: 36px;
-		height: 36px;
+	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-logo-link svg,
+	.atfp-dashboard-header:has(.tfp-nav) .atfp-dashboard-header-left img,
+	.atfp-dashboard-header:has(.tfp-nav) .atfp-dashboard-logo-link img,
+	.atfpp-dashboard-header:has(.tfp-nav) .atfpp-dashboard-header-left img,
+	.atfpp-dashboard-header:has(.tfp-nav) .atfpp-dashboard-logo-link img,
+	.lsdp-header-content:has(.tfp-nav) .lsdp-header-logo img,
+	.dupcap-plugin-topbar-inner:has(.tfp-nav) .dupcap-plugin-topbar-logo {
+		width: 36px !important;
+		max-width: 36px !important;
+		height: 36px !important;
 	}
 
-	.tfp-hub-body {
-		padding: 0 0 24px;
-		margin: 0 0 24px;
-	}
-
-	.tfp-nav {
-		order: 0;
-		padding: 0;
-	}
-
+	/* Narrow: stack pills inside the full-width grey track */
 	.tfp-nav-track {
-		gap: 4px;
-		padding: 4px;
+		flex-direction: column !important;
+		flex-wrap: wrap !important;
+		align-items: center !important;
+		border-radius: 12px !important;
+		gap: 4px !important;
 	}
 
 	.tfp-nav .tfp-nav-item {
-		flex: 1 1 auto;
-		justify-content: center;
+		width: 100% !important;
+		justify-content: center !important;
 		padding: 8px 10px !important;
 		gap: 6px;
+	}
+
+	.tfp-nav .tfp-nav-item.active {
+		width: fit-content !important;
+		max-width: 100% !important;
+		align-self: center;
 	}
 
 	.tfp-nav .tfp-nav-label {
 		font-size: 12px;
 	}
 
-	.tfp-header-btn {
-		flex: 1 1 auto;
-		justify-content: center;
-		text-align: center;
+	.tfp-hub-body {
+		padding: 0 0 24px;
+		margin: 0 0 24px;
 	}
 
 	.tfp-hero {
@@ -1506,15 +1775,19 @@
 		flex-wrap: wrap;
 	}
 
+	/* Keep Toolkit Controls toggle on the same row (icon | text | toggle), even at WP admin mobile width */
 	.tfp-control-main {
-		flex-direction: column;
-		align-items: stretch;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		align-items: center;
 		gap: 12px;
 	}
 
 	.tfp-row-right {
-		justify-content: flex-start;
-		flex-wrap: wrap;
+		justify-content: flex-end;
+		flex-wrap: nowrap;
+		flex-shrink: 0;
+		align-self: center;
 	}
 
 	.tfp-compat-tags {
@@ -1532,29 +1805,28 @@
 }
 
 @media screen and (max-width: 480px) {
-	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-logo-text {
-		font-size: 14px;
+	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-logo-text,
+	.atfp-dashboard-header:has(.tfp-nav) .atfp-dashboard-logo-text,
+	.atfpp-dashboard-header:has(.tfp-nav) .atfpp-dashboard-logo-text,
+	.lsdp-header-content:has(.tfp-nav) .lsdp-header-title,
+	.dupcap-plugin-topbar-inner:has(.tfp-nav) .dupcap-plugin-topbar-name {
+		font-size: 14px !important;
 	}
 
-	.tfp-nav .tfp-nav-item {
-		flex: 1 1 100%;
+	.atfp-dashboard-header:has(.tfp-nav) .atfp-dashboard-header-right,
+	.atfpp-dashboard-header:has(.tfp-nav) .atfpp-dashboard-header-right,
+	.lsdp-header-content:has(.tfp-nav) .lsdp-header-actions,
+	.dupcap-plugin-topbar-inner:has(.tfp-nav) .dupcap-plugin-topbar-actions,
+	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-header-right {
+		flex-wrap: wrap !important;
 	}
 
-	.tfp-hero {
-		padding: 10px;
-	}
-
-	.tfp-hero-badge {
-		font-size: 9px;
-	}
-
-	.tfp-panel,
-	.tfp-card {
-		padding: 14px;
-		border-radius: 10px;
-	}
-
-	.tfp-header-btn-docs .tfp-header-btn-icon {
-		display: none;
+	.atfp-dashboard-header:has(.tfp-nav) .tfp-header-btn,
+	.atfpp-dashboard-header:has(.tfp-nav) .tfp-header-btn,
+	.lsdp-header-content:has(.tfp-nav) .tfp-header-btn,
+	.dupcap-plugin-topbar-inner:has(.tfp-nav) .tfp-header-btn,
+	.dupcap-plugin-topbar-inner:has(.tfp-nav) .dupcap-topbar-btn,
+	:is(.languages_page_toolkit-for-polylang) .tfp-header-btn {
+		flex: 1 1 100% !important;
 	}
 }
