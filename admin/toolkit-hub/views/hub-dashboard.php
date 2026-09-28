@@ -49,7 +49,7 @@ $tfp_tools = array(
 
 $tfp_hub_asset = dirname( __DIR__ ) . '/class-tfp-toolkit-hub.php';
 $tfp_icons     = array(
-	'inspector' => '<img class="tfp-icon-logo" src="' . esc_url( plugins_url( 'images/inspector-logo.png', $tfp_hub_asset ) ) . '" alt="" width="48" height="48" />',
+	'inspector' => '<img class="tfp-icon-logo" src="' . esc_url( plugins_url( 'images/inspector-logo.svg', $tfp_hub_asset ) ) . '" alt="" width="48" height="48" />',
 	'autopoly'  => '<img class="tfp-icon-logo" src="' . esc_url( plugins_url( 'images/autopoly-logo.png', $tfp_hub_asset ) ) . '" alt="" width="48" height="48" />',
 	'switcher'  => '<img class="tfp-icon-logo" src="' . esc_url( plugins_url( 'images/switcher-logo.png', $tfp_hub_asset ) ) . '" alt="" width="48" height="48" />',
 );
