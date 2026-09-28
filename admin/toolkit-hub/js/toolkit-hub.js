@@ -309,18 +309,42 @@
 		nav.className = 'tfp-nav';
 		nav.setAttribute( 'aria-label', 'Toolkit tools' );
 
+		var track = document.createElement( 'div' );
+		track.className = 'tfp-nav-track';
+
 		cfg.items.forEach( function ( item ) {
 			var a = document.createElement( 'a' );
 			a.href = item.href;
-			a.textContent = item.label;
 			a.className = 'tfp-nav-item';
 			if ( item.here ) {
 				a.className += ' active';
 			} else if ( ! item.active ) {
 				a.className += ' not-installed';
 			}
-			nav.appendChild( a );
+
+			var iconWrap = document.createElement( 'span' );
+			iconWrap.className = 'tfp-nav-icon-wrap';
+			iconWrap.setAttribute( 'aria-hidden', 'true' );
+			if ( item.icon ) {
+				iconWrap.innerHTML = item.icon;
+			}
+			a.appendChild( iconWrap );
+
+			var label = document.createElement( 'span' );
+			label.className = 'tfp-nav-label';
+			label.textContent = item.label;
+			a.appendChild( label );
+
+			if ( item.here ) {
+				var status = document.createElement( 'span' );
+				status.className = 'tfp-nav-status';
+				status.setAttribute( 'aria-hidden', 'true' );
+				a.appendChild( status );
+			}
+
+			track.appendChild( a );
 		} );
+		nav.appendChild( track );
 
 		var actions = root.querySelector( profile.actions );
 		if ( actions ) {
