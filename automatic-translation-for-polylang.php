@@ -916,6 +916,17 @@ if (! class_exists('AutoPoly')) {
 						'site_key'                => 'atfp',
 					)
 				);
+
+				// Family consent may already exist (sibling installed first); inherit + schedule.
+				$atfp_opt_in = get_option( 'atfp_feedback_opt_in' );
+				if ( ! in_array( $atfp_opt_in, array( 'yes', 'no' ), true )
+					&& 'yes' === get_option( 'cpfm_opt_in_choice_cool_translations' ) ) {
+					update_option( 'atfp_feedback_opt_in', 'yes' );
+					$atfp_opt_in = 'yes';
+				}
+				if ( 'yes' === $atfp_opt_in ) {
+					CPFM_Usage_Cron::cpfm_schedule_event( 'atfp_extra_data_update' );
+				}
 			}
 		}
 
