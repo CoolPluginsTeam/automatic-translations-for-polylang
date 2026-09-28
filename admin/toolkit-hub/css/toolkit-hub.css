@@ -278,158 +278,26 @@
 	color: #6b7280;
 }
 
-/* Hero */
+/* Hero — mirrored from AutoPoly Free .atfp-dashboard-card.atfp-dashboard-start */
 .tfp-hero {
-	display: grid;
-	grid-template-columns: minmax(0, 1fr) minmax(240px, 34%);
-	gap: 28px;
-	padding: 33px;
-	border-radius: 12px;
-	background-color: rgb(243 243 248 / 1);
-	color: #0f172a;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: 15px;
+	background: #fff;
+	border-radius: 8px;
+	border: 1px solid #ddd;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 	margin-bottom: 24px;
 	overflow: hidden;
 	width: 100%;
 	min-width: 0;
-	box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
-	border: 1px solid #e5e7eb;
+	color: #222;
 	position: relative;
 }
 
-/* Soft lift on the right media column against the light hero. */
-.tfp-hero::after {
-	content: "";
-	position: absolute;
-	inset: -20% -10% -30% 55%;
-	background: radial-gradient(ellipse at center, rgba(99, 102, 241, 0.06) 0%, rgba(243, 243, 248, 0) 70%);
-	pointer-events: none;
-	z-index: 0;
-}
-
-.tfp-hero-copy,
-.tfp-hero-video {
-	position: relative;
-	z-index: 1;
-	min-width: 0;
-}
-
-.tfp-hero-copy {
-	max-width: 40rem;
-}
-
-.tfp-hero-highlights {
-	display: grid;
-	grid-template-columns: repeat(2, minmax(0, 1fr));
-	gap: 10px;
-	min-width: 0;
-	margin-top: 14px;
-}
-
-.tfp-hero-chip {
-	display: flex;
-	align-items: center;
-	gap: 12px;
-	min-width: 0;
-	padding: 12px 14px;
-	border-radius: 14px;
-	background: #fff;
-	border: 1px solid #e5e7eb;
-	box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
-	box-sizing: border-box;
-	height: auto;
-	color: #0f172a;
-}
-
-.tfp-hero-chip-icon {
-	position: relative;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	flex-shrink: 0;
-	width: 36px;
-	height: 36px;
-	border-radius: 10px;
-	color: #fff;
-	line-height: 1;
-	box-shadow: 0 6px 14px rgba(15, 23, 42, 0.22);
-}
-
-.tfp-hero-chip-icon--tools {
-	background: linear-gradient(145deg, #3b82f6 0%, #2563eb 100%);
-}
-
-.tfp-hero-chip-icon--ai {
-	background: linear-gradient(145deg, #60a5fa 0%, #2563eb 100%);
-}
-
-.tfp-hero-chip-icon--inspect {
-	background: linear-gradient(145deg, #2dd4bf 0%, #0d9488 100%);
-}
-
-.tfp-hero-chip-icon--builder {
-	background: linear-gradient(145deg, #60a5fa 0%, #2563eb 100%);
-}
-
-.tfp-hero-chip-badge {
-	position: absolute;
-	top: -5px;
-	right: -5px;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	min-width: 16px;
-	height: 16px;
-	padding: 0 4px;
-	border-radius: 999px;
-	background: #2563eb;
-	border: 1.5px solid rgba(255, 255, 255, 0.85);
-	color: #fff;
-	font-size: 9px;
-	font-weight: 800;
-	line-height: 1;
-}
-
-.tfp-hero-chip-svg {
-	display: block;
-	width: 18px;
-	height: 18px;
-}
-
-.tfp-hero-chip-text {
-	display: flex;
-	flex-direction: column;
-	gap: 2px;
-	min-width: 0;
-}
-
-.tfp-hero-chip-text strong {
-	font-size: 13px;
-	font-weight: 700;
-	line-height: 1.25;
-	color: #0f172a;
-}
-
-.tfp-hero-chip-text span {
-	font-size: 11.5px;
-	font-weight: 500;
-	line-height: 1.3;
-	color: #64748b;
-}
-
-@media screen and (max-width: 1100px) {
-	.tfp-hero {
-		grid-template-columns: 1fr;
-	}
-
-	.tfp-hero-highlights {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-	}
-}
-
-@media screen and (max-width: 782px) {
-	.tfp-hero-highlights {
-		grid-template-columns: 1fr;
-	}
+.tfp-hero-welcome {
+	padding: 20px 20px 0;
 }
 
 .tfp-hero-badge {
@@ -448,42 +316,56 @@
 }
 
 .tfp-hero-title {
-	margin: 0 0 8px;
-	font-size: clamp(18px, 1.7vw, 22px);
-	line-height: 1.3;
+	margin: 0;
+	padding: 0;
+	font-size: 24px;
 	font-weight: 700;
-	color: #0f172a;
+	line-height: 1.3;
+	color: #222;
 	max-width: none;
 }
 
 .tfp-hero-desc {
-	margin: 0;
-	font-size: 13px;
+	margin: 8px 0 0;
+	padding: 0;
+	font-size: 14px;
 	line-height: 1.5;
-	color: #475569;
+	color: #222;
 	max-width: none;
 }
 
+.tfp-hero-start-grid {
+	align-items: stretch;
+	display: flex;
+	gap: 24px;
+	padding: 16px 20px 20px;
+}
+
 .tfp-hero-video {
-	width: 100%;
+	flex: 0 0 45%;
+	max-width: 45%;
 	min-width: 0;
+
+	display: flex;
+	flex-direction: column;
+	align-self: stretch;
 }
 
 .tfp-hero-video-frame {
 	align-items: center;
 	aspect-ratio: 16 / 9;
-	background-color: #0f172a;
+	background-color: #f8f9fa;
 	background-position: center;
 	background-size: cover;
-	border: 1px solid #e2e8f0;
-	border-radius: 12px;
-	box-shadow: 0 8px 24px rgba(37, 99, 235, 0.12);
+	border-radius: 9px;
 	cursor: pointer;
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	overflow: hidden;
 	position: relative;
 	width: 100%;
+
 }
 
 .tfp-hero-video-frame:has(iframe) {
@@ -502,10 +384,10 @@
 
 .tfp-hero-play {
 	align-items: center;
-	background: #ff480d;
-	border: 3px solid #fff;
+	background: #e62117;
+	border: 3px solid #f2f2f2;
 	border-radius: 50%;
-	box-shadow: 0 6px 18px rgba(37, 99, 235, 0.4);
+	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28);
 	box-sizing: content-box;
 	color: #fff;
 	cursor: pointer;
@@ -515,7 +397,7 @@
 	margin: 0;
 	padding: 0;
 	position: relative;
-	transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+	transition: transform 0.2s ease, background 0.2s ease;
 	width: 48px;
 	z-index: 1;
 }
@@ -523,15 +405,105 @@
 .tfp-hero-video-frame:hover .tfp-hero-play,
 .tfp-hero-play:hover,
 .tfp-hero-play:focus {
-	background: #ff480d;
+	background: #c81c13;
 	transform: scale(1.06);
-	box-shadow: 0 8px 22px rgba(37, 99, 235, 0.5);
 }
 
 .tfp-hero-play svg {
 	height: 20px;
 	margin-left: 3px;
 	width: 20px;
+}
+
+.tfp-hero-steps {
+	flex: 1;
+	min-width: 0;
+	min-height: min-content;
+	padding: 8px 15px;
+	display: flex;
+	flex-direction: column;
+	align-self: stretch;
+}
+
+.tfp-hero-steps h2 {
+	font-size: 16px;
+	font-weight: 700;
+	margin: 0 0 14px;
+	padding: 0;
+	color: #222;
+	flex-shrink: 0;
+}
+
+.tfp-hero-step-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	flex: 1 0 auto;
+	min-height: min-content;
+}
+
+.tfp-hero-step-list li {
+	align-items: center;
+	display: flex;
+	gap: 12px;
+	margin: 0;
+	flex: 1 0 auto;
+	min-height: min-content;
+	padding: 10px 14px;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	background: #f8f9fa;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+	box-sizing: border-box;
+	overflow: visible;
+}
+
+.tfp-hero-step-num {
+	align-items: center;
+	background: #efffef;
+	border-radius: 50%;
+	color: #30b230;
+	display: inline-flex;
+	flex-shrink: 0;
+	font-size: 12px;
+	font-weight: 700;
+	height: 28px;
+	justify-content: center;
+	width: 28px;
+}
+
+.tfp-hero-step-text {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	min-width: 0;
+	justify-content: center;
+	flex: 1;
+	flex-shrink: 0;
+}
+
+
+.tfp-hero-step-desc {
+	font-size: 13px;
+	font-weight: 400;
+	line-height: 1.45;
+	color: #666;
+}
+
+@media screen and (max-width: 900px) {
+	.tfp-hero-start-grid {
+		display: block;
+	}
+
+	.tfp-hero-video {
+		margin-bottom: 20px;
+		max-width: 100%;
+		flex: none;
+		width: 100%;
+	}
 }
 
 /* Tools grid */
@@ -1317,55 +1289,6 @@
 	display: block;
 }
 
-/* Workflow */
-.tfp-workflow-list {
-	list-style: none;
-	margin: 0 0 18px;
-	padding: 0;
-	display: flex;
-	flex-direction: column;
-	gap: 10px;
-}
-
-.tfp-workflow-list li {
-	display: flex;
-	gap: 12px;
-	align-items: flex-start;
-	padding: 12px 14px;
-	border: 1px solid #eef2f7;
-	background: #f8fafc;
-	border-radius: 10px;
-}
-
-.tfp-step-num {
-	width: 24px;
-	height: 24px;
-	border-radius: 50%;
-	background: #eff6ff;
-	color: #2563eb;
-	font-size: 12px;
-	font-weight: 750;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	flex-shrink: 0;
-	margin-top: 1px;
-}
-
-.tfp-step-title {
-	margin: 0 0 3px;
-	font-size: 13.5px;
-	font-weight: 700;
-	color: #111827;
-}
-
-.tfp-step-desc {
-	margin: 0;
-	font-size: 12.5px;
-	line-height: 1.45;
-	color: #6b7280;
-}
-
 .tfp-compat-tags {
 	display: flex;
 	flex-wrap: wrap;
@@ -1430,10 +1353,6 @@
 	.tfp-nav .tfp-nav-item {
 		padding: 7px 12px !important;
 		font-size: 12.5px;
-	}
-
-	.tfp-hero-title {
-		max-width: none;
 	}
 
 	.tfp-card-desc {
@@ -1567,26 +1486,12 @@
 	}
 
 	.tfp-hero {
-		grid-template-columns: 1fr;
-		padding: 16px;
-		gap: 16px;
-		border-radius: 10px;
-	}
-
-	.tfp-hero::after {
-		inset: 40% -10% -40% -10%;
-	}
-
-	.tfp-hero-copy {
-		max-width: none;
+		padding: 12px;
+		border-radius: 8px;
 	}
 
 	.tfp-hero-title {
-		font-size: 17px;
-	}
-
-	.tfp-hero-chip {
-		width: 100%;
+		font-size: 20px;
 	}
 
 	.tfp-section-title {
@@ -1636,7 +1541,7 @@
 	}
 
 	.tfp-hero {
-		padding: 14px;
+		padding: 10px;
 	}
 
 	.tfp-hero-badge {
