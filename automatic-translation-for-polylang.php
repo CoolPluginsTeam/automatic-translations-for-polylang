@@ -1154,7 +1154,12 @@ if (! class_exists('AutoPoly')) {
 			self::atfp_translation_string_migration();
 			update_option('atfp-v', ATFP_V);
 			update_option('atfp-type', 'FREE');
-			update_option('atfp-installDate', gmdate('Y-m-d h:i:s'));
+
+			// Write once — this value is hashed into the feedback site_id; overwriting
+			// on every activate creates duplicate Activated/Deactivated rows.
+			if ( ! get_option( 'atfp-installDate' ) ) {
+				add_option( 'atfp-installDate', gmdate( 'Y-m-d h:i:s' ), '', false );
+			}
 
 			if (!get_option('atfp-install-date')) {
 				add_option('atfp-install-date', gmdate('Y-m-d h:i:s'));
