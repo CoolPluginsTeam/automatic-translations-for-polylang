@@ -579,7 +579,7 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 					continue;
 				}
 
-				$result = activate_plugin( $file, '', is_multisite(), true );
+				$result = activate_plugin( $file, '', is_multisite(), false );
 				if ( is_wp_error( $result ) ) {
 					wp_send_json_error( array( 'message' => $result->get_error_message() ) );
 				}
@@ -653,7 +653,7 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 
 			$activated = false;
 			if ( $plugin_file && current_user_can( 'activate_plugins' ) ) {
-				$activate = activate_plugin( $plugin_file, '', is_multisite(), true );
+				$activate = activate_plugin( $plugin_file, '', is_multisite(), false );
 				$activated = ! is_wp_error( $activate );
 			}
 
