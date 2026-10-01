@@ -924,9 +924,10 @@ if (! class_exists('AutoPoly')) {
 					update_option( 'atfp_feedback_opt_in', 'yes' );
 					$atfp_opt_in = 'yes';
 				}
-				if ( 'yes' === $atfp_opt_in ) {
-					CPFM_Usage_Cron::cpfm_schedule_event( 'atfp_extra_data_update' );
-				}
+				// Cron is scheduled only on plugin activation or explicit
+			// user opt-in (cpfm_after_opt_in_atfp hook).  Removed the
+			// every-page-load re-schedule that caused the cron to
+			// reappear immediately after manual deletion.
 			}
 		}
 
