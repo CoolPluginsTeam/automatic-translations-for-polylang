@@ -58,12 +58,12 @@ $tfp_download_icon = '<svg class="tfp-btn-icon" viewBox="0 0 20 20" fill="curren
 $tfp_arrow_icon    = '<svg class="tfp-btn-icon tfp-btn-icon-end" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.69l-3.22-3.22a.75.75 0 111.06-1.06l4.5 4.5a.75.75 0 010 1.06l-4.5 4.5a.75.75 0 11-1.06-1.06l3.22-3.22H3.75A.75.75 0 013 10z" clip-rule="evenodd"/></svg>';
 
 /*
- * Same walkthrough as AutoPoly dashboard (admin/atfp-dashboard/views/dashboard.php).
- * Poster from YouTube; hqdefault falls back if maxresdefault is missing.
+ * Toolkit hub walkthrough video (Translation Inspector).
+ * Poster from YouTube; this video has no maxresdefault, so use sddefault with hqdefault fallback.
  */
-$tfp_video_id         = 'ubDSMP2qjpY';
-$tfp_video_title      = __( 'Automate the Translation Process with AutoPoly - AI Translation For Polylang', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
-$tfp_video_poster     = 'https://i.ytimg.com/vi/' . $tfp_video_id . '/maxresdefault.jpg';
+$tfp_video_id         = 'WS3fl6sjgOE';
+$tfp_video_title      = __( 'Translation Inspector | Find & Fix Polylang Translation Issues', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
+$tfp_video_poster     = 'https://i.ytimg.com/vi/' . $tfp_video_id . '/sddefault.jpg';
 $tfp_video_poster_alt = 'https://i.ytimg.com/vi/' . $tfp_video_id . '/hqdefault.jpg';
 
 ?>
@@ -82,7 +82,7 @@ $tfp_video_poster_alt = 'https://i.ytimg.com/vi/' . $tfp_video_id . '/hqdefault.
 
 			<div class="tfp-hero-start-grid">
 				<div class="tfp-hero-video" data-video-id="<?php echo esc_attr( $tfp_video_id ); ?>" data-video-title="<?php echo esc_attr( $tfp_video_title ); ?>">
-					<div class="tfp-hero-video-frame" style="background-image:url('<?php echo esc_url( $tfp_video_poster ); ?>'), url('<?php echo esc_url( $tfp_video_poster_alt ); ?>');" role="button" tabindex="0" aria-label="<?php echo esc_attr__( 'Play the AutoPoly walkthrough video', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?>">
+					<div class="tfp-hero-video-frame" style="background-image:url('<?php echo esc_url( $tfp_video_poster ); ?>'), url('<?php echo esc_url( $tfp_video_poster_alt ); ?>');" role="button" tabindex="0" aria-label="<?php echo esc_attr__( 'Play the Translation Inspector walkthrough video', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction ?>">
 						<button type="button" class="tfp-hero-play" aria-hidden="true" tabindex="-1">
 							<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.5 5.5v13l11-6.5-11-6.5z"/></svg>
 						</button>
