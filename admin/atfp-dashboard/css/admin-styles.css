@@ -96,6 +96,14 @@ Polylang Addon Dashboard - Admin Panel Styles
     margin-block-start: 80px !important;
 }
 
+/* <=1100: toolkit hub makes .atfp-dashboard-header relative/auto — drop absolute spacer */
+@media screen and (max-width: 1100px) {
+    :is(.toplevel_page_loco-addon,.languages_page_polylang-atfp-dashboard) #wpbody #wpbody-content {
+        margin-top: 0 !important;
+        margin-block-start: 0 !important;
+    }
+}
+
 /* ================================================
    Buttons & Links
 ================================================ */
@@ -941,19 +949,6 @@ ul.atfp-dashboard-sts-btm li:last-child {
 }
 
 /* ================================================
-   Need Help Section
-================================================ */
-.atfp-dashboard-translate-support{
-    align-items: flex-start;
-}
-
-.atfp-dashboard-translate-support h3{
-    margin-bottom: 0;
-}
-.atfp-dashboard-translate-support .atfp-dashboard-support-link {
-    margin-right: auto;
-}
-/* ================================================
    Rate Us Section
 ================================================ */
 .atfp-dashboard-rate-us{
@@ -1549,7 +1544,8 @@ ul.atfp-dashboard-sts-btm li:last-child {
     .atfp-dashboard-sidebar {
         width: auto;
     }
-    .atfp-dashboard-header {
+    /* Pre-Toolkit header only — .tfp-nav headers are owned by toolkit-hub.css */
+    .atfp-dashboard-header:not(:has(.tfp-nav)) {
         padding: 0px 11px 11px 20px;
         height: auto;
         min-height: 110px;
@@ -1557,10 +1553,10 @@ ul.atfp-dashboard-sts-btm li:last-child {
         gap: 15px;
         top: 0;
     }
-    .atfp-dashboard-wrapper {
+    .atfp-dashboard-wrapper:not(:has(.tfp-nav)) {
         padding: 60px 12px 0px 0px;
     }
-    .atfp-dashboard-header-right {
+    .atfp-dashboard-header:not(:has(.tfp-nav)) .atfp-dashboard-header-right {
         gap: 6px;
     }
     .atfp-dashboard-free-vs-pro-container .header,
@@ -1571,33 +1567,33 @@ ul.atfp-dashboard-sts-btm li:last-child {
     }
 }
 @media (max-width: 766px) and  (min-width:601px){
-	.atfp-dashboard-header {
+	.atfp-dashboard-header:not(:has(.tfp-nav)) {
 	top: 0px;
 }
 }
 	
 @media (max-width: 767px) and  (min-width:375px){
-	.atfp-dashboard-header {
+	.atfp-dashboard-header:not(:has(.tfp-nav)) {
     height: 110px;
 }
 }
 	
 	
 @media (max-width: 1024px) {
-.atfp-dashboard-header-left svg {
+.atfp-dashboard-header:not(:has(.tfp-nav)) .atfp-dashboard-header-left svg {
     max-width: 120px;
 }
-	.atfp-dashboard-header {
+	.atfp-dashboard-header:not(:has(.tfp-nav)) {
 	gap: 15px;
 }
 
-	.atfp-dashboard-header-left img{
+	.atfp-dashboard-header:not(:has(.tfp-nav)) .atfp-dashboard-header-left img{
 	max-width: 125px;
 }
 	.atfp-dashboard-btn {
     padding: 7px 6px;
 }
-	.atfp-dashboard-header-right {
+	.atfp-dashboard-header:not(:has(.tfp-nav)) .atfp-dashboard-header-right {
     gap: 13px;
 }
 }

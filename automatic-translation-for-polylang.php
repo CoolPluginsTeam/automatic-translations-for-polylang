@@ -28,6 +28,10 @@ if (! defined('ATFP_FILE')) {
 	define('ATFP_FILE', __FILE__);
 }
 
+if (! defined('ATFP_PLUGIN_NAME')) {
+	define('ATFP_PLUGIN_NAME', 'AutoPoly - AI Translation For Polylang');
+}
+
 if (! defined('ATFP_FEEDBACK_API')) {
 	define('ATFP_FEEDBACK_API', "https://feedback.coolplugins.net/");
 }
@@ -65,7 +69,6 @@ if (! class_exists('AutoPoly')) {
 		private function __construct()
 		{
 			$this->atfp_load_files();
-			add_action('plugins_loaded', array($this, 'atfp_init'));
 			register_activation_hook(ATFP_FILE, array($this, 'atfp_activate'));
 			register_deactivation_hook(ATFP_FILE, array($this, 'atfp_deactivate'));
 			add_action('admin_menu', array($this, 'atfp_add_submenu_page'), 11);
@@ -76,13 +79,14 @@ if (! class_exists('AutoPoly')) {
 			add_action('init', array($this, 'atfp_translation_string_migration'));
 			add_action('activated_plugin', array($this, 'atfp_plugin_redirection'));
 
-			// Initialize cron
-			$this->init_cron();
-
-			// Initialize feedback notice.
-			$this->init_feedback_notice();
+			// Initialize the shared "Toolkit for Polylang" hub.
+			$this->init_toolkit_hub();
 			add_filter('plugin_action_links_' . plugin_basename(__FILE__), array($this, 'atfp_plugin_action_links'));
 			add_filter('plugin_row_meta', array($this, 'atfp_plugin_row_links'), 10, 2);
+			add_action('init', array($this, 'register_cpfm_notices'), 999);
+
+			// Boot the CPFM usage cron (unconditional so wp-cron.php can run it).
+			$this->init_cpfm_cron();
 
 			// nonce verification is not required here because we are not using the nonce here.
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
@@ -219,14 +223,14 @@ if (! class_exists('AutoPoly')) {
 					'edge_setup_doc_url' => esc_url('https://docs.coolplugins.net/doc/edge-ai-translation-language-setup/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=edge_ai_setup&utm_content=settings'),
 					'texts' => array(
 						'cardTitle' => esc_html__( 'Chrome AI Setup', 'automatic-translations-for-polylang' ),
-						'cardDescription' => esc_html__( 'Free on-device translation. We detect what your browser needs — usually just one click.', 'automatic-translations-for-polylang' ),
-						'statusChecking' => esc_html__( 'Checking your browser…', 'automatic-translations-for-polylang' ),
+						'cardDescription' => esc_html__( 'Free on-device translation. We detect what your browser needs â€” usually just one click.', 'automatic-translations-for-polylang' ),
+						'statusChecking' => esc_html__( 'Checking your browserâ€¦', 'automatic-translations-for-polylang' ),
 						'statusCheckingDesc' => esc_html__( 'Give us a second while we detect Chrome AI support.', 'automatic-translations-for-polylang' ),
 						'statusReady' => esc_html__( 'Chrome AI is Ready', 'automatic-translations-for-polylang' ),
 						'statusReadyDesc' => esc_html__( 'On-device translation is set up. No API key, no cost.', 'automatic-translations-for-polylang' ),
 						'statusDownloadable' => esc_html__( 'Language pack required', 'automatic-translations-for-polylang' ),
 						'statusDownloadableDesc' => esc_html__( 'Add the target translation language in your browser settings to download the translation model.', 'automatic-translations-for-polylang' ),
-						'statusDownloading' => esc_html__( 'Downloading language model…', 'automatic-translations-for-polylang' ),
+						'statusDownloading' => esc_html__( 'Downloading language modelâ€¦', 'automatic-translations-for-polylang' ),
 						'statusDownloadingDesc' => esc_html__( 'Keep this tab open. This happens once.', 'automatic-translations-for-polylang' ),
 						'statusError' => esc_html__( 'Chrome AI is currently unavailable', 'automatic-translations-for-polylang' ),
 						'statusErrorDesc' => esc_html__( 'Something blocked the check. See advanced steps or use alternative options.', 'automatic-translations-for-polylang' ),
@@ -236,18 +240,18 @@ if (! class_exists('AutoPoly')) {
 						'btnRetry' => esc_html__( 'Retry', 'automatic-translations-for-polylang' ),
 						'btnAlternative' => esc_html__( 'Use Another Provider', 'automatic-translations-for-polylang' ),
 						'previewTitle' => esc_html__( 'Try a real translation', 'automatic-translations-for-polylang' ),
-						'previewDesc' => esc_html__( 'Type anything and see the exact on-device result — no page needed.', 'automatic-translations-for-polylang' ),
+						'previewDesc' => esc_html__( 'Type anything and see the exact on-device result â€” no page needed.', 'automatic-translations-for-polylang' ),
 						'previewInputLabel' => esc_html__( 'Your text', 'automatic-translations-for-polylang' ),
 						'previewOutputLabel' => esc_html__( 'Translation', 'automatic-translations-for-polylang' ),
-						'previewPlaceholder' => esc_html__( 'Type or paste text to translate…', 'automatic-translations-for-polylang' ),
+						'previewPlaceholder' => esc_html__( 'Type or paste text to translateâ€¦', 'automatic-translations-for-polylang' ),
 						'previewOutPlaceholder' => esc_html__( 'Translation will appear here.', 'automatic-translations-for-polylang' ),
 						'btnTranslate' => esc_html__( 'Translate preview', 'automatic-translations-for-polylang' ),
-						'translatingText' => esc_html__( 'Translating…', 'automatic-translations-for-polylang' ),
-						'translationDone' => esc_html__( 'Done in {ms} ms · on-device · no data left your browser', 'automatic-translations-for-polylang' ),
-						'translationFailed' => esc_html__( '✗ Translation failed. This pair may need its own model, or see advanced steps below.', 'automatic-translations-for-polylang' ),
+						'translatingText' => esc_html__( 'Translatingâ€¦', 'automatic-translations-for-polylang' ),
+						'translationDone' => esc_html__( 'Done in {ms} ms Â· on-device Â· no data left your browser', 'automatic-translations-for-polylang' ),
+						'translationFailed' => esc_html__( 'âœ— Translation failed. This pair may need its own model, or see advanced steps below.', 'automatic-translations-for-polylang' ),
 						'advancedTitle' => esc_html__( 'Still not working? Advanced steps', 'automatic-translations-for-polylang' ),
-						'advancedBrowserRequirements' => esc_html__( 'Chrome AI translation needs Chrome or Edge on desktop (version 138+). It doesn’t run on mobile phones or tablets.', 'automatic-translations-for-polylang' ),
-						'openSetupGuide' => esc_html__( 'Open Official Setup Guide →', 'automatic-translations-for-polylang' )
+						'advancedBrowserRequirements' => esc_html__( 'Chrome AI translation needs Chrome or Edge on desktop (version 138+). It doesnâ€™t run on mobile phones or tablets.', 'automatic-translations-for-polylang' ),
+						'openSetupGuide' => esc_html__( 'Open Official Setup Guide â†’', 'automatic-translations-for-polylang' )
 					)
 				);
 
@@ -268,61 +272,29 @@ if (! class_exists('AutoPoly')) {
 		}
 
 		/**
-		 * Initialize the cron job for the plugin.
+		 * Load the shared "Toolkit for Polylang" hub.
+		 *
+		 * This file ships identically in AutoPoly, Translation Inspector /
+		 * Duplicate Content, and Language Switcher. The class_exists() guard
+		 * means only the copy that loads first actually runs â€” whichever of
+		 * the three plugins happens to boot first on a given site â€” so having
+		 * more than one of these plugins active never registers the hub twice.
 		 */
-		public function init_cron()
-		{
-			// if (is_admin()) {
-			require_once ATFP_DIR_PATH . '/admin/cpfm-feedback/cron/atfp-cron.php';
-			$cron = new ATFP_cronjob();
-			$cron->atfp_cron_init_hooks();
-			// }
-		}
-
-		/**
-		 * Initialize the feedback notice for the plugin.
-		 */
-
-		public function init_feedback_notice()
-		{
-			if (is_admin()) {
-
-				if (!class_exists('CPFM_Feedback_Notice')) {
-					require_once ATFP_DIR_PATH . '/admin/cpfm-feedback/cpfm-common-notice.php';
-				}
-
-				add_action('cpfm_register_notice', function () {
-					if (!class_exists('CPFM_Feedback_Notice') || !current_user_can('manage_options')) {
-						return;
-					}
-
-					$notice = [
-						'title' => __('AutoPoly - AI Translation For Polylang', 'automatic-translations-for-polylang'),
-						'message' => __('Help us make this plugin more compatible with your site by sharing non-sensitive site data.', 'automatic-translations-for-polylang'),
-						'pages' => ['polylang-atfp-dashboard'],
-						'always_show_on' => ['polylang-atfp-dashboard'], // This enables auto-show
-						'plugin_name' => 'atfp'
-					];
-					CPFM_Feedback_Notice::cpfm_register_notice('cool_translations', $notice);
-					if (!isset($GLOBALS['cool_plugins_feedback'])) {
-						// cool_plugins is our company name
-						// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
-						$GLOBALS['cool_plugins_feedback'] = [];
-					}
-					// cool_plugins is our company name
-					// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
-					$GLOBALS['cool_plugins_feedback']['cool_translations'][] = $notice;
-				});
-
-				add_action('cpfm_after_opt_in_atfp', function ($category) {
-					if ($category === 'cool_translations') {
-						ATFP_cronjob::atfp_send_data();
-						$options = get_option('atfp_feedback_opt_in');
-						$options = 'yes';
-						update_option('atfp_feedback_opt_in', $options);
-					}
-				});
+		public function init_toolkit_hub() {
+			if ( ! is_admin() ) {
+				return;
 			}
+
+			require_once ATFP_DIR_PATH . 'admin/toolkit-hub/load-tfp-toolkit-hub.php';
+			tfp_toolkit_hub_register(
+				'1.0.2',
+				ATFP_DIR_PATH . 'admin/toolkit-hub/class-tfp-toolkit-hub.php',
+				array(
+					'text_domain' => 'automatic-translations-for-polylang',
+					'support_url' => 'https://wordpress.org/support/plugin/automatic-translations-for-polylang/',
+					'docs_url'    => 'https://docs.coolplugins.net/plugin/ai-translation-for-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=toolkit_hub_header',
+				)
+			);
 		}
 
 		/*
@@ -491,40 +463,38 @@ if (! class_exists('AutoPoly')) {
 				$atfp_utm_parameters = ATFP_Helper::utm_source_text();
 			}
 
-			// Action buttons configuration
-			$buttons = [
-				[
-					'url' => 'https://docs.coolplugins.net/plugin/ai-translation-for-polylang/?' . sanitize_text_field($atfp_utm_parameters) . '&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_header',
-					'img' => 'docs.svg',
-					'alt' => __('Read Docs', 'automatic-translations-for-polylang'),
-					'text' => __('Read Docs', 'automatic-translations-for-polylang'),
-					'class' => 'atfp-dashboard-btn primary'
-				]
-			];
+			// Header-right action links â€” same "Get Support" + "Check Docs" pair
+			// as Translation Inspector's own header, so both plugins' dashboards
+			// match. Docs URL is AutoPoly's existing one; support is new.
+			$atfp_support_url = 'https://wordpress.org/support/plugin/automatic-translations-for-polylang/';
+			$atfp_docs_url    = 'https://docs.coolplugins.net/plugin/ai-translation-for-polylang/?' . sanitize_text_field( $atfp_utm_parameters ) . '&utm_medium=inside&utm_campaign=docs&utm_content=dashboard_header';
 
 			// Start HTML output
 ?>
 			<div class="atfp-dashboard-wrapper">
 				<div class="atfp-dashboard-header">
+					<?php
+					$atfp_toolkit_hub_url = class_exists( 'TFP_Toolkit_Hub' )
+						? admin_url( 'admin.php?page=' . TFP_Toolkit_Hub::PAGE )
+						: admin_url( 'admin.php?page=toolkit-for-polylang' );
+					?>
 					<div class="atfp-dashboard-header-left">
-						<a href="?page=polylang-atfp-dashboard&tab=dashboard" class="atfp-dashboard-logo-link">
-							<img src="<?php echo esc_url(ATFP_URL . 'assets/images/ai-translation-for-Polylang.svg'); ?>" alt="<?php esc_attr_e('Polylang Addon Logo', 'automatic-translations-for-polylang'); ?>">
+						<a href="<?php echo esc_url( $atfp_toolkit_hub_url ); ?>" class="atfp-dashboard-logo-link">
+							<img src="<?php echo esc_url(ATFP_URL . 'assets/images/toolkit-for-polylang-logo.svg'); ?>" alt="<?php esc_attr_e('Polylang Addon Logo', 'automatic-translations-for-polylang'); ?>">
+							<h2 class="atfp-dashboard-logo-text"><?php esc_html_e( 'Toolkit for Polylang', 'automatic-translations-for-polylang' ); ?></h2>
 						</a>
-						<h2 class="atfp-dashboard-logo-text">AutoPoly</h2>
 					</div>
+					<?php if ( class_exists( 'TFP_Toolkit_Hub' ) ) : ?>
+						<?php TFP_Toolkit_Hub::render_nav( 'autopoly' ); ?>
+					<?php endif; ?>
 					<div class="atfp-dashboard-header-right">
-						<?php foreach ($buttons as $button): ?>
-							<a href="<?php echo esc_url($button['url']); ?>"
-								class="<?php echo esc_attr(isset($button['class']) ? $button['class'] : 'atfp-dashboard-btn'); ?>"
-								target="_blank"
-								aria-label="<?php echo isset($button['alt']) ? esc_attr($button['alt']) : ''; ?>">
-								<img src="<?php echo esc_url(ATFP_URL . 'admin/atfp-dashboard/images/' . $button['img']); ?>"
-									alt="<?php echo esc_attr($button['alt']); ?>">
-								<?php if (isset($button['text'])): ?>
-									<span><?php echo esc_html($button['text']); ?></span>
-								<?php endif; ?>
-							</a>
-						<?php endforeach; ?>
+						<a href="<?php echo esc_url( $atfp_support_url ); ?>" class="tfp-header-btn tfp-header-btn-support" target="_blank" rel="noopener noreferrer">
+							<?php esc_html_e( 'Get Support', 'automatic-translations-for-polylang' ); ?>
+						</a>
+						<a href="<?php echo esc_url( $atfp_docs_url ); ?>" class="tfp-header-btn tfp-header-btn-docs" target="_blank" rel="noopener noreferrer">
+							<span class="dashicons dashicons-media-document tfp-header-btn-icon" aria-hidden="true"></span>
+							<?php esc_html_e( 'Check Docs', 'automatic-translations-for-polylang' ); ?>
+						</a>
 					</div>
 				</div>
 
@@ -647,21 +617,16 @@ if (! class_exists('AutoPoly')) {
 			require_once ATFP_DIR_PATH . '/includes/bulk-translation/class-atfp-posts-clone.php';
 			require_once ATFP_DIR_PATH . '/includes/bulk-translation/class-atfp-bulk-translation.php';
 			require_once ATFP_DIR_PATH . 'includes/elementor-translate/class-atfp-elementor-translate.php';
+			require_once ATFP_DIR_PATH . 'includes/menu-sync/class-atfp-menu-sync-promo.php';
+			if ( class_exists( 'ATFP_Menu_Sync_Promo' ) ) {
+				ATFP_Menu_Sync_Promo::get_instance();
+			}
 			require_once ATFP_DIR_PATH . 'helper/class-atfp-register-route.php';
 			require_once ATFP_DIR_PATH . 'helper/class-atfp-sanitized-content.php';
 
+
+
 			new ATFP_Register_Route('atfp-translate');
-		}
-		/**
-		 * Initialize the Automatic Translation for Polylang plugin.
-		 *
-		 * @return void
-		 */
-		function atfp_init()
-		{
-			if (is_admin()) {
-				require_once ATFP_DIR_PATH . 'admin/feedback/atfp-users-feedback.php';
-			}
 		}
 
 		public function atfp_admin_notice()
@@ -704,24 +669,265 @@ if (! class_exists('AutoPoly')) {
 				$this->atfp_register_backend_assets();
 
 				$this->atfp_initialize_elementor_translation();
+			}
+		}
 
-				// Review Notice
-				if (class_exists('Atfp_Dashboard') && !defined('ATFPP_V')) {
-					$atfp_installation_date = gmdate('Y-m-d h:i:s', strtotime(get_option('atfp-installDate')));
-					$atfp_display_date = gmdate('Y-m-d h:i:s');
-					$install_date = new DateTime($atfp_installation_date);
-					$current_date = new DateTime($atfp_display_date);
-					$difference = $install_date->diff($current_date);
-					$atfp_diff_days = $difference->days;
+		/**
+		 * Whether Polylang free or Pro is available.
+		 *
+		 * @return bool
+		 */
+		public static function is_polylang_available() {
+			if ( function_exists( 'PLL' ) || function_exists( 'pll_languages_list' ) || defined( 'POLYLANG_VERSION' ) ) {
+				return true;
+			}
 
-					if ($atfp_diff_days > 2) {
-						Atfp_Dashboard::review_notice(
-							'atfp', // Required
-							'AutoPoly - AI Translation For Polylang', // Required
-							'https://wordpress.org/support/plugin/automatic-translations-for-polylang/reviews/#new-post', // Required
-						);
+			global $polylang;
+			return isset( $polylang );
+		}
+
+		/**
+		 * Register CPFM review ask and usage-feedback notice.
+		 *
+		 * @return void
+		 */
+		public function register_cpfm_notices() {
+			if ( ! is_admin() || ! self::is_polylang_available() ) {
+				return;
+			}
+
+			static $registered = false;
+			if ( $registered ) {
+				return;
+			}
+			$registered = true;
+
+			$loader = ATFP_DIR_PATH . 'admin/cpfm-feedback/class-cpfm-loader.php';
+			if ( ! file_exists( $loader ) ) {
+				return;
+			}
+
+			require_once $loader;
+			if ( class_exists( 'CPFM_Loader' ) ) {
+				CPFM_Loader::load();
+			}
+
+			$name = defined( 'ATFP_PLUGIN_NAME' ) ? ATFP_PLUGIN_NAME : 'AutoPoly - AI Translation For Polylang';
+			$page = 'polylang-atfp-dashboard';
+
+			$dashboard_screens = array(
+				'mlang_page_' . $page,
+				'tools_page_' . $page,
+				'languages_page_' . $page,
+			);
+
+			if ( class_exists( 'CPFM_Review' ) ) {
+				CPFM_Review::cpfm_register(
+					array(
+						'id'          => 'atfp',
+						'plugin_file' => ATFP_FILE,
+						'plugin_name' => $name,
+						'review_url'  => 'https://wordpress.org/support/plugin/automatic-translations-for-polylang/reviews/#new-post',
+						'capability'  => 'activate_plugins',
+						'quiet_days'  => 0,
+						'own_screens' => $dashboard_screens,
+						'trigger'     => array(
+							'type'  => 'install_age',
+							'hours' => 24,
+						),
+						'notice'      => array(
+							'enabled'        => true,
+							'template'       => 'two_step',
+							'screens'        => array( 'plugins' ),
+							'inline_screens' => array(),
+							'defer_screens'  => array(),
+						),
+						'row'         => array( 'enabled' => true ),
+						'legacy'      => array(
+							'done_options'  => array(
+								'atfp-ratingDiv' => array( 'yes', 'done', 'dismissed' ),
+							),
+							'install_dates' => array( 'atfp-installDate', 'atfp-install-date' ),
+							'mirror_write'  => array( 'atfp-ratingDiv' => 'yes' ),
+						),
+						'i18n'        => array(
+							'like_question' => sprintf(
+								/* translators: %s: plugin name. */
+								__( 'Do you like the %s plugin?', 'automatic-translations-for-polylang' ),
+								$name
+							),
+							'yes_button'    => __( 'Yes, I like it', 'automatic-translations-for-polylang' ),
+							'dismiss_link'  => __( 'Not good, dismiss', 'automatic-translations-for-polylang' ),
+							'later_link'    => __( 'Ask me later', 'automatic-translations-for-polylang' ),
+							'thanks_line'   => __( 'That is great to hear! A quick review on WordPress.org would really help us.', 'automatic-translations-for-polylang' ),
+							'submit_button' => __( 'Submit review', 'automatic-translations-for-polylang' ),
+							'no_link'       => __( 'I do not like it, dismiss', 'automatic-translations-for-polylang' ),
+							'row_question'  => __( 'Do you like this plugin?', 'automatic-translations-for-polylang' ),
+							'inline_title'  => sprintf(
+								/* translators: %s: plugin name. */
+								__( 'Enjoying %s?', 'automatic-translations-for-polylang' ),
+								$name
+							),
+							'inline_text'   => __( 'A short review helps other site owners find it.', 'automatic-translations-for-polylang' ),
+							'close_label'   => __( 'Close', 'automatic-translations-for-polylang' ),
+						),
+					)
+				);
+			}
+
+			if ( class_exists( 'CPFM_Deactivation_Feedback' ) ) {
+				CPFM_Deactivation_Feedback::cpfm_register(
+					array(
+						'id'                     => 'atfp',
+						'slug'                   => 'automatic-translations-for-polylang',
+						'plugin_name'            => $name,
+						'version'                => defined( 'ATFP_V' ) ? ATFP_V : '',
+						'api'                    => defined( 'ATFP_FEEDBACK_API' ) ? ATFP_FEEDBACK_API : 'https://feedback.coolplugins.net/',
+						'site_key'               => 'atfp',
+						'install_date_option'    => 'atfp-installDate',
+						'initial_version_option' => 'atfp_initial_save_version',
+						'reasons'                => array(
+							'not_working'  => array(
+								'title'       => __( "The plugin isn't working", 'automatic-translations-for-polylang' ),
+								'placeholder' => __( 'Which problem did you run into? We read every reply.', 'automatic-translations-for-polylang' ),
+							),
+							'not_expected' => array(
+								'title'       => __( "It didn't do what I expected", 'automatic-translations-for-polylang' ),
+								'placeholder' => __( 'What were you hoping it would do?', 'automatic-translations-for-polylang' ),
+							),
+							'found_better' => array(
+								'title'       => __( 'I found a better plugin', 'automatic-translations-for-polylang' ),
+								'placeholder' => __( 'Mind sharing which one?', 'automatic-translations-for-polylang' ),
+							),
+							'temporary'    => array(
+								'title'       => __( "It's a temporary deactivation", 'automatic-translations-for-polylang' ),
+								'placeholder' => '',
+							),
+							'other'        => array(
+								'title'       => __( 'Another reason', 'automatic-translations-for-polylang' ),
+								'placeholder' => __( 'Please tell us more', 'automatic-translations-for-polylang' ),
+							),
+						),
+						'i18n'                   => array(
+							'title'        => __( 'Before you go…', 'automatic-translations-for-polylang' ),
+							/* translators: %s: plugin name (bold). */
+							'intro'        => __( 'What made you deactivate %s? Your answer helps us fix it.', 'automatic-translations-for-polylang' ),
+							'submit'       => __( 'Submit & Deactivate', 'automatic-translations-for-polylang' ),
+							'skip'         => __( 'Skip & Deactivate', 'automatic-translations-for-polylang' ),
+							'deactivating' => __( 'Deactivating…', 'automatic-translations-for-polylang' ),
+							'pick_reason'  => __( 'Please choose a reason.', 'automatic-translations-for-polylang' ),
+							'close_label'  => __( 'Close', 'automatic-translations-for-polylang' ),
+							/* translators: %s: company name. */
+							'byline'       => __( 'A plugin by %s', 'automatic-translations-for-polylang' ),
+							'consent'      => __( 'Submitting shares your reason plus your site URL, admin email and basic environment details (PHP, WordPress, active plugins). Skip & Deactivate sends nothing.', 'automatic-translations-for-polylang' ),
+						),
+					)
+				);
+
+			}
+
+			// Register the "Help Improve Plugins" opt-in popup via CPFM_Feedback_Notice.
+			if ( class_exists( 'CPFM_Feedback_Notice' ) ) {
+				CPFM_Feedback_Notice::cpfm_register_notice(
+					'cool_translations',
+					array(
+						'title'          => __( 'Translation Plugins by Cool Plugins', 'automatic-translations-for-polylang' ),
+						'message'        => __( 'Help us make this plugin more compatible with your site by sharing non-sensitive site data.', 'automatic-translations-for-polylang' ),
+						'plugin_name'    => 'atfp',
+						'pages'          => array( $page ),
+						'always_show_on' => array( $page ),
+						'i18n'           => array(
+							'panel_title' => __( 'Help Improve Plugins', 'automatic-translations-for-polylang' ),
+							'yes_label'   => __( "Yes, it's OK", 'automatic-translations-for-polylang' ),
+							'no_label'    => __( 'No, Thanks', 'automatic-translations-for-polylang' ),
+							'more_info'   => __( 'More info', 'automatic-translations-for-polylang' ),
+						),
+					)
+				);
+
+				// Schedule cron when user opts in.
+				add_action(
+					'cpfm_after_opt_in_atfp',
+					function () {
+						update_option( 'atfp_feedback_opt_in', 'yes' );
+						if ( class_exists( 'CPFM_Usage_Cron' ) ) {
+							CPFM_Usage_Cron::cpfm_schedule_event( 'atfp_extra_data_update' );
+						}
 					}
+				);
+
+				// Clear cron when user opts out.
+				add_action(
+					'cpfm_after_opt_out_atfp',
+					function () {
+						update_option( 'atfp_feedback_opt_in', 'no' );
+						wp_clear_scheduled_hook( 'atfp_extra_data_update' );
+					}
+				);
+			}
+
+			add_action(
+				'admin_notices',
+				static function () {
+					$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+					if ( ! $screen || empty( $screen->id ) ) {
+						return;
+					}
+					$slug = 'polylang-atfp-dashboard';
+					if ( false === strpos( (string) $screen->id, $slug ) ) {
+						return;
+					}
+					if ( class_exists( 'CPFM_Review_Notice' ) ) {
+						remove_action( 'admin_notices', array( 'CPFM_Review_Notice', 'cpfm_maybe_render' ), 10 );
+					}
+				},
+				0
+			);
+		}
+
+		/**
+		 * Boot and register the CPFM usage cron.
+		 *
+		 * @return void
+		 */
+		public function init_cpfm_cron() {
+			$cron_file = ATFP_DIR_PATH . 'admin/cpfm-feedback/cron/class-cron.php';
+			if ( file_exists( $cron_file ) ) {
+				require_once $cron_file;
+			}
+			$env_file = ATFP_DIR_PATH . 'admin/cpfm-feedback/class-cpfm-environment.php';
+			if ( file_exists( $env_file ) ) {
+				require_once $env_file;
+			}
+
+			if ( class_exists( 'CPFM_Usage_Cron' ) ) {
+				$name = defined( 'ATFP_PLUGIN_NAME' ) ? ATFP_PLUGIN_NAME : 'AutoPoly - AI Translation For Polylang';
+				CPFM_Usage_Cron::cpfm_register(
+					array(
+						'id'                      => 'atfp',
+						'plugin_name'             => $name,
+						'version'                 => defined( 'ATFP_V' ) ? ATFP_V : '',
+						'api'                     => defined( 'ATFP_FEEDBACK_API' ) ? ATFP_FEEDBACK_API : 'https://feedback.coolplugins.net/',
+						'cron_hook'               => 'atfp_extra_data_update',
+						'consent_override_option' => 'atfp_feedback_opt_in',
+						'consent_master_option'   => 'cpfm_opt_in_choice_cool_translations',
+						'install_date_option'     => 'atfp-installDate',
+						'initial_version_option'  => 'atfp_initial_save_version',
+						'site_key'                => 'atfp',
+					)
+				);
+
+				// Family consent may already exist (sibling installed first); inherit + schedule.
+				$atfp_opt_in = get_option( 'atfp_feedback_opt_in' );
+				if ( ! in_array( $atfp_opt_in, array( 'yes', 'no' ), true )
+					&& 'yes' === get_option( 'cpfm_opt_in_choice_cool_translations' ) ) {
+					update_option( 'atfp_feedback_opt_in', 'yes' );
+					$atfp_opt_in = 'yes';
 				}
+				// Cron is scheduled only on plugin activation or explicit
+			// user opt-in (cpfm_after_opt_in_atfp hook).  Removed the
+			// every-page-load re-schedule that caused the cron to
+			// reappear immediately after manual deletion.
 			}
 		}
 
@@ -949,10 +1155,19 @@ if (! class_exists('AutoPoly')) {
 			self::atfp_translation_string_migration();
 			update_option('atfp-v', ATFP_V);
 			update_option('atfp-type', 'FREE');
-			update_option('atfp-installDate', gmdate('Y-m-d h:i:s'));
+
+			// Write once — this value is hashed into the feedback site_id; overwriting
+			// on every activate creates duplicate Activated/Deactivated rows.
+			if ( ! get_option( 'atfp-installDate' ) ) {
+				add_option( 'atfp-installDate', gmdate( 'Y-m-d h:i:s' ), '', false );
+			}
 
 			if (!get_option('atfp-install-date')) {
 				add_option('atfp-install-date', gmdate('Y-m-d h:i:s'));
+			}
+
+			if ( false === get_option( 'atfp-ratingDiv', false ) ) {
+				add_option( 'atfp-ratingDiv', 'no', '', false );
 			}
 
 			if (!get_option('atfp_initial_save_version')) {
@@ -961,9 +1176,16 @@ if (! class_exists('AutoPoly')) {
 
 			$get_opt_in = get_option('atfp_feedback_opt_in');
 
-			if ($get_opt_in == 'yes' && !wp_next_scheduled('atfp_extra_data_update')) {
-
-				wp_schedule_event(time(), 'every_30_days', 'atfp_extra_data_update');
+			if ($get_opt_in === 'yes') {
+				$cron_file = ATFP_DIR_PATH . 'admin/cpfm-feedback/cron/class-cron.php';
+				if ( file_exists( $cron_file ) ) {
+					require_once $cron_file;
+				}
+				if ( class_exists( 'CPFM_Usage_Cron' ) ) {
+					CPFM_Usage_Cron::cpfm_schedule_event( 'atfp_extra_data_update' );
+				} elseif ( ! wp_next_scheduled( 'atfp_extra_data_update' ) ) {
+					wp_schedule_event( time(), 'every_30_days', 'atfp_extra_data_update' );
+				}
 			}
 		}
 
@@ -989,3 +1211,21 @@ function ATFP_AutoPoly()
 // AutoPoly is our plugin name and it is used to call the plugin instance
 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $ATFP_AutoPoly = ATFP_AutoPoly();
+
+// Register Toolkit Hub as early as file load so a newer copy boots before
+// older siblings that still require the class on plugins_loaded 10/20.
+if ( is_admin() && defined( 'ATFP_DIR_PATH' ) ) {
+	$tfp_hub_load = ATFP_DIR_PATH . 'admin/toolkit-hub/load-tfp-toolkit-hub.php';
+	if ( file_exists( $tfp_hub_load ) ) {
+		require_once $tfp_hub_load;
+		tfp_toolkit_hub_register(
+			'1.0.2',
+			ATFP_DIR_PATH . 'admin/toolkit-hub/class-tfp-toolkit-hub.php',
+			array(
+				'text_domain' => 'automatic-translations-for-polylang',
+				'support_url' => 'https://wordpress.org/support/plugin/automatic-translations-for-polylang/',
+				'docs_url'    => 'https://docs.coolplugins.net/plugin/ai-translation-for-polylang/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=docs&utm_content=toolkit_hub_header',
+			)
+		);
+	}
+}

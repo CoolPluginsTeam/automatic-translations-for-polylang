@@ -1,0 +1,1831 @@
+/**
+ * Version: 1.0.0
+ * Toolkit for Polylang — shared hub + cross-plugin header styles.
+ * Loaded on the hub page and on each tool's own dashboard page.
+ *
+ * The hub page's own header uses the same ".atfp-dashboard-header" class
+ * names AutoPoly's real dashboard uses, but this stylesheet styles them
+ * itself, scoped to the hub's own screen — it never depends on AutoPoly's
+ * admin-styles.css being loaded. Whichever plugin's copy of the shared class
+ * wins the class_exists() race (AutoPoly, Inspector, or Switcher), the hub
+ * page looks identical, even on a site where AutoPoly isn't installed.
+ */
+ :is(.languages_page_toolkit-for-polylang) #wpbody #wpbody-content {
+	margin-top: 80px !important;
+}
+
+/* Same base font as AutoPoly's real .atfp-dashboard-wrapper (admin-styles.css),
+ * scoped to the hub's own screen — the hub's whole page uses AutoPoly's
+ * typography, not just its header.
+ */
+:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-wrapper * {
+	box-sizing: border-box;
+	font-family: Inter, Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Self-sufficient copy of AutoPoly's real .atfp-dashboard-header rules
+ * (admin/atfp-dashboard/css/admin-styles.css), scoped to the hub's own
+ * screen only — every tool's own dashboard keeps using its own plugin's
+ * real stylesheet for this, unchanged.
+ */
+:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background: #f8f9fa;
+	padding: 5px 30px;
+	border-bottom: 1px solid #ddd;
+	border-radius: 6px 6px 0 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: calc(100% + 20px);
+	margin: 0 0 0 -20px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+	height: 70px;
+}
+
+:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-header-left {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-header-right {
+	display: flex;
+	align-items: center;
+	gap: 15px;
+}
+
+:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-logo-text {
+	font-size: 18px;
+	font-weight: 700;
+	color: #000;
+	margin: 0;
+	padding: 0;
+	line-height: 1;
+}
+
+/* Hub header logo (SVG via <img> or inline <svg>) — match other dashboards at 42px. */
+:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-header-left img,
+:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-logo-link img {
+	width: 42px;
+	max-width: 42px;
+	height: auto;
+	margin: 0;
+	display: block;
+}
+
+:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-header-left svg,
+:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-logo-link svg {
+	width: 42px;
+	height: 42px;
+	display: block;
+	flex-shrink: 0;
+}
+
+/*
+ * AutoPoly's own .atfp-dashboard-logo-link (its own header, not the hub's)
+ * has no display rule of its own — it wraps the logo image and the title
+ * together, so it needs its own flex layout or the <h2> drops to a new line
+ * under the image.
+ */
+.atfp-dashboard-logo-link {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	text-decoration: none;
+}
+/*
+ * Pro dashboard uses .atfpp-dashboard-logo-link (double p) for the same
+ * logo+title wrap Free styles as .atfp-dashboard-logo-link.
+ */
+.atfpp-dashboard-logo-link {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	text-decoration: none;
+}
+
+/*
+ * WP admin sets a global a:focus box-shadow (theme-color ring). Toolkit
+ * headers already restyle logo / nav / action links; kill that core ring so
+ * older host dashboards (e.g. pre-Toolkit Language Switcher) match the new
+ * headers after migration. Nav/buttons still change colour on :focus.
+ */
+.lsdp-dashboard-header a:focus,
+.lsdp-dashboard-header a:focus-visible,
+.lsdp-header-logo-link:focus,
+.lsdp-header-logo-link:focus-visible,
+.dupcap-plugin-topbar a:focus,
+.dupcap-plugin-topbar a:focus-visible,
+.dupcap-plugin-topbar-link:focus,
+.dupcap-plugin-topbar-link:focus-visible,
+.atfp-dashboard-header a:focus,
+.atfp-dashboard-header a:focus-visible,
+.atfpp-dashboard-header a:focus,
+.atfpp-dashboard-header a:focus-visible,
+.atfp-dashboard-logo-link:focus,
+.atfp-dashboard-logo-link:focus-visible,
+.atfpp-dashboard-logo-link:focus,
+.atfpp-dashboard-logo-link:focus-visible,
+.tfp-header-btn:focus,
+.tfp-header-btn:focus-visible,
+.tfp-nav .tfp-nav-item:focus,
+.tfp-nav .tfp-nav-item:focus-visible {
+	box-shadow: none !important;
+	outline: none;
+}
+
+
+
+/*
+ * Same "Get Support" / "Check Docs" pair as Translation Inspector's own
+ * header (admin/inspector/css/admin.css .dupcap-topbar-btn*) — matching
+ * colours, own class names so this doesn't depend on that plugin's CSS
+ * actually being loaded.
+ */
+.tfp-header-btn {
+	align-items: center;
+	border-radius: 6px;
+	box-sizing: border-box;
+	display: inline-flex;
+	font-size: 14px;
+	font-weight: 600;
+	gap: 6px;
+	line-height: 1;
+	min-height: 36px;
+	padding: 10px 18px;
+	text-decoration: none;
+	transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.tfp-header-btn-icon.dashicons {
+	/*
+	 * AutoPoly's own admin-styles.css sets ".atfp-dashboard-wrapper * { font-family: Inter... }",
+	 * a same-specificity universal selector that loads after dashicons.css and
+	 * wins on source order — silently replacing the icon font so the glyph
+	 * falls back to a missing-character box. Reassert it here.
+	 */
+	font-family: dashicons !important;
+	font-size: 16px;
+	height: 16px;
+	width: 16px;
+	line-height: 1;
+	margin: 0;
+	flex-shrink: 0;
+}
+
+.tfp-header-btn-support {
+	background: #fff;
+	border: 1px solid #2563eb;
+	color: #2563eb;
+}
+
+.tfp-header-btn-support:hover,
+.tfp-header-btn-support:focus {
+	background: #eff6ff;
+	border-color: #1d4ed8;
+	color: #1d4ed8;
+}
+
+.tfp-header-btn-docs {
+	background: #2563eb;
+	border: 1px solid #2563eb;
+	color: #fff;
+}
+
+.tfp-header-btn-docs:hover,
+.tfp-header-btn-docs:focus {
+	background: #1d4ed8;
+	border-color: #1d4ed8;
+	color: #fff;
+}
+
+.tfp-logo {
+	width: 28px;
+	height: 28px;
+	border-radius: 7px;
+	background: #2563eb;
+	flex-shrink: 0;
+	position: relative;
+}
+
+.tfp-logo::after {
+	content: "A";
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #fff;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 1;
+}
+
+/* ---------- Hub body (mockup layout; header above stays unchanged) ---------- */
+
+/*
+ * Keep WP #wpcontent left padding as-is (do not bleed left smaller).
+ * Mirror that 20px on the right so right spacing matches left.
+ */
+:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-wrapper {
+	margin-left: 0;
+	margin-right: 0;
+	width: 85%;
+	margin:auto;
+	overflow-x: hidden;
+	box-sizing: border-box;
+	padding-left: 20px;
+	padding-right: 40px; /* 20px hub inset + 20px to match WP left pad */
+}
+
+.tfp-hub-body {
+	box-sizing: border-box;
+	width: 100%;
+	margin: 0 0 40px;
+	padding: 0;
+}
+
+/* Folded admin menu drops #wpcontent left pad — keep left/right equal. */
+:is(.folded.languages_page_toolkit-for-polylang) .atfp-dashboard-wrapper {
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.tfp-hub-body *,
+.tfp-hub-body *::before,
+.tfp-hub-body *::after {
+	box-sizing: border-box;
+}
+
+.tfp-section-head {
+	margin: 0 0 18px;
+}
+
+.tfp-section-title {
+	margin: 0 0 6px;
+	font-size: 18px;
+	font-weight: 700;
+	color: #111827;
+	line-height: 1.3;
+}
+
+.tfp-section-sub {
+	margin: 0;
+	font-size: 13.5px;
+	line-height: 1.5;
+	color: #6b7280;
+}
+
+/* Hero — mirrored from AutoPoly Free .atfp-dashboard-card.atfp-dashboard-start */
+.tfp-hero {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: 15px;
+	background: #fff;
+	border-radius: 8px;
+	border: 1px solid #ddd;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+	margin-bottom: 24px;
+	overflow: hidden;
+	width: 100%;
+	min-width: 0;
+	color: #222;
+	position: relative;
+}
+
+.tfp-hero-welcome {
+	padding: 20px 20px 0;
+}
+
+.tfp-hero-badge {
+	display: inline-flex;
+	align-items: center;
+	padding: 4px 10px;
+	border-radius: 999px;
+	background: #eff6ff;
+	border: 1px solid #bfdbfe;
+	color: #1d4ed8;
+	font-size: 10px;
+	font-weight: 700;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	margin-bottom: 10px;
+}
+
+.tfp-hero-title {
+	margin: 0;
+	padding: 0;
+	font-size: 24px;
+	font-weight: 700;
+	line-height: 1.3;
+	color: #222;
+	max-width: none;
+}
+
+.tfp-hero-desc {
+	margin: 8px 0 0;
+	padding: 0;
+	font-size: 14px;
+	line-height: 1.5;
+	color: #222;
+	max-width: none;
+}
+
+.tfp-hero-start-grid {
+	align-items: stretch;
+	display: flex;
+	gap: 24px;
+	padding: 16px 20px 20px;
+}
+
+.tfp-hero-video {
+	flex: 0 0 45%;
+	max-width: 45%;
+	min-width: 0;
+
+	display: flex;
+	flex-direction: column;
+	align-self: stretch;
+}
+
+.tfp-hero-video-frame {
+	align-items: center;
+	aspect-ratio: 16 / 9;
+	background-color: #f8f9fa;
+	background-position: center;
+	background-size: cover;
+	border-radius: 9px;
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+
+}
+
+.tfp-hero-video-frame:has(iframe) {
+	cursor: default;
+}
+
+.tfp-hero-video-frame iframe {
+	border: 0;
+	height: 100%;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	z-index: 2;
+}
+
+.tfp-hero-play {
+	align-items: center;
+	background: #e62117;
+	border: 3px solid #f2f2f2;
+	border-radius: 50%;
+	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28);
+	box-sizing: content-box;
+	color: #fff;
+	cursor: pointer;
+	display: flex;
+	height: 48px;
+	justify-content: center;
+	margin: 0;
+	padding: 0;
+	position: relative;
+	transition: transform 0.2s ease, background 0.2s ease;
+	width: 48px;
+	z-index: 1;
+}
+
+.tfp-hero-video-frame:hover .tfp-hero-play,
+.tfp-hero-play:hover,
+.tfp-hero-play:focus {
+	background: #c81c13;
+	transform: scale(1.06);
+}
+
+.tfp-hero-play svg {
+	height: 20px;
+	margin-left: 3px;
+	width: 20px;
+}
+
+.tfp-hero-steps {
+	flex: 1;
+	min-width: 0;
+	min-height: min-content;
+	padding: 8px 15px;
+	display: flex;
+	flex-direction: column;
+	align-self: stretch;
+}
+
+.tfp-hero-steps h2 {
+	font-size: 16px;
+	font-weight: 700;
+	margin: 0 0 14px;
+	padding: 0;
+	color: #222;
+	flex-shrink: 0;
+}
+
+.tfp-hero-step-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	flex: 1 0 auto;
+	min-height: min-content;
+}
+
+.tfp-hero-step-list li {
+	align-items: center;
+	display: flex;
+	gap: 12px;
+	margin: 0;
+	flex: 1 0 auto;
+	min-height: min-content;
+	padding: 10px 14px;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	background: #fff;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+	box-sizing: border-box;
+	overflow: visible;
+}
+
+.tfp-hero-step-num {
+	align-items: center;
+	background: #efffef;
+	border-radius: 50%;
+	color: #30b230;
+	display: inline-flex;
+	flex-shrink: 0;
+	font-size: 12px;
+	font-weight: 700;
+	height: 28px;
+	justify-content: center;
+	width: 28px;
+}
+
+.tfp-hero-step-text {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	min-width: 0;
+	justify-content: center;
+	flex: 1;
+	flex-shrink: 0;
+}
+
+
+.tfp-hero-step-desc {
+	font-size: 13px;
+	font-weight: 400;
+	line-height: 1.45;
+	color: #666;
+}
+
+@media screen and (max-width: 900px) {
+	.tfp-hero-start-grid {
+		display: block;
+	}
+
+	.tfp-hero-video {
+		margin-bottom: 20px;
+		max-width: 100%;
+		flex: none;
+		width: 100%;
+	}
+}
+
+/* Tools grid */
+.tfp-tools-section {
+	margin-bottom: 28px;
+}
+
+.tfp-grid {
+	display: grid;
+	/* 3 across when room; 2 then 1 as the admin content column shrinks. */
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+	gap: 18px;
+	width: 100%;
+	min-width: 0;
+}
+
+.tfp-card {
+	background: #fff;
+	border: 1px solid #e5e7eb;
+	border-radius: 12px;
+	padding: 24px;
+	display: flex;
+	flex-direction: column;
+	box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+	min-height: 100%;
+	min-width: 0;
+	width: 100%;
+}
+
+.tfp-card-top {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 12px;
+	margin-bottom: 16px;
+}
+
+/* Rounded-square icon tiles on tool cards (dashboard palette). */
+.tfp-icon-tile {
+	width: 52px;
+	height: 52px;
+	border: 1px solid #e8edf5;
+	border-radius: 12px;
+	background: #f8fafc;
+	box-shadow: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	overflow: hidden;
+	padding: 4px;
+}
+
+.tfp-icon-tile svg,
+.tfp-icon-tile .tfp-icon-logo {
+	width: 40px;
+	height: 40px;
+	display: block;
+	object-fit: contain;
+	border: 0;
+	/* border-radius: 8px; */
+	box-shadow: none;
+	/* background: transparent; */
+}
+
+.tfp-icon-circle {
+	overflow: hidden;
+}
+
+.tfp-icon-circle .tfp-icon-logo {
+	width: 28px;
+	height: 28px;
+	display: block;
+	object-fit: contain;
+}
+
+.tfp-icon-tile.purple {
+	/* background: #f5f3ff;
+	border-color: #e9e5ff; */
+}
+
+.tfp-icon-tile.green {
+	/* background: #ecfdf5;
+	border-color: #d1fae5; */
+}
+
+.tfp-icon-tile.blue {
+	/* background: #eff6ff;
+	border-color: #dbeafe; */
+}
+
+/* Circular icons still used in Toolkit controls rows. */
+.tfp-icon-circle {
+	width: 44px;
+	height: 44px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+}
+
+.tfp-icon-circle.sm {
+	width: 40px;
+	height: 40px;
+}
+
+.tfp-icon-circle svg {
+	width: 22px;
+	height: 22px;
+}
+
+.tfp-icon-circle.sm svg {
+	width: 20px;
+	height: 20px;
+}
+
+.tfp-icon-circle.blue {
+	background: #dbeafe;
+	color: #2271b1;
+}
+
+.tfp-icon-circle.green {
+	background: #dcfce7;
+	color: #15803d;
+}
+
+.tfp-icon-circle.purple {
+	background: #f3e8ff;
+	color: #7e22ce;
+}
+
+.tfp-icon-circle.amber {
+	background: #fef3c7;
+	color: #b45309;
+}
+
+.tfp-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 5px 11px;
+	border-radius: 999px;
+	font-size: 11.5px;
+	font-weight: 650;
+	line-height: 1.2;
+	white-space: nowrap;
+}
+
+.tfp-badge-dot {
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: currentColor;
+	flex-shrink: 0;
+}
+
+.tfp-badge.active,
+.tfp-badge.enabled,
+.tfp-badge.installed {
+	background: #dcfce7;
+	color: #15803d;
+}
+
+.tfp-badge.addon {
+	background: #eef2f7;
+	color: #334155;
+}
+
+.tfp-badge.not-installed,
+.tfp-badge.inactive {
+	background: #eef2f7;
+	color: #334155;
+}
+
+.tfp-badge.disabled {
+	background: #f3f4f6;
+	color: #6b7280;
+}
+
+.tfp-card-title {
+	margin: 0 0 8px;
+	font-size: 18px;
+	font-weight: 700;
+	color: #0f172a;
+	line-height: 1.3;
+}
+
+.tfp-card-desc {
+	margin: 0 0 20px;
+	font-size: 13.5px;
+	line-height: 1.55;
+	color: #64748b;
+	flex: 1 1 auto;
+}
+
+.tfp-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	min-height: 44px;
+	padding: 10px 16px;
+	border-radius: 10px;
+	border: 1px solid transparent;
+	font-size: 13.5px;
+	font-weight: 650;
+	text-decoration: none;
+	width: 50%;
+	cursor: pointer;
+	margin-top: auto;
+	transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
+.tfp-btn-block {
+	width: 50%;
+}
+
+.tfp-btn-icon {
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+}
+
+.tfp-btn-icon-end {
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+}
+
+/* Open / active: dashboard blue (#2563eb) — ignore WP admin color scheme. */
+.tfp-btn.button,
+.tfp-btn.button-primary {
+	display: inline-flex !important;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	box-sizing: border-box;
+	width: 50%;
+	min-height: 44px;
+	height: auto !important;
+	margin: 0;
+	padding: 10px 16px !important;
+	float: none !important;
+	line-height: 1.25 !important;
+	text-align: center;
+	text-decoration: none;
+	vertical-align: middle;
+	white-space: nowrap;
+	background: #2563eb !important;
+	border: 1px solid #2563eb !important;
+	border-radius: 10px !important;
+	color: #fff !important;
+	box-shadow: 0 1px 2px rgba(37, 99, 235, 0.2);
+	text-shadow: none !important;
+}
+
+.tfp-btn.button:hover,
+.tfp-btn.button:focus,
+.tfp-btn.button-primary:hover,
+.tfp-btn.button-primary:focus {
+	background: #1d4ed8 !important;
+	border-color: #1d4ed8 !important;
+	color: #fff !important;
+	box-shadow: 0 4px 12px rgba(37, 99, 235, 0.28);
+}
+
+.tfp-btn.button .tfp-btn-text,
+.tfp-btn.button-primary .tfp-btn-text {
+	display: inline;
+	line-height: inherit;
+	color: inherit;
+}
+
+.tfp-btn.button .tfp-btn-icon,
+.tfp-btn.button-primary .tfp-btn-icon,
+.tfp-btn.button .tfp-btn-icon-end,
+.tfp-btn.button-primary .tfp-btn-icon-end {
+	display: block;
+	flex-shrink: 0;
+	color: inherit;
+	fill: currentColor;
+}
+
+
+/* Cross-plugin header menu — pill track + crisp 16px SVG icons. */
+.tfp-nav {
+	align-items: center;
+	background: transparent;
+	border: 0;
+	display: flex;
+	flex: 1 1 auto;
+	flex-wrap: nowrap;
+	gap: 0;
+	justify-content: center;
+	margin: 0;
+	min-width: 0;
+	padding: 0 12px;
+}
+
+.tfp-nav-track {
+	align-items: center;
+	background: #eef1f6;
+	border-radius: 999px;
+	display: inline-flex;
+	flex-wrap: nowrap; /* never orphan Language Switcher onto its own row */
+	flex-shrink: 0;
+	gap: 2px;
+	justify-content: center;
+	max-width: 100%;
+	padding: 4px;
+}
+
+.tfp-nav .tfp-nav-item {
+	align-items: center;
+	background: transparent !important;
+	border: 0 !important;
+	border-radius: 999px;
+	box-shadow: none !important;
+	color: #64748b !important;
+	display: inline-flex;
+	font-size: 13px;
+	font-weight: 500;
+	gap: 8px;
+	height: auto;
+	line-height: 1.2;
+	margin: 0;
+	min-height: 0;
+	padding: 8px 14px !important;
+	text-decoration: none !important;
+	transition: color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+	white-space: nowrap;
+}
+
+.tfp-nav .tfp-nav-icon-wrap {
+	align-items: center;
+	color: #334155;
+	display: inline-flex;
+	flex-shrink: 0;
+	height: 16px;
+	justify-content: center;
+	line-height: 0;
+	width: 16px;
+}
+
+.tfp-nav .tfp-nav-icon {
+	display: block;
+	flex-shrink: 0;
+	height: 16px;
+	width: 16px;
+}
+
+.tfp-nav .tfp-nav-label {
+	line-height: 1.2;
+}
+
+.tfp-nav .tfp-nav-status {
+	background: #22c55e;
+	border-radius: 50%;
+	box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
+	display: inline-block;
+	flex-shrink: 0;
+	height: 8px;
+	width: 8px;
+}
+
+.tfp-nav .tfp-nav-item:hover,
+.tfp-nav .tfp-nav-item:focus,
+.tfp-nav .tfp-nav-item:focus-visible {
+	background: rgba(255, 255, 255, 0.55) !important;
+	box-shadow: none !important;
+	color: #334155 !important;
+	outline: none;
+	text-decoration: none !important;
+}
+
+.tfp-nav .tfp-nav-item:hover .tfp-nav-icon-wrap,
+.tfp-nav .tfp-nav-item:focus .tfp-nav-icon-wrap {
+	color: #0f172a;
+}
+
+.tfp-nav .tfp-nav-item.active {
+	background: #fff !important;
+	box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(15, 23, 42, 0.06) !important;
+	color: #0f172a !important;
+	font-weight: 700 !important;
+	text-decoration: none !important;
+}
+
+.tfp-nav .tfp-nav-item.active .tfp-nav-icon-wrap {
+	color: #2563eb;
+}
+
+.tfp-nav .tfp-nav-item.active:hover,
+.tfp-nav .tfp-nav-item.active:focus,
+.tfp-nav .tfp-nav-item.active:focus-visible {
+	background: #fff !important;
+	color: #0f172a !important;
+	text-decoration: none !important;
+}
+
+.tfp-nav .tfp-nav-item.not-installed {
+	color: #94a3b8 !important;
+}
+
+.tfp-nav .tfp-nav-item.not-installed:hover,
+.tfp-nav .tfp-nav-item.not-installed:focus {
+	color: #64748b !important;
+}
+
+/* Pulse Install/Activate when arriving from header menu (tfp_install=…). */
+@keyframes tfp-install-pulse {
+	0%, 100% {
+		box-shadow: 0 0 0 0 rgba(15, 23, 42, 0.55);
+		transform: scale(1);
+	}
+	50% {
+		box-shadow: 0 0 0 10px rgba(15, 23, 42, 0);
+		transform: scale(1.03);
+	}
+}
+
+.tfp-btn.tfp-install-pulse {
+	animation: tfp-install-pulse 1.25s ease-in-out infinite;
+	position: relative;
+	z-index: 1;
+}
+
+.tfp-card.tfp-install-focus {
+	outline: 2px solid #0f172a;
+	outline-offset: 4px;
+}
+
+/* Focus Toolkit controls when arriving with ?tfp_focus=inspector — do NOT
+ * scale the toggle (that breaks the knob). Highlight the row + show a cue. */
+@keyframes tfp-control-glow {
+	0%, 100% {
+		box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.35);
+		background-color: #eff6ff;
+	}
+	50% {
+		box-shadow: 0 0 0 8px rgba(37, 99, 235, 0);
+		background-color: #dbeafe;
+	}
+}
+
+@keyframes tfp-cue-bounce {
+	0%, 100% { transform: translateY(0); }
+	50% { transform: translateY(-3px); }
+}
+
+.tfp-control-row.tfp-control-focus {
+	position: relative;
+	outline: 2px solid #2563eb;
+	outline-offset: 4px;
+	border-radius: 12px;
+	padding: 12px 14px;
+	margin-left: -14px;
+	margin-right: -14px;
+	animation: tfp-control-glow 1.4s ease-in-out infinite;
+}
+
+.tfp-control-row.tfp-control-focus .tfp-focus-cue {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	margin: 0;
+	padding: 6px 10px;
+	border-radius: 999px;
+	background: #2563eb;
+	color: #fff;
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 1.2;
+	white-space: nowrap;
+	box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+	animation: tfp-cue-bounce 1.1s ease-in-out infinite;
+}
+
+.tfp-control-row.tfp-control-focus .tfp-focus-cue::before {
+	content: "";
+	width: 0;
+	height: 0;
+	border-top: 5px solid transparent;
+	border-bottom: 5px solid transparent;
+	border-left: 7px solid #fff;
+}
+
+.tfp-control-row.tfp-control-focus .tfp-row-right {
+	display: flex;
+	align-items: center;
+	align-self: center;
+	gap: 10px;
+	flex: 0 0 auto;
+	flex-shrink: 0;
+}
+
+
+
+/* Install / Activate — same dashboard blue as Open CTAs. */
+.tfp-btn.dark {
+	background: #2563eb;
+	border-color: #2563eb;
+	color: #fff;
+	box-shadow: 0 1px 2px rgba(37, 99, 235, 0.2);
+}
+
+.tfp-btn.dark:hover,
+.tfp-btn.dark:focus {
+	background: #1d4ed8;
+	border-color: #1d4ed8;
+	color: #fff;
+	box-shadow: 0 4px 12px rgba(37, 99, 235, 0.28);
+}
+
+.tfp-btn.is-disabled,
+.tfp-btn[aria-disabled="true"] {
+	opacity: 0.45;
+	pointer-events: none;
+	cursor: not-allowed;
+	box-shadow: none;
+}
+
+/* Enable inspector mode: hide Open arrow; keep button fully clickable. */
+.tfp-enable-inspector-btn .tfp-btn-icon-end {
+	display: none;
+}
+
+
+.tfp-btn-wrap {
+	position: relative;
+	width: 100%;
+	margin-top: auto;
+}
+
+.tfp-btn-wrap .tfp-btn {
+	margin-top: 0;
+}
+
+.tfp-btn-tip {
+	display: none;
+	position: absolute;
+	left: 50%;
+	bottom: calc(100% + 10px);
+	transform: translateX(-50%);
+	z-index: 20;
+	width: max-content;
+	max-width: 240px;
+	padding: 8px 10px;
+	border-radius: 8px;
+	background: #0f172a;
+	color: #fff;
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 1.4;
+	text-align: center;
+	box-shadow: 0 8px 20px rgba(15, 23, 42, 0.25);
+	pointer-events: none;
+	white-space: normal;
+}
+
+.tfp-btn-tip::after {
+	content: "";
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	margin-left: -6px;
+	border: 6px solid transparent;
+	border-top-color: #0f172a;
+}
+
+.tfp-btn-wrap.is-disabled:hover .tfp-btn-tip,
+.tfp-btn-wrap.is-disabled:focus-within .tfp-btn-tip {
+	display: block;
+}
+
+
+.tfp-install-message {
+	margin: 8px 0 0;
+	font-size: 12.5px;
+	color: #dc2626;
+	min-height: 0;
+}
+
+/* Bottom two-column layout */
+.tfp-bottom-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+	gap: 18px;
+	align-items: start;
+	width: 100%;
+	min-width: 0;
+}
+
+.tfp-panel {
+	background: #fff;
+	border: 1px solid #e5e7eb;
+	border-radius: 14px;
+	padding: 22px 24px;
+	box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+}
+
+.tfp-control-row {
+	margin-bottom: 16px;
+}
+
+.tfp-control-row:last-of-type {
+	margin-bottom: 12px;
+}
+
+.tfp-control-main {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+}
+
+.tfp-control-left {
+	display: flex;
+	align-items: flex-start;
+	gap: 12px;
+	min-width: 0;
+	flex: 1 1 auto;
+}
+
+.tfp-row-text-title {
+	margin: 0 0 4px;
+	font-size: 14.5px;
+	font-weight: 700;
+	color: #111827;
+}
+
+.tfp-row-text-desc {
+	margin: 0;
+	font-size: 12.5px;
+	line-height: 1.45;
+	color: #6b7280;
+}
+
+.tfp-row-right {
+	display: flex;
+	align-items: center;
+	align-self: center;
+	gap: 10px;
+	flex: 0 0 auto;
+	flex-shrink: 0;
+}
+
+.tfp-controls-note {
+	margin: 4px 0 0;
+	font-size: 12px;
+	line-height: 1.45;
+	color: #9ca3af;
+}
+
+.tfp-toggle {
+	position: relative;
+	display: inline-block;
+	width: 44px;
+	height: 24px;
+	flex-shrink: 0;
+}
+
+/*
+ * WordPress admin forms.css paints input[type=checkbox]:checked:before /
+ * :disabled:checked:before as a blue dash. Hide every WP chrome on our
+ * custom switch — visual state lives only on .tfp-toggle-track.
+ */
+.tfp-toggle input[type="checkbox"],
+.tfp-toggle input[type="checkbox"]:checked,
+.tfp-toggle input[type="checkbox"]:disabled,
+.tfp-toggle input[type="checkbox"]:disabled:checked,
+.tfp-toggle input[type="checkbox"]:focus {
+	position: absolute !important;
+	inset: 0 !important;
+	width: 100% !important;
+	height: 100% !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	opacity: 0 !important;
+	border: 0 !important;
+	background: transparent !important;
+	box-shadow: none !important;
+	appearance: none !important;
+	-webkit-appearance: none !important;
+	z-index: 2;
+	cursor: pointer;
+}
+
+.tfp-toggle input[type="checkbox"]::before,
+.tfp-toggle input[type="checkbox"]::after,
+.tfp-toggle input[type="checkbox"]:checked::before,
+.tfp-toggle input[type="checkbox"]:checked::after,
+.tfp-toggle input[type="checkbox"]:disabled::before,
+.tfp-toggle input[type="checkbox"]:disabled::after,
+.tfp-toggle input[type="checkbox"]:disabled:checked::before,
+.tfp-toggle input[type="checkbox"]:disabled:checked::after,
+.tfp-toggle input[type="checkbox"]:checked:before,
+.tfp-toggle input[type="checkbox"]:disabled:checked:before {
+	content: none !important;
+	display: none !important;
+	width: 0 !important;
+	height: 0 !important;
+	border: 0 !important;
+	background: none !important;
+	box-shadow: none !important;
+}
+
+.tfp-toggle-track {
+	position: absolute;
+	inset: 0;
+	background: #d1d5db;
+	border-radius: 999px;
+	cursor: pointer;
+	transition: background-color 0.15s ease;
+	z-index: 1;
+	pointer-events: none;
+}
+
+.tfp-toggle-track::before {
+	content: "" !important;
+	display: block !important;
+	position: absolute;
+	width: 18px;
+	height: 18px;
+	left: 3px;
+	top: 3px;
+	background: #fff !important;
+	border: 0 !important;
+	border-radius: 50%;
+	transition: transform 0.15s ease;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.tfp-toggle input:checked + .tfp-toggle-track {
+	background: #2563eb;
+}
+
+.tfp-toggle input:checked + .tfp-toggle-track::before {
+	transform: translateX(20px);
+}
+
+.tfp-toggle input:disabled + .tfp-toggle-track,
+.tfp-toggle.is-locked .tfp-toggle-track {
+	opacity: 0.55;
+	cursor: not-allowed;
+}
+
+.tfp-toggle input:disabled {
+	cursor: not-allowed;
+}
+
+.tfp-toggle.is-locked {
+	cursor: not-allowed;
+}
+
+.tfp-toggle-tip {
+	display: none;
+	position: absolute;
+	right: 0;
+	bottom: calc(100% + 10px);
+	z-index: 20;
+	width: max-content;
+	max-width: 220px;
+	padding: 8px 10px;
+	border-radius: 8px;
+	background: #0f172a;
+	color: #fff;
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 1.4;
+	text-align: left;
+	box-shadow: 0 8px 20px rgba(15, 23, 42, 0.25);
+	pointer-events: none;
+	white-space: normal;
+}
+
+.tfp-toggle-tip::after {
+	content: "";
+	position: absolute;
+	top: 100%;
+	right: 14px;
+	border: 6px solid transparent;
+	border-top-color: #0f172a;
+}
+
+.tfp-toggle.is-locked:hover .tfp-toggle-tip,
+.tfp-toggle.is-locked:focus-within .tfp-toggle-tip {
+	display: block;
+}
+
+.tfp-compat-tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.tfp-compat-tags span {
+	display: inline-flex;
+	align-items: center;
+	padding: 5px 10px;
+	border-radius: 999px;
+	background: #f3f4f6;
+	border: 1px solid #e5e7eb;
+	font-size: 11.5px;
+	font-weight: 600;
+	color: #4b5563;
+}
+
+/* ---------- Canonical shared header (identical on Free / Pro / Inspector / Switcher) ----------
+ * Host dashboards use different shells (.atfp- / .atfpp- / .lsdp- / .dupcap-) and each
+ * ships its own admin CSS that fights width / wrap / ellipsis / height. When .tfp-nav is
+ * present, these rules own the header so every plugin shows the SAME layout.
+ * -------------------------------------------------------------------------- */
+
+/* Desktop shell: single row — logo | centered nav track | Support+Docs */
+.atfp-dashboard-header:has(.tfp-nav),
+.atfpp-dashboard-header:has(.tfp-nav),
+.lsdp-header-content:has(.tfp-nav),
+.dupcap-plugin-topbar-inner:has(.tfp-nav) {
+	display: flex !important;
+	flex-direction: row !important;
+	flex-wrap: nowrap;
+	align-items: center !important;
+	justify-content: space-between;
+	gap: 12px;
+	box-sizing: border-box;
+	overflow: visible !important;
+}
+
+/* Absolute/fixed host headers (Free/Pro 70px, Switcher 70px) must not clip the track */
+.atfp-dashboard-header:has(.tfp-nav),
+.atfpp-dashboard-header:has(.tfp-nav) {
+	height: 70px;
+	min-height: 70px;
+}
+
+.lsdp-dashboard-header:has(.tfp-nav) {
+	height: auto !important;
+	min-height: 70px;
+	box-sizing: border-box;
+	overflow: visible !important;
+}
+
+.lsdp-header-content:has(.tfp-nav) {
+	height: auto !important;
+	min-height: 60px;
+}
+
+.dupcap-plugin-topbar:has(.tfp-nav) {
+	overflow: visible;
+}
+
+.dupcap-plugin-topbar-inner:has(.tfp-nav) {
+	min-height: 56px;
+	padding: 10px 0;
+	height: auto !important;
+}
+
+/* Logo cluster — do not flex-shrink:0 so hard that nav is crushed (Switcher) */
+.atfp-dashboard-header:has(.tfp-nav) .atfp-dashboard-header-left,
+.atfpp-dashboard-header:has(.tfp-nav) .atfpp-dashboard-header-left,
+.lsdp-header-content:has(.tfp-nav) .lsdp-header-logo,
+.dupcap-plugin-topbar-inner:has(.tfp-nav) .dupcap-plugin-topbar-brand {
+	display: flex !important;
+	align-items: center;
+	flex: 0 1 auto;
+	flex-shrink: 1;
+	min-width: 0;
+	max-width: 42%;
+	gap: 10px;
+}
+
+/* Title: never "Toolkit for Pol..." ellipsis; allow wrap / slightly smaller mid */
+.atfp-dashboard-header:has(.tfp-nav) .atfp-dashboard-logo-text,
+.atfpp-dashboard-header:has(.tfp-nav) .atfpp-dashboard-logo-text,
+.lsdp-header-content:has(.tfp-nav) .lsdp-header-title,
+.dupcap-plugin-topbar-inner:has(.tfp-nav) .dupcap-plugin-topbar-name {
+	overflow: visible !important;
+	text-overflow: clip !important;
+	white-space: normal !important;
+	line-height: 1.2 !important;
+	font-size: 18px !important;
+	font-weight: 700 !important;
+	color: #000 !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	max-width: none !important;
+}
+
+/* Logo image size locked — kill Free/Pro ≤1024 max-width:125px blow-up */
+.atfp-dashboard-header:has(.tfp-nav) .atfp-dashboard-header-left img,
+.atfp-dashboard-header:has(.tfp-nav) .atfp-dashboard-logo-link img,
+.atfpp-dashboard-header:has(.tfp-nav) .atfpp-dashboard-header-left img,
+.atfpp-dashboard-header:has(.tfp-nav) .atfpp-dashboard-logo-link img,
+.lsdp-header-content:has(.tfp-nav) .lsdp-header-logo img,
+.dupcap-plugin-topbar-inner:has(.tfp-nav) .dupcap-plugin-topbar-logo {
+	width: 42px !important;
+	max-width: 42px !important;
+	height: auto !important;
+	flex-shrink: 0;
+}
+
+.atfp-dashboard-header:has(.tfp-nav) .atfp-dashboard-header-left svg,
+.atfpp-dashboard-header:has(.tfp-nav) .atfpp-dashboard-header-left svg {
+	width: 42px !important;
+	height: 42px !important;
+	max-width: 42px !important;
+	flex-shrink: 0;
+}
+
+/* Nav sits in the middle and can take remaining space as a unit */
+.atfp-dashboard-header:has(.tfp-nav) > .tfp-nav,
+.atfpp-dashboard-header:has(.tfp-nav) > .tfp-nav,
+.lsdp-header-content:has(.tfp-nav) > .tfp-nav,
+.dupcap-plugin-topbar-inner:has(.tfp-nav) > .tfp-nav {
+	flex: 1 1 auto;
+	min-width: 0;
+	justify-content: center;
+	padding: 0 8px;
+}
+
+/* Actions — Support + Docs side-by-side; don't flex-shrink:0 crush the nav */
+.atfp-dashboard-header:has(.tfp-nav) .atfp-dashboard-header-right,
+.atfpp-dashboard-header:has(.tfp-nav) .atfpp-dashboard-header-right,
+.lsdp-header-content:has(.tfp-nav) .lsdp-header-actions,
+.dupcap-plugin-topbar-inner:has(.tfp-nav) .dupcap-plugin-topbar-actions {
+	display: flex !important;
+	flex: 0 1 auto;
+	flex-wrap: nowrap !important;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 10px !important;
+	min-width: 0;
+	/* Override Switcher flex-shrink:0 / Inspector flex-wrap:wrap */
+	flex-shrink: 1 !important;
+}
+
+/* Inspector still ships dupcap-topbar-btn — mirror .tfp-header-btn sizing here */
+.dupcap-plugin-topbar-inner:has(.tfp-nav) .dupcap-topbar-btn,
+.dupcap-plugin-topbar-inner:has(.tfp-nav) .tfp-header-btn,
+.atfp-dashboard-header:has(.tfp-nav) .tfp-header-btn,
+.atfpp-dashboard-header:has(.tfp-nav) .tfp-header-btn,
+.lsdp-header-content:has(.tfp-nav) .tfp-header-btn {
+	flex: 0 0 auto;
+	white-space: nowrap;
+}
+
+/* ---------- Responsive: hub + shared header (cards, buttons, menus) ---------- */
+
+@media screen and (max-width: 1280px) {
+	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-wrapper {
+		width: 94%;
+		padding-left: 16px;
+		padding-right: 24px;
+	}
+}
+
+/*
+ * ≤1100px (tablet + mobile): ONE continuous white header — column stack.
+ * Tool pages (with .tfp-nav): logo → full-width grey nav track → Support/Docs.
+ * Hub page (no .tfp-nav): logo → Support/Docs only — same relative/auto shell
+ * via :is(.languages_page_toolkit-for-polylang), so no absolute overflow,
+ * no ghost 80px spacer, buttons wrap cleanly inside the white bar.
+ */
+@media screen and (max-width: 1100px) {
+	body:is(.languages_page_toolkit-for-polylang) #wpbody #wpbody-content,
+	body:is(.languages_page_polylang-atfp-dashboard, .toplevel_page_loco-addon, .languages_page_polylang-atfpp-dashboard) #wpbody #wpbody-content {
+		margin-top: 0 !important;
+		margin-block-start: 0 !important;
+	}
+
+	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-wrapper {
+		width: 100%;
+		padding-left: 12px;
+		padding-right: 16px;
+	}
+
+	/* Drop host/hub padding that compensated for the old absolute header */
+	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-wrapper,
+	.atfp-dashboard-wrapper:has(.tfp-nav),
+	.atfpp-dashboard-wrapper:has(.tfp-nav) {
+		padding-top: 0 !important;
+	}
+
+	/* Hub header (scoped) + every host shell with .tfp-nav */
+	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-header,
+	.atfp-dashboard-header:has(.tfp-nav),
+	.atfpp-dashboard-header:has(.tfp-nav),
+	.lsdp-header-content:has(.tfp-nav),
+	.dupcap-plugin-topbar-inner:has(.tfp-nav) {
+		position: relative !important;
+		top: auto !important;
+		left: auto !important;
+		right: auto !important;
+		bottom: auto !important;
+		width: 100% !important;
+		max-width: 100% !important;
+		margin: 0 0 12px !important;
+		border-radius: 8px;
+		height: auto !important;
+		min-height: 0 !important;
+		max-height: none !important;
+		padding: 12px 16px !important;
+		display: flex !important;
+		flex-direction: column !important;
+		flex-wrap: nowrap !important;
+		align-items: stretch !important;
+		justify-content: flex-start !important;
+		gap: 10px !important;
+		overflow: visible !important;
+		box-sizing: border-box !important;
+	}
+
+	.lsdp-dashboard-header:has(.tfp-nav),
+	.dupcap-plugin-topbar:has(.tfp-nav) {
+		height: auto !important;
+		min-height: 0 !important;
+		overflow: visible !important;
+	}
+
+	/* 1) Logo row */
+	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-header-left,
+	.atfp-dashboard-header:has(.tfp-nav) .atfp-dashboard-header-left,
+	.atfpp-dashboard-header:has(.tfp-nav) .atfpp-dashboard-header-left,
+	.lsdp-header-content:has(.tfp-nav) .lsdp-header-logo,
+	.dupcap-plugin-topbar-inner:has(.tfp-nav) .dupcap-plugin-topbar-brand {
+		order: 1 !important;
+		flex: 0 0 auto !important;
+		flex-shrink: 1 !important;
+		width: 100% !important;
+		max-width: none !important;
+		min-width: 0 !important;
+		display: flex !important;
+		align-items: center !important;
+		gap: 10px !important;
+	}
+
+	.atfp-dashboard-header:has(.tfp-nav) .atfp-dashboard-logo-text,
+	.atfpp-dashboard-header:has(.tfp-nav) .atfpp-dashboard-logo-text,
+	.lsdp-header-content:has(.tfp-nav) .lsdp-header-title,
+	.dupcap-plugin-topbar-inner:has(.tfp-nav) .dupcap-plugin-topbar-name,
+	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-logo-text {
+		font-size: 16px !important;
+		white-space: normal !important;
+		overflow: visible !important;
+		text-overflow: clip !important;
+		line-height: 1.25 !important;
+		margin: 0 !important;
+	}
+
+	/* 2) Nav — full width of header; grey track spans content, pills wrap inside */
+	.tfp-nav,
+	.atfp-dashboard-header:has(.tfp-nav) > .tfp-nav,
+	.atfpp-dashboard-header:has(.tfp-nav) > .tfp-nav,
+	.lsdp-header-content:has(.tfp-nav) > .tfp-nav,
+	.dupcap-plugin-topbar-inner:has(.tfp-nav) > .tfp-nav {
+		order: 2 !important;
+		flex: 0 0 auto !important;
+		width: 100% !important;
+		max-width: 100% !important;
+		min-width: 0 !important;
+		padding: 0 !important;
+		margin: 0 !important;
+		justify-content: stretch !important;
+		align-self: stretch !important;
+	}
+
+	.tfp-nav-track {
+		display: flex !important;
+		flex-direction: row !important;
+		flex-wrap: wrap !important;
+		align-items: center !important;
+		justify-content: center !important;
+		gap: 4px !important;
+		width: 100% !important;
+		max-width: 100% !important;
+		box-sizing: border-box !important;
+		background: #eef1f6 !important;
+		border: 0 !important;
+		border-radius: 12px !important;
+		box-shadow: none !important;
+		padding: 4px !important;
+		flex-shrink: 1 !important;
+	}
+
+	.tfp-nav .tfp-nav-item {
+		flex: 0 1 auto !important;
+		width: auto !important;
+		max-width: 100% !important;
+		padding: 7px 12px !important;
+		font-size: 12.5px;
+		box-sizing: border-box;
+		justify-content: center;
+	}
+
+	.tfp-nav .tfp-nav-item.active {
+		width: fit-content !important;
+		max-width: 100% !important;
+		flex: 0 0 auto !important;
+	}
+
+	/* 3) Support + Docs — immediately under nav, still inside header */
+	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-header-right,
+	.atfp-dashboard-header:has(.tfp-nav) .atfp-dashboard-header-right,
+	.atfpp-dashboard-header:has(.tfp-nav) .atfpp-dashboard-header-right,
+	.lsdp-header-content:has(.tfp-nav) .lsdp-header-actions,
+	.dupcap-plugin-topbar-inner:has(.tfp-nav) .dupcap-plugin-topbar-actions {
+		order: 3 !important;
+		flex: 0 0 auto !important;
+		width: 100% !important;
+		max-width: none !important;
+		min-width: 0 !important;
+		display: flex !important;
+		flex-wrap: nowrap !important;
+		align-items: center !important;
+		justify-content: flex-start !important;
+		gap: 8px !important;
+		margin: 0 !important;
+	}
+
+	.atfp-dashboard-header:has(.tfp-nav) .tfp-header-btn,
+	.atfpp-dashboard-header:has(.tfp-nav) .tfp-header-btn,
+	.lsdp-header-content:has(.tfp-nav) .tfp-header-btn,
+	.dupcap-plugin-topbar-inner:has(.tfp-nav) .tfp-header-btn,
+	.dupcap-plugin-topbar-inner:has(.tfp-nav) .dupcap-topbar-btn,
+	:is(.languages_page_toolkit-for-polylang) .tfp-header-btn {
+		flex: 1 1 0 !important;
+		justify-content: center;
+		text-align: center;
+		white-space: nowrap;
+		padding: 7px 12px;
+		font-size: 12.5px;
+	}
+
+	.tfp-card-desc {
+		min-height: 0;
+	}
+
+	.tfp-btn,
+	.tfp-btn-block,
+	.tfp-btn.button,
+	.tfp-btn.button-primary {
+		width: 70%;
+	}
+}
+
+@media screen and (max-width: 960px) {
+	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-logo-text,
+	.atfp-dashboard-header:has(.tfp-nav) .atfp-dashboard-logo-text,
+	.atfpp-dashboard-header:has(.tfp-nav) .atfpp-dashboard-logo-text,
+	.lsdp-header-content:has(.tfp-nav) .lsdp-header-title,
+	.dupcap-plugin-topbar-inner:has(.tfp-nav) .dupcap-plugin-topbar-name {
+		font-size: 15px !important;
+	}
+
+	.tfp-panel {
+		padding: 18px;
+	}
+
+	.tfp-card {
+		padding: 18px;
+	}
+
+	.tfp-btn,
+	.tfp-btn-block,
+	.tfp-btn.button,
+	.tfp-btn.button-primary {
+		width: 100%;
+		white-space: normal;
+	}
+
+	.tfp-btn-wrap {
+		width: 100%;
+	}
+
+	.tfp-grid,
+	.tfp-bottom-grid {
+		grid-template-columns: 1fr;
+		gap: 14px;
+	}
+}
+
+@media screen and (max-width: 782px) {
+	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-wrapper,
+	:is(.folded.languages_page_toolkit-for-polylang) .atfp-dashboard-wrapper {
+		width: 100%;
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+
+	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-header,
+	.atfp-dashboard-header:has(.tfp-nav),
+	.atfpp-dashboard-header:has(.tfp-nav),
+	.lsdp-header-content:has(.tfp-nav),
+	.dupcap-plugin-topbar-inner:has(.tfp-nav) {
+		padding: 12px !important;
+		gap: 10px !important;
+	}
+
+	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-header-left img,
+	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-logo-link img,
+	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-header-left svg,
+	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-logo-link svg,
+	.atfp-dashboard-header:has(.tfp-nav) .atfp-dashboard-header-left img,
+	.atfp-dashboard-header:has(.tfp-nav) .atfp-dashboard-logo-link img,
+	.atfpp-dashboard-header:has(.tfp-nav) .atfpp-dashboard-header-left img,
+	.atfpp-dashboard-header:has(.tfp-nav) .atfpp-dashboard-logo-link img,
+	.lsdp-header-content:has(.tfp-nav) .lsdp-header-logo img,
+	.dupcap-plugin-topbar-inner:has(.tfp-nav) .dupcap-plugin-topbar-logo {
+		width: 36px !important;
+		max-width: 36px !important;
+		height: 36px !important;
+	}
+
+	/* Narrow: stack pills inside the full-width grey track */
+	.tfp-nav-track {
+		flex-direction: column !important;
+		flex-wrap: wrap !important;
+		align-items: center !important;
+		border-radius: 12px !important;
+		gap: 4px !important;
+	}
+
+	.tfp-nav .tfp-nav-item {
+		width: 100% !important;
+		justify-content: center !important;
+		padding: 8px 10px !important;
+		gap: 6px;
+	}
+
+	.tfp-nav .tfp-nav-item.active {
+		width: fit-content !important;
+		max-width: 100% !important;
+		align-self: center;
+	}
+
+	.tfp-nav .tfp-nav-label {
+		font-size: 12px;
+	}
+
+	.tfp-hub-body {
+		padding: 0 0 24px;
+		margin: 0 0 24px;
+	}
+
+	.tfp-hero {
+		padding: 12px;
+		border-radius: 8px;
+	}
+
+	.tfp-hero-title {
+		font-size: 20px;
+	}
+
+	.tfp-section-title {
+		font-size: 16px;
+	}
+
+	.tfp-card-title {
+		font-size: 16px;
+	}
+
+	.tfp-card-top {
+		flex-wrap: wrap;
+	}
+
+	/* Keep Toolkit Controls toggle on the same row (icon | text | toggle), even at WP admin mobile width */
+	.tfp-control-main {
+		flex-direction: row;
+		flex-wrap: nowrap;
+		align-items: center;
+		gap: 12px;
+	}
+
+	.tfp-row-right {
+		justify-content: flex-end;
+		flex-wrap: nowrap;
+		flex-shrink: 0;
+		align-self: center;
+	}
+
+	.tfp-compat-tags {
+		gap: 6px;
+	}
+
+	.tfp-btn,
+	.tfp-btn-block,
+	.tfp-btn.button,
+	.tfp-btn.button-primary {
+		width: 100%;
+		min-height: 42px;
+		white-space: normal;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-logo-text,
+	.atfp-dashboard-header:has(.tfp-nav) .atfp-dashboard-logo-text,
+	.atfpp-dashboard-header:has(.tfp-nav) .atfpp-dashboard-logo-text,
+	.lsdp-header-content:has(.tfp-nav) .lsdp-header-title,
+	.dupcap-plugin-topbar-inner:has(.tfp-nav) .dupcap-plugin-topbar-name {
+		font-size: 14px !important;
+	}
+
+	.atfp-dashboard-header:has(.tfp-nav) .atfp-dashboard-header-right,
+	.atfpp-dashboard-header:has(.tfp-nav) .atfpp-dashboard-header-right,
+	.lsdp-header-content:has(.tfp-nav) .lsdp-header-actions,
+	.dupcap-plugin-topbar-inner:has(.tfp-nav) .dupcap-plugin-topbar-actions,
+	:is(.languages_page_toolkit-for-polylang) .atfp-dashboard-header-right {
+		flex-wrap: wrap !important;
+	}
+
+	.atfp-dashboard-header:has(.tfp-nav) .tfp-header-btn,
+	.atfpp-dashboard-header:has(.tfp-nav) .tfp-header-btn,
+	.lsdp-header-content:has(.tfp-nav) .tfp-header-btn,
+	.dupcap-plugin-topbar-inner:has(.tfp-nav) .tfp-header-btn,
+	.dupcap-plugin-topbar-inner:has(.tfp-nav) .dupcap-topbar-btn,
+	:is(.languages_page_toolkit-for-polylang) .tfp-header-btn {
+		flex: 1 1 100% !important;
+	}
+}

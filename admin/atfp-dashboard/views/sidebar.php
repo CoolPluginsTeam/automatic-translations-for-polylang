@@ -5,6 +5,42 @@ if(!defined('ABSPATH')){
 ?>
 <!-- Right Sidebar -->
 <div class="atfp-dashboard-sidebar">
+    <div class="atfp-dashboard-translate-full atfp-dashboard-card">
+        <h3><?php esc_html_e('Duplicate Content & Translation Inspector', 'automatic-translations-for-polylang'); ?></h3>
+        <div class="atfp-dashboard-addon first">
+            <div class="atfp-dashboard-addon-l">
+                <strong><?php echo esc_html( atfp_get_plugin_display_name( 'duplicate-content-addon-for-polylang' ) ); ?></strong>
+                <span class="addon-desc"><?php esc_html_e( 'Duplicate your pages/posts and inspect translations across Polylang languages.', 'automatic-translations-for-polylang' ); ?></span>
+                <?php
+                $atfp_inspector_plugin_file = 'duplicate-content-addon-for-polylang/duplicate-content-addon-for-polylang.php';
+                $atfp_inspector_installed   = atfp_is_plugin_installed( 'duplicate-content-addon-for-polylang' );
+                $atfp_inspector_active      = false;
+
+                if ( function_exists( 'is_plugin_active' ) ) {
+                    $atfp_inspector_active = is_plugin_active( $atfp_inspector_plugin_file );
+                }
+
+                if ( $atfp_inspector_installed && $atfp_inspector_active ) :
+                    ?>
+                    <span class="installed"><?php esc_html_e( 'Activated', 'automatic-translations-for-polylang' ); ?></span>
+                <?php else : ?>
+                    <button
+                        type="button"
+                        class="atfp-dashboard-btn atfp-install-plugin"
+                        data-slug="duplicate-content-addon-for-polylang"
+                        data-nonce="<?php echo esc_attr( wp_create_nonce( 'atfp_install_nonce' ) ); ?>"
+                    >
+                        <?php echo esc_html( $atfp_inspector_installed ? __( 'Activate', 'automatic-translations-for-polylang' ) : __( 'Install', 'automatic-translations-for-polylang' ) ); ?>
+                    </button>
+                    <div class="atfp-install-message" aria-live="polite" style="margin-top:8px;"></div>
+                <?php endif; ?>
+            </div>
+            <div class="atfp-dashboard-addon-r">
+                <img src="<?php echo esc_url( ATFP_URL . 'admin/atfp-dashboard/images/toolkit-for-polylang-logo.svg' ); ?>" alt="<?php esc_attr_e( 'Translation Inspector', 'automatic-translations-for-polylang' ); ?>">
+            </div>
+        </div>
+    </div>
+
     <div class="atfp-dashboard-status atfp-dashboard-card">
         <h3><?php esc_html_e('Translation Statistics', 'automatic-translations-for-polylang'); ?></h3>
         <div class="atfp-dashboard-sts-top">
@@ -109,11 +145,6 @@ if(!defined('ABSPATH')){
             </div>
         </div>
     </div>
-    <div class="atfp-dashboard-translate-support atfp-dashboard-card">
-        <h3><?php esc_html_e('Need Help?', 'automatic-translations-for-polylang'); ?></h3>
-        <p><?php esc_html_e('Facing any issue with AI translation? Create a support thread and our team will assist you.', 'automatic-translations-for-polylang'); ?></p>
-        <a href="<?php echo esc_url('https://wordpress.org/support/plugin/automatic-translations-for-polylang/'); ?>" class="atfp-dashboard-btn primary" target="_blank"><?php esc_html_e('Get Support →', 'automatic-translations-for-polylang'); ?></a>
-    </div>
     <div class="atfp-dashboard-rate-us atfp-dashboard-card">
         <h3><?php esc_html_e('Enjoying AutoPoly?', 'automatic-translations-for-polylang'); ?></h3>
         <p><?php esc_html_e('We’d love to hear your feedback! If AutoPoly makes translation easier for you, please leave us a review.', 'automatic-translations-for-polylang'); ?></p>
@@ -151,6 +182,10 @@ function atfp_is_plugin_installed($plugin_slug) {
             || isset( $plugins['loco-automatic-translate-addon-pro/loco-automatic-translate-addon-pro.php'] );
     }
 
+    if ( 'duplicate-content-addon-for-polylang' === $plugin_slug ) {
+        return isset( $plugins['duplicate-content-addon-for-polylang/duplicate-content-addon-for-polylang.php'] );
+    }
+
     return false;
 }
 
@@ -168,6 +203,11 @@ function atfp_get_plugin_display_name($plugin_slug) {
             'pro'  => 'loco-automatic-translate-addon-pro/loco-automatic-translate-addon-pro.php',
             'free_name' => esc_html__('LocoAI – Auto Translate for Loco Translate', 'automatic-translations-for-polylang'),
             'pro_name'  => esc_html__('LocoAI – Auto Translate for Loco Translate (Pro)', 'automatic-translations-for-polylang'),
+        ],
+        'duplicate-content-addon-for-polylang' => [
+            'free' => 'duplicate-content-addon-for-polylang/duplicate-content-addon-for-polylang.php',
+            'free_name' => esc_html__('Toolkit for Polylang - Translation Inspector & Duplicate Content', 'automatic-translations-for-polylang'),
+            'pro_name'  => esc_html__('Toolkit for Polylang - Translation Inspector & Duplicate Content', 'automatic-translations-for-polylang'),
         ]
     ];
 
