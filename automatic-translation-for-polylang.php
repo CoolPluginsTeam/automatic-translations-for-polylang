@@ -143,6 +143,11 @@ if (! class_exists('AutoPoly')) {
 
 		public function atfp_plugin_redirection($plugin)
 		{
+			// AJAX activation (Toolkit hub Install/Activate) must return JSON; the caller navigates.
+			if (wp_doing_ajax()) {
+				return false;
+			}
+
 			if (! is_plugin_active('polylang/polylang.php') && ! is_plugin_active('polylang-pro/polylang.php')) {
 				return false;
 			}
@@ -153,7 +158,7 @@ if (! class_exists('AutoPoly')) {
 
 			if ($plugin == plugin_basename(__FILE__)) {
 				wp_safe_redirect(
-					esc_url(admin_url('admin.php?page=polylang-atfp-dashboard&tab=dashboard'))
+					admin_url('admin.php?page=polylang-atfp-dashboard&tab=dashboard')
 				);
 				exit;
 			}
