@@ -269,8 +269,10 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 == Changelog ==
 
-= Version 1.6.2 | 21 September 2026 =
+= Version 1.6.2 | 05 October 2026 =
+* **Added:** Introduced a unified Toolkit for Polylang dashboard to manage Polylang addons.
 * **Fixed:** Resolved an issue where media uploads were saving to incorrect month folders by preventing a global $post override in the helper class.
+* **Tested Up to:** WordPress 7.1.2 and Polylang 3.8.10.
 
 = Version 1.6.1 | 17 September 2026 =
 * **Added:** Support for translation rules defined in wpml-config.xml files.
