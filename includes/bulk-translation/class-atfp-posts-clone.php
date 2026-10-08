@@ -112,6 +112,11 @@ class ATFPP_Posts_Clone {
 		$tr_post   = get_post( $post_id );
 		$languages = array_keys( $this->get( $post_id ) );
 
+		// The target translation may belong to someone else; never write to a post the current user can't edit.
+		if ( $tr_id && ! current_user_can( 'edit_post', $tr_id ) ) {
+			return 0;
+		}
+
 		if ( isset( $re_translate['status'] ) && true === $re_translate['status'] ) {
 			if ( ! isset( $re_translate['postId'] ) ) {
 				wp_send_json_error( __( 'Re-translate post id not found', 'automatic-translations-for-polylang' ) );
