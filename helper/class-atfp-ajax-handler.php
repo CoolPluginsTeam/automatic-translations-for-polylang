@@ -444,7 +444,7 @@ if ( ! class_exists( 'ATFP_Ajax_Handler' ) ) {
 					$translation_data
 				);
 
-				if($parent_post_id > 0){
+				if ( $parent_post_id > 0 && current_user_can( 'edit_post', $parent_post_id ) ) {
 					global $polylang;
 					$parent_lang = pll_get_post_language($parent_post_id, 'slug');
 					$parent_post_id_by_lang = $polylang->model->post->get_translation( $post_id, $parent_lang );

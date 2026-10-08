@@ -2,7 +2,7 @@
 /*
 Plugin Name: AutoPoly - AI Translation For Polylang
 Plugin URI: https://coolplugins.net/
-Version: 1.6.2
+Version: 1.6.3
 Author: Cool Plugins
 Author URI: https://coolplugins.net/?utm_source=atfp_plugin&utm_medium=inside&utm_campaign=author_page&utm_content=plugins_list
 Description: AutoPoly - AI Translation For Polylang simplifies your translation process by automatically translating all pages/posts content from one language to another.
@@ -15,7 +15,7 @@ if (! defined('ABSPATH')) {
 	exit;
 }
 if (! defined('ATFP_V')) {
-	define( 'ATFP_V', '1.6.2' );
+	define( 'ATFP_V', '1.6.3' );
 }
 if (! defined('ATFP_DIR_PATH')) {
 	define('ATFP_DIR_PATH', plugin_dir_path(__FILE__));
@@ -143,6 +143,11 @@ if (! class_exists('AutoPoly')) {
 
 		public function atfp_plugin_redirection($plugin)
 		{
+			// AJAX activation (Toolkit hub Install/Activate) must return JSON; the caller navigates.
+			if (wp_doing_ajax()) {
+				return false;
+			}
+
 			if (! is_plugin_active('polylang/polylang.php') && ! is_plugin_active('polylang-pro/polylang.php')) {
 				return false;
 			}
@@ -153,7 +158,7 @@ if (! class_exists('AutoPoly')) {
 
 			if ($plugin == plugin_basename(__FILE__)) {
 				wp_safe_redirect(
-					esc_url(admin_url('admin.php?page=polylang-atfp-dashboard&tab=dashboard'))
+					admin_url('admin.php?page=polylang-atfp-dashboard&tab=dashboard')
 				);
 				exit;
 			}
