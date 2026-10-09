@@ -97,8 +97,8 @@ if ( ! class_exists( 'ATFP_Notices' ) ) :
 		}
 
 		private function render_notice( $data, $layout = 'admin' ) {
-			wp_enqueue_style( 'atfp-marketing-notice', ATFP_URL . 'admin/notice/assets/css/markting-notice.css', array(), ATFP_V );
-			wp_enqueue_script( 'atfp-language-switcher-notice', ATFP_URL . 'admin/notice/assets/js/atfp-language-switcher-notice.js', array( 'jquery' ), ATFP_V, true );
+			wp_enqueue_style( 'atfp-marketing-notice', ATFP_URL . 'admin/notice/assets/css/markting-notice.min.css', array(), ATFP_V );
+			wp_enqueue_script( 'atfp-language-switcher-notice', ATFP_URL . 'admin/notice/assets/js/atfp-language-switcher-notice.min.js', array( 'jquery' ), ATFP_V, true );
 
 			if ( 'sidebar' === $layout ) {
 				?>
