@@ -1375,6 +1375,10 @@ $modal-width: clamp(320px, 1040px, 94vw);
                         white-space: nowrap;
 
                         img {
+                            width: 20px;
+                            height: 14px;
+                            object-fit: contain;
+                            flex-shrink: 0;
                             margin-right: 8px;
                         }
                     }
@@ -1721,6 +1725,10 @@ $modal-width: clamp(320px, 1040px, 94vw);
 
                         img {
                             flex-shrink: 0;
+                            // Polylang 3.9+ ships dimensionless SVG flags; pin a consistent size (also fits legacy 16x11 PNGs).
+                            width: 18px;
+                            height: 12px;
+                            object-fit: contain;
                         }
                     }
 

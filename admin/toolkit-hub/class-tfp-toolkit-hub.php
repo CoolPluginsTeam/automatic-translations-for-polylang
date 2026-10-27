@@ -887,22 +887,22 @@ if ( ! class_exists( 'TFP_Toolkit_Hub' ) ) {
 			// constant: ATFP_V (or any tool's own version) does not change
 			// when this shared file is edited, so the browser would keep
 			// serving a stale cached copy across every change otherwise.
-			$tfp_css_path = __DIR__ . '/css/toolkit-hub.css';
+			$tfp_css_path = __DIR__ . '/css/toolkit-hub.min.css';
 			$tfp_css_ver  = file_exists( $tfp_css_path ) ? filemtime( $tfp_css_path ) : false;
 
 			wp_enqueue_style(
 				'tfp-toolkit-hub',
-				plugins_url( 'css/toolkit-hub.css', __FILE__ ),
+				plugins_url( 'css/toolkit-hub.min.css', __FILE__ ),
 				$tfp_deps,
 				$tfp_css_ver
 			);
 
-			$tfp_js_path = __DIR__ . '/js/toolkit-hub.js';
+			$tfp_js_path = __DIR__ . '/js/toolkit-hub.min.js';
 			$tfp_js_ver  = file_exists( $tfp_js_path ) ? filemtime( $tfp_js_path ) : false;
 
 			wp_enqueue_script(
 				'tfp-toolkit-hub',
-				plugins_url( 'js/toolkit-hub.js', __FILE__ ),
+				plugins_url( 'js/toolkit-hub.min.js', __FILE__ ),
 				array( 'jquery' ),
 				$tfp_js_ver,
 				true

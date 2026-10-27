@@ -74,3 +74,11 @@ assets/js/atfp-elementor-translate-confirm-box.js export-ignore
 assets/js/atfp-re-translation.js export-ignore
 assets/js/atfp-supported-block.js export-ignore
 assets/js/atfp-update-custom-blocks.js export-ignore
+
+# Unminified sources whose .min version is loaded
+.cursor/ export-ignore
+assets/js/atfp-mlang-strings.js export-ignore
+admin/toolkit-hub/css/toolkit-hub.css export-ignore
+admin/toolkit-hub/js/toolkit-hub.js export-ignore
+admin/notice/assets/css/markting-notice.css export-ignore
+admin/notice/assets/js/atfp-language-switcher-notice.js export-ignore

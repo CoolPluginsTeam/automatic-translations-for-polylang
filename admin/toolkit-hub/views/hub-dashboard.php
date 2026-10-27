@@ -61,7 +61,7 @@ $tfp_arrow_icon    = '<svg class="tfp-btn-icon tfp-btn-icon-end" viewBox="0 0 20
  * Toolkit hub walkthrough video (Translation Inspector).
  * Poster from YouTube; this video has no maxresdefault, so use sddefault with hqdefault fallback.
  */
-$tfp_video_id         = 'WS3fl6sjgOE';
+$tfp_video_id         = 'NEoQRqDCcSM';
 $tfp_video_title      = __( 'Translation Inspector | Find & Fix Polylang Translation Issues', $tfp_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain, WordPress.WP.I18n.LowLevelTranslationFunction
 $tfp_video_poster     = 'https://i.ytimg.com/vi/' . $tfp_video_id . '/sddefault.jpg';
 $tfp_video_poster_alt = 'https://i.ytimg.com/vi/' . $tfp_video_id . '/hqdefault.jpg';
