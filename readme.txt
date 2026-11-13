@@ -20,6 +20,8 @@ https://youtu.be/QGOueushC8U?si=Q-fpZ98sv4hcC9o-
 
 This addon works by duplicating and translating **page/post titles, content, images, galleries, and meta fields,** eliminating the need to manually adjust featured images, layouts, and other elements.
 
+[**Upgrade to Pro!**](https://coolplugins.net/product/autopoly-ai-translation-for-polylang/?utm_source=atfp_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=get_pro)
+
 == Compatibility ==
 
 **AutoPoly - AI Translation For Polylang** is compatible with popular WordPress editors, page builders, plugins, and custom fields, making it easier to create and manage multilingual websites.
