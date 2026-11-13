@@ -272,7 +272,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 == Changelog ==
 
 = Version 1.6.5 | 13 November 2026 =
-* **Tested Up to:** WordPress 7.1.4.
+* **Tested Up to:** Elementor 4.4.0.
 
 = Version 1.6.4 | 27 October 2026 =
 * **Tested Up to:** Polylang 3.9.1.
