@@ -54,8 +54,6 @@ admin/atfp-dashboard/js/atfp-data-share-setting.js
 admin/chrome-ai-setup/css/chrome-ai-setup-framework.css
 admin/chrome-ai-setup/js/chrome-ai-setup-framework.js
 admin/chrome-ai-setup/js/chrome-ai-setup-notice.js
-admin/cpfm-feedback/css/cpfm-admin-feedback.css
-admin/cpfm-feedback/js/cpfm-admin-feedback.js
 admin/cpt_dashboard/assets/css/cpt-dashboard.css
 admin/cpt_dashboard/assets/js/cpt-dashboard.js
 admin/feedback/css/admin-feedback.css
