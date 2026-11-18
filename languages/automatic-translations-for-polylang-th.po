@@ -1,0 +1,2047 @@
+# Copyright (C) 2026 Cool Plugins
+# This file is distributed under the GPLv2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: AutoPoly - AI Translation For Polylang 1.6.5\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/automatic-"
+"translations-for-polylang\n"
+"Last-Translator: \n"
+"Language-Team: Thai\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-11-18T06:54:43+00:00\n"
+"PO-Revision-Date: 2026-11-18 07:20+0000\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Domain: automatic-translations-for-polylang\n"
+"Language: th\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Loco-Version: 2.8.9; wp-7.1.4; php-8.2.29"
+
+#. Plugin Name of the plugin
+#: automatic-translation-for-polylang.php
+#: automatic-translation-for-polylang.php:440
+msgid "AutoPoly - AI Translation For Polylang"
+msgstr "AutoPoly - การแปลด้วย AI สำหรับ Polylang"
+
+#. Plugin URI of the plugin
+#: automatic-translation-for-polylang.php
+msgid "https://coolplugins.net/"
+msgstr ""
+
+#. Description of the plugin
+#: automatic-translation-for-polylang.php
+msgid ""
+"AutoPoly - AI Translation For Polylang simplifies your translation process "
+"by automatically translating all pages/posts content from one language to "
+"another."
+msgstr ""
+"AutoPoly - การแปลด้วย AI สำหรับ Polylang ช่วยให้กระบวนการแปลง่ายขึ้น "
+"โดยแปลเนื้อหาของทุกหน้าและโพสต์จากภาษาหนึ่งเป็นอีกภาษาหนึ่งโดยอัตโนมัติ"
+
+#. Author of the plugin
+#: automatic-translation-for-polylang.php
+msgid "Cool Plugins"
+msgstr "Cool Plugins"
+
+#. Author URI of the plugin
+#: automatic-translation-for-polylang.php
+msgid ""
+"https://coolplugins.net/?"
+"utm_source=atfp_plugin&utm_medium=inside&utm_campaign=author_page&utm_content=plugins_list"
+msgstr ""
+
+#: admin/atfp-dashboard/views/dashboard.php:27
+#: assets/automatic-translate/index.js:1
+msgid "Google Translate"
+msgstr "Google แปลภาษา"
+
+#: admin/atfp-dashboard/views/dashboard.php:33
+msgid "Chrome Built-in AI"
+msgstr "AI ที่ติดตั้งมาใน Chrome"
+
+#: admin/atfp-dashboard/views/dashboard.php:39
+msgid "Edge Built-in AI"
+msgstr "AI ที่ติดตั้งมาใน Edge"
+
+#: admin/atfp-dashboard/views/dashboard.php:45
+#: assets/automatic-translate/index.js:1
+msgid "Yandex Translate"
+msgstr "Yandex แปลภาษา"
+
+#: admin/atfp-dashboard/views/dashboard.php:53
+msgid "Choose the page or post you want to translate."
+msgstr "เลือกหน้าหรือโพสต์ที่ต้องการแปล"
+
+#: admin/atfp-dashboard/views/dashboard.php:54
+msgid "Click the AI Translate button."
+msgstr "คลิกปุ่มแปลด้วย AI"
+
+#: admin/atfp-dashboard/views/dashboard.php:55
+msgid "Choose your target languages and AI translation provider."
+msgstr "เลือกภาษาเป้าหมายและผู้ให้บริการแปลด้วย AI"
+
+#: admin/atfp-dashboard/views/dashboard.php:56
+msgid "Start the translation and update the page to save it."
+msgstr "เริ่มแปล แล้วอัปเดตหน้าเพื่อบันทึก"
+
+#: admin/atfp-dashboard/views/dashboard.php:60
+msgid ""
+"Automate the Translation Process with AutoPoly - AI Translation For Polylang"
+msgstr ""
+"ทำให้กระบวนการแปลเป็นอัตโนมัติด้วย AutoPoly - การแปลด้วย AI สำหรับ Polylang"
+
+#: admin/atfp-dashboard/views/dashboard.php:76
+msgid "Welcome to AutoPoly"
+msgstr "ยินดีต้อนรับสู่ AutoPoly"
+
+#: admin/atfp-dashboard/views/dashboard.php:77
+msgid ""
+"Translate your WordPress content with AI and make your website multilingual "
+"in minutes."
+msgstr ""
+"แปลเนื้อหา WordPress ด้วย AI "
+"และทำให้เว็บไซต์ของคุณรองรับหลายภาษาได้ในไม่กี่นาที"
+
+#: admin/atfp-dashboard/views/dashboard.php:83
+msgid "Play the AutoPoly walkthrough video"
+msgstr "เล่นวิดีโอแนะนำการใช้งาน AutoPoly"
+
+#: admin/atfp-dashboard/views/dashboard.php:92
+msgid "Translate your first page in 4 simple steps"
+msgstr "แปลหน้าแรกของคุณใน 4 ขั้นตอนง่ายๆ"
+
+#: admin/atfp-dashboard/views/dashboard.php:102
+msgid "Translate Pages"
+msgstr "แปลหน้า"
+
+#: admin/atfp-dashboard/views/dashboard.php:103
+msgid "Translate Posts"
+msgstr "แปลโพสต์"
+
+#: admin/atfp-dashboard/views/dashboard.php:111
+msgid "Translation Providers"
+msgstr "ผู้ให้บริการแปล"
+
+#: admin/atfp-dashboard/views/dashboard.php:112
+msgid ""
+"Select your default translation provider. This provider will be pre-selected "
+"when the translation modal opens."
+msgstr ""
+"เลือกผู้ให้บริการแปลเริ่มต้น "
+"ผู้ให้บริการนี้จะถูกเลือกไว้ล่วงหน้าเมื่อเปิดหน้าต่างแปล"
+
+#: admin/atfp-dashboard/views/dashboard.php:122
+msgid "You can switch providers anytime from the translation modal."
+msgstr "คุณสามารถเปลี่ยนผู้ให้บริการได้ทุกเมื่อจากหน้าต่างแปล"
+
+#: admin/atfp-dashboard/views/dashboard.php:132
+msgid "Ready"
+msgstr "พร้อมใช้งาน"
+
+#: admin/atfp-dashboard/views/dashboard.php:133
+msgid "Not Configured"
+msgstr "ยังไม่ได้กำหนดค่า"
+
+#: admin/atfp-dashboard/views/dashboard.php:134
+msgid "Not supported"
+msgstr "ไม่รองรับ"
+
+#. translators: 1: translation provider name, 2: required browser name
+#: admin/atfp-dashboard/views/dashboard.php:141
+#: admin/chrome-ai-setup/js/chrome-ai-setup-notice.js:151
+#, js-format
+msgid ""
+"%1$s Translation provider is not supported in your current browser. Please "
+"use %2$s browser to use this translation provider."
+msgstr ""
+"เบราว์เซอร์ปัจจุบันของคุณไม่รองรับผู้ให้บริการแปล %1$s โปรดใช้เบราว์เซอร์ "
+"%2$s เพื่อใช้ผู้ให้บริการแปลนี้"
+
+#: admin/atfp-dashboard/views/dashboard.php:157
+msgid "Set as default"
+msgstr "ตั้งเป็นค่าเริ่มต้น"
+
+#: admin/atfp-dashboard/views/dashboard.php:158
+msgid "Default provider"
+msgstr "ผู้ให้บริการเริ่มต้น"
+
+#: admin/atfp-dashboard/views/dashboard.php:159
+msgid "Configure this provider before setting it as default."
+msgstr "กำหนดค่าผู้ให้บริการนี้ก่อนตั้งเป็นค่าเริ่มต้น"
+
+#: admin/atfp-dashboard/views/dashboard.php:161
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:1
+msgid "Docs"
+msgstr "เอกสารประกอบ"
+
+#: admin/atfp-dashboard/views/dashboard.php:163
+msgid "Configure"
+msgstr "กำหนดค่า"
+
+#: admin/atfp-dashboard/views/dashboard.php:173
+msgid ""
+"The default provider stays enabled. Pick another default to turn this off."
+msgstr ""
+"ผู้ให้บริการเริ่มต้นจะยังคงเปิดใช้งานอยู่ "
+"เลือกผู้ให้บริการเริ่มต้นรายอื่นเพื่อปิดใช้งานรายการนี้"
+
+#. translators: %s: translation engine name
+#: admin/atfp-dashboard/views/dashboard.php:180
+#, php-format
+msgid "Enable %s"
+msgstr "เปิดใช้งาน %s"
+
+#: admin/atfp-dashboard/views/footer.php:9
+msgid "Made with ❤️ by"
+msgstr ""
+
+#: admin/atfp-dashboard/views/footer.php:12
+msgid "Cool Plugins Logo"
+msgstr "โลโก้ Cool Plugins"
+
+#: admin/atfp-dashboard/views/free-vs-pro.php:9
+msgid "Free VS Pro"
+msgstr "ฟรี เทียบกับ Pro"
+
+#: admin/atfp-dashboard/views/free-vs-pro.php:17
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:1
+msgid "Buy Pro"
+msgstr "ซื้อ Pro"
+
+#: admin/atfp-dashboard/views/free-vs-pro.php:20
+msgid ""
+"Compare the Free and Pro versions to choose the best option for your "
+"translation needs."
+msgstr ""
+"เปรียบเทียบเวอร์ชันฟรีกับ Pro "
+"เพื่อเลือกตัวเลือกที่เหมาะกับความต้องการในการแปลของคุณมากที่สุด"
+
+#: admin/atfp-dashboard/views/free-vs-pro.php:25
+msgid "Features"
+msgstr "คุณสมบัติ"
+
+#: admin/atfp-dashboard/views/free-vs-pro.php:26
+msgid "Free"
+msgstr "ฟรี"
+
+#: admin/atfp-dashboard/views/free-vs-pro.php:27
+#: assets/bulk-translate/index.js:3
+msgid "Pro"
+msgstr "Pro"
+
+#. translators: %s: Google Translate (brand name, not translated)
+#. translators: %s: Yandex Translate (brand name, not translated)
+#: admin/atfp-dashboard/views/free-vs-pro.php:36
+#: admin/atfp-dashboard/views/free-vs-pro.php:45
+#, php-format
+msgid "%s Widget Support"
+msgstr "รองรับวิดเจ็ต %s"
+
+#. translators: 1: Chrome (brand name, not translated), 2: AI (not translated)
+#. translators: 1: Edge (brand name, not translated), 2: AI (not translated)
+#: admin/atfp-dashboard/views/free-vs-pro.php:54
+#: admin/atfp-dashboard/views/free-vs-pro.php:64
+#, php-format
+msgid "%1$s Built-in %2$s Support"
+msgstr "รองรับ %2$s ในตัวของ %1$s"
+
+#. translators: %s: API Key (not translated)
+#: admin/atfp-dashboard/views/free-vs-pro.php:74
+#, php-format
+msgid "No %s Required"
+msgstr "ไม่ต้องใช้ %s"
+
+#: admin/atfp-dashboard/views/free-vs-pro.php:80
+msgid "Unlimited Translations"
+msgstr "แปลได้ไม่จำกัด"
+
+#. translators: 1: AI (not translated), 2: Gemini/OpenAI/DeepL (brand names, not translated)
+#: admin/atfp-dashboard/views/free-vs-pro.php:84
+#, php-format
+msgid "%1$s Translator (%2$s) Support"
+msgstr "รองรับตัวแปล %1$s (%2$s)"
+
+#: admin/atfp-dashboard/views/free-vs-pro.php:91
+msgid "Custom Fields Translation"
+msgstr "การแปลฟิลด์กำหนดเอง"
+
+#: admin/atfp-dashboard/views/free-vs-pro.php:92
+msgid "Taxonomy Translation"
+msgstr "การแปลอนุกรมวิธาน"
+
+#: admin/atfp-dashboard/views/free-vs-pro.php:93
+#: assets/automatic-translate/index.js:1
+#: assets/js/atfp-elementor-translate-confirm-box.js:52
+msgid "Bulk Translation"
+msgstr "แปลแบบกลุ่ม"
+
+#: admin/atfp-dashboard/views/free-vs-pro.php:94
+msgid "Re Translation"
+msgstr "แปลใหม่"
+
+#. translators: %s: Classic Editor (brand name, not translated)
+#. translators: %s: Divi 5 (brand name, not translated)
+#: admin/atfp-dashboard/views/free-vs-pro.php:98
+#: admin/atfp-dashboard/views/free-vs-pro.php:107
+#, php-format
+msgid "%s Translation"
+msgstr "การแปล %s"
+
+#: admin/atfp-dashboard/views/free-vs-pro.php:113
+msgid "Premium Support"
+msgstr "การสนับสนุนระดับพรีเมียม"
+
+#: admin/atfp-dashboard/views/settings.php:7
+msgid "You do not have sufficient permissions to access this page."
+msgstr "คุณไม่มีสิทธิ์เพียงพอในการเข้าถึงหน้านี้"
+
+#: admin/atfp-dashboard/views/settings.php:49
+#: automatic-translation-for-polylang.php:123
+#: automatic-translation-for-polylang.php:454
+msgid "Settings"
+msgstr "การตั้งค่า"
+
+#. translators: %s is a link to the Polylang languages page.
+#: admin/atfp-dashboard/views/settings.php:94
+#, php-format
+msgid "Add at least %1$s to use the %2$s AI translation test"
+msgstr "เพิ่มอย่างน้อย %1$s เพื่อใช้ทดสอบการแปลด้วย AI ของ %2$s"
+
+#: admin/atfp-dashboard/views/settings.php:96
+msgid "one language in Polylang"
+msgstr "หนึ่งภาษาใน Polylang"
+
+#: admin/atfp-dashboard/views/settings.php:121
+msgid "Translated Posts Status"
+msgstr "สถานะโพสต์ที่แปลแล้ว"
+
+#: admin/atfp-dashboard/views/settings.php:124
+msgid "Choose the default status for Translated posts"
+msgstr "เลือกสถานะเริ่มต้นสำหรับโพสต์ที่แปลแล้ว"
+
+#: admin/atfp-dashboard/views/settings.php:130
+msgid "Default Post Status"
+msgstr "สถานะโพสต์เริ่มต้น"
+
+#: admin/atfp-dashboard/views/settings.php:134
+msgid "Publish"
+msgstr "เผยแพร่"
+
+#: admin/atfp-dashboard/views/settings.php:136
+msgid "Draft"
+msgstr "ฉบับร่าง"
+
+#: admin/atfp-dashboard/views/settings.php:139
+msgid ""
+"Select the status automatically applied to posts after translation is "
+"completed."
+msgstr "เลือกสถานะที่จะกำหนดให้กับโพสต์โดยอัตโนมัติหลังจากแปลเสร็จแล้ว"
+
+#: admin/atfp-dashboard/views/settings.php:145
+msgid "Upgrade Now"
+msgstr "อัปเกรดตอนนี้"
+
+#: admin/atfp-dashboard/views/settings.php:146
+msgid "Unlock Pro Features"
+msgstr "ปลดล็อกฟีเจอร์ Pro"
+
+#: admin/atfp-dashboard/views/settings.php:161
+msgid "AI API Keys & Models"
+msgstr "คีย์ API และโมเดล AI"
+
+#: admin/atfp-dashboard/views/settings.php:164
+msgid "Configure your API keys and models for the AI translation providers."
+msgstr "กำหนดค่าคีย์ API และโมเดลสำหรับผู้ให้บริการแปลด้วย AI"
+
+#. translators: 1: API name
+#: admin/atfp-dashboard/views/settings.php:191
+#, php-format
+msgid "Add %1$s API key"
+msgstr "เพิ่มคีย์ API ของ %1$s"
+
+#. translators: 1: Click Here link, 2: API name
+#: admin/atfp-dashboard/views/settings.php:205
+#, php-format
+msgid "%1$s to See How to Generate %2$s API Key"
+msgstr "%1$s เพื่อดูวิธีสร้างคีย์ API ของ %2$s"
+
+#: admin/atfp-dashboard/views/settings.php:206
+#: admin/atfp-dashboard/views/settings.php:322
+msgid "Click Here"
+msgstr "คลิกที่นี่"
+
+#: admin/atfp-dashboard/views/settings.php:224
+msgid "Translation Settings"
+msgstr "การตั้งค่าการแปล"
+
+#: admin/atfp-dashboard/views/settings.php:227
+msgid "Configure the translation settings for AI translations."
+msgstr "กำหนดค่าการตั้งค่าการแปลด้วย AI"
+
+#: admin/atfp-dashboard/views/settings.php:232
+msgid "Context Aware"
+msgstr "เข้าใจบริบท"
+
+#: admin/atfp-dashboard/views/settings.php:236
+msgid ""
+"Provide optional context about WordPress page or post to enhance translation "
+"accuracy (e.g. content purpose, target audience, SEO focus, tone)..."
+msgstr ""
+"ระบุบริบทเพิ่มเติมเกี่ยวกับหน้าเว็บหรือโพสต์ใน WordPress "
+"เพื่อเพิ่มความแม่นยำในการแปล (เช่น วัตถุประสงค์ของเนื้อหา กลุ่มเป้าหมาย "
+"จุดเน้น SEO โทนภาษา)..."
+
+#: admin/atfp-dashboard/views/settings.php:240
+msgid "This setting only works with Gemini AI and OpenAI."
+msgstr "การตั้งค่านี้ใช้ได้กับ Gemini AI และ OpenAI เท่านั้น"
+
+#: admin/atfp-dashboard/views/settings.php:245
+msgid "Slug Translation Settings"
+msgstr "การตั้งค่าการแปล Slug"
+
+#: admin/atfp-dashboard/views/settings.php:249
+msgid "Use Translated Title"
+msgstr "ใช้ชื่อเรื่องที่แปลแล้ว"
+
+#: admin/atfp-dashboard/views/settings.php:251
+msgid "Translate Original Slug"
+msgstr "แปล Slug ต้นฉบับ"
+
+#: admin/atfp-dashboard/views/settings.php:253
+msgid "Keep Original Slug"
+msgstr "คง Slug ต้นฉบับไว้"
+
+#: admin/atfp-dashboard/views/settings.php:268
+msgid "AI Request Performance"
+msgstr "ประสิทธิภาพการส่งคำขอ AI"
+
+#: admin/atfp-dashboard/views/settings.php:271
+msgid ""
+"Adjust these settings to optimize the speed, stability, and processing "
+"performance of your AI requests."
+msgstr ""
+"ปรับการตั้งค่าเหล่านี้เพื่อเพิ่มประสิทธิภาพความเร็ว ความเสถียร "
+"และการประมวลผลของคำขอ AI"
+
+#: admin/atfp-dashboard/views/settings.php:275
+msgid "Token Limit"
+msgstr "ขีดจำกัดโทเค็น"
+
+#. translators: 1: span tag, 2: span tag
+#: admin/atfp-dashboard/views/settings.php:280
+#, php-format
+msgid ""
+"%1$sRecommended%2$s 500 tokens per request If model or network is slow, "
+"decrease this value"
+msgstr ""
+"%1$sแนะนำ%2$s 500 โทเค็นต่อคำขอ หากโมเดลหรือเครือข่ายทำงานช้า ให้ลดค่านี้"
+
+#: admin/atfp-dashboard/views/settings.php:285
+msgid "Batch Size"
+msgstr "ขนาดชุด"
+
+#. translators: 1: span tag, 2: span tag
+#: admin/atfp-dashboard/views/settings.php:290
+#, php-format
+msgid ""
+"%1$sRecommended%2$s 5 posts per batch Larger batch can take longer to "
+"process If model or network is slow, decrease this value"
+msgstr ""
+"%1$sแนะนำ%2$s 5 โพสต์ต่อชุด ชุดที่ใหญ่ขึ้นอาจใช้เวลาประมวลผลนานขึ้น "
+"หากโมเดลหรือเครือข่ายทำงานช้า ให้ลดค่านี้"
+
+#: admin/atfp-dashboard/views/settings.php:295
+msgid "Timeout Duration"
+msgstr "ระยะเวลาหมดเวลา"
+
+#. translators: 1: span tag, 2: span tag
+#: admin/atfp-dashboard/views/settings.php:300
+#, php-format
+msgid ""
+"%1$sRecommended%2$s 120 seconds minimum timeout can cause timeouts If model "
+"or network is slow, increase this value"
+msgstr ""
+"%1$sแนะนำ%2$s 120 วินาที การตั้งค่าระยะเวลาหมดเวลาขั้นต่ำอาจทำให้คำขอหมดเวลา "
+"หากโมเดลหรือเครือข่ายทำงานช้า ให้เพิ่มค่านี้"
+
+#: admin/atfp-dashboard/views/settings.php:310
+msgid "Usage Data Sharing"
+msgstr "การแชร์ข้อมูลการใช้งาน"
+
+#: admin/atfp-dashboard/views/settings.php:318
+#: automatic-translation-for-polylang.php:841
+msgid ""
+"Help us make this plugin more compatible with your site by sharing non-"
+"sensitive site data."
+msgstr ""
+"ช่วยให้เราทำให้ปลั๊กอินนี้เข้ากันได้กับเว็บไซต์ของคุณมากขึ้น "
+"โดยแชร์ข้อมูลเว็บไซต์ที่ไม่ละเอียดอ่อน"
+
+#: admin/atfp-dashboard/views/settings.php:322
+msgid ""
+"Opt in to receive email updates about security improvements, new features, "
+"helpful tutorials, and occasional special offers. We'll collect:"
+msgstr ""
+"เลือกรับอีเมลข่าวสารเกี่ยวกับการปรับปรุงความปลอดภัย ฟีเจอร์ใหม่ "
+"บทแนะนำที่เป็นประโยชน์ และข้อเสนอพิเศษเป็นครั้งคราว "
+"เราจะเก็บรวบรวมข้อมูลดังนี้:"
+
+#: admin/atfp-dashboard/views/settings.php:324
+msgid "Your website home URL and WordPress admin email."
+msgstr "URL หน้าแรกของเว็บไซต์และอีเมลผู้ดูแลระบบ WordPress ของคุณ"
+
+#: admin/atfp-dashboard/views/settings.php:325
+msgid ""
+"To check plugin compatibility, we will collect the following: list of active "
+"plugins and themes, server type, MySQL version, WordPress version, memory "
+"limit, site language and database prefix."
+msgstr ""
+"เพื่อตรวจสอบความเข้ากันได้ของปลั๊กอิน เราจะเก็บรวบรวมข้อมูลต่อไปนี้: "
+"รายการปลั๊กอินและธีมที่ใช้งานอยู่ ประเภทเซิร์ฟเวอร์ เวอร์ชัน MySQL เวอร์ชัน "
+"WordPress ขีดจำกัดหน่วยความจำ ภาษาของเว็บไซต์ และคำนำหน้าฐานข้อมูล"
+
+#: admin/atfp-dashboard/views/settings.php:331
+msgid "Save Changes"
+msgstr "บันทึกการเปลี่ยนแปลง"
+
+#: admin/atfp-dashboard/views/sidebar.php:9
+msgid "Duplicate Content & Translation Inspector"
+msgstr "เครื่องมือตรวจสอบเนื้อหาซ้ำและการแปล"
+
+#: admin/atfp-dashboard/views/sidebar.php:13
+msgid ""
+"Duplicate your pages/posts and inspect translations across Polylang "
+"languages."
+msgstr "ทำสำเนาหน้า/โพสต์และตรวจสอบคำแปลในภาษาต่าง ๆ ของ Polylang"
+
+#: admin/atfp-dashboard/views/sidebar.php:25
+#: admin/atfp-dashboard/views/sidebar.php:130
+msgid "Activated"
+msgstr "เปิดใช้งานแล้ว"
+
+#: admin/atfp-dashboard/views/sidebar.php:33
+#: admin/atfp-dashboard/views/sidebar.php:138
+msgid "Activate"
+msgstr "เปิดใช้งาน"
+
+#: admin/atfp-dashboard/views/sidebar.php:33
+#: admin/atfp-dashboard/views/sidebar.php:138
+msgid "Install"
+msgstr "ติดตั้ง"
+
+#: admin/atfp-dashboard/views/sidebar.php:39
+msgid "Translation Inspector"
+msgstr "เครื่องมือตรวจสอบการแปล"
+
+#: admin/atfp-dashboard/views/sidebar.php:45
+msgid "Translation Statistics"
+msgstr "สถิติการแปล"
+
+#: admin/atfp-dashboard/views/sidebar.php:88
+msgid "Characters Translated!"
+msgstr "แปลตัวอักษรแล้ว!"
+
+#: admin/atfp-dashboard/views/sidebar.php:91
+msgid "Total Strings"
+msgstr "สตริงทั้งหมด"
+
+#: admin/atfp-dashboard/views/sidebar.php:92
+msgid "Pages / Posts Translated"
+msgstr "หน้า / โพสต์ที่แปลแล้ว"
+
+#: admin/atfp-dashboard/views/sidebar.php:93 assets/bulk-translate/index.js:1
+msgid "Time Taken"
+msgstr "เวลาที่ใช้"
+
+#. translators: 1: number of characters translated, 2: plugin name
+#: admin/atfp-dashboard/views/sidebar.php:101
+#, php-format
+msgid ""
+"Translated %1$s characters page by page. Save time — install %2$s and use "
+"Bulk Translation to translate multiple pages in one click."
+msgstr ""
+"แปลอักขระ %1$s ทีละหน้า ประหยัดเวลา — ติดตั้ง %2$s "
+"แล้วใช้การแปลจำนวนมากเพื่อแปลหลายหน้าได้ในคลิกเดียว"
+
+#: admin/atfp-dashboard/views/sidebar.php:109
+msgid "Get Pro for Bulk translation"
+msgstr "รับ Pro เพื่อใช้การแปลจำนวนมาก"
+
+#: admin/atfp-dashboard/views/sidebar.php:114
+msgid "Translate Plugins & Themes Automatically"
+msgstr "แปลปลั๊กอินและธีมโดยอัตโนมัติ"
+
+#: admin/atfp-dashboard/views/sidebar.php:118
+msgid "Loco addon to translate plugins and themes."
+msgstr "ส่วนเสริม Loco สำหรับแปลปลั๊กอินและธีม"
+
+#: admin/atfp-dashboard/views/sidebar.php:144
+msgid "Loco Translate Addon"
+msgstr "ส่วนเสริม Loco Translate"
+
+#: admin/atfp-dashboard/views/sidebar.php:149
+msgid "Enjoying AutoPoly?"
+msgstr "คุณชอบ AutoPoly ไหม?"
+
+#: admin/atfp-dashboard/views/sidebar.php:150
+msgid ""
+"We’d love to hear your feedback! If AutoPoly makes translation easier for "
+"you, please leave us a review."
+msgstr ""
+"เราอยากทราบความคิดเห็นของคุณ! หาก AutoPoly ช่วยให้การแปลง่ายขึ้น "
+"โปรดรีวิวให้เราด้วย"
+
+#: admin/atfp-dashboard/views/sidebar.php:151
+msgid "Leave a Review ★★★★★"
+msgstr "เขียนรีวิว ★★★★★"
+
+#: admin/atfp-dashboard/views/sidebar.php:158
+msgid "0"
+msgstr "0"
+
+#. translators: 1: Time taken in seconds in number format
+#: admin/atfp-dashboard/views/sidebar.php:160
+#, php-format
+msgid "%d sec"
+msgstr "%d วินาที"
+
+#. translators: 1: Time taken in minutes in number format, 2: Time taken in seconds in number format
+#: admin/atfp-dashboard/views/sidebar.php:165
+#, php-format
+msgid "%1$d min %2$d sec"
+msgstr "%1$d นาที %2$d วินาที"
+
+#. translators: 1: Time taken in hours in number format, 2: Time taken in minutes in number format
+#: admin/atfp-dashboard/views/sidebar.php:170
+#, php-format
+msgid "%1$d hours %2$d min"
+msgstr "%1$d ชั่วโมง %2$d นาที"
+
+#: admin/atfp-dashboard/views/sidebar.php:204
+msgid "LocoAI – Auto Translate for Loco Translate"
+msgstr "LocoAI – แปลอัตโนมัติสำหรับ Loco Translate"
+
+#: admin/atfp-dashboard/views/sidebar.php:205
+msgid "LocoAI – Auto Translate for Loco Translate (Pro)"
+msgstr "LocoAI – แปลอัตโนมัติสำหรับ Loco Translate (Pro)"
+
+#: admin/atfp-dashboard/views/sidebar.php:209
+#: admin/atfp-dashboard/views/sidebar.php:210
+msgid "Toolkit for Polylang - Translation Inspector & Duplicate Content"
+msgstr "ชุดเครื่องมือสำหรับ Polylang - เครื่องมือตรวจสอบการแปลและทำซ้ำเนื้อหา"
+
+#: admin/atfp-dashboard/views/sidebar.php:243
+msgid "B"
+msgstr "B"
+
+#: admin/atfp-dashboard/views/sidebar.php:245
+msgid "M"
+msgstr "M"
+
+#: admin/atfp-dashboard/views/sidebar.php:247
+msgid "K"
+msgstr "K"
+
+#. translators: 1: AutoPoly - AI Translation For Polylang plugin name
+#: admin/atfp-dashboard/views/support-blocks.php:87
+#, php-format
+msgid "Supported Blocks for %s"
+msgstr "บล็อกที่รองรับสำหรับ %s"
+
+#: admin/atfp-dashboard/views/support-blocks.php:90
+msgid "Block Type Category:"
+msgstr "หมวดหมู่ประเภทบล็อก:"
+
+#: admin/atfp-dashboard/views/support-blocks.php:92
+#: admin/atfp-dashboard/views/support-blocks.php:100
+msgid "All"
+msgstr "ทั้งหมด"
+
+#: admin/atfp-dashboard/views/support-blocks.php:98
+msgid "Show Blocks:"
+msgstr "แสดงบล็อก:"
+
+#: admin/atfp-dashboard/views/support-blocks.php:101
+#: automatic-translation-for-polylang.php:456
+msgid "Supported Blocks"
+msgstr "บล็อกที่รองรับ"
+
+#: admin/atfp-dashboard/views/support-blocks.php:102
+msgid "Unsupported Blocks"
+msgstr "บล็อกที่ไม่รองรับ"
+
+#: admin/atfp-dashboard/views/support-blocks.php:111
+msgid "Sr.No"
+msgstr "ลำดับที่"
+
+#: admin/atfp-dashboard/views/support-blocks.php:112
+msgid "Block Name"
+msgstr "ชื่อบล็อก"
+
+#: admin/atfp-dashboard/views/support-blocks.php:113
+msgid "Block Title"
+msgstr "ชื่อเรื่องบล็อก"
+
+#: admin/atfp-dashboard/views/support-blocks.php:114
+#: assets/bulk-translate/index.js:1
+msgid "Status"
+msgstr "สถานะ"
+
+#: admin/atfp-dashboard/views/support-blocks.php:115
+msgid "Modify"
+msgstr "แก้ไข"
+
+#: admin/atfp-dashboard/views/support-blocks.php:194
+msgid "Add"
+msgstr "เพิ่ม"
+
+#: admin/atfp-dashboard/views/support-blocks.php:194
+msgid "Edit"
+msgstr "แก้ไข"
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:103
+msgctxt "post type general name"
+msgid "Automatic Translations"
+msgstr "การแปลอัตโนมัติ"
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:104
+msgctxt "post type singular name"
+msgid "Automatic Translation"
+msgstr "การแปลอัตโนมัติ"
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:105
+msgctxt "admin menu"
+msgid "Automatic Translations"
+msgstr "การแปลอัตโนมัติ"
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:106
+msgctxt "add new on admin bar"
+msgid "Automatic Translation"
+msgstr "การแปลอัตโนมัติ"
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:107
+msgctxt "Automatic Translation"
+msgid "Add New"
+msgstr "เพิ่มใหม่"
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:108
+msgid "Add New Automatic Translation"
+msgstr "เพิ่มการแปลอัตโนมัติใหม่"
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:109
+msgid "New Automatic Translation"
+msgstr "การแปลอัตโนมัติใหม่"
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:110
+msgid "Edit Automatic Translation"
+msgstr "แก้ไขการแปลอัตโนมัติ"
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:111
+msgid "View Automatic Translation"
+msgstr "ดูการแปลอัตโนมัติ"
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:112
+msgid "Automatic Translations"
+msgstr "การแปลอัตโนมัติ"
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:113
+msgid "Search Automatic Translations"
+msgstr "ค้นหาการแปลอัตโนมัติ"
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:114
+msgid "No Automatic Translations found."
+msgstr "ไม่พบการแปลอัตโนมัติ"
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:115
+msgid "No Automatic Translations found in Trash."
+msgstr "ไม่พบการแปลอัตโนมัติในถังขยะ"
+
+#. translators: 1: Plugin name, 2: Total character count, 3: Cool Plugins URL
+#: admin/cpt_dashboard/cpt_dashboard.php:280
+#, php-format
+msgid ""
+"Thanks for using <b>%1$s</b>! You have translated <b>%2$s</b> characters so "
+"far using our plugin!<br>Please give us a quick rating, it works as a boost "
+"for us to keep working on more <a style=\"text-decoration: none;\" "
+"href=\"%3$s\" target=\"_blank\" rel=\"noopener noreferrer\"><b>Cool "
+"Plugins</b></a>!"
+msgstr ""
+
+#: admin/cpt_dashboard/cpt_dashboard.php:306
+#: admin/cpt_dashboard/cpt_dashboard.php:313
+msgid "Already Reviewed"
+msgstr "ตรวจสอบแล้ว"
+
+#: admin/cpt_dashboard/cpt_dashboard.php:306
+#: admin/cpt_dashboard/cpt_dashboard.php:313
+msgid "Not Interested"
+msgstr "ไม่สนใจ"
+
+#: admin/cpt_dashboard/cpt_dashboard.php:326
+#: helper/class-atfp-ajax-handler.php:86 helper/class-atfp-ajax-handler.php:113
+#: helper/class-atfp-ajax-handler.php:253
+#: helper/class-atfp-ajax-handler.php:271
+#: helper/class-atfp-ajax-handler.php:400
+#: helper/class-atfp-ajax-handler.php:404
+#: helper/class-atfp-ajax-handler.php:478
+#: helper/class-atfp-ajax-handler.php:526
+#: helper/class-atfp-ajax-handler.php:589
+msgid "Unauthorized"
+msgstr "ไม่ได้รับอนุญาต"
+
+#: admin/notice/atfp-notice.php:32
+msgid "Add a Language Switcher"
+msgstr "เพิ่มตัวสลับภาษา"
+
+#: admin/notice/atfp-notice.php:33
+msgid ""
+"Did you know? You can add a customizable language switcher to help visitors "
+"easily browse your website in their preferred language."
+msgstr ""
+"คุณทราบหรือไม่? คุณสามารถเพิ่มตัวสลับภาษาที่ปรับแต่งได้ "
+"เพื่อช่วยให้ผู้เยี่ยมชมเรียกดูเว็บไซต์ในภาษาที่ต้องการได้อย่างง่ายดาย"
+
+#: admin/notice/atfp-notice.php:34
+msgid ""
+"Let visitors browse in their preferred language with Language Switcher for "
+"Polylang for Elementor, Gutenberg, and Divi."
+msgstr ""
+"ให้ผู้เยี่ยมชมเรียกดูเว็บไซต์ในภาษาที่ต้องการด้วย Language Switcher for "
+"Polylang สำหรับ Elementor, Gutenberg และ Divi"
+
+#: admin/notice/atfp-notice.php:71
+msgid "Activate Now"
+msgstr "เปิดใช้งานตอนนี้"
+
+#: admin/notice/atfp-notice.php:71
+msgid "Install Now"
+msgstr "ติดตั้งตอนนี้"
+
+#: admin/notice/atfp-notice.php:113
+msgid "Dismiss this notice."
+msgstr "ปิดการแจ้งเตือนนี้"
+
+#: admin/notice/atfp-notice.php:152
+msgid "Unauthorized access."
+msgstr "ไม่ได้รับอนุญาตให้เข้าถึง"
+
+#: admin/notice/atfp-notice.php:156 helper/class-atfp-ajax-handler.php:76
+#: helper/class-atfp-ajax-handler.php:103
+#: helper/class-atfp-ajax-handler.php:248
+#: helper/class-atfp-ajax-handler.php:267
+#: helper/class-atfp-ajax-handler.php:392
+#: helper/class-atfp-ajax-handler.php:474
+#: helper/class-atfp-ajax-handler.php:522
+#: helper/class-atfp-ajax-handler.php:585
+#: helper/class-atfp-register-route.php:166
+msgid "Invalid security token sent."
+msgstr "โทเค็นความปลอดภัยที่ส่งมาไม่ถูกต้อง"
+
+#: automatic-translation-for-polylang.php:127
+msgid "Get Pro"
+msgstr "รับ Pro"
+
+#: automatic-translation-for-polylang.php:140
+msgid "Bulk Translation (Pro)"
+msgstr "การแปลจำนวนมาก (Pro)"
+
+#: automatic-translation-for-polylang.php:231
+msgid "Chrome AI Setup"
+msgstr "ตั้งค่า Chrome AI"
+
+#: automatic-translation-for-polylang.php:232
+msgid ""
+"Free on-device translation. We detect what your browser needs â€” usually "
+"just one click."
+msgstr ""
+"แปลบนอุปกรณ์ได้ฟรี เราจะตรวจหาสิ่งที่เบราว์เซอร์ของคุณต้องใช้ "
+"ซึ่งโดยปกติทำได้ด้วยการคลิกเพียงครั้งเดียว"
+
+#: automatic-translation-for-polylang.php:233
+msgid "Checking your browserâ€¦"
+msgstr "กำลังตรวจสอบเบราว์เซอร์ของคุณ…"
+
+#: automatic-translation-for-polylang.php:234
+msgid "Give us a second while we detect Chrome AI support."
+msgstr "โปรดรอสักครู่ ขณะที่เราตรวจสอบการรองรับ Chrome AI"
+
+#: automatic-translation-for-polylang.php:235
+msgid "Chrome AI is Ready"
+msgstr "Chrome AI พร้อมใช้งานแล้ว"
+
+#: automatic-translation-for-polylang.php:236
+msgid "On-device translation is set up. No API key, no cost."
+msgstr "ตั้งค่าการแปลบนอุปกรณ์แล้ว ไม่ต้องใช้คีย์ API และไม่มีค่าใช้จ่าย"
+
+#: automatic-translation-for-polylang.php:237
+msgid "Language pack required"
+msgstr "ต้องใช้ชุดภาษา"
+
+#: automatic-translation-for-polylang.php:238
+msgid ""
+"Add the target translation language in your browser settings to download the "
+"translation model."
+msgstr "เพิ่มภาษาที่ต้องการแปลในการตั้งค่าเบราว์เซอร์เพื่อดาวน์โหลดโมเดลการแปล"
+
+#: automatic-translation-for-polylang.php:239
+msgid "Downloading language modelâ€¦"
+msgstr "กำลังดาวน์โหลดโมเดลภาษา…"
+
+#: automatic-translation-for-polylang.php:240
+msgid "Keep this tab open. This happens once."
+msgstr "เปิดแท็บนี้ไว้ การดำเนินการนี้จะเกิดขึ้นเพียงครั้งเดียว"
+
+#: automatic-translation-for-polylang.php:241
+msgid "Chrome AI is currently unavailable"
+msgstr "ขณะนี้ Chrome AI ไม่พร้อมใช้งาน"
+
+#: automatic-translation-for-polylang.php:242
+msgid ""
+"Something blocked the check. See advanced steps or use alternative options."
+msgstr "มีบางอย่างขัดขวางการตรวจสอบ ดูขั้นตอนขั้นสูงหรือลองใช้ตัวเลือกอื่น"
+
+#: automatic-translation-for-polylang.php:243
+msgid "Chrome AI needs a secure (HTTPS) connection"
+msgstr "Chrome AI ต้องใช้การเชื่อมต่อที่ปลอดภัย (HTTPS)"
+
+#: automatic-translation-for-polylang.php:244
+msgid ""
+"Serving wp-admin over HTTP prevents Chrome AI from launching. Serve pages "
+"over HTTPS or use an alternative engine."
+msgstr ""
+"การให้บริการ wp-admin ผ่าน HTTP จะทำให้ Chrome AI เปิดใช้งานไม่ได้ "
+"ให้บริการหน้าผ่าน HTTPS หรือใช้เอนจินอื่น"
+
+#: automatic-translation-for-polylang.php:245
+msgid "Enable Chrome AI"
+msgstr "เปิดใช้ Chrome AI"
+
+#: automatic-translation-for-polylang.php:246
+msgid "Retry"
+msgstr "ลองอีกครั้ง"
+
+#: automatic-translation-for-polylang.php:247
+msgid "Use Another Provider"
+msgstr "ใช้ผู้ให้บริการรายอื่น"
+
+#: automatic-translation-for-polylang.php:248
+msgid "Try a real translation"
+msgstr "ลองแปลจริง"
+
+#: automatic-translation-for-polylang.php:249
+msgid "Type anything and see the exact on-device result â€” no page needed."
+msgstr ""
+"พิมพ์ข้อความใดก็ได้เพื่อดูผลลัพธ์บนอุปกรณ์ของคุณแบบตรงตามจริง %s — "
+"ไม่ต้องใช้หน้าเว็บ"
+
+#: automatic-translation-for-polylang.php:250
+msgid "Your text"
+msgstr "ข้อความของคุณ"
+
+#: automatic-translation-for-polylang.php:251
+#: assets/automatic-translate/index.js:1
+msgid "Translation"
+msgstr "คำแปล"
+
+#: automatic-translation-for-polylang.php:252
+msgid "Type or paste text to translateâ€¦"
+msgstr "พิมพ์หรือวางข้อความที่ต้องการแปลที่นี่%s"
+
+#: automatic-translation-for-polylang.php:253
+msgid "Translation will appear here."
+msgstr "คำแปลจะแสดงที่นี่"
+
+#: automatic-translation-for-polylang.php:254
+msgid "Translate preview"
+msgstr "ดูตัวอย่างการแปล"
+
+#: automatic-translation-for-polylang.php:255
+msgid "Translatingâ€¦"
+msgstr "กำลังแปล%s"
+
+#: automatic-translation-for-polylang.php:256
+msgid "Done in {ms} ms Â· on-device Â· no data left your browser"
+msgstr ""
+
+#: automatic-translation-for-polylang.php:257
+msgid ""
+"âœ— Translation failed. This pair may need its own model, or see advanced "
+"steps below."
+msgstr ""
+"%s การแปลไม่สำเร็จ ภาษาคู่นี้อาจต้องใช้โมเดลเฉพาะ "
+"หรือดูขั้นตอนขั้นสูงด้านล่าง"
+
+#: automatic-translation-for-polylang.php:258
+msgid "Still not working? Advanced steps"
+msgstr "ยังใช้งานไม่ได้ใช่ไหม? ดูขั้นตอนขั้นสูง"
+
+#: automatic-translation-for-polylang.php:259
+msgid ""
+"Chrome AI translation needs Chrome or Edge on desktop (version 138+). It "
+"doesnâ€™t run on mobile phones or tablets."
+msgstr ""
+"การแปลด้วย Chrome AI ต้องใช้ Chrome หรือ Edge บนเดสก์ท็อป (เวอร์ชัน 138 "
+"ขึ้นไป) ใช้งานบนโทรศัพท์มือถือหรือแท็บเล็ตไม่ได้"
+
+#: automatic-translation-for-polylang.php:260
+msgid "Open Official Setup Guide â†’"
+msgstr "เปิดคู่มือการตั้งค่าอย่างเป็นทางการ %s"
+
+#: automatic-translation-for-polylang.php:441
+msgid "AutoPoly"
+msgstr "AutoPoly"
+
+#: automatic-translation-for-polylang.php:453 assets/bulk-translate/index.js:1
+msgid "Dashboard"
+msgstr "แดชบอร์ด"
+
+#: automatic-translation-for-polylang.php:455
+msgid "Free vs Pro"
+msgstr "ฟรีเทียบกับ Pro"
+
+#: automatic-translation-for-polylang.php:489
+msgid "Polylang Addon Logo"
+msgstr "โลโก้ส่วนเสริม Polylang"
+
+#: automatic-translation-for-polylang.php:490
+msgid "Toolkit for Polylang"
+msgstr "ชุดเครื่องมือสำหรับ Polylang"
+
+#: automatic-translation-for-polylang.php:498
+msgid "Get Support"
+msgstr "รับความช่วยเหลือ"
+
+#: automatic-translation-for-polylang.php:502
+msgid "Check Docs"
+msgstr "ดูเอกสาร"
+
+#: automatic-translation-for-polylang.php:507
+msgid "Dashboard navigation"
+msgstr "การนำทางแดชบอร์ด"
+
+#. translators: %s: plugin name.
+#: automatic-translation-for-polylang.php:762
+#, php-format
+msgid "Do you like the %s plugin?"
+msgstr "คุณชอบปลั๊กอิน %s ไหม?"
+
+#: automatic-translation-for-polylang.php:765
+msgid "Yes, I like it"
+msgstr "ชอบ"
+
+#: automatic-translation-for-polylang.php:766
+msgid "Not good, dismiss"
+msgstr "ไม่ชอบ ปิดข้อความนี้"
+
+#: automatic-translation-for-polylang.php:767
+msgid "Ask me later"
+msgstr "ถามฉันภายหลัง"
+
+#: automatic-translation-for-polylang.php:768
+msgid ""
+"That is great to hear! A quick review on WordPress.org would really help us."
+msgstr ""
+"ยินดีที่ได้ยินเช่นนั้น! การรีวิวสั้น ๆ บน WordPress.org จะช่วยเราได้มาก"
+
+#: automatic-translation-for-polylang.php:769
+msgid "Submit review"
+msgstr "ส่งรีวิว"
+
+#: automatic-translation-for-polylang.php:770
+msgid "I do not like it, dismiss"
+msgstr "ไม่ชอบ ปิดข้อความนี้"
+
+#: automatic-translation-for-polylang.php:771
+msgid "Do you like this plugin?"
+msgstr "คุณชอบปลั๊กอินนี้ไหม?"
+
+#. translators: %s: plugin name.
+#: automatic-translation-for-polylang.php:774
+#, php-format
+msgid "Enjoying %s?"
+msgstr "ชอบ %s ไหม?"
+
+#: automatic-translation-for-polylang.php:777
+msgid "A short review helps other site owners find it."
+msgstr "รีวิวสั้น ๆ ช่วยให้เจ้าของเว็บไซต์คนอื่นค้นพบปลั๊กอินนี้"
+
+#: automatic-translation-for-polylang.php:778
+#: automatic-translation-for-polylang.php:825 assets/bulk-translate/index.js:1
+#: assets/bulk-translate/index.js:3 assets/bulk-translate/index.js:4
+#: assets/bulk-translate/index.js:8
+msgid "Close"
+msgstr "ปิด"
+
+#: automatic-translation-for-polylang.php:797
+msgid "The plugin isn't working"
+msgstr "ปลั๊กอินใช้งานไม่ได้"
+
+#: automatic-translation-for-polylang.php:798
+msgid "Which problem did you run into? We read every reply."
+msgstr "คุณพบปัญหาอะไร? เราอ่านทุกคำตอบ"
+
+#: automatic-translation-for-polylang.php:801
+msgid "It didn't do what I expected"
+msgstr "ปลั๊กอินไม่ทำงานอย่างที่คาดไว้"
+
+#: automatic-translation-for-polylang.php:802
+msgid "What were you hoping it would do?"
+msgstr "คุณคาดหวังให้ปลั๊กอินทำอะไร?"
+
+#: automatic-translation-for-polylang.php:805
+msgid "I found a better plugin"
+msgstr "ฉันพบปลั๊กอินที่ดีกว่า"
+
+#: automatic-translation-for-polylang.php:806
+msgid "Mind sharing which one?"
+msgstr "บอกชื่อปลั๊กอินนั้นได้ไหม?"
+
+#: automatic-translation-for-polylang.php:809
+msgid "It's a temporary deactivation"
+msgstr "ปิดใช้งานชั่วคราว"
+
+#: automatic-translation-for-polylang.php:813
+msgid "Another reason"
+msgstr "เหตุผลอื่น"
+
+#: automatic-translation-for-polylang.php:814
+msgid "Please tell us more"
+msgstr "โปรดบอกรายละเอียดเพิ่มเติม"
+
+#: automatic-translation-for-polylang.php:818
+msgid "Before you go…"
+msgstr "ก่อนที่คุณจะไป…"
+
+#. translators: %s: plugin name (bold).
+#: automatic-translation-for-polylang.php:820
+#, php-format
+msgid "What made you deactivate %s? Your answer helps us fix it."
+msgstr "อะไรทำให้คุณปิดใช้งาน %s? คำตอบของคุณช่วยให้เราปรับปรุงได้"
+
+#: automatic-translation-for-polylang.php:821
+msgid "Submit & Deactivate"
+msgstr "ส่งและปิดใช้งาน"
+
+#: automatic-translation-for-polylang.php:822
+msgid "Skip & Deactivate"
+msgstr "ข้ามและปิดใช้งาน"
+
+#: automatic-translation-for-polylang.php:823
+msgid "Deactivating…"
+msgstr "กำลังปิดใช้งาน%s"
+
+#: automatic-translation-for-polylang.php:824
+msgid "Please choose a reason."
+msgstr "โปรดเลือกเหตุผล"
+
+#. translators: %s: company name.
+#: automatic-translation-for-polylang.php:827
+#, php-format
+msgid "A plugin by %s"
+msgstr "ปลั๊กอินโดย %s"
+
+#: automatic-translation-for-polylang.php:828
+msgid ""
+"Submitting shares your reason plus your site URL, admin email and basic "
+"environment details (PHP, WordPress, active plugins). Skip & Deactivate "
+"sends nothing."
+msgstr ""
+"เมื่อส่งข้อมูล ระบบจะแชร์เหตุผลของคุณพร้อม URL เว็บไซต์ อีเมลผู้ดูแลระบบ "
+"และรายละเอียดสภาพแวดล้อมพื้นฐาน (PHP, WordPress และปลั๊กอินที่ใช้งานอยู่) "
+"การเลือกข้ามและปิดใช้งานจะไม่ส่งข้อมูลใด ๆ"
+
+#: automatic-translation-for-polylang.php:840
+msgid "Translation Plugins by Cool Plugins"
+msgstr "ปลั๊กอินแปลภาษาโดย Cool Plugins"
+
+#: automatic-translation-for-polylang.php:846
+msgid "Help Improve Plugins"
+msgstr "ช่วยปรับปรุงปลั๊กอิน"
+
+#: automatic-translation-for-polylang.php:847
+msgid "Yes, it's OK"
+msgstr "ได้เลย"
+
+#: automatic-translation-for-polylang.php:848
+msgid "No, Thanks"
+msgstr "ไม่ ขอบคุณ"
+
+#: automatic-translation-for-polylang.php:849
+msgid "More info"
+msgstr "ข้อมูลเพิ่มเติม"
+
+#. translators: 1: Plugin Name, 2: Plugin URL
+#: automatic-translation-for-polylang.php:954
+#, php-format
+msgid ""
+"In order to use %1$s plugin, please install and activate the latest version  "
+"of %2$s"
+msgstr ""
+
+#: automatic-translation-for-polylang.php:1027
+#: automatic-translation-for-polylang.php:1047
+#: automatic-translation-for-polylang.php:1071
+msgid "Automatic Translate"
+msgstr "แปลอัตโนมัติ"
+
+#: automatic-translation-for-polylang.php:1109
+#: assets/automatic-translate/index.js:1 assets/js/atfp-re-translation.js:87
+#: assets/js/atfp-re-translation.js:99
+msgid "Re-Translate"
+msgstr "แปลใหม่"
+
+#: automatic-translation-for-polylang.php:1112
+msgid "Re-Translate the page content for updating changes."
+msgstr "แปลเนื้อหาหน้าอีกครั้งเพื่ออัปเดตการเปลี่ยนแปลง"
+
+#: automatic-translation-for-polylang.php:1144
+msgid "Translate Page"
+msgstr "แปลหน้า"
+
+#. translators: 1: Source language, 2: Target language
+#: automatic-translation-for-polylang.php:1149
+#, php-format
+msgid "Translate or duplicate content from %1$s to %2$s"
+msgstr "แปลหรือทำสำเนาเนื้อหาจาก %1$s ไปยัง %2$s"
+
+#: helper/class-atfp-ajax-handler.php:82 helper/class-atfp-ajax-handler.php:109
+msgid "Invalid Post ID."
+msgstr "รหัสโพสต์ไม่ถูกต้อง"
+
+#: helper/class-atfp-ajax-handler.php:119
+msgid "Post not found."
+msgstr "ไม่พบโพสต์"
+
+#: helper/class-atfp-ajax-handler.php:261
+msgid "No custom blocks found."
+msgstr "ไม่พบบล็อกที่กำหนดเอง"
+
+#: helper/class-atfp-ajax-handler.php:279
+msgid "Invalid JSON"
+msgstr "JSON ไม่ถูกต้อง"
+
+#: helper/class-atfp-ajax-handler.php:305
+msgid ""
+"Automatic Translation for Polylang: Custom Blocks data updated successfully"
+msgstr ""
+"อัปเดตข้อมูลบล็อกที่กำหนดเองของ Automatic Translation for Polylang สำเร็จแล้ว"
+
+#: helper/class-atfp-ajax-handler.php:460
+msgid "Translation data updated successfully"
+msgstr "อัปเดตข้อมูลการแปลสำเร็จแล้ว"
+
+#: helper/class-atfp-ajax-handler.php:464
+msgid "Atfp_Dashboard class not found"
+msgstr "ไม่พบคลาส Atfp_Dashboard"
+
+#: helper/class-atfp-ajax-handler.php:487
+msgid "Invalid data."
+msgstr "ข้อมูลไม่ถูกต้อง"
+
+#: helper/class-atfp-ajax-handler.php:505
+msgid "Invalid Elementor data."
+msgstr "ข้อมูล Elementor ไม่ถูกต้อง"
+
+#: helper/class-atfp-ajax-handler.php:537
+msgid "Invalid JSON."
+msgstr "JSON ไม่ถูกต้อง"
+
+#: helper/class-atfp-ajax-handler.php:541
+msgid "Invalid enabled providers."
+msgstr "ผู้ให้บริการที่เปิดใช้งานไม่ถูกต้อง"
+
+#: helper/class-atfp-ajax-handler.php:573
+msgid "Enabled providers updated successfully."
+msgstr "อัปเดตรายชื่อผู้ให้บริการที่เปิดใช้งานสำเร็จแล้ว"
+
+#: helper/class-atfp-ajax-handler.php:596
+msgid "Invalid translation provider."
+msgstr "ผู้ให้บริการแปลภาษาไม่ถูกต้อง"
+
+#: helper/class-atfp-ajax-handler.php:618
+msgid "Default translation provider updated successfully."
+msgstr "อัปเดตผู้ให้บริการแปลภาษาเริ่มต้นสำเร็จแล้ว"
+
+#: helper/class-atfp-ajax-handler.php:629
+msgid "Sorry, you are not allowed to install plugins on this site."
+msgstr "ขออภัย คุณไม่ได้รับอนุญาตให้ติดตั้งปลั๊กอินบนเว็บไซต์นี้"
+
+#: helper/class-atfp-ajax-handler.php:635
+msgid "Security check failed."
+msgstr "การตรวจสอบความปลอดภัยไม่สำเร็จ"
+
+#: helper/class-atfp-ajax-handler.php:644
+msgid "No plugin specified."
+msgstr "ไม่ได้ระบุปลั๊กอิน"
+
+#: helper/class-atfp-ajax-handler.php:661
+msgid "Please activate Loco Translate plugin first."
+msgstr "โปรดเปิดใช้งานปลั๊กอิน Loco Translate ก่อน"
+
+#: helper/class-atfp-ajax-handler.php:677
+msgid "Invalid plugin slug."
+msgstr "รหัสย่อปลั๊กอินไม่ถูกต้อง"
+
+#: helper/class-atfp-ajax-handler.php:684
+msgid "Permission denied."
+msgstr "ไม่ได้รับอนุญาต"
+
+#: helper/class-atfp-ajax-handler.php:711
+#: helper/class-atfp-ajax-handler.php:765
+msgid "Plugin activated successfully."
+msgstr "เปิดใช้งานปลั๊กอินสำเร็จแล้ว"
+
+#: helper/class-atfp-ajax-handler.php:778
+msgid "Unable to connect to the filesystem. Please confirm your credentials."
+msgstr "ไม่สามารถเชื่อมต่อกับระบบไฟล์ได้ โปรดยืนยันข้อมูลรับรองของคุณ"
+
+#: helper/class-atfp-ajax-handler.php:801
+msgid "Plugin installed and activated successfully."
+msgstr "ติดตั้งและเปิดใช้งานปลั๊กอินสำเร็จแล้ว"
+
+#: helper/class-atfp-ajax-handler.php:803
+msgid "Plugin installed successfully."
+msgstr "ติดตั้งปลั๊กอินสำเร็จแล้ว"
+
+#: helper/class-atfp-helper.php:69
+msgid "Add More Gutenberg Blocks"
+msgstr "เพิ่มบล็อก Gutenberg เพิ่มเติม"
+
+#: helper/class-atfp-helper.php:977 assets/bulk-translate/index.js:3
+msgid "(no title)"
+msgstr "(ไม่มีชื่อเรื่อง)"
+
+#: helper/class-atfp-register-route.php:144
+msgid "Invalid nonce."
+msgstr "Nonce ไม่ถูกต้อง"
+
+#: helper/class-atfp-register-route.php:148
+#: helper/class-atfp-register-route.php:151
+#: helper/class-atfp-register-route.php:158
+#: helper/class-atfp-register-route.php:162
+#: helper/class-atfp-register-route.php:194
+#: helper/class-atfp-register-route.php:197
+#: helper/class-atfp-register-route.php:201
+#: helper/class-atfp-register-route.php:313
+#: helper/class-atfp-register-route.php:316
+#: helper/class-atfp-register-route.php:321
+#: helper/class-atfp-register-route.php:523
+#: helper/class-atfp-register-route.php:555
+msgid "You are not authorized to perform this action."
+msgstr "คุณไม่ได้รับอนุญาตให้ดำเนินการนี้"
+
+#: helper/class-atfp-register-route.php:205
+msgid "Empty target language. Select at least one language."
+msgstr "ไม่ได้ระบุภาษาเป้าหมาย โปรดเลือกอย่างน้อยหนึ่งภาษา"
+
+#: helper/class-atfp-register-route.php:209
+msgid "Empty post IDs. Select at least one post to translate."
+msgstr "ไม่ได้ระบุรหัสโพสต์ โปรเลือกโพสต์อย่างน้อยหนึ่งรายการเพื่อแปล"
+
+#: helper/class-atfp-register-route.php:400
+msgid "No posts to translate"
+msgstr "ไม่มีโพสต์ที่ต้องการแปล"
+
+#: helper/class-atfp-register-route.php:514
+msgid "Invalid source language"
+msgstr "ภาษาแหล่งที่มาไม่ถูกต้อง"
+
+#: helper/class-atfp-register-route.php:517
+msgid "Invalid request"
+msgstr "คำขอไม่ถูกต้อง"
+
+#: helper/class-atfp-register-route.php:520
+msgid "Invalid target language"
+msgstr "ภาษาเป้าหมายไม่ถูกต้อง"
+
+#: helper/class-atfp-register-route.php:526
+msgid "Invalid request content and title empty"
+msgstr "เนื้อหาและชื่อเรื่องของคำขอไม่ถูกต้องและว่างเปล่า"
+
+#: helper/class-atfp-register-route.php:539
+msgid "Invalid post."
+msgstr "โพสต์ไม่ถูกต้อง"
+
+#: helper/class-atfp-register-route.php:543
+msgid "This editor type is not supported by the free version."
+msgstr "รุ่นฟรีไม่รองรับประเภทเครื่องมือนี้"
+
+#. translators: 1: parent post ID, 2: target language
+#: helper/class-atfp-register-route.php:609
+#, php-format
+msgid "Unable to create the translated post for parent post ID %1$s in %2$s."
+msgstr "ไม่สามารถสร้างโพสต์ที่แปลแล้วสำหรับโพสต์หลักรหัส %1$s ในภาษา %2$s ได้"
+
+#: includes/bulk-translation/class-atfp-bulk-translation.php:64
+#: includes/bulk-translation/class-atfp-bulk-translation.php:92
+msgid "AI Translate"
+msgstr "แปลด้วย AI"
+
+#. translators: %s: post title
+#: includes/bulk-translation/class-atfp-bulk-translation.php:88
+#, php-format
+msgid "AI Translate &#8220;%s&#8221;"
+msgstr ""
+
+#: includes/bulk-translation/class-atfp-posts-clone.php:122
+msgid "Re-translate post id not found"
+msgstr "ไม่พบรหัสโพสต์ที่ต้องการแปลอีกครั้ง"
+
+#: includes/bulk-translation/class-atfp-posts-clone.php:126
+msgid "Re-translate post id not matched with target language saved post id"
+msgstr ""
+"รหัสโพสต์ที่ต้องการแปลอีกครั้งไม่ตรงกับรหัสโพสต์ที่บันทึกไว้ในภาษาเป้าหมาย"
+
+#: includes/bulk-translation/class-atfp-posts-clone.php:130
+msgid "Re-translate translation fields not exist in fields key"
+msgstr "ไม่มีฟิลด์การแปลซ้ำอยู่ในคีย์ fields"
+
+#: includes/class-atfp-register-backend-assets.php:80
+msgid "Pages"
+msgstr "หน้า"
+
+#: includes/class-atfp-register-backend-assets.php:81
+msgid "Page"
+msgstr "หน้า"
+
+#: includes/menu-sync/class-atfp-menu-sync-promo.php:96
+msgid "Menu Sync (Pro)"
+msgstr "ซิงค์เมนู (Pro)"
+
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:1
+msgid "STEP 2 OF 2"
+msgstr "ขั้นตอนที่ 2 จาก 2"
+
+#: assets/automatic-translate/index.js:1
+msgid "Start Automatic Translation Process"
+msgstr "เริ่มกระบวนการแปลอัตโนมัติ"
+
+#: assets/automatic-translate/index.js:1
+msgid "close"
+msgstr "ปิด"
+
+#: assets/automatic-translate/index.js:1
+msgid ""
+"Google Translate could not load. This is usually caused by an ad blocker or "
+"privacy extension blocking translate.google.com - please disable it for this "
+"site and reload the page."
+msgstr ""
+"Google Translate โหลดไม่สำเร็จ "
+"โดยปกติเกิดจากตัวบล็อกโฆษณาหรือส่วนขยายความเป็นส่วนตัวบล็อก translate.google."
+"com โปรดปิดใช้งานส่วนขยายดังกล่าวสำหรับเว็บไซต์นี้ แล้วโหลดหน้าใหม่"
+
+#: assets/automatic-translate/index.js:1
+msgid "Translate To"
+msgstr "แปลเป็น"
+
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:1
+msgid "Choose Language"
+msgstr "เลือกภาษา"
+
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:1
+msgid "View Error"
+msgstr "ดูข้อผิดพลาด"
+
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:1
+#, js-format
+msgid "Translate Using %s"
+msgstr "แปลโดยใช้ %s"
+
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:1
+#, js-format
+msgid "Translate Using %s Model"
+msgstr "แปลโดยใช้โมเดล %s"
+
+#: assets/automatic-translate/index.js:1
+msgid "Automatic translation is in progress...."
+msgstr "กำลังดำเนินการแปลอัตโนมัติ...."
+
+#: assets/automatic-translate/index.js:1
+msgid "It will take few minutes, enjoy ☕ coffee in this time!"
+msgstr "ใช้เวลาเพียงไม่กี่นาที ระหว่างนี้เชิญเพลิดเพลินกับกาแฟ ☕!"
+
+#: assets/automatic-translate/index.js:1
+msgid ""
+"Please do not leave this window or browser tab while translation is in "
+"progress..."
+msgstr "โปรดอย่าปิดหน้าต่างนี้หรือออกจากแท็บเบราว์เซอร์ขณะที่กำลังแปล..."
+
+#: assets/automatic-translate/index.js:1
+msgid "S.No"
+msgstr "ลำดับที่"
+
+#: assets/automatic-translate/index.js:1
+msgid "Source Text"
+msgstr "ข้อความต้นฉบับ"
+
+#: assets/automatic-translate/index.js:1
+msgid "No strings are available for translation"
+msgstr "ไม่มีข้อความที่พร้อมสำหรับการแปล"
+
+#: assets/automatic-translate/index.js:1
+msgid "Wahooo! You have saved your valuable time via auto translating"
+msgstr "เยี่ยมเลย! คุณประหยัดเวลาอันมีค่าได้ด้วยการแปลอัตโนมัติ"
+
+#: assets/automatic-translate/index.js:1
+msgid "characters using"
+msgstr "อักขระโดยใช้"
+
+#: assets/automatic-translate/index.js:1
+msgid "Updating"
+msgstr "กำลังอัปเดต"
+
+#: assets/automatic-translate/index.js:1
+msgid "Update Content"
+msgstr "อัปเดตเนื้อหา"
+
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:1
+msgid "STEP 1 OF 2"
+msgstr "ขั้นตอนที่ 1 จาก 2"
+
+#: assets/automatic-translate/index.js:1
+msgid "Select Translation Engine"
+msgstr "เลือกเครื่องมือแปล"
+
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:1
+msgid "Select an AI provider to automatically translate your content."
+msgstr "เลือกผู้ให้บริการ AI เพื่อแปลเนื้อหาของคุณโดยอัตโนมัติ"
+
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:1
+#, js-format
+msgid "View %s Documentation"
+msgstr "ดูเอกสารประกอบ %s"
+
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:1
+msgid "Start Translation"
+msgstr "เริ่มแปล"
+
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:1
+msgid "Back"
+msgstr "กลับ"
+
+#: assets/automatic-translate/index.js:1
+#, js-format
+msgid "Yandex Translate does not support the target language: %s."
+msgstr "Yandex Translate ไม่รองรับภาษาปลายทาง: %s"
+
+#: assets/automatic-translate/index.js:1
+#, js-format
+msgid "Google Translate does not support the target language: %s."
+msgstr "Google Translate ไม่รองรับภาษาปลายทาง: %s"
+
+#: assets/automatic-translate/index.js:1
+#, js-format
+msgid "%s AI Translator"
+msgstr "เครื่องมือแปล AI %s"
+
+#: assets/automatic-translate/index.js:1
+msgid "Edge AI Translator"
+msgstr "เครื่องมือแปล Edge AI"
+
+#: assets/automatic-translate/index.js:1
+msgid ""
+"⚠️ For accurate custom field translations, please disable the Custom Fields "
+"synchronization in "
+msgstr ""
+
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:8
+msgid "Polylang settings"
+msgstr "การตั้งค่า Polylang"
+
+#: assets/automatic-translate/index.js:1
+msgid ". This may affect linked posts or pages."
+msgstr ". ซึ่งอาจส่งผลต่อโพสต์หรือเพจที่เชื่อมโยงกัน"
+
+#: assets/automatic-translate/index.js:1
+msgid ""
+"No block rules were found. It appears that the block-rules.JSON file could "
+"not be fetched, possibly because it is blocked by your server settings. "
+"Please check your server configuration to resolve this issue."
+msgstr ""
+"ไม่พบกฎการบล็อก ดูเหมือนว่าไม่สามารถดึงไฟล์ block-rules.JSON ได้ "
+"ซึ่งอาจเกิดจากการตั้งค่าเซิร์ฟเวอร์ของคุณบล็อกไว้ "
+"โปรดตรวจสอบการกำหนดค่าเซิร์ฟเวอร์เพื่อแก้ไขปัญหานี้"
+
+#: assets/automatic-translate/index.js:1
+msgid "AI"
+msgstr "AI"
+
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:8
+#: assets/js/atfp-elementor-translate-confirm-box.js:30
+#: assets/js/atfp-re-translation.js:62
+msgid "AI Translation"
+msgstr "การแปลด้วย AI"
+
+#: assets/automatic-translate/index.js:1
+#, js-format
+msgid ""
+"Would you like to duplicate your original %s content and have it "
+"automatically translated into %s?"
+msgstr "คุณต้องการทำสำเนาเนื้อหา %s ต้นฉบับ แล้วแปลเป็น %s โดยอัตโนมัติหรือไม่"
+
+#: assets/automatic-translate/index.js:1
+#: assets/js/atfp-elementor-translate-confirm-box.js:39
+msgid "Translate Now"
+msgstr "แปลเลย"
+
+#: assets/automatic-translate/index.js:1
+#: assets/js/atfp-elementor-translate-confirm-box.js:43
+msgid "Translate Multiple Pages & Posts"
+msgstr "แปลหลายเพจและโพสต์"
+
+#: assets/automatic-translate/index.js:1
+#: assets/js/atfp-elementor-translate-confirm-box.js:47
+msgid "You’ve already translated"
+msgstr "คุณแปลไปแล้ว"
+
+#: assets/automatic-translate/index.js:1
+#: assets/js/atfp-elementor-translate-confirm-box.js:49
+msgid "characters manually."
+msgstr "อักขระด้วยตนเอง"
+
+#: assets/automatic-translate/index.js:1
+#: assets/js/atfp-elementor-translate-confirm-box.js:51
+msgid ""
+"Save time by translating multiple posts and pages in multiple languages on "
+"one click with"
+msgstr ""
+"ประหยัดเวลาด้วยการแปลโพสต์และเพจหลายรายการเป็นหลายภาษาได้ในคลิกเดียวด้วย"
+
+#: assets/automatic-translate/index.js:1
+#: assets/js/atfp-elementor-translate-confirm-box.js:58
+msgid "Get Pro for Bulk Translation"
+msgstr "อัปเกรดเป็น Pro เพื่อแปลหลายรายการ"
+
+#: assets/automatic-translate/index.js:1
+#: assets/js/atfp-elementor-translate-confirm-box.js:65
+msgid "Note: close this popup if you do not want AI translation."
+msgstr "หมายเหตุ: ปิดป๊อปอัปนี้หากไม่ต้องการใช้การแปลด้วย AI"
+
+#: assets/bulk-translate/index.js:1
+#, js-format
+msgid "Language %s(%s) is not supported by Yandex Translate"
+msgstr "Yandex Translate ไม่รองรับภาษา %s(%s)"
+
+#: assets/bulk-translate/index.js:1
+msgid ""
+"Yandex translator script did not initialize. Please check network/CSP "
+"blocking yastatic.net."
+msgstr ""
+"สคริปต์ Yandex Translator เริ่มต้นทำงานไม่สำเร็จ โปรดตรวจสอบว่าเครือข่ายหรือ "
+"CSP บล็อก yastatic.net หรือไม่"
+
+#: assets/bulk-translate/index.js:1
+msgid "Yandex translation failed. Please retry or check network blocking."
+msgstr ""
+"การแปลด้วย Yandex ล้มเหลว "
+"โปรดลองอีกครั้งหรือตรวจสอบว่าเครือข่ายบล็อกอยู่หรือไม่"
+
+#: assets/bulk-translate/index.js:1
+msgid "No content to translate"
+msgstr "ไม่มีเนื้อหาที่จะแปล"
+
+#: assets/bulk-translate/index.js:1
+#, js-format
+msgid "Language %s(%s) is not supported by Google Translate"
+msgstr "Google Translate ไม่รองรับภาษา %s(%s)"
+
+#: assets/bulk-translate/index.js:1
+msgid "No content found to translate"
+msgstr "ไม่พบเนื้อหาที่จะแปล"
+
+#: assets/bulk-translate/index.js:1
+msgid "N/A"
+msgstr "ไม่มีข้อมูล"
+
+#: assets/bulk-translate/index.js:1
+msgid "Post not created. Please try again."
+msgstr "สร้างโพสต์ไม่สำเร็จ โปรดลองอีกครั้ง"
+
+#: assets/bulk-translate/index.js:1
+msgid "No posts to translate data undefined"
+msgstr "ไม่มีข้อมูลโพสต์ที่จะแปล: ไม่ได้กำหนด"
+
+#: assets/bulk-translate/index.js:1
+msgid "No posts to translate untranslated data not found"
+msgstr "ไม่มีโพสต์ที่จะแปล: ไม่พบข้อมูลโพสต์ที่ยังไม่ได้แปล"
+
+#: assets/bulk-translate/index.js:1
+msgid "No posts to translate untranslated posts data not found"
+msgstr "ไม่มีโพสต์ที่จะแปล: ไม่พบข้อมูลโพสต์ที่ยังไม่ได้แปล"
+
+#: assets/bulk-translate/index.js:1
+msgid "No create translate post nonce"
+msgstr "ไม่มี nonce สำหรับสร้างโพสต์แปล"
+
+#: assets/bulk-translate/index.js:1
+#, js-format
+msgid "Set source language for this %s %s before translating."
+msgstr "กำหนดภาษาต้นฉบับสำหรับ %s %s นี้ก่อนแปล"
+
+#: assets/bulk-translate/index.js:1
+#, js-format
+msgid ""
+"Translations already exist for all selected %s in the chosen languages. "
+"There are no new %s to translate."
+msgstr "มีคำแปลสำหรับ %s ที่เลือกทั้งหมดในภาษาที่เลือกแล้ว ไม่มี %s ใหม่ให้แปล"
+
+#: assets/bulk-translate/index.js:1
+msgid "This post editor type is not supported for translation"
+msgstr "ไม่รองรับประเภทตัวแก้ไขโพสต์นี้สำหรับการแปล"
+
+#: assets/bulk-translate/index.js:1
+msgid "AI Translation Error"
+msgstr "ข้อผิดพลาดในการแปลด้วย AI"
+
+#: assets/bulk-translate/index.js:1
+#, js-format
+msgid "AI Translation %s"
+msgstr "การแปลด้วย AI %s"
+
+#: assets/bulk-translate/index.js:1
+msgid "In Queue"
+msgstr "อยู่ในคิว"
+
+#: assets/bulk-translate/index.js:1
+msgid "In Progress"
+msgstr "กำลังดำเนินการ"
+
+#: assets/bulk-translate/index.js:1
+msgid "Pending"
+msgstr "รอดำเนินการ"
+
+#: assets/bulk-translate/index.js:1
+msgid "Completed"
+msgstr "เสร็จสมบูรณ์"
+
+#: assets/bulk-translate/index.js:1
+msgid ""
+"Please keep this window open while your pages/posts are being translated."
+msgstr "โปรดเปิดหน้าต่างนี้ค้างไว้ขณะแปลหน้า/โพสต์ของคุณ"
+
+#: assets/bulk-translate/index.js:1
+msgid "Your content has been translated successfully."
+msgstr "แปลเนื้อหาของคุณสำเร็จแล้ว"
+
+#: assets/bulk-translate/index.js:1
+msgid "Posts"
+msgstr "โพสต์"
+
+#: assets/bulk-translate/index.js:1
+msgid "Characters"
+msgstr "อักขระ"
+
+#: assets/bulk-translate/index.js:1
+msgid "seconds"
+msgstr "วินาที"
+
+#: assets/bulk-translate/index.js:1
+msgid "Language"
+msgstr "ภาษา"
+
+#: assets/bulk-translate/index.js:1
+msgid "Preview"
+msgstr "ดูตัวอย่าง"
+
+#: assets/bulk-translate/index.js:1
+msgid "Actions"
+msgstr "การดำเนินการ"
+
+#: assets/bulk-translate/index.js:1
+msgid "Untitled"
+msgstr "ไม่มีชื่อ"
+
+#: assets/bulk-translate/index.js:1
+msgid "Retranslate"
+msgstr "แปลอีกครั้ง"
+
+#: assets/bulk-translate/index.js:1
+msgid "Error Details"
+msgstr "รายละเอียดข้อผิดพลาด"
+
+#: assets/bulk-translate/index.js:1
+#, js-format
+msgid "Open the translated %s for review"
+msgstr "เปิด %s ที่แปลแล้วเพื่อตรวจสอบ"
+
+#: assets/bulk-translate/index.js:1
+msgid "Review Translation"
+msgstr "ตรวจสอบคำแปล"
+
+#: assets/bulk-translate/index.js:1
+#, js-format
+msgid ""
+"Please wait until all translations for this %s are complete before reviewing."
+msgstr "โปรดรอจนกว่าการแปลทั้งหมดสำหรับ %s นี้จะเสร็จสมบูรณ์ก่อนตรวจสอบ"
+
+#: assets/bulk-translate/index.js:1
+msgid "AI Translation Settings"
+msgstr "การตั้งค่าการแปลด้วย AI"
+
+#: assets/bulk-translate/index.js:1
+msgid "Select your target languages and translation provider."
+msgstr "เลือกภาษาเป้าหมายและผู้ให้บริการแปล"
+
+#: assets/bulk-translate/index.js:1
+msgid "Select Languages"
+msgstr "เลือกภาษา"
+
+#: assets/bulk-translate/index.js:1
+msgid "Choose the languages you want to translate your content into."
+msgstr "เลือกภาษาที่ต้องการแปลเนื้อหาของคุณเป็น"
+
+#: assets/bulk-translate/index.js:1
+msgid "Unselect All"
+msgstr "ยกเลิกการเลือกทั้งหมด"
+
+#: assets/bulk-translate/index.js:1
+msgid "Select All"
+msgstr "เลือกทั้งหมด"
+
+#: assets/bulk-translate/index.js:1
+msgid "Select Translation Provider"
+msgstr "เลือกผู้ให้บริการแปล"
+
+#: assets/bulk-translate/index.js:1
+msgid "No AI providers available"
+msgstr "ไม่มีผู้ให้บริการ AI ที่พร้อมใช้งาน"
+
+#: assets/bulk-translate/index.js:1
+msgid "All providers are currently disabled."
+msgstr "ขณะนี้ผู้ให้บริการทั้งหมดถูกปิดใช้งาน"
+
+#: assets/bulk-translate/index.js:1
+msgid "Go to"
+msgstr "ไปที่"
+
+#: assets/bulk-translate/index.js:1
+msgid "to enable Yandex, Google, Chrome, or Edge built-in AI."
+msgstr "เพื่อเปิดใช้งาน AI ในตัวของ Yandex, Google, Chrome หรือ Edge"
+
+#: assets/bulk-translate/index.js:1
+msgid "Please select at least one language."
+msgstr "โปรดเลือกอย่างน้อยหนึ่งภาษา"
+
+#: assets/bulk-translate/index.js:1
+msgid "Please select a translation provider."
+msgstr "โปรดเลือกผู้ให้บริการแปล"
+
+#: assets/bulk-translate/index.js:1
+msgid ""
+"Translate 10× faster with Bulk Translation — save hours of manual work and "
+"effort."
+msgstr ""
+"แปลเร็วขึ้น 10× ด้วยการแปลเป็นชุด — "
+"ประหยัดเวลาหลายชั่วโมงจากการทำงานด้วยตนเอง"
+
+#: assets/bulk-translate/index.js:1
+msgid "Translate In Bulk"
+msgstr "แปลเป็นชุด"
+
+#. translators: %s: post type label, for example Posts or Pages.
+#: assets/bulk-translate/index.js:3
+#, js-format
+msgid "Send many %s through AI in a single run."
+msgstr "ส่ง %s จำนวนมากผ่าน AI ในครั้งเดียว"
+
+#: assets/bulk-translate/index.js:3
+msgid "Better Accuracy"
+msgstr "ความแม่นยำที่ดียิ่งขึ้น"
+
+#: assets/bulk-translate/index.js:3
+msgid "Improved context-aware translations."
+msgstr "คำแปลที่เข้าใจบริบทได้ดียิ่งขึ้น"
+
+#: assets/bulk-translate/index.js:3
+msgid "Save Time & Effort"
+msgstr "ประหยัดเวลาและแรง"
+
+#: assets/bulk-translate/index.js:3
+msgid "No need to translate them one by one."
+msgstr "ไม่ต้องแปลทีละรายการ"
+
+#: assets/bulk-translate/index.js:3
+msgid "Translating this editor is a <accent>Pro</accent> feature."
+msgstr ""
+
+#: assets/bulk-translate/index.js:3
+msgid "More Editor Support"
+msgstr "รองรับตัวแก้ไขเพิ่มเติม"
+
+#: assets/bulk-translate/index.js:3
+msgid ""
+"Translate content built without blocks, including the classic editor and "
+"page builders."
+msgstr ""
+"แปลเนื้อหาที่สร้างโดยไม่ใช้บล็อก "
+"รวมถึงตัวแก้ไขแบบคลาสสิกและเครื่องมือสร้างหน้า"
+
+#: assets/bulk-translate/index.js:3
+msgid "No need to translate manually again."
+msgstr "ไม่ต้องกลับมาแปลด้วยตนเองอีก"
+
+#: assets/bulk-translate/index.js:3
+msgid "Unlock Re-Translation with AutoPoly Pro"
+msgstr "ปลดล็อกการแปลซ้ำด้วย AutoPoly Pro"
+
+#: assets/bulk-translate/index.js:3
+msgid "Upgrade to Pro to re-translate existing content with AI."
+msgstr "อัปเกรดเป็น Pro เพื่อแปลเนื้อหาที่มีอยู่แล้วซ้ำด้วย AI"
+
+#: assets/bulk-translate/index.js:3
+msgid "Already translated this content?"
+msgstr "แปลเนื้อหานี้แล้วใช่ไหม"
+
+#: assets/bulk-translate/index.js:3
+msgid ""
+"AutoPoly Pro lets you translate it again with AI whenever your original "
+"content changes."
+msgstr ""
+"AutoPoly Pro ช่วยให้คุณแปลเนื้อหานี้ซ้ำด้วย AI "
+"ได้ทุกเมื่อที่เนื้อหาต้นฉบับมีการเปลี่ยนแปลง"
+
+#: assets/bulk-translate/index.js:3
+msgid "Re-translate Existing Content"
+msgstr "แปลเนื้อหาที่มีอยู่ซ้ำ"
+
+#: assets/bulk-translate/index.js:3
+msgid "Translate previously translated pages again with AI."
+msgstr "แปลหน้าที่เคยแปลแล้วซ้ำอีกครั้งด้วย AI"
+
+#: assets/bulk-translate/index.js:3
+msgid "Re-translate in One Click"
+msgstr "แปลซ้ำได้ในคลิกเดียว"
+
+#: assets/bulk-translate/index.js:3
+msgid ""
+"Start AI re-translation quickly without recreating translations manually."
+msgstr "เริ่มแปลซ้ำด้วย AI ได้อย่างรวดเร็ว โดยไม่ต้องสร้างคำแปลด้วยตนเองใหม่"
+
+#: assets/bulk-translate/index.js:3
+msgid "AutoPoly Pro Feature"
+msgstr "ฟีเจอร์ของ AutoPoly Pro"
+
+#: assets/bulk-translate/index.js:3
+msgid "Upgrade to Pro to unlock advanced AI translation capabilities."
+msgstr "อัปเกรดเป็น Pro เพื่อปลดล็อกความสามารถในการแปลด้วย AI ขั้นสูง"
+
+#: assets/bulk-translate/index.js:3
+msgid "Unlock <accent>AutoPoly Pro</accent>"
+msgstr ""
+
+#: assets/bulk-translate/index.js:3
+msgid "Upgrade to Pro"
+msgstr "อัปเกรดเป็น Pro"
+
+#: assets/bulk-translate/index.js:3
+msgid "Bulk Translation is a Pro Feature"
+msgstr "การแปลเป็นชุดเป็นฟีเจอร์ของ Pro"
+
+#. translators: 1: number of selected items, 2: post type label.
+#: assets/bulk-translate/index.js:4
+#, js-format
+msgid "You have selected <count>%1$d %2$s</count> for translation."
+msgstr ""
+
+#. translators: 1: position (always 1), 2: total selected, 3: singular post type label.
+#: assets/bulk-translate/index.js:5
+#, js-format
+msgid "Translate %1$d of %2$d %3$s"
+msgstr "แปล %1$d จาก %2$d %3$s"
+
+#. translators: %s: singular post type label.
+#: assets/bulk-translate/index.js:6
+#, js-format
+msgid "Translate This %s"
+msgstr "แปล %s นี้"
+
+#: assets/bulk-translate/index.js:6
+msgid "Choose Another Page"
+msgstr "เลือกหน้าอื่น"
+
+#: assets/bulk-translate/index.js:6
+msgid ""
+"AutoPoly Free allows you to translate <one>one page at a time.</one> "
+"Continue with a single untranslated page, or go back and choose another "
+"pages."
+msgstr ""
+
+#: assets/bulk-translate/index.js:6
+msgid "Bulk Translate All Pages (Pro)"
+msgstr "แปลทุกหน้าเป็นชุด (Pro)"
+
+#. translators: 1: number of additional selected items not shown, 2: post type label.
+#: assets/bulk-translate/index.js:7
+#, js-format
+msgid "+ %1$d more %2$s"
+msgstr "%2$s เพิ่มอีก %1$d รายการ"
+
+#. translators: 1: total selected items, 2: post type label.
+#: assets/bulk-translate/index.js:8
+#, js-format
+msgid "Translate %1$d %2$s at Once"
+msgstr "แปล %1$d %2$s พร้อมกัน"
+
+#: assets/bulk-translate/index.js:8
+msgid "Upgrade for Bulk Translation"
+msgstr "อัปเกรดเพื่อแปลหลายรายการพร้อมกัน"
+
+#: assets/bulk-translate/index.js:8
+msgid "You need to select one page for translation."
+msgstr "คุณต้องเลือกหนึ่งหน้าเพื่อแปล"
+
+#: assets/bulk-translate/index.js:8
+msgid "Yandex Translate does not support the selected target language(s)."
+msgstr "Yandex Translate ไม่รองรับภาษาปลายทางที่เลือก"
+
+#: assets/bulk-translate/index.js:8
+msgid "Google Translate does not support the selected target language(s)."
+msgstr "Google Translate ไม่รองรับภาษาปลายทางที่เลือก"
+
+#: assets/bulk-translate/index.js:8
+msgid "Nothing is ready to translate yet."
+msgstr "ยังไม่มีเนื้อหาพร้อมให้แปล"
+
+#: assets/bulk-translate/index.js:8
+msgid "No Page Selected"
+msgstr "ไม่ได้เลือกหน้า"
+
+#: assets/bulk-translate/index.js:8
+msgid ""
+"For accurate custom field translations, please disable the Custom Fields "
+"synchronization in "
+msgstr ""
+
+#: assets/bulk-translate/index.js:8
+#, js-format
+msgid ". This may affect linked %s."
+msgstr ". ซึ่งอาจส่งผลต่อ %s ที่ลิงก์ไว้"
+
+#: assets/inline-translate-modal/index.js:1
+msgid "Language Error Details"
+msgstr "รายละเอียดข้อผิดพลาดของภาษา"
+
+#: assets/js/atfp-elementor-translate-confirm-box.js:36
+#, js-format
+msgid ""
+"Use AI to translate this page inside %s while keeping the same layout and "
+"design."
+msgstr "ใช้ AI แปลหน้านี้ภายใน %s โดยคงเค้าโครงและดีไซน์เดิมไว้"
+
+#: assets/js/atfp-elementor-translate-confirm-box.js:139
+msgid "Loading"
+msgstr "กำลังโหลด"
+
+#: assets/js/atfp-re-translation.js:50
+msgid "Get Pro for Re-Translation"
+msgstr "รับ Pro เพื่อแปลซ้ำ"
+
+#: assets/js/atfp-re-translation.js:69
+msgid ""
+"Want to update your translated content to match the latest changes on your "
+"page? Try our Pro version to easily re-translate and unlock all advanced "
+"features."
+msgstr ""
+"ต้องการอัปเดตเนื้อหาที่แปลแล้วให้ตรงกับการเปลี่ยนแปลงล่าสุดบนหน้าของคุณหรือไม่"
+" ลองใช้เวอร์ชัน Pro เพื่อแปลซ้ำได้อย่างง่ายดายและปลดล็อกฟีเจอร์ขั้นสูงทั้งหมด"

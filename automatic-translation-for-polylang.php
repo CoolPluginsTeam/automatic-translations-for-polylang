@@ -8,6 +8,7 @@ Author URI: https://coolplugins.net/?utm_source=atfp_plugin&utm_medium=inside&ut
 Description: AutoPoly - AI Translation For Polylang simplifies your translation process by automatically translating all pages/posts content from one language to another.
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Domain Path: /languages
 Text Domain: automatic-translations-for-polylang
 */
 

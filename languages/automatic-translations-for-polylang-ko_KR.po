@@ -1,0 +1,1998 @@
+# Copyright (C) 2026 Cool Plugins
+# This file is distributed under the GPLv2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: AutoPoly - AI Translation For Polylang 1.6.5\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/automatic-"
+"translations-for-polylang\n"
+"Last-Translator: \n"
+"Language-Team: Korean\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-11-18T06:54:43+00:00\n"
+"PO-Revision-Date: 2026-11-18 08:52+0000\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Domain: automatic-translations-for-polylang\n"
+"Language: ko_KR\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Loco-Version: 2.8.9; wp-7.1.4; php-8.2.29"
+
+#. Plugin Name of the plugin
+#: automatic-translation-for-polylang.php
+#: automatic-translation-for-polylang.php:440
+msgid "AutoPoly - AI Translation For Polylang"
+msgstr "AutoPoly - Polylang용 AI 번역"
+
+#. Plugin URI of the plugin
+#: automatic-translation-for-polylang.php
+msgid "https://coolplugins.net/"
+msgstr ""
+
+#. Description of the plugin
+#: automatic-translation-for-polylang.php
+msgid ""
+"AutoPoly - AI Translation For Polylang simplifies your translation process "
+"by automatically translating all pages/posts content from one language to "
+"another."
+msgstr ""
+"AutoPoly - Polylang용 AI 번역은 모든 페이지/게시물 콘텐츠를 한 언어에서 다른 언어로 자동 번역하여 번역 과정을 "
+"간소화합니다."
+
+#. Author of the plugin
+#: automatic-translation-for-polylang.php
+msgid "Cool Plugins"
+msgstr "Cool Plugins"
+
+#. Author URI of the plugin
+#: automatic-translation-for-polylang.php
+msgid ""
+"https://coolplugins.net/?"
+"utm_source=atfp_plugin&utm_medium=inside&utm_campaign=author_page&utm_content=plugins_list"
+msgstr ""
+
+#: admin/atfp-dashboard/views/dashboard.php:27
+#: assets/automatic-translate/index.js:1
+msgid "Google Translate"
+msgstr "Google 번역"
+
+#: admin/atfp-dashboard/views/dashboard.php:33
+msgid "Chrome Built-in AI"
+msgstr "Chrome 내장 AI"
+
+#: admin/atfp-dashboard/views/dashboard.php:39
+msgid "Edge Built-in AI"
+msgstr "Edge 내장 AI"
+
+#: admin/atfp-dashboard/views/dashboard.php:45
+#: assets/automatic-translate/index.js:1
+msgid "Yandex Translate"
+msgstr "Yandex 번역"
+
+#: admin/atfp-dashboard/views/dashboard.php:53
+msgid "Choose the page or post you want to translate."
+msgstr "번역할 페이지 또는 게시물을 선택하세요."
+
+#: admin/atfp-dashboard/views/dashboard.php:54
+msgid "Click the AI Translate button."
+msgstr "AI 번역 버튼을 클릭하세요."
+
+#: admin/atfp-dashboard/views/dashboard.php:55
+msgid "Choose your target languages and AI translation provider."
+msgstr "대상 언어와 AI 번역 제공업체를 선택하세요."
+
+#: admin/atfp-dashboard/views/dashboard.php:56
+msgid "Start the translation and update the page to save it."
+msgstr "번역을 시작한 다음 페이지를 업데이트하여 저장하세요."
+
+#: admin/atfp-dashboard/views/dashboard.php:60
+msgid ""
+"Automate the Translation Process with AutoPoly - AI Translation For Polylang"
+msgstr "AutoPoly - Polylang용 AI 번역으로 번역 과정 자동화"
+
+#: admin/atfp-dashboard/views/dashboard.php:76
+msgid "Welcome to AutoPoly"
+msgstr "AutoPoly에 오신 것을 환영합니다"
+
+#: admin/atfp-dashboard/views/dashboard.php:77
+msgid ""
+"Translate your WordPress content with AI and make your website multilingual "
+"in minutes."
+msgstr "AI로 WordPress 콘텐츠를 번역하고 몇 분 만에 다국어 웹사이트를 만들어 보세요."
+
+#: admin/atfp-dashboard/views/dashboard.php:83
+msgid "Play the AutoPoly walkthrough video"
+msgstr "AutoPoly 안내 동영상 재생"
+
+#: admin/atfp-dashboard/views/dashboard.php:92
+msgid "Translate your first page in 4 simple steps"
+msgstr "간단한 4단계로 첫 페이지 번역하기"
+
+#: admin/atfp-dashboard/views/dashboard.php:102
+msgid "Translate Pages"
+msgstr "페이지 번역"
+
+#: admin/atfp-dashboard/views/dashboard.php:103
+msgid "Translate Posts"
+msgstr "게시물 번역"
+
+#: admin/atfp-dashboard/views/dashboard.php:111
+msgid "Translation Providers"
+msgstr "번역 제공업체"
+
+#: admin/atfp-dashboard/views/dashboard.php:112
+msgid ""
+"Select your default translation provider. This provider will be pre-selected "
+"when the translation modal opens."
+msgstr "기본 번역 제공업체를 선택하세요. 번역 모달이 열릴 때 이 제공업체가 미리 선택됩니다."
+
+#: admin/atfp-dashboard/views/dashboard.php:122
+msgid "You can switch providers anytime from the translation modal."
+msgstr "번역 모달에서 언제든지 제공업체를 변경할 수 있습니다."
+
+#: admin/atfp-dashboard/views/dashboard.php:132
+msgid "Ready"
+msgstr "사용 가능"
+
+#: admin/atfp-dashboard/views/dashboard.php:133
+msgid "Not Configured"
+msgstr "구성되지 않음"
+
+#: admin/atfp-dashboard/views/dashboard.php:134
+msgid "Not supported"
+msgstr "지원되지 않음"
+
+#. translators: 1: translation provider name, 2: required browser name
+#: admin/atfp-dashboard/views/dashboard.php:141
+#: admin/chrome-ai-setup/js/chrome-ai-setup-notice.js:151
+#, js-format
+msgid ""
+"%1$s Translation provider is not supported in your current browser. Please "
+"use %2$s browser to use this translation provider."
+msgstr "현재 브라우저에서는 %1$s 번역 제공업체가 지원되지 않습니다. 이 번역 제공업체를 사용하려면 %2$s 브라우저를 이용하세요."
+
+#: admin/atfp-dashboard/views/dashboard.php:157
+msgid "Set as default"
+msgstr "기본값으로 설정"
+
+#: admin/atfp-dashboard/views/dashboard.php:158
+msgid "Default provider"
+msgstr "기본 제공업체"
+
+#: admin/atfp-dashboard/views/dashboard.php:159
+msgid "Configure this provider before setting it as default."
+msgstr "기본값으로 설정하기 전에 이 제공업체를 구성하세요."
+
+#: admin/atfp-dashboard/views/dashboard.php:161
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:1
+msgid "Docs"
+msgstr "문서"
+
+#: admin/atfp-dashboard/views/dashboard.php:163
+msgid "Configure"
+msgstr "구성"
+
+#: admin/atfp-dashboard/views/dashboard.php:173
+msgid ""
+"The default provider stays enabled. Pick another default to turn this off."
+msgstr "기본 제공업체는 계속 활성화됩니다. 이 제공업체를 비활성화하려면 다른 제공업체를 기본값으로 선택하세요."
+
+#. translators: %s: translation engine name
+#: admin/atfp-dashboard/views/dashboard.php:180
+#, php-format
+msgid "Enable %s"
+msgstr "%s 활성화"
+
+#: admin/atfp-dashboard/views/footer.php:9
+msgid "Made with ❤️ by"
+msgstr ""
+
+#: admin/atfp-dashboard/views/footer.php:12
+msgid "Cool Plugins Logo"
+msgstr "Cool Plugins 로고"
+
+#: admin/atfp-dashboard/views/free-vs-pro.php:9
+msgid "Free VS Pro"
+msgstr "무료 버전과 Pro 버전"
+
+#: admin/atfp-dashboard/views/free-vs-pro.php:17
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:1
+msgid "Buy Pro"
+msgstr "Pro 구매"
+
+#: admin/atfp-dashboard/views/free-vs-pro.php:20
+msgid ""
+"Compare the Free and Pro versions to choose the best option for your "
+"translation needs."
+msgstr "번역 요구사항에 가장 적합한 옵션을 선택할 수 있도록 무료 버전과 Pro 버전을 비교해 보세요."
+
+#: admin/atfp-dashboard/views/free-vs-pro.php:25
+msgid "Features"
+msgstr "기능"
+
+#: admin/atfp-dashboard/views/free-vs-pro.php:26
+msgid "Free"
+msgstr "무료"
+
+#: admin/atfp-dashboard/views/free-vs-pro.php:27
+#: assets/bulk-translate/index.js:3
+msgid "Pro"
+msgstr "Pro"
+
+#. translators: %s: Google Translate (brand name, not translated)
+#. translators: %s: Yandex Translate (brand name, not translated)
+#: admin/atfp-dashboard/views/free-vs-pro.php:36
+#: admin/atfp-dashboard/views/free-vs-pro.php:45
+#, php-format
+msgid "%s Widget Support"
+msgstr "%s 위젯 지원"
+
+#. translators: 1: Chrome (brand name, not translated), 2: AI (not translated)
+#. translators: 1: Edge (brand name, not translated), 2: AI (not translated)
+#: admin/atfp-dashboard/views/free-vs-pro.php:54
+#: admin/atfp-dashboard/views/free-vs-pro.php:64
+#, php-format
+msgid "%1$s Built-in %2$s Support"
+msgstr "%1$s 내장 %2$s 지원"
+
+#. translators: %s: API Key (not translated)
+#: admin/atfp-dashboard/views/free-vs-pro.php:74
+#, php-format
+msgid "No %s Required"
+msgstr "%s 필요 없음"
+
+#: admin/atfp-dashboard/views/free-vs-pro.php:80
+msgid "Unlimited Translations"
+msgstr "번역 무제한"
+
+#. translators: 1: AI (not translated), 2: Gemini/OpenAI/DeepL (brand names, not translated)
+#: admin/atfp-dashboard/views/free-vs-pro.php:84
+#, php-format
+msgid "%1$s Translator (%2$s) Support"
+msgstr "%1$s 번역기(%2$s) 지원"
+
+#: admin/atfp-dashboard/views/free-vs-pro.php:91
+msgid "Custom Fields Translation"
+msgstr "사용자 정의 필드 번역"
+
+#: admin/atfp-dashboard/views/free-vs-pro.php:92
+msgid "Taxonomy Translation"
+msgstr "분류 체계 번역"
+
+#: admin/atfp-dashboard/views/free-vs-pro.php:93
+#: assets/automatic-translate/index.js:1
+#: assets/js/atfp-elementor-translate-confirm-box.js:52
+msgid "Bulk Translation"
+msgstr "일괄 번역"
+
+#: admin/atfp-dashboard/views/free-vs-pro.php:94
+msgid "Re Translation"
+msgstr "재번역"
+
+#. translators: %s: Classic Editor (brand name, not translated)
+#. translators: %s: Divi 5 (brand name, not translated)
+#: admin/atfp-dashboard/views/free-vs-pro.php:98
+#: admin/atfp-dashboard/views/free-vs-pro.php:107
+#, php-format
+msgid "%s Translation"
+msgstr "%s 번역"
+
+#: admin/atfp-dashboard/views/free-vs-pro.php:113
+msgid "Premium Support"
+msgstr "프리미엄 지원"
+
+#: admin/atfp-dashboard/views/settings.php:7
+msgid "You do not have sufficient permissions to access this page."
+msgstr "이 페이지에 액세스할 권한이 충분하지 않습니다."
+
+#: admin/atfp-dashboard/views/settings.php:49
+#: automatic-translation-for-polylang.php:123
+#: automatic-translation-for-polylang.php:454
+msgid "Settings"
+msgstr "설정"
+
+#. translators: %s is a link to the Polylang languages page.
+#: admin/atfp-dashboard/views/settings.php:94
+#, php-format
+msgid "Add at least %1$s to use the %2$s AI translation test"
+msgstr "%2$s AI 번역 테스트를 사용하려면 최소 %1$s을(를) 추가하세요."
+
+#: admin/atfp-dashboard/views/settings.php:96
+msgid "one language in Polylang"
+msgstr "Polylang에 언어 하나"
+
+#: admin/atfp-dashboard/views/settings.php:121
+msgid "Translated Posts Status"
+msgstr "번역된 게시물 상태"
+
+#: admin/atfp-dashboard/views/settings.php:124
+msgid "Choose the default status for Translated posts"
+msgstr "번역된 게시물의 기본 상태를 선택하세요."
+
+#: admin/atfp-dashboard/views/settings.php:130
+msgid "Default Post Status"
+msgstr "기본 게시물 상태"
+
+#: admin/atfp-dashboard/views/settings.php:134
+msgid "Publish"
+msgstr "게시됨"
+
+#: admin/atfp-dashboard/views/settings.php:136
+msgid "Draft"
+msgstr "임시 글"
+
+#: admin/atfp-dashboard/views/settings.php:139
+msgid ""
+"Select the status automatically applied to posts after translation is "
+"completed."
+msgstr "번역 완료 후 게시물에 자동으로 적용될 상태를 선택합니다."
+
+#: admin/atfp-dashboard/views/settings.php:145
+msgid "Upgrade Now"
+msgstr "지금 업그레이드"
+
+#: admin/atfp-dashboard/views/settings.php:146
+msgid "Unlock Pro Features"
+msgstr "Pro 기능 잠금 해제"
+
+#: admin/atfp-dashboard/views/settings.php:161
+msgid "AI API Keys & Models"
+msgstr "AI API 키 및 모델"
+
+#: admin/atfp-dashboard/views/settings.php:164
+msgid "Configure your API keys and models for the AI translation providers."
+msgstr "AI 번역 제공업체의 API 키와 모델을 구성합니다."
+
+#. translators: 1: API name
+#: admin/atfp-dashboard/views/settings.php:191
+#, php-format
+msgid "Add %1$s API key"
+msgstr "%1$s API 키 추가"
+
+#. translators: 1: Click Here link, 2: API name
+#: admin/atfp-dashboard/views/settings.php:205
+#, php-format
+msgid "%1$s to See How to Generate %2$s API Key"
+msgstr "%1$s API 키 생성 방법을 확인하려면 %2$s"
+
+#: admin/atfp-dashboard/views/settings.php:206
+#: admin/atfp-dashboard/views/settings.php:322
+msgid "Click Here"
+msgstr "여기를 클릭"
+
+#: admin/atfp-dashboard/views/settings.php:224
+msgid "Translation Settings"
+msgstr "번역 설정"
+
+#: admin/atfp-dashboard/views/settings.php:227
+msgid "Configure the translation settings for AI translations."
+msgstr "AI 번역 설정을 구성합니다."
+
+#: admin/atfp-dashboard/views/settings.php:232
+msgid "Context Aware"
+msgstr "문맥 인식"
+
+#: admin/atfp-dashboard/views/settings.php:236
+msgid ""
+"Provide optional context about WordPress page or post to enhance translation "
+"accuracy (e.g. content purpose, target audience, SEO focus, tone)..."
+msgstr ""
+"번역 정확도를 높이기 위해 WordPress 페이지 또는 게시물에 대한 선택적 문맥을 제공합니다(예: 콘텐츠 목적, 대상 독자, SEO "
+"중점 사항, 어조)..."
+
+#: admin/atfp-dashboard/views/settings.php:240
+msgid "This setting only works with Gemini AI and OpenAI."
+msgstr "이 설정은 Gemini AI 및 OpenAI에서만 작동합니다."
+
+#: admin/atfp-dashboard/views/settings.php:245
+msgid "Slug Translation Settings"
+msgstr "슬러그 번역 설정"
+
+#: admin/atfp-dashboard/views/settings.php:249
+msgid "Use Translated Title"
+msgstr "번역된 제목 사용"
+
+#: admin/atfp-dashboard/views/settings.php:251
+msgid "Translate Original Slug"
+msgstr "원본 슬러그 번역"
+
+#: admin/atfp-dashboard/views/settings.php:253
+msgid "Keep Original Slug"
+msgstr "원본 슬러그 유지"
+
+#: admin/atfp-dashboard/views/settings.php:268
+msgid "AI Request Performance"
+msgstr "AI 요청 성능"
+
+#: admin/atfp-dashboard/views/settings.php:271
+msgid ""
+"Adjust these settings to optimize the speed, stability, and processing "
+"performance of your AI requests."
+msgstr "AI 요청의 속도, 안정성 및 처리 성능을 최적화하도록 설정을 조정합니다."
+
+#: admin/atfp-dashboard/views/settings.php:275
+msgid "Token Limit"
+msgstr "토큰 한도"
+
+#. translators: 1: span tag, 2: span tag
+#: admin/atfp-dashboard/views/settings.php:280
+#, php-format
+msgid ""
+"%1$sRecommended%2$s 500 tokens per request If model or network is slow, "
+"decrease this value"
+msgstr "%1$s권장%2$s 요청당 토큰 500개. 모델 또는 네트워크가 느리면 이 값을 낮추세요."
+
+#: admin/atfp-dashboard/views/settings.php:285
+msgid "Batch Size"
+msgstr "일괄 처리 크기"
+
+#. translators: 1: span tag, 2: span tag
+#: admin/atfp-dashboard/views/settings.php:290
+#, php-format
+msgid ""
+"%1$sRecommended%2$s 5 posts per batch Larger batch can take longer to "
+"process If model or network is slow, decrease this value"
+msgstr ""
+"%1$s권장%2$s 배치당 게시물 5개. 배치가 클수록 처리 시간이 길어질 수 있습니다. 모델 또는 네트워크가 느리면 이 값을 낮추세요."
+
+#: admin/atfp-dashboard/views/settings.php:295
+msgid "Timeout Duration"
+msgstr "시간 초과 시간"
+
+#. translators: 1: span tag, 2: span tag
+#: admin/atfp-dashboard/views/settings.php:300
+#, php-format
+msgid ""
+"%1$sRecommended%2$s 120 seconds minimum timeout can cause timeouts If model "
+"or network is slow, increase this value"
+msgstr ""
+"%1$s권장%2$s 120초. 최소 시간 초과 값은 시간 초과를 유발할 수 있습니다. 모델 또는 네트워크가 느리면 이 값을 높이세요."
+
+#: admin/atfp-dashboard/views/settings.php:310
+msgid "Usage Data Sharing"
+msgstr "사용 데이터 공유"
+
+#: admin/atfp-dashboard/views/settings.php:318
+#: automatic-translation-for-polylang.php:841
+msgid ""
+"Help us make this plugin more compatible with your site by sharing non-"
+"sensitive site data."
+msgstr "민감하지 않은 사이트 데이터를 공유하여 이 플러그인이 사이트와 더 잘 호환되도록 도와주세요."
+
+#: admin/atfp-dashboard/views/settings.php:322
+msgid ""
+"Opt in to receive email updates about security improvements, new features, "
+"helpful tutorials, and occasional special offers. We'll collect:"
+msgstr ""
+"보안 개선 사항, 새로운 기능, 유용한 튜토리얼 및 가끔 제공되는 특별 혜택에 관한 이메일 업데이트를 받도록 동의합니다. 다음 정보를 "
+"수집합니다:"
+
+#: admin/atfp-dashboard/views/settings.php:324
+msgid "Your website home URL and WordPress admin email."
+msgstr "웹사이트 홈 URL 및 WordPress 관리자 이메일 주소."
+
+#: admin/atfp-dashboard/views/settings.php:325
+msgid ""
+"To check plugin compatibility, we will collect the following: list of active "
+"plugins and themes, server type, MySQL version, WordPress version, memory "
+"limit, site language and database prefix."
+msgstr ""
+"플러그인 호환성을 확인하기 위해 활성 플러그인 및 테마 목록, 서버 유형, MySQL 버전, WordPress 버전, 메모리 제한, "
+"사이트 언어 및 데이터베이스 접두사를 수집합니다."
+
+#: admin/atfp-dashboard/views/settings.php:331
+msgid "Save Changes"
+msgstr "변경 사항 저장"
+
+#: admin/atfp-dashboard/views/sidebar.php:9
+msgid "Duplicate Content & Translation Inspector"
+msgstr "중복 콘텐츠 및 번역 검사기"
+
+#: admin/atfp-dashboard/views/sidebar.php:13
+msgid ""
+"Duplicate your pages/posts and inspect translations across Polylang "
+"languages."
+msgstr "페이지/게시물을 복제하고 Polylang 언어 전반의 번역을 검사합니다."
+
+#: admin/atfp-dashboard/views/sidebar.php:25
+#: admin/atfp-dashboard/views/sidebar.php:130
+msgid "Activated"
+msgstr "활성화됨"
+
+#: admin/atfp-dashboard/views/sidebar.php:33
+#: admin/atfp-dashboard/views/sidebar.php:138
+msgid "Activate"
+msgstr "활성화"
+
+#: admin/atfp-dashboard/views/sidebar.php:33
+#: admin/atfp-dashboard/views/sidebar.php:138
+msgid "Install"
+msgstr "설치"
+
+#: admin/atfp-dashboard/views/sidebar.php:39
+msgid "Translation Inspector"
+msgstr "번역 검사기"
+
+#: admin/atfp-dashboard/views/sidebar.php:45
+msgid "Translation Statistics"
+msgstr "번역 통계"
+
+#: admin/atfp-dashboard/views/sidebar.php:88
+msgid "Characters Translated!"
+msgstr "번역된 글자 수!"
+
+#: admin/atfp-dashboard/views/sidebar.php:91
+msgid "Total Strings"
+msgstr "총 문자열 수"
+
+#: admin/atfp-dashboard/views/sidebar.php:92
+msgid "Pages / Posts Translated"
+msgstr "번역된 페이지/게시물"
+
+#: admin/atfp-dashboard/views/sidebar.php:93 assets/bulk-translate/index.js:1
+msgid "Time Taken"
+msgstr "소요 시간"
+
+#. translators: 1: number of characters translated, 2: plugin name
+#: admin/atfp-dashboard/views/sidebar.php:101
+#, php-format
+msgid ""
+"Translated %1$s characters page by page. Save time — install %2$s and use "
+"Bulk Translation to translate multiple pages in one click."
+msgstr ""
+"페이지를 하나씩 %1$s 문자로 번역하세요. 시간을 절약하세요 — %2$s를 설치하고 일괄 번역 기능으로 여러 페이지를 한 번에 "
+"번역하세요."
+
+#: admin/atfp-dashboard/views/sidebar.php:109
+msgid "Get Pro for Bulk translation"
+msgstr "일괄 번역을 사용하려면 Pro를 이용하세요"
+
+#: admin/atfp-dashboard/views/sidebar.php:114
+msgid "Translate Plugins & Themes Automatically"
+msgstr "플러그인 및 테마 자동 번역"
+
+#: admin/atfp-dashboard/views/sidebar.php:118
+msgid "Loco addon to translate plugins and themes."
+msgstr "플러그인과 테마를 번역하는 Loco 애드온입니다."
+
+#: admin/atfp-dashboard/views/sidebar.php:144
+msgid "Loco Translate Addon"
+msgstr "Loco Translate 애드온"
+
+#: admin/atfp-dashboard/views/sidebar.php:149
+msgid "Enjoying AutoPoly?"
+msgstr "AutoPoly를 유용하게 사용하고 계신가요?"
+
+#: admin/atfp-dashboard/views/sidebar.php:150
+msgid ""
+"We’d love to hear your feedback! If AutoPoly makes translation easier for "
+"you, please leave us a review."
+msgstr "여러분의 의견을 듣고 싶습니다! AutoPoly가 번역을 더 쉽게 만들어 드렸다면 리뷰를 남겨 주세요."
+
+#: admin/atfp-dashboard/views/sidebar.php:151
+msgid "Leave a Review ★★★★★"
+msgstr "리뷰 남기기 ★★★★★"
+
+#: admin/atfp-dashboard/views/sidebar.php:158
+msgid "0"
+msgstr "0"
+
+#. translators: 1: Time taken in seconds in number format
+#: admin/atfp-dashboard/views/sidebar.php:160
+#, php-format
+msgid "%d sec"
+msgstr "%d초"
+
+#. translators: 1: Time taken in minutes in number format, 2: Time taken in seconds in number format
+#: admin/atfp-dashboard/views/sidebar.php:165
+#, php-format
+msgid "%1$d min %2$d sec"
+msgstr "%1$d분 %2$d초"
+
+#. translators: 1: Time taken in hours in number format, 2: Time taken in minutes in number format
+#: admin/atfp-dashboard/views/sidebar.php:170
+#, php-format
+msgid "%1$d hours %2$d min"
+msgstr "%1$d시간 %2$d분"
+
+#: admin/atfp-dashboard/views/sidebar.php:204
+msgid "LocoAI – Auto Translate for Loco Translate"
+msgstr "LocoAI – Loco Translate 자동 번역"
+
+#: admin/atfp-dashboard/views/sidebar.php:205
+msgid "LocoAI – Auto Translate for Loco Translate (Pro)"
+msgstr "LocoAI – Loco Translate 자동 번역 (Pro)"
+
+#: admin/atfp-dashboard/views/sidebar.php:209
+#: admin/atfp-dashboard/views/sidebar.php:210
+msgid "Toolkit for Polylang - Translation Inspector & Duplicate Content"
+msgstr "Polylang 도구 모음 - 번역 검사기 및 콘텐츠 복제"
+
+#: admin/atfp-dashboard/views/sidebar.php:243
+msgid "B"
+msgstr "B"
+
+#: admin/atfp-dashboard/views/sidebar.php:245
+msgid "M"
+msgstr "M"
+
+#: admin/atfp-dashboard/views/sidebar.php:247
+msgid "K"
+msgstr "K"
+
+#. translators: 1: AutoPoly - AI Translation For Polylang plugin name
+#: admin/atfp-dashboard/views/support-blocks.php:87
+#, php-format
+msgid "Supported Blocks for %s"
+msgstr "%s에서 지원하는 블록"
+
+#: admin/atfp-dashboard/views/support-blocks.php:90
+msgid "Block Type Category:"
+msgstr "블록 유형 카테고리:"
+
+#: admin/atfp-dashboard/views/support-blocks.php:92
+#: admin/atfp-dashboard/views/support-blocks.php:100
+msgid "All"
+msgstr "전체"
+
+#: admin/atfp-dashboard/views/support-blocks.php:98
+msgid "Show Blocks:"
+msgstr "블록 표시:"
+
+#: admin/atfp-dashboard/views/support-blocks.php:101
+#: automatic-translation-for-polylang.php:456
+msgid "Supported Blocks"
+msgstr "지원되는 블록"
+
+#: admin/atfp-dashboard/views/support-blocks.php:102
+msgid "Unsupported Blocks"
+msgstr "지원되지 않는 블록"
+
+#: admin/atfp-dashboard/views/support-blocks.php:111
+msgid "Sr.No"
+msgstr "번호"
+
+#: admin/atfp-dashboard/views/support-blocks.php:112
+msgid "Block Name"
+msgstr "블록 이름"
+
+#: admin/atfp-dashboard/views/support-blocks.php:113
+msgid "Block Title"
+msgstr "블록 제목"
+
+#: admin/atfp-dashboard/views/support-blocks.php:114
+#: assets/bulk-translate/index.js:1
+msgid "Status"
+msgstr "상태"
+
+#: admin/atfp-dashboard/views/support-blocks.php:115
+msgid "Modify"
+msgstr "수정"
+
+#: admin/atfp-dashboard/views/support-blocks.php:194
+msgid "Add"
+msgstr "추가"
+
+#: admin/atfp-dashboard/views/support-blocks.php:194
+msgid "Edit"
+msgstr "편집"
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:103
+msgctxt "post type general name"
+msgid "Automatic Translations"
+msgstr "자동 번역"
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:104
+msgctxt "post type singular name"
+msgid "Automatic Translation"
+msgstr "자동 번역"
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:105
+msgctxt "admin menu"
+msgid "Automatic Translations"
+msgstr "자동 번역"
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:106
+msgctxt "add new on admin bar"
+msgid "Automatic Translation"
+msgstr "자동 번역"
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:107
+msgctxt "Automatic Translation"
+msgid "Add New"
+msgstr "새로 추가"
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:108
+msgid "Add New Automatic Translation"
+msgstr "자동 번역 새로 추가"
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:109
+msgid "New Automatic Translation"
+msgstr "새 자동 번역"
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:110
+msgid "Edit Automatic Translation"
+msgstr "자동 번역 편집"
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:111
+msgid "View Automatic Translation"
+msgstr "자동 번역 보기"
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:112
+msgid "Automatic Translations"
+msgstr "자동 번역"
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:113
+msgid "Search Automatic Translations"
+msgstr "자동 번역 검색"
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:114
+msgid "No Automatic Translations found."
+msgstr "자동 번역을 찾을 수 없습니다."
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:115
+msgid "No Automatic Translations found in Trash."
+msgstr "휴지통에서 자동 번역을 찾을 수 없습니다."
+
+#. translators: 1: Plugin name, 2: Total character count, 3: Cool Plugins URL
+#: admin/cpt_dashboard/cpt_dashboard.php:280
+#, php-format
+msgid ""
+"Thanks for using <b>%1$s</b>! You have translated <b>%2$s</b> characters so "
+"far using our plugin!<br>Please give us a quick rating, it works as a boost "
+"for us to keep working on more <a style=\"text-decoration: none;\" "
+"href=\"%3$s\" target=\"_blank\" rel=\"noopener noreferrer\"><b>Cool "
+"Plugins</b></a>!"
+msgstr ""
+
+#: admin/cpt_dashboard/cpt_dashboard.php:306
+#: admin/cpt_dashboard/cpt_dashboard.php:313
+msgid "Already Reviewed"
+msgstr "이미 검토함"
+
+#: admin/cpt_dashboard/cpt_dashboard.php:306
+#: admin/cpt_dashboard/cpt_dashboard.php:313
+msgid "Not Interested"
+msgstr "관심 없음"
+
+#: admin/cpt_dashboard/cpt_dashboard.php:326
+#: helper/class-atfp-ajax-handler.php:86 helper/class-atfp-ajax-handler.php:113
+#: helper/class-atfp-ajax-handler.php:253
+#: helper/class-atfp-ajax-handler.php:271
+#: helper/class-atfp-ajax-handler.php:400
+#: helper/class-atfp-ajax-handler.php:404
+#: helper/class-atfp-ajax-handler.php:478
+#: helper/class-atfp-ajax-handler.php:526
+#: helper/class-atfp-ajax-handler.php:589
+msgid "Unauthorized"
+msgstr "권한 없음"
+
+#: admin/notice/atfp-notice.php:32
+msgid "Add a Language Switcher"
+msgstr "언어 전환기 추가"
+
+#: admin/notice/atfp-notice.php:33
+msgid ""
+"Did you know? You can add a customizable language switcher to help visitors "
+"easily browse your website in their preferred language."
+msgstr "알고 계셨나요? 사용자 지정 가능한 언어 전환기를 추가하면 방문자가 원하는 언어로 웹사이트를 쉽게 둘러볼 수 있습니다."
+
+#: admin/notice/atfp-notice.php:34
+msgid ""
+"Let visitors browse in their preferred language with Language Switcher for "
+"Polylang for Elementor, Gutenberg, and Divi."
+msgstr ""
+"Elementor, Gutenberg, Divi용 Polylang 언어 전환기로 방문자가 원하는 언어로 웹사이트를 둘러볼 수 있도록 "
+"하세요."
+
+#: admin/notice/atfp-notice.php:71
+msgid "Activate Now"
+msgstr "지금 활성화"
+
+#: admin/notice/atfp-notice.php:71
+msgid "Install Now"
+msgstr "지금 설치"
+
+#: admin/notice/atfp-notice.php:113
+msgid "Dismiss this notice."
+msgstr "이 알림 닫기"
+
+#: admin/notice/atfp-notice.php:152
+msgid "Unauthorized access."
+msgstr "권한이 없습니다."
+
+#: admin/notice/atfp-notice.php:156 helper/class-atfp-ajax-handler.php:76
+#: helper/class-atfp-ajax-handler.php:103
+#: helper/class-atfp-ajax-handler.php:248
+#: helper/class-atfp-ajax-handler.php:267
+#: helper/class-atfp-ajax-handler.php:392
+#: helper/class-atfp-ajax-handler.php:474
+#: helper/class-atfp-ajax-handler.php:522
+#: helper/class-atfp-ajax-handler.php:585
+#: helper/class-atfp-register-route.php:166
+msgid "Invalid security token sent."
+msgstr "잘못된 보안 토큰이 전송되었습니다."
+
+#: automatic-translation-for-polylang.php:127
+msgid "Get Pro"
+msgstr "Pro 이용하기"
+
+#: automatic-translation-for-polylang.php:140
+msgid "Bulk Translation (Pro)"
+msgstr "일괄 번역 (Pro)"
+
+#: automatic-translation-for-polylang.php:231
+msgid "Chrome AI Setup"
+msgstr "Chrome AI 설정"
+
+#: automatic-translation-for-polylang.php:232
+msgid ""
+"Free on-device translation. We detect what your browser needs â€” usually "
+"just one click."
+msgstr "무료 온디바이스 번역입니다. 브라우저에 필요한 항목을 감지합니다. 보통 한 번만 클릭하면 됩니다."
+
+#: automatic-translation-for-polylang.php:233
+msgid "Checking your browserâ€¦"
+msgstr "브라우저 확인 중…"
+
+#: automatic-translation-for-polylang.php:234
+msgid "Give us a second while we detect Chrome AI support."
+msgstr "Chrome AI 지원 여부를 확인하는 동안 잠시 기다려 주세요."
+
+#: automatic-translation-for-polylang.php:235
+msgid "Chrome AI is Ready"
+msgstr "Chrome AI 사용 준비 완료"
+
+#: automatic-translation-for-polylang.php:236
+msgid "On-device translation is set up. No API key, no cost."
+msgstr "온디바이스 번역 설정이 완료되었습니다. API 키가 필요 없고 비용도 들지 않습니다."
+
+#: automatic-translation-for-polylang.php:237
+msgid "Language pack required"
+msgstr "언어 팩 필요"
+
+#: automatic-translation-for-polylang.php:238
+msgid ""
+"Add the target translation language in your browser settings to download the "
+"translation model."
+msgstr "번역 모델을 다운로드하려면 브라우저 설정에서 대상 번역 언어를 추가하세요."
+
+#: automatic-translation-for-polylang.php:239
+msgid "Downloading language modelâ€¦"
+msgstr "언어 모델 다운로드 중…"
+
+#: automatic-translation-for-polylang.php:240
+msgid "Keep this tab open. This happens once."
+msgstr "이 탭을 열어 두세요. 한 번만 진행됩니다."
+
+#: automatic-translation-for-polylang.php:241
+msgid "Chrome AI is currently unavailable"
+msgstr "현재 Chrome AI를 사용할 수 없습니다"
+
+#: automatic-translation-for-polylang.php:242
+msgid ""
+"Something blocked the check. See advanced steps or use alternative options."
+msgstr "무언가가 확인을 차단했습니다. 고급 단계 안내를 확인하거나 다른 옵션을 사용하세요."
+
+#: automatic-translation-for-polylang.php:243
+msgid "Chrome AI needs a secure (HTTPS) connection"
+msgstr "Chrome AI를 사용하려면 보안 연결(HTTPS)이 필요합니다"
+
+#: automatic-translation-for-polylang.php:244
+msgid ""
+"Serving wp-admin over HTTP prevents Chrome AI from launching. Serve pages "
+"over HTTPS or use an alternative engine."
+msgstr ""
+"wp-admin 페이지를 HTTP로 제공하면 Chrome AI를 실행할 수 없습니다. 페이지를 HTTPS로 제공하거나 다른 엔진을 "
+"사용하세요."
+
+#: automatic-translation-for-polylang.php:245
+msgid "Enable Chrome AI"
+msgstr "Chrome AI 사용 설정"
+
+#: automatic-translation-for-polylang.php:246
+msgid "Retry"
+msgstr "다시 시도"
+
+#: automatic-translation-for-polylang.php:247
+msgid "Use Another Provider"
+msgstr "다른 제공업체 사용"
+
+#: automatic-translation-for-polylang.php:248
+msgid "Try a real translation"
+msgstr "실제 번역을 시도해 보세요"
+
+#: automatic-translation-for-polylang.php:249
+msgid "Type anything and see the exact on-device result â€” no page needed."
+msgstr "아무 내용이나 입력하고 기기에서 처리되는 정확한 결과를 확인하세요 %s 페이지가 필요하지 않습니다."
+
+#: automatic-translation-for-polylang.php:250
+msgid "Your text"
+msgstr "텍스트"
+
+#: automatic-translation-for-polylang.php:251
+#: assets/automatic-translate/index.js:1
+msgid "Translation"
+msgstr "번역"
+
+#: automatic-translation-for-polylang.php:252
+msgid "Type or paste text to translateâ€¦"
+msgstr "번역할 텍스트를 입력하거나 붙여넣으세요…"
+
+#: automatic-translation-for-polylang.php:253
+msgid "Translation will appear here."
+msgstr "여기에 번역이 표시됩니다."
+
+#: automatic-translation-for-polylang.php:254
+msgid "Translate preview"
+msgstr "번역 미리보기"
+
+#: automatic-translation-for-polylang.php:255
+msgid "Translatingâ€¦"
+msgstr "번역 중…"
+
+#: automatic-translation-for-polylang.php:256
+msgid "Done in {ms} ms Â· on-device Â· no data left your browser"
+msgstr ""
+
+#: automatic-translation-for-polylang.php:257
+msgid ""
+"âœ— Translation failed. This pair may need its own model, or see advanced "
+"steps below."
+msgstr "번역에 실패했습니다. 이 언어 조합에는 별도의 모델이 필요할 수 있습니다. 또는 아래의 고급 단계 안내를 확인하세요."
+
+#: automatic-translation-for-polylang.php:258
+msgid "Still not working? Advanced steps"
+msgstr "여전히 작동하지 않나요? 고급 단계"
+
+#: automatic-translation-for-polylang.php:259
+msgid ""
+"Chrome AI translation needs Chrome or Edge on desktop (version 138+). It "
+"doesnâ€™t run on mobile phones or tablets."
+msgstr ""
+"Chrome AI 번역은 데스크톱의 Chrome 또는 Edge(버전 138 이상)가 필요합니다. 휴대전화나 태블릿에서는 실행되지 않습니다."
+
+#: automatic-translation-for-polylang.php:260
+msgid "Open Official Setup Guide â†’"
+msgstr "공식 설정 가이드 열기 →"
+
+#: automatic-translation-for-polylang.php:441
+msgid "AutoPoly"
+msgstr "AutoPoly"
+
+#: automatic-translation-for-polylang.php:453 assets/bulk-translate/index.js:1
+msgid "Dashboard"
+msgstr "알림판"
+
+#: automatic-translation-for-polylang.php:455
+msgid "Free vs Pro"
+msgstr "무료 버전과 Pro 버전"
+
+#: automatic-translation-for-polylang.php:489
+msgid "Polylang Addon Logo"
+msgstr "Polylang 애드온 로고"
+
+#: automatic-translation-for-polylang.php:490
+msgid "Toolkit for Polylang"
+msgstr "Polylang 도구 모음"
+
+#: automatic-translation-for-polylang.php:498
+msgid "Get Support"
+msgstr "지원 받기"
+
+#: automatic-translation-for-polylang.php:502
+msgid "Check Docs"
+msgstr "문서 확인"
+
+#: automatic-translation-for-polylang.php:507
+msgid "Dashboard navigation"
+msgstr "알림판 탐색"
+
+#. translators: %s: plugin name.
+#: automatic-translation-for-polylang.php:762
+#, php-format
+msgid "Do you like the %s plugin?"
+msgstr "%s 플러그인이 마음에 드시나요?"
+
+#: automatic-translation-for-polylang.php:765
+msgid "Yes, I like it"
+msgstr "네, 마음에 들어요"
+
+#: automatic-translation-for-polylang.php:766
+msgid "Not good, dismiss"
+msgstr "아니요, 닫기"
+
+#: automatic-translation-for-polylang.php:767
+msgid "Ask me later"
+msgstr "나중에 물어보기"
+
+#: automatic-translation-for-polylang.php:768
+msgid ""
+"That is great to hear! A quick review on WordPress.org would really help us."
+msgstr "좋은 소식이네요! WordPress.org에 간단한 리뷰를 남겨 주시면 큰 도움이 됩니다."
+
+#: automatic-translation-for-polylang.php:769
+msgid "Submit review"
+msgstr "리뷰 제출"
+
+#: automatic-translation-for-polylang.php:770
+msgid "I do not like it, dismiss"
+msgstr "마음에 들지 않아요, 닫기"
+
+#: automatic-translation-for-polylang.php:771
+msgid "Do you like this plugin?"
+msgstr "이 플러그인이 마음에 드시나요?"
+
+#. translators: %s: plugin name.
+#: automatic-translation-for-polylang.php:774
+#, php-format
+msgid "Enjoying %s?"
+msgstr "%s 플러그인을 유용하게 사용하고 계신가요?"
+
+#: automatic-translation-for-polylang.php:777
+msgid "A short review helps other site owners find it."
+msgstr "짧은 리뷰는 다른 사이트 운영자가 이 플러그인을 찾는 데 도움이 됩니다."
+
+#: automatic-translation-for-polylang.php:778
+#: automatic-translation-for-polylang.php:825 assets/bulk-translate/index.js:1
+#: assets/bulk-translate/index.js:3 assets/bulk-translate/index.js:4
+#: assets/bulk-translate/index.js:8
+msgid "Close"
+msgstr "닫기"
+
+#: automatic-translation-for-polylang.php:797
+msgid "The plugin isn't working"
+msgstr "플러그인이 작동하지 않습니다"
+
+#: automatic-translation-for-polylang.php:798
+msgid "Which problem did you run into? We read every reply."
+msgstr "어떤 문제가 발생했나요? 보내 주신 의견을 모두 읽습니다."
+
+#: automatic-translation-for-polylang.php:801
+msgid "It didn't do what I expected"
+msgstr "기대한 대로 작동하지 않았어요"
+
+#: automatic-translation-for-polylang.php:802
+msgid "What were you hoping it would do?"
+msgstr "어떻게 작동하길 바라셨나요?"
+
+#: automatic-translation-for-polylang.php:805
+msgid "I found a better plugin"
+msgstr "더 나은 플러그인을 찾았어요"
+
+#: automatic-translation-for-polylang.php:806
+msgid "Mind sharing which one?"
+msgstr "어떤 플러그인인지 알려 주시겠어요?"
+
+#: automatic-translation-for-polylang.php:809
+msgid "It's a temporary deactivation"
+msgstr "일시적으로 비활성화합니다"
+
+#: automatic-translation-for-polylang.php:813
+msgid "Another reason"
+msgstr "다른 이유"
+
+#: automatic-translation-for-polylang.php:814
+msgid "Please tell us more"
+msgstr "자세히 알려 주세요"
+
+#: automatic-translation-for-polylang.php:818
+msgid "Before you go…"
+msgstr "떠나시기 전에…"
+
+#. translators: %s: plugin name (bold).
+#: automatic-translation-for-polylang.php:820
+#, php-format
+msgid "What made you deactivate %s? Your answer helps us fix it."
+msgstr "%s 플러그인을 비활성화한 이유가 무엇인가요? 보내 주신 답변은 문제를 해결하는 데 도움이 됩니다."
+
+#: automatic-translation-for-polylang.php:821
+msgid "Submit & Deactivate"
+msgstr "제출하고 비활성화"
+
+#: automatic-translation-for-polylang.php:822
+msgid "Skip & Deactivate"
+msgstr "건너뛰고 비활성화"
+
+#: automatic-translation-for-polylang.php:823
+msgid "Deactivating…"
+msgstr "비활성화 중…"
+
+#: automatic-translation-for-polylang.php:824
+msgid "Please choose a reason."
+msgstr "이유를 선택하세요."
+
+#. translators: %s: company name.
+#: automatic-translation-for-polylang.php:827
+#, php-format
+msgid "A plugin by %s"
+msgstr "%s에서 제공하는 플러그인"
+
+#: automatic-translation-for-polylang.php:828
+msgid ""
+"Submitting shares your reason plus your site URL, admin email and basic "
+"environment details (PHP, WordPress, active plugins). Skip & Deactivate "
+"sends nothing."
+msgstr ""
+"제출하면 비활성화 이유와 사이트 URL, 관리자 이메일 및 기본 환경 정보(PHP, WordPress, 활성 플러그인)가 공유됩니다. "
+"건너뛰고 비활성화를 선택하면 아무 정보도 전송되지 않습니다."
+
+#: automatic-translation-for-polylang.php:840
+msgid "Translation Plugins by Cool Plugins"
+msgstr "Cool Plugins의 번역 플러그인"
+
+#: automatic-translation-for-polylang.php:846
+msgid "Help Improve Plugins"
+msgstr "플러그인 개선에 참여하기"
+
+#: automatic-translation-for-polylang.php:847
+msgid "Yes, it's OK"
+msgstr "네, 괜찮습니다"
+
+#: automatic-translation-for-polylang.php:848
+msgid "No, Thanks"
+msgstr "아니요, 괜찮습니다"
+
+#: automatic-translation-for-polylang.php:849
+msgid "More info"
+msgstr "자세히 보기"
+
+#. translators: 1: Plugin Name, 2: Plugin URL
+#: automatic-translation-for-polylang.php:954
+#, php-format
+msgid ""
+"In order to use %1$s plugin, please install and activate the latest version  "
+"of %2$s"
+msgstr ""
+
+#: automatic-translation-for-polylang.php:1027
+#: automatic-translation-for-polylang.php:1047
+#: automatic-translation-for-polylang.php:1071
+msgid "Automatic Translate"
+msgstr "자동 번역"
+
+#: automatic-translation-for-polylang.php:1109
+#: assets/automatic-translate/index.js:1 assets/js/atfp-re-translation.js:87
+#: assets/js/atfp-re-translation.js:99
+msgid "Re-Translate"
+msgstr "다시 번역"
+
+#: automatic-translation-for-polylang.php:1112
+msgid "Re-Translate the page content for updating changes."
+msgstr "변경 사항을 업데이트하기 위해 페이지 콘텐츠를 다시 번역합니다."
+
+#: automatic-translation-for-polylang.php:1144
+msgid "Translate Page"
+msgstr "페이지 번역"
+
+#. translators: 1: Source language, 2: Target language
+#: automatic-translation-for-polylang.php:1149
+#, php-format
+msgid "Translate or duplicate content from %1$s to %2$s"
+msgstr "%1$s에서 %2$s로 콘텐츠를 번역하거나 복제합니다"
+
+#: helper/class-atfp-ajax-handler.php:82 helper/class-atfp-ajax-handler.php:109
+msgid "Invalid Post ID."
+msgstr "잘못된 글 ID입니다."
+
+#: helper/class-atfp-ajax-handler.php:119
+msgid "Post not found."
+msgstr "글을 찾을 수 없습니다."
+
+#: helper/class-atfp-ajax-handler.php:261
+msgid "No custom blocks found."
+msgstr "사용자 정의 블록을 찾을 수 없습니다."
+
+#: helper/class-atfp-ajax-handler.php:279
+msgid "Invalid JSON"
+msgstr "잘못된 JSON입니다"
+
+#: helper/class-atfp-ajax-handler.php:305
+msgid ""
+"Automatic Translation for Polylang: Custom Blocks data updated successfully"
+msgstr "Polylang용 자동 번역: 사용자 정의 블록 데이터가 성공적으로 업데이트되었습니다"
+
+#: helper/class-atfp-ajax-handler.php:460
+msgid "Translation data updated successfully"
+msgstr "번역 데이터가 성공적으로 업데이트되었습니다"
+
+#: helper/class-atfp-ajax-handler.php:464
+msgid "Atfp_Dashboard class not found"
+msgstr "Atfp_Dashboard 클래스를 찾을 수 없습니다"
+
+#: helper/class-atfp-ajax-handler.php:487
+msgid "Invalid data."
+msgstr "잘못된 데이터입니다."
+
+#: helper/class-atfp-ajax-handler.php:505
+msgid "Invalid Elementor data."
+msgstr "잘못된 Elementor 데이터입니다."
+
+#: helper/class-atfp-ajax-handler.php:537
+msgid "Invalid JSON."
+msgstr "잘못된 JSON입니다."
+
+#: helper/class-atfp-ajax-handler.php:541
+msgid "Invalid enabled providers."
+msgstr "잘못된 활성화된 공급자입니다."
+
+#: helper/class-atfp-ajax-handler.php:573
+msgid "Enabled providers updated successfully."
+msgstr "활성화된 공급자가 성공적으로 업데이트되었습니다."
+
+#: helper/class-atfp-ajax-handler.php:596
+msgid "Invalid translation provider."
+msgstr "잘못된 번역 공급자입니다."
+
+#: helper/class-atfp-ajax-handler.php:618
+msgid "Default translation provider updated successfully."
+msgstr "기본 번역 공급자가 성공적으로 업데이트되었습니다."
+
+#: helper/class-atfp-ajax-handler.php:629
+msgid "Sorry, you are not allowed to install plugins on this site."
+msgstr "죄송합니다. 이 사이트에 플러그인을 설치할 권한이 없습니다."
+
+#: helper/class-atfp-ajax-handler.php:635
+msgid "Security check failed."
+msgstr "보안 확인에 실패했습니다."
+
+#: helper/class-atfp-ajax-handler.php:644
+msgid "No plugin specified."
+msgstr "지정된 플러그인이 없습니다."
+
+#: helper/class-atfp-ajax-handler.php:661
+msgid "Please activate Loco Translate plugin first."
+msgstr "먼저 Loco Translate 플러그인을 활성화하세요."
+
+#: helper/class-atfp-ajax-handler.php:677
+msgid "Invalid plugin slug."
+msgstr "잘못된 플러그인 슬러그입니다."
+
+#: helper/class-atfp-ajax-handler.php:684
+msgid "Permission denied."
+msgstr "권한이 거부되었습니다."
+
+#: helper/class-atfp-ajax-handler.php:711
+#: helper/class-atfp-ajax-handler.php:765
+msgid "Plugin activated successfully."
+msgstr "플러그인이 성공적으로 활성화되었습니다."
+
+#: helper/class-atfp-ajax-handler.php:778
+msgid "Unable to connect to the filesystem. Please confirm your credentials."
+msgstr "파일 시스템에 연결할 수 없습니다. 자격 증명을 확인하세요."
+
+#: helper/class-atfp-ajax-handler.php:801
+msgid "Plugin installed and activated successfully."
+msgstr "플러그인이 성공적으로 설치 및 활성화되었습니다."
+
+#: helper/class-atfp-ajax-handler.php:803
+msgid "Plugin installed successfully."
+msgstr "플러그인이 성공적으로 설치되었습니다."
+
+#: helper/class-atfp-helper.php:69
+msgid "Add More Gutenberg Blocks"
+msgstr "구텐베르크 블록 더 추가하기"
+
+#: helper/class-atfp-helper.php:977 assets/bulk-translate/index.js:3
+msgid "(no title)"
+msgstr "(제목 없음)"
+
+#: helper/class-atfp-register-route.php:144
+msgid "Invalid nonce."
+msgstr "잘못된 nonce입니다."
+
+#: helper/class-atfp-register-route.php:148
+#: helper/class-atfp-register-route.php:151
+#: helper/class-atfp-register-route.php:158
+#: helper/class-atfp-register-route.php:162
+#: helper/class-atfp-register-route.php:194
+#: helper/class-atfp-register-route.php:197
+#: helper/class-atfp-register-route.php:201
+#: helper/class-atfp-register-route.php:313
+#: helper/class-atfp-register-route.php:316
+#: helper/class-atfp-register-route.php:321
+#: helper/class-atfp-register-route.php:523
+#: helper/class-atfp-register-route.php:555
+msgid "You are not authorized to perform this action."
+msgstr "이 작업을 수행할 권한이 없습니다."
+
+#: helper/class-atfp-register-route.php:205
+msgid "Empty target language. Select at least one language."
+msgstr "대상 언어가 비어 있습니다. 언어를 하나 이상 선택하세요."
+
+#: helper/class-atfp-register-route.php:209
+msgid "Empty post IDs. Select at least one post to translate."
+msgstr "글 ID가 비어 있습니다. 번역할 글을 하나 이상 선택하세요."
+
+#: helper/class-atfp-register-route.php:400
+msgid "No posts to translate"
+msgstr "번역할 글이 없습니다"
+
+#: helper/class-atfp-register-route.php:514
+msgid "Invalid source language"
+msgstr "잘못된 원본 언어입니다"
+
+#: helper/class-atfp-register-route.php:517
+msgid "Invalid request"
+msgstr "잘못된 요청입니다"
+
+#: helper/class-atfp-register-route.php:520
+msgid "Invalid target language"
+msgstr "잘못된 대상 언어입니다"
+
+#: helper/class-atfp-register-route.php:526
+msgid "Invalid request content and title empty"
+msgstr "요청의 콘텐츠와 제목이 모두 비어 있습니다"
+
+#: helper/class-atfp-register-route.php:539
+msgid "Invalid post."
+msgstr "잘못된 글입니다."
+
+#: helper/class-atfp-register-route.php:543
+msgid "This editor type is not supported by the free version."
+msgstr "이 편집기 유형은 무료 버전에서 지원되지 않습니다."
+
+#. translators: 1: parent post ID, 2: target language
+#: helper/class-atfp-register-route.php:609
+#, php-format
+msgid "Unable to create the translated post for parent post ID %1$s in %2$s."
+msgstr "%2$s에서 상위 글 ID %1$s의 번역된 글을 만들 수 없습니다."
+
+#: includes/bulk-translation/class-atfp-bulk-translation.php:64
+#: includes/bulk-translation/class-atfp-bulk-translation.php:92
+msgid "AI Translate"
+msgstr "AI 번역"
+
+#. translators: %s: post title
+#: includes/bulk-translation/class-atfp-bulk-translation.php:88
+#, php-format
+msgid "AI Translate &#8220;%s&#8221;"
+msgstr ""
+
+#: includes/bulk-translation/class-atfp-posts-clone.php:122
+msgid "Re-translate post id not found"
+msgstr "다시 번역할 글 ID를 찾을 수 없습니다"
+
+#: includes/bulk-translation/class-atfp-posts-clone.php:126
+msgid "Re-translate post id not matched with target language saved post id"
+msgstr "다시 번역할 글 ID가 대상 언어에 저장된 글 ID와 일치하지 않습니다"
+
+#: includes/bulk-translation/class-atfp-posts-clone.php:130
+msgid "Re-translate translation fields not exist in fields key"
+msgstr "필드 키에 다시 번역할 번역 필드가 없습니다"
+
+#: includes/class-atfp-register-backend-assets.php:80
+msgid "Pages"
+msgstr "페이지"
+
+#: includes/class-atfp-register-backend-assets.php:81
+msgid "Page"
+msgstr "페이지"
+
+#: includes/menu-sync/class-atfp-menu-sync-promo.php:96
+msgid "Menu Sync (Pro)"
+msgstr "메뉴 동기화 (Pro)"
+
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:1
+msgid "STEP 2 OF 2"
+msgstr "2단계 중 2단계"
+
+#: assets/automatic-translate/index.js:1
+msgid "Start Automatic Translation Process"
+msgstr "자동 번역 프로세스 시작"
+
+#: assets/automatic-translate/index.js:1
+msgid "close"
+msgstr "닫기"
+
+#: assets/automatic-translate/index.js:1
+msgid ""
+"Google Translate could not load. This is usually caused by an ad blocker or "
+"privacy extension blocking translate.google.com - please disable it for this "
+"site and reload the page."
+msgstr ""
+"Google 번역을 불러올 수 없습니다. 일반적으로 광고 차단기나 개인정보 보호 확장 프로그램이 translate.google.com을 "
+"차단할 때 발생합니다. 이 사이트에서 해당 기능을 사용 중지한 다음 페이지를 새로고침하세요."
+
+#: assets/automatic-translate/index.js:1
+msgid "Translate To"
+msgstr "번역 대상"
+
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:1
+msgid "Choose Language"
+msgstr "언어 선택"
+
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:1
+msgid "View Error"
+msgstr "오류 보기"
+
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:1
+#, js-format
+msgid "Translate Using %s"
+msgstr "%s을(를) 사용하여 번역"
+
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:1
+#, js-format
+msgid "Translate Using %s Model"
+msgstr "%s 모델을 사용하여 번역"
+
+#: assets/automatic-translate/index.js:1
+msgid "Automatic translation is in progress...."
+msgstr "자동 번역이 진행 중입니다...."
+
+#: assets/automatic-translate/index.js:1
+msgid "It will take few minutes, enjoy ☕ coffee in this time!"
+msgstr "몇 분 정도 소요됩니다. 그동안 ☕ 커피를 즐기세요!"
+
+#: assets/automatic-translate/index.js:1
+msgid ""
+"Please do not leave this window or browser tab while translation is in "
+"progress..."
+msgstr "번역이 진행되는 동안 이 창이나 브라우저 탭을 닫지 마세요..."
+
+#: assets/automatic-translate/index.js:1
+msgid "S.No"
+msgstr "번호"
+
+#: assets/automatic-translate/index.js:1
+msgid "Source Text"
+msgstr "원문"
+
+#: assets/automatic-translate/index.js:1
+msgid "No strings are available for translation"
+msgstr "번역할 문자열이 없습니다"
+
+#: assets/automatic-translate/index.js:1
+msgid "Wahooo! You have saved your valuable time via auto translating"
+msgstr "야호! 자동 번역으로 소중한 시간을 절약했습니다"
+
+#: assets/automatic-translate/index.js:1
+msgid "characters using"
+msgstr "자를 사용하여"
+
+#: assets/automatic-translate/index.js:1
+msgid "Updating"
+msgstr "업데이트 중"
+
+#: assets/automatic-translate/index.js:1
+msgid "Update Content"
+msgstr "콘텐츠 업데이트"
+
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:1
+msgid "STEP 1 OF 2"
+msgstr "2단계 중 1단계"
+
+#: assets/automatic-translate/index.js:1
+msgid "Select Translation Engine"
+msgstr "번역 엔진 선택"
+
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:1
+msgid "Select an AI provider to automatically translate your content."
+msgstr "콘텐츠를 자동으로 번역할 AI 제공업체를 선택하세요."
+
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:1
+#, js-format
+msgid "View %s Documentation"
+msgstr "%s 문서 보기"
+
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:1
+msgid "Start Translation"
+msgstr "번역 시작"
+
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:1
+msgid "Back"
+msgstr "뒤로"
+
+#: assets/automatic-translate/index.js:1
+#, js-format
+msgid "Yandex Translate does not support the target language: %s."
+msgstr "Yandex 번역은 대상 언어를 지원하지 않습니다: %s."
+
+#: assets/automatic-translate/index.js:1
+#, js-format
+msgid "Google Translate does not support the target language: %s."
+msgstr "Google 번역은 대상 언어를 지원하지 않습니다: %s."
+
+#: assets/automatic-translate/index.js:1
+#, js-format
+msgid "%s AI Translator"
+msgstr "%s AI 번역기"
+
+#: assets/automatic-translate/index.js:1
+msgid "Edge AI Translator"
+msgstr "Edge AI 번역기"
+
+#: assets/automatic-translate/index.js:1
+msgid ""
+"⚠️ For accurate custom field translations, please disable the Custom Fields "
+"synchronization in "
+msgstr ""
+
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:8
+msgid "Polylang settings"
+msgstr "Polylang 설정"
+
+#: assets/automatic-translate/index.js:1
+msgid ". This may affect linked posts or pages."
+msgstr ". 연결된 게시물이나 페이지에 영향을 줄 수 있습니다."
+
+#: assets/automatic-translate/index.js:1
+msgid ""
+"No block rules were found. It appears that the block-rules.JSON file could "
+"not be fetched, possibly because it is blocked by your server settings. "
+"Please check your server configuration to resolve this issue."
+msgstr ""
+"차단 규칙을 찾을 수 없습니다. 서버 설정에 의해 차단되어 block-rules.JSON 파일을 가져오지 못한 것 같습니다. 이 문제를 "
+"해결하려면 서버 구성을 확인하세요."
+
+#: assets/automatic-translate/index.js:1
+msgid "AI"
+msgstr "AI"
+
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:8
+#: assets/js/atfp-elementor-translate-confirm-box.js:30
+#: assets/js/atfp-re-translation.js:62
+msgid "AI Translation"
+msgstr "AI 번역"
+
+#: assets/automatic-translate/index.js:1
+#, js-format
+msgid ""
+"Would you like to duplicate your original %s content and have it "
+"automatically translated into %s?"
+msgstr "원본 %s 콘텐츠를 복제하고 %s(으)로 자동 번역하시겠습니까?"
+
+#: assets/automatic-translate/index.js:1
+#: assets/js/atfp-elementor-translate-confirm-box.js:39
+msgid "Translate Now"
+msgstr "지금 번역"
+
+#: assets/automatic-translate/index.js:1
+#: assets/js/atfp-elementor-translate-confirm-box.js:43
+msgid "Translate Multiple Pages & Posts"
+msgstr "여러 페이지 및 게시물 번역"
+
+#: assets/automatic-translate/index.js:1
+#: assets/js/atfp-elementor-translate-confirm-box.js:47
+msgid "You’ve already translated"
+msgstr "이미 번역한"
+
+#: assets/automatic-translate/index.js:1
+#: assets/js/atfp-elementor-translate-confirm-box.js:49
+msgid "characters manually."
+msgstr "자를 수동으로 번역했습니다."
+
+#: assets/automatic-translate/index.js:1
+#: assets/js/atfp-elementor-translate-confirm-box.js:51
+msgid ""
+"Save time by translating multiple posts and pages in multiple languages on "
+"one click with"
+msgstr "를 사용하면 클릭 한 번으로 여러 언어의 게시물과 페이지를 한꺼번에 번역하여 시간을 절약할 수 있습니다."
+
+#: assets/automatic-translate/index.js:1
+#: assets/js/atfp-elementor-translate-confirm-box.js:58
+msgid "Get Pro for Bulk Translation"
+msgstr "일괄 번역을 이용하려면 Pro를 사용하세요"
+
+#: assets/automatic-translate/index.js:1
+#: assets/js/atfp-elementor-translate-confirm-box.js:65
+msgid "Note: close this popup if you do not want AI translation."
+msgstr "AI 번역을 원하지 않으면 이 팝업을 닫으세요."
+
+#: assets/bulk-translate/index.js:1
+#, js-format
+msgid "Language %s(%s) is not supported by Yandex Translate"
+msgstr "Yandex 번역은 언어 %s(%s)을(를) 지원하지 않습니다"
+
+#: assets/bulk-translate/index.js:1
+msgid ""
+"Yandex translator script did not initialize. Please check network/CSP "
+"blocking yastatic.net."
+msgstr "Yandex 번역기 스크립트를 초기화하지 못했습니다. 네트워크 또는 CSP에서 yastatic.net을 차단하는지 확인하세요."
+
+#: assets/bulk-translate/index.js:1
+msgid "Yandex translation failed. Please retry or check network blocking."
+msgstr "Yandex 번역에 실패했습니다. 다시 시도하거나 네트워크 차단 여부를 확인하세요."
+
+#: assets/bulk-translate/index.js:1
+msgid "No content to translate"
+msgstr "번역할 콘텐츠가 없습니다"
+
+#: assets/bulk-translate/index.js:1
+#, js-format
+msgid "Language %s(%s) is not supported by Google Translate"
+msgstr "Google 번역은 언어 %s(%s)을(를) 지원하지 않습니다"
+
+#: assets/bulk-translate/index.js:1
+msgid "No content found to translate"
+msgstr "번역할 콘텐츠를 찾을 수 없습니다"
+
+#: assets/bulk-translate/index.js:1
+msgid "N/A"
+msgstr "해당 없음"
+
+#: assets/bulk-translate/index.js:1
+msgid "Post not created. Please try again."
+msgstr "게시물을 생성하지 못했습니다. 다시 시도하세요."
+
+#: assets/bulk-translate/index.js:1
+msgid "No posts to translate data undefined"
+msgstr "번역할 게시물이 없습니다. 데이터가 정의되지 않았습니다."
+
+#: assets/bulk-translate/index.js:1
+msgid "No posts to translate untranslated data not found"
+msgstr "번역할 게시물이 없습니다. 번역되지 않은 데이터를 찾을 수 없습니다."
+
+#: assets/bulk-translate/index.js:1
+msgid "No posts to translate untranslated posts data not found"
+msgstr "번역할 게시물이 없습니다. 번역되지 않은 게시물 데이터를 찾을 수 없습니다."
+
+#: assets/bulk-translate/index.js:1
+msgid "No create translate post nonce"
+msgstr "번역 게시물 생성 nonce가 없습니다"
+
+#: assets/bulk-translate/index.js:1
+#, js-format
+msgid "Set source language for this %s %s before translating."
+msgstr "번역하기 전에 이 %s %s의 원본 언어를 설정하세요."
+
+#: assets/bulk-translate/index.js:1
+#, js-format
+msgid ""
+"Translations already exist for all selected %s in the chosen languages. "
+"There are no new %s to translate."
+msgstr "선택한 언어에서 선택된 모든 %s에 대한 번역이 이미 존재합니다. 번역할 새 %s가 없습니다."
+
+#: assets/bulk-translate/index.js:1
+msgid "This post editor type is not supported for translation"
+msgstr "이 게시물 편집기 유형은 번역을 지원하지 않습니다"
+
+#: assets/bulk-translate/index.js:1
+msgid "AI Translation Error"
+msgstr "AI 번역 오류"
+
+#: assets/bulk-translate/index.js:1
+#, js-format
+msgid "AI Translation %s"
+msgstr "AI 번역 %s"
+
+#: assets/bulk-translate/index.js:1
+msgid "In Queue"
+msgstr "대기열에 있음"
+
+#: assets/bulk-translate/index.js:1
+msgid "In Progress"
+msgstr "진행 중"
+
+#: assets/bulk-translate/index.js:1
+msgid "Pending"
+msgstr "보류 중"
+
+#: assets/bulk-translate/index.js:1
+msgid "Completed"
+msgstr "완료"
+
+#: assets/bulk-translate/index.js:1
+msgid ""
+"Please keep this window open while your pages/posts are being translated."
+msgstr "페이지/게시물을 번역하는 동안 이 창을 열어 두세요."
+
+#: assets/bulk-translate/index.js:1
+msgid "Your content has been translated successfully."
+msgstr "콘텐츠가 성공적으로 번역되었습니다."
+
+#: assets/bulk-translate/index.js:1
+msgid "Posts"
+msgstr "게시물"
+
+#: assets/bulk-translate/index.js:1
+msgid "Characters"
+msgstr "글자 수"
+
+#: assets/bulk-translate/index.js:1
+msgid "seconds"
+msgstr "초"
+
+#: assets/bulk-translate/index.js:1
+msgid "Language"
+msgstr "언어"
+
+#: assets/bulk-translate/index.js:1
+msgid "Preview"
+msgstr "미리보기"
+
+#: assets/bulk-translate/index.js:1
+msgid "Actions"
+msgstr "작업"
+
+#: assets/bulk-translate/index.js:1
+msgid "Untitled"
+msgstr "제목 없음"
+
+#: assets/bulk-translate/index.js:1
+msgid "Retranslate"
+msgstr "다시 번역"
+
+#: assets/bulk-translate/index.js:1
+msgid "Error Details"
+msgstr "오류 세부 정보"
+
+#: assets/bulk-translate/index.js:1
+#, js-format
+msgid "Open the translated %s for review"
+msgstr "번역된 %s을(를) 열어 검토하세요"
+
+#: assets/bulk-translate/index.js:1
+msgid "Review Translation"
+msgstr "번역 검토"
+
+#: assets/bulk-translate/index.js:1
+#, js-format
+msgid ""
+"Please wait until all translations for this %s are complete before reviewing."
+msgstr "검토하기 전에 이 %s의 모든 번역이 완료될 때까지 기다려 주세요."
+
+#: assets/bulk-translate/index.js:1
+msgid "AI Translation Settings"
+msgstr "AI 번역 설정"
+
+#: assets/bulk-translate/index.js:1
+msgid "Select your target languages and translation provider."
+msgstr "대상 언어와 번역 제공업체를 선택하세요."
+
+#: assets/bulk-translate/index.js:1
+msgid "Select Languages"
+msgstr "언어 선택"
+
+#: assets/bulk-translate/index.js:1
+msgid "Choose the languages you want to translate your content into."
+msgstr "콘텐츠를 번역할 언어를 선택하세요."
+
+#: assets/bulk-translate/index.js:1
+msgid "Unselect All"
+msgstr "모두 선택 해제"
+
+#: assets/bulk-translate/index.js:1
+msgid "Select All"
+msgstr "모두 선택"
+
+#: assets/bulk-translate/index.js:1
+msgid "Select Translation Provider"
+msgstr "번역 제공업체 선택"
+
+#: assets/bulk-translate/index.js:1
+msgid "No AI providers available"
+msgstr "사용 가능한 AI 제공업체가 없습니다"
+
+#: assets/bulk-translate/index.js:1
+msgid "All providers are currently disabled."
+msgstr "현재 모든 제공업체가 비활성화되어 있습니다."
+
+#: assets/bulk-translate/index.js:1
+msgid "Go to"
+msgstr "로 이동"
+
+#: assets/bulk-translate/index.js:1
+msgid "to enable Yandex, Google, Chrome, or Edge built-in AI."
+msgstr "하여 Yandex, Google, Chrome 또는 Edge 내장 AI를 활성화하세요."
+
+#: assets/bulk-translate/index.js:1
+msgid "Please select at least one language."
+msgstr "언어를 하나 이상 선택하세요."
+
+#: assets/bulk-translate/index.js:1
+msgid "Please select a translation provider."
+msgstr "번역 제공업체를 선택하세요."
+
+#: assets/bulk-translate/index.js:1
+msgid ""
+"Translate 10× faster with Bulk Translation — save hours of manual work and "
+"effort."
+msgstr "일괄 번역으로 10배 더 빠르게 번역하세요 — 수작업에 드는 시간과 노력을 절약할 수 있습니다."
+
+#: assets/bulk-translate/index.js:1
+msgid "Translate In Bulk"
+msgstr "일괄 번역"
+
+#. translators: %s: post type label, for example Posts or Pages.
+#: assets/bulk-translate/index.js:3
+#, js-format
+msgid "Send many %s through AI in a single run."
+msgstr "한 번에 여러 %s을(를) AI로 번역하세요."
+
+#: assets/bulk-translate/index.js:3
+msgid "Better Accuracy"
+msgstr "더욱 정확한 번역"
+
+#: assets/bulk-translate/index.js:3
+msgid "Improved context-aware translations."
+msgstr "문맥을 더 잘 반영하는 번역."
+
+#: assets/bulk-translate/index.js:3
+msgid "Save Time & Effort"
+msgstr "시간과 노력 절약"
+
+#: assets/bulk-translate/index.js:3
+msgid "No need to translate them one by one."
+msgstr "하나씩 번역할 필요가 없습니다."
+
+#: assets/bulk-translate/index.js:3
+msgid "Translating this editor is a <accent>Pro</accent> feature."
+msgstr ""
+
+#: assets/bulk-translate/index.js:3
+msgid "More Editor Support"
+msgstr "더 폭넓은 편집기 지원"
+
+#: assets/bulk-translate/index.js:3
+msgid ""
+"Translate content built without blocks, including the classic editor and "
+"page builders."
+msgstr "클래식 편집기와 페이지 빌더를 포함해 블록 없이 작성된 콘텐츠도 번역하세요."
+
+#: assets/bulk-translate/index.js:3
+msgid "No need to translate manually again."
+msgstr "더 이상 수동으로 다시 번역할 필요가 없습니다."
+
+#: assets/bulk-translate/index.js:3
+msgid "Unlock Re-Translation with AutoPoly Pro"
+msgstr "AutoPoly Pro로 재번역 기능 잠금 해제"
+
+#: assets/bulk-translate/index.js:3
+msgid "Upgrade to Pro to re-translate existing content with AI."
+msgstr "기존 콘텐츠를 AI로 다시 번역하려면 Pro로 업그레이드하세요."
+
+#: assets/bulk-translate/index.js:3
+msgid "Already translated this content?"
+msgstr "이 콘텐츠를 이미 번역하셨나요?"
+
+#: assets/bulk-translate/index.js:3
+msgid ""
+"AutoPoly Pro lets you translate it again with AI whenever your original "
+"content changes."
+msgstr "AutoPoly Pro를 사용하면 원본 콘텐츠가 변경될 때마다 AI로 다시 번역할 수 있습니다."
+
+#: assets/bulk-translate/index.js:3
+msgid "Re-translate Existing Content"
+msgstr "기존 콘텐츠 다시 번역"
+
+#: assets/bulk-translate/index.js:3
+msgid "Translate previously translated pages again with AI."
+msgstr "이전에 번역한 페이지를 AI로 다시 번역하세요."
+
+#: assets/bulk-translate/index.js:3
+msgid "Re-translate in One Click"
+msgstr "한 번의 클릭으로 재번역"
+
+#: assets/bulk-translate/index.js:3
+msgid ""
+"Start AI re-translation quickly without recreating translations manually."
+msgstr "번역을 수동으로 다시 만들 필요 없이 AI 재번역을 빠르게 시작하세요."
+
+#: assets/bulk-translate/index.js:3
+msgid "AutoPoly Pro Feature"
+msgstr "AutoPoly Pro 기능"
+
+#: assets/bulk-translate/index.js:3
+msgid "Upgrade to Pro to unlock advanced AI translation capabilities."
+msgstr "고급 AI 번역 기능을 잠금 해제하려면 Pro로 업그레이드하세요."
+
+#: assets/bulk-translate/index.js:3
+msgid "Unlock <accent>AutoPoly Pro</accent>"
+msgstr ""
+
+#: assets/bulk-translate/index.js:3
+msgid "Upgrade to Pro"
+msgstr "Pro로 업그레이드"
+
+#: assets/bulk-translate/index.js:3
+msgid "Bulk Translation is a Pro Feature"
+msgstr "일괄 번역은 Pro 기능입니다"
+
+#. translators: 1: number of selected items, 2: post type label.
+#: assets/bulk-translate/index.js:4
+#, js-format
+msgid "You have selected <count>%1$d %2$s</count> for translation."
+msgstr ""
+
+#. translators: 1: position (always 1), 2: total selected, 3: singular post type label.
+#: assets/bulk-translate/index.js:5
+#, js-format
+msgid "Translate %1$d of %2$d %3$s"
+msgstr "%1$d/%2$d %3$s 번역"
+
+#. translators: %s: singular post type label.
+#: assets/bulk-translate/index.js:6
+#, js-format
+msgid "Translate This %s"
+msgstr "이 %s 번역"
+
+#: assets/bulk-translate/index.js:6
+msgid "Choose Another Page"
+msgstr "다른 페이지 선택"
+
+#: assets/bulk-translate/index.js:6
+msgid ""
+"AutoPoly Free allows you to translate <one>one page at a time.</one> "
+"Continue with a single untranslated page, or go back and choose another "
+"pages."
+msgstr ""
+
+#: assets/bulk-translate/index.js:6
+msgid "Bulk Translate All Pages (Pro)"
+msgstr "모든 페이지 일괄 번역 (Pro)"
+
+#. translators: 1: number of additional selected items not shown, 2: post type label.
+#: assets/bulk-translate/index.js:7
+#, js-format
+msgid "+ %1$d more %2$s"
+msgstr "%2$s %1$d개 더"
+
+#. translators: 1: total selected items, 2: post type label.
+#: assets/bulk-translate/index.js:8
+#, js-format
+msgid "Translate %1$d %2$s at Once"
+msgstr "%1$d %2$s 한 번에 번역"
+
+#: assets/bulk-translate/index.js:8
+msgid "Upgrade for Bulk Translation"
+msgstr "대량 번역을 이용하려면 업그레이드하세요"
+
+#: assets/bulk-translate/index.js:8
+msgid "You need to select one page for translation."
+msgstr "번역할 페이지를 하나 선택해야 합니다."
+
+#: assets/bulk-translate/index.js:8
+msgid "Yandex Translate does not support the selected target language(s)."
+msgstr "Yandex 번역은 선택한 대상 언어를 지원하지 않습니다."
+
+#: assets/bulk-translate/index.js:8
+msgid "Google Translate does not support the selected target language(s)."
+msgstr "Google 번역은 선택한 대상 언어를 지원하지 않습니다."
+
+#: assets/bulk-translate/index.js:8
+msgid "Nothing is ready to translate yet."
+msgstr "아직 번역할 준비가 된 항목이 없습니다."
+
+#: assets/bulk-translate/index.js:8
+msgid "No Page Selected"
+msgstr "선택된 페이지 없음"
+
+#: assets/bulk-translate/index.js:8
+msgid ""
+"For accurate custom field translations, please disable the Custom Fields "
+"synchronization in "
+msgstr ""
+
+#: assets/bulk-translate/index.js:8
+#, js-format
+msgid ". This may affect linked %s."
+msgstr "입니다. 연결된 %s에 영향을 줄 수 있습니다."
+
+#: assets/inline-translate-modal/index.js:1
+msgid "Language Error Details"
+msgstr "언어 오류 세부 정보"
+
+#: assets/js/atfp-elementor-translate-confirm-box.js:36
+#, js-format
+msgid ""
+"Use AI to translate this page inside %s while keeping the same layout and "
+"design."
+msgstr "레이아웃과 디자인을 유지하면서 %s 내에서 AI를 사용해 이 페이지를 번역하세요."
+
+#: assets/js/atfp-elementor-translate-confirm-box.js:139
+msgid "Loading"
+msgstr "로딩 중"
+
+#: assets/js/atfp-re-translation.js:50
+msgid "Get Pro for Re-Translation"
+msgstr "재번역하려면 Pro로 업그레이드하세요"
+
+#: assets/js/atfp-re-translation.js:69
+msgid ""
+"Want to update your translated content to match the latest changes on your "
+"page? Try our Pro version to easily re-translate and unlock all advanced "
+"features."
+msgstr ""
+"페이지의 최신 변경 사항에 맞게 번역된 콘텐츠를 업데이트하고 싶으신가요? Pro 버전을 사용하면 쉽게 재번역하고 모든 고급 기능을 이용할 "
+"수 있습니다."

@@ -1,0 +1,2083 @@
+# Copyright (C) 2026 Cool Plugins
+# This file is distributed under the GPLv2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: AutoPoly - AI Translation For Polylang 1.6.5\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/automatic-"
+"translations-for-polylang\n"
+"Last-Translator: \n"
+"Language-Team: Русский\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-11-18T06:54:43+00:00\n"
+"PO-Revision-Date: 2026-11-18 06:56+0000\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Domain: automatic-translations-for-polylang\n"
+"Language: ru_RU\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10 >= 2 && "
+"n%10<=4 &&(n%100<10||n%100 >= 20)? 1 : 2);\n"
+"X-Loco-Version: 2.8.9; wp-7.1.4; php-8.2.29"
+
+#. Plugin Name of the plugin
+#: automatic-translation-for-polylang.php
+#: automatic-translation-for-polylang.php:440
+msgid "AutoPoly - AI Translation For Polylang"
+msgstr "AutoPoly — ИИ-переводчик для Polylang"
+
+#. Plugin URI of the plugin
+#: automatic-translation-for-polylang.php
+msgid "https://coolplugins.net/"
+msgstr ""
+
+#. Description of the plugin
+#: automatic-translation-for-polylang.php
+msgid ""
+"AutoPoly - AI Translation For Polylang simplifies your translation process "
+"by automatically translating all pages/posts content from one language to "
+"another."
+msgstr ""
+"AutoPoly — ИИ-переводчик для Polylang упрощает перевод: автоматически "
+"переводит содержимое всех страниц и записей с одного языка на другой."
+
+#. Author of the plugin
+#: automatic-translation-for-polylang.php
+msgid "Cool Plugins"
+msgstr "Cool Plugins"
+
+#. Author URI of the plugin
+#: automatic-translation-for-polylang.php
+msgid ""
+"https://coolplugins.net/?"
+"utm_source=atfp_plugin&utm_medium=inside&utm_campaign=author_page&utm_content=plugins_list"
+msgstr ""
+
+#: admin/atfp-dashboard/views/dashboard.php:27
+#: assets/automatic-translate/index.js:1
+msgid "Google Translate"
+msgstr "Google Переводчик"
+
+#: admin/atfp-dashboard/views/dashboard.php:33
+msgid "Chrome Built-in AI"
+msgstr "Встроенный ИИ Chrome"
+
+#: admin/atfp-dashboard/views/dashboard.php:39
+msgid "Edge Built-in AI"
+msgstr "Встроенный ИИ Edge"
+
+#: admin/atfp-dashboard/views/dashboard.php:45
+#: assets/automatic-translate/index.js:1
+msgid "Yandex Translate"
+msgstr "Яндекс Переводчик"
+
+#: admin/atfp-dashboard/views/dashboard.php:53
+msgid "Choose the page or post you want to translate."
+msgstr "Выберите страницу или запись, которую хотите перевести."
+
+#: admin/atfp-dashboard/views/dashboard.php:54
+msgid "Click the AI Translate button."
+msgstr "Нажмите кнопку «Перевести с помощью ИИ»."
+
+#: admin/atfp-dashboard/views/dashboard.php:55
+msgid "Choose your target languages and AI translation provider."
+msgstr "Выберите целевые языки и поставщика ИИ-перевода."
+
+#: admin/atfp-dashboard/views/dashboard.php:56
+msgid "Start the translation and update the page to save it."
+msgstr "Запустите перевод и обновите страницу, чтобы сохранить изменения."
+
+#: admin/atfp-dashboard/views/dashboard.php:60
+msgid ""
+"Automate the Translation Process with AutoPoly - AI Translation For Polylang"
+msgstr ""
+"Автоматизируйте перевод с помощью AutoPoly — ИИ-переводчика для Polylang"
+
+#: admin/atfp-dashboard/views/dashboard.php:76
+msgid "Welcome to AutoPoly"
+msgstr "Добро пожаловать в AutoPoly"
+
+#: admin/atfp-dashboard/views/dashboard.php:77
+msgid ""
+"Translate your WordPress content with AI and make your website multilingual "
+"in minutes."
+msgstr ""
+"Переводите содержимое WordPress с помощью ИИ и создайте многоязычный сайт за "
+"считаные минуты."
+
+#: admin/atfp-dashboard/views/dashboard.php:83
+msgid "Play the AutoPoly walkthrough video"
+msgstr "Посмотреть видеоинструкцию по AutoPoly"
+
+#: admin/atfp-dashboard/views/dashboard.php:92
+msgid "Translate your first page in 4 simple steps"
+msgstr "Переведите первую страницу за 4 простых шага"
+
+#: admin/atfp-dashboard/views/dashboard.php:102
+msgid "Translate Pages"
+msgstr "Перевод страниц"
+
+#: admin/atfp-dashboard/views/dashboard.php:103
+msgid "Translate Posts"
+msgstr "Перевод записей"
+
+#: admin/atfp-dashboard/views/dashboard.php:111
+msgid "Translation Providers"
+msgstr "Поставщики переводов"
+
+#: admin/atfp-dashboard/views/dashboard.php:112
+msgid ""
+"Select your default translation provider. This provider will be pre-selected "
+"when the translation modal opens."
+msgstr ""
+"Выберите поставщика переводов по умолчанию. Он будет выбран при открытии "
+"окна перевода."
+
+#: admin/atfp-dashboard/views/dashboard.php:122
+msgid "You can switch providers anytime from the translation modal."
+msgstr "Вы можете сменить поставщика в любое время в окне перевода."
+
+#: admin/atfp-dashboard/views/dashboard.php:132
+msgid "Ready"
+msgstr "Готово"
+
+#: admin/atfp-dashboard/views/dashboard.php:133
+msgid "Not Configured"
+msgstr "Не настроено"
+
+#: admin/atfp-dashboard/views/dashboard.php:134
+msgid "Not supported"
+msgstr "Не поддерживается"
+
+#. translators: 1: translation provider name, 2: required browser name
+#: admin/atfp-dashboard/views/dashboard.php:141
+#: admin/chrome-ai-setup/js/chrome-ai-setup-notice.js:151
+#, js-format
+msgid ""
+"%1$s Translation provider is not supported in your current browser. Please "
+"use %2$s browser to use this translation provider."
+msgstr ""
+"Поставщик переводов %1$s не поддерживается в вашем браузере. Чтобы "
+"использовать его, откройте сайт в браузере %2$s."
+
+#: admin/atfp-dashboard/views/dashboard.php:157
+msgid "Set as default"
+msgstr "Установить по умолчанию"
+
+#: admin/atfp-dashboard/views/dashboard.php:158
+msgid "Default provider"
+msgstr "Поставщик по умолчанию"
+
+#: admin/atfp-dashboard/views/dashboard.php:159
+msgid "Configure this provider before setting it as default."
+msgstr "Настройте этого поставщика, прежде чем устанавливать его по умолчанию."
+
+#: admin/atfp-dashboard/views/dashboard.php:161
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:1
+msgid "Docs"
+msgstr "Документация"
+
+#: admin/atfp-dashboard/views/dashboard.php:163
+msgid "Configure"
+msgstr "Настроить"
+
+#: admin/atfp-dashboard/views/dashboard.php:173
+msgid ""
+"The default provider stays enabled. Pick another default to turn this off."
+msgstr ""
+"Поставщик по умолчанию остаётся включённым. Выберите другого поставщика по "
+"умолчанию, чтобы отключить этот."
+
+#. translators: %s: translation engine name
+#: admin/atfp-dashboard/views/dashboard.php:180
+#, php-format
+msgid "Enable %s"
+msgstr "Включить %s"
+
+#: admin/atfp-dashboard/views/footer.php:9
+msgid "Made with ❤️ by"
+msgstr ""
+
+#: admin/atfp-dashboard/views/footer.php:12
+msgid "Cool Plugins Logo"
+msgstr "Логотип Cool Plugins"
+
+#: admin/atfp-dashboard/views/free-vs-pro.php:9
+msgid "Free VS Pro"
+msgstr "Бесплатная и Pro-версии"
+
+#: admin/atfp-dashboard/views/free-vs-pro.php:17
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:1
+msgid "Buy Pro"
+msgstr "Купить Pro"
+
+#: admin/atfp-dashboard/views/free-vs-pro.php:20
+msgid ""
+"Compare the Free and Pro versions to choose the best option for your "
+"translation needs."
+msgstr ""
+"Сравните бесплатную версию и Pro, чтобы выбрать подходящий вариант для "
+"перевода."
+
+#: admin/atfp-dashboard/views/free-vs-pro.php:25
+msgid "Features"
+msgstr "Возможности"
+
+#: admin/atfp-dashboard/views/free-vs-pro.php:26
+msgid "Free"
+msgstr "Бесплатная"
+
+#: admin/atfp-dashboard/views/free-vs-pro.php:27
+#: assets/bulk-translate/index.js:3
+msgid "Pro"
+msgstr "Pro"
+
+#. translators: %s: Google Translate (brand name, not translated)
+#. translators: %s: Yandex Translate (brand name, not translated)
+#: admin/atfp-dashboard/views/free-vs-pro.php:36
+#: admin/atfp-dashboard/views/free-vs-pro.php:45
+#, php-format
+msgid "%s Widget Support"
+msgstr "Поддержка виджетов %s"
+
+#. translators: 1: Chrome (brand name, not translated), 2: AI (not translated)
+#. translators: 1: Edge (brand name, not translated), 2: AI (not translated)
+#: admin/atfp-dashboard/views/free-vs-pro.php:54
+#: admin/atfp-dashboard/views/free-vs-pro.php:64
+#, php-format
+msgid "%1$s Built-in %2$s Support"
+msgstr "Поддержка встроенного %2$s в %1$s"
+
+#. translators: %s: API Key (not translated)
+#: admin/atfp-dashboard/views/free-vs-pro.php:74
+#, php-format
+msgid "No %s Required"
+msgstr "Не требуется %s"
+
+#: admin/atfp-dashboard/views/free-vs-pro.php:80
+msgid "Unlimited Translations"
+msgstr "Неограниченное количество переводов"
+
+#. translators: 1: AI (not translated), 2: Gemini/OpenAI/DeepL (brand names, not translated)
+#: admin/atfp-dashboard/views/free-vs-pro.php:84
+#, php-format
+msgid "%1$s Translator (%2$s) Support"
+msgstr "Поддержка переводчика %1$s (%2$s)"
+
+#: admin/atfp-dashboard/views/free-vs-pro.php:91
+msgid "Custom Fields Translation"
+msgstr "Перевод пользовательских полей"
+
+#: admin/atfp-dashboard/views/free-vs-pro.php:92
+msgid "Taxonomy Translation"
+msgstr "Перевод таксономий"
+
+#: admin/atfp-dashboard/views/free-vs-pro.php:93
+#: assets/automatic-translate/index.js:1
+#: assets/js/atfp-elementor-translate-confirm-box.js:52
+msgid "Bulk Translation"
+msgstr "Массовый перевод"
+
+#: admin/atfp-dashboard/views/free-vs-pro.php:94
+msgid "Re Translation"
+msgstr "Повторный перевод"
+
+#. translators: %s: Classic Editor (brand name, not translated)
+#. translators: %s: Divi 5 (brand name, not translated)
+#: admin/atfp-dashboard/views/free-vs-pro.php:98
+#: admin/atfp-dashboard/views/free-vs-pro.php:107
+#, php-format
+msgid "%s Translation"
+msgstr "Перевод %s"
+
+#: admin/atfp-dashboard/views/free-vs-pro.php:113
+msgid "Premium Support"
+msgstr "Премиум-поддержка"
+
+#: admin/atfp-dashboard/views/settings.php:7
+msgid "You do not have sufficient permissions to access this page."
+msgstr "У вас недостаточно прав для доступа к этой странице."
+
+#: admin/atfp-dashboard/views/settings.php:49
+#: automatic-translation-for-polylang.php:123
+#: automatic-translation-for-polylang.php:454
+msgid "Settings"
+msgstr "Настройки"
+
+#. translators: %s is a link to the Polylang languages page.
+#: admin/atfp-dashboard/views/settings.php:94
+#, php-format
+msgid "Add at least %1$s to use the %2$s AI translation test"
+msgstr "Добавьте как минимум %1$s, чтобы использовать тест ИИ-перевода %2$s"
+
+#: admin/atfp-dashboard/views/settings.php:96
+msgid "one language in Polylang"
+msgstr "один язык в Polylang"
+
+#: admin/atfp-dashboard/views/settings.php:121
+msgid "Translated Posts Status"
+msgstr "Статус переведённых записей"
+
+#: admin/atfp-dashboard/views/settings.php:124
+msgid "Choose the default status for Translated posts"
+msgstr "Выберите статус по умолчанию для переведённых записей"
+
+#: admin/atfp-dashboard/views/settings.php:130
+msgid "Default Post Status"
+msgstr "Статус записи по умолчанию"
+
+#: admin/atfp-dashboard/views/settings.php:134
+msgid "Publish"
+msgstr "Опубликовано"
+
+#: admin/atfp-dashboard/views/settings.php:136
+msgid "Draft"
+msgstr "Черновик"
+
+#: admin/atfp-dashboard/views/settings.php:139
+msgid ""
+"Select the status automatically applied to posts after translation is "
+"completed."
+msgstr ""
+"Автоматически устанавливать этот статус для записей после завершения "
+"перевода."
+
+#: admin/atfp-dashboard/views/settings.php:145
+msgid "Upgrade Now"
+msgstr "Обновить сейчас"
+
+#: admin/atfp-dashboard/views/settings.php:146
+msgid "Unlock Pro Features"
+msgstr "Разблокировать функции Pro"
+
+#: admin/atfp-dashboard/views/settings.php:161
+msgid "AI API Keys & Models"
+msgstr "Ключи API и модели ИИ"
+
+#: admin/atfp-dashboard/views/settings.php:164
+msgid "Configure your API keys and models for the AI translation providers."
+msgstr ""
+"Настройте ключи API и модели для поставщиков услуг перевода с помощью ИИ."
+
+#. translators: 1: API name
+#: admin/atfp-dashboard/views/settings.php:191
+#, php-format
+msgid "Add %1$s API key"
+msgstr "Добавить ключ API %1$s"
+
+#. translators: 1: Click Here link, 2: API name
+#: admin/atfp-dashboard/views/settings.php:205
+#, php-format
+msgid "%1$s to See How to Generate %2$s API Key"
+msgstr "%1$s, чтобы узнать, как создать ключ API %2$s"
+
+#: admin/atfp-dashboard/views/settings.php:206
+#: admin/atfp-dashboard/views/settings.php:322
+msgid "Click Here"
+msgstr "Нажмите здесь"
+
+#: admin/atfp-dashboard/views/settings.php:224
+msgid "Translation Settings"
+msgstr "Настройки перевода"
+
+#: admin/atfp-dashboard/views/settings.php:227
+msgid "Configure the translation settings for AI translations."
+msgstr "Настройте параметры перевода с помощью ИИ."
+
+#: admin/atfp-dashboard/views/settings.php:232
+msgid "Context Aware"
+msgstr "С учётом контекста"
+
+#: admin/atfp-dashboard/views/settings.php:236
+msgid ""
+"Provide optional context about WordPress page or post to enhance translation "
+"accuracy (e.g. content purpose, target audience, SEO focus, tone)..."
+msgstr ""
+"Укажите дополнительный контекст страницы или записи WordPress, чтобы "
+"повысить точность перевода (например, цель контента, целевая аудитория, SEO-"
+"задачи, тональность)..."
+
+#: admin/atfp-dashboard/views/settings.php:240
+msgid "This setting only works with Gemini AI and OpenAI."
+msgstr "Эта настройка работает только с Gemini AI и OpenAI."
+
+#: admin/atfp-dashboard/views/settings.php:245
+msgid "Slug Translation Settings"
+msgstr "Настройки перевода ярлыков"
+
+#: admin/atfp-dashboard/views/settings.php:249
+msgid "Use Translated Title"
+msgstr "Использовать переведённый заголовок"
+
+#: admin/atfp-dashboard/views/settings.php:251
+msgid "Translate Original Slug"
+msgstr "Перевести исходный ярлык"
+
+#: admin/atfp-dashboard/views/settings.php:253
+msgid "Keep Original Slug"
+msgstr "Оставить исходный ярлык"
+
+#: admin/atfp-dashboard/views/settings.php:268
+msgid "AI Request Performance"
+msgstr "Производительность запросов ИИ"
+
+#: admin/atfp-dashboard/views/settings.php:271
+msgid ""
+"Adjust these settings to optimize the speed, stability, and processing "
+"performance of your AI requests."
+msgstr ""
+"Настройте эти параметры, чтобы оптимизировать скорость, стабильность и "
+"производительность обработки запросов ИИ."
+
+#: admin/atfp-dashboard/views/settings.php:275
+msgid "Token Limit"
+msgstr "Лимит токенов"
+
+#. translators: 1: span tag, 2: span tag
+#: admin/atfp-dashboard/views/settings.php:280
+#, php-format
+msgid ""
+"%1$sRecommended%2$s 500 tokens per request If model or network is slow, "
+"decrease this value"
+msgstr ""
+"%1$sРекомендуется%2$s 500 токенов на запрос. Если модель или сеть работают "
+"медленно, уменьшите это значение."
+
+#: admin/atfp-dashboard/views/settings.php:285
+msgid "Batch Size"
+msgstr "Размер пакета"
+
+#. translators: 1: span tag, 2: span tag
+#: admin/atfp-dashboard/views/settings.php:290
+#, php-format
+msgid ""
+"%1$sRecommended%2$s 5 posts per batch Larger batch can take longer to "
+"process If model or network is slow, decrease this value"
+msgstr ""
+"%1$sРекомендуется%2$s 5 записей в пакете. Обработка больших пакетов может "
+"занять больше времени. Если модель или сеть работают медленно, уменьшите это "
+"значение."
+
+#: admin/atfp-dashboard/views/settings.php:295
+msgid "Timeout Duration"
+msgstr "Длительность ожидания"
+
+#. translators: 1: span tag, 2: span tag
+#: admin/atfp-dashboard/views/settings.php:300
+#, php-format
+msgid ""
+"%1$sRecommended%2$s 120 seconds minimum timeout can cause timeouts If model "
+"or network is slow, increase this value"
+msgstr ""
+"%1$sРекомендуется%2$s 120 секунд. Слишком малый тайм-аут может привести к "
+"сбоям. Если модель или сеть работают медленно, увеличьте это значение."
+
+#: admin/atfp-dashboard/views/settings.php:310
+msgid "Usage Data Sharing"
+msgstr "Передача данных об использовании"
+
+#: admin/atfp-dashboard/views/settings.php:318
+#: automatic-translation-for-polylang.php:841
+msgid ""
+"Help us make this plugin more compatible with your site by sharing non-"
+"sensitive site data."
+msgstr ""
+"Помогите сделать этот плагин более совместимым с вашим сайтом, поделившись "
+"несекретными данными о сайте."
+
+#: admin/atfp-dashboard/views/settings.php:322
+msgid ""
+"Opt in to receive email updates about security improvements, new features, "
+"helpful tutorials, and occasional special offers. We'll collect:"
+msgstr ""
+"Подпишитесь на рассылку новостей об улучшениях безопасности, новых функциях, "
+"полезных руководствах и специальных предложениях. Мы будем собирать:"
+
+#: admin/atfp-dashboard/views/settings.php:324
+msgid "Your website home URL and WordPress admin email."
+msgstr ""
+"URL главной страницы вашего сайта и адрес электронной почты администратора "
+"WordPress."
+
+#: admin/atfp-dashboard/views/settings.php:325
+msgid ""
+"To check plugin compatibility, we will collect the following: list of active "
+"plugins and themes, server type, MySQL version, WordPress version, memory "
+"limit, site language and database prefix."
+msgstr ""
+"Для проверки совместимости плагина мы соберём следующие данные: список "
+"активных плагинов и тем, тип сервера, версия MySQL, версия WordPress, лимит "
+"памяти, язык сайта и префикс базы данных."
+
+#: admin/atfp-dashboard/views/settings.php:331
+msgid "Save Changes"
+msgstr "Сохранить изменения"
+
+#: admin/atfp-dashboard/views/sidebar.php:9
+msgid "Duplicate Content & Translation Inspector"
+msgstr "Проверка дублирующегося контента и переводов"
+
+#: admin/atfp-dashboard/views/sidebar.php:13
+msgid ""
+"Duplicate your pages/posts and inspect translations across Polylang "
+"languages."
+msgstr ""
+"Создавайте копии страниц и записей, а также проверяйте переводы на языки "
+"Polylang."
+
+#: admin/atfp-dashboard/views/sidebar.php:25
+#: admin/atfp-dashboard/views/sidebar.php:130
+msgid "Activated"
+msgstr "Активировано"
+
+#: admin/atfp-dashboard/views/sidebar.php:33
+#: admin/atfp-dashboard/views/sidebar.php:138
+msgid "Activate"
+msgstr "Активировать"
+
+#: admin/atfp-dashboard/views/sidebar.php:33
+#: admin/atfp-dashboard/views/sidebar.php:138
+msgid "Install"
+msgstr "Установить"
+
+#: admin/atfp-dashboard/views/sidebar.php:39
+msgid "Translation Inspector"
+msgstr "Проверка перевода"
+
+#: admin/atfp-dashboard/views/sidebar.php:45
+msgid "Translation Statistics"
+msgstr "Статистика переводов"
+
+#: admin/atfp-dashboard/views/sidebar.php:88
+msgid "Characters Translated!"
+msgstr "Переведено символов!"
+
+#: admin/atfp-dashboard/views/sidebar.php:91
+msgid "Total Strings"
+msgstr "Всего строк"
+
+#: admin/atfp-dashboard/views/sidebar.php:92
+msgid "Pages / Posts Translated"
+msgstr "Переведено страниц / записей"
+
+#: admin/atfp-dashboard/views/sidebar.php:93 assets/bulk-translate/index.js:1
+msgid "Time Taken"
+msgstr "Затраченное время"
+
+#. translators: 1: number of characters translated, 2: plugin name
+#: admin/atfp-dashboard/views/sidebar.php:101
+#, php-format
+msgid ""
+"Translated %1$s characters page by page. Save time — install %2$s and use "
+"Bulk Translation to translate multiple pages in one click."
+msgstr ""
+"Переведите страницы с %1$s посимвольно. Экономьте время — установите %2$s и "
+"используйте пакетный перевод, чтобы переводить несколько страниц одним "
+"нажатием."
+
+#: admin/atfp-dashboard/views/sidebar.php:109
+msgid "Get Pro for Bulk translation"
+msgstr "Перейдите на Pro, чтобы использовать пакетный перевод"
+
+#: admin/atfp-dashboard/views/sidebar.php:114
+msgid "Translate Plugins & Themes Automatically"
+msgstr "Автоматический перевод плагинов и тем"
+
+#: admin/atfp-dashboard/views/sidebar.php:118
+msgid "Loco addon to translate plugins and themes."
+msgstr "Дополнение Loco для перевода плагинов и тем."
+
+#: admin/atfp-dashboard/views/sidebar.php:144
+msgid "Loco Translate Addon"
+msgstr "Дополнение Loco Translate"
+
+#: admin/atfp-dashboard/views/sidebar.php:149
+msgid "Enjoying AutoPoly?"
+msgstr "Нравится AutoPoly?"
+
+#: admin/atfp-dashboard/views/sidebar.php:150
+msgid ""
+"We’d love to hear your feedback! If AutoPoly makes translation easier for "
+"you, please leave us a review."
+msgstr ""
+"Мы будем рады узнать ваше мнение! Если AutoPoly упрощает перевод, оставьте "
+"отзыв."
+
+#: admin/atfp-dashboard/views/sidebar.php:151
+msgid "Leave a Review ★★★★★"
+msgstr "Оставить отзыв ★★★★★"
+
+#: admin/atfp-dashboard/views/sidebar.php:158
+msgid "0"
+msgstr "0"
+
+#. translators: 1: Time taken in seconds in number format
+#: admin/atfp-dashboard/views/sidebar.php:160
+#, php-format
+msgid "%d sec"
+msgstr "%d сек."
+
+#. translators: 1: Time taken in minutes in number format, 2: Time taken in seconds in number format
+#: admin/atfp-dashboard/views/sidebar.php:165
+#, php-format
+msgid "%1$d min %2$d sec"
+msgstr "%1$d мин. %2$d сек."
+
+#. translators: 1: Time taken in hours in number format, 2: Time taken in minutes in number format
+#: admin/atfp-dashboard/views/sidebar.php:170
+#, php-format
+msgid "%1$d hours %2$d min"
+msgstr "%1$d ч. %2$d мин."
+
+#: admin/atfp-dashboard/views/sidebar.php:204
+msgid "LocoAI – Auto Translate for Loco Translate"
+msgstr "LocoAI — автоматический перевод для Loco Translate"
+
+#: admin/atfp-dashboard/views/sidebar.php:205
+msgid "LocoAI – Auto Translate for Loco Translate (Pro)"
+msgstr "LocoAI — автоматический перевод для Loco Translate (Pro)"
+
+#: admin/atfp-dashboard/views/sidebar.php:209
+#: admin/atfp-dashboard/views/sidebar.php:210
+msgid "Toolkit for Polylang - Translation Inspector & Duplicate Content"
+msgstr "Инструменты для Polylang — проверка переводов и дублирование контента"
+
+#: admin/atfp-dashboard/views/sidebar.php:243
+msgid "B"
+msgstr "Б"
+
+#: admin/atfp-dashboard/views/sidebar.php:245
+msgid "M"
+msgstr "М"
+
+#: admin/atfp-dashboard/views/sidebar.php:247
+msgid "K"
+msgstr "К"
+
+#. translators: 1: AutoPoly - AI Translation For Polylang plugin name
+#: admin/atfp-dashboard/views/support-blocks.php:87
+#, php-format
+msgid "Supported Blocks for %s"
+msgstr "Поддерживаемые блоки для %s"
+
+#: admin/atfp-dashboard/views/support-blocks.php:90
+msgid "Block Type Category:"
+msgstr "Категория типа блока:"
+
+#: admin/atfp-dashboard/views/support-blocks.php:92
+#: admin/atfp-dashboard/views/support-blocks.php:100
+msgid "All"
+msgstr "Все"
+
+#: admin/atfp-dashboard/views/support-blocks.php:98
+msgid "Show Blocks:"
+msgstr "Показать блоки:"
+
+#: admin/atfp-dashboard/views/support-blocks.php:101
+#: automatic-translation-for-polylang.php:456
+msgid "Supported Blocks"
+msgstr "Поддерживаемые блоки"
+
+#: admin/atfp-dashboard/views/support-blocks.php:102
+msgid "Unsupported Blocks"
+msgstr "Неподдерживаемые блоки"
+
+#: admin/atfp-dashboard/views/support-blocks.php:111
+msgid "Sr.No"
+msgstr "№"
+
+#: admin/atfp-dashboard/views/support-blocks.php:112
+msgid "Block Name"
+msgstr "Название блока"
+
+#: admin/atfp-dashboard/views/support-blocks.php:113
+msgid "Block Title"
+msgstr "Заголовок блока"
+
+#: admin/atfp-dashboard/views/support-blocks.php:114
+#: assets/bulk-translate/index.js:1
+msgid "Status"
+msgstr "Статус"
+
+#: admin/atfp-dashboard/views/support-blocks.php:115
+msgid "Modify"
+msgstr "Изменить"
+
+#: admin/atfp-dashboard/views/support-blocks.php:194
+msgid "Add"
+msgstr "Добавить"
+
+#: admin/atfp-dashboard/views/support-blocks.php:194
+msgid "Edit"
+msgstr "Редактировать"
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:103
+msgctxt "post type general name"
+msgid "Automatic Translations"
+msgstr "Автоматические переводы"
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:104
+msgctxt "post type singular name"
+msgid "Automatic Translation"
+msgstr "Автоматический перевод"
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:105
+msgctxt "admin menu"
+msgid "Automatic Translations"
+msgstr "Автоматические переводы"
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:106
+msgctxt "add new on admin bar"
+msgid "Automatic Translation"
+msgstr "Автоматический перевод"
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:107
+msgctxt "Automatic Translation"
+msgid "Add New"
+msgstr "Добавить"
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:108
+msgid "Add New Automatic Translation"
+msgstr "Добавить автоматический перевод"
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:109
+msgid "New Automatic Translation"
+msgstr "Новый автоматический перевод"
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:110
+msgid "Edit Automatic Translation"
+msgstr "Редактировать автоматический перевод"
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:111
+msgid "View Automatic Translation"
+msgstr "Просмотреть автоматический перевод"
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:112
+msgid "Automatic Translations"
+msgstr "Автоматические переводы"
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:113
+msgid "Search Automatic Translations"
+msgstr "Поиск автоматических переводов"
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:114
+msgid "No Automatic Translations found."
+msgstr "Автоматические переводы не найдены."
+
+#: admin/atfp-menu-pages/class-atfp-custom-block-post.php:115
+msgid "No Automatic Translations found in Trash."
+msgstr "В корзине автоматические переводы не найдены."
+
+#. translators: 1: Plugin name, 2: Total character count, 3: Cool Plugins URL
+#: admin/cpt_dashboard/cpt_dashboard.php:280
+#, php-format
+msgid ""
+"Thanks for using <b>%1$s</b>! You have translated <b>%2$s</b> characters so "
+"far using our plugin!<br>Please give us a quick rating, it works as a boost "
+"for us to keep working on more <a style=\"text-decoration: none;\" "
+"href=\"%3$s\" target=\"_blank\" rel=\"noopener noreferrer\"><b>Cool "
+"Plugins</b></a>!"
+msgstr ""
+
+#: admin/cpt_dashboard/cpt_dashboard.php:306
+#: admin/cpt_dashboard/cpt_dashboard.php:313
+msgid "Already Reviewed"
+msgstr "Уже рассмотрено"
+
+#: admin/cpt_dashboard/cpt_dashboard.php:306
+#: admin/cpt_dashboard/cpt_dashboard.php:313
+msgid "Not Interested"
+msgstr "Не интересно"
+
+#: admin/cpt_dashboard/cpt_dashboard.php:326
+#: helper/class-atfp-ajax-handler.php:86 helper/class-atfp-ajax-handler.php:113
+#: helper/class-atfp-ajax-handler.php:253
+#: helper/class-atfp-ajax-handler.php:271
+#: helper/class-atfp-ajax-handler.php:400
+#: helper/class-atfp-ajax-handler.php:404
+#: helper/class-atfp-ajax-handler.php:478
+#: helper/class-atfp-ajax-handler.php:526
+#: helper/class-atfp-ajax-handler.php:589
+msgid "Unauthorized"
+msgstr "Нет авторизации"
+
+#: admin/notice/atfp-notice.php:32
+msgid "Add a Language Switcher"
+msgstr "Добавить переключатель языков"
+
+#: admin/notice/atfp-notice.php:33
+msgid ""
+"Did you know? You can add a customizable language switcher to help visitors "
+"easily browse your website in their preferred language."
+msgstr ""
+"Знаете ли вы? Вы можете добавить настраиваемый переключатель языков, чтобы "
+"посетители могли легко просматривать ваш сайт на предпочитаемом языке."
+
+#: admin/notice/atfp-notice.php:34
+msgid ""
+"Let visitors browse in their preferred language with Language Switcher for "
+"Polylang for Elementor, Gutenberg, and Divi."
+msgstr ""
+"Позвольте посетителям просматривать сайт на предпочитаемом языке с помощью "
+"переключателя языков для Polylang в Elementor, Gutenberg и Divi."
+
+#: admin/notice/atfp-notice.php:71
+msgid "Activate Now"
+msgstr "Активировать"
+
+#: admin/notice/atfp-notice.php:71
+msgid "Install Now"
+msgstr "Установить"
+
+#: admin/notice/atfp-notice.php:113
+msgid "Dismiss this notice."
+msgstr "Закрыть это уведомление."
+
+#: admin/notice/atfp-notice.php:152
+msgid "Unauthorized access."
+msgstr "Доступ не авторизован."
+
+#: admin/notice/atfp-notice.php:156 helper/class-atfp-ajax-handler.php:76
+#: helper/class-atfp-ajax-handler.php:103
+#: helper/class-atfp-ajax-handler.php:248
+#: helper/class-atfp-ajax-handler.php:267
+#: helper/class-atfp-ajax-handler.php:392
+#: helper/class-atfp-ajax-handler.php:474
+#: helper/class-atfp-ajax-handler.php:522
+#: helper/class-atfp-ajax-handler.php:585
+#: helper/class-atfp-register-route.php:166
+msgid "Invalid security token sent."
+msgstr "Отправлен недействительный токен безопасности."
+
+#: automatic-translation-for-polylang.php:127
+msgid "Get Pro"
+msgstr "Перейти на Pro"
+
+#: automatic-translation-for-polylang.php:140
+msgid "Bulk Translation (Pro)"
+msgstr "Пакетный перевод (Pro)"
+
+#: automatic-translation-for-polylang.php:231
+msgid "Chrome AI Setup"
+msgstr "Настройка Chrome AI"
+
+#: automatic-translation-for-polylang.php:232
+msgid ""
+"Free on-device translation. We detect what your browser needs â€” usually "
+"just one click."
+msgstr ""
+"Бесплатный перевод прямо на устройстве. Мы определим, что нужно вашему "
+"браузеру — обычно достаточно одного нажатия."
+
+#: automatic-translation-for-polylang.php:233
+msgid "Checking your browserâ€¦"
+msgstr "Проверка браузера…"
+
+#: automatic-translation-for-polylang.php:234
+msgid "Give us a second while we detect Chrome AI support."
+msgstr "Подождите немного, пока мы проверяем поддержку Chrome AI."
+
+#: automatic-translation-for-polylang.php:235
+msgid "Chrome AI is Ready"
+msgstr "Chrome AI готов"
+
+#: automatic-translation-for-polylang.php:236
+msgid "On-device translation is set up. No API key, no cost."
+msgstr "Перевод на устройстве настроен. Ключ API не нужен, никаких расходов."
+
+#: automatic-translation-for-polylang.php:237
+msgid "Language pack required"
+msgstr "Требуется языковой пакет"
+
+#: automatic-translation-for-polylang.php:238
+msgid ""
+"Add the target translation language in your browser settings to download the "
+"translation model."
+msgstr ""
+"Добавьте целевой язык перевода в настройках браузера, чтобы скачать модель "
+"перевода."
+
+#: automatic-translation-for-polylang.php:239
+msgid "Downloading language modelâ€¦"
+msgstr "Загрузка языковой модели…"
+
+#: automatic-translation-for-polylang.php:240
+msgid "Keep this tab open. This happens once."
+msgstr "Оставьте эту вкладку открытой. Это происходит один раз."
+
+#: automatic-translation-for-polylang.php:241
+msgid "Chrome AI is currently unavailable"
+msgstr "Функция ИИ Chrome сейчас недоступна"
+
+#: automatic-translation-for-polylang.php:242
+msgid ""
+"Something blocked the check. See advanced steps or use alternative options."
+msgstr ""
+"Что-то помешало выполнить проверку. См. дополнительные инструкции или "
+"используйте другие варианты."
+
+#: automatic-translation-for-polylang.php:243
+msgid "Chrome AI needs a secure (HTTPS) connection"
+msgstr "Для работы ИИ Chrome требуется защищённое соединение (HTTPS)"
+
+#: automatic-translation-for-polylang.php:244
+msgid ""
+"Serving wp-admin over HTTP prevents Chrome AI from launching. Serve pages "
+"over HTTPS or use an alternative engine."
+msgstr ""
+"Если панель wp-admin открыта по HTTP, ИИ Chrome не запустится. Используйте "
+"HTTPS или другой движок."
+
+#: automatic-translation-for-polylang.php:245
+msgid "Enable Chrome AI"
+msgstr "Включить ИИ Chrome"
+
+#: automatic-translation-for-polylang.php:246
+msgid "Retry"
+msgstr "Повторить"
+
+#: automatic-translation-for-polylang.php:247
+msgid "Use Another Provider"
+msgstr "Использовать другого провайдера"
+
+#: automatic-translation-for-polylang.php:248
+msgid "Try a real translation"
+msgstr "Попробовать настоящий перевод"
+
+#: automatic-translation-for-polylang.php:249
+msgid "Type anything and see the exact on-device result â€” no page needed."
+msgstr ""
+"Введите любой текст и посмотрите точный результат на устройстве — без "
+"необходимости открывать страницу."
+
+#: automatic-translation-for-polylang.php:250
+msgid "Your text"
+msgstr "Ваш текст"
+
+#: automatic-translation-for-polylang.php:251
+#: assets/automatic-translate/index.js:1
+msgid "Translation"
+msgstr "Перевод"
+
+#: automatic-translation-for-polylang.php:252
+msgid "Type or paste text to translateâ€¦"
+msgstr "Введите или вставьте текст для перевода…"
+
+#: automatic-translation-for-polylang.php:253
+msgid "Translation will appear here."
+msgstr "Здесь появится перевод."
+
+#: automatic-translation-for-polylang.php:254
+msgid "Translate preview"
+msgstr "Предварительный просмотр перевода"
+
+#: automatic-translation-for-polylang.php:255
+msgid "Translatingâ€¦"
+msgstr "Перевод…"
+
+#: automatic-translation-for-polylang.php:256
+msgid "Done in {ms} ms Â· on-device Â· no data left your browser"
+msgstr ""
+
+#: automatic-translation-for-polylang.php:257
+msgid ""
+"âœ— Translation failed. This pair may need its own model, or see advanced "
+"steps below."
+msgstr ""
+"✗ Не удалось выполнить перевод. Возможно, для этой языковой пары нужна "
+"отдельная модель. Также см. дополнительные инструкции ниже."
+
+#: automatic-translation-for-polylang.php:258
+msgid "Still not working? Advanced steps"
+msgstr "Не помогло? Дополнительные инструкции"
+
+#: automatic-translation-for-polylang.php:259
+msgid ""
+"Chrome AI translation needs Chrome or Edge on desktop (version 138+). It "
+"doesnâ€™t run on mobile phones or tablets."
+msgstr ""
+"Для перевода с помощью ИИ Chrome нужен Chrome или Edge на компьютере (версия "
+"138 или выше). Эта функция не работает на телефонах и планшетах."
+
+#: automatic-translation-for-polylang.php:260
+msgid "Open Official Setup Guide â†’"
+msgstr "Открыть официальное руководство по настройке →"
+
+#: automatic-translation-for-polylang.php:441
+msgid "AutoPoly"
+msgstr "AutoPoly"
+
+#: automatic-translation-for-polylang.php:453 assets/bulk-translate/index.js:1
+msgid "Dashboard"
+msgstr "Панель управления"
+
+#: automatic-translation-for-polylang.php:455
+msgid "Free vs Pro"
+msgstr "Бесплатная версия и Pro"
+
+#: automatic-translation-for-polylang.php:489
+msgid "Polylang Addon Logo"
+msgstr "Логотип дополнения Polylang"
+
+#: automatic-translation-for-polylang.php:490
+msgid "Toolkit for Polylang"
+msgstr "Набор инструментов для Polylang"
+
+#: automatic-translation-for-polylang.php:498
+msgid "Get Support"
+msgstr "Получить поддержку"
+
+#: automatic-translation-for-polylang.php:502
+msgid "Check Docs"
+msgstr "Документация"
+
+#: automatic-translation-for-polylang.php:507
+msgid "Dashboard navigation"
+msgstr "Навигация панели управления"
+
+#. translators: %s: plugin name.
+#: automatic-translation-for-polylang.php:762
+#, php-format
+msgid "Do you like the %s plugin?"
+msgstr "Вам нравится плагин %s?"
+
+#: automatic-translation-for-polylang.php:765
+msgid "Yes, I like it"
+msgstr "Да, мне нравится"
+
+#: automatic-translation-for-polylang.php:766
+msgid "Not good, dismiss"
+msgstr "Нет, закрыть"
+
+#: automatic-translation-for-polylang.php:767
+msgid "Ask me later"
+msgstr "Спросить позже"
+
+#: automatic-translation-for-polylang.php:768
+msgid ""
+"That is great to hear! A quick review on WordPress.org would really help us."
+msgstr "Здорово! Короткий отзыв на WordPress.org очень нам поможет."
+
+#: automatic-translation-for-polylang.php:769
+msgid "Submit review"
+msgstr "Оставить отзыв"
+
+#: automatic-translation-for-polylang.php:770
+msgid "I do not like it, dismiss"
+msgstr "Мне не нравится, закрыть"
+
+#: automatic-translation-for-polylang.php:771
+msgid "Do you like this plugin?"
+msgstr "Вам нравится этот плагин?"
+
+#. translators: %s: plugin name.
+#: automatic-translation-for-polylang.php:774
+#, php-format
+msgid "Enjoying %s?"
+msgstr "Нравится %s?"
+
+#: automatic-translation-for-polylang.php:777
+msgid "A short review helps other site owners find it."
+msgstr "Короткий отзыв поможет другим владельцам сайтов найти этот плагин."
+
+#: automatic-translation-for-polylang.php:778
+#: automatic-translation-for-polylang.php:825 assets/bulk-translate/index.js:1
+#: assets/bulk-translate/index.js:3 assets/bulk-translate/index.js:4
+#: assets/bulk-translate/index.js:8
+msgid "Close"
+msgstr "Закрыть"
+
+#: automatic-translation-for-polylang.php:797
+msgid "The plugin isn't working"
+msgstr "Плагин не работает"
+
+#: automatic-translation-for-polylang.php:798
+msgid "Which problem did you run into? We read every reply."
+msgstr "С какой проблемой вы столкнулись? Мы читаем каждый ответ."
+
+#: automatic-translation-for-polylang.php:801
+msgid "It didn't do what I expected"
+msgstr "Он работал не так, как я ожидал(а)"
+
+#: automatic-translation-for-polylang.php:802
+msgid "What were you hoping it would do?"
+msgstr "Какого результата вы ожидали?"
+
+#: automatic-translation-for-polylang.php:805
+msgid "I found a better plugin"
+msgstr "Я нашёл(ла) плагин получше"
+
+#: automatic-translation-for-polylang.php:806
+msgid "Mind sharing which one?"
+msgstr "Не могли бы вы назвать его?"
+
+#: automatic-translation-for-polylang.php:809
+msgid "It's a temporary deactivation"
+msgstr "Это временная деактивация"
+
+#: automatic-translation-for-polylang.php:813
+msgid "Another reason"
+msgstr "Другая причина"
+
+#: automatic-translation-for-polylang.php:814
+msgid "Please tell us more"
+msgstr "Расскажите подробнее"
+
+#: automatic-translation-for-polylang.php:818
+msgid "Before you go…"
+msgstr "Прежде чем уйти…"
+
+#. translators: %s: plugin name (bold).
+#: automatic-translation-for-polylang.php:820
+#, php-format
+msgid "What made you deactivate %s? Your answer helps us fix it."
+msgstr "Почему вы деактивировали %s? Ваш ответ поможет нам исправить проблему."
+
+#: automatic-translation-for-polylang.php:821
+msgid "Submit & Deactivate"
+msgstr "Отправить и деактивировать"
+
+#: automatic-translation-for-polylang.php:822
+msgid "Skip & Deactivate"
+msgstr "Пропустить и деактивировать"
+
+#: automatic-translation-for-polylang.php:823
+msgid "Deactivating…"
+msgstr "Деактивация…"
+
+#: automatic-translation-for-polylang.php:824
+msgid "Please choose a reason."
+msgstr "Выберите причину."
+
+#. translators: %s: company name.
+#: automatic-translation-for-polylang.php:827
+#, php-format
+msgid "A plugin by %s"
+msgstr "Плагин от %s"
+
+#: automatic-translation-for-polylang.php:828
+msgid ""
+"Submitting shares your reason plus your site URL, admin email and basic "
+"environment details (PHP, WordPress, active plugins). Skip & Deactivate "
+"sends nothing."
+msgstr ""
+"При отправке будут переданы причина, URL вашего сайта, адрес электронной "
+"почты администратора и основные сведения о среде (PHP, WordPress, активные "
+"плагины). При нажатии «Пропустить и деактивировать» данные не отправляются."
+
+#: automatic-translation-for-polylang.php:840
+msgid "Translation Plugins by Cool Plugins"
+msgstr "Плагины перевода от Cool Plugins"
+
+#: automatic-translation-for-polylang.php:846
+msgid "Help Improve Plugins"
+msgstr "Помогите улучшить плагины"
+
+#: automatic-translation-for-polylang.php:847
+msgid "Yes, it's OK"
+msgstr "Да, можно"
+
+#: automatic-translation-for-polylang.php:848
+msgid "No, Thanks"
+msgstr "Нет, спасибо"
+
+#: automatic-translation-for-polylang.php:849
+msgid "More info"
+msgstr "Подробнее"
+
+#. translators: 1: Plugin Name, 2: Plugin URL
+#: automatic-translation-for-polylang.php:954
+#, php-format
+msgid ""
+"In order to use %1$s plugin, please install and activate the latest version  "
+"of %2$s"
+msgstr ""
+
+#: automatic-translation-for-polylang.php:1027
+#: automatic-translation-for-polylang.php:1047
+#: automatic-translation-for-polylang.php:1071
+msgid "Automatic Translate"
+msgstr "Автоматический перевод"
+
+#: automatic-translation-for-polylang.php:1109
+#: assets/automatic-translate/index.js:1 assets/js/atfp-re-translation.js:87
+#: assets/js/atfp-re-translation.js:99
+msgid "Re-Translate"
+msgstr "Перевести заново"
+
+#: automatic-translation-for-polylang.php:1112
+msgid "Re-Translate the page content for updating changes."
+msgstr "Повторно перевести содержимое страницы, чтобы обновить изменения."
+
+#: automatic-translation-for-polylang.php:1144
+msgid "Translate Page"
+msgstr "Перевести страницу"
+
+#. translators: 1: Source language, 2: Target language
+#: automatic-translation-for-polylang.php:1149
+#, php-format
+msgid "Translate or duplicate content from %1$s to %2$s"
+msgstr "Перевести или дублировать содержимое с %1$s на %2$s"
+
+#: helper/class-atfp-ajax-handler.php:82 helper/class-atfp-ajax-handler.php:109
+msgid "Invalid Post ID."
+msgstr "Недопустимый ID записи."
+
+#: helper/class-atfp-ajax-handler.php:119
+msgid "Post not found."
+msgstr "Запись не найдена."
+
+#: helper/class-atfp-ajax-handler.php:261
+msgid "No custom blocks found."
+msgstr "Пользовательские блоки не найдены."
+
+#: helper/class-atfp-ajax-handler.php:279
+msgid "Invalid JSON"
+msgstr "Недопустимый JSON"
+
+#: helper/class-atfp-ajax-handler.php:305
+msgid ""
+"Automatic Translation for Polylang: Custom Blocks data updated successfully"
+msgstr ""
+"Данные пользовательских блоков Automatic Translation for Polylang успешно "
+"обновлены"
+
+#: helper/class-atfp-ajax-handler.php:460
+msgid "Translation data updated successfully"
+msgstr "Данные перевода успешно обновлены"
+
+#: helper/class-atfp-ajax-handler.php:464
+msgid "Atfp_Dashboard class not found"
+msgstr "Класс Atfp_Dashboard не найден"
+
+#: helper/class-atfp-ajax-handler.php:487
+msgid "Invalid data."
+msgstr "Недопустимые данные."
+
+#: helper/class-atfp-ajax-handler.php:505
+msgid "Invalid Elementor data."
+msgstr "Недопустимые данные Elementor."
+
+#: helper/class-atfp-ajax-handler.php:537
+msgid "Invalid JSON."
+msgstr "Недопустимый JSON."
+
+#: helper/class-atfp-ajax-handler.php:541
+msgid "Invalid enabled providers."
+msgstr "Недопустимые включённые провайдеры."
+
+#: helper/class-atfp-ajax-handler.php:573
+msgid "Enabled providers updated successfully."
+msgstr "Список включённых провайдеров успешно обновлён."
+
+#: helper/class-atfp-ajax-handler.php:596
+msgid "Invalid translation provider."
+msgstr "Недопустимый провайдер перевода."
+
+#: helper/class-atfp-ajax-handler.php:618
+msgid "Default translation provider updated successfully."
+msgstr "Провайдер перевода по умолчанию успешно обновлён."
+
+#: helper/class-atfp-ajax-handler.php:629
+msgid "Sorry, you are not allowed to install plugins on this site."
+msgstr "У вас нет разрешения на установку плагинов на этом сайте."
+
+#: helper/class-atfp-ajax-handler.php:635
+msgid "Security check failed."
+msgstr "Проверка безопасности не пройдена."
+
+#: helper/class-atfp-ajax-handler.php:644
+msgid "No plugin specified."
+msgstr "Плагин не указан."
+
+#: helper/class-atfp-ajax-handler.php:661
+msgid "Please activate Loco Translate plugin first."
+msgstr "Сначала активируйте плагин Loco Translate."
+
+#: helper/class-atfp-ajax-handler.php:677
+msgid "Invalid plugin slug."
+msgstr "Недопустимый ярлык плагина."
+
+#: helper/class-atfp-ajax-handler.php:684
+msgid "Permission denied."
+msgstr "Доступ запрещён."
+
+#: helper/class-atfp-ajax-handler.php:711
+#: helper/class-atfp-ajax-handler.php:765
+msgid "Plugin activated successfully."
+msgstr "Плагин успешно активирован."
+
+#: helper/class-atfp-ajax-handler.php:778
+msgid "Unable to connect to the filesystem. Please confirm your credentials."
+msgstr "Не удалось подключиться к файловой системе. Проверьте учётные данные."
+
+#: helper/class-atfp-ajax-handler.php:801
+msgid "Plugin installed and activated successfully."
+msgstr "Плагин успешно установлен и активирован."
+
+#: helper/class-atfp-ajax-handler.php:803
+msgid "Plugin installed successfully."
+msgstr "Плагин успешно установлен."
+
+#: helper/class-atfp-helper.php:69
+msgid "Add More Gutenberg Blocks"
+msgstr "Добавить блоки Gutenberg"
+
+#: helper/class-atfp-helper.php:977 assets/bulk-translate/index.js:3
+msgid "(no title)"
+msgstr "(без заголовка)"
+
+#: helper/class-atfp-register-route.php:144
+msgid "Invalid nonce."
+msgstr "Недопустимый nonce."
+
+#: helper/class-atfp-register-route.php:148
+#: helper/class-atfp-register-route.php:151
+#: helper/class-atfp-register-route.php:158
+#: helper/class-atfp-register-route.php:162
+#: helper/class-atfp-register-route.php:194
+#: helper/class-atfp-register-route.php:197
+#: helper/class-atfp-register-route.php:201
+#: helper/class-atfp-register-route.php:313
+#: helper/class-atfp-register-route.php:316
+#: helper/class-atfp-register-route.php:321
+#: helper/class-atfp-register-route.php:523
+#: helper/class-atfp-register-route.php:555
+msgid "You are not authorized to perform this action."
+msgstr "У вас нет прав на выполнение этого действия."
+
+#: helper/class-atfp-register-route.php:205
+msgid "Empty target language. Select at least one language."
+msgstr "Не указан язык перевода. Выберите хотя бы один язык."
+
+#: helper/class-atfp-register-route.php:209
+msgid "Empty post IDs. Select at least one post to translate."
+msgstr "Не указаны ID записей. Выберите хотя бы одну запись для перевода."
+
+#: helper/class-atfp-register-route.php:400
+msgid "No posts to translate"
+msgstr "Нет записей для перевода"
+
+#: helper/class-atfp-register-route.php:514
+msgid "Invalid source language"
+msgstr "Недопустимый исходный язык"
+
+#: helper/class-atfp-register-route.php:517
+msgid "Invalid request"
+msgstr "Недопустимый запрос"
+
+#: helper/class-atfp-register-route.php:520
+msgid "Invalid target language"
+msgstr "Недопустимый целевой язык"
+
+#: helper/class-atfp-register-route.php:526
+msgid "Invalid request content and title empty"
+msgstr "Недопустимый запрос: содержимое и заголовок не указаны"
+
+#: helper/class-atfp-register-route.php:539
+msgid "Invalid post."
+msgstr "Недопустимая запись."
+
+#: helper/class-atfp-register-route.php:543
+msgid "This editor type is not supported by the free version."
+msgstr "Этот тип редактора не поддерживается бесплатной версией."
+
+#. translators: 1: parent post ID, 2: target language
+#: helper/class-atfp-register-route.php:609
+#, php-format
+msgid "Unable to create the translated post for parent post ID %1$s in %2$s."
+msgstr "Не удалось создать перевод записи с ID %1$s на языке %2$s."
+
+#: includes/bulk-translation/class-atfp-bulk-translation.php:64
+#: includes/bulk-translation/class-atfp-bulk-translation.php:92
+msgid "AI Translate"
+msgstr "Перевести с помощью ИИ"
+
+#. translators: %s: post title
+#: includes/bulk-translation/class-atfp-bulk-translation.php:88
+#, php-format
+msgid "AI Translate &#8220;%s&#8221;"
+msgstr ""
+
+#: includes/bulk-translation/class-atfp-posts-clone.php:122
+msgid "Re-translate post id not found"
+msgstr "ID записи для повторного перевода не найден"
+
+#: includes/bulk-translation/class-atfp-posts-clone.php:126
+msgid "Re-translate post id not matched with target language saved post id"
+msgstr ""
+"ID записи для повторного перевода не соответствует ID сохранённой записи на "
+"целевом языке"
+
+#: includes/bulk-translation/class-atfp-posts-clone.php:130
+msgid "Re-translate translation fields not exist in fields key"
+msgstr "Поля перевода для повторного перевода отсутствуют в ключе полей"
+
+#: includes/class-atfp-register-backend-assets.php:80
+msgid "Pages"
+msgstr "Страницы"
+
+#: includes/class-atfp-register-backend-assets.php:81
+msgid "Page"
+msgstr "Страница"
+
+#: includes/menu-sync/class-atfp-menu-sync-promo.php:96
+msgid "Menu Sync (Pro)"
+msgstr "Синхронизация меню (Pro)"
+
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:1
+msgid "STEP 2 OF 2"
+msgstr "ШАГ 2 ИЗ 2"
+
+#: assets/automatic-translate/index.js:1
+msgid "Start Automatic Translation Process"
+msgstr "Запустить автоматический перевод"
+
+#: assets/automatic-translate/index.js:1
+msgid "close"
+msgstr "закрыть"
+
+#: assets/automatic-translate/index.js:1
+msgid ""
+"Google Translate could not load. This is usually caused by an ad blocker or "
+"privacy extension blocking translate.google.com - please disable it for this "
+"site and reload the page."
+msgstr ""
+"Не удалось загрузить Google Translate. Обычно это вызвано блокировщиком "
+"рекламы или расширением конфиденциальности, блокирующим translate.google.com."
+" Отключите его для этого сайта и перезагрузите страницу."
+
+#: assets/automatic-translate/index.js:1
+msgid "Translate To"
+msgstr "Перевести на"
+
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:1
+msgid "Choose Language"
+msgstr "Выберите язык"
+
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:1
+msgid "View Error"
+msgstr "Просмотреть ошибку"
+
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:1
+#, js-format
+msgid "Translate Using %s"
+msgstr "Перевести с помощью %s"
+
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:1
+#, js-format
+msgid "Translate Using %s Model"
+msgstr "Перевести с помощью модели %s"
+
+#: assets/automatic-translate/index.js:1
+msgid "Automatic translation is in progress...."
+msgstr "Выполняется автоматический перевод...."
+
+#: assets/automatic-translate/index.js:1
+msgid "It will take few minutes, enjoy ☕ coffee in this time!"
+msgstr "Это займет несколько минут. Наслаждайтесь кофе ☕, пока идет перевод!"
+
+#: assets/automatic-translate/index.js:1
+msgid ""
+"Please do not leave this window or browser tab while translation is in "
+"progress..."
+msgstr ""
+"Пожалуйста, не закрывайте это окно и не переключайтесь на другую вкладку "
+"браузера, пока выполняется перевод..."
+
+#: assets/automatic-translate/index.js:1
+msgid "S.No"
+msgstr "№"
+
+#: assets/automatic-translate/index.js:1
+msgid "Source Text"
+msgstr "Исходный текст"
+
+#: assets/automatic-translate/index.js:1
+msgid "No strings are available for translation"
+msgstr "Нет строк для перевода"
+
+#: assets/automatic-translate/index.js:1
+msgid "Wahooo! You have saved your valuable time via auto translating"
+msgstr ""
+"Ура! Вы сэкономили драгоценное время благодаря автоматическому переводу"
+
+#: assets/automatic-translate/index.js:1
+msgid "characters using"
+msgstr "символов с помощью"
+
+#: assets/automatic-translate/index.js:1
+msgid "Updating"
+msgstr "Обновление"
+
+#: assets/automatic-translate/index.js:1
+msgid "Update Content"
+msgstr "Обновить содержимое"
+
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:1
+msgid "STEP 1 OF 2"
+msgstr "ШАГ 1 ИЗ 2"
+
+#: assets/automatic-translate/index.js:1
+msgid "Select Translation Engine"
+msgstr "Выберите движок перевода"
+
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:1
+msgid "Select an AI provider to automatically translate your content."
+msgstr "Выберите поставщика услуг ИИ для автоматического перевода содержимого."
+
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:1
+#, js-format
+msgid "View %s Documentation"
+msgstr "Посмотреть документацию %s"
+
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:1
+msgid "Start Translation"
+msgstr "Начать перевод"
+
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:1
+msgid "Back"
+msgstr "Назад"
+
+#: assets/automatic-translate/index.js:1
+#, js-format
+msgid "Yandex Translate does not support the target language: %s."
+msgstr "Yandex Translate не поддерживает целевой язык: %s."
+
+#: assets/automatic-translate/index.js:1
+#, js-format
+msgid "Google Translate does not support the target language: %s."
+msgstr "Google Translate не поддерживает целевой язык: %s."
+
+#: assets/automatic-translate/index.js:1
+#, js-format
+msgid "%s AI Translator"
+msgstr "Переводчик на базе ИИ %s"
+
+#: assets/automatic-translate/index.js:1
+msgid "Edge AI Translator"
+msgstr "Переводчик Edge AI"
+
+#: assets/automatic-translate/index.js:1
+msgid ""
+"⚠️ For accurate custom field translations, please disable the Custom Fields "
+"synchronization in "
+msgstr ""
+
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:8
+msgid "Polylang settings"
+msgstr "Настройки Polylang"
+
+#: assets/automatic-translate/index.js:1
+msgid ". This may affect linked posts or pages."
+msgstr ". Это может повлиять на связанные записи или страницы."
+
+#: assets/automatic-translate/index.js:1
+msgid ""
+"No block rules were found. It appears that the block-rules.JSON file could "
+"not be fetched, possibly because it is blocked by your server settings. "
+"Please check your server configuration to resolve this issue."
+msgstr ""
+"Правила блокировки не найдены. Похоже, файл block-rules.JSON не удалось "
+"загрузить — возможно, он заблокирован настройками сервера. Проверьте "
+"конфигурацию сервера, чтобы устранить эту проблему."
+
+#: assets/automatic-translate/index.js:1
+msgid "AI"
+msgstr "ИИ"
+
+#: assets/automatic-translate/index.js:1 assets/bulk-translate/index.js:8
+#: assets/js/atfp-elementor-translate-confirm-box.js:30
+#: assets/js/atfp-re-translation.js:62
+msgid "AI Translation"
+msgstr "Перевод с помощью ИИ"
+
+#: assets/automatic-translate/index.js:1
+#, js-format
+msgid ""
+"Would you like to duplicate your original %s content and have it "
+"automatically translated into %s?"
+msgstr ""
+"Хотите создать копию исходного содержимого %s и автоматически перевести ее "
+"на %s?"
+
+#: assets/automatic-translate/index.js:1
+#: assets/js/atfp-elementor-translate-confirm-box.js:39
+msgid "Translate Now"
+msgstr "Перевести сейчас"
+
+#: assets/automatic-translate/index.js:1
+#: assets/js/atfp-elementor-translate-confirm-box.js:43
+msgid "Translate Multiple Pages & Posts"
+msgstr "Перевести несколько страниц и записей"
+
+#: assets/automatic-translate/index.js:1
+#: assets/js/atfp-elementor-translate-confirm-box.js:47
+msgid "You’ve already translated"
+msgstr "Вы уже перевели"
+
+#: assets/automatic-translate/index.js:1
+#: assets/js/atfp-elementor-translate-confirm-box.js:49
+msgid "characters manually."
+msgstr "символов вручную."
+
+#: assets/automatic-translate/index.js:1
+#: assets/js/atfp-elementor-translate-confirm-box.js:51
+msgid ""
+"Save time by translating multiple posts and pages in multiple languages on "
+"one click with"
+msgstr ""
+"Экономьте время: переводите несколько записей и страниц на несколько языков "
+"одним нажатием с помощью"
+
+#: assets/automatic-translate/index.js:1
+#: assets/js/atfp-elementor-translate-confirm-box.js:58
+msgid "Get Pro for Bulk Translation"
+msgstr "Оформите Pro для массового перевода"
+
+#: assets/automatic-translate/index.js:1
+#: assets/js/atfp-elementor-translate-confirm-box.js:65
+msgid "Note: close this popup if you do not want AI translation."
+msgstr ""
+"Примечание: закройте это всплывающее окно, если не хотите использовать "
+"перевод с помощью ИИ."
+
+#: assets/bulk-translate/index.js:1
+#, js-format
+msgid "Language %s(%s) is not supported by Yandex Translate"
+msgstr "Язык %s(%s) не поддерживается Yandex Translate"
+
+#: assets/bulk-translate/index.js:1
+msgid ""
+"Yandex translator script did not initialize. Please check network/CSP "
+"blocking yastatic.net."
+msgstr ""
+"Не удалось инициализировать скрипт переводчика Yandex. Проверьте, не "
+"блокирует ли сеть или CSP домен yastatic.net."
+
+#: assets/bulk-translate/index.js:1
+msgid "Yandex translation failed. Please retry or check network blocking."
+msgstr ""
+"Не удалось выполнить перевод с помощью Yandex. Повторите попытку или "
+"проверьте, не блокирует ли перевод сеть."
+
+#: assets/bulk-translate/index.js:1
+msgid "No content to translate"
+msgstr "Нет содержимого для перевода"
+
+#: assets/bulk-translate/index.js:1
+#, js-format
+msgid "Language %s(%s) is not supported by Google Translate"
+msgstr "Язык %s(%s) не поддерживается Google Translate"
+
+#: assets/bulk-translate/index.js:1
+msgid "No content found to translate"
+msgstr "Не найдено содержимое для перевода"
+
+#: assets/bulk-translate/index.js:1
+msgid "N/A"
+msgstr "Н/Д"
+
+#: assets/bulk-translate/index.js:1
+msgid "Post not created. Please try again."
+msgstr "Не удалось создать запись. Повторите попытку."
+
+#: assets/bulk-translate/index.js:1
+msgid "No posts to translate data undefined"
+msgstr "Нет данных о записях для перевода: значение не определено"
+
+#: assets/bulk-translate/index.js:1
+msgid "No posts to translate untranslated data not found"
+msgstr "Нет записей для перевода: не найдены непереведенные данные"
+
+#: assets/bulk-translate/index.js:1
+msgid "No posts to translate untranslated posts data not found"
+msgstr "Нет записей для перевода: не найдены данные о непереведенных записях"
+
+#: assets/bulk-translate/index.js:1
+msgid "No create translate post nonce"
+msgstr "Отсутствует nonce для создания переведенной записи"
+
+#: assets/bulk-translate/index.js:1
+#, js-format
+msgid "Set source language for this %s %s before translating."
+msgstr "Перед переводом задайте исходный язык для этого %s %s."
+
+#: assets/bulk-translate/index.js:1
+#, js-format
+msgid ""
+"Translations already exist for all selected %s in the chosen languages. "
+"There are no new %s to translate."
+msgstr ""
+"Для всех выбранных %s уже существуют переводы на выбранные языки. Нет новых "
+"%s для перевода."
+
+#: assets/bulk-translate/index.js:1
+msgid "This post editor type is not supported for translation"
+msgstr "Этот тип редактора записей не поддерживает перевод"
+
+#: assets/bulk-translate/index.js:1
+msgid "AI Translation Error"
+msgstr "Ошибка перевода с помощью ИИ"
+
+#: assets/bulk-translate/index.js:1
+#, js-format
+msgid "AI Translation %s"
+msgstr "Перевод с помощью ИИ %s"
+
+#: assets/bulk-translate/index.js:1
+msgid "In Queue"
+msgstr "В очереди"
+
+#: assets/bulk-translate/index.js:1
+msgid "In Progress"
+msgstr "В процессе"
+
+#: assets/bulk-translate/index.js:1
+msgid "Pending"
+msgstr "Ожидает выполнения"
+
+#: assets/bulk-translate/index.js:1
+msgid "Completed"
+msgstr "Завершено"
+
+#: assets/bulk-translate/index.js:1
+msgid ""
+"Please keep this window open while your pages/posts are being translated."
+msgstr "Не закрывайте это окно, пока переводятся ваши страницы/записи."
+
+#: assets/bulk-translate/index.js:1
+msgid "Your content has been translated successfully."
+msgstr "Ваш контент успешно переведён."
+
+#: assets/bulk-translate/index.js:1
+msgid "Posts"
+msgstr "Записи"
+
+#: assets/bulk-translate/index.js:1
+msgid "Characters"
+msgstr "Символы"
+
+#: assets/bulk-translate/index.js:1
+msgid "seconds"
+msgstr "секунд"
+
+#: assets/bulk-translate/index.js:1
+msgid "Language"
+msgstr "Язык"
+
+#: assets/bulk-translate/index.js:1
+msgid "Preview"
+msgstr "Предпросмотр"
+
+#: assets/bulk-translate/index.js:1
+msgid "Actions"
+msgstr "Действия"
+
+#: assets/bulk-translate/index.js:1
+msgid "Untitled"
+msgstr "Без названия"
+
+#: assets/bulk-translate/index.js:1
+msgid "Retranslate"
+msgstr "Перевести заново"
+
+#: assets/bulk-translate/index.js:1
+msgid "Error Details"
+msgstr "Подробности ошибки"
+
+#: assets/bulk-translate/index.js:1
+#, js-format
+msgid "Open the translated %s for review"
+msgstr "Открыть переведённый материал %s для проверки"
+
+#: assets/bulk-translate/index.js:1
+msgid "Review Translation"
+msgstr "Проверить перевод"
+
+#: assets/bulk-translate/index.js:1
+#, js-format
+msgid ""
+"Please wait until all translations for this %s are complete before reviewing."
+msgstr ""
+"Дождитесь завершения перевода всех материалов типа «%s», прежде чем "
+"приступать к проверке."
+
+#: assets/bulk-translate/index.js:1
+msgid "AI Translation Settings"
+msgstr "Настройки перевода с помощью ИИ"
+
+#: assets/bulk-translate/index.js:1
+msgid "Select your target languages and translation provider."
+msgstr "Выберите целевые языки и поставщика перевода."
+
+#: assets/bulk-translate/index.js:1
+msgid "Select Languages"
+msgstr "Выбрать языки"
+
+#: assets/bulk-translate/index.js:1
+msgid "Choose the languages you want to translate your content into."
+msgstr "Выберите языки, на которые нужно перевести ваш контент."
+
+#: assets/bulk-translate/index.js:1
+msgid "Unselect All"
+msgstr "Снять все отметки"
+
+#: assets/bulk-translate/index.js:1
+msgid "Select All"
+msgstr "Выбрать все"
+
+#: assets/bulk-translate/index.js:1
+msgid "Select Translation Provider"
+msgstr "Выбрать поставщика перевода"
+
+#: assets/bulk-translate/index.js:1
+msgid "No AI providers available"
+msgstr "Нет доступных поставщиков ИИ"
+
+#: assets/bulk-translate/index.js:1
+msgid "All providers are currently disabled."
+msgstr "Все поставщики сейчас отключены."
+
+#: assets/bulk-translate/index.js:1
+msgid "Go to"
+msgstr "Перейти в"
+
+#: assets/bulk-translate/index.js:1
+msgid "to enable Yandex, Google, Chrome, or Edge built-in AI."
+msgstr ", чтобы включить встроенный ИИ Yandex, Google, Chrome или Edge."
+
+#: assets/bulk-translate/index.js:1
+msgid "Please select at least one language."
+msgstr "Выберите хотя бы один язык."
+
+#: assets/bulk-translate/index.js:1
+msgid "Please select a translation provider."
+msgstr "Выберите поставщика перевода."
+
+#: assets/bulk-translate/index.js:1
+msgid ""
+"Translate 10× faster with Bulk Translation — save hours of manual work and "
+"effort."
+msgstr ""
+"Переводите в 10 раз быстрее с пакетным переводом — экономьте часы ручной "
+"работы и усилий."
+
+#: assets/bulk-translate/index.js:1
+msgid "Translate In Bulk"
+msgstr "Пакетный перевод"
+
+#. translators: %s: post type label, for example Posts or Pages.
+#: assets/bulk-translate/index.js:3
+#, js-format
+msgid "Send many %s through AI in a single run."
+msgstr "Отправьте сразу несколько материалов типа %s на перевод с помощью ИИ."
+
+#: assets/bulk-translate/index.js:3
+msgid "Better Accuracy"
+msgstr "Более точный перевод"
+
+#: assets/bulk-translate/index.js:3
+msgid "Improved context-aware translations."
+msgstr "Улучшенный перевод с учётом контекста."
+
+#: assets/bulk-translate/index.js:3
+msgid "Save Time & Effort"
+msgstr "Экономьте время и силы"
+
+#: assets/bulk-translate/index.js:3
+msgid "No need to translate them one by one."
+msgstr "Не нужно переводить их по одному."
+
+#: assets/bulk-translate/index.js:3
+msgid "Translating this editor is a <accent>Pro</accent> feature."
+msgstr ""
+
+#: assets/bulk-translate/index.js:3
+msgid "More Editor Support"
+msgstr "Поддержка большего числа редакторов"
+
+#: assets/bulk-translate/index.js:3
+msgid ""
+"Translate content built without blocks, including the classic editor and "
+"page builders."
+msgstr ""
+"Переводите контент, созданный без блоков, включая классический редактор и "
+"конструкторы страниц."
+
+#: assets/bulk-translate/index.js:3
+msgid "No need to translate manually again."
+msgstr "Больше не нужно переводить вручную."
+
+#: assets/bulk-translate/index.js:3
+msgid "Unlock Re-Translation with AutoPoly Pro"
+msgstr "Откройте повторный перевод с AutoPoly Pro"
+
+#: assets/bulk-translate/index.js:3
+msgid "Upgrade to Pro to re-translate existing content with AI."
+msgstr ""
+"Перейдите на Pro, чтобы повторно переводить существующий контент с помощью "
+"ИИ."
+
+#: assets/bulk-translate/index.js:3
+msgid "Already translated this content?"
+msgstr "Вы уже переводили этот контент?"
+
+#: assets/bulk-translate/index.js:3
+msgid ""
+"AutoPoly Pro lets you translate it again with AI whenever your original "
+"content changes."
+msgstr ""
+"AutoPoly Pro позволяет повторно переводить контент с помощью ИИ при каждом "
+"изменении оригинала."
+
+#: assets/bulk-translate/index.js:3
+msgid "Re-translate Existing Content"
+msgstr "Повторно перевести существующий контент"
+
+#: assets/bulk-translate/index.js:3
+msgid "Translate previously translated pages again with AI."
+msgstr "Повторно переводите ранее переведённые страницы с помощью ИИ."
+
+#: assets/bulk-translate/index.js:3
+msgid "Re-translate in One Click"
+msgstr "Повторный перевод в один клик"
+
+#: assets/bulk-translate/index.js:3
+msgid ""
+"Start AI re-translation quickly without recreating translations manually."
+msgstr ""
+"Быстро запустите повторный перевод с помощью ИИ — без необходимости вручную "
+"создавать переводы заново."
+
+#: assets/bulk-translate/index.js:3
+msgid "AutoPoly Pro Feature"
+msgstr "Возможность AutoPoly Pro"
+
+#: assets/bulk-translate/index.js:3
+msgid "Upgrade to Pro to unlock advanced AI translation capabilities."
+msgstr ""
+"Перейдите на Pro, чтобы получить доступ к расширенным возможностям перевода "
+"с помощью ИИ."
+
+#: assets/bulk-translate/index.js:3
+msgid "Unlock <accent>AutoPoly Pro</accent>"
+msgstr ""
+
+#: assets/bulk-translate/index.js:3
+msgid "Upgrade to Pro"
+msgstr "Перейти на Pro"
+
+#: assets/bulk-translate/index.js:3
+msgid "Bulk Translation is a Pro Feature"
+msgstr "Пакетный перевод доступен в Pro"
+
+#. translators: 1: number of selected items, 2: post type label.
+#: assets/bulk-translate/index.js:4
+#, js-format
+msgid "You have selected <count>%1$d %2$s</count> for translation."
+msgstr ""
+
+#. translators: 1: position (always 1), 2: total selected, 3: singular post type label.
+#: assets/bulk-translate/index.js:5
+#, js-format
+msgid "Translate %1$d of %2$d %3$s"
+msgstr "Перевести %1$d из %2$d: %3$s"
+
+#. translators: %s: singular post type label.
+#: assets/bulk-translate/index.js:6
+#, js-format
+msgid "Translate This %s"
+msgstr "Перевести этот материал: %s"
+
+#: assets/bulk-translate/index.js:6
+msgid "Choose Another Page"
+msgstr "Выбрать другую страницу"
+
+#: assets/bulk-translate/index.js:6
+msgid ""
+"AutoPoly Free allows you to translate <one>one page at a time.</one> "
+"Continue with a single untranslated page, or go back and choose another "
+"pages."
+msgstr ""
+
+#: assets/bulk-translate/index.js:6
+msgid "Bulk Translate All Pages (Pro)"
+msgstr "Пакетный перевод всех страниц (Pro)"
+
+#. translators: 1: number of additional selected items not shown, 2: post type label.
+#: assets/bulk-translate/index.js:7
+#, js-format
+msgid "+ %1$d more %2$s"
+msgstr "Ещё %1$d: %2$s"
+
+#. translators: 1: total selected items, 2: post type label.
+#: assets/bulk-translate/index.js:8
+#, js-format
+msgid "Translate %1$d %2$s at Once"
+msgstr "Перевести сразу %1$d: %2$s"
+
+#: assets/bulk-translate/index.js:8
+msgid "Upgrade for Bulk Translation"
+msgstr "Обновитесь, чтобы переводить несколько страниц"
+
+#: assets/bulk-translate/index.js:8
+msgid "You need to select one page for translation."
+msgstr "Выберите одну страницу для перевода."
+
+#: assets/bulk-translate/index.js:8
+msgid "Yandex Translate does not support the selected target language(s)."
+msgstr "Яндекс Переводчик не поддерживает выбранные целевые языки."
+
+#: assets/bulk-translate/index.js:8
+msgid "Google Translate does not support the selected target language(s)."
+msgstr "Google Переводчик не поддерживает выбранные целевые языки."
+
+#: assets/bulk-translate/index.js:8
+msgid "Nothing is ready to translate yet."
+msgstr "Пока нет ничего, что можно перевести."
+
+#: assets/bulk-translate/index.js:8
+msgid "No Page Selected"
+msgstr "Страница не выбрана"
+
+#: assets/bulk-translate/index.js:8
+msgid ""
+"For accurate custom field translations, please disable the Custom Fields "
+"synchronization in "
+msgstr ""
+
+#: assets/bulk-translate/index.js:8
+#, js-format
+msgid ". This may affect linked %s."
+msgstr ". Это может повлиять на связанные элементы %s."
+
+#: assets/inline-translate-modal/index.js:1
+msgid "Language Error Details"
+msgstr "Подробности об ошибке языка"
+
+#: assets/js/atfp-elementor-translate-confirm-box.js:36
+#, js-format
+msgid ""
+"Use AI to translate this page inside %s while keeping the same layout and "
+"design."
+msgstr ""
+"Используйте ИИ, чтобы перевести эту страницу в %s, сохранив исходный макет и "
+"дизайн."
+
+#: assets/js/atfp-elementor-translate-confirm-box.js:139
+msgid "Loading"
+msgstr "Загрузка"
+
+#: assets/js/atfp-re-translation.js:50
+msgid "Get Pro for Re-Translation"
+msgstr "Перейдите на Pro, чтобы повторно перевести"
+
+#: assets/js/atfp-re-translation.js:69
+msgid ""
+"Want to update your translated content to match the latest changes on your "
+"page? Try our Pro version to easily re-translate and unlock all advanced "
+"features."
+msgstr ""
+"Хотите обновить переведённый контент в соответствии с последними изменениями "
+"на странице? Попробуйте версию Pro, чтобы легко выполнить повторный перевод "
+"и получить доступ ко всем расширенным функциям."
